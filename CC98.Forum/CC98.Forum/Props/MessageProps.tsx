@@ -11,17 +11,13 @@ export class MessageProps {
     */
     id: number;
     /**
-    * 消息的发送者的用户名。如果是系统消息，则该属性为 null
+    * 消息的发送者的id
     */
-    senderName: string;
+    senderId: number;
     /**
-    * 消息的接收者的用户名
+    * 消息的接收者的id
     */
-    receiverName: string;
-    /**
-    * 消息的标题
-    */
-    title: string;
+    receiverId: number;
     /**
     * 消息的正文
     */
@@ -33,13 +29,5 @@ export class MessageProps {
     /**
     * 消息的发送时间
     */
-    sendTime: Date;
-    /**
-   * 正在聊天者的头像的图片地址
-   */
-    chatPortraitUrl: string;
-    /**
-    * 我的头像的图片地址
-    */
-    myPortraitUrl: string;
+    time: Date;
 }
