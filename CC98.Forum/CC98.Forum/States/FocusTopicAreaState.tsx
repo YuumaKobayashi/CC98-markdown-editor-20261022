@@ -7,6 +7,6 @@ import { FocusTopic } from '../Props/FocusTopic';
  */
 export class FocusTopicAreaState {
     data: FocusTopic[];
-    curNum: number;
+    from: number;
     loading: boolean; 
 }
