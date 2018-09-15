@@ -82,6 +82,7 @@ const config: Webpack.Configuration = {
 
         new ExtractTextPlugin('static/content/[name].css'),
 
+        new Webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     ],
 
     optimization: {
