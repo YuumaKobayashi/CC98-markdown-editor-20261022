@@ -3,8 +3,8 @@
 // https://github.com/Microsoft/TypeScript/wiki/JSX
 
 import * as React from "react";
-import Post from "./ExactActivitiesPost";
-import { UserRecentPost } from "../../States/AppState";
+import Topic from "./ExactActivitiesTopic";
+import { UserRecentTopic } from "../../States/AppState";
 import * as Utility from "../../Utility";
 import Pager from "./Pager";
 import * as Actions from "../../Actions/UserCenter";
@@ -17,7 +17,7 @@ import { getFavoritePosts } from "../../AsyncActions/UserCenter";
 import { ThunkDispatch } from "redux-thunk";
 
 type ownProps = {
-  userRecentPosts: UserRecentPost[];
+  currentUserFavoriteTopics: UserRecentTopic[];
   totalPage: number;
   hasTotal: boolean;
   isLoading: boolean;
@@ -68,7 +68,7 @@ class Posts extends React.Component<Props> {
           <p className="fa fa-spinner fa-pulse fa-2x fa-fw"></p>
         </div>
       );
-    } else if (this.props.userRecentPosts.length === 0) {
+    } else if (this.props.currentUserFavoriteTopics.length === 0) {
       return (
         <div className="user-posts" style={{ textAlign: "center" }}>
           没有主题
@@ -78,9 +78,9 @@ class Posts extends React.Component<Props> {
     const curPage = parseInt(this.props.match.params.page) || 1;
     const totalPage = this.props.hasTotal ? this.props.totalPage : curPage + 1;
     //state转换为JSX
-    let userRecentPosts = this.props.userRecentPosts
+    let userRecentPosts = this.props.currentUserFavoriteTopics
       .slice((curPage - 1) * 10, curPage * 10)
-      .map((item) => <Post key={item.id} userRecentPost={item} />);
+      .map((item) => <Topic key={item.id} userRecentTopic={item} />);
     //添加分隔线
     for (let i = 1; i < userRecentPosts.length; i += 2) {
       userRecentPosts.splice(i, 0, <hr key={i} />);
@@ -120,7 +120,7 @@ class Posts extends React.Component<Props> {
 
 function mapState(store: RootState) {
   return {
-    userRecentPosts: store.userInfo.currentUserFavoritePosts,
+    currentUserFavoriteTopics: store.userInfo.currentUserFavoriteTopics,
     totalPage: store.userInfo.totalPage.myfavoriteposts,
     hasTotal: store.userInfo.hasTotal.myfavoriteposts,
     isLoading: store.userInfo.isLoading,
