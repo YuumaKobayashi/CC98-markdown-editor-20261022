@@ -292,3 +292,4 @@ __pycache__/
 # Generated frontend build output. Authored static assets live in public/static,
 # and the maintained IIS configuration lives in deploy/iis.
 /dist/
+/dist-vite/

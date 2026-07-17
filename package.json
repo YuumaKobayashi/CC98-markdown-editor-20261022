@@ -11,7 +11,9 @@
     "dev": "set NODE_OPTIONS=\"--openssl-legacy-provider\" && webpack-dev-server --progress --hot --inline --config vscodeConfig/webpack.config.vscode.js",
     "bundle-analyze": "webpack --config vscodeConfig/webpack.config.bundle.js",
     "build:debug": "webpack --config webpack.config.debug.js",
-    "build:release": "set NODE_OPTIONS=\"--openssl-legacy-provider\" && webpack --config webpack.config.release.js"
+    "build:release": "set NODE_OPTIONS=\"--openssl-legacy-provider\" && webpack --config webpack.config.release.js",
+    "dev:shadow": "vite --config vite.config.mjs",
+    "build:shadow": "node scripts/build-vite-shadow.mjs"
   },
   "dependencies": {
     "@aspnet/signalr": "^1.0.3",
@@ -89,12 +91,15 @@
     "katex": "0.16.9",
     "mathjax-full": "4.0.0-beta.4",
     "null-loader": "^4.0.1",
+    "path-browserify": "1.0.1",
     "sass-loader": "^10.0.0",
+    "sass-embedded": "1.100.0",
     "style-loader": "^0.23.0",
     "terser-webpack-plugin": "^4.2.3",
     "ts-loader": "^8.4.0",
     "tslib": "^2.4.0",
     "typescript": "^4.8.4",
+    "vite": "8.1.4",
     "webpack": "^4.42.0",
     "webpack-bundle-analyzer": "^3.0.2",
     "webpack-chunk-hash": "^0.6.0",
