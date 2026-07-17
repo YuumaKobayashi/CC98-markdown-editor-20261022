@@ -55,7 +55,6 @@
   <script type="text/javascript" src="/static/scripts/lib/moment/moment.js"></script>
   <script defer type="text/javascript" src="/static/scripts/lib/spectrum/spectrum.js"></script>
   <script type="text/javascript" src="/static/scripts/lib/mathjax-full/bundle/tex-mml-chtml.js"></script>
-  <% const jsFileNames=[]; htmlWebpackPlugin.files.js.forEach((jsFileName)=> jsFileName.indexOf("css") === -1 && jsFileNames.push(jsFileName.split("/").pop())); %>
     <script type="text/javascript">
       // 兼容性检查
       if (!("flex" in document.documentElement.style)) {
@@ -72,14 +71,13 @@
         const jsFileNames = <%= JSON.stringify(jsFileNames) %>;
         jsFileNames.forEach((jsFileName) => {
           const scriptElement = document.createElement("script");
-          scriptElement.type = "text/javascript";
+          scriptElement.type = <%= JSON.stringify(scriptType) %>;
           scriptElement.src = `/static/scripts/${jsFileName}`;
           document.body.appendChild(scriptElement);
         });
       }
     </script>
 
-    <% const themeNames=["default_theme_placeholder"]; htmlWebpackPlugin.files.css.forEach((cssFile)=> themeNames.push(cssFile.split("/").pop())); %>
       <script type="text/javascript">
         // 动态载入样式
         const themeNames = <%= JSON.stringify(themeNames) %>;
