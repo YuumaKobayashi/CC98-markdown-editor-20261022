@@ -23,18 +23,23 @@ npm run dev
 
 ## File Intro
 
+### ./public/static
+
+构建时原样复制并保持 `/static/*` 固定 URL 的手工维护资源：
+
+- /images 网站的表情包、头图等图片文件
+- /boardinfo.json 版面信息表
+- /98icon.ico 网站标识
+- /config.json 项目默认配置
+- /portrait.json 头饰配置
+
+### ./deploy/iis
+
+- /web.config 手工维护的 IIS 部署配置
+
 ### ./dist
 
-- web.config IIS 配置文件
-- /static 网站静态文件
-  - /content css 文件
-  - /images 网站的表情包，头图等图片文件
-  - /scripts 网站的所有脚本
-  - /boardInfo.json 版面信息表
-  - /98icon.ico 网站标识
-  - /config.json 项目配置
-  - /index.html 网站文件
-  - /portrait.json 头饰配置
+可删除、可由 Webpack 重新生成且不提交到 Git 的构建产物，包括复制后的公开资源、IIS 配置、脚本、样式、index 和 reset 页面。
 
 ### ./Actions
 

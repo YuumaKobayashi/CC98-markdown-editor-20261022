@@ -145,13 +145,13 @@
 
 ### 3.5 静态资源与构建
 
-`dist` 当前同时承担三种互相冲突的职责：
+P02 前，`dist` 同时承担三种互相冲突的职责：
 
 1. 手工维护的源资源库；
 2. 构建输出目录；
 3. IIS 部署配置目录。
 
-已跟踪的 `dist` 内容约 54 MB、2,514 个文件，其中 2,509 个位于 `dist/static/images`。源码和 SCSS 中有大量 `/static/images/...` 固定 URL，UBB 还会动态拼接表情路径，因此第一阶段不能把这些资源逐个改成 module import。
+P02 前已跟踪的 `dist` 内容约 54 MB、2,514 个文件，其中 2,509 个位于 `dist/static/images`。源码和 SCSS 中有大量 `/static/images/...` 固定 URL，UBB 还会动态拼接表情路径，因此第一阶段不能把这些资源逐个改成 module import。
 
 目标边界应为：
 
@@ -488,8 +488,8 @@ src/shared/ui/
 - `STATE-USER-004`：`CHANGE_USER_HISTORY_POSTS` 有 action 无 reducer case，`hotPosts` 写入后无已确认消费者，`USER_LOG_ON` 的对象展开顺序可能覆盖目标状态；主体迁移保持现状，P24+ 分项处理。
 - `Header.tsx` 和 `NotificationController.tsx` 使用匿名跨标签页监听、直接解析 `str-`/`obj-` 前缀且未统一 cleanup；`reset.html` 清空 storage 时的 `key === null` 语义也未集中处理。主体迁移只收口边界，不顺便改变业务行为。
 - 认证实现中存在前端硬编码的 OIDC client secret；只登记字段和路径，不在文档复制 secret 值。
-- `config.Production.json` 与忽略规则中的大小写约定不一致。
-- `Utility/boardInfoJson.ts` 与 `dist/static/boardinfo.json` 数量不一致，TS 数据独有 board id 788。
+- `config.Production.json` 是未跟踪的部署时可选覆盖配置；大小写敏感环境必须保持运行时代码使用的精确文件名。
+- `Utility/boardInfoJson.ts` 与 `public/static/boardinfo.json` 数量不一致，TS 数据独有 board id 788。
 - UBB 自定义 engine/options/handler 注册存在已知语义风险；因 UBB 冻结，本轮只登记。
 - `SignalR.ts` 存在但 `NotificationController` 未挂载，当前应保持“不连接”。
 
