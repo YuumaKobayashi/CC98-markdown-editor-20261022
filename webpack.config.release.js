@@ -125,9 +125,11 @@ const config = (async () => ({
         unsupportedTemplate: await minify((await fs.readFile("unsupported.html")).toString(), minifyOptions),
       },
     }),
-    // clean dist
-    new CleanWebpackPlugin(["dist/static/scripts", "dist/static/content", "dist/static/index.html", "dist/static/reset.html"]),
+    // clean the complete build output so removed public assets cannot remain stale
+    new CleanWebpackPlugin(["dist"], { root: __dirname }),
     new CopyWebpackPlugin([
+      { from: "public/static", to: "static" },
+      { from: "deploy/iis/web.config", to: "web.config" },
       { from: "node_modules/jquery/dist", to: "static/scripts/lib/jquery/" },
       { from: "node_modules/moment", to: "static/scripts/lib/moment/" },
       { from: "node_modules/bootstrap/dist", to: "static/scripts/lib/bootstrap/" },

@@ -109,9 +109,8 @@ module.exports = {
   },
 
   plugins: [
-    new CleanWebpackPlugin(["dist/static/scripts", "dist/static/content", "dist/static/index.html", "dist/static/reset.html"], {
-      root: '../'
-    }),
+    // clean this config's complete output directory before rebuilding
+    new CleanWebpackPlugin(["dist"], { root: __dirname }),
 
     // generate index.html
     new HTMLWebpackPlugin({
@@ -126,10 +125,12 @@ module.exports = {
     }),
 
     new CopyWebpackPlugin([
-      // copy static/config file
-      { from: "dist/static", to: "static" },
+      // copy maintained public assets and deployment configuration
+      { from: "public/static", to: "static" },
+      { from: "deploy/iis/web.config", to: "web.config" },
 
       { from: "node_modules/jquery/dist", to: "static/scripts/lib/jquery/" },
+      { from: "node_modules/moment", to: "static/scripts/lib/moment/" },
       { from: "node_modules/bootstrap/dist", to: "static/scripts/lib/bootstrap/" },
       { from: "node_modules/bootstrap-icons", to: "static/scripts/lib/bootstrap-icons/" },
       { from: "node_modules/frowser/build", to: "static/scripts/lib/frowser/" },
