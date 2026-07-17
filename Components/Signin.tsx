@@ -2,7 +2,7 @@
 import * as Utility from "../Utility";
 import { UbbEditor } from "./UbbEditor";
 import { withRouter } from "react-router-dom";
-import * as moment from "moment";
+import moment from "moment";
 import ResignCalendar from "./ReSignCalendar";
 export class Signin extends React.Component<{ history }, { signinInfo; content }> {
   constructor(props) {

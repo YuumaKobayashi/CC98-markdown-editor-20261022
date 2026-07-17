@@ -1,6 +1,6 @@
 ﻿import * as React from 'react';
 import * as Utility from '../../Utility';
-import * as $ from 'jquery';
+import $ from 'jquery';
 import { match } from "react-router";
 import { BoardState } from '../../States/AppState';
 interface Props {

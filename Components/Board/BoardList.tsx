@@ -1,7 +1,7 @@
 ﻿import * as React from "react";
 import { Board } from "../../States/AppState";
 import * as Utility from "../../Utility";
-import * as $ from "jquery";
+import $ from "jquery";
 import { Link } from "react-router-dom";
 import DocumentTitle from "../DocumentTitle";
 

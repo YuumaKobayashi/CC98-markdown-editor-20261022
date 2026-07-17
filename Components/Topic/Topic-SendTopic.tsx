@@ -1,6 +1,6 @@
 ﻿import * as React from "react";
 import * as Utility from "../../Utility";
-import * as $ from "jquery";
+import $ from "jquery";
 import { UbbContainer } from ".././UbbContainer";
 import { Constants } from "../Constant";
 import { UbbEditor } from "../UbbEditor";
@@ -10,7 +10,7 @@ import { NoticeMessage, SendTopicNoticeMessage } from "../NoticeMessage";
 import { Prompt } from "react-router-dom";
 import Button from "antd/es/button";
 import Modal from "antd/es/modal";
-import * as moment from "moment";
+import moment from "moment";
 import ReactMde, {
   ReactMdeTypes,
   ReactMdeCommands,

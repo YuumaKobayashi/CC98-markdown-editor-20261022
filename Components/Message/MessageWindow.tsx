@@ -11,7 +11,7 @@ import * as Utility from "../../Utility";
 import DocumentTitle from "../DocumentTitle";
 import Store from "../../Store";
 import { refreshCurrentMessageCount } from "../../AsyncActions/Message";
-import * as $ from "jquery";
+import $ from "jquery";
 
 export class MessageWindow extends React.Component<
   MessageWindowProps,

@@ -1,7 +1,7 @@
 ﻿import * as React from "react";
 import * as Ubb from "./Core";
 import LazyLoad from "react-lazyload";
-import * as parse from "url-parse";
+import parse from "url-parse";
 
 export class ImageTagHandler extends Ubb.TextTagHandler {
   get supportedTagNames(): string {

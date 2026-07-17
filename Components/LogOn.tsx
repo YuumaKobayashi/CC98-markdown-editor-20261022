@@ -3,7 +3,7 @@
 // https://github.com/Microsoft/TypeScript/wiki/JSX
 
 import * as React from 'react';
-import * as $ from 'jquery';
+import $ from 'jquery';
 import * as Utility from '../Utility';
 import { connect } from 'react-redux';
 import * as Actions from '../Actions/UserCenter';

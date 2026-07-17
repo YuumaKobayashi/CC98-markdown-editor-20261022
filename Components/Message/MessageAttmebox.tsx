@@ -6,7 +6,7 @@ import { MessageResponseProps } from '../../Props/MessageResponseProps';
 import * as Utility from '../../Utility';
 import { UbbContainer } from '../UbbContainer';
 import { UbbCompatiblityMode } from '../../Ubb/UbbCodeExtension';
-import * as moment from 'moment';
+import moment from 'moment';
 
 export class MessageAttmebox extends React.Component<MessageResponseProps> {
 

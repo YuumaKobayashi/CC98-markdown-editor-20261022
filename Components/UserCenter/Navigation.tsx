@@ -4,7 +4,7 @@
 
 import * as React from "react";
 import { NavLink } from "react-router-dom";
-import * as $ from "jquery";
+import $ from "jquery";
 
 type props = {};
 

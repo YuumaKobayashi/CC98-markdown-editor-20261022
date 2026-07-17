@@ -1,6 +1,6 @@
 ﻿import * as React from 'react';
 import * as Utility from '../../Utility';
-import * as $ from 'jquery';
+import $ from 'jquery';
 import {
     BrowserRouter as Router,
     Route,

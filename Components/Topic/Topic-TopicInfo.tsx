@@ -2,7 +2,7 @@
 import * as Utility from "../../Utility";
 import { Link } from "react-router-dom";
 import { AdsComponent } from "../MainPage";
-import * as moment from "moment";
+import moment from "moment";
 import { NoticeMessage } from "../NoticeMessage";
 import { Modal, Select } from "antd";
 import { getFavoriteAllTopic } from "../../Utility";

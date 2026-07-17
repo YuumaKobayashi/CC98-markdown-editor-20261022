@@ -2,7 +2,7 @@
 import "core-js/shim";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import * as $ from "jquery";
+import $ from "jquery";
 import store from "./Store";
 import { Provider } from "react-redux";
 import "whatwg-fetch";

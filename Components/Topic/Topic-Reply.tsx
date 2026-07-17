@@ -1,6 +1,6 @@
 ﻿import * as React from "react";
 import * as Utility from "../../Utility";
-import * as $ from "jquery";
+import $ from "jquery";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { RouteComponent } from "../RouteComponent";
 import { Replier } from "./Topic-Replier";
@@ -10,7 +10,7 @@ import PostManagement from "./Topic-PostManagement-v2";
 import Judge from "./Topic-Judge-v3";
 import ReplierSignature from "./Topic-ReplierSignature";
 import Spin from "antd/es/spin";
-import * as moment from "moment";
+import moment from "moment";
 interface Props {
   topicId;
   page;

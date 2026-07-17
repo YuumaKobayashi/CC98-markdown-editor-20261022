@@ -4,7 +4,7 @@ import Button from 'antd/es/button';
 import Table from 'antd/es/table';
 import Checkbox from 'antd/es/checkbox';
 import Input from 'antd/es/input';
-import * as moment from 'moment';
+import moment from 'moment';
 const PostForumIndexColumnInfoType = [
   '推荐阅读',
   '推荐功能',

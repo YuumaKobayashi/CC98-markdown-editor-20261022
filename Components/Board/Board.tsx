@@ -2,7 +2,7 @@
 import * as State from "../../States/AppState";
 import * as Utility from "../../Utility";
 import ControlLabel from "react-bootstrap/es/ControlLabel";
-import * as $ from "jquery";
+import $ from "jquery";
 import { UbbContainer } from "../UbbContainer";
 import { match } from "react-router";
 
@@ -19,7 +19,7 @@ import {
 } from "../Status";
 import { AdsComponent } from "../MainPage";
 import { isLogOn } from "../../Utility";
-import * as moment from "moment";
+import moment from "moment";
 import Modal from "antd/es/modal";
 import List from "antd/es/list";
 import Button from "antd/es/button";

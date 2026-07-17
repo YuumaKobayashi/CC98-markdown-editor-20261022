@@ -1,6 +1,6 @@
 ﻿import * as React from "react";
 import { AppState } from "../States/AppState";
-import * as $ from "jquery";
+import $ from "jquery";
 import * as Utility from "../Utility";
 import { UbbContainer } from "./UbbContainer";
 import { Link } from "react-router-dom";

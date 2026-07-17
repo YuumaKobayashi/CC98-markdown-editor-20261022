@@ -5,7 +5,7 @@
 import * as React from 'react';
 import * as Ubb from './Core';
 import { UrlTagHandler } from './URLTagHandler';
-import * as parse from 'url-parse';
+import parse from 'url-parse';
 
 export default class SandBoxTagHandler extends Ubb.RecursiveTagHandler {
 	get supportedTagNames(): string {

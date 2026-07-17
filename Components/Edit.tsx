@@ -1,7 +1,7 @@
 ﻿import * as React from "react";
 import * as Utility from "../Utility";
 import { AppState } from "../States/AppState";
-import * as $ from "jquery";
+import $ from "jquery";
 import {
   BrowserRouter as Router,
   Route,
@@ -31,7 +31,7 @@ import {
   Input,
   Radio
 } from "antd";
-import * as moment from "moment";
+import moment from "moment";
 const { MonthPicker, RangePicker } = DatePicker;
 const { Option } = Select;
 const { TextArea } = Input;

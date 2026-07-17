@@ -5,7 +5,7 @@
 import * as React from "react";
 import * as Utility from "../Utility";
 import { AppState, UserInfo } from "../States/AppState";
-import * as $ from "jquery";
+import $ from "jquery";
 import { connect } from "react-redux";
 import { Actions, RootState } from "../Store";
 import { Link, withRouter, Route } from "react-router-dom";

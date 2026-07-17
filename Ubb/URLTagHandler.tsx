@@ -4,7 +4,7 @@
 
 import * as React from 'react';
 import * as Ubb from './Core';
-import * as parse from 'url-parse';
+import parse from 'url-parse';
 
 // 默认URL类型和导入的有微妙的差别
 type URL = ReturnType<typeof parse>;

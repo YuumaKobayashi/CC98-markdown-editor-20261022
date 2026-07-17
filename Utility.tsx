@@ -9,9 +9,9 @@ import { removeUserInfo as removeUserInfoInIndexDB } from "./IndexedDB/UserStora
 // lib
 
 import * as React from "react";
-import * as $ from "jquery";
+import $ from "jquery";
 
-import * as moment from "moment";
+import moment from "moment";
 
 // -------- TBC --------
 
