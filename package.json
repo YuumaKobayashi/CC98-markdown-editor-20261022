@@ -2,6 +2,11 @@
   "version": "1.0.0",
   "name": "cc98-forum",
   "private": true,
+  "packageManager": "npm@10.8.2",
+  "engines": {
+    "node": "20.20.0",
+    "npm": "10.8.2"
+  },
   "scripts": {
     "dev": "set NODE_OPTIONS=\"--openssl-legacy-provider\" && webpack-dev-server --progress --hot --inline --config vscodeConfig/webpack.config.vscode.js",
     "bundle-analyze": "webpack --config vscodeConfig/webpack.config.bundle.js",

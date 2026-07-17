@@ -11,5 +11,6 @@
     "lib": ["dom", "es5", "es6"],
     "allowSyntheticDefaultImports": true,
     "importHelpers": true
-  }
+  },
+  "exclude": ["node_modules", "dist", "vscodeConfig/dist"]
 }

@@ -11,14 +11,16 @@ _[Auser](https://github.com/sgjsakura), [Madridista](https://github.com/Tsukiko1
 ```
 git clone https://github.com/ZJU-CC98/Forum.git
 cd Forum
-npm i
+nvm use 20.20.0
+npm ci
 npm run dev
 ```
 
 ### Notes
 
-- 请使用 `node@16` 或更早的版本进行构建，推荐使用 [`nvm`](https://github.com/nvm-sh/nvm) 或 [`nvm-windows`](https://github.com/coreybutler/nvm-windows) 管理和切换 `node` 版本；
-- 包管理工具请使用 `npm`；
+- 本分支固定使用 `Node 20.20.0` 和 `npm 10.8.2`；Node 版本同时记录在 `.nvmrc`，npm 版本同时记录在 `packageManager`/`engines`；
+- 安装依赖使用 `npm ci`。仓库 `.npmrc` 固定了当前 React 16 依赖树所需的 `legacy-peer-deps` 解析策略；
+- `spatial-watermark` 来自固定 Git commit，clean install 需要当前环境能够通过 SSH 访问对应私有仓库；仓库不保存该私有库的源码或二进制；
 - PR 请提交至默认 `main` 分支，其余皆为开发用分支。
 
 ## File Intro
