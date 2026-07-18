@@ -1,13 +1,13 @@
-// P04 Vite 影子构建入口。
-// 只写入 dist-vite，不改变仍由 Webpack 负责的 dist；Vite 构建完成后再复制
-// 现有部署依赖，避免把 node_modules 内容误当作 public 中的手工维护资源。
+// P05 Vite 正式构建入口。
+// Vite 先生成 dist，再复制部署所需的维护文件和固定 URL 第三方资源；
+// node_modules 中的文件只进入构建产物，不作为手工维护资源提交。
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { build } from "vite";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const output = path.join(root, "dist-vite");
+const output = path.join(root, "dist");
 
 const copies = [
   ["deploy/iis/web.config", "web.config"],
@@ -37,4 +37,4 @@ for (const [from, to] of copies) {
   await fs.cp(source, destination, { recursive: stat.isDirectory(), force: true });
 }
 
-console.log(`Vite 影子产物已生成：${output}`);
+console.log(`Vite 正式产物已生成：${output}`);

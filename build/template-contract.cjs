@@ -26,21 +26,6 @@ function createThemeNames(cssFiles) {
   return result;
 }
 
-function createWebpackTemplateParameters({ assets, errorTemplate, unsupportedTemplate }) {
-  const themeKeys = new Set(themes.map(({ key }) => key));
-  const jsFileNames = assets.js
-    .map(basename)
-    .filter((name) => !themeKeys.has(name.replace(/(?:-[^.]+)?\.js$/, "")));
-
-  return {
-    errorTemplate,
-    unsupportedTemplate,
-    scriptType: "text/javascript",
-    jsFileNames,
-    themeNames: createThemeNames(assets.css),
-  };
-}
-
 function renderTemplate(source, parameters) {
   const replacements = new Map([
     ["<%= errorTemplate %>", parameters.errorTemplate],
@@ -65,6 +50,5 @@ function renderTemplate(source, parameters) {
 
 module.exports = {
   createThemeNames,
-  createWebpackTemplateParameters,
   renderTemplate,
 };

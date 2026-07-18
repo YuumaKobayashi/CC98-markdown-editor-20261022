@@ -8,12 +8,8 @@
     "npm": "10.8.2"
   },
   "scripts": {
-    "dev": "set NODE_OPTIONS=\"--openssl-legacy-provider\" && webpack-dev-server --progress --hot --inline --config vscodeConfig/webpack.config.vscode.js",
-    "bundle-analyze": "webpack --config vscodeConfig/webpack.config.bundle.js",
-    "build:debug": "webpack --config webpack.config.debug.js",
-    "build:release": "set NODE_OPTIONS=\"--openssl-legacy-provider\" && webpack --config webpack.config.release.js",
-    "dev:shadow": "vite --config vite.config.mjs",
-    "build:shadow": "node scripts/build-vite-shadow.mjs"
+    "dev": "vite --config vite.config.mjs",
+    "build": "node scripts/build-vite.mjs"
   },
   "dependencies": {
     "@aspnet/signalr": "^1.0.3",
@@ -50,7 +46,6 @@
     "redux-thunk": "^2.3.0",
     "remark": "^10.0.0",
     "remark-react": "^4.0.3",
-    "sass": "1.43.3",
     "save": "^2.3.3",
     "showdown": "^1.9.0",
     "showdown-xss-filter": "^0.2.0",
@@ -77,34 +72,17 @@
     "@types/react-router-redux": "5.0.15",
     "@types/url-join": "0.8.2",
     "@types/url-parse": "^1.4.1",
-    "@types/webpack": "^4.4.11",
     "better-react-mathjax": "^2.0.3",
     "bootstrap": "^5.2.2",
     "bootstrap-icons": "^1.10.2",
-    "clean-webpack-plugin": "^0.1.19",
-    "copy-webpack-plugin": "^4.5.2",
-    "css-loader": "^1.0.0",
-    "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "frowser": "^0.2.0",
     "html-minifier-terser": "^7.0.0",
-    "html-webpack-plugin": "^4.5.2",
     "katex": "0.16.9",
     "mathjax-full": "4.0.0-beta.4",
-    "null-loader": "^4.0.1",
     "path-browserify": "1.0.1",
-    "sass-loader": "^10.0.0",
     "sass-embedded": "1.100.0",
-    "style-loader": "^0.23.0",
-    "terser-webpack-plugin": "^4.2.3",
-    "ts-loader": "^8.4.0",
     "tslib": "^2.4.0",
     "typescript": "^4.8.4",
-    "vite": "8.1.4",
-    "webpack": "^4.42.0",
-    "webpack-bundle-analyzer": "^3.0.2",
-    "webpack-chunk-hash": "^0.6.0",
-    "webpack-cli": "^3.1.0",
-    "webpack-dev-server": "^3.11.3",
-    "webpack-merge": "^4.1.4"
+    "vite": "8.1.4"
   }
 }

@@ -10,6 +10,10 @@ const require = createRequire(import.meta.url);
 const { themes, themeEntries } = require("./build/theme-manifest.cjs");
 const { createThemeNames, renderTemplate } = require("./build/template-contract.cjs");
 const root = path.dirname(fileURLToPath(import.meta.url));
+const browserProcessDefines = {
+  // vfile@3 expects the browser process shim that Webpack supplied implicitly.
+  "process.cwd": "(() => '/')",
+};
 
 const devStaticRewrites = [
   ["/static/scripts/lib/jquery/", "node_modules/jquery/dist/"],
@@ -234,6 +238,14 @@ export default defineConfig(({ command }) => ({
   },
   define: {
     "process.env.NODE_ENV": JSON.stringify(command === "serve" ? "development" : "production"),
+    ...browserProcessDefines,
+  },
+  optimizeDeps: {
+    rolldownOptions: {
+      transform: {
+        define: browserProcessDefines,
+      },
+    },
   },
   server: {
     host: "127.0.0.1",
@@ -244,7 +256,7 @@ export default defineConfig(({ command }) => ({
     lightningcss: { errorRecovery: true },
   },
   build: {
-    outDir: "dist-vite",
+    outDir: "dist",
     emptyOutDir: true,
     copyPublicDir: true,
     assetsInlineLimit: 0,
