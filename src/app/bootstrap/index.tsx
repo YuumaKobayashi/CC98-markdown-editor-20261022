@@ -1,23 +1,17 @@
-﻿import "es6-promise/auto";
+import "es6-promise/auto";
 import "core-js/shim";
-import * as React from "react";
 import * as ReactDOM from "react-dom";
 import $ from "jquery";
-import store from "./Store";
-import { Provider } from "react-redux";
 import "whatwg-fetch";
 import "blueimp-canvas-to-blob";
 import { initWatermark } from "spatial-watermark";
 
-import { Constants } from "./Components/Constant";
-import App from "./Components/App";
-import ErrorBoundary from "./Components/ErrorBoundary";
-import { IndexedDB } from "./IndexedDB/IndexedDB";
-import { shouldUseIndexedDb } from "./config";
-import zh_CN from "antd/lib/locale-provider/zh_CN";
-import { LocaleProvider } from "antd";
+import { createAppRoot } from "@app/providers/create-app-root";
+import { Constants } from "@legacy/Components/Constant";
+import { IndexedDB } from "@legacy/IndexedDB/IndexedDB";
+import { shouldUseIndexedDb } from "@legacy/config";
 import moment from "moment";
-import { checkThemeToChange } from "./Utility";
+import { checkThemeToChange } from "@legacy/Utility";
 moment.locale("zh-cn");
 
 /**
@@ -61,16 +55,7 @@ async function initialize() {
   console.info("%cCC98 Durian", "font-size: 80px; fontFamily: Big");
 
   // 显示应用程序核心内容
-  ReactDOM.render(
-    <ErrorBoundary>
-      <Provider store={store}>
-        <LocaleProvider locale={zh_CN}>
-          <App />
-        </LocaleProvider>
-      </Provider>
-    </ErrorBoundary>,
-    document.getElementById("root")
-  );
+  ReactDOM.render(createAppRoot(), document.getElementById("root"));
 
   if (process.env.NODE_ENV === "development") {
     const { whyDidYouUpdate } = require("why-did-you-update");
@@ -83,7 +68,6 @@ async function initialize() {
 
   // 添加主题检查程序
   addTimerCallback(checkThemeToChange);
-
 }
 
 initialize();

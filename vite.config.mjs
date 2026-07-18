@@ -135,7 +135,7 @@ function forumHtmlPlugin() {
         const requestUrl = new URL(request.url || "/", "http://vite.local");
 
         if (requestUrl.pathname === "/static/scripts/main.js") {
-          request.url = "/Main.tsx";
+          request.url = "/src/app/bootstrap/index.tsx";
           next();
           return;
         }
@@ -232,6 +232,13 @@ export default defineConfig(({ command }) => ({
   ],
   resolve: {
     alias: [
+      { find: "@app", replacement: path.join(root, "src/app") },
+      { find: "@pages", replacement: path.join(root, "src/pages") },
+      { find: "@features", replacement: path.join(root, "src/features") },
+      { find: "@entities", replacement: path.join(root, "src/entities") },
+      { find: "@shared", replacement: path.join(root, "src/shared") },
+      { find: "@integrations", replacement: path.join(root, "src/integrations") },
+      { find: "@legacy", replacement: root },
       { find: "path", replacement: path.join(root, "node_modules/path-browserify/index.js") },
       { find: /^~antd/, replacement: path.join(root, "node_modules/antd") },
     ],
@@ -266,7 +273,7 @@ export default defineConfig(({ command }) => ({
     target: "es2015",
     rolldownOptions: {
       input: {
-        main: path.join(root, "Main.tsx"),
+        main: path.join(root, "src/app/bootstrap/index.tsx"),
         ...Object.fromEntries(
           themes.map(({ key }) => [key, path.resolve(root, themeEntries[key])])
         ),

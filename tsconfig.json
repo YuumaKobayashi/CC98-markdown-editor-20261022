@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "module": "esnext",
     "moduleResolution": "node",
     "noImplicitAny": false,
@@ -10,7 +11,16 @@
     "jsx": "react",
     "lib": ["dom", "es5", "es6"],
     "allowSyntheticDefaultImports": true,
-    "importHelpers": true
+    "importHelpers": true,
+    "paths": {
+      "@app/*": ["src/app/*"],
+      "@pages/*": ["src/pages/*"],
+      "@features/*": ["src/features/*"],
+      "@entities/*": ["src/entities/*"],
+      "@shared/*": ["src/shared/*"],
+      "@integrations/*": ["src/integrations/*"],
+      "@legacy/*": ["*"]
+    }
   },
   "exclude": ["node_modules", "dist"]
 }
