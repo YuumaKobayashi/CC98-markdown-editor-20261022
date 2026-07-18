@@ -30,7 +30,7 @@ export function TopicIPData(props: TopicIPDataProps): React.ReactElement {
 
   return (
     <Modal
-      visible={visible}
+      open={visible}
       title="查看IP"
       okText="确认"
       cancelText="取消"

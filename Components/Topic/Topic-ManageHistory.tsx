@@ -32,7 +32,7 @@ export default class extends React.Component<Props, State> {
     return (
       <>
         <Modal
-          visible={visible}
+          open={visible}
           title="管理记录"
           okText="确认"
           cancelText="取消"

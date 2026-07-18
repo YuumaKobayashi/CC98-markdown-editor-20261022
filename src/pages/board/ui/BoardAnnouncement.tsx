@@ -196,7 +196,7 @@ export function BoardAnnouncement(
     <div style={{ width: "100%" }}>
       <Modal
         title="编辑大字报"
-        visible={editVisible}
+        open={editVisible}
         onOk={submitBigPaper}
         onCancel={() => setEditVisible(false)}
         width={"50rem"}
