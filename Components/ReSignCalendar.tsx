@@ -1,9 +1,12 @@
 import moment from "moment";
 import React, { useEffect } from "react";
 import CC98Calendar from "./CC98Calendar";
-import { Button, DatePicker, Icon, message, Popover, Radio } from "antd";
-
-const { MonthPicker } = DatePicker;
+import { Button, DatePicker, message, Popover, Radio } from "antd";
+import {
+  LeftOutlined,
+  QuestionCircleOutlined,
+  RightOutlined,
+} from "@ant-design/icons";
 import {
   cc98Fetch,
   formAuthorizeHeader,
@@ -183,7 +186,7 @@ const ResignCalendar: React.FC<ResignCalendarProps> = (props) => {
         补签卡：{signInCardCount}张
         <div>
           <Popover content={ruleContent} title="补签规则">
-            <Icon type="question-circle" />
+            <QuestionCircleOutlined />
           </Popover>
         </div>
         <div>
@@ -209,7 +212,8 @@ const ResignCalendar: React.FC<ResignCalendarProps> = (props) => {
         </div>
       </div>
       <div className="cc98-calendar-picker">
-        <MonthPicker
+        <DatePicker
+          picker="month"
           style={{ marginRight: 8 }}
           placeholder="选择月份"
           value={datePicker}
@@ -244,7 +248,7 @@ const ResignCalendar: React.FC<ResignCalendarProps> = (props) => {
               datePicker.isSameOrBefore(moment("2016-07", "YYYY-MM"))
             }
           >
-            <Icon type="left" />
+            <LeftOutlined />
             上月
           </Button>
           <Button
@@ -259,7 +263,7 @@ const ResignCalendar: React.FC<ResignCalendarProps> = (props) => {
             }
           >
             下月
-            <Icon type="right" />
+            <RightOutlined />
           </Button>
         </Button.Group>
         <div className="cc98-calendar-picker-info">
