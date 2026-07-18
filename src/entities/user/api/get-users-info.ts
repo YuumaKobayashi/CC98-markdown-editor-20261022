@@ -60,11 +60,11 @@ export async function getUsersInfo(keys: (number | string)[]): Promise<UserInfo[
                         setLocalStorage(`userId_${userInfo.id}`, userInfo, 3600);
                         setLocalStorage(`userName_${userInfo.name}`, userInfo, 3600);
                     }
-   
+
                     return userInfo;
                 }
             } else {
-          
+
                 return item;
             }
         })

@@ -137,10 +137,10 @@ export function autoClearLocalStorage() {
         let noticeSetting = getLocalStorage('noticeSetting');
         let userInfo = localStorage.getItem('userInfo');
         let version = localStorage.getItem('version');
-        
+
         localStorage.clear();
         console.info('localStorage cleared');
-        
+
         localStorage.setItem('version', version);
         if(refresh_token) {
             setLocalStorage('refresh_token', refresh_token);

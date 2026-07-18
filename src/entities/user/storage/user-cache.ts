@@ -30,10 +30,10 @@ export async function getUserInfo(key: number | string) {
     let t = IndexedDB.db.transaction('userInfo', 'readonly');
     let store = t.objectStore('userInfo');
     let req: IDBRequest;
-    if(typeof key === 'number'){ 
+    if(typeof key === 'number'){
         // search by userId
         req = store.get(key);
-    } else if(typeof key === 'string') { 
+    } else if(typeof key === 'string') {
         // serach by name
         req = store.index("name").get(key);
     } else { // id === null
@@ -48,7 +48,7 @@ export async function getUserInfo(key: number | string) {
             } else {
                 resolve(undefined);
             }
-        } 
+        }
         req.onerror = e => reject();
     }) as Promise<UserInfo>;
 }
@@ -64,10 +64,10 @@ export async function getUsersInfo(keys: (number | string)[]) {
     let store = t.objectStore('userInfo');
     return Promise.all(keys.map(item => {
         let req: IDBRequest;
-        if(typeof item === 'number'){ 
+        if(typeof item === 'number'){
             // search by userId
             req = store.get(item);
-        } else if(typeof item === 'string') { 
+        } else if(typeof item === 'string') {
             // serach by name
             req = store.index("name").get(item);
         } else { // id === null
@@ -91,7 +91,7 @@ export async function getUsersInfo(keys: (number | string)[]) {
 /**
  * 根据用户id删除indexdb中储存的用户信息
  * @param id 用户id
- * @returns {Promise<void>} 
+ * @returns {Promise<void>}
  * @author AsukaSong
  */
 export async function removeUserInfo(id: number): Promise<void> {
