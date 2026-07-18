@@ -8,8 +8,6 @@ import { QuoteContext } from './Topic';
 import { QuoteTraceContext } from './Topic-Trace'
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import moment from 'moment';
-import * as Popover from 'antd/es/popover';
-import * as Button from 'antd/es/button';
 import { data } from 'jquery';
 interface Props {
   postInfo;

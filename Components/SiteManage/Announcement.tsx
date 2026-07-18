@@ -1,8 +1,7 @@
 ﻿import * as React from 'react';
 import * as Utility from '../../Utility';
 import { UbbContainer } from '../UbbContainer';
-import Input from 'antd/es/input';
-import Button from 'antd/es/button';
+import { Button, Input } from 'antd';
 const {TextArea} = Input;
 interface AnnouncementState {
     /**

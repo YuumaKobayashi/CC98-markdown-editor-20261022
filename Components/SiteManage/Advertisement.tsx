@@ -1,9 +1,6 @@
 ﻿import * as React from 'react';
 import { cc98Fetch, getToken } from '../../Utility';
-import Button from 'antd/es/button';
-import Table from 'antd/es/table';
-import Checkbox from 'antd/es/checkbox';
-import Input from 'antd/es/input';
+import { Button, Checkbox, Input, Table } from 'antd';
 import moment from 'moment';
 const PostForumIndexColumnInfoType = [
   '推荐阅读',

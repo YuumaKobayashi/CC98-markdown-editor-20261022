@@ -4,7 +4,7 @@ import { FocusBoard } from "../../Props/FocusBoard";
 import { FocusTopicSingle } from "./FocusTopicSingle";
 import { FocusTopicAreaState } from "../../States/FocusTopicAreaState";
 import * as Utility from "../../Utility";
-import Spin from "antd/es/spin";
+import { Spin } from "antd";
 /**
  * 表示我关注的版面的主题列表
  */

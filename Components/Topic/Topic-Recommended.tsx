@@ -10,7 +10,7 @@ import {
     withRouter,
 } from "react-router-dom";
 import DocumentTitle from "../DocumentTitle";
-import Spin from "antd/es/spin";
+import { Spin } from "antd";
 //import pDebounce from "p-debounce";
 
 /**
