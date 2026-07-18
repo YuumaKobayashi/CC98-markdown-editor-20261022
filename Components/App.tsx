@@ -3,7 +3,7 @@ import { AppState } from "../States/AppState";
 import { match } from "react-router";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { ConnectedRouter } from "react-router-redux";
-import { history } from "../Store";
+import store, { history } from "../Store";
 import { Post, ShowTopic } from "./Topic/Topic";
 import { BList } from "./Board/Board";
 import { CurUserPost } from "./Topic/Topic-Trace";
@@ -86,7 +86,7 @@ class App extends React.Component<Props> {
 
     return (
       <>
-        <ConnectedRouter history={history}>
+        <ConnectedRouter history={history} store={store}>
           <div className="main-container">
             <Header />
             <Route component={ErrorControl} />

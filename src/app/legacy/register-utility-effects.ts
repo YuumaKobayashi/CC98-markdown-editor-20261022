@@ -1,4 +1,4 @@
-import store, { Actions, history } from "@legacy/Store";
+import store, { Actions, history } from "@app/store";
 import * as ErrorActions from "@legacy/Actions/Error";
 import * as UserCenterActions from "@legacy/Actions/UserCenter";
 import { configureLegacyUtilityEffects } from "@shared/lib/legacy-utility-effects";

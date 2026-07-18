@@ -5,21 +5,24 @@ import { Provider } from "react-redux";
 
 import App from "@legacy/Components/App";
 import ErrorBoundary from "@legacy/Components/ErrorBoundary";
-import store from "@legacy/Store";
+import store from "@app/store";
+import { CrossTabSync } from "@app/providers/cross-tab-sync";
 
 /**
- * 创建与旧入口完全相同的应用 Provider 树。
+ * 创建保持旧运行行为的应用 Provider 树。
  *
- * 这里返回元素而不是新增包装组件，避免改变 ErrorBoundary、Redux Provider、
- * AntD LocaleProvider 和 App 之间的运行时层级。
+ * CrossTabSync 是 P09 新增的无 DOM 应用壳；同步白名单为空，现有 Header
+ * storage 合同仍保持原状。
  */
 export function createAppRoot(): React.ReactElement<any> {
   return (
     <ErrorBoundary>
       <Provider store={store}>
-        <LocaleProvider locale={zh_CN}>
-          <App />
-        </LocaleProvider>
+        <CrossTabSync>
+          <LocaleProvider locale={zh_CN}>
+            <App />
+          </LocaleProvider>
+        </CrossTabSync>
       </Provider>
     </ErrorBoundary>
   );
