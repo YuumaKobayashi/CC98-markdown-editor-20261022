@@ -8,7 +8,8 @@ import Page5 from "./page5";
 import Page6 from "./page6";
 import Page7 from "./page7";
 import Cover from "./cover";
-import { Icon, Spin } from "antd";
+import { Spin } from "antd";
+import { DownOutlined, UpOutlined } from "@ant-design/icons";
 import Page8 from "./page8";
 import Page9 from "./page9"
 
@@ -100,8 +101,7 @@ export default class extends React.Component {
     return (
       <div className={isMobile ? "annual-review-body" : "annual-review-body"}>
         {page !== 0 ? (
-          <Icon
-            type="up"
+          <UpOutlined
             onClick={this.previousPage}
             style={{ fontSize: "2rem", cursor: "pointer", zIndex: 99 }}
           />
@@ -159,8 +159,7 @@ export default class extends React.Component {
           </div>
         )}
         {page !== 9 && (
-          <Icon
-            type="down"
+          <DownOutlined
             onClick={this.nextPage}
             style={{ fontSize: "2rem", cursor: "pointer", zIndex: 99 }}
           />

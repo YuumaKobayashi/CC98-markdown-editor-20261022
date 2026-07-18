@@ -13,7 +13,7 @@ import { refreshCurrentUserInfo } from "../AsyncActions/UserCenter";
 import { refreshCurrentMessageCount } from "../AsyncActions/Message";
 import { MessageInfo } from "../Reducers/Message";
 import { changeUserInfoVisible } from "../Actions/UserCenter";
-import { Icon } from "antd";
+import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 
 type props = {
   isLogOn: boolean;
@@ -218,9 +218,7 @@ class DropDownConnect extends React.Component<props, state> {
                 }
               />
               {this.props.showCardUser ? (
-                <Icon
-                  type="eye-invisible"
-                  theme="outlined"
+                <EyeInvisibleOutlined
                   className="topBarUserHideIcon"
                   onClick={() => {
                     this.props.changeUserInfoVisible(false);
@@ -228,9 +226,7 @@ class DropDownConnect extends React.Component<props, state> {
                   }}
                 />
               ) : (
-                <Icon
-                  type="eye"
-                  theme="outlined"
+                <EyeOutlined
                   className="topBarUserHideIcon"
                   onClick={() => {
                     this.props.changeUserInfoVisible(true);
