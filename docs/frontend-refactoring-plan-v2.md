@@ -32,7 +32,7 @@
 - 人工确认前不提交；提交后也不自动开始下一阶段。
 - 默认不引入或运行自动 lint、自动测试、循环依赖扫描、自动视觉截图、自动渲染、bundle analyzer、artifact comparator 或类似门禁。
 - 不计算或维护产物 SHA256。编译/打包若成为某阶段的必要动作，需在阶段开始前单独说明；其成功也不能替代人工功能确认。
-- 所有 Node dev server、preview server、Webpack dev server 或其他持续运行的 Node 服务，只能由可确认使用 GPT-5.4 的 subagent 启动和完整回收。若当前协作接口无法确认模型版本，则该阶段运行验证应标记为阻塞，不得由主线程代跑。
+- 所有 Node dev server、preview server 或其他持续运行的 Node 服务，只能由 subagent 启动和完整回收；若当前协作接口无法锁定具体模型版本，必须在阶段记录中明确说明，但不得改由主线程代跑。
 - 发现旧逻辑缺陷时只进入台账；主体迁移完成前不得顺手修复。
 - 所有 class → function 改写都必须有人工作成的前后对照文档，不能依赖自动生成报告。
 - `spatial-watermark` 是私有依赖：不 vendor、不 pack、不复制其源码或二进制到仓库，不提交 `node_modules` 或由该库产生的独立二进制。若必须改依赖引用、版本、接口或构建方式，先停下征求人工意见。
@@ -449,7 +449,7 @@ src/shared/ui/
 | P02 | 静态资源/产物分离 | `dist/static` authored assets → `public/static`；`web.config` → `deploy/iis`；旧 Webpack 只做必要 copy 调整；保持 `/static/*` | 人工抽查固定 URL、JSON、reset、IIS 规则；`dist` 可被视为纯产物 |
 | P03 | 可复现依赖环境 | 统一 manifest/lock；固定 Node/npm；检查水印条目未漂移 | 人工审查 lock diff；无大版本业务依赖升级；无私有库内容入库 |
 | P04 | Vite 影子构建 | 新增 Vite 配置但不切默认；显式主题 manifest；保留 Webpack | 人工比较文件清单、入口、主题编号、reset/IIS 约定；旧构建可回退 |
-| P05 | 默认构建切换 | 默认命令转 Vite；Webpack 保留一个阶段作为回滚 | 人工确认开发/发布流程；Node server 若需运行，严格走 GPT-5.4 subagent |
+| P05 | Vite 唯一构建切换 | 默认开发/发布命令转 Vite；正式产物写入 `dist`；删除仓库自有 Webpack 配置、脚本和直接依赖，第三方传递依赖除外；回滚通过 Git 恢复 P04 | 人工确认开发/发布流程、固定 URL 和部署产物；Node server 若需运行，使用可用 subagent 并记录无法锁定具体模型 |
 | P06 | 目标源码边界 | 建 `src/app/pages/features/entities/shared/integrations`；写明 owner/依赖规则；只把 `Main.tsx` 和最小 bootstrap/providers 机械迁入新目录 | 新旧代码可共存；入口行为不变；其余文件按 5.1 的归属阶段迁移 |
 | P07 | `Utility.tsx` 拆分与解环 | 先纯函数/平台，再领域 service；保留 facade；去掉 Utility→Component/Store 反向依赖 | 三个已确认环均从源码关系上解除；旧调用行为未主动改变 |
 | P08 | TypeScript 过渡基线 | 先升 TS 5.9 兼容档；现代 target/moduleResolution/JSX；新旧 tsconfig 分区 | 新 `src` 使用现代语法；冻结 UBB 走兼容配置；不在此阶段开全仓 strict |
@@ -465,7 +465,7 @@ src/shared/ui/
 | P18 | 消息服务端状态 | message list/unread/read/send；保留 `messageCount` storage 合同但不挂载当前未启用的控制器；继续不启用 SignalR | HTTP 消息路径人工核对；无实时连接，也不新增原运行时不存在的跨标签页行为 |
 | P19 | 写操作与管理状态 | 发帖、回复、编辑、上传、签到、moderation 的 mutation 边界 | 不修改 UBB 引擎；请求/跳转/草稿/错误行为逐项审核 |
 | P20 | SCSS 与主题体系 | tokens、显式 theme manifest、`@use`、按 feature 拆分、去重 | 29 个主题映射保留；人工视觉路径审核；无自动渲染 |
-| P21 | 遗留代码与依赖清理 | 移除 facade、旧目录、Webpack 回滚链、确认无用的 SignalR/polyfill/dependency | 每项有无引用证据和人工批准；水印、UBB 冻结边界不动 |
+| P21 | 遗留代码与依赖清理 | 移除 facade、旧目录，确认无用的 SignalR/polyfill/dependency | 每项有无引用证据和人工批准；水印、UBB 冻结边界不动 |
 | P22 | React 最终受支持版本 | 在组件/UI 迁移完成后评估并进入当前受支持 React 19 | 只处理 runtime 差异；人工路径确认 |
 | P23 | TypeScript 最终严格化 | 评估 TS 6；strict 按目录收口；冻结岛保留显式兼容项目 | 新主体 strict；所有例外有路径、原因和后续计划 |
 | P24+ | 旧缺陷逐项修复 | 每个缺陷单独一个微阶段，不批量修 | 每项都有旧行为、新行为、影响面和独立人工批准 |

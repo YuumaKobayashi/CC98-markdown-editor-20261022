@@ -16,6 +16,14 @@ npm ci
 npm run dev
 ```
 
+正式构建：
+
+```
+npm run build
+```
+
+开发服务器和正式构建均由 Vite 提供；正式部署产物生成到 `dist/`。
+
 ### Notes
 
 - 本分支固定使用 `Node 20.20.0` 和 `npm 10.8.2`；Node 版本同时记录在 `.nvmrc`，npm 版本同时记录在 `packageManager`/`engines`；
@@ -41,7 +49,7 @@ npm run dev
 
 ### ./dist
 
-可删除、可由 Webpack 重新生成且不提交到 Git 的构建产物，包括复制后的公开资源、IIS 配置、脚本、样式、index 和 reset 页面。
+可删除、可由 `npm run build` 通过 Vite 重新生成且不提交到 Git 的构建产物，包括复制后的公开资源、IIS 配置、脚本、样式、index 和 reset 页面。
 
 ### ./Actions
 
@@ -106,7 +114,6 @@ react-redux 的异步 action（用户中心）
 - /Themes 网站主题
 - /Ubb Ubb 解析引擎
 - /Utility 函数集
-- /vscodeConfig vscode 开发配置
 - /ActionTypes.tsx Redux 的 Action 类型
 - /Main.tsx 程序入口
 - /adddna.scss zza 的样式表
@@ -116,5 +123,5 @@ react-redux 的异步 action（用户中心）
 - /UbbEditor.scss Ubb 编辑器样式表
 - /UserCenter.scss 用户中心样式表
 - /Utility.tsx 函数集
-- /webpack.config.debug.ts debug 模式使用的 webpack 配置
-- /webpack.config.release.ts release 模式使用的 webpack 配置
+- /vite.config.mjs Vite 开发服务器与正式构建配置
+- /scripts/build-vite.mjs 正式构建及部署依赖复制入口
