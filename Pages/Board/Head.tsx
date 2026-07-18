@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { IBoard } from "@cc98/api";
 import { Button } from "antd";
 import { AdsComponent } from "../../Components/MainPage";
-import BigPaper from "./Announcement";
+import { BoardAnnouncement } from "@pages/board";
 
 interface Props {
   data: IBoard;
@@ -54,7 +54,11 @@ export default class extends React.Component<Props, State> {
       <div className="board-head-body">
         <Category data={data} />
 
-        <BigPaper key={page} data={data} isFirstPage={page === "1"} />
+        <BoardAnnouncement
+          key={page}
+          data={data}
+          isFirstPage={page === "1"}
+        />
 
         <div className="board-head-bar">
           {isLogOn && isVerified && !isLocked ? (

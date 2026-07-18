@@ -4,7 +4,7 @@ import { MessageMessage } from "./MessageMessage";
 import { MessageResponse } from "./MessageResponse";
 import { MessageAttme } from "./MessageAttme";
 import { MessageSystem } from "./MessageSystem";
-import { MessageSetting } from "./MessageSetting";
+import { MessageSetting } from "@features/message";
 import * as Utility from "../../Utility";
 import DocumentTitle from "../DocumentTitle";
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";

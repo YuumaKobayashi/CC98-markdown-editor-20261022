@@ -17,7 +17,7 @@ import { NotFoundTopic, UnauthorizedTopic, ServerError } from '../Status';
 import { TopicInfo } from './Topic-TopicInfo';
 import { NoticeMessage } from '../NoticeMessage';
 import DocumentTitle from '../DocumentTitle';
-import { NoticeSetting } from '../Message/MessageSetting';
+import { NoticeSetting } from '@features/message';
 const initQuoteContext = {
     content: "",
     userName: "",

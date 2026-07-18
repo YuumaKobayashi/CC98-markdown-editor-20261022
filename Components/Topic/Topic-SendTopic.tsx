@@ -18,7 +18,7 @@ import ReactMde, {
 import * as Showdown from "showdown";
 import CustomCommand from "./topic-react-mde/ImageUploaderCommand";
 import { RightTagHandler } from "../../Ubb/RightTagHandler";
-import IPTable from "./Topic-IPData";
+import { TopicIPData } from "@features/moderation";
 import { Util } from "bizcharts";
 var xssFilter = require("showdown-xss-filter");
 
@@ -1048,7 +1048,10 @@ ${newProps.content.content}[/quote]
           />
         )}
         {this.state.IPData.length !== 0 && (
-          <IPTable IPData={this.state.IPData} changeStatus={this.closeIP} />
+          <TopicIPData
+            IPData={this.state.IPData}
+            changeStatus={this.closeIP}
+          />
         )}
 
         {/**错误提示 */}

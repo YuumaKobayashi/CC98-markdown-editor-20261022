@@ -4,7 +4,7 @@
 import * as React from 'react';
 import { FocusBoardArea } from './FocusBoardArea';
 import { FocusUserArea } from './FocusUserArea';
-import { FocusFavoriteArea } from './FocusFavoriteArea';
+import { FocusFavoriteArea } from '@pages/focus';
 import * as Utility from '../../Utility';
 import { Link, BrowserRouter as Router, Route } from 'react-router-dom';
 import DocumentTitle from '../DocumentTitle';
