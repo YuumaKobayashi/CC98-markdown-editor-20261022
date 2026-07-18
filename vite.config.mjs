@@ -10,10 +10,42 @@ const require = createRequire(import.meta.url);
 const { themes, themeEntries } = require("./build/theme-manifest.cjs");
 const { createThemeNames, renderTemplate } = require("./build/template-contract.cjs");
 const root = path.dirname(fileURLToPath(import.meta.url));
+const modernSourcePrefix = normalizeFsPath(path.join(root, "src")) + "/";
 const browserProcessDefines = {
   // vfile@3 expects the browser process shim that Webpack supplied implicitly.
   "process.cwd": "(() => '/')",
 };
+
+function normalizeFsPath(fileName) {
+  return fileName
+    .replace(/\\/g, "/")
+    .replace(/^\/([A-Za-z]:\/)/, "$1")
+    .toLowerCase();
+}
+
+function loadTypeScriptCompilerOptions(configName) {
+  const configFile = path.join(root, configName);
+  const { config, error } = ts.readConfigFile(configFile, ts.sys.readFile);
+  const parsed = error
+    ? { errors: [error] }
+    : ts.parseJsonConfigFileContent(config, ts.sys, root, undefined, configFile);
+  if (parsed.errors.length > 0) {
+    throw new Error(
+      ts.formatDiagnostics(parsed.errors, {
+        getCanonicalFileName: (fileName) => fileName,
+        getCurrentDirectory: () => root,
+        getNewLine: () => "\n",
+      })
+    );
+  }
+
+  return {
+    ...parsed.options,
+    noEmit: false,
+    noEmitOnError: false,
+    sourceMap: false,
+  };
+}
 
 const devStaticRewrites = [
   ["/static/scripts/lib/jquery/", "node_modules/jquery/dist/"],
@@ -67,9 +99,12 @@ function convertStaticRequires(code) {
   return `${importStatements.join("\n")}\n${rewritten}`;
 }
 
-function legacyTypeScriptPlugin({ convertRequires }) {
+function transitionalTypeScriptPlugin({ convertRequires }) {
+  const modernCompilerOptions = loadTypeScriptCompilerOptions("tsconfig.json");
+  const legacyCompilerOptions = loadTypeScriptCompilerOptions("tsconfig.legacy.json");
+
   return {
-    name: "cc98-legacy-typescript",
+    name: "cc98-transitional-typescript",
     enforce: "pre",
     transform(code, id) {
       const fileName = id.split("?", 1)[0];
@@ -78,14 +113,9 @@ function legacyTypeScriptPlugin({ convertRequires }) {
       }
       const result = ts.transpileModule(code, {
         fileName,
-        compilerOptions: {
-          allowSyntheticDefaultImports: true,
-          importHelpers: true,
-          jsx: ts.JsxEmit.React,
-          module: ts.ModuleKind.ESNext,
-          sourceMap: false,
-          target: ts.ScriptTarget.ES2015,
-        },
+        compilerOptions: normalizeFsPath(fileName).startsWith(modernSourcePrefix)
+          ? modernCompilerOptions
+          : legacyCompilerOptions,
         reportDiagnostics: false,
       });
       return {
@@ -226,7 +256,7 @@ export default defineConfig(({ command }) => ({
   root,
   publicDir: "public",
   plugins: [
-    legacyTypeScriptPlugin({ convertRequires: command === "serve" }),
+    transitionalTypeScriptPlugin({ convertRequires: command === "serve" }),
     jqueryGlobalPlugin(),
     forumHtmlPlugin(),
   ],

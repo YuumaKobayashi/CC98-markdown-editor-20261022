@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "module": "ESNext",
+    "strict": false,
+    "skipLibCheck": true,
+    "noEmitOnError": true,
+    "removeComments": false,
+    "sourceMap": false,
+    "allowSyntheticDefaultImports": true,
+    "importHelpers": true,
+    "paths": {
+      "@app/*": ["src/app/*"],
+      "@pages/*": ["src/pages/*"],
+      "@features/*": ["src/features/*"],
+      "@entities/*": ["src/entities/*"],
+      "@shared/*": ["src/shared/*"],
+      "@integrations/*": ["src/integrations/*"],
+      "@legacy/*": ["*"]
+    }
+  }
+}

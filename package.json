@@ -9,7 +9,10 @@
   },
   "scripts": {
     "dev": "vite --config vite.config.mjs",
-    "build": "node scripts/build-vite.mjs"
+    "build": "node scripts/build-vite.mjs",
+    "typecheck": "npm run typecheck:modern && npm run typecheck:legacy",
+    "typecheck:modern": "tsc --noEmit -p tsconfig.json",
+    "typecheck:legacy": "tsc --noEmit -p tsconfig.legacy.json"
   },
   "dependencies": {
     "@aspnet/signalr": "^1.0.3",
@@ -82,7 +85,7 @@
     "path-browserify": "1.0.1",
     "sass-embedded": "1.100.0",
     "tslib": "^2.4.0",
-    "typescript": "^4.8.4",
+    "typescript": "~5.9.3",
     "vite": "8.1.4"
   }
 }

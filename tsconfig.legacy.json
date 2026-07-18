@@ -1,0 +1,39 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "target": "ES2015",
+    "moduleResolution": "Node10",
+    "jsx": "react",
+    "lib": ["DOM", "ES2015"]
+  },
+  "include": [
+    "*.ts",
+    "*.tsx",
+    "@types/**/*.ts",
+    "Actions/**/*.ts",
+    "Actions/**/*.tsx",
+    "AsyncActions/**/*.ts",
+    "AsyncActions/**/*.tsx",
+    "Components/**/*.ts",
+    "Components/**/*.tsx",
+    "config/**/*.ts",
+    "config/**/*.tsx",
+    "IndexedDB/**/*.ts",
+    "IndexedDB/**/*.tsx",
+    "Match/**/*.ts",
+    "Match/**/*.tsx",
+    "Pages/**/*.ts",
+    "Pages/**/*.tsx",
+    "Props/**/*.ts",
+    "Props/**/*.tsx",
+    "Reducers/**/*.ts",
+    "Reducers/**/*.tsx",
+    "States/**/*.ts",
+    "States/**/*.tsx",
+    "Ubb/**/*.ts",
+    "Ubb/**/*.tsx",
+    "Utility/**/*.ts",
+    "Utility/**/*.tsx"
+  ],
+  "exclude": ["src", "node_modules", "dist"]
+}
