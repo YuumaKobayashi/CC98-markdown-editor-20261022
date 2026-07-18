@@ -220,11 +220,14 @@ app → pages → features → entities → shared
 
 - 下层不得反向 import 上层。
 - `shared` 不得 import Store、Router 或业务组件。
+- `integrations` 只依赖第三方包和 `shared`，不得反向依赖 app/page/feature/entity；上层通过窄 adapter 使用第三方能力。
 - `entities` 不直接操作页面跳转或全局错误 UI。
 - 每个 feature/entity 只暴露窄 `index.ts`，禁止重新创建全仓 giant barrel。
 - 旧 `Utility.tsx` 在迁移期只做兼容 facade：旧代码可以继续 import facade，新代码不得从 facade 取能力。
 - forum/admin 暂不拆成两个独立部署应用；Site Manage 仍是主论坛 SPA 内的路由边界，除非以后出现独立发布或安全要求。
 - 主论坛保持持久壳层：Header/Footer/Provider/Store 不随首页、版面、主题帖之间的普通导航重建；特殊 `/reset` 页面继续独立。
+
+P06 同时建立 `@app/*`、`@pages/*`、`@features/*`、`@entities/*`、`@shared/*`、`@integrations/*` 路径别名。`@legacy/*` 临时指向仓库根目录，只用于已迁入模块连接尚未归位的旧实现，不作为新业务代码的默认依赖入口。
 
 ### 5.1 目录迁移具体发生在哪些阶段
 
