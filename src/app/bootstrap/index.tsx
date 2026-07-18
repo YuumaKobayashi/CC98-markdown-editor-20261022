@@ -7,11 +7,12 @@ import "blueimp-canvas-to-blob";
 import { initWatermark } from "spatial-watermark";
 
 import { createAppRoot } from "@app/providers/create-app-root";
-import { Constants } from "@legacy/Components/Constant";
-import { IndexedDB } from "@legacy/IndexedDB/IndexedDB";
-import { shouldUseIndexedDb } from "@legacy/config";
+import { registerLegacyUtilityEffects } from "@app/legacy/register-utility-effects";
+import { Constants } from "@shared/config/runtime-config";
+import { IndexedDB } from "@shared/storage/indexed-db";
+import { shouldUseIndexedDb } from "@shared/config/platform";
+import { checkThemeToChange } from "@shared/theme/runtime";
 import moment from "moment";
-import { checkThemeToChange } from "@legacy/Utility";
 moment.locale("zh-cn");
 
 /**
@@ -47,6 +48,7 @@ export function addTimerCallback(callback: () => void) {
  * 项目初始化代码
  */
 async function initialize() {
+  registerLegacyUtilityEffects();
   await Constants.loadConfig();
   if (shouldUseIndexedDb) await IndexedDB.start();
 

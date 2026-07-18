@@ -3,10 +3,12 @@
 // https://github.com/Microsoft/TypeScript/wiki/JSX
 
 import * as ActionTypes from "../ActionTypes";
-import * as Utility from "../Utility";
 import * as Appstate from "../States/AppState";
 import { RootAction } from "../Store";
-import { addUserInfo } from "../IndexedDB/UserStorage";
+import { addUserInfo } from "@entities/user/storage/user-cache";
+import { getMyInfo } from "@entities/user/storage/current-user";
+import { isLogOn } from "@features/auth/api/session";
+import { getLocalStorage, setLocalStorage } from "@shared/storage/web-storage";
 
 /**
  * 用户中心用Store
@@ -15,7 +17,7 @@ export class UserInfoStore {
   /**
    * 表示用户是否登录
    */
-  isLogOn: boolean = Utility.isLogOn();
+  isLogOn: boolean = isLogOn();
   /**
    * 当前组件是否正在加载
    */
@@ -24,7 +26,7 @@ export class UserInfoStore {
    * 表示当前登录用户的用户信息
    */
   currentUserInfo: Appstate.UserInfo =
-    Utility.getMyInfo() || new Appstate.UserInfo();
+    getMyInfo() || new Appstate.UserInfo();
   /**
    * 表示当前访问的用户页的页面状态
    */
@@ -110,7 +112,7 @@ export class UserInfoStore {
   /**
    * 是否显示用户信息
    */
-  showCardUser: boolean = Utility.getLocalStorage("showCardUser") === "false" ? false : true;;
+  showCardUser: boolean = getLocalStorage("showCardUser") === "false" ? false : true;;
 
 
   constructor() {
@@ -155,7 +157,7 @@ export default (
     case ActionTypes.USER_LOG_OFF:
       return { ...state, isLogOn: false };
     case ActionTypes.CHANGE_USERINFO:
-      Utility.setLocalStorage("userInfo", action.payload.newInfo, 2592000);
+      setLocalStorage("userInfo", action.payload.newInfo, 2592000);
       addUserInfo(action.payload.newInfo);
       return { ...state, currentUserInfo: action.payload.newInfo };
     case ActionTypes.CHANGE_VISITING_USER:
