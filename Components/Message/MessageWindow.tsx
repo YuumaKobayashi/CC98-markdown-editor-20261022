@@ -4,8 +4,7 @@
 import * as React from "react";
 import { MessageProps } from "../../Props/MessageProps";
 import { MessageWindowState } from "../../States/MessageWindowState";
-import { MessageSender } from "./MessageSender";
-import { MessageReceiver } from "./MessageReceiver";
+import { MessageReceiver, MessageSender } from "@entities/message";
 import { MessageWindowProps } from "../../Props/MessageWindowProps";
 import * as Utility from "../../Utility";
 import DocumentTitle from "../DocumentTitle";

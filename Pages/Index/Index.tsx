@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { IIndex, IHotTopic, IMainpageAutoContent, IMainpageEditableContent } from '@cc98/api';
-import { Announcement } from './Announcement'
+import { Announcement } from '@pages/home';
 
 import * as Utility from '../../Utility';
 

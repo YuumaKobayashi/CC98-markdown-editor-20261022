@@ -11,6 +11,9 @@ import Judge from "./Topic-Judge-v3";
 import ReplierSignature from "./Topic-ReplierSignature";
 import Spin from "antd/es/spin";
 import moment from "moment";
+import { FloorSize } from "@entities/post";
+
+export { FloorSize } from "@entities/post";
 interface Props {
   topicId;
   page;
@@ -345,33 +348,6 @@ export class Reply extends React.Component<
         </div>
       );
     } else return <Spin style={{ marginTop: "4rem" }} size="large" />;
-  }
-}
-
-//楼层显示的控件
-export class FloorSize extends React.Component<{
-  isHot: boolean;
-  floor: number;
-}> {
-  render() {
-    if (!this.props.isHot) {
-      if (this.props.floor > 9999)
-        return <div className="reply-floor-small">{this.props.floor}</div>;
-      else if (this.props.floor < 0) {
-        return <div className="reply-floor-lz">楼主</div>;
-      } else {
-        return <div className="reply-floor">{this.props.floor}</div>;
-      }
-    } else {
-      return (
-        <div style={{ backgroundColor: "#FF4040" }} className="reply-floor">
-          <img
-            style={{ width: "20px", height: "30px" }}
-            src="/static/images/hot.png"
-          />
-        </div>
-      );
-    }
   }
 }
 

@@ -2,36 +2,31 @@
 import { AppState } from "../States/AppState";
 import $ from "jquery";
 import * as Utility from "../Utility";
-import { UbbContainer } from "./UbbContainer";
 import { Link } from "react-router-dom";
 import DocumentTitle from "./DocumentTitle";
-import { CountDown } from "./CountDown";
-/**
- * 全站公告组件
- **/
-export class AnnouncementComponent extends React.Component<{ data }, {}> {
-  render() {
-    const data = this.props.data;
-    if (data == "") return <div></div>;
-    else
-      return (
-        <div className="announcement">
-          <div className="mainPageTitle1">
-            <div className="mainPageTitleRow" style={{ width: "100%" }}>
-              <i className="fa fa-volume-up"></i>
-              <div style={{ flexGrow: 1 }} className="mainPageTitleText">
-                全站公告
-              </div>
-              {/*<CountDown endDate={new Date('05/26/2018 05:30 PM')} />*/}
-            </div>
-          </div>
-          <div className="announcementContent">
-            <UbbContainer code={data} />
-          </div>
-        </div>
-      );
-  }
-}
+import {
+  AnnouncementComponent,
+  MainPageColumn,
+  MainPageTopicComponent,
+  MainPageTopicMoreProps,
+  MainPageTopicState,
+  QRCode,
+  RecommendedFunctionComponent,
+  SchoolSuggestionBox,
+  SpecialOfferComponent,
+} from "@pages/home";
+
+export {
+  AnnouncementComponent,
+  MainPageColumn,
+  MainPageTopicComponent,
+  MainPageTopicMoreProps,
+  MainPageTopicState,
+  QRCode,
+  RecommendedFunctionComponent,
+  SchoolSuggestionBox,
+  SpecialOfferComponent,
+} from "@pages/home";
 
 /**
  * 推荐阅读组件
@@ -208,203 +203,6 @@ export class HotTopicComponent extends React.Component<
         </div>
         <div className="mainPageListContent1">
           {data.map(this.convertMainPageTopic)}
-        </div>
-      </div>
-    );
-  }
-}
-
-/**
- * 首页话题类
- * 用于首页左侧下方的几栏，该类的对象（一条主题)需要标题和id
- **/
-export class MainPageTopicState {
-  //属性
-  title: string;
-  id: number;
-
-  //构造方法
-  constructor(title, id) {
-    this.title = title;
-    this.id = id;
-  }
-}
-
-/**
- * 首页话题更多参数
- * 拥有名称和链接两个属性
- */
-export class MainPageTopicMoreProps {
-  name: string;
-  url: string;
-
-  constructor(name, url) {
-    this.name = name;
-    this.url = url;
-  }
-}
-
-/**
- * 首页话题组件
- * 需要列表名，fetchUrl和样式三个参数
- **/
-export class MainPageTopicComponent extends React.Component<
-  {
-    data;
-    name: string;
-    fetchUrl: string;
-    style: string;
-    mores: MainPageTopicMoreProps[];
-  },
-  {}
-> {
-  convertMainPageTopic(item: MainPageTopicState, index: number) {
-    const topicUrl = `/topic/${item.id}/1`;
-    return (
-      <div key={item.id} className="mainPageListRow">
-        <div className="mainPageListTitle">
-          <a href={topicUrl} target="_blank">
-            {item.title.trim() ? item.title : <span style={{ display: 'inline-block', width: '5rem' }}></span>}
-          </a>
-        </div>
-      </div>
-    );
-  }
-
-  render() {
-    let moresHTML = this.props.mores.map((item, index) => {
-      return (
-        <div key={index} className="mainPageTitleText">
-          <a href={item.url} target="_blank">
-            {item.name}
-          </a>
-        </div>
-      );
-    });
-
-    const style: string = this.props.style;
-
-    if (style === "black") {
-      return (
-        <div className="mainPageList">
-          <div className="mainPageTitle2">
-            <div className="mainPageTitleRow">
-              <i className="fa fa-volume-up"></i>
-              <div className="mainPageTitleText">{this.props.name}</div>
-            </div>
-            <div className="mainPageTitleRow">{moresHTML}</div>
-          </div>
-          <div className="mainPageListContent2">
-            {this.props.data.map(this.convertMainPageTopic)}
-          </div>
-        </div>
-      );
-    } else if (style === "blue") {
-      return (
-        <div className="mainPageList">
-          <div className="mainPageTitle1">
-            <div className="mainPageTitleRow">
-              <i className="fa fa-volume-up"></i>
-              <div className="mainPageTitleText">{this.props.name}</div>
-            </div>
-            <div className="mainPageTitleRow">{moresHTML}</div>
-          </div>
-          <div className="mainPageListContent1">
-            {this.props.data.map(this.convertMainPageTopic)}
-          </div>
-        </div>
-      );
-    }
-  }
-}
-
-/**
- * 首页栏目类
- * 用于首页的栏目，包括推荐阅读、推荐功能以及校园新闻。
- * 该类的成员对象包括：图片url（校园新闻不需要），标题，url，以及摘要（仅推荐阅读需要）
- * 这部分栏目均设置在新窗口打开链接
- **/
-export class MainPageColumn {
-  //属性
-  imageUrl: string;
-  title: string;
-  url: string;
-  content: string;
-
-  //构造方法
-  constructor(imageUrl, title, url, content) {
-    this.imageUrl = imageUrl;
-    this.title = title;
-    this.url = url;
-    this.content = content;
-  }
-}
-
-/**
- * 福利优惠组件
- */
-export class SpecialOfferComponent extends React.Component<{ data }, {}> {
-  convertSpecialOffer(item: MainPageColumn) {
-    return (
-      <div className="specialOfferRow">
-        <div className="specialOfferTitle">
-          <a href={item.url} target="_blank">
-            • {item.title}
-          </a>
-        </div>
-      </div>
-    );
-  }
-
-  render() {
-    return this.props.data && this.props.data.length > 0 ? (
-      <div className="specialOffer">
-        <div className="mainPageTitle2">
-          <div className="mainPageTitleRow">
-            <i className="fa fa-volume-up"></i>
-            <div className="mainPageTitleText">福利优惠</div>
-          </div>
-        </div>
-        <div className="specialOfferContent">
-          {this.props.data.map(this.convertSpecialOffer)}
-        </div>
-      </div>
-    ) : null;
-  }
-}
-
-/**
- * 推荐功能组件
- */
-export class RecommendedFunctionComponent extends React.Component<
-  { data },
-  {}
-> {
-  convertRecommendedFunction(item: MainPageColumn, index: number) {
-    return (
-      <div key={index} className="recommendedFunctionRow">
-        <div className="recommendedFunctionImage">
-          <img src={item.imageUrl}></img>
-        </div>
-        <div className="recommendedFunctionTitle">
-          <a href={item.url} target="_blank">
-            {item.title}
-          </a>
-        </div>
-      </div>
-    );
-  }
-  render() {
-    return (
-      <div className="recommendedFunction">
-        <div className="mainPageTitle1">
-          <div className="mainPageTitleRow">
-            <i className="fa fa-volume-up"></i>
-            <div className="mainPageTitleText">推荐功能</div>
-          </div>
-        </div>
-        <div className="recommendedFunctionContent">
-          {this.props.data.map(this.convertRecommendedFunction)}
         </div>
       </div>
     );
@@ -686,53 +484,6 @@ export class MainPageCountProps {
     this.onlineUserCount = onlineUserCount;
     this.userCount = userCount;
     this.lastUserName = lastUserName;
-  }
-}
-
-export class SchoolSuggestionBox extends React.Component<{}, {}> {
-  render() {
-    return (<div
-      style={{ position: "relative", width: "18.75rem", height: "6.25rem", marginBottom: "1rem" }}
-    >
-      <div>
-        <a href="https://zju.aliwork.com/s/mailto?corpid=ding2c6bcab1e41b0242&ddtab=true" target="_blank">
-          <img
-            src="/static/images/xyyjx.jpg"
-            style={{ width: "18.75rem", height: "6.25rem" }}
-          />
-        </a>
-      </div>
-    </div>);
-  }
-}
-
-/**
- * 小程序二维码
- */
-export class QRCode extends React.Component<
-  { title: string; src: string },
-  {}
-> {
-  render() {
-    return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          marginBottom: "1rem",
-        }}
-      >
-        <div className="mainPageTitle2">
-          <div className="mainPageTitleRow">
-            <i className="fa fa-volume-up"></i>
-            <div className="mainPageTitleText">{this.props.title}</div>
-          </div>
-        </div>
-        <div style={{ marginTop: "1rem" }}>
-          <img style={{ width: "100%" }} src={this.props.src}></img>
-        </div>
-      </div>
-    );
   }
 }
 

@@ -3,8 +3,7 @@
 // https://github.com/Microsoft/TypeScript/wiki/JSX
 import * as React from 'react';
 import { MessageResponseState } from '../../States/MessageResponseState';
-import { MessageResponseProps } from '../../Props/MessageResponseProps';
-import { MessageAttmebox } from './MessageAttmebox';
+import { MessageAttmebox, MessageResponseProps } from '@entities/message';
 import * as Utility from '../../Utility';
 import { Pager } from '../Pager';
 import DocumentTitle from '../DocumentTitle';
