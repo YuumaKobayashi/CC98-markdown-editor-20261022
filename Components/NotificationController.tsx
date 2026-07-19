@@ -7,7 +7,7 @@ import { MessageInfo } from '../Reducers/Message';
 import { refreshCurrentMessageCount } from '../AsyncActions/Message';
 import { changeMessageCount } from '../Actions/Message';
 import { BlinkTitle } from '../Utility/blinkTitle';
-import { history } from '../Store';
+import { navigate } from '@app/router/navigation';
 
 type props = {
     isLogOn: boolean, 
@@ -82,7 +82,7 @@ class NotificationController extends React.PureComponent<props> {
                 icon: '/static/98icon.ico',
                 onClick: () => {
                     window.focus();
-                    history.push('/message/response');
+                    navigate('/message/response');
                 }
             } as any);
         }

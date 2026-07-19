@@ -1,4 +1,4 @@
-export { Actions, history, store, default } from "./store";
+export { Actions, store, default } from "./store";
 export type { AppDispatch, AppStore } from "./store";
 export type { RootAction, RootState, RootThunkAction } from "./legacy-types";
 export {

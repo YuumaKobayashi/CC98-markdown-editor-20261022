@@ -1,6 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit";
-import createHistory from "history/createBrowserHistory";
-import { routerMiddleware, routerReducer as router } from "react-router-redux";
 import { combineReducers } from "redux";
 
 import * as ErrorActions from "@legacy/Actions/Error";
@@ -21,13 +19,9 @@ export const Actions = {
 
 const rootReducer = combineReducers<RootState>({
   error,
-  router,
   userInfo,
   message,
 });
-
-/** Keep one browser-history instance for Router and legacy navigation effects. */
-export const history = createHistory();
 
 export const store = configureStore({
   reducer: rootReducer,
@@ -40,8 +34,7 @@ export const store = configureStore({
       // will establish serializable state contracts incrementally.
       serializableCheck: false,
     })
-      .prepend(listenerMiddleware.middleware)
-      .concat(routerMiddleware(history)),
+      .prepend(listenerMiddleware.middleware),
   devTools: true,
 });
 

@@ -1,5 +1,3 @@
-import type { RouterState } from "react-router-redux";
-
 import type { ErrorStore } from "@legacy/Reducers/Error";
 import type { MessageInfo } from "@legacy/Reducers/Message";
 import type { UserInfoStore } from "@legacy/Reducers/UserInfo";
@@ -11,12 +9,11 @@ type LegacyActionCreators =
 
 type LegacyThunkActionCreators = typeof import("@legacy/AsyncActions");
 
-/** The four reducer branches that are live before the domain migrations. */
+/** The three reducer branches that remain live after Router owns URL state. */
 export interface RootState {
   error: ErrorStore;
   userInfo: UserInfoStore;
   message: MessageInfo;
-  router: RouterState;
 }
 
 /** Compatibility union for existing reducer and thunk annotations. */
