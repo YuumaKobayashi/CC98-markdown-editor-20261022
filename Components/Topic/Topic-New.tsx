@@ -11,13 +11,13 @@ import {
   withRouter,
 } from "react-router-dom";
 import DocumentTitle from "../DocumentTitle";
-import Spin from "antd/es/spin";
+import { Spin } from "antd";
 import { MyInfo } from "../../States/AppState";
 import { CardBoard } from "../Focus/CardBoard";
 import { CardRecommendTopic } from "../Focus/CardRecommendTopic";
 import store, { Actions, RootState } from "../../Store";
 import * as ErrorActions from "../../Actions/Error";
-import { Icon } from "antd";
+import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import { changeUserInfoVisible } from "../../Actions/UserCenter";
 import { connect } from "react-redux";
 //import pDebounce from "p-debounce";
@@ -329,9 +329,9 @@ class AllNewTopic extends React.Component<{ showCardUser: boolean, changeUserInf
                     </a>
                     {/* </span> */}
                     {this.props.showCardUser ? (
-                      <Icon type="eye-invisible" theme="outlined" onClick={() => { debugger; this.props.changeUserInfoVisible(false); Utility.setLocalStorage("showCardUser", false, 0) }} />
+                      <EyeInvisibleOutlined onClick={() => { debugger; this.props.changeUserInfoVisible(false); Utility.setLocalStorage("showCardUser", false, 0) }} />
                     ) : (
-                      <Icon type="eye" theme="outlined" onClick={() => { debugger; this.props.changeUserInfoVisible(true); Utility.setLocalStorage("showCardUser", true, 0) }} />
+                      <EyeOutlined onClick={() => { debugger; this.props.changeUserInfoVisible(true); Utility.setLocalStorage("showCardUser", true, 0) }} />
                     )}
                   </div>
                   <div className="card-user-stats">

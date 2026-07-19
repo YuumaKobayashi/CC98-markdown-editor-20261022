@@ -9,7 +9,7 @@ import { Award } from "./Topic-Award";
 import PostManagement from "./Topic-PostManagement-v2";
 import Judge from "./Topic-Judge-v3";
 import ReplierSignature from "./Topic-ReplierSignature";
-import Spin from "antd/es/spin";
+import { Spin } from "antd";
 import moment from "moment";
 import { FloorSize } from "@entities/post";
 
