@@ -1,0 +1,53 @@
+# P15 React class 清单
+
+## 基线与口径
+
+- 基线：`a38580e2`；
+- 使用 TypeScript AST 统计实际 class declaration，避免把注释中的旧代码算入；
+- 扫描 `Components/**` 与 `src/**`；
+- 排除冻结的 `Ubb/**`、`Components/UbbEditor/**`、`Components/UbbContainer.tsx`；
+- `ErrorBoundary` 是唯一允许最终保留的 React class；同文件的 `ErrorEmitter` 仍属于 P15 目标。
+
+## 基线分布
+
+| 位置 | React class 声明数 |
+|---|---:|
+| `Components/` 根目录 | 35 |
+| `Components/Board` | 19 |
+| `Components/Common` | 1 |
+| `Components/Focus` | 11 |
+| `Components/Message` | 8 |
+| `Components/Search` | 5 |
+| `Components/SiteManage` | 3 |
+| `Components/Topic` | 30 |
+| `Components/UserCenter` | 39 |
+| 合计 | 151 |
+
+P15 目标为其中 150 个声明；首批迁移 `MyTopics`、`MyPosts` 两个声明。首批完成后预期剩余 148 个目标声明及一个允许保留的 `ErrorBoundary`。
+
+## 首批清单
+
+| 原符号 | 风险 | 新 owner | 状态 |
+|---|---|---|---|
+| `Components/UserCenter/MyTopics.tsx` / `MyTopics` | Redux + Router + mount/update 取数 | `src/pages/user-center/my-topics` | 已实现，待人工验收 |
+| `Components/UserCenter/MyPosts.tsx` / `MyPosts` | Redux + Router + mount/update 取数 + 导航 | `src/pages/user-center/my-posts` | 已实现，待人工验收 |
+
+后续 class 在各自小批开始前补充逐符号 owner 与风险，不因本批授权自动迁移。
+
+## 无 Redux 简单组件组
+
+| 批次 | 原符号 | 新 owner | 状态 |
+|---|---|---|---|
+| entity 展示 | `ExactActivitiesPost`、`ExactActivitiesTopic` | `entities/post`、`entities/topic` | 已实现，待人工验收 |
+| entity 展示 | `MessagePerson`、`UnreadDot` | `entities/message` | 已实现，待人工验收 |
+| entity 展示 | `ExactProfile` | `entities/user` | 已实现，待人工验收 |
+| shared/app 展示 | `NoticeMessage`、`SendTopicNoticeMessage` | `shared/ui/feedback` | 已实现，待人工验收 |
+| shared/app 展示 | `Footer`、`DocumentTitle` | `app/layouts`、`shared/ui/document-title` | 已实现，待人工验收 |
+| 页面组合 | `Focus`、`SiteManage` | `pages/focus`、`pages/site-manage` | 已实现，待人工验收 |
+| 页面组合 | `ExactActivities`、`ConfigSignature` | `pages/user-center/overview`、`features/account` | 已实现，待人工验收 |
+
+TypeScript AST 复核确认 13 个目标声明均已消失，当前剩余 136 个非冻结 React class 声明，其中 `ErrorBoundary` 是唯一允许最终保留的例外；因此仍有 135 个 P15 目标待迁。
+
+## P21 删除候选
+
+根 `Breadcrumb`、根 `Category/Test`、`MessageBar`、`FindIP`、`TopicReplyUserBar` 未发现运行时调用，本轮不为清零 class 而迁移。`CountDown` 只有 import 和注释 JSX，需在 P21 重新做引用/构建证明后决定删除。
