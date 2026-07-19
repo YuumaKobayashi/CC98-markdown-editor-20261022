@@ -467,7 +467,8 @@ src/shared/ui/
 | P11 | 函数组件 B | 在旧 runtime 上迁简单 local state 与可清晰映射 lifecycle 的组件，同时归位 | state、effect、cleanup、事件顺序和新 owner 逐项审核 |
 | P12 | UI/React peer 阻塞收口 | 建 `shared/ui`；分步升级 AntD；隔离 BizCharts/Lazyload/editor 等旧 peer；梳理 Bootstrap/Icon 重叠 | 代表页面/弹窗人工核对；不改冻结 UBB 源码，不靠长期 peer 忽略参数掩盖冲突 |
 | P13 | React 18.3 runtime | 只处理 React/ReactDOM runtime、root/provider 和已知兼容警告 | 人工核对启动、导航、表单和 timer 行为；不改 Router 或继续函数化 |
-| P14 | Router 与持久壳层 | 现代 Router；移除 `react-router-redux`；route lazy；Header/Footer/Store 持久 | 旧 URL/IIS deep link/前进后退/页内导航经人工核对 |
+| P13.5 | Router 去伪依赖与迁移清单 | 删除已证明未被读取的 service `router` 参数和 `this.context.router` 类型假声明；固化公开 URL、嵌套 Router、class route props 与 P14 兼容桥退出清单 | 请求参数、返回值、错误副作用和现有 Router 4 运行时不变；Message/Focus/Search/Topic 代表路径人工核对；不升级 Router、不改 Store |
+| P14 | Router 与持久壳层 | 在 P13.5 清单上迁现代单一 Router；移除 `react-router-redux`；route lazy；Header/Footer/Store 持久；临时 class route props 桥明确由 P15 删除 | 旧 URL/IIS deep link/前进后退/页内导航经人工核对；嵌套 BrowserRouter 与 Redux 路由副本均已移除 |
 | P15 | 函数组件 C | Redux/Router/复杂 lifecycle/壳层组件；高风险文件小批次并归位到 app/page/feature | `ErrorBoundary` 与 UBB 例外保留；每批独立确认 |
 | P16 | 公共读路径服务端状态 | 首页、Board、Topic read、Feed、Search 逐领域迁 RTK Query | 请求参数、分页、缓存/刷新时机和错误呈现人工核对 |
 | P17 | 用户与收藏服务端状态 | 建立完整 `CurrentUser` 聚合；迁 User、User Center、profile/theme/topicView/history/customBoards/follow/favorite；收口现有完整 `userInfo` 跨标签页兼容桥 | 跨端设置未被拆成独立本地偏好；逐字段/API 映射人工确认；`showCardUser` 服务端合同缺口先确认再处理；其他认证改动另行授权 |
