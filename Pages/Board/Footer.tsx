@@ -7,9 +7,9 @@ import {
   Spin,
   Transfer,
   Select,
-  notification,
-  Icon
+  notification
 } from "antd";
+import { CloseCircleOutlined } from "@ant-design/icons";
 import {
   multiDelete as aDelete,
   multiLock as aLock,
@@ -110,7 +110,7 @@ export default class extends React.Component<Props, State> {
         />
         <Modal
           title="小黑屋"
-          visible={this.state.visible}
+          open={this.state.visible}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
           width={isMaster ? "60rem" : "45rem"}
@@ -172,7 +172,7 @@ export default class extends React.Component<Props, State> {
         </Modal>
         <Modal
           title="版面事件"
-          visible={this.state.recordVisible}
+          open={this.state.recordVisible}
           onOk={() => this.setState({ recordVisible: false })}
           onCancel={() => this.setState({ recordVisible: false })}
           width={"60rem"}
@@ -224,7 +224,7 @@ class Manage extends React.Component<ChildProps, ChildState> {
       message: "操作错误",
       description: "请至少选择一个帖子",
       duration: 4.5,
-      icon: <Icon type="close-circle" style={{ color: "red" }} />
+      icon: <CloseCircleOutlined style={{ color: "red" }} />
     };
     notification.open(args);
   };
@@ -261,7 +261,7 @@ class Manage extends React.Component<ChildProps, ChildState> {
       <>
         <Modal
           title="批量管理"
-          visible={visible}
+          open={visible}
           onOk={() => this.props.onClose()}
           onCancel={() => this.props.onClose()}
           maskClosable={false}
@@ -295,7 +295,7 @@ class Manage extends React.Component<ChildProps, ChildState> {
         </Modal>
         <Modal
           title="批量删除"
-          visible={deleteVisible}
+          open={deleteVisible}
           onOk={() => this.multiDelete()}
           onCancel={() => this.setState({ deleteVisible: false })}
         >
@@ -317,7 +317,7 @@ class Manage extends React.Component<ChildProps, ChildState> {
         </Modal>
         <Modal
           title="批量锁沉"
-          visible={lockVisible}
+          open={lockVisible}
           onOk={() => this.multiLock()}
           onCancel={() => this.setState({ lockVisible: false })}
         >

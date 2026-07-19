@@ -1,7 +1,6 @@
 ﻿import * as React from "react";
 import * as State from "../../States/AppState";
 import * as Utility from "../../Utility";
-import ControlLabel from "react-bootstrap/es/ControlLabel";
 import $ from "jquery";
 import { UbbContainer } from "../UbbContainer";
 import { match } from "react-router";
@@ -20,12 +19,7 @@ import {
 import { AdsComponent } from "../MainPage";
 import { isLogOn } from "../../Utility";
 import moment from "moment";
-import Modal from "antd/es/modal";
-import List from "antd/es/list";
-import Button from "antd/es/button";
-import message from "antd/es/message";
-import Avatar from "antd/es/avatar";
-import Spin from "antd/es/spin";
+import { Avatar, Button, List, Modal, Spin, message } from "antd";
 
 export class RouteComponent<
   TProps,
@@ -197,7 +191,7 @@ export class BList extends RouteComponent<
         </div>
         <Modal
           title="小黑屋"
-          visible={this.state.visible}
+          open={this.state.visible}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
           width={this.state.isMaster ? "60rem" : "45rem"}
@@ -1030,7 +1024,7 @@ export class ListContent extends RouteComponent<
 
     let reasonUI = (
       <div>
-        <ControlLabel>处理理由</ControlLabel>
+        <label className="control-label">处理理由</label>
         <select
           id="opReason"
           onChange={this.changeReason.bind(this)}
@@ -1064,7 +1058,7 @@ export class ListContent extends RouteComponent<
     );
     let deleteReasonUI = (
       <div>
-        <ControlLabel>处理理由</ControlLabel>
+        <label className="control-label">处理理由</label>
         <select
           id="opReason"
           onChange={this.changeDeleteReason.bind(this)}
@@ -1099,7 +1093,7 @@ export class ListContent extends RouteComponent<
     let dayUI = (
       <div>
         {" "}
-        <ControlLabel>下沉天数</ControlLabel>
+        <label className="control-label">下沉天数</label>
         <select id="opDays" className="react-bootstrap-select">
           <option value="7">7</option>
           <option value="30">30</option>
