@@ -1,6 +1,6 @@
 # P13.5 Router 去伪依赖与迁移清单范围
 
-> 状态：P13 已人工接受并提交为 `276d0ec0`；P13.5 阶段文档已建立但尚未实施，仍须用户明确授权开始；不 push、不开始 P14
+> 状态：用户已审核并授权两笔 P13.5 本地提交；代码提交为 `a298424f`，事实清单和机械门禁已完成，等待人工验收；不 push、不开始 P14
 
 ## 唯一大事
 
@@ -12,7 +12,7 @@
 - 仅当函数体和所有内部转发均未读取 Router 时，删除对应 service 参数、内部转发参数、调用参数与 `declare context`；
 - 删除已证明无引用的旧 Router import，但不改变任何实际导航调用；
 - 记录当前顶层 `ConnectedRouter`、Message/Focus 嵌套 `BrowserRouter`、UserCenter/Board 子路由和全部公开 URL；
-- 记录 class 组件实际依赖的 `match.params`、`location` 与 `history.push/replace/go/length`，作为 P14 临时兼容桥的最大合同；
+- 记录 class 组件实际依赖的 `match.params`、`location` 与 `history.push/replace/length`，并注明 `history.go` 只存在于注释、不进入 P14 临时兼容桥合同；
 - 写明 P14 的单 Router、持久 AppShell、嵌套路由、Redux Router 清理和 P15 兼容桥退出边界；
 - 执行两套 TypeScript、正式构建、diff 检查和代表路径人工验收。
 

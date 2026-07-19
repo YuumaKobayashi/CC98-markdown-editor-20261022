@@ -1,28 +1,42 @@
-# P13.5 服务运行记录
+# P13.5 服务与机械门禁记录
 
-> 当前状态：仅建立阶段文档，未执行 typecheck、build、开发服务或浏览器检查。
+> 实施基线：`9392e6a4`。本阶段没有启动开发服务，没有创建 launcher/listener PID，也没有占用端口。
 
-## 计划机械门禁
+## TypeScript
 
-实施完成后依次执行：
+以下命令均成功：
 
 ```text
 npm run typecheck:modern
 npm run typecheck:legacy
 npm run typecheck
-npm run build
-git diff --check
 ```
 
-## 计划有界开发服务
+聚合命令再次依次执行 modern 与 legacy，两项均成功。
 
-如用户授权运行开发服务，使用仓库既有有界流程启动固定端口，记录 launcher/listener PID、代表 URL 和响应；验证后只停止已确认属于本仓库的进程树，并复查端口无监听。
+## 正式构建
 
-代表 URL 至少包括：
+第一次在受限环境执行 `npm run build` 时，Vite 加载配置阶段因 Windows 子进程策略失败：
 
-- `/message`、`/message/response`、`/message/message`；
-- `/focus/board`、`/focus/favorite`；
-- `/search`、`/searchBoard`；
-- 一个 Topic 页面。
+```text
+[plugin externalize-deps]
+Error: spawn EPERM
+```
 
-开发服务可转换、HTTP 200 或正式构建通过都不代表登录态、真实 API、浏览器控制台或交互验收完成。
+在允许子进程的同一工作树重跑完全相同命令后成功：Vite `8.1.4` 转换 3907 个模块，正式产物写入 `dist`。构建仍输出既有 Sass `@import` deprecation、legacy CSS hack minify 与大 chunk 警告；P13.5 未修改相关样式或构建配置。
+
+## 静态核对
+
+- `git diff --check`：成功；
+- 目标组件 `this.context.router` / `declare context` 搜索：0 个匹配；
+- service 业务 Router 形参搜索：0 个匹配；保留的 `router` 标识只属于 Redux router state、普通局部变量/类型名或注释；
+- 实际 `<BrowserRouter>`：只保留 Message 与 Focus 两处；
+- `package.json`、lockfile、`src/app/store`、root provider、冻结 UBB、样式和主题：无 diff。
+
+## 未执行
+
+- 未启动开发服务，未做 HTTP deep-link 探测；
+- 未使用真实登录态/API；
+- 未做浏览器控制台、Message/Focus/Search/Topic reaction 交互验收。
+
+正式构建成功不代表上述人工路径已经通过。
