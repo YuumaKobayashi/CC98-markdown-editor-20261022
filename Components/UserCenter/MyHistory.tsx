@@ -9,13 +9,11 @@ import Pager from "./Pager";
 import * as Actions from "../../Actions/UserCenter";
 import { connect } from "react-redux";
 import { RootState, RootAction } from "../../Store";
-import { Select, Input, Modal } from "antd";
+import { Button, Checkbox, Select, Input, Modal } from "antd";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 import { ThunkDispatch } from "redux-thunk";
-import Button from "antd/es/button";
 import { type } from "os";
 import { getHistoryPosts, setBrowsingHistoryEnabled } from "../../AsyncActions/UserCenter/GetMyHistoryPosts";
-import Checkbox from "antd/es/checkbox";
 import { set } from "core-js/core/dict";
 import { refreshCurrentUserInfo } from "../../AsyncActions/UserCenter";
 
@@ -78,7 +76,7 @@ class Posts extends React.Component<Props> {
     );
     const enableCheckBoxModal = (
       <Modal
-        visible={this.state.showEnableCheckBoxModal}
+        open={this.state.showEnableCheckBoxModal}
         title={this.props.browsingHistoryEnabled ? "确定要关闭浏览历史吗？" : "确定要开启浏览历史吗？"}
         okText="确认"
         cancelText="取消"

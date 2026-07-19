@@ -5,9 +5,9 @@
 import * as React from "react";
 import { UserRecentTopic } from "../../States/AppState";
 import { Link } from "react-router-dom";
-import { Dropdown, Icon, Menu } from "antd";
+import { Dropdown, Menu, Modal } from "antd";
+import { UnorderedListOutlined } from "@ant-design/icons";
 import { deleteFavoriteTopic,setFavoriteTopic} from "../../Utility";
-import Modal from "antd/es/modal";
 import MyFavoritesAddModalcontent from "./MyFavoritesAdd";
 
 type Props = UserCenterExactActivitiesTopicProps& {updateinfo: () => void};
@@ -89,7 +89,7 @@ export default class extends React.Component<Props> {
                 className="ant-dropdown-link"
                 onClick={(e) => e.preventDefault()}
               >
-                <Icon type="unordered-list" />
+                <UnorderedListOutlined />
                 &nbsp;操作
               </a>
             </Dropdown>
