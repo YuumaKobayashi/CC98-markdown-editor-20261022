@@ -1,19 +1,5 @@
 import React from "react";
-import {
-  G2,
-  Chart,
-  Geom,
-  Axis,
-  Tooltip,
-  Coord,
-  Label,
-  Legend,
-  View,
-  Guide,
-  Shape,
-  Facet,
-  Util,
-} from "bizcharts";
+import { IntervalChart } from "@integrations/charts";
 import QueueAnim from "rc-queue-anim";
 
 export default class extends React.Component<{ data }> {
@@ -99,22 +85,14 @@ export default class extends React.Component<{ data }> {
             style={{ marginTop: "1rem", marginRight: "2rem" }}
             key="annual-page5-3"
           >
-            <Chart
+            <IntervalChart
               width={document.body.clientHeight * 0.5}
               height={document.body.clientHeight * 0.35}
               data={postData}
-              scale={cols}
-              forceFit
-            >
-              <Axis name="time" />
-              <Axis name="posts" />
-              <Tooltip
-                crosshairs={{
-                  type: "y",
-                }}
-              />
-              <Geom type="interval" position="time*posts" />
-            </Chart>
+              xField="time"
+              yAlias={cols.posts.alias}
+              yField="posts"
+            />
           </div>
         </QueueAnim>
       </div>

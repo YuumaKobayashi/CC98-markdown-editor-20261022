@@ -1,19 +1,5 @@
 import React from "react";
-import {
-  G2,
-  Chart,
-  Geom,
-  Axis,
-  Tooltip,
-  Coord,
-  Label,
-  Legend,
-  View,
-  Guide,
-  Shape,
-  Facet,
-  Util
-} from "bizcharts";
+import { IntervalChart } from "@integrations/charts";
 
 export default class extends React.Component<{ data }> {
   getBoardUrlById(boardId) {
@@ -75,22 +61,14 @@ export default class extends React.Component<{ data }> {
         <div style={{ marginTop: "3rem" }}>你发言的时间段统计如下：</div>
 
         <div style={{ marginTop: "1rem", marginRight: "2rem" }}>
-          <Chart
+          <IntervalChart
             width={document.body.clientHeight * 0.5}
             height={document.body.clientHeight * 0.35}
             data={postData}
-            scale={cols}
-            forceFit
-          >
-            <Axis name="time" />
-            <Axis name="posts" />
-            <Tooltip
-              crosshairs={{
-                type: "y"
-              }}
-            />
-            <Geom type="interval" position="time*posts" />
-          </Chart>
+            xField="time"
+            yAlias={cols.posts.alias}
+            yField="posts"
+          />
         </div>
       </div>
     );
