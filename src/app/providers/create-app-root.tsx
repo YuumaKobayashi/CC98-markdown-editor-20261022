@@ -1,6 +1,6 @@
 import * as React from "react";
-import { LocaleProvider } from "antd";
-import zh_CN from "antd/lib/locale-provider/zh_CN";
+import { ConfigProvider } from "antd";
+import zhCN from "antd/es/locale/zh_CN";
 import { Provider } from "react-redux";
 
 import App from "@legacy/Components/App";
@@ -19,9 +19,9 @@ export function createAppRoot(): React.ReactElement<any> {
     <ErrorBoundary>
       <Provider store={store}>
         <CrossTabSync>
-          <LocaleProvider locale={zh_CN}>
+          <ConfigProvider locale={zhCN}>
             <App />
-          </LocaleProvider>
+          </ConfigProvider>
         </CrossTabSync>
       </Provider>
     </ErrorBoundary>
