@@ -15,16 +15,13 @@ import { Constants } from "./Constant";
 import store from "../Store";
 import * as ErrorActions from "../Actions/Error";
 import { Vote, props as VoteProps } from "./EditVoteIput";
-import ReactMde, {
-  ReactMdeTypes,
-  ReactMdeCommands
-} from "@cc98/hell-react-mde";
+import { MarkdownEditor } from "@integrations/markdown-editor";
 import * as Showdown from "showdown";
-import CustomCommand from "./react-mde/ImageUploaderCommand";
 import {
   Button,
   Modal,
   Form,
+  FormInstance,
   DatePicker,
   TimePicker,
   Select,
@@ -32,7 +29,7 @@ import {
   Radio
 } from "antd";
 import moment from "moment";
-const { MonthPicker, RangePicker } = DatePicker;
+const { RangePicker } = DatePicker;
 const { Option } = Select;
 const { TextArea } = Input;
 
@@ -56,7 +53,6 @@ class EditForm extends RouteComponent<
     masters: string[];
     voteInfo: VoteProps["voteInfo"];
     mdeState;
-    commands;
     notice;
     houseTmpVisible;
     /** 发帖版面的匿名状态，包括不可匿名，可选匿名和强制匿名 */
@@ -108,7 +104,6 @@ class EditForm extends RouteComponent<
         needVote: false
       },
       mdeState: "",
-      commands: [],
       notice: true,
       houseTmpVisible: false,
       anonymousState: 0,
@@ -134,14 +129,6 @@ class EditForm extends RouteComponent<
     headers.append("Authorization", token);
     //let url, response, data, tags, tagsV2;
     let url, response, data, tagsV2;
-    CustomCommand.editor = this;
-    const getCommands: () => ReactMdeTypes.CommandGroup[] = () => [
-      { commands: [CustomCommand] }
-    ];
-    const defaultCommands = ReactMdeCommands.getDefaultCommands();
-    const myCommands = defaultCommands.concat(getCommands());
-    myCommands[1].commands.length = 3;
-    this.setState({ commands: myCommands });
     switch (mode) {
       case "postTopic":
       case "postVoteTopic":
@@ -992,24 +979,15 @@ class EditForm extends RouteComponent<
                 切换到UBB编辑器
               </div>
             </div>
-            <ReactMde
+            <MarkdownEditor
               value={this.state.mdeState}
               onChange={this.handleValueChange}
-              generateMarkdownPreview={markdown =>
+              renderPreview={markdown =>
                 Promise.resolve(this.converter.makeHtml(markdown))
               }
-              commands={this.state.commands}
+              uploadImage={Utility.uploadEvent}
               minEditorHeight={330}
               maxEditorHeight={500}
-              buttonContentOptions={{
-                iconProvider: name => {
-                  console.log(name);
-                  if (name === "heading")
-                    return <i className={`fa fa-header`} />;
-
-                  return <i className={`fa fa-${name}`} />;
-                }
-              }}
             />
             {mdButtons}
           </div>
@@ -1064,24 +1042,15 @@ class EditForm extends RouteComponent<
                 切换到UBB编辑器
               </div>
             </div>
-            <ReactMde
+            <MarkdownEditor
               value={this.state.mdeState}
               onChange={this.handleValueChange}
-              generateMarkdownPreview={markdown =>
+              renderPreview={markdown =>
                 Promise.resolve(this.converter.makeHtml(markdown))
               }
-              commands={this.state.commands}
+              uploadImage={Utility.uploadEvent}
               minEditorHeight={330}
               maxEditorHeight={500}
-              buttonContentOptions={{
-                iconProvider: name => {
-                  console.log(name);
-                  if (name === "heading")
-                    return <i className={`fa fa-header`} />;
-
-                  return <i className={`fa fa-${name}`} />;
-                }
-              }}
             />
             <button
               id="post-topic-button"
@@ -1206,7 +1175,7 @@ class EditForm extends RouteComponent<
             <Button
               style={{ width: "150px" }}
               type="primary"
-              size="default"
+              size="middle"
               onClick={this.showModal}
             >
               住房信息模板
@@ -1230,7 +1199,7 @@ class EditForm extends RouteComponent<
       <div className="createTopic">
         <Modal
           title="错误提示"
-          visible={this.state.contentTooLongModalVisible}
+          open={this.state.contentTooLongModalVisible}
           onCancel={this.closeContentTooLongModal}
           onOk={this.closeContentTooLongModal}
           cancelButtonProps={{ style: { display: 'none' } }}
@@ -1724,6 +1693,7 @@ export class Options extends React.Component<{}, {}> {
 }
 
 class TmpForm extends React.Component<any, any> {
+  private formRef = React.createRef<FormInstance>();
   state = {
     elecRadio: "",
     waterElecRadio: "",
@@ -1746,26 +1716,25 @@ class TmpForm extends React.Component<any, any> {
       elecRadio: e.target.value
     });
   };
-  onHandleSubmit = e => {
-    e.preventDefault();
-    const ref: any = this.refs.tmpForm;
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        console.log("Received values of form: ", values);
-        if (this.state.elecRadio === "其他")
-          values.isElectricIsolated = this.state.elecValue;
-        if (this.state.waterElecRadio === "其他")
-          values.waterElecValue = this.state.waterElecValue;
-        this.props.submit(values);
-        this.setState({ visible: false });
-      }
-    });
+  onHandleSubmit = async e => {
+    if (e && e.preventDefault) e.preventDefault();
+    try {
+      const values = await this.formRef.current.validateFields();
+      console.log("Received values of form: ", values);
+      if (this.state.elecRadio === "其他")
+        values.isElectricIsolated = this.state.elecValue;
+      if (this.state.waterElecRadio === "其他")
+        values.waterElecValue = this.state.waterElecValue;
+      this.props.submit(values);
+      this.setState({ visible: false });
+    } catch (_error) {
+      return;
+    }
   };
   onCancel = () => {
     this.setState({ visible: false });
   };
   render() {
-    const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -1777,124 +1746,76 @@ class TmpForm extends React.Component<any, any> {
       }
     };
 
-    const rangeConfig = {
-      rules: [{ type: "array", required: true, message: "Please select time!" }]
-    };
     return (
       <Modal
         title="住房信息模板"
-        visible={this.state.visible}
+        open={this.state.visible}
         onOk={this.onHandleSubmit}
         onCancel={this.onCancel}
       >
         <Form
-          ref="tmpForm"
+          ref={this.formRef}
           style={{ maxHeight: "500px", overflowY: "scroll" }}
           {...formItemLayout}
-          onSubmit={this.onHandleSubmit}
         >
-          <Form.Item label="有效时间">
-            {getFieldDecorator(
-              "validDate",
-              rangeConfig
-            )(
-              <RangePicker
-                renderExtraFooter={() => "不能大于2周，到期可编辑"}
-              />
-            )}
+          <Form.Item
+            label="有效时间"
+            name="validDate"
+            rules={[{ type: "array", required: true, message: "Please select time!" }]}
+          >
+            <RangePicker
+              renderExtraFooter={() => "不能大于2周，到期可编辑"}
+            />
           </Form.Item>
-          <Form.Item label="类型" hasFeedback>
-            {getFieldDecorator("type", {
-              rules: [{ required: true, message: "请选择类型!" }]
-            })(
-              <Select placeholder="请选择类型">
-                <Option value="整租">整租</Option>
-                <Option value="合租">合租</Option>
-                <Option value="转租">转租</Option>
-                <Option value="出售">出售</Option>
-                <Option value="其他">其他</Option>
-              </Select>
-            )}
+          <Form.Item label="类型" name="type" rules={[{ required: true, message: "请选择类型!" }]} hasFeedback>
+            <Select placeholder="请选择类型">
+              <Option value="整租">整租</Option>
+              <Option value="合租">合租</Option>
+              <Option value="转租">转租</Option>
+              <Option value="出售">出售</Option>
+              <Option value="其他">其他</Option>
+            </Select>
           </Form.Item>
-          <Form.Item label="地区">
-            {getFieldDecorator("district", {
-              rules: [{ required: true, message: "请输入地区!" }]
-            })(
-              <Input placeholder="例如：紫金港 / 玉泉 / 文一西路xx路交叉口处 / 上海的xx路附近" />
-            )}
+          <Form.Item label="地区" name="district" rules={[{ required: true, message: "请输入地区!" }]}>
+            <Input placeholder="例如：紫金港 / 玉泉 / 文一西路xx路交叉口处 / 上海的xx路附近" />
           </Form.Item>
-          <Form.Item label="小区名称">
-            {getFieldDecorator("neighborhood", {
-              rules: [{ required: true, message: "请输入小区名称!" }]
-            })(<Input placeholder="例如：港湾家园" />)}
+          <Form.Item label="小区名称" name="neighborhood" rules={[{ required: true, message: "请输入小区名称!" }]}>
+            <Input placeholder="例如：港湾家园" />
           </Form.Item>
-          <Form.Item label="详细地址">
-            {getFieldDecorator("address", {
-              rules: [{ required: true, message: "请输入详细地址!" }]
-            })(<Input placeholder="例如：余杭塘路866号港湾家园X幢X单元X号" />)}
+          <Form.Item label="详细地址" name="address" rules={[{ required: true, message: "请输入详细地址!" }]}>
+            <Input placeholder="例如：余杭塘路866号港湾家园X幢X单元X号" />
           </Form.Item>
-          <Form.Item label="联系方式">
-            {getFieldDecorator("contact", {
-              rules: [{ required: true, message: "请输入联系方式!" }]
-            })(
-              <Input placeholder="例如：张房东 电话18888888888 / 李女士 微信1234abc" />
-            )}
+          <Form.Item label="联系方式" name="contact" rules={[{ required: true, message: "请输入联系方式!" }]}>
+            <Input placeholder="例如：张房东 电话18888888888 / 李女士 微信1234abc" />
           </Form.Item>
-          <Form.Item label="价格">
-            {getFieldDecorator("price", {
-              rules: [{ required: true, message: "请输入价格!" }]
-            })(<Input placeholder="例如：2000元/月" />)}
+          <Form.Item label="价格" name="price" rules={[{ required: true, message: "请输入价格!" }]}>
+            <Input placeholder="例如：2000元/月" />
           </Form.Item>
-          <Form.Item label="租期">
-            {getFieldDecorator("rentDays", {
-              rules: [{ required: true, message: "请输入租期!" }]
-            })(<Input placeholder="例如：6个月起租" />)}
+          <Form.Item label="租期" name="rentDays" rules={[{ required: true, message: "请输入租期!" }]}>
+            <Input placeholder="例如：6个月起租" />
           </Form.Item>
-          <Form.Item label="房户类型">
-            {getFieldDecorator("houseType", {
-              rules: [{ required: true, message: "请输入房户类型!" }]
-            })(
-              <Input placeholder="例如：4室0厅1阳1卫1厨（指包括要出租的房间数量，加上公用的区域，私用的不算入）" />
-            )}
+          <Form.Item label="房户类型" name="houseType" rules={[{ required: true, message: "请输入房户类型!" }]}>
+            <Input placeholder="例如：4室0厅1阳1卫1厨（指包括要出租的房间数量，加上公用的区域，私用的不算入）" />
           </Form.Item>
-          <Form.Item label="出租类型">
-            {getFieldDecorator("rentType", {
-              rules: [{ required: true, message: "请输入出租类型!" }]
-            })(
-              <Input placeholder="（指本次出租的房间）例如： 单间（独卫带阳台）/ 单间（独卫）/  单间 " />
-            )}
+          <Form.Item label="出租类型" name="rentType" rules={[{ required: true, message: "请输入出租类型!" }]}>
+            <Input placeholder="（指本次出租的房间）例如： 单间（独卫带阳台）/ 单间（独卫）/  单间 " />
           </Form.Item>
-          <Form.Item label="出租面积">
-            {getFieldDecorator("area", {
-              rules: [{ required: true, message: "请输入出租面积!" }]
-            })(<Input placeholder="（指本次出租的房间）例如：20平米" />)}
+          <Form.Item label="出租面积" name="area" rules={[{ required: true, message: "请输入出租面积!" }]}>
+            <Input placeholder="（指本次出租的房间）例如：20平米" />
           </Form.Item>
-          <Form.Item label="可租期限">
-            {getFieldDecorator("range", {
-              rules: [{ required: true, message: "请输入可租期限!" }]
-            })(
-              <Input placeholder="例如：到2017年11月7日 / 长期 （指合约可以签到什么时候）" />
-            )}
+          <Form.Item label="可租期限" name="range" rules={[{ required: true, message: "请输入可租期限!" }]}>
+            <Input placeholder="例如：到2017年11月7日 / 长期 （指合约可以签到什么时候）" />
           </Form.Item>
-          <Form.Item label="付款方式">
-            {getFieldDecorator("paymentType", {
-              rules: [{ required: true, message: "请输入付款方式!" }]
-            })(<Input placeholder=" 例如：押1付1  /  押1付2" />)}
+          <Form.Item label="付款方式" name="paymentType" rules={[{ required: true, message: "请输入付款方式!" }]}>
+            <Input placeholder=" 例如：押1付1  /  押1付2" />
           </Form.Item>
-          <Form.Item label="是否为隔间">
-            {getFieldDecorator("isSingleRoom", {
-              rules: [{ required: true, message: "请输入是否为隔间!" }]
-            })(
-              <Radio.Group>
-                <Radio value="是">是</Radio>
-                <Radio value="否">否</Radio>
-              </Radio.Group>
-            )}
+          <Form.Item label="是否为隔间" name="isSingleRoom" rules={[{ required: true, message: "请输入是否为隔间!" }]}>
+            <Radio.Group>
+              <Radio value="是">是</Radio>
+              <Radio value="否">否</Radio>
+            </Radio.Group>
           </Form.Item>
-          <Form.Item label="独立电表">
-            {getFieldDecorator("isElectricIsolated", {
-              rules: [{ required: true, message: "请输入电表方式!" }]
-            })(
+          <Form.Item label="独立电表" name="isElectricIsolated" rules={[{ required: true, message: "请输入电表方式!" }]}>
               <Radio.Group onChange={this.onElecChange}>
                 <Radio value="是">是</Radio>
                 <Radio value="否">否</Radio>
@@ -1911,13 +1832,9 @@ class TmpForm extends React.Component<any, any> {
                   ) : null}
                 </Radio>
               </Radio.Group>
-            )}
           </Form.Item>
 
-          <Form.Item label="水电缴费">
-            {getFieldDecorator("waterElecValue", {
-              rules: [{ required: true, message: "请输入水电缴费!" }]
-            })(
+          <Form.Item label="水电缴费" name="waterElecValue" rules={[{ required: true, message: "请输入水电缴费!" }]}>
               <Radio.Group onChange={this.onWaterElecChange}>
                 <Radio value="每月一付">每月一付</Radio>
                 <Radio value="每季一付">每季一付</Radio>
@@ -1934,48 +1851,31 @@ class TmpForm extends React.Component<any, any> {
                   ) : null}
                 </Radio>
               </Radio.Group>
-            )}
           </Form.Item>
-          <Form.Item label="日常卫生">
-            {getFieldDecorator("cleaning", {
-              //    rules: [{ required: true, message: "请输入日常卫生!" }]
-            })(<Input placeholder="例如：自理 / 每周1次" />)}
+          <Form.Item label="日常卫生" name="cleaning">
+            <Input placeholder="例如：自理 / 每周1次" />
           </Form.Item>
-          <Form.Item label="维修物业">
-            {getFieldDecorator("repairing", {
-              //     rules: [{ required: true, message: "请输入维修物业!" }]
-            })(<Input placeholder="例如：合租统一由房东承担、整租自行商议" />)}
+          <Form.Item label="维修物业" name="repairing">
+            <Input placeholder="例如：合租统一由房东承担、整租自行商议" />
           </Form.Item>
-          <Form.Item label="网络带宽">
-            {getFieldDecorator("networking", {
-              //       rules: [{ required: true, message: "请输入网络带宽!" }]
-            })(<Input placeholder="例如：有，电信20M宽带 / 无，自理" />)}
+          <Form.Item label="网络带宽" name="networking">
+            <Input placeholder="例如：有，电信20M宽带 / 无，自理" />
           </Form.Item>
-          <Form.Item label="退租方式">
-            {getFieldDecorator("checkout", {
-              //        rules: [{ required: true, message: "请输入退租方式!" }]
-            })(<Input placeholder="例如：合同到期，退还钥匙取回全额押金" />)}
+          <Form.Item label="退租方式" name="checkout">
+            <Input placeholder="例如：合同到期，退还钥匙取回全额押金" />
           </Form.Item>
 
-          <Form.Item label="其他描述">
-            {getFieldDecorator("otherDescriptions", {
-              rules: [{ required: false }]
-            })(
+          <Form.Item label="其他描述" name="otherDescriptions" rules={[{ required: false }]}>
               <TextArea
                 rows={4}
                 placeholder="此处添加任何合适的描述，可以包括家具设备、地理优势、水电网物业详细、入住情况、朝向等相关信息描述"
               />
-            )}
           </Form.Item>
-          <Form.Item label="其他要求">
-            {getFieldDecorator("otherDemands", {
-              rules: [{ required: false }]
-            })(
+          <Form.Item label="其他要求" name="otherDemands" rules={[{ required: false }]}>
               <TextArea
                 rows={4}
                 placeholder="例如：无 / 由于XXX原因，希望找一个男生/女生/上班族/不接受情侣/……"
               />
-            )}
           </Form.Item>
           <Form.Item>
             图片请点击下方编辑器的图片上传按钮上传，其他未尽内容请在下方编辑器输入。
@@ -1985,5 +1885,5 @@ class TmpForm extends React.Component<any, any> {
     );
   }
 }
-export const Tmp = Form.create()(TmpForm);
+export const Tmp = TmpForm;
 export const ShowEdit = withRouter(EditForm);

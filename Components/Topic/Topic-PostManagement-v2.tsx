@@ -1,18 +1,11 @@
 ﻿import * as React from "react";
-import Form from "antd/es/form";
-import Input from "antd/es/input";
-import InputNumber from "antd/es/input-number";
-import { FormComponentProps } from "antd/es/form";
-import Modal from "antd/es/modal";
-import Select from "antd/es/select";
-import Menu from "antd/es/menu";
-import Tag from "antd/es/tag";
+import { Form, FormInstance, Input, InputNumber, Menu, Modal, Select, Tag } from "antd";
 import * as Utility from "../../Utility";
 
 const FormItem = Form.Item;
 const Option = Select.Option;
 
-interface FormProps extends FormComponentProps<any> {
+interface FormProps {
   update;
   privilege;
   item;
@@ -24,8 +17,8 @@ interface FormProps extends FormComponentProps<any> {
   onCancel;
 }
 
-export default Form.create<FormProps>()(
-  class extends React.Component<FormProps, { option; current }> {
+export default class TopicPostManagementV2 extends React.Component<FormProps, { option; current }> {
+    private formRef = React.createRef<FormInstance>();
     constructor(props) {
       super(props);
       this.state = { option: "", current: "wealth" };
@@ -40,16 +33,13 @@ export default Form.create<FormProps>()(
         current: e.key,
       });
     };
-    onCreate = () => {
+    onCreate = async () => {
       console.log(this.state.current);
-      const form = this.props.form;
       let value = 0,
         reason = "",
         response = null;
-      form.validateFields(async (err, values) => {
-        if (err) {
-          return;
-        }
+      try {
+        const values = await this.formRef.current.validateFields();
         switch (this.state.current) {
           case "wealth":
             value = parseInt(values.wealth);
@@ -117,11 +107,12 @@ export default Form.create<FormProps>()(
         } else {
           alert(response);
         }
-      });
+      } catch (_error) {
+        return;
+      }
     };
     render() {
       console.log(this.props.item.id);
-      const { getFieldDecorator } = this.props.form;
       const { visible, onCancel } = this.props;
       let rcForm = null;
       let m_wealth: any = 0;
@@ -130,21 +121,16 @@ export default Form.create<FormProps>()(
       switch (this.state.current) {
         case "wealth":
           rcForm = (
-            <Form layout="vertical">
+            <Form layout="vertical" ref={this.formRef}>
               <Tag color="blue">
                 您今天在{this.props.boardName}已经发了{this.props.d_wealth}
                 财富值，最多可发{m_wealth} （单次最多1000）
               </Tag>
-              <FormItem label="财富值">
-                {getFieldDecorator("wealth", {
-                  rules: [{ required: true, message: "请输入财富值" }],
-                })(<InputNumber />)}
+              <FormItem label="财富值" name="wealth" rules={[{ required: true, message: "请输入财富值" }]}>
+                <InputNumber />
               </FormItem>
 
-              <FormItem label="理由">
-                {getFieldDecorator("reason", {
-                  rules: [{ required: true, message: "请输入理由" }],
-                })(
+              <FormItem label="理由" name="reason" rules={[{ required: true, message: "请输入理由" }]}>
                   <Select
                     mode={"tags"}
                     style={{ width: 120 }}
@@ -154,23 +140,17 @@ export default Form.create<FormProps>()(
                     <Option value="有用资源">有用资源</Option>
                     <Option value="热心回复">热心回复</Option>
                   </Select>
-                )}
               </FormItem>
             </Form>
           );
           break;
         case "prestige":
           rcForm = (
-            <Form layout="vertical">
-              <FormItem label="威望">
-                {getFieldDecorator("prestige", {
-                  rules: [{ required: true, message: "请输入威望值" }],
-                })(<InputNumber />)}
+            <Form layout="vertical" ref={this.formRef}>
+              <FormItem label="威望" name="prestige" rules={[{ required: true, message: "请输入威望值" }]}>
+                <InputNumber />
               </FormItem>
-              <FormItem label="理由">
-                {getFieldDecorator("reason", {
-                  rules: [{ required: true, message: "请输入理由" }],
-                })(
+              <FormItem label="理由" name="reason" rules={[{ required: true, message: "请输入理由" }]}>
                   <Select
                     mode={"tags"}
                     style={{ width: 120 }}
@@ -180,24 +160,18 @@ export default Form.create<FormProps>()(
                     <Option value="有用资源">有用资源</Option>
                     <Option value="热心回复">热心回复</Option>
                   </Select>
-                )}
               </FormItem>
             </Form>
           );
           break;
         case "punishwealth":
           rcForm = (
-            <Form layout="vertical">
-              <FormItem label="财富值">
-                {getFieldDecorator("wealth", {
-                  rules: [{ required: true, message: "请输入财富值" }],
-                })(<InputNumber />)}
+            <Form layout="vertical" ref={this.formRef}>
+              <FormItem label="财富值" name="wealth" rules={[{ required: true, message: "请输入财富值" }]}>
+                <InputNumber />
               </FormItem>
 
-              <FormItem label="理由">
-                {getFieldDecorator("reason", {
-                  rules: [{ required: true, message: "请输入理由" }],
-                })(
+              <FormItem label="理由" name="reason" rules={[{ required: true, message: "请输入理由" }]}>
                   <Select
                     mode={"tags"}
                     style={{ width: 120 }}
@@ -207,23 +181,17 @@ export default Form.create<FormProps>()(
                     <Option value="违反版规">违反版规</Option>
                     <Option value="恶意灌水">恶意灌水</Option>
                   </Select>
-                )}
               </FormItem>
             </Form>
           );
           break;
         case "punishprestige":
           rcForm = (
-            <Form layout="vertical">
-              <FormItem label="威望">
-                {getFieldDecorator("prestige", {
-                  rules: [{ required: true, message: "请输入威望值" }],
-                })(<InputNumber />)}
+            <Form layout="vertical" ref={this.formRef}>
+              <FormItem label="威望" name="prestige" rules={[{ required: true, message: "请输入威望值" }]}>
+                <InputNumber />
               </FormItem>
-              <FormItem label="理由">
-                {getFieldDecorator("reason", {
-                  rules: [{ required: true, message: "请输入理由" }],
-                })(
+              <FormItem label="理由" name="reason" rules={[{ required: true, message: "请输入理由" }]}>
                   <Select
                     mode={"tags"}
                     defaultValue="人身攻击"
@@ -234,37 +202,30 @@ export default Form.create<FormProps>()(
                     <Option value="违反版规">违反版规</Option>
                     <Option value="恶意灌水">恶意灌水</Option>
                   </Select>
-                )}
               </FormItem>
             </Form>
           );
           break;
         case "delete":
           rcForm = (
-            <Form layout="vertical">
-              <FormItem label="理由">
-                {getFieldDecorator("reason", {
-                  rules: [{ required: true, message: "请输入理由" }],
-                })(<Input />)}
+            <Form layout="vertical" ref={this.formRef}>
+              <FormItem label="理由" name="reason" rules={[{ required: true, message: "请输入理由" }]}>
+                <Input />
               </FormItem>
             </Form>
           );
           break;
         case "canceltp":
-          rcForm = <div>解除此用户版面 tp</div>;
+          rcForm = <Form ref={this.formRef}><div>解除此用户版面 tp</div></Form>;
           break;
         case "tp":
           rcForm = (
-            <Form layout="vertical">
-              <FormItem label="天数">
-                {getFieldDecorator("days", {
-                  rules: [{ required: true, message: "请输入tp天数" }],
-                })(<InputNumber />)}
+            <Form layout="vertical" ref={this.formRef}>
+              <FormItem label="天数" name="days" rules={[{ required: true, message: "请输入tp天数" }]}>
+                <InputNumber />
               </FormItem>
-              <FormItem label="理由">
-                {getFieldDecorator("reason", {
-                  rules: [{ required: true, message: "请输入理由" }],
-                })(<Input />)}
+              <FormItem label="理由" name="reason" rules={[{ required: true, message: "请输入理由" }]}>
+                <Input />
               </FormItem>
             </Form>
           );
@@ -272,7 +233,7 @@ export default Form.create<FormProps>()(
       }
       return (
         <Modal
-          visible={visible}
+          open={visible}
           title="发言管理"
           okText="确认"
           cancelText="取消"
@@ -299,4 +260,3 @@ export default Form.create<FormProps>()(
       );
     }
   }
-);

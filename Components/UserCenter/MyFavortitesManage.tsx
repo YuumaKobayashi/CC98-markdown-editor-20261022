@@ -1,4 +1,4 @@
-import { Button, Form, Input, Menu, Modal, Select, Tabs, message } from "antd";
+import { Button, Form, FormInstance, Input, Menu, Modal, Select, Tabs, message } from "antd";
 import * as React from "react";
 import {
   createFavGroup,
@@ -7,7 +7,6 @@ import {
   noticeMessageShow,
   updateFavGroup,
 } from "../../Utility";
-import { FormComponentProps } from "antd/es/form";
 import { type } from "os";
 const Item = Menu.Item;
 const FormItem = Form.Item;
@@ -34,13 +33,13 @@ enum Options {
 }
 import { History } from "history";
 import { NoticeMessage } from "../NoticeMessage";
-type Props = FormComponentProps<any> & {
+type Props = {
   history: History;
   updateFavoriteTopicList: () => Promise<void>;
   favoriteTopicList: FavoriteTopicGroupType[];
 };
-export default Form.create<Props>()(
-  class MyFavoritesPostsManager extends React.Component<Props> {
+export default class MyFavoritesPostsManager extends React.Component<Props> {
+    private formRef = React.createRef<FormInstance>();
     state = {
       visible: false,
       option: Options.Create,
@@ -63,18 +62,16 @@ export default Form.create<Props>()(
     };
 
     handleOk = async (e: any) => {
-      this.props.form.validateFields(async (err, values) => {
-        if (err) {
-          return false;
-        }
+      try {
+        const values = await this.formRef.current.validateFields();
         this.setState({
           confirmLoading: true,
         });
         switch (this.state.option) {
           case Options.Create:
-            console.log(this.props.form.getFieldsValue());
+            console.log(values);
             let createRes = await createFavGroup(
-              this.props.form.getFieldValue("createName")
+              values.createName
             );
             if (createRes !== "ok") {
               noticeMessageShow("maxFavGroup");
@@ -83,10 +80,10 @@ export default Form.create<Props>()(
             }
             break;
           case Options.Rename:
-            console.log(this.props.form.getFieldsValue());
+            console.log(values);
             let renameRes = await updateFavGroup(
-              this.props.form.getFieldValue("renameId"),
-              this.props.form.getFieldValue("rename")
+              values.renameId,
+              values.rename
             );
             if (renameRes !== "ok") {
               noticeMessageShow("other");
@@ -95,9 +92,9 @@ export default Form.create<Props>()(
             }
             break;
           case Options.Delete:
-            console.log(this.props.form.getFieldsValue());
+            console.log(values);
             let deleteRes = await deleteFavGroup(
-              this.props.form.getFieldValue("deleteId")
+              values.deleteId
             );
             if (deleteRes !== "ok") {
               noticeMessageShow("other");
@@ -108,14 +105,16 @@ export default Form.create<Props>()(
           default:
             break;
         }
-        console.log(this.props.form.getFieldsValue());
+        console.log(values);
         noticeMessageShow("success");
         await this.props.updateFavoriteTopicList();
         this.setState({
           visible: false,
           confirmLoading: false,
         });
-      });
+      } catch (_error) {
+        return false;
+      }
     };
 
     handleCancel = () => {
@@ -125,7 +124,6 @@ export default Form.create<Props>()(
       });
     };
     render() {
-      const { getFieldDecorator } = this.props.form;
       const { visible, confirmLoading } = this.state;
       const options = this.props.favoriteTopicList.map((item) =>
         item.id === 0 ? null : (
@@ -137,25 +135,28 @@ export default Form.create<Props>()(
       const isFavoriteTopicListMax =
         this.props.favoriteTopicList.length - 1 === 10;
       let EmptyForm = (
-        <Form>
+        <Form ref={this.formRef}>
           <div>没有可供操作的收藏组</div>
           <div>默认分组不可删除或重命名</div>
         </Form>
       );
       let createForm = (
-        <Form>
-          <FormItem label="分组名称">
-            {getFieldDecorator("createName", {
-              rules: [
-                {
-                  required: this.state.option === Options.Create,
-                  max: 10,
-                  message: "请输入最多十个字符且不为空的名称",
-                },
-              ],
-            })(<Input disabled={isFavoriteTopicListMax} />)}
-            {`目前支持的分组上限为10个，你已经创建了${this.props.favoriteTopicList.length - 1
-              }个分组`}
+        <Form ref={this.formRef}>
+          <FormItem
+            label="分组名称"
+            name="createName"
+            extra={`目前支持的分组上限为10个，你已经创建了${
+              this.props.favoriteTopicList.length - 1
+            }个分组`}
+            rules={[
+              {
+                required: this.state.option === Options.Create,
+                max: 10,
+                message: "请输入最多十个字符且不为空的名称",
+              },
+            ]}
+          >
+            <Input disabled={isFavoriteTopicListMax} />
           </FormItem>
         </Form>
       );
@@ -164,27 +165,31 @@ export default Form.create<Props>()(
         this.props.favoriteTopicList.length === 1 ? (
           EmptyForm
         ) : (
-          <Form>
-            <FormItem label="分组名称">
-              {getFieldDecorator("renameId", {
-                rules: [
-                  {
-                    required: this.state.option === Options.Rename,
-                    message: "请选择需要更名的收藏组",
-                  },
-                ],
-              })(<Select>{options}</Select>)}
+          <Form ref={this.formRef}>
+            <FormItem
+              label="分组名称"
+              name="renameId"
+              rules={[
+                {
+                  required: this.state.option === Options.Rename,
+                  message: "请选择需要更名的收藏组",
+                },
+              ]}
+            >
+              <Select>{options}</Select>
             </FormItem>
-            <FormItem label="将名称修改为">
-              {getFieldDecorator("rename", {
-                rules: [
-                  {
-                    required: this.state.option === Options.Rename,
-                    max: 10,
-                    message: "请输入最多十个字符且不为空的名称",
-                  },
-                ],
-              })(<Input />)}
+            <FormItem
+              label="将名称修改为"
+              name="rename"
+              rules={[
+                {
+                  required: this.state.option === Options.Rename,
+                  max: 10,
+                  message: "请输入最多十个字符且不为空的名称",
+                },
+              ]}
+            >
+              <Input />
             </FormItem>
           </Form>
         );
@@ -193,16 +198,18 @@ export default Form.create<Props>()(
         this.props.favoriteTopicList.length === 1 ? (
           EmptyForm
         ) : (
-          <Form>
-            <FormItem label="分组名称">
-              {getFieldDecorator("deleteId", {
-                rules: [
-                  {
-                    required: this.state.option === Options.Delete,
-                    message: "请选择需要删除的收藏组",
-                  },
-                ],
-              })(<Select>{options}</Select>)}
+          <Form ref={this.formRef}>
+            <FormItem
+              label="分组名称"
+              name="deleteId"
+              rules={[
+                {
+                  required: this.state.option === Options.Delete,
+                  message: "请选择需要删除的收藏组",
+                },
+              ]}
+            >
+              <Select>{options}</Select>
             </FormItem>
             <div>
               注意：删除后该分组将无法恢复，该分组下的所有收藏主题帖将被移入【默认分组】
@@ -240,7 +247,7 @@ export default Form.create<Props>()(
           <NoticeMessage text="操作失败" id="other" top="33%" left="40%" />
           <Modal
             title="收藏管理"
-            visible={visible}
+            open={visible}
             onOk={this.handleOk}
             confirmLoading={confirmLoading}
             onCancel={this.handleCancel}
@@ -269,4 +276,3 @@ export default Form.create<Props>()(
       );
     }
   }
-);
