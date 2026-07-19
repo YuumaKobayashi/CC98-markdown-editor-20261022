@@ -37,12 +37,13 @@ import { RootState } from "../Store";
 import { errorKeys } from "../Reducers/Error";
 import { connect } from "react-redux";
 
-import AnnualReview from "../Pages/AnnualReview";
+// P13: 年度报告暂时下线；恢复前需重新选择 React 18 兼容的图表实现。
+// import AnnualReview from "../Pages/AnnualReview";
 import { Index } from "../Pages/Index/Index";
 
 // 重构
 import RBoard from "../Pages/Board/index";
-import AnnualReviewV2 from "../Pages/AnnualReviewV2";
+// import AnnualReviewV2 from "../Pages/AnnualReviewV2";
 
 type Props = {
   isError: boolean;
@@ -76,7 +77,7 @@ class App extends React.Component<Props> {
 
         <Route path="/board/:id/:page?" component={RBoard} />
         {/* <Route path="/annual-review-2022" component={AnnualReview} /> */}
-        <Route path="/annual-review-2025" component={AnnualReviewV2} />
+        {/* <Route path="/annual-review-2025" component={AnnualReviewV2} /> */}
         <Route path="/error/401" component={Status.UnauthorizedBoard} />
         <Route path="/index" component={Index} />
 

@@ -13,6 +13,8 @@ import DocumentTitle from '../DocumentTitle';
  * 我的私信，包括最近联系人列表和聊天窗口两个组件
  */
 export class MessageMessage extends React.Component<{}, MessageMessageState> {
+    declare context: { router: any };
+
 
     constructor(props) {
         super(props);

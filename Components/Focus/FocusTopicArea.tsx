@@ -12,6 +12,8 @@ export class FocusTopicArea extends React.Component<
   FocusBoard,
   FocusTopicAreaState
 > {
+  declare context: { router: any };
+
   isLoadable: boolean;
 
   /**

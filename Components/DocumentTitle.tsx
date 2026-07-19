@@ -8,6 +8,7 @@ interface Props {
      * 要显示的标题内容
      */
     title: string;
+    children?: React.ReactNode;
 }
 
 /**

@@ -17,6 +17,8 @@ import {
  * 表示搜索结果的帖子列表
  */
 export class Search extends React.Component<{}, SearchState> {
+  declare context: { router: any };
+
   isLoadable: boolean;
   constructor(props) {
     super(props);

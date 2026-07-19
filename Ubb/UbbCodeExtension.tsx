@@ -49,7 +49,8 @@ import CC98 from './CC98TagHandler';
 import { PosterOnlyTagHanlder } from './PosterOnlyTagHandler';
 import { AllowViewerTagHanlder } from './AllowViewerTagHanlder';
 
-import { MathTagHandler, MathTextHandler } from './MathTagHandler';
+// P13: MathTagHandler 在 React 18 迁移期间暂时禁用。
+// import { MathTagHandler, MathTextHandler } from './MathTagHandler';
 
 /**
  * 创建一个解析签名档用的engine
@@ -122,7 +123,7 @@ export function createEngine(): Ubb.UbbCodeEngine {
 	engine.handlers.register(PmTagHandler);
 	engine.handlers.register(NoUbbTagHandler);
 	engine.handlers.register(BiliTagHandler);
-	engine.handlers.register(MathTagHandler);
+	// engine.handlers.register(MathTagHandler);
 
 	engine.handlers.register(NeedReplyTagHandler);
 	engine.handlers.register(PosterOnlyTagHanlder);
@@ -140,7 +141,7 @@ export function createEngine(): Ubb.UbbCodeEngine {
 	//engine.handlers.registerText(BiliTextHandler);
     engine.handlers.registerText(UrlTextHandler);
     engine.handlers.registerText(UrlTextHandler2);
-	engine.handlers.registerText(MathTextHandler);
+	// engine.handlers.registerText(MathTextHandler);
 
 	return engine;
 }

@@ -16,6 +16,8 @@ export class MessageWindow extends React.Component<
   MessageWindowProps,
   MessageWindowState
 > {
+  declare context: { router: any };
+
   constructor(props) {
     super(props);
     this.state = { data: [] };

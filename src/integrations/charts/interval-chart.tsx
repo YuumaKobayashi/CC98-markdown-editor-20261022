@@ -1,6 +1,3 @@
-import * as React from "react";
-import { Axis, Chart, Interval, Tooltip } from "bizcharts";
-
 export interface IntervalChartProps {
   autoFit?: boolean;
   crosshair?: "x" | "y";
@@ -12,24 +9,14 @@ export interface IntervalChartProps {
   yField: string;
 }
 
-export function IntervalChart({
-  autoFit = true,
-  crosshair = "y",
-  data,
-  height,
-  width,
-  xField,
-  yAlias,
-  yField,
-}: IntervalChartProps) {
-  const scale = yAlias ? { [yField]: { alias: yAlias } } : undefined;
-
-  return (
-    <Chart autoFit={autoFit} width={width} height={height} data={data} scale={scale}>
-      <Axis name={xField} />
-      <Axis name={yField} />
-      <Tooltip showCrosshairs crosshairs={{ type: crosshair }} />
-      <Interval position={`${xField}*${yField}`} />
-    </Chart>
-  );
+/**
+ * P13 compatibility stub.
+ *
+ * Annual review routes are temporarily unavailable while the project has no
+ * chart renderer that supports the single React 18 runtime. Keep the contract
+ * so the dormant annual-review sources remain type-checkable until the feature
+ * receives a replacement renderer.
+ */
+export function IntervalChart(_props: IntervalChartProps): null {
+  return null;
 }

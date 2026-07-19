@@ -13,6 +13,7 @@ import Store from '../../Store';
  * 系统消息
  */
 export class MessageSystem extends React.Component<{}, MessageSystemState> {
+    declare context: { router: any };
     constructor(props) {
         super(props);
         this.state = {

@@ -13,6 +13,7 @@ import Store from '../../Store';
  * @我的消息
  */
 export class MessageAttme extends React.Component<{match}, MessageResponseState> {
+    declare context: { router: any };
 
     constructor(props) {
         super(props);

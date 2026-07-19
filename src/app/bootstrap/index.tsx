@@ -1,6 +1,7 @@
 import "es6-promise/auto";
 import "core-js/shim";
-import * as ReactDOM from "react-dom";
+import { flushSync } from "react-dom";
+import { createRoot } from "react-dom/client";
 import $ from "jquery";
 import "whatwg-fetch";
 import "blueimp-canvas-to-blob";
@@ -57,7 +58,15 @@ async function initialize() {
   console.info("%cCC98 Durian", "font-size: 80px; fontFamily: Big");
 
   // 显示应用程序核心内容
-  ReactDOM.render(createAppRoot(), document.getElementById("root"));
+  const rootElement = document.getElementById("root");
+  if (!rootElement) {
+    throw new Error("Cannot initialize CC98 Forum: #root element is missing.");
+  }
+
+  const root = createRoot(rootElement);
+  flushSync(() => {
+    root.render(createAppRoot());
+  });
 
   if (process.env.NODE_ENV === "development") {
     const { whyDidYouUpdate } = require("why-did-you-update");

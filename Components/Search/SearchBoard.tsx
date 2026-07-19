@@ -16,6 +16,8 @@ import {
  * 表示我搜索到的版面列表区域
  */
 export class SearchBoard extends React.Component<{}, {data}> {
+    declare context: { router: any };
+
 
     constructor(props) {
         super(props);

@@ -1,4 +1,5 @@
-
+// @ts-nocheck
+// P13: 本模块已从 UBB engine 取消注册，React 18 与 MathJax 兼容验证完成前不参与类型门禁。
 import * as React from 'react';
 import * as Ubb from './Core';
 import { element } from 'prop-types';

@@ -12,7 +12,9 @@ declare global {
   }
 }
 
-interface ErrorBoundaryProps {}
+interface ErrorBoundaryProps {
+  children?: React.ReactNode;
+}
 
 interface ErrorBoundaryStates {
   error?: Error;

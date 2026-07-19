@@ -23,6 +23,8 @@ interface Props {
 }
 interface withRouterProps extends RouteComponentProps<{}> { }
 export default withRouter(class extends React.Component<withRouterProps & Props, { likeNumber, dislikeNumber, likeState }> {
+  declare context: { router: any };
+
   constructor(props, content) {
     super(props, content);
     this.showManageUI = this.showManageUI.bind(this);

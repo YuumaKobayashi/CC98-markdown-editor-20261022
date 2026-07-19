@@ -43,7 +43,7 @@ export class Category extends React.Component<CategoryProps, CategoryState>{
     render() {
         return <div className="row" style={{ alignItems: "baseline", justifyContent: "flex-start", color: "grey", fontSize: "0.75rem", marginBottom: "1rem" }}>
             <a style={{ color: "grey", fontSize: "1rem", marginRight: "0.5rem" }} href="/">首页</a>
-            {this.convertLevels}
+            {this.convertLevels as unknown as React.ReactNode}
         </div>;
     }
 }
