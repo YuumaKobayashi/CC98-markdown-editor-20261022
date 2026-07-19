@@ -23,8 +23,6 @@ interface Props {
 }
 interface withRouterProps extends RouteComponentProps<{}> { }
 export default withRouter(class extends React.Component<withRouterProps & Props, { likeNumber, dislikeNumber, likeState }> {
-  declare context: { router: any };
-
   constructor(props, content) {
     super(props, content);
     this.showManageUI = this.showManageUI.bind(this);
@@ -63,7 +61,7 @@ export default withRouter(class extends React.Component<withRouterProps & Props,
   async like() {
     const idLike = `#like${this.props.postInfo.id}`;
     const idDislike = `#dislike${this.props.postInfo.id}`;
-    const status = await Utility.like(this.props.topicInfo.id, this.props.postInfo.id, this.context.router);
+    const status = await Utility.like(this.props.topicInfo.id, this.props.postInfo.id);
 
     switch (status) {
       case 200:
@@ -83,7 +81,7 @@ export default withRouter(class extends React.Component<withRouterProps & Props,
     const idLike = `#like${this.props.postInfo.id}`;
     const idDislike = `#dislike${this.props.postInfo.id}`;
 
-    const status = await Utility.dislike(this.props.topicInfo.id, this.props.postInfo.id, this.context.router);
+    const status = await Utility.dislike(this.props.topicInfo.id, this.props.postInfo.id);
 
     switch (status) {
       case 200:

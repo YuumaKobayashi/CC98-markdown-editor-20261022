@@ -13,8 +13,6 @@ import DocumentTitle from '../DocumentTitle';
  * 我的私信，包括最近联系人列表和聊天窗口两个组件
  */
 export class MessageMessage extends React.Component<{}, MessageMessageState> {
-    declare context: { router: any };
-
 
     constructor(props) {
         super(props);
@@ -43,12 +41,12 @@ export class MessageMessage extends React.Component<{}, MessageMessageState> {
         let recentContact = Utility.getStorage('recentContact');
 
         if (!recentContact || recentContact.length === 0) {
-            recentContact = await Utility.getRecentContact(0, 7, this.context.router);
+            recentContact = await Utility.getRecentContact(0, 7);
             Utility.setStorage("recentContact", recentContact);
         }
 
         //对联系人列表重新排序，看是否有从其他页面发起的聊天
-        recentContact = await Utility.sortContactList(recentContact, this.context.router);
+        recentContact = await Utility.sortContactList(recentContact);
 
         if (recentContact) {
             //默认第一个人为聊天对象
@@ -91,7 +89,7 @@ export class MessageMessage extends React.Component<{}, MessageMessageState> {
             $('#moreDot').addClass('displaynone');
             $('#moreShow').addClass('displaynone');
             let recentContact = Utility.getStorage("recentContact");
-            let newContact = await Utility.getRecentContact(recentContact.length, 7, this.context.router);
+            let newContact = await Utility.getRecentContact(recentContact.length, 7);
             recentContact = recentContact.concat(newContact);
             this.setState({ data: recentContact });
             Utility.setStorage("recentContact", recentContact);

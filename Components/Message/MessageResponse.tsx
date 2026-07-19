@@ -13,8 +13,6 @@ import Store from '../../Store';
  * 回复我的消息
  */
 export class MessageResponse extends React.Component<{match}, MessageResponseState> {
-    declare context: { router: any };
-
     
     constructor(props, context) {
         super(props, context);
@@ -38,7 +36,7 @@ export class MessageResponse extends React.Component<{match}, MessageResponseSta
         if (!curPage || curPage < 0) {
             curPage = 0;
         }
-        let data = await Utility.getMessageResponse(curPage * num, num, this.context.router);
+        let data = await Utility.getMessageResponse(curPage * num, num);
         if (data) {
             this.setState({ data: data, from: curPage+1, totalPage: totalPage });
         }

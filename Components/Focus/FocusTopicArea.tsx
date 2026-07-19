@@ -12,8 +12,6 @@ export class FocusTopicArea extends React.Component<
   FocusBoard,
   FocusTopicAreaState
 > {
-  declare context: { router: any };
-
   isLoadable: boolean;
 
   /**
@@ -55,12 +53,7 @@ export class FocusTopicArea extends React.Component<
   }
 
   async getData(props) {
-    let data = await Utility.getFocusTopic(
-      props.id,
-      props.name,
-      0,
-      this.context.router
-    );
+    let data = await Utility.getFocusTopic(props.id, props.name, 0);
 
     if (data) {
       this.setState({ data: data, from: data.length });
@@ -132,8 +125,7 @@ export class FocusTopicArea extends React.Component<
         var newData = await Utility.getFocusTopic(
           this.props.id,
           this.props.name,
-          this.state.from,
-          this.context.router
+          this.state.from
         );
       } catch (err) {
         /**

@@ -1,7 +1,7 @@
 ﻿import * as React from "react";
 import { AppState } from "../States/AppState";
 import { match } from "react-router";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { ConnectedRouter } from "react-router-redux";
 import store, { history } from "../Store";
 import { Post, ShowTopic } from "./Topic/Topic";

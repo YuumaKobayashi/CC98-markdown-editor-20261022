@@ -7,7 +7,7 @@ import { clearLegacyMessageCounts, getLegacyMessageCounts, throwLegacyError } fr
  * 发送私信的函数
  * @param bodyContent
  */
-export async function sendMessage(bodyContent: string, router) {
+export async function sendMessage(bodyContent: string) {
   const myHeaders = await formAuthorizeHeader();
   myHeaders.append("content-type", "application/json");
   let response = await cc98Fetch("/message", {

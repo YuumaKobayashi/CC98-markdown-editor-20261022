@@ -7,18 +7,11 @@ import { SearchState } from "../../States/SearchState";
 import * as Utility from "../../Utility";
 import { FocusTopic } from "../../Props/FocusTopic";
 import DocumentTitle from "../DocumentTitle";
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  withRouter,
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 /**
  * 表示搜索结果的帖子列表
  */
 export class Search extends React.Component<{}, SearchState> {
-  declare context: { router: any };
-
   isLoadable: boolean;
   constructor(props) {
     super(props);
@@ -39,8 +32,7 @@ export class Search extends React.Component<{}, SearchState> {
     let newTopic = await Utility.getSearchTopic(
       searchInfo.boardId,
       searchInfo.words,
-      from,
-      this.context.router
+      from
     );
     //搜索结果为0
     if (!newTopic || newTopic.length === 0) {
@@ -100,8 +92,7 @@ export class Search extends React.Component<{}, SearchState> {
     let newTopic = await Utility.getSearchTopic(
       searchInfo.boardId,
       searchInfo.words,
-      from,
-      this.context.router
+      from
     );
     //搜索结果为0
     if (!newTopic || newTopic.length === 0) {

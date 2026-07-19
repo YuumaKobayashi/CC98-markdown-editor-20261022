@@ -16,8 +16,6 @@ export class MessageWindow extends React.Component<
   MessageWindowProps,
   MessageWindowState
 > {
-  declare context: { router: any };
-
   constructor(props) {
     super(props);
     this.state = { data: [] };
@@ -63,8 +61,7 @@ export class MessageWindow extends React.Component<
       let data = await Utility.getRecentMessage(
         props.data.id,
         0,
-        10,
-        this.context.router
+        10
       );
       //如果此时有未读私信,看有没有清除掉未读私信
       let unreadCount = Store.getState().message;
@@ -131,8 +128,7 @@ export class MessageWindow extends React.Component<
     let newData = await Utility.getRecentMessage(
       this.props.data.id,
       oldData.length,
-      10,
-      this.context.router
+      10
     );
     //如果此时有未读私信,看有没有清除掉未读私信
     let unreadCount = Store.getState().message;
@@ -179,8 +175,7 @@ export class MessageWindow extends React.Component<
     let data = await Utility.getRecentMessage(
       this.props.data.id,
       0,
-      10,
-      this.context.router
+      10
     );
 
     //先看一下缓存里的旧私信信息
@@ -398,7 +393,7 @@ export class MessageWindow extends React.Component<
     }
     let bodyObj = { receiverId: this.props.data.id, content: str };
     let bodyContent = JSON.stringify(bodyObj);
-    let response = await Utility.sendMessage(bodyContent, this.context.router);
+    let response = await Utility.sendMessage(bodyContent);
     if (response.status == 403) {
       $("#postContent").val("");
       $("#wPostError").removeClass("displaynone");

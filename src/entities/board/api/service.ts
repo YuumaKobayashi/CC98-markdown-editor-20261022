@@ -41,9 +41,8 @@ export async function getBoardName(boardId: number) {
  * 搜索指定关键词版面，版面名称或版面描述中包含关键词的结果都会返回
  * @param boardId
  * @param word
- * @param router
  */
-export async function getSearchBoard(word: string, router) {
+export async function getSearchBoard(word: string) {
   if (word) {
     const url = `/board/search?keyword=${word}`;
     const response = await cc98Fetch(url);

@@ -3,7 +3,6 @@
 // https://github.com/Microsoft/TypeScript/wiki/JSX
 
 import * as React from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import ExactActivitiesTopics from "./ExactActivitiesTopics";
 /**
  * 用户中心主页近期动态组件

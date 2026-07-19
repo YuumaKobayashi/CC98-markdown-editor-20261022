@@ -3,12 +3,7 @@ import { FocusTopic } from "../../Props/FocusTopic";
 import { FocusTopicSingle } from "../Focus/FocusTopicSingle";
 import { FocusTopicAreaState } from "../../States/FocusTopicAreaState";
 import * as Utility from "../../Utility";
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  withRouter,
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 import DocumentTitle from "../DocumentTitle";
 
 /**

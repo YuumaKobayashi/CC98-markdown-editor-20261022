@@ -3,7 +3,7 @@ import { cc98Fetch } from "@shared/api/http";
 import { throwLegacyError } from "@shared/lib/legacy-utility-effects";
 import { getTopic } from "@entities/topic/api/service";
 
-export async function like(topicid, postid, router): Promise<number> {
+export async function like(topicid, postid): Promise<number> {
   try {
     const headers = await formAuthorizeHeader();
     headers.append("Content-Type", "application/json");
@@ -35,7 +35,7 @@ export async function like(topicid, postid, router): Promise<number> {
   }
 }
 
-export async function dislike(topicid, postid, router): Promise<number> {
+export async function dislike(topicid, postid): Promise<number> {
   try {
     const headers = await formAuthorizeHeader();
     headers.append("Content-Type", "application/json");
@@ -67,7 +67,7 @@ export async function dislike(topicid, postid, router): Promise<number> {
   }
 }
 
-export async function getLikeStateAndCount(topicid, postid, router) {
+export async function getLikeStateAndCount(topicid, postid) {
   try {
     const headers = await formAuthorizeHeader();
 
@@ -92,7 +92,7 @@ export async function getLikeStateAndCount(topicid, postid, router) {
   }
 }
 
-export async function getLikeState(topicid, router) {
+export async function getLikeState(topicid) {
   try {
     const headers = await formAuthorizeHeader();
     const topic = await getTopic(topicid);

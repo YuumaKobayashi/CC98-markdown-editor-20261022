@@ -5,20 +5,11 @@ import * as React from 'react';
 import { FocusBoard } from '../../Props/FocusBoard';
 import * as Utility from '../../Utility';
 import DocumentTitle from '../DocumentTitle';
-import {
-    BrowserRouter as Router,
-    Route,
-    Link,
-
-    withRouter
-} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 /**
  * 表示我搜索到的版面列表区域
  */
 export class SearchBoard extends React.Component<{}, {data}> {
-    declare context: { router: any };
-
-
     constructor(props) {
         super(props);
         this.state = {
@@ -34,7 +25,7 @@ export class SearchBoard extends React.Component<{}, {data}> {
         }
         else {
             let keyword1 = decodeURI(decodeURI(keyword[1]));
-            searchBoardInfo = await Utility.getSearchBoard(keyword1, this.context.router);
+            searchBoardInfo = await Utility.getSearchBoard(keyword1);
             if (!searchBoardInfo) {
                 this.showNoResult();
             }

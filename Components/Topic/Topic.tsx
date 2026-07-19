@@ -1,13 +1,7 @@
 ﻿import * as React from 'react';
 import * as Utility from '../../Utility';
 import $ from 'jquery';
-import {
-    BrowserRouter as Router,
-    Route,
-    Link,
-
-    withRouter
-} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { RouteComponent } from '../RouteComponent';
 import { SendTopic } from './Topic-SendTopic';
 import { Category } from './Topic-Category';

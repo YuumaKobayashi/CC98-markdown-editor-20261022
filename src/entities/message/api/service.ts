@@ -9,7 +9,7 @@ import { transerTime } from "@shared/lib/time";
 /*
  * 获取最近N个联系人的信息
  */
-export async function getRecentContact(from: number, size: number, router) {
+export async function getRecentContact(from: number, size: number) {
   //如果未登录,直接跳转至登录页面
   if (!isLogOn()) {
     throwLegacyError("LogOut");
@@ -68,8 +68,7 @@ export async function getRecentContact(from: number, size: number, router) {
 export async function getRecentMessage(
   userId: number,
   from: number,
-  size: number,
-  router
+  size: number
 ) {
   //如果未登录,直接跳转至登录页面
   if (!isLogOn()) {
@@ -133,7 +132,7 @@ export function sortRecentMessage(recentMessage) {
  * 对联系人列表重新排序，看是否有从其他页面发起的聊天
  * @param recentContact
  */
-export async function sortContactList(recentContact, router) {
+export async function sortContactList(recentContact) {
   //看url中是否携带id信息，如果有的话就作为第一个联系人
   let urlId = location.href.match(/id=(\d+)/);
   if (urlId) {
@@ -157,7 +156,7 @@ export async function sortContactList(recentContact, router) {
         flag = 0;
       }
       if (flag === 1) {
-        chatMan.message = await getRecentMessage(chatMan.id, 0, 10, router);
+        chatMan.message = await getRecentMessage(chatMan.id, 0, 10);
         if (chatMan.message) {
           chatMan.lastContent = chatMan.message[0];
         }
@@ -207,7 +206,7 @@ export async function sortContactList(recentContact, router) {
           flag = 0;
         }
         if (flag === 1) {
-          chatMan.message = await getRecentMessage(chatMan.id, 0, 10, router);
+          chatMan.message = await getRecentMessage(chatMan.id, 0, 10);
           if (chatMan.message) {
             chatMan.lastContent = chatMan.message[0];
           }
@@ -257,7 +256,7 @@ export async function sortContactList(recentContact, router) {
             lastContent: "",
             isRead: true,
           };
-          chatMan.message = await getRecentMessage(chatMan.id, 0, 10, router);
+          chatMan.message = await getRecentMessage(chatMan.id, 0, 10);
           if (chatMan.message) {
             chatMan.lastContent = chatMan.message[0];
           }
@@ -315,7 +314,7 @@ export async function sortContactList(recentContact, router) {
               lastContent: "",
               isRead: true,
             };
-            chatMan.message = await getRecentMessage(chatMan.id, 0, 10, router);
+            chatMan.message = await getRecentMessage(chatMan.id, 0, 10);
             if (chatMan.message) {
               chatMan.lastContent = chatMan.message[0];
             }
@@ -333,9 +332,8 @@ export async function sortContactList(recentContact, router) {
  * 获取系统通知
  * @param from 获取消息起点
  * @param size 一次性获取消息数量
- * @param router 路由器
  */
-export async function getMessageSystem(from: number, size: number, router) {
+export async function getMessageSystem(from: number, size: number) {
   const myHeaders = await formAuthorizeHeader();
   try {
     let response = await cc98Fetch(
@@ -380,7 +378,7 @@ export async function getMessageSystem(from: number, size: number, router) {
 }
 
 //获取回复我的通知
-export async function getMessageResponse(from: number, size: number, router) {
+export async function getMessageResponse(from: number, size: number) {
   try {
     let result = [];
     const myHeaders = await formAuthorizeHeader();
@@ -447,7 +445,7 @@ export async function getMessageResponse(from: number, size: number, router) {
 }
 
 //获取@我的通知
-export async function getMessageAttme(from: number, size: number, router) {
+export async function getMessageAttme(from: number, size: number) {
   try {
     let result = [];
     let token = await getToken();

@@ -3,9 +3,6 @@
 // https://github.com/Microsoft/TypeScript/wiki/JSX
 
 import * as React from 'react';
-import {
-    BrowserRouter as Router,
-} from 'react-router-dom';
 import { connect } from 'react-redux';
 import Navigation from './Navigation';
 import UserRouter from './Router';

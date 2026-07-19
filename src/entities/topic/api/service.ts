@@ -518,8 +518,7 @@ export async function getAllNewTopic(from: number, mediaOnly: boolean = false) {
 export async function getFocusTopic(
   boardId: number,
   boardName: string,
-  from: number,
-  router
+  from: number
 ) {
   //如果未登录,直接跳转至登录页面
   if (!isLogOn()) {
@@ -823,8 +822,7 @@ export async function getSaveTopics(curPage, boardId) {
 export async function getSearchTopic(
   boardId: number,
   words: string[],
-  from: number,
-  router
+  from: number
 ) {
   //如果未登录,直接跳转至登录页面
   if (!isLogOn()) {

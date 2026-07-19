@@ -1,11 +1,6 @@
 import * as React from "react";
 import * as Utility from "../../Utility";
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  withRouter,
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Collapse } from "antd";
 import { is } from "core-js/core/object";
 const { Panel } = Collapse;

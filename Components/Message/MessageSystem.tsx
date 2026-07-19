@@ -13,7 +13,6 @@ import Store from '../../Store';
  * 系统消息
  */
 export class MessageSystem extends React.Component<{}, MessageSystemState> {
-    declare context: { router: any };
     constructor(props) {
         super(props);
         this.state = {
@@ -36,7 +35,7 @@ export class MessageSystem extends React.Component<{}, MessageSystemState> {
         if (!curPage || curPage < 0) {
             curPage = 0;
         }
-        let data = await Utility.getMessageSystem(curPage * num, num, this.context.router);
+        let data = await Utility.getMessageSystem(curPage * num, num);
         //console.log(data);
         if (data) {
             this.setState({ data: data, from: curPage + 1, totalPage: totalPage });

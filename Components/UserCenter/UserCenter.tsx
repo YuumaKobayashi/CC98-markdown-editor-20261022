@@ -1,6 +1,5 @@
 ﻿import * as React from "react";
 import { connect } from "react-redux";
-import { BrowserRouter as Router } from "react-router-dom";
 import Navigation from "./Navigation";
 import UserCenterRouter from "./Router";
 import { LogOut } from "../Status";

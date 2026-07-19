@@ -4,7 +4,7 @@ import { getToken, formAuthorizeHeader } from "@features/auth/api/session";
 import { cc98Fetch } from "@shared/api/http";
 import { throwLegacyError } from "@shared/lib/legacy-utility-effects";
 
-export async function sendTopic(topicId, router) {
+export async function sendTopic(topicId) {
   try {
     const url = `/post/topic/${topicId}`;
     const c = Constants.testEditor.getMarkdown();
