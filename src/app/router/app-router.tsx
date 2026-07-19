@@ -125,7 +125,7 @@ const routes: RouteObject[] = [
           {
             path: "mytopics/:page?/*",
             lazy: lazyDefault(
-              () => import("@legacy/Components/UserCenter/MyTopics")
+              () => import("@pages/user-center/my-topics")
             ),
           },
           {
@@ -137,7 +137,7 @@ const routes: RouteObject[] = [
           {
             path: "myposts/ishot/:ishot/:page?/*",
             lazy: lazyDefault(
-              () => import("@legacy/Components/UserCenter/MyPosts")
+              () => import("@pages/user-center/my-posts")
             ),
           },
           {
