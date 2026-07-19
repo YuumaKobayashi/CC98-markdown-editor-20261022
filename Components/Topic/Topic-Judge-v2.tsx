@@ -1,15 +1,10 @@
 import * as React from "react";
-import Modal from "antd/es/modal";
-import Form from "antd/es/form";
-import Menu from "antd/es/menu";
-import Tag from "antd/es/tag";
+import { Form, FormInstance, Menu, Modal, Select, Tag } from "antd";
 import * as Utility from "../../Utility";
-import Select from "antd/es/select";
-import { FormComponentProps } from "antd/es/form";
 const FormItem = Form.Item;
 const Option = Select.Option;
 const Item = Menu.Item;
-interface FormProps extends FormComponentProps<any> {
+interface FormProps {
   visible;
   onCancel;
   item;
@@ -20,8 +15,8 @@ interface FormStates {
   option;
   loading;
 }
-export default Form.create<FormProps>()(
-  class extends React.Component<FormProps, FormStates> {
+export default class TopicJudgeV2 extends React.Component<FormProps, FormStates> {
+    private formRef = React.createRef<FormInstance>();
     constructor(props) {
       super(props);
       this.state = { current: "0", option: "", loading: false };
@@ -29,14 +24,11 @@ export default Form.create<FormProps>()(
     handleChange = (value) => {
       this.setState({ option: value });
     };
-    onCreate = () => {
+    onCreate = async () => {
       let status = "",
         value = "";
-      const form = this.props.form;
-      form.validateFields(async (err, values) => {
-        if (err) {
-          return;
-        }
+      try {
+        const values = await this.formRef.current.validateFields();
         this.setState({ loading: true });
         value = values.reason.toString();
         console.log(value, this.state.current);
@@ -69,7 +61,9 @@ export default Form.create<FormProps>()(
           else if (status === "not allowed") alert("您还没有资格评分~");
           else if (status === "rateself") alert("您不能给自己评分哦~");
         }
-      });
+      } catch (_error) {
+        return;
+      }
     };
     handleClick = (e) => {
       console.log("click ", e);
@@ -79,49 +73,48 @@ export default Form.create<FormProps>()(
     };
     render() {
       const { visible, onCancel } = this.props;
-      const { getFieldDecorator } = this.props.form;
       const p1Form = (
-        <Form>
-          <FormItem label="理由">
-            {getFieldDecorator("reason", {
-              rules: [{ required: true, message: "请输入理由" }],
-            })(
-              <Select
-                mode={"tags"}
-                style={{ width: 400 }}
-                onChange={this.handleChange}
-              >
-                <Option value="所言极是">所言极是</Option>
-                <Option value="好人一生平安">好人一生平安</Option>
-                <Option value="非常求是">非常求是</Option>
-              </Select>
-            )}
+        <Form ref={this.formRef}>
+          <FormItem
+            label="理由"
+            name="reason"
+            rules={[{ required: true, message: "请输入理由" }]}
+          >
+            <Select
+              mode={"tags"}
+              style={{ width: 400 }}
+              onChange={this.handleChange}
+            >
+              <Option value="所言极是">所言极是</Option>
+              <Option value="好人一生平安">好人一生平安</Option>
+              <Option value="非常求是">非常求是</Option>
+            </Select>
           </FormItem>
         </Form>
       );
       const m1Form = (
-        <Form>
-          <FormItem label="理由">
-            {getFieldDecorator("reason", {
-              rules: [{ required: true, message: "请输入理由" }],
-            })(
-              <Select
-                mode={"tags"}
-                style={{ width: 400 }}
-                onChange={this.handleChange}
-              >
-                <Option value="太不求是">太不求是</Option>
-                <Option value="呵呵">呵呵</Option>
-                <Option value="被你暴击">被你暴击</Option>
-              </Select>
-            )}
+        <Form ref={this.formRef}>
+          <FormItem
+            label="理由"
+            name="reason"
+            rules={[{ required: true, message: "请输入理由" }]}
+          >
+            <Select
+              mode={"tags"}
+              style={{ width: 400 }}
+              onChange={this.handleChange}
+            >
+              <Option value="太不求是">太不求是</Option>
+              <Option value="呵呵">呵呵</Option>
+              <Option value="被你暴击">被你暴击</Option>
+            </Select>
           </FormItem>
         </Form>
       );
       let rcForm = this.state.current === "1" ? p1Form : m1Form;
       return (
         <Modal
-          visible={visible}
+          open={visible}
           title="评分"
           okText="确认"
           cancelText="取消"
@@ -179,4 +172,3 @@ export default Form.create<FormProps>()(
       );
     }
   }
-);

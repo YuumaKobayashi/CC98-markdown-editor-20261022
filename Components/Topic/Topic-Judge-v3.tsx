@@ -1,16 +1,10 @@
 import * as React from "react";
-import Modal from "antd/es/modal";
-import Form from "antd/es/form";
-import Menu from "antd/es/menu";
-import Tag from "antd/es/tag";
+import { Empty, Form, FormInstance, Menu, Modal, Select, Tag } from "antd";
 import * as Utility from "../../Utility";
-import Select from "antd/es/select";
-import { FormComponentProps } from "antd/es/form";
-import { Empty } from "antd";
 const FormItem = Form.Item;
 const Option = Select.Option;
 const Item = Menu.Item;
-interface FormProps extends FormComponentProps<any> {
+interface FormProps {
   visible;
   onCancel;
   item;
@@ -30,8 +24,8 @@ type JudgeTag = {
   enabled: boolean;
 };
 
-export default Form.create<FormProps>()(
-  class extends React.Component<FormProps, FormStates> {
+export default class TopicJudgeV3 extends React.Component<FormProps, FormStates> {
+    private formRef = React.createRef<FormInstance>();
     constructor(props) {
       super(props);
       this.state = {
@@ -46,14 +40,11 @@ export default Form.create<FormProps>()(
       console.log(value);
       this.setState({ option: value });
     };
-    onCreate = () => {
+    onCreate = async () => {
       let status = "",
         value = "";
-      const form = this.props.form;
-      form.validateFields(async (err, values) => {
-        if (err) {
-          return;
-        }
+      try {
+        const values = await this.formRef.current.validateFields();
         this.setState({ loading: true });
         value = values.reason;
         console.log(value, this.state.current);
@@ -110,7 +101,9 @@ export default Form.create<FormProps>()(
               break;
           }
         }
-      });
+      } catch (_error) {
+        return;
+      }
     };
     handleClick = (e) => {
       //控制加分or扣分选项卡
@@ -131,7 +124,7 @@ export default Form.create<FormProps>()(
       //清空已选择的理由
       this.setState({ option: "" });
       //清空表单选中项
-      this.props.form.resetFields();
+      if (this.formRef.current) this.formRef.current.resetFields();
 
       this.setState({
         current: e.key,
@@ -140,72 +133,72 @@ export default Form.create<FormProps>()(
 
     render() {
       const { visible, onCancel } = this.props;
-      const { getFieldDecorator } = this.props.form;
-
       const positiveForm = (
-        <Form key="positiveForm">
-          <FormItem label="理由">
-            {getFieldDecorator("reason", {
-              rules: [{ required: true, message: "请选择理由" }],
-            })(
-              <Select
-                style={{ width: 200 }}
-                onChange={this.handleChange}
-                key="positiveForm-Select"
-              >
-                {this.state.positiveTags.map(
-                  (tag) =>
-                    tag.enabled && (
-                      <Option value={tag.id} key={tag.id}>
-                        {tag.reason}
-                      </Option>
-                    )
-                )}
-              </Select>
-            )}
+        <Form key="positiveForm" ref={this.formRef}>
+          <FormItem
+            label="理由"
+            name="reason"
+            rules={[{ required: true, message: "请选择理由" }]}
+          >
+            <Select
+              style={{ width: 200 }}
+              onChange={this.handleChange}
+              key="positiveForm-Select"
+            >
+              {this.state.positiveTags.map(
+                (tag) =>
+                  tag.enabled && (
+                    <Option value={tag.id} key={tag.id}>
+                      {tag.reason}
+                    </Option>
+                  )
+              )}
+            </Select>
           </FormItem>
         </Form>
       );
 
       const negativeForm = (
-        <Form key="negativeForm">
-          <FormItem label="理由">
-            {getFieldDecorator("reason", {
-              rules: [{ required: true, message: "请选择理由" }],
-            })(
-              <Select
-                style={{ width: 200 }}
-                onChange={this.handleChange}
-                key="nagativeForm-Select"
-              >
-                {this.state.negativeTags.map(
-                  (tag) =>
-                    tag.enabled && (
-                      <Option value={tag.id} key={tag.id}>
-                        {tag.reason}
-                      </Option>
-                    )
-                )}
-              </Select>
-            )}
+        <Form key="negativeForm" ref={this.formRef}>
+          <FormItem
+            label="理由"
+            name="reason"
+            rules={[{ required: true, message: "请选择理由" }]}
+          >
+            <Select
+              style={{ width: 200 }}
+              onChange={this.handleChange}
+              key="nagativeForm-Select"
+            >
+              {this.state.negativeTags.map(
+                (tag) =>
+                  tag.enabled && (
+                    <Option value={tag.id} key={tag.id}>
+                      {tag.reason}
+                    </Option>
+                  )
+              )}
+            </Select>
           </FormItem>
         </Form>
       );
 
       const disabledForm = (
-        <Form>
-          <FormItem label="理由">
-            {getFieldDecorator("reason", {
-              rules: [{ required: true, message: "请选择理由" }],
-            })(<Select style={{ width: 200 }} disabled={true}></Select>)}
-            <div>提示：请先点击“+1”或者“-1”，再选择理由。</div>
+        <Form ref={this.formRef}>
+          <FormItem
+            label="理由"
+            name="reason"
+            rules={[{ required: true, message: "请选择理由" }]}
+          >
+            <Select style={{ width: 200 }} disabled={true}></Select>
           </FormItem>
+          <div>提示：请先点击“+1”或者“-1”，再选择理由。</div>
         </Form>
       );
 
       return (
         <Modal
-          visible={visible}
+          open={visible}
           title="评分"
           okText="确认"
           cancelText="取消"
@@ -266,4 +259,3 @@ export default Form.create<FormProps>()(
       );
     }
   }
-);
