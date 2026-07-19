@@ -8,18 +8,12 @@ import TopicManagement from "./Topic-TopicManagement-v2";
 import ManageHistory from "./Topic-ManageHistory";
 import { NoticeMessage, SendTopicNoticeMessage } from "../NoticeMessage";
 import { Prompt } from "react-router-dom";
-import Button from "antd/es/button";
-import Modal from "antd/es/modal";
+import { Button, Modal } from "antd";
 import moment from "moment";
-import ReactMde, {
-  ReactMdeTypes,
-  ReactMdeCommands,
-} from "@cc98/hell-react-mde";
+import { MarkdownEditor } from "@integrations/markdown-editor";
 import * as Showdown from "showdown";
-import CustomCommand from "./topic-react-mde/ImageUploaderCommand";
 import { RightTagHandler } from "../../Ubb/RightTagHandler";
 import { TopicIPData } from "@features/moderation";
-import { Util } from "bizcharts";
 var xssFilter = require("showdown-xss-filter");
 
 interface Props {
@@ -38,7 +32,6 @@ interface State {
   buttonDisabled;
   manageVisible;
   mdeState;
-  commands;
   IPData;
   postCache: string;
   anonymouslyPostButtonInfo;
@@ -154,7 +147,6 @@ export class SendTopic extends React.Component<Props, State> {
       buttonInfo: "回复",
       manageVisible: false,
       mdeState: initContent,
-      commands: [],
       IPData: [],
       postCache: "",
       anonymouslyPostButtonInfo: "匿名回复",
@@ -267,14 +259,6 @@ export class SendTopic extends React.Component<Props, State> {
   }
 
   async componentDidMount() {
-    CustomCommand.editor = this;
-    const getCommands: () => ReactMdeTypes.CommandGroup[] = () => [
-      { commands: [CustomCommand] },
-    ];
-    const defaultCommands = ReactMdeCommands.getDefaultCommands();
-    const myCommands = defaultCommands.concat(getCommands());
-    myCommands[1].commands.length = 3;
-    this.setState({ commands: myCommands });
     // confirm before user close the window
     // when there's content in the editor
     // should be removed before the component unmounts
@@ -892,24 +876,16 @@ ${newProps.content.content}[/quote]
           <div>
             {ft}
             {notifyAllReplier}
-            <ReactMde
+            <MarkdownEditor
               value={this.state.mdeState}
               onChange={this.handleValueChange}
-              generateMarkdownPreview={(markdown) => {
+              renderPreview={(markdown) => {
                 console.log(this.converter.makeHtml(markdown));
                 return Promise.resolve(this.converter.makeHtml(markdown));
               }}
-              commands={this.state.commands}
+              uploadImage={Utility.uploadEvent}
               minEditorHeight={330}
               maxEditorHeight={500}
-              buttonContentOptions={{
-                iconProvider: (name) => {
-                  console.log(name);
-                  if (name === "heading")
-                    return <i className={`fa fa-header`} />;
-                  return <i className={`fa fa-${name}`} />;
-                },
-              }}
             />
           </div>
           <div
@@ -1076,7 +1052,7 @@ ${newProps.content.content}[/quote]
 
         <Modal
           title="错误提示"
-          visible={this.state.contentTooLongModalVisible}
+          open={this.state.contentTooLongModalVisible}
           onCancel={this.closeContentTooLongModal}
           onOk={this.closeContentTooLongModal}
           cancelButtonProps={{ style: { display: 'none' } }}
