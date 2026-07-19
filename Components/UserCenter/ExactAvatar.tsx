@@ -5,7 +5,7 @@
 import * as React from 'react';
 import * as Utility from '../../Utility';
 import { UserInfo } from '../../States/AppState';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 
 interface State {
   displayTitles: DispalyTitle[];

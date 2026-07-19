@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Utility from "../../Utility";
 import { RandomTopicAreaState } from "../../States/RandomTopicAreaState";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 /**
  * 表示侧边卡片可能错过主题列表

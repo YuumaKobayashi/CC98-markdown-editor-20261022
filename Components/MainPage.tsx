@@ -2,7 +2,7 @@
 import { AppState } from "../States/AppState";
 import $ from "jquery";
 import * as Utility from "../Utility";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import DocumentTitle from "./DocumentTitle";
 import {
   AnnouncementComponent,

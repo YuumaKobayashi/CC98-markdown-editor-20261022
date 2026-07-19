@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter } from '@app/router/legacy-route-props';
 import { RouteComponent } from '../../Components/RouteComponent';
 import { IBoard, ITopic, ITagGroup } from '@cc98/api';
 import {

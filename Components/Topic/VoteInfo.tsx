@@ -1,7 +1,7 @@
 import * as Utility from '../../Utility';
 import * as React from 'react';
 import store from '../../Store';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import moment from 'moment';
 
 type voteItem = {

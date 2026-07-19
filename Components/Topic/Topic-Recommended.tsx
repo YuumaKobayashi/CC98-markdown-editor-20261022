@@ -3,7 +3,7 @@ import { RecommendedTopic } from "../../Props/RecommendedTopic";
 import { RecommendedTopicSingle } from "../Focus/RecommendedTopicSingle";
 import { RecommendedTopicAreaState } from "../../States/RecommendedTopicAreaState";
 import * as Utility from "../../Utility";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import DocumentTitle from "../DocumentTitle";
 import { Spin } from "antd";
 //import pDebounce from "p-debounce";

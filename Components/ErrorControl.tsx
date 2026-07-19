@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from '@app/router/legacy-route-props';
 import { connect } from 'react-redux';
 import { RootState } from '../Store';
 import * as Actions from '../Actions/Error';
@@ -38,4 +38,4 @@ function mapDispatch(dispatch) {
     };
 }
 
-export default connect(mapState, mapDispatch)(ErrorControl);
+export default connect(mapState, mapDispatch)(withRouter(ErrorControl));

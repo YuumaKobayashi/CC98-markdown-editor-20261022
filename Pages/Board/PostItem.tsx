@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as Utility from '../../Utility';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { ITopic, IPost } from '@cc98/api';
 import { Tag, Popover, Tooltip, Spin } from 'antd';
 import moment from 'moment';

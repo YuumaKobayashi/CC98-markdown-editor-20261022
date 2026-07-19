@@ -4,7 +4,7 @@
 
 import * as React from "react";
 import { UserRecentPost } from "../../States/AppState";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 /**
  * 用户最近单个帖子组件
  */

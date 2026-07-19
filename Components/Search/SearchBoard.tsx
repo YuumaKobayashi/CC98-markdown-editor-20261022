@@ -5,7 +5,7 @@ import * as React from 'react';
 import { FocusBoard } from '../../Props/FocusBoard';
 import * as Utility from '../../Utility';
 import DocumentTitle from '../DocumentTitle';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 /**
  * 表示我搜索到的版面列表区域
  */

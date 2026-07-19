@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Utility from "../../Utility";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { IBoard } from "@cc98/api";
 import { Button } from "antd";
 import { AdsComponent } from "../../Components/MainPage";

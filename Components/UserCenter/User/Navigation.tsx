@@ -1,8 +1,7 @@
 ﻿import * as React from 'react';
 import {
-    Link,
-    withRouter
-} from 'react-router-dom';
+    Link
+} from 'react-router';
 import { connect } from 'react-redux';
 type props = {
     isManager: string,

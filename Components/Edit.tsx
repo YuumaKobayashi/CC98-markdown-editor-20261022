@@ -2,8 +2,8 @@
 import * as Utility from "../Utility";
 import { AppState } from "../States/AppState";
 import $ from "jquery";
-import { Link, withRouter } from "react-router-dom";
-import { match } from "react-router";
+import { Link } from "react-router";
+import { match, withRouter } from "@app/router/legacy-route-props";
 import { RouteComponent } from "./RouteComponent";
 import { UbbEditor } from "./UbbEditor";
 import { Constants } from "./Constant";

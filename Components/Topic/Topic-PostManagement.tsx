@@ -1,7 +1,7 @@
 ﻿import * as React from 'react';
 import * as Utility from '../../Utility';
 import $ from 'jquery';
-import { match } from "react-router";
+import { match } from "@app/router/legacy-route-props";
 import { BoardState } from '../../States/AppState';
 interface Props {
     userId;

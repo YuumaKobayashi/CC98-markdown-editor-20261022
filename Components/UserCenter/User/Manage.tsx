@@ -1,8 +1,8 @@
 ﻿import * as React from 'react';
 import {
-    withRouter, 
+    withRouter,
     RouteComponentProps
-} from 'react-router-dom';
+} from '@app/router/legacy-route-props';
 import * as Utility from '../../../Utility';
 import * as Actions from '../../../Actions/UserCenter';
 import { UserInfo } from '../../../States/AppState';

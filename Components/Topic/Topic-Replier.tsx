@@ -1,5 +1,5 @@
 ﻿import * as React from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { RouteComponent } from "../RouteComponent";
 import * as Utility from "../../Utility";
 import moment from "moment";

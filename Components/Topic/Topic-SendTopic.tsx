@@ -7,7 +7,7 @@ import { UbbEditor } from "../UbbEditor";
 import TopicManagement from "./Topic-TopicManagement-v2";
 import ManageHistory from "./Topic-ManageHistory";
 import { NoticeMessage, SendTopicNoticeMessage } from "../NoticeMessage";
-import { Prompt } from "react-router-dom";
+import { NavigationPrompt } from "@app/router/navigation-prompt";
 import { Button, Modal } from "antd";
 import moment from "moment";
 import { MarkdownEditor } from "@integrations/markdown-editor";
@@ -1041,7 +1041,8 @@ ${newProps.content.content}[/quote]
           id="原因未知，请刷新重试。如果依然出现该问题，请联系管理员。"
         />
 
-        <Prompt
+        <NavigationPrompt
+          when={Boolean(this.state.content)}
           message={(location) =>
             (this.state.content &&
               location.pathname.indexOf(this.props.topicInfo.id)) === -1

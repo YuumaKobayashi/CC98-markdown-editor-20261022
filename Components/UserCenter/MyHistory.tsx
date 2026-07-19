@@ -10,7 +10,7 @@ import * as Actions from "../../Actions/UserCenter";
 import { connect } from "react-redux";
 import { RootState, RootAction } from "../../Store";
 import { Button, Checkbox, Select, Input, Modal } from "antd";
-import { withRouter, RouteComponentProps } from "react-router-dom";
+import { withRouter, RouteComponentProps } from "@app/router/legacy-route-props";
 import { ThunkDispatch } from "redux-thunk";
 import { type } from "os";
 import { getHistoryPosts, setBrowsingHistoryEnabled } from "../../AsyncActions/UserCenter/GetMyHistoryPosts";

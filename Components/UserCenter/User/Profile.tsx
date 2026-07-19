@@ -3,7 +3,7 @@
 // https://github.com/Microsoft/TypeScript/wiki/JSX
 
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { UserInfo } from '../../../States/AppState';
 import { UbbContainer } from '../../UbbContainer';
 import * as Utility from '../../../Utility';

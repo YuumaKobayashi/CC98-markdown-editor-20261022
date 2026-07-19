@@ -1,5 +1,5 @@
 ﻿import * as React from 'react';
-import {withRouter} from 'react-router'
+import { withRouter } from '@app/router/legacy-route-props';
 interface Props {
     postId;
     portraitUrl;

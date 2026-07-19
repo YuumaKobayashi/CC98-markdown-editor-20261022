@@ -31,10 +31,10 @@ enum Options {
   Rename = "2",
   Delete = "3",
 }
-import { History } from "history";
+import type { LegacyHistory } from "@app/router/legacy-route-props";
 import { NoticeMessage } from "../NoticeMessage";
 type Props = {
-  history: History;
+  history: LegacyHistory;
   updateFavoriteTopicList: () => Promise<void>;
   favoriteTopicList: FavoriteTopicGroupType[];
 };

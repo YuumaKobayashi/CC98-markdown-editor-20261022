@@ -4,7 +4,7 @@ import { Announcement } from '@pages/home';
 
 import * as Utility from '../../Utility';
 
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import DocumentTitle from '../../Components/DocumentTitle';
 import { CountDown } from '../../Components/CountDown'
 

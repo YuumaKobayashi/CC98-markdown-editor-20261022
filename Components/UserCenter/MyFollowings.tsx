@@ -11,7 +11,7 @@ import * as Actions from '../../Actions/UserCenter';
 import { connect } from 'react-redux';
 import { RootState, RootAction } from '../../Store';
 import { Dispatch } from 'redux';
-import { withRouter, match, RouteComponentProps } from 'react-router-dom';
+import { withRouter, match, RouteComponentProps } from '@app/router/legacy-route-props';
 import { getUserFollowingsInfo } from '../../AsyncActions/UserCenter';
 import { ThunkDispatch } from 'redux-thunk';
 

@@ -1,6 +1,6 @@
 ﻿import * as React from 'react';
 import * as Utility from '../../Utility';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 
 interface Props {
     topicInfo;

@@ -4,7 +4,7 @@ import { FocusTopicSingle } from "../Focus/FocusTopicSingle";
 import { CardTopicSingle } from "../Focus/CardTopicSingle";
 import { NewTopicAreaState } from "../../States/NewTopicAreaState";
 import * as Utility from "../../Utility";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import DocumentTitle from "../DocumentTitle";
 import { Spin } from "antd";
 import { MyInfo } from "../../States/AppState";

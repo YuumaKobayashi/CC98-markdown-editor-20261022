@@ -15,7 +15,7 @@ import {
   multiLock as aLock,
   getBoardRecords
 } from "./action";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { IBoard, ITopic } from "@cc98/api";
 import moment from "moment";
 

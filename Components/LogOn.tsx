@@ -7,17 +7,16 @@ import $ from 'jquery';
 import * as Utility from '../Utility';
 import { connect } from 'react-redux';
 import * as Actions from '../Actions/UserCenter';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { LegacyHistory, RouteComponentProps } from '@app/router/legacy-route-props';
 import DocumentTitle from './DocumentTitle';
 import { UserInfo } from '../States/AppState';
-import { History } from 'history';
 import { Constants } from '../Components/Constant'
 
 type ownProps = {
     isLogOn: boolean;
     logOn: () => void;
     logOff: () => void;
-    history: History;
+    history: LegacyHistory;
     changeUserInfo: (newInfo: UserInfo) => void;
 }
 

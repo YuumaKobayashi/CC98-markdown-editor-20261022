@@ -1,7 +1,5 @@
 ﻿import { ReactElement } from 'react';
 import * as React from 'react';
-import store from '../Store';
-import { push } from 'react-router-redux';
 
 interface Props {
     /**

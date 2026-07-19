@@ -7,7 +7,7 @@ import { SearchState } from "../../States/SearchState";
 import * as Utility from "../../Utility";
 import { FocusTopic } from "../../Props/FocusTopic";
 import DocumentTitle from "../DocumentTitle";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 /**
  * 表示搜索结果的帖子列表
  */

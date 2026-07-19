@@ -2,11 +2,11 @@
 import * as Utility from '../../Utility';
 import { NoticeMessage } from "../NoticeMessage";
 import { UbbContainer } from '../UbbContainer';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { UbbCodeOptions } from '../../Ubb/UbbCodeExtension';
 import { QuoteContext } from './Topic';
 import { QuoteTraceContext } from './Topic-Trace'
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { withRouter, RouteComponentProps } from '@app/router/legacy-route-props';
 import moment from 'moment';
 import { data } from 'jquery';
 interface Props {

@@ -1,7 +1,6 @@
 ﻿import * as React from "react";
 import * as Utility from "../Utility";
 import { UbbEditor } from "./UbbEditor";
-import { withRouter } from "react-router-dom";
 import moment from "moment";
 import ResignCalendar from "./ReSignCalendar";
 export class Signin extends React.Component<{ history }, { signinInfo; content }> {
@@ -129,4 +128,4 @@ export class Signin extends React.Component<{ history }, { signinInfo; content }
   }
 }
 
-export const ShowSignin = withRouter(Signin);
+export const ShowSignin = Signin;

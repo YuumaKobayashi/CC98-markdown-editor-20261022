@@ -7,7 +7,7 @@ import Post from "./ExactActivitiesPost";
 import { UserRecentPost } from "../../States/AppState";
 import Pager from "./Pager";
 import { connect } from "react-redux";
-import { withRouter, match, RouteComponentProps } from "react-router-dom";
+import { withRouter, match, RouteComponentProps } from "@app/router/legacy-route-props";
 import { getRecentPosts } from "../../AsyncActions/UserCenter";
 import * as Actions from "../../Actions/UserCenter";
 import { RootState } from "../../Store";

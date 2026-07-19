@@ -8,7 +8,8 @@ import { AppState, UserInfo } from "../States/AppState";
 import $ from "jquery";
 import { connect } from "react-redux";
 import { Actions, RootState } from "../Store";
-import { Link, withRouter, Route } from "react-router-dom";
+import { Link } from "react-router";
+import { withRouter } from "@app/router/legacy-route-props";
 import { refreshCurrentUserInfo } from "../AsyncActions/UserCenter";
 import { refreshCurrentMessageCount } from "../AsyncActions/Message";
 import { MessageInfo } from "../Reducers/Message";
@@ -580,9 +581,9 @@ export class SearchBeforeConnent extends React.Component<any, AppState> {
 
 export const Search = withRouter(SearchBeforeConnent);
 
-export class Header extends React.Component<{}, AppState> {
+export class Header extends React.Component<{ pathname: string }, AppState> {
   render() {
-    let pathname = location.pathname;
+    let pathname = this.props.pathname;
     if (pathname === "/") {
       return (
         <div className="headerShell headerShell-mainPage">
@@ -619,7 +620,7 @@ export class Header extends React.Component<{}, AppState> {
                 <div className="topBarText">
                   <Link to="/recommendedTopics">精选</Link>
                 </div>
-                <Route component={Search} />
+                <Search />
               </div>
               <DropDown />
             </div>
@@ -662,7 +663,7 @@ export class Header extends React.Component<{}, AppState> {
                 <div className="topBarText">
                   <Link to="/recommendedTopics">精选</Link>
                 </div>
-                <Route component={Search} />
+                <Search />
               </div>
               <DropDown />
             </div>
