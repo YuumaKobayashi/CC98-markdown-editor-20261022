@@ -1,7 +1,7 @@
 ﻿import * as React from "react";
+import { Outlet } from "react-router";
 import { connect } from "react-redux";
 import Navigation from "./Navigation";
-import UserCenterRouter from "./Router";
 import { LogOut } from "../Status";
 import DocumentTitle from "../DocumentTitle";
 
@@ -22,7 +22,9 @@ class UserCenterBeforeConnect extends React.Component<{ isLogOn }> {
           </div>
           <div className="user-center-body">
             <Navigation />
-            <UserCenterRouter />
+            <div className="user-center-router">
+              <Outlet />
+            </div>
           </div>
         </div>
       </div>

@@ -1,13 +1,8 @@
 ﻿import * as React from "react";
 import { AppState } from "../../States/AppState";
-import { MessageMessage } from "./MessageMessage";
-import { MessageResponse } from "./MessageResponse";
-import { MessageAttme } from "./MessageAttme";
-import { MessageSystem } from "./MessageSystem";
-import { MessageSetting } from "@features/message";
 import * as Utility from "../../Utility";
 import DocumentTitle from "../DocumentTitle";
-import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
+import { NavLink, Outlet } from "react-router";
 import Store from "../../Store";
 
 /**
@@ -26,8 +21,7 @@ export class Message extends React.Component<{}, AppState> {
             </button>
           </div>
           <div className="message-title">我的消息</div>
-          <Router>
-            <div className="message-content">
+          <div className="message-content">
               <div className="message-nav">
                 <NavLink to="/message/response">
                   <div id="response" className="nav-div">
@@ -71,14 +65,8 @@ export class Message extends React.Component<{}, AppState> {
                   </div>
                 </NavLink>
               </div>
-              <Route exact path="/message" component={MessageResponse}></Route>
-              <Route path="/message/response/:page?" exact component={MessageResponse} />
-              <Route path="/message/attme/:page?" component={MessageAttme} />
-              <Route path="/message/system/:page?" component={MessageSystem} />
-              <Route path="/message/message/:page?" component={MessageMessage} />
-              <Route path="/message/setting" component={MessageSetting} />
-            </div>
-          </Router>
+            <Outlet />
+          </div>
         </div>
       </div>
     );

@@ -4,13 +4,11 @@
 
 import * as React from 'react';
 import {
-    Route,
-    withRouter, 
+    withRouter,
     RouteComponentProps
-} from 'react-router-dom';
+} from '@app/router/legacy-route-props';
 import { connect } from 'react-redux';
 import { UserInfo } from '../../../States/AppState';
-import UserManage from './Manage';
 import Profile from './Profile';
 import Activities from './Activities';
 import Avatar from '../ExactAvatar';
@@ -18,19 +16,6 @@ import * as Actions from '../../../Actions/UserCenter';
 import * as Utility from '../../../Utility';
 import DocumentTitle from '../../DocumentTitle';
 import { getUserInfo } from '../../../Utility/Fetch/getUserInfo';
-
-/**
- * 用户详情页用的Route
- */
-export default class extends React.Component {
-    render() {
-        return (<div className="user-center-router">
-            <Route path="/user/:method/:id?" exact component={UserExactWithRouter} />
-            <Route path="/user/:method/:id/manage" component={UserManage} />
-        </div>);
-    }
-}
-
 
 interface States {
     /**
@@ -127,4 +112,4 @@ function mapDispatch(dispatch) {
     };
 }
 
-const UserExactWithRouter = connect(null, mapDispatch)(withRouter(UserExact));
+export const UserExactWithRouter = connect(null, mapDispatch)(withRouter(UserExact));

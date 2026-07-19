@@ -3,9 +3,9 @@
 // https://github.com/Microsoft/TypeScript/wiki/JSX
 
 import * as React from 'react';
+import { Outlet } from 'react-router';
 import { connect } from 'react-redux';
 import Navigation from './Navigation';
-import UserRouter from './Router';
 import { NotFoundUser } from '../../Status';
 /**
  * 用户详情页核心
@@ -23,7 +23,9 @@ class UserBeforeConnent extends React.Component<{isError}> {
                 </div>
                 <div className="user-center-body">
                     <Navigation />
-                    <UserRouter />
+                    <div className="user-center-router">
+                        <Outlet />
+                    </div>
                 </div>
             </div>
         </div>);

@@ -3,10 +3,10 @@ import { ConfigProvider } from "antd";
 import zhCN from "antd/es/locale/zh_CN";
 import { Provider } from "react-redux";
 
-import App from "@legacy/Components/App";
 import ErrorBoundary from "@legacy/Components/ErrorBoundary";
 import store from "@app/store";
 import { CrossTabSync } from "@app/providers/cross-tab-sync";
+import { AppRouter } from "@app/router/app-router";
 
 /**
  * 创建保持旧运行行为的应用 Provider 树。
@@ -20,7 +20,7 @@ export function createAppRoot(): React.ReactElement<any> {
       <Provider store={store}>
         <CrossTabSync>
           <ConfigProvider locale={zhCN}>
-            <App />
+            <AppRouter />
           </ConfigProvider>
         </CrossTabSync>
       </Provider>

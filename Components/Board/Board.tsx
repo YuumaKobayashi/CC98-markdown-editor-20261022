@@ -3,10 +3,10 @@ import * as State from "../../States/AppState";
 import * as Utility from "../../Utility";
 import $ from "jquery";
 import { UbbContainer } from "../UbbContainer";
-import { match } from "react-router";
+import { match, withRouter } from "@app/router/legacy-route-props";
 
 import DocumentTitle from "../DocumentTitle";
-import { Route, Link, Switch } from "react-router-dom";
+import { Route, Link, Routes } from "react-router";
 import TopicTitleAndContentState = State.TopicTitleAndContentState;
 import { BoardEvent } from "../../States/BoardEvent";
 import { Pager } from "../Pager";
@@ -142,39 +142,33 @@ export class BList extends RouteComponent<
           boardInfo={this.state.boardInfo}
         />
         <ListButtonAndAds boardInfo={this.state.boardInfo} adsUrl={null} />
-        <Switch>
+        <Routes>
           <Route
-            exact
             path="/board/:boardid/tags/:tag1Id/:tag2Id/:page?"
-            component={ListTagsContent}
+            element={<ListTagsContentWithRouteProps />}
           />
           <Route
-            exact
             path="/board/:boardId/tag/tag1/:tagId/:page?"
-            component={ListTagContent}
+            element={<ListTagContentWithRouteProps />}
           />
           <Route
-            exact
             path="/board/:boardId/tag/tag2/:tagId/:page?"
-            component={ListTagContent}
+            element={<ListTagContentWithRouteProps />}
           />
           <Route
-            exact
             path="/board/:boardId/best/:page?"
-            component={ListBestContent}
+            element={<ListBestContentWithRouteProps />}
           />
           <Route
-            exact
             path="/board/:boardId/save/:page?"
-            component={ListSaveContent}
+            element={<ListSaveContentWithRouteProps />}
           />
           <Route
-            exact
             path="/board/:boardId/record/:page?"
-            component={BoardRecord}
+            element={<BoardRecordWithRouteProps />}
           />
-          <Route exact path="/board/:boardId/:page?" component={ListContent} />
-        </Switch>
+          <Route path="/board/:boardId/:page?" element={<ListContentWithRouteProps />} />
+        </Routes>
         <div
           style={{ display: "flex", width: "100%", justifyContent: "flex-end" }}
         >
@@ -2235,3 +2229,10 @@ export class BoardRecordContent extends React.Component<BoardEvent> {
     );
   }
 }
+
+const ListTagsContentWithRouteProps = withRouter(ListTagsContent);
+const ListTagContentWithRouteProps = withRouter(ListTagContent);
+const ListBestContentWithRouteProps = withRouter(ListBestContent);
+const ListSaveContentWithRouteProps = withRouter(ListSaveContent);
+const BoardRecordWithRouteProps = withRouter(BoardRecord);
+const ListContentWithRouteProps = withRouter(ListContent);
