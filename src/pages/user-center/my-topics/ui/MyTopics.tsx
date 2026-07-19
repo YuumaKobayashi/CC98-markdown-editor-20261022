@@ -6,9 +6,9 @@ import * as React from "react";
 import { useParams } from "react-router";
 
 import { useAppDispatch, useAppSelector } from "@app/store";
+import { UserRecentTopicItem as Topic } from "@entities/topic";
 import * as Actions from "@legacy/Actions/UserCenter";
 import { getRecentTopics } from "@legacy/AsyncActions/UserCenter";
-import Topic from "@legacy/Components/UserCenter/ExactActivitiesTopic";
 import Pager from "@legacy/Components/UserCenter/Pager";
 import type { UserRecentTopic } from "@legacy/States/AppState";
 import { parseUserCenterPage } from "@pages/user-center/model/route-params";

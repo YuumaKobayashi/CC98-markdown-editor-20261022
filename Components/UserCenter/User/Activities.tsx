@@ -1,5 +1,5 @@
 ﻿import * as React from "react";
-import Topic from "../ExactActivitiesTopic";
+import { UserRecentTopicItem as Topic } from "@entities/topic";
 import { UserRecentPost } from "../../../States/AppState";
 import * as Utility from "../../../Utility";
 

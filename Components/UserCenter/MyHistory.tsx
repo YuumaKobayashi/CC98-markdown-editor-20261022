@@ -3,7 +3,7 @@
 // https://github.com/Microsoft/TypeScript/wiki/JSX
 
 import * as React from "react";
-import Topic from "./ExactActivitiesTopic";
+import { UserRecentTopicItem as Topic } from "@entities/topic";
 import { UserRecentTopic } from "../../States/AppState";
 import Pager from "./Pager";
 import * as Actions from "../../Actions/UserCenter";

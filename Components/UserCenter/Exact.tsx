@@ -4,8 +4,8 @@
 
 import * as React from "react";
 import { UserInfo } from "../../States/AppState";
-import ExactProfile from "./ExactProfile";
-import ExactActivities from "./ExactActivities";
+import { UserProfile as ExactProfile } from "@entities/user";
+import { UserRecentActivities as ExactActivities } from "@pages/user-center/overview";
 import ExactAvatar from "./ExactAvatar";
 import * as Utility from "../../Utility";
 import { refreshCurrentUserInfo } from "../../AsyncActions/UserCenter";

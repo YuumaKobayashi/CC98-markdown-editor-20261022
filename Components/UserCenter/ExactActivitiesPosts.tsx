@@ -3,7 +3,7 @@
 // https://github.com/Microsoft/TypeScript/wiki/JSX
 
 import * as React from "react";
-import Post from "./ExactActivitiesPost";
+import { UserRecentPostItem as Post } from "@entities/post";
 import { UserRecentPost } from "../../States/AppState";
 import * as Utility from "../../Utility";
 import { connect } from "react-redux";

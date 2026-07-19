@@ -242,7 +242,7 @@ const routes: RouteObject[] = [
       },
       {
         path: "focus",
-        lazy: lazyDefault(() => import("@legacy/Components/Focus/Focus")),
+        lazy: lazyDefault(() => import("@pages/focus/layout")),
         children: [
           {
             index: true,
@@ -340,7 +340,7 @@ const routes: RouteObject[] = [
       {
         path: "sitemanage/*",
         lazy: lazyNamed(
-          () => import("@legacy/Components/SiteManage/Index"),
+          () => import("@pages/site-manage"),
           "SiteManage"
         ),
       },

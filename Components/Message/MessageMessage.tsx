@@ -4,7 +4,7 @@
 import * as React from 'react';
 import { MessageMessageState } from '../../States/MessageMessageState';
 import { MessagePersonInfo } from '../../Props/MessagePersonInfo';
-import { MessagePerson } from './MessagePerson';
+import { MessagePerson } from '@entities/message';
 import { MessageWindow } from './MessageWindow';
 import * as Utility from '../../Utility';
 import DocumentTitle from '../DocumentTitle';

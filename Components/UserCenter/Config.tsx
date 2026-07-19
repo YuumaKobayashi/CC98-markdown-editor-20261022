@@ -7,7 +7,7 @@ import * as Utility from '../../Utility';
 import { ChangeUserInfo, UserInfo } from '../../States/AppState';
 import * as Actions from '../../Actions/UserCenter';
 import ConfigAvatar from './ConfigAvatar';
-import ConfigSignature from './ConfigSignature';
+import { ConfigSignature } from '@features/account';
 import ConfigOthers from './ConfigOthers';
 import { connect } from 'react-redux';
 import { refreshCurrentUserInfo } from '../../AsyncActions/UserCenter';

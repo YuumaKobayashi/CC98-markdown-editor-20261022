@@ -3,8 +3,8 @@
 // https://github.com/Microsoft/TypeScript/wiki/JSX
 import * as React from "react";
 import $ from "jquery";
-import DocumentTitle from "@legacy/Components/DocumentTitle";
-import { NoticeMessage } from "@legacy/Components/NoticeMessage";
+import DocumentTitle from "@shared/ui/document-title";
+import { NoticeMessage } from "@shared/ui/feedback";
 import {
   getLocalStorage,
   setLocalStorage,

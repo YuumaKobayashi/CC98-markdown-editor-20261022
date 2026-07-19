@@ -2,8 +2,8 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Outlet, useLocation } from "react-router";
 
+import { Footer } from "@app/layouts/footer";
 import { Header } from "@legacy/Components/Header";
-import { Footer } from "@legacy/Components/Footer";
 import ErrorControl from "@legacy/Components/ErrorControl";
 import * as Status from "@legacy/Components/Status";
 import type { errorKeys } from "@legacy/Reducers/Error";
