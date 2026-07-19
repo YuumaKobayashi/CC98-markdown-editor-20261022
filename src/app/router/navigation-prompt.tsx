@@ -16,8 +16,14 @@ function resolveMessage(message: Props["message"], location: Location): PromptRe
   return typeof message === "function" ? message(location) : message;
 }
 
-/** Preserve the old Prompt contract for the frozen class editor surface. */
+/**
+ * Preserve the old Prompt contract for the frozen class editor surface.
+ * `true` allows navigation, `false` silently keeps the user on the page, and a
+ * string asks the user for confirmation before continuing.
+ */
 export function NavigationPrompt({ message, when = true }: Props): null {
+  // First put the Router navigation into a blocked state; the effect below
+  // decides whether to continue or cancel that pending navigation.
   const blocker = useBlocker(({ nextLocation }) => {
     if (!when) {
       return false;
@@ -33,6 +39,7 @@ export function NavigationPrompt({ message, when = true }: Props): null {
 
     const result = resolveMessage(message, blocker.location);
     if (result === false) {
+      // Cancel only the pending navigation. This does not reset editor state.
       blocker.reset();
       return;
     }
@@ -51,6 +58,8 @@ export function NavigationPrompt({ message, when = true }: Props): null {
           return;
         }
 
+        // Refreshing or closing the tab cannot use the custom Router dialog;
+        // ask the browser to show its native unsaved-changes confirmation.
         event.preventDefault();
         event.returnValue = "";
       },

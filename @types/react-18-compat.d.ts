@@ -11,9 +11,3 @@ declare module "react-router-dom" {
     children?: ReactNode;
   }
 }
-
-declare module "react-router-redux" {
-  interface ConnectedRouterProps<State> {
-    children?: ReactNode;
-  }
-}
