@@ -1,15 +1,7 @@
 import * as React from "react";
-import Modal from "antd/es/modal";
-import Form from "antd/es/form";
-import Menu from "antd/es/menu";
-import Input from "antd/es/input";
-import InputNumber from "antd/es/input-number";
+import { Carousel, Checkbox, Form, FormInstance, Input, Menu, Modal, Select } from "antd";
 import * as Utility from "../../Utility";
-import Select from "antd/es/select";
-import Checkbox from "antd/es/checkbox";
 import { SketchPicker } from "react-color";
-import { FormComponentProps } from "antd/es/form";
-import Carousel from "antd/es/carousel";
 import { setLocalStorage } from "../../Utility/storageUtility";
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -19,7 +11,7 @@ const CheckboxGroup = Checkbox.Group;
 /**
  * 控件属性。
  */
-interface FormProps extends FormComponentProps<any> {
+interface FormProps {
   visible;
   onCancel;
   topicInfo;
@@ -48,8 +40,8 @@ interface FormStates {
 }
 const plainOptions = ["加粗", "斜体"];
 const defaultCheckedList = [];
-export default Form.create<FormProps>()(
-  class extends React.Component<FormProps, FormStates> {
+export default class TopicTopicManagementV2 extends React.Component<FormProps, FormStates> {
+    private formRef = React.createRef<FormInstance>();
     constructor(props) {
       super(props);
       this.state = {
@@ -69,12 +61,9 @@ export default Form.create<FormProps>()(
         boardsData: [],
       };
     }
-    onCreate = () => {
-      const form = this.props.form;
-      form.validateFields(async (err, values) => {
-        if (err) {
-          return;
-        }
+    onCreate = async () => {
+      try {
+        const values = await this.formRef.current.validateFields();
         const reason = values.reason;
         let days = parseInt(this.state.days);
         let status = "ok";
@@ -219,7 +208,9 @@ export default Form.create<FormProps>()(
         } else {
           alert("操作失败");
         }
-      });
+      } catch (_error) {
+        return;
+      }
     };
     handleChangeComplete = (color) => {
       this.setState({ background: color.hex });
@@ -296,19 +287,16 @@ export default Form.create<FormProps>()(
 
       let rcForm = null;
       const { visible, onCancel } = this.props;
-      const { getFieldDecorator } = this.props.form;
 
       let formWithReason = (
-        <Form>
-          <FormItem label="理由">
-            {getFieldDecorator("reason", {
-              rules: [{ required: true, message: "请输入理由" }],
-            })(<Input />)}
+        <Form ref={this.formRef}>
+          <FormItem label="理由" name="reason" rules={[{ required: true, message: "请输入理由" }]}>
+            <Input />
           </FormItem>
         </Form>
       );
       let formWithDays = (
-        <Form>
+        <Form ref={this.formRef}>
           <FormItem label="天数">
             <Select value={this.state.days} onChange={this.onDaysChange}>
               {this.state.current === "1" ? <Option key="0">0</Option> : null}
@@ -322,19 +310,15 @@ export default Form.create<FormProps>()(
               <Option key="10000">10000 (作为永久使用)</Option>
             </Select>
           </FormItem>
-          <FormItem label="理由">
-            {getFieldDecorator("reason", {
-              rules: [{ required: true, message: "请输入理由" }],
-            })(<Input />)}
+          <FormItem label="理由" name="reason" rules={[{ required: true, message: "请输入理由" }]}>
+            <Input />
           </FormItem>
         </Form>
       );
       let formWithBoardMessage = (
-        <Form>
-          <FormItem label="理由">
-            {getFieldDecorator("reason", {
-              rules: [{ required: true, message: "请输入理由" }],
-            })(<Input />)}
+        <Form ref={this.formRef}>
+          <FormItem label="理由" name="reason" rules={[{ required: true, message: "请输入理由" }]}>
+            <Input />
           </FormItem>
           <FormItem>
             <Select
@@ -356,7 +340,7 @@ export default Form.create<FormProps>()(
         </Form>
       );
       let formWithColorPicker = (
-        <Form>
+        <Form ref={this.formRef}>
           <FormItem>
             <Checkbox
               indeterminate={this.state.indeterminate}
@@ -384,10 +368,8 @@ export default Form.create<FormProps>()(
               <Option key="10000">10000 (作为永久使用)</Option>
             </Select>
           </FormItem>
-          <FormItem label="理由">
-            {getFieldDecorator("reason", {
-              rules: [{ required: true, message: "请输入理由" }],
-            })(<Input />)}
+          <FormItem label="理由" name="reason" rules={[{ required: true, message: "请输入理由" }]}>
+            <Input />
           </FormItem>
           <FormItem label="颜色">
             <SketchPicker
@@ -432,7 +414,7 @@ export default Form.create<FormProps>()(
       }
       return (
         <Modal
-          visible={this.props.visible}
+          open={this.props.visible}
           title="帖子管理"
           okText="确认"
           cancelText="取消"
@@ -479,4 +461,3 @@ export default Form.create<FormProps>()(
       );
     }
   }
-);
