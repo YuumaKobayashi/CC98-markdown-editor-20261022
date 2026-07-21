@@ -3,8 +3,8 @@ import * as React from "react";
 import { useAppDispatch, useAppSelector } from "@app/store";
 import * as Actions from "@legacy/Actions/UserCenter";
 import { getCurrentUserFavoriteBoards } from "@legacy/AsyncActions/UserCenter";
-import MyFavoritesBoard from "@legacy/Components/UserCenter/MyFavoritesBoard";
 import type { UserFavoritesBoardInfo } from "@legacy/States/AppState";
+import { UserFavoriteBoardCard } from "./UserFavoriteBoardCard";
 
 /**
  * 用户关注的版面信息
@@ -40,7 +40,7 @@ export function UserFavoriteBoards() {
   }
 
   const boardItems = boards.map((item: UserFavoritesBoardInfo) => (
-    <MyFavoritesBoard key={item.id} UserFavoritesBoard={item} />
+    <UserFavoriteBoardCard key={item.id} board={item} />
   ));
   for (let index = 1; index < boardItems.length; index += 2) {
     boardItems.splice(index, 0, <hr key={index} />);

@@ -2,9 +2,9 @@ import * as React from "react";
 import { useParams } from "react-router";
 
 import { useAppDispatch, useAppSelector } from "@app/store";
+import { UserFollowCard } from "@features/follow";
 import * as Actions from "@legacy/Actions/UserCenter";
 import { getUserFollowingsInfo } from "@legacy/AsyncActions/UserCenter";
-import MyFollowingsUser from "@legacy/Components/UserCenter/MyFollowingsUser";
 import type { UserInfo } from "@legacy/States/AppState";
 import { parseUserCenterPage } from "@pages/user-center/model/route-params";
 import { UserCenterPager as Pager } from "@pages/user-center/pagination";
@@ -56,7 +56,7 @@ export function MyFollowings() {
   const followingItems = userFollowings
     .slice((currentPage - 1) * 10, currentPage * 10)
     .map((item: UserInfo) => (
-      <MyFollowingsUser key={item.id} userFanInfo={item} />
+      <UserFollowCard key={item.id} user={item} />
     ));
   //添加分隔线
   for (let index = 1; index < followingItems.length; index += 2) {

@@ -3,8 +3,8 @@ import { Outlet } from "react-router";
 
 import { useAppSelector } from "@app/store";
 import { LogOut } from "@legacy/Components/Status";
-import Navigation from "@legacy/Components/UserCenter/Navigation";
 import DocumentTitle from "@shared/ui/document-title";
+import { UserCenterNavigation } from "./UserCenterNavigation";
 
 /**
  * 用户中心页面
@@ -24,7 +24,7 @@ export function UserCenterLayout() {
           <p>个人中心</p>
         </div>
         <div className="user-center-body">
-          <Navigation />
+        <UserCenterNavigation />
           <div className="user-center-router">
             <Outlet />
           </div>
