@@ -1,10 +1,10 @@
 # P15 函数组件 C 范围
 
-> 当前状态：首批 `MyTopics`/`MyPosts` 已在 `6ab4c465` 提交；无 Redux、无 local state 的简单组件组已形成阶段性代码提交 `016ca083`；本轮以 `dd514178` 为基线继续迁移无 Redux 轻状态与导航组件，完成后等待人工验收，P15 尚未完成
+> 当前状态：首批 `MyTopics`/`MyPosts` 已在 `6ab4c465` 提交；两组轻量组件已形成 `016ca083`、`dd514178`、`403e3f3b`、`594215b7` 检查点；用户中心 Redux 页面与壳层组已形成代码检查点 `32ff97d8`，真实页面/API 验收仍开放，P15 尚未完成
 
 ## 唯一大事
 
-将仍依赖 Redux、Router 或复杂 lifecycle 的 React class 按风险分组迁为函数组件，并随批次归入 `app/pages/features/entities/shared` owner。当前已完成首批 route-aware 页面、第二组 13 个无 Redux 简单 class，并实施第三组 9 个无 Redux 轻状态与导航 class；P15 尚未完成。
+将仍依赖 Redux、Router 或复杂 lifecycle 的 React class 按风险分组迁为函数组件，并随批次归入 `app/pages/features/entities/shared` owner。当前已完成首批 route-aware 页面、第二组 13 个无 Redux 简单 class、第三组 9 个无 Redux 轻状态与导航 class，并实施第四组 5 个用户中心 Redux page/layout class；P15 尚未完成。
 
 ## 已完成的无 Redux 简单组件组
 
@@ -14,7 +14,7 @@
 - `DocumentTitle` 使用 `useEffect`；修复 `MessagePerson` 修改 props 和用户生日格式异常时的空匹配崩溃；
 - 建立逐组件对照、class 清单、文件映射、静态证据和人工清单。
 
-## 本轮允许范围
+## 已完成的无 Redux 轻状态与导航组件组
 
 - 迁移根 Pager 的两个 class、用户中心 Pager、三个主题列表项、Topic breadcrumb、AwardInfo 和 FocusUserArea，共 9 个 class；
 - 通用 Pager 只使用一个 `useState`，不增加同步 props 的 effect；
@@ -23,9 +23,19 @@
 - 修复用户中心 Pager 的重复空 key，移除目标组件内的 render 调试日志；
 - 建立逐组件对照、行为变化记录、AST 证据和人工清单。
 
+## 本轮允许范围
+
+- 迁移 `UserCenterBeforeConnect`、`UserCenterExact`、`Following`、`Fans`、`Boards`，共 5 个 class；
+- 使用 `useAppSelector`、`useAppDispatch`、`useParams` 和 `useEffect`，移除目标组件的 `connect`、`withRouter` 和 class route props；
+- 对关注/粉丝页复用既有 `parseUserCenterPage`，并分离页签、路由取数和视口副作用；
+- 保留 legacy `Navigation`、`MyFollowingsUser`、`MyFavoritesBoard` 等未迁移子组件；
+- 旧路径保持 default facade，Router lazy import 与直接 owner 调用方改用新 page 窄入口；
+- 建立逐组件对照、class 清单、文件映射、静态证据与人工清单。
+
 ## 本轮禁止范围
 
-- 除通用 Pager 的单一跳转页码 state 外，不迁移 Redux、请求、timer、Modal mutation、复杂 lifecycle 或本轮外 class；
+- 不迁移用户中心侧边 `Navigation`、`MyFollowingsUser`、`MyFavoritesBoard`、头像、收藏 mutation、公共用户详情壳、`ErrorControl` 或本轮外 class；
+- 不改动 thunk、API、Redux 结构、全局 `userInfo.isLoading` 共享事实源或请求取消策略；
 - 不迁移 `FocusBoardArea`/`FocusTopicArea` 的请求、缓存、滚动监听、版面点击与双击逻辑；
 - 不删除全局 `legacy-route-props`、`RouteComponent` 或 `navigation-prompt`；
 - 不改变公开 URL、API、Redux state、样式、主题、依赖或冻结 UBB/editor；
@@ -34,8 +44,8 @@
 
 ## 本轮完成条件
 
-1. 本轮 9 个目标 class 均由具名函数承接，旧文件只保留兼容导出；
-2. 新 owner 没有 Redux/Store 依赖；只有通用 Pager 持有单一跳转页码 state；
+1. 本轮 5 个目标 class 均由具名函数承接，旧文件只保留兼容导出；
+2. 新 owner 通过 typed hooks 消费既有 Redux，不含 `connect`、Store 直接读取或 legacy Router props；
 3. 每个内部批次两套 TypeScript、diff 与静态审计通过，整组正式构建通过；
-4. AST class 总数从 136 降到 127；排除 `ErrorBoundary` 后仍有 126 个 P15 目标；
-5. 保留未暂存 diff 并停止，等待真实页面/API 验收、diff 审核和提交授权。
+4. AST class 总数从 127 降到 122；排除 `ErrorBoundary` 后仍有 121 个 P15 目标；
+5. 代码与文档分别形成可审阅的本地检查点并停止；真实页面/API 验收继续作为独立门禁。

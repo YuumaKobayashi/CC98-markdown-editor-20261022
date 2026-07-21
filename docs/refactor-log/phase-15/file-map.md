@@ -32,3 +32,14 @@
 | `Focus/FocusUserArea` | `pages/focus` | 保留具名 re-export，Router lazy import 改用 page 入口 |
 
 通用 Pager 的 Board/Topic/Message 调用方、用户中心 Pager 调用方和五个 topic 叶子的直接调用方均改用新窄入口；旧 facade 留待 P21 删除。
+
+## 用户中心 Redux 页面与壳层组
+
+| 旧位置 | 新 owner | 兼容方式 |
+|---|---|---|
+| `UserCenter/UserCenter` | `pages/user-center/layout` | 保留 default re-export；Router 直接 lazy layout 入口 |
+| `UserCenter/Exact` | `pages/user-center/overview` | 保留 default re-export；Router lazy named `UserCenterOverview` |
+| `UserCenter/MyFollowings`、`MyFans` | `pages/user-center/my-followings`、`my-fans` | 保留 default re-export；Router 直接 lazy page 入口 |
+| `UserCenter/MyFavoritesBoards` | `pages/user-center/custom-boards` | 保留 default re-export；Router 直接 lazy page 入口 |
+
+未迁移的 `Navigation`、`MyFollowingsUser`、`MyFavoritesBoard` 继续经 legacy 路径由新 page owner 消费。

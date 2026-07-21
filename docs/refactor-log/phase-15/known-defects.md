@@ -30,3 +30,10 @@
 - `P15-FOCUS-001`（已修复）：Focus 页签选中状态由三个子页挂载副作用竞争维护，收藏页还使用 `useLayoutEffect`；现由布局按 pathname 唯一派生，支持 deep link 与 back/forward。
 - 通用 Pager 的 Go 输入仍是非受控输入，`nextPage` 仍按旧合同只在组件实例创建时取当前页；本组不主动改变该交互语义。
 - `FocusBoardArea`/`FocusTopicArea` 仍包含旧请求、缓存、滚动监听和 jQuery 事件绑定，留待后续高风险小批迁移。
+
+## 用户中心 Redux 页面与壳层组
+
+- `P15-USERCENTER-004`（已修复）：关注/粉丝页过去接受负数页码并在首次进入不滚动；现复用既有正整数页码合同，首次进入和分页变化均滚动到顶部。
+- `P15-USERCENTER-005`（已保留）：用户中心多个页面继续共享 `userInfo.isLoading`，并且 thunk 不提供取消/请求序号；本组不改变跨页面加载态竞争与陈旧响应风险。
+- `P15-USERCENTER-006`（已保留）：关注/粉丝 Pager 过去忽略已从 Redux 读取的 `hasTotal`，始终传入 `true`；本组保持该公开展示合同，不在迁移中推断分页语义。
+- 关注版面仍由 legacy `MyFavoritesBoard` 处理关注/取关 mutation；关注/粉丝用户项仍由 legacy `MyFollowingsUser` 处理 follow mutation，留待各自高风险批次。

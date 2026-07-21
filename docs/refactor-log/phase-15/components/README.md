@@ -24,5 +24,10 @@
 - [`topic-breadcrumb.md`](./topic-breadcrumb.md)
 - [`topic-award-info.md`](./topic-award-info.md)
 - [`focus-user-area.md`](./focus-user-area.md)
+- [`user-center-layout.md`](./user-center-layout.md)
+- [`user-center-overview.md`](./user-center-overview.md)
+- [`my-followings.md`](./my-followings.md)
+- [`my-fans.md`](./my-fans.md)
+- [`user-favorite-boards.md`](./user-favorite-boards.md)
 
 审核结论由用户完成人工页面验收后填写。

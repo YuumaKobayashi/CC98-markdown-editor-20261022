@@ -36,3 +36,11 @@
 - 之前：Topic breadcrumb 在 mount/update 把四个 props 字段复制到 state，首个 commit 使用空 state；现在：直接从当前 props 派生 URL 和文案，不产生额外 render 或陈旧副本。
 - 之前：AwardInfo 由 `withRouter` 注入 history，并在 render 输出 props；现在：使用 `useNavigate` 的具名 handler，DOM、目标 URL 与两处点击行为不变。
 - 之前：Focus board/user/favorite 子页面各自在挂载后修改父级页签 class，其中收藏页使用 `useLayoutEffect`；现在：`FocusLayout` 根据 pathname 同步计算唯一 active 页签，`/focus` 默认 board，deep link 和 back/forward 不依赖子组件副作用。
+
+## 用户中心 Redux 页面与壳层组
+
+- 之前：用户中心认证壳与个人主页由 `connect` class 承接；现在：两个 page owner 用 typed selector/dispatch 表达登录态、用户资料与 action 依赖。`LogOut`、标题、Navigation、Outlet、资料、头像和近期动态的 JSX 结构不变。
+- 之前：个人主页 `componentDidMount` 先切到 `profile`，再刷新当前用户信息；现在：两个按声明顺序运行的 `useEffect` 保持相同 dispatch 顺序。
+- 之前：我的关注/粉丝由 `componentWillMount` 取数、`componentWillReceiveProps` 比对 Router props 后滚动和重取；现在：页签、当前页取数和视口各自由真实依赖 effect 表达，使用既有正整数页码解析。
+- 有意变化：关注与粉丝页首次进入也滚动到顶部；无效或非正页码回退第 1 页，和已迁移的主题/回复页保持一致。
+- 之前：关注版面在 constructor 中先请求再切换页签；现在：两个 effect 按相同顺序 dispatch。列表切片、分隔线、loading、空态和原卡片组件不变。

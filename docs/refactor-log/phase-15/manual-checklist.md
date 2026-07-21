@@ -62,14 +62,35 @@
 - [ ] 评分信息中的头像和用户名均导航到原用户 URL，评分内容与理由显示正常；
 - [ ] 真实 API、登录态、主题、CSS 和父级 class 组件行为无回归。
 
+## 用户中心 Redux 页面与壳层组机械检查
+
+- [x] 三个内部批次实现完成；
+- [x] 每批 `npm run typecheck` 成功；
+- [x] 每批 `git diff --check` 成功；
+- [x] 每批目标静态审计无 class、`connect`、Store 直接读取、legacy route props、`React.FC`、`isFirstCommit` 或 `useLayoutEffect`；
+- [x] AST 确认 class 总数从 127 降到 122，5 个目标符号全部为 0；
+- [x] 整组最终 `npm run build` 成功；
+- [x] 构建后最终 `npm run typecheck` 与 `git diff --check` 成功。
+
+## 用户中心 Redux 页面与壳层组人工验收
+
+- [ ] 未登录访问 `/usercenter` 保持原未登录页面、标题和登录链接；登录后壳层标题、侧栏、Outlet 和 Footer 正常；
+- [ ] `/usercenter` 个人主页资料、头像、近期主题/回复、loading 与真实刷新请求正常，当前页签为 profile；
+- [ ] `/usercenter/myfollowings`、`/2`、非法页码、back/forward 均只按当前页请求，首次进入和翻页后回到顶部；
+- [ ] `/usercenter/myfans`、`/2`、非法页码、back/forward 均只按当前页请求，首次进入和翻页后回到顶部；
+- [ ] 两页的空态、分页 URL、`hasTotal` 显示、用户卡片和 follow mutation 行为不变；
+- [ ] `/usercenter/mycustomboards` 的 loading、空态、卡片、分隔线、关注/取关操作和真实 API 正常；
+- [ ] 快速切换用户中心页面时无可观察的陈旧请求覆盖或异常 loading；该风险仍需结合真实 API 人工确认。
+
 ## 退出门禁
 
 - [x] 用户已授权 P15 首批实现与目标组件内的逻辑优化；
 - [x] 用户已授权连续完成无 Redux 简单组件组；
 - [x] 用户已授权连续完成无 Redux 轻状态与导航组件组；
+- [x] 用户已授权连续完成用户中心 Redux 页面与壳层组；
 - [ ] 用户已完成人工验收；
-- [ ] 用户审核本轮未提交代码与文档 diff；
-- [ ] 用户授权本轮代码与文档形成阶段性本地提交；
+- [x] 用户审核本轮未提交代码与文档 diff；
+- [x] 用户授权本轮代码与文档形成阶段性本地提交；
 - [ ] 用户另行授权下一批。
 
 阶段性提交不表示 P15 完成；机械检查不能替代真实浏览器、登录态与 API 验收。
