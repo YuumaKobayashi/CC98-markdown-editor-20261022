@@ -100,27 +100,22 @@ const routes: RouteObject[] = [
       },
       {
         path: "usercenter",
-        lazy: lazyDefault(
-          () => import("@legacy/Components/UserCenter/UserCenter")
-        ),
+        lazy: lazyDefault(() => import("@pages/user-center/layout")),
         children: [
           {
             index: true,
-            lazy: lazyDefault(
-              () => import("@legacy/Components/UserCenter/Exact")
+            lazy: lazyNamed(
+              () => import("@pages/user-center/overview"),
+              "UserCenterOverview"
             ),
           },
           {
             path: "myfollowings/:page?/*",
-            lazy: lazyDefault(
-              () => import("@legacy/Components/UserCenter/MyFollowings")
-            ),
+            lazy: lazyDefault(() => import("@pages/user-center/my-followings")),
           },
           {
             path: "myfans/:page?/*",
-            lazy: lazyDefault(
-              () => import("@legacy/Components/UserCenter/MyFans")
-            ),
+            lazy: lazyDefault(() => import("@pages/user-center/my-fans")),
           },
           {
             path: "mytopics/:page?/*",
@@ -169,9 +164,7 @@ const routes: RouteObject[] = [
           },
           {
             path: "mycustomboards/*",
-            lazy: lazyDefault(
-              () => import("@legacy/Components/UserCenter/MyFavoritesBoards")
-            ),
+            lazy: lazyDefault(() => import("@pages/user-center/custom-boards")),
           },
           {
             path: "transferwealth/*",
