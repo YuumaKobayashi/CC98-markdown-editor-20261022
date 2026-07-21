@@ -52,21 +52,21 @@ const routes: RouteObject[] = [
       {
         path: "topic/hot-monthly",
         lazy: lazyNamed(
-          () => import("@legacy/Components/Topic/Topic-Hot-Monthly"),
+          () => import("@pages/hot-topics/monthly"),
           "MonthlyHotTopic"
         ),
       },
       {
         path: "topic/hot-weekly",
         lazy: lazyNamed(
-          () => import("@legacy/Components/Topic/Topic-Hot-Weekly"),
+          () => import("@pages/hot-topics/weekly"),
           "WeeklyHotTopic"
         ),
       },
       {
         path: "topic/hot-history",
         lazy: lazyNamed(
-          () => import("@legacy/Components/Topic/Topic-Hot-History"),
+          () => import("@pages/hot-topics/history"),
           "HistoryHotTopic"
         ),
       },

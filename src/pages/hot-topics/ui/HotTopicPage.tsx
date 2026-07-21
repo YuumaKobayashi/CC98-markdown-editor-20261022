@@ -1,0 +1,76 @@
+import * as React from "react";
+
+import { FocusTopicItem } from "@entities/topic";
+import { getMonthlyHotTopic } from "@entities/topic/api/service";
+import type { FocusTopic } from "@legacy/Props/FocusTopic";
+import DocumentTitle from "@shared/ui/document-title";
+
+export type HotTopicKind = "weekly" | "monthly" | "history";
+
+interface HotTopicPageProps {
+  breadcrumb: React.ReactNode;
+  kind: HotTopicKind;
+  title: string;
+}
+
+/**
+ * 单个主题数据转换成单个热门话题组件
+ */
+const renderFocusTopic = (item: FocusTopic) => (
+  <FocusTopicItem
+    key={item.id}
+    title={item.title}
+    hitCount={item.hitCount}
+    id={item.id}
+    boardId={item.boardId}
+    boardName={item.boardName}
+    replyCount={item.replyCount}
+    userId={item.userId}
+    userName={item.userName}
+    portraitUrl={item.portraitUrl}
+    time={item.time}
+    likeCount={item.likeCount}
+    dislikeCount={item.dislikeCount}
+    lastPostUser={item.lastPostUser}
+    lastPostTime={item.lastPostTime}
+    tag1={item.tag1}
+    tag2={item.tag2}
+    floorCount={item.floorCount}
+    contentType={item.contentType}
+    mediaContent={item.mediaContent}
+  />
+);
+
+export function HotTopicPage({ breadcrumb, kind, title }: HotTopicPageProps) {
+  const [topics, setTopics] = React.useState<FocusTopic[]>([]);
+
+  React.useEffect(() => {
+    let ignoreResult = false;
+
+    const loadTopics = async () => {
+      const nextTopics = await getMonthlyHotTopic(kind);
+      if (!ignoreResult) {
+        setTopics(nextTopics);
+      }
+    };
+
+    void loadTopics();
+    return () => {
+      ignoreResult = true;
+    };
+  }, [kind]);
+
+  return (
+    <div className="focus-root">
+      <DocumentTitle title={`${title} - CC98论坛`} />
+      <div className="focus">
+        {breadcrumb}
+        <div className="focus-topic-area">
+          <div className="focus-topic-topicArea">
+            {topics.map(renderFocusTopic)}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
