@@ -18,3 +18,11 @@
 - 在允许子进程的同一工作树重跑成功，共转换 3,880 个模块；
 - 生成新的/更新后的 `document-title`、`feedback`、`focus layout`、`site-manage`、`post`、`topic` 等动态块；
 - 既有 Sass `@import`、Spectrum 旧 CSS、plugin timing 与大 chunk 警告继续存在，本组未修改。
+
+## 无 Redux 轻状态与导航组件组构建
+
+- 本组未启动 Node dev/preview server，没有 PID、端口或回收事项；
+- 沙箱内正式构建在 Vite 配置加载阶段因 Windows 子进程策略报 `spawn EPERM`；
+- 在允许子进程的同一工作树重跑成功，共转换 3,882 个模块；
+- 生成/更新 `pagination`、`topic`、`focus`、Board、Message 和用户中心相关动态块；
+- 既有 Sass `@import`、Spectrum 旧 CSS、plugin timing 与大 chunk 警告继续存在，本组未修改。

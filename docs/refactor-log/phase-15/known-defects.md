@@ -21,3 +21,12 @@
 - Notice 仍依赖固定 DOM id、CSS class 与外部 jQuery show/hide 合同；本轮只迁 owner，不重构该 ABI。
 - `ExactActivitiesTopics`、SiteManage 的 Announcement/Advertisement 以及冻结 UBB 仍是 legacy 子树；本轮 wrapper 迁移不代表这些子组件完成 P15。
 - 已登记的零调用 class 只进入 P21 候选，不在迁移中顺便删除。
+
+## 无 Redux 轻状态与导航组件组
+
+- `P15-PAGER-001`（已修复）：用户中心 Pager 在总页数不超过 7 时为所有页码元素使用相同空 key；现改为稳定的 `href + page` key，并移除 render 调试日志。
+- `P15-TOPIC-001`（已修复）：匿名用户链接和无标签搜索项在旧实现首次绘制后才由 jQuery 修正，可能短暂显示错误的可点击/标签状态；现由 props 在首次 render 声明式决定。仍保留“主题作者匿名时同时禁用最后回复用户链接”的既有合同。
+- `P15-TOPIC-002`（已修复）：Topic breadcrumb 把 props 复制到 state，首次 commit 为空且更新需额外 render；现直接读取当前 props。
+- `P15-FOCUS-001`（已修复）：Focus 页签选中状态由三个子页挂载副作用竞争维护，收藏页还使用 `useLayoutEffect`；现由布局按 pathname 唯一派生，支持 deep link 与 back/forward。
+- 通用 Pager 的 Go 输入仍是非受控输入，`nextPage` 仍按旧合同只在组件实例创建时取当前页；本组不主动改变该交互语义。
+- `FocusBoardArea`/`FocusTopicArea` 仍包含旧请求、缓存、滚动监听和 jQuery 事件绑定，留待后续高风险小批迁移。

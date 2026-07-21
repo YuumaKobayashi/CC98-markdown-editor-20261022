@@ -20,3 +20,15 @@
 | `Footer`、`DocumentTitle` | `app/layouts/footer`、`shared/ui/document-title` | 保留原具名/默认形状 |
 | `Focus/Focus`、`SiteManage/Index` | `pages/focus/layout`、`pages/site-manage` | Router 改为直接 lazy 新 owner |
 | `UserCenter/ExactActivities`、`ConfigSignature` | `pages/user-center/overview`、`features/account` | 默认/具名 re-export |
+
+## 无 Redux 轻状态与导航组件组
+
+| 旧位置 | 新 owner | 兼容方式 |
+|---|---|---|
+| 根 `Components/Pager.tsx` | `shared/ui/pagination` | 保留具名 `Pager` re-export |
+| `Components/UserCenter/Pager.tsx` | `pages/user-center/pagination` | 保留 default re-export |
+| `Focus/FocusTopicSingle`、`RecommendedTopicSingle`、`Search/SearchTopicSingle` | `entities/topic` | 旧具名符号映射到 `FocusTopicItem`、`RecommendedTopicItem`、`SearchTopicItem` |
+| `Topic/Topic-Category`、`Topic-AwardInfo` | `entities/topic` | 保留 `Category` 具名和 `AwardInfo` default 形状 |
+| `Focus/FocusUserArea` | `pages/focus` | 保留具名 re-export，Router lazy import 改用 page 入口 |
+
+通用 Pager 的 Board/Topic/Message 调用方、用户中心 Pager 调用方和五个 topic 叶子的直接调用方均改用新窄入口；旧 facade 留待 P21 删除。

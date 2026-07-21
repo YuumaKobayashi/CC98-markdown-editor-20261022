@@ -27,3 +27,12 @@
 - `MessagePerson` 不再把空 `lastContent` 写回 props 对象，而使用局部派生值；合法输入输出不变。
 - `UserProfile` 在生日字符串无法匹配 `YYYY-MM-DD` 时不再访问空匹配结果；正常生日、生日图标、UBB options 和资料展示不变。
 - Focus 与 SiteManage 的 Router URL、Outlet/子组件结构不变；Footer 链接、Notice DOM id/CSS class、签名字段名和回调顺序不变。
+
+## 无 Redux 轻状态与导航组件组
+
+- 之前：通用 Pager 由 `PageModel`/`Pager` 两个 class 组成，用户中心 Pager 是匿名 class；现在：分别由 `shared/ui/pagination` 和 `pages/user-center/pagination` 的具名函数承接。通用 Pager 的 `nextPage` 仍只在实例首次创建时取 `page`，没有新增 props 同步 effect。
+- 之前：用户中心总页数不超过 7 时每个 `<li>` 都使用空 key，并在 render 中输出 props；现在：使用稳定的 `href + page` key，并移除调试日志。页码窗口、disabled、首尾省略号、`hasTotal`、keyword 与 URL 保持不变。
+- 之前：匿名主题与无标签搜索结果先按可点击/可见 DOM 渲染，再由 `componentDidMount` + jQuery 删除属性或增加 `displaynone`；现在：首次 render 直接根据数据输出相同的最终属性和 class，不使用 effect。
+- 之前：Topic breadcrumb 在 mount/update 把四个 props 字段复制到 state，首个 commit 使用空 state；现在：直接从当前 props 派生 URL 和文案，不产生额外 render 或陈旧副本。
+- 之前：AwardInfo 由 `withRouter` 注入 history，并在 render 输出 props；现在：使用 `useNavigate` 的具名 handler，DOM、目标 URL 与两处点击行为不变。
+- 之前：Focus board/user/favorite 子页面各自在挂载后修改父级页签 class，其中收藏页使用 `useLayoutEffect`；现在：`FocusLayout` 根据 pathname 同步计算唯一 active 页签，`/focus` 默认 board，deep link 和 back/forward 不依赖子组件副作用。

@@ -15,5 +15,14 @@
 - [`site-manage.md`](./site-manage.md)
 - [`user-recent-activities.md`](./user-recent-activities.md)
 - [`config-signature.md`](./config-signature.md)
+- [`pagination-link.md`](./pagination-link.md)
+- [`pager.md`](./pager.md)
+- [`user-center-pager.md`](./user-center-pager.md)
+- [`focus-topic-item.md`](./focus-topic-item.md)
+- [`recommended-topic-item.md`](./recommended-topic-item.md)
+- [`search-topic-item.md`](./search-topic-item.md)
+- [`topic-breadcrumb.md`](./topic-breadcrumb.md)
+- [`topic-award-info.md`](./topic-award-info.md)
+- [`focus-user-area.md`](./focus-user-area.md)
 
 审核结论由用户完成人工页面验收后填写。

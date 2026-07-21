@@ -41,13 +41,35 @@
 - [ ] 发帖/回复/收藏/消息设置中的 Notice 仍由原 DOM id/CSS/jQuery 合同显示；
 - [ ] 生日、签名 UBB、权限颜色和用户资料字段显示正常。
 
+## 无 Redux 轻状态与导航组件组机械检查
+
+- [x] 三个内部批次实现完成；
+- [x] 每批 `npm run typecheck` 成功；
+- [x] 每批 `git diff --check` 成功；
+- [x] 每批目标静态审计无 class、Redux/Store、`connect`、legacy route props、`React.FC`、`isFirstCommit` 或 `useLayoutEffect`；
+- [x] Focus 页签路径不存在 jQuery DOM class mutation；
+- [x] AST 确认 class 总数从 136 降到 127，9 个目标符号全部为 0；
+- [x] 整组最终 `npm run build` 成功；受限沙箱因 `spawn EPERM` 失败，在允许子进程的同一工作树重跑成功；
+- [x] 构建后最终 `npm run typecheck` 与 `git diff --check` 成功。
+
+## 无 Redux 轻状态与导航组件组人工验收
+
+- [ ] Board、Topic、Message 的当前页、首尾页、前后页和超过 20 页时的 Go 输入正常；非法 Go 输入不改变目标页；
+- [ ] 用户中心主题、回复、关注、粉丝、收藏和历史分页在总页数小于等于 7、起始段、中间段、末尾段时正常；keyword 与 `hasTotal=false` 合同不变；
+- [ ] Focus、搜索、新主题、每周/月度/历史热门和推荐主题中的实名/匿名、标签/无标签、空标题、版面链接及最后回复锚点正常；
+- [ ] `/focus`、`/focus/board`、`/focus/user`、`/focus/favorite` 首次进入、deep link 与 back/forward 始终只有一个正确页签高亮；
+- [ ] Topic 普通阅读与 trace 页的 breadcrumb 首次显示完整，首页/版面/主题链接正确；
+- [ ] 评分信息中的头像和用户名均导航到原用户 URL，评分内容与理由显示正常；
+- [ ] 真实 API、登录态、主题、CSS 和父级 class 组件行为无回归。
+
 ## 退出门禁
 
 - [x] 用户已授权 P15 首批实现与目标组件内的逻辑优化；
 - [x] 用户已授权连续完成无 Redux 简单组件组；
+- [x] 用户已授权连续完成无 Redux 轻状态与导航组件组；
 - [ ] 用户已完成人工验收；
-- [x] 用户已审核本轮代码 diff；
-- [x] 用户已授权本轮代码与文档形成阶段性本地提交；
+- [ ] 用户审核本轮未提交代码与文档 diff；
+- [ ] 用户授权本轮代码与文档形成阶段性本地提交；
 - [ ] 用户另行授权下一批。
 
 阶段性提交不表示 P15 完成；机械检查不能替代真实浏览器、登录态与 API 验收。

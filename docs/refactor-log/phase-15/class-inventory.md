@@ -46,7 +46,19 @@ P15 目标为其中 150 个声明；首批迁移 `MyTopics`、`MyPosts` 两个�
 | 页面组合 | `Focus`、`SiteManage` | `pages/focus`、`pages/site-manage` | 已实现，待人工验收 |
 | 页面组合 | `ExactActivities`、`ConfigSignature` | `pages/user-center/overview`、`features/account` | 已实现，待人工验收 |
 
-TypeScript AST 复核确认 13 个目标声明均已消失，当前剩余 136 个非冻结 React class 声明，其中 `ErrorBoundary` 是唯一允许最终保留的例外；因此仍有 135 个 P15 目标待迁。
+TypeScript AST 复核确认 13 个目标声明均已消失；在 `dd514178` 检查点剩余 136 个非冻结 React class 声明，其中 `ErrorBoundary` 是唯一允许最终保留的例外，因此该检查点仍有 135 个 P15 目标待迁。
+
+## 无 Redux 轻状态与导航组件组
+
+| 批次 | 原符号 | 新 owner | 状态 |
+|---|---|---|---|
+| 分页 | `PageModel`、根 `Pager` | `shared/ui/pagination` | 已实现，待人工验收 |
+| 分页 | 用户中心 `Pager` | `pages/user-center/pagination` | 已实现，待人工验收 |
+| topic 展示 | `FocusTopicSingle`、`RecommendedTopicSingle`、`SearchTopicSingle` | `entities/topic` | 已实现，待人工验收 |
+| topic 导航 | Topic `Category`、`AwardInfo` | `entities/topic` | 已实现，待人工验收 |
+| Focus page | `FocusUserArea` | `pages/focus` | 已实现，待人工验收 |
+
+TypeScript AST 复核确认本组 9 个目标声明均已消失，当前剩余 127 个非冻结 React class 声明；排除最终保留的 `ErrorBoundary` 后，仍有 126 个 P15 目标待迁，因此 P15 尚未完成。
 
 ## P21 删除候选
 
