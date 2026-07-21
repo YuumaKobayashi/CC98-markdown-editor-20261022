@@ -32,5 +32,11 @@
 - [`user-center-navigation.md`](./user-center-navigation.md)
 - [`user-favorite-board-card.md`](./user-favorite-board-card.md)
 - [`user-follow-card.md`](./user-follow-card.md)
+- [`weekly-hot-topic.md`](./weekly-hot-topic.md)
+- [`weekly-hot-topic-category.md`](./weekly-hot-topic-category.md)
+- [`monthly-hot-topic.md`](./monthly-hot-topic.md)
+- [`monthly-hot-topic-category.md`](./monthly-hot-topic-category.md)
+- [`history-hot-topic.md`](./history-hot-topic.md)
+- [`history-hot-topic-category.md`](./history-hot-topic-category.md)
 
 审核结论由用户完成人工页面验收后填写。

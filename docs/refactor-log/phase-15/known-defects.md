@@ -44,3 +44,10 @@
 - `P15-USERCENTER-008`（已保留）：用户/版面关注操作没有请求取消或卸载保护；快速离开页面时请求仍会结束，本组不扩展全局 mutation 基础设施。
 - `P15-USERCENTER-009`（已保留）：侧栏回顶继续依赖 jQuery `animate` 以保持现有 500ms 行为；完整移除 jQuery 留给专门批次。
 - `P15-USERCENTER-010`（待后续修复）：`UserCenterNavigation` 当前直接把 `btn-show`/`btn-disappare` 动画类名保存为 React state，并在 document scroll 事件中切换；这是为保持旧行为而保留的表现层状态，不作为最终设计。后续与回顶 jQuery 清理一并改为语义化可见状态、由 render 派生 class、CSS transition 和原生滚动 API，同时补齐挂载时初始同步、234px 临界值、首次隐藏无闪烁及淡入/淡出/回顶手感的浏览器验收。
+
+## 热门主题同构页面组
+
+- `P15-HOTTOPIC-001`（已修复）：三个热门列表过去为 `FocusTopicItem` 缺少 React key；现使用稳定的 topic id。
+- `P15-HOTTOPIC-002`（已修复）：旧异步 `componentDidMount` 在页面卸载后仍可能 `setState`；现由 effect cleanup 忽略旧结果，不改变 API 请求本身。
+- `P15-HOTTOPIC-003`（已保留）：首次加载和请求失败仍只显示空白列表，没有 spinner、空态或重试入口；本组不扩展页面交互合同。
+- `ExactActivitiesPosts` 未发现运行时引用，登记为 P21 引用证明与删除候选，不为 class 计数而迁移。

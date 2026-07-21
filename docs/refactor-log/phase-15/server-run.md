@@ -42,3 +42,11 @@
 - 在允许子进程的同一工作树重跑成功，共转换 3,887 个模块；
 - 生成新的 `follow` 动态块，并更新 `layout`、`custom-boards`、`my-followings` 与 `my-fans` 块；
 - 既有 Sass `@import`、Spectrum 旧 CSS、plugin timing 与大 chunk 警告继续存在，本组未修改。
+
+## 热门主题同构页面组构建
+
+- 本组未启动 Node dev/preview server，没有 PID、端口或回收事项；
+- 沙箱内正式构建在 Vite 配置加载阶段因 Windows 子进程策略报 `spawn EPERM`；
+- 在允许子进程的同一工作树重跑成功，共转换 3,889 个模块；
+- 生成独立的 `weekly`、`monthly`、`history` 入口块和共享 `HotTopicPage` 块；
+- 既有 Sass `@import`、Spectrum 旧 CSS、plugin timing 与大 chunk 警告继续存在，本组未修改。

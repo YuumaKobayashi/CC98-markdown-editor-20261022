@@ -51,3 +51,10 @@
 - 之前：关注版面卡片 class 用三项 state 驱动关注/取关；现在：函数组件用单一局部状态对象和具名异步 handler 保持请求、状态文案、DOM 与 CSS class 合同。
 - 之前：关注/粉丝卡片通过无状态 `connect` 只注入 dispatch，并在相同 id 下用 `componentWillReceiveProps` 复制 props；现在：由 keyed 卡片实例从当前用户数据初始化状态，直接使用 typed dispatch，不重建 props 生命周期模拟器。
 - 缺陷修复：旧取关 handler 未 `await Utility.unfollowUser(...)`，Promise 恒为 truthy，网络失败也会立即显示成功并 dispatch；现在等待真实布尔结果，失败时保留关注状态并显示“取关失败”。
+
+## 热门主题同构页面组
+
+- 之前：周/月/历史热门各自复制一个 `componentDidMount` class、一个 breadcrumb class 和整套主题映射；现在：三个具名 page wrapper 通过共享 `HotTopicPage`/`HotTopicBreadcrumb` 提供相同 DOM 与数据字段。
+- 之前：mount 后异步结果无视组件是否已经卸载；现在：`useEffect` cleanup 标记旧结果，快速切换路由后不再更新已卸载页面。
+- 之前：`data.map(coverFocusPost)` 返回的主题项没有 React key；现在：使用稳定的 `topic.id`，不改变渲染 DOM 或顺序。
+- 未使用的 `from: 0` state 被移除；首次请求完成前仍显示空白列表，不新增 loading、空态或重试 UI。

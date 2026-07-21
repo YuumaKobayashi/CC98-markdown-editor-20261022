@@ -81,6 +81,16 @@ TypeScript AST 复核确认本组 5 个目标声明均已消失，当前剩余 1
 
 TypeScript AST 复核确认本组 3 个目标声明均已消失，当前剩余 119 个非冻结 React class 声明；排除最终保留的 `ErrorBoundary` 后，仍有 118 个 P15 目标待迁，因此 P15 尚未完成。
 
+## 热门主题同构页面组
+
+| 原符号 | 新 owner | 状态 |
+|---|---|---|
+| `Topic-Hot-Weekly/WeeklyHotTopic`、`Category` | `pages/hot-topics/weekly` | 已实现，待人工验收 |
+| `Topic-Hot-Monthly/MonthlyHotTopic`、`Category` | `pages/hot-topics/monthly` | 已实现，待人工验收 |
+| `Topic-Hot-History/HistoryHotTopic`、`Category` | `pages/hot-topics/history` | 已实现，待人工验收 |
+
+TypeScript AST 复核确认本组 6 个目标声明均已消失，当前剩余 113 个非冻结 React class 声明；排除最终保留的 `ErrorBoundary` 后，仍有 112 个 P15 目标待迁，因此 P15 尚未完成。
+
 ## P21 删除候选
 
-根 `Breadcrumb`、根 `Category/Test`、`MessageBar`、`FindIP`、`TopicReplyUserBar` 未发现运行时调用，本轮不为清零 class 而迁移。`CountDown` 只有 import 和注释 JSX，需在 P21 重新做引用/构建证明后决定删除。
+根 `Breadcrumb`、根 `Category/Test`、`MessageBar`、`FindIP`、`TopicReplyUserBar`、`ExactActivitiesPosts` 未发现运行时调用，本轮不为清零 class 而迁移。`CountDown` 只有 import 和注释 JSX，需在 P21 重新做引用/构建证明后决定删除。

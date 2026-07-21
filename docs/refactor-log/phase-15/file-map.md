@@ -51,3 +51,13 @@
 | `UserCenter/Navigation` | `pages/user-center/layout/ui/UserCenterNavigation` | 旧路径 default re-export；layout 改用本地 owner |
 | `UserCenter/MyFavoritesBoard` | `pages/user-center/custom-boards/ui/UserFavoriteBoardCard` | 旧路径 default re-export；关注版面 page 改用本地 owner |
 | `UserCenter/MyFollowingsUser` | `features/follow/ui/UserFollowCard` | 旧路径 default re-export；关注/粉丝 page 改用 feature 入口 |
+
+## 热门主题同构页面组
+
+| 旧位置 | 新 owner | 兼容方式 |
+|---|---|---|
+| `Topic/Topic-Hot-Weekly` | `pages/hot-topics/weekly` | 保留 `WeeklyHotTopic`、`Category` named re-export；Router 改用新入口 |
+| `Topic/Topic-Hot-Monthly` | `pages/hot-topics/monthly` | 保留 `MonthlyHotTopic`、`Category` named re-export；Router 改用新入口 |
+| `Topic/Topic-Hot-History` | `pages/hot-topics/history` | 保留 `HistoryHotTopic`、`Category` named re-export；Router 改用新入口 |
+
+三个入口共享 `pages/hot-topics/ui` 实现，但继续保持独立 lazy route module。

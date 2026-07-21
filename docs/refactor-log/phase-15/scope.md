@@ -1,10 +1,10 @@
 # P15 函数组件 C 范围
 
-> 当前状态：前四组已形成至 `312abe27` 的代码/文档检查点；第五组 3 个用户中心交互叶子已形成代码检查点 `607289f3`，文档本地提交已获授权，真实页面/API 验收仍开放，P15 尚未完成
+> 当前状态：前五组已形成至 `f47bd51a` 的代码/文档检查点；热门主题同构页面组代码检查点为 `8c53d6b5`，文档检查点获授权随本次提交形成；真实页面/API 验收仍开放，P15 尚未完成
 
 ## 唯一大事
 
-将仍依赖 Redux、Router 或复杂 lifecycle 的 React class 按风险分组迁为函数组件，并随批次归入 `app/pages/features/entities/shared` owner。当前已完成首批 route-aware 页面、第二组 13 个无 Redux 简单 class、第三组 9 个无 Redux 轻状态与导航 class、第四组 5 个用户中心 Redux page/layout class，并实施第五组 3 个用户中心交互叶子；P15 尚未完成。
+将仍依赖 Redux、Router 或复杂 lifecycle 的 React class 按风险分组迁为函数组件，并随批次归入 `app/pages/features/entities/shared` owner。当前已形成五组检查点，并完成第六组 6 个热门主题同构页面 class 的代码检查点；P15 尚未完成。
 
 ## 已完成的无 Redux 简单组件组
 
@@ -59,3 +59,12 @@
 - 不迁移头像、近期动态无限滚动、收藏页面、公共用户页或其他请求/Modal/复杂状态组件；
 - 不新增依赖，不使用 `connect`、`React.FC`、`isFirstCommit`、previous-props 模拟器或 `useLayoutEffect`；
 - 完成条件为 3 个目标 class 消失、AST 总数从 122 降至 119、两套类型检查和正式构建通过，并保留未暂存 diff 停在人工验收。
+
+## 当前热门主题同构页面组
+
+- 迁移周热门、月热门、历史热门三个页面及各自 breadcrumb，共 6 个 live class；
+- 共享 `HotTopicPage`、`HotTopicBreadcrumb`，并保留 weekly、monthly、history 三个独立 lazy 入口；
+- 使用依赖热门类型的 `useEffect` 取数，cleanup 忽略组件卸载后的旧结果；首次加载继续显示空白列表；
+- 保留热门 API、页面标题、breadcrumb、DOM/CSS、主题字段和三个公开 URL；补充稳定 topic key；
+- 随机推荐、近期动态无限滚动、Message 缓存页和其他复杂生命周期不在本组；
+- 完成条件为 6 个目标 class 消失、AST 总数从 119 降至 113、两套类型检查和正式构建通过，代码与文档分别形成本地检查点；人工验收继续作为独立门禁。
