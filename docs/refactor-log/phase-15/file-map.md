@@ -42,4 +42,12 @@
 | `UserCenter/MyFollowings`、`MyFans` | `pages/user-center/my-followings`、`my-fans` | 保留 default re-export；Router 直接 lazy page 入口 |
 | `UserCenter/MyFavoritesBoards` | `pages/user-center/custom-boards` | 保留 default re-export；Router 直接 lazy page 入口 |
 
-未迁移的 `Navigation`、`MyFollowingsUser`、`MyFavoritesBoard` 继续经 legacy 路径由新 page owner 消费。
+在该检查点尚未迁移的 `Navigation`、`MyFollowingsUser`、`MyFavoritesBoard` 仍经 legacy 路径消费；随后已由下述用户中心交互叶子组承接。
+
+## 用户中心交互叶子组
+
+| 旧位置 | 新 owner | 兼容方式 |
+|---|---|---|
+| `UserCenter/Navigation` | `pages/user-center/layout/ui/UserCenterNavigation` | 旧路径 default re-export；layout 改用本地 owner |
+| `UserCenter/MyFavoritesBoard` | `pages/user-center/custom-boards/ui/UserFavoriteBoardCard` | 旧路径 default re-export；关注版面 page 改用本地 owner |
+| `UserCenter/MyFollowingsUser` | `features/follow/ui/UserFollowCard` | 旧路径 default re-export；关注/粉丝 page 改用 feature 入口 |

@@ -36,4 +36,11 @@
 - `P15-USERCENTER-004`（已修复）：关注/粉丝页过去接受负数页码并在首次进入不滚动；现复用既有正整数页码合同，首次进入和分页变化均滚动到顶部。
 - `P15-USERCENTER-005`（已保留）：用户中心多个页面继续共享 `userInfo.isLoading`，并且 thunk 不提供取消/请求序号；本组不改变跨页面加载态竞争与陈旧响应风险。
 - `P15-USERCENTER-006`（已保留）：关注/粉丝 Pager 过去忽略已从 Redux 读取的 `hasTotal`，始终传入 `true`；本组保持该公开展示合同，不在迁移中推断分页语义。
-- 关注版面仍由 legacy `MyFavoritesBoard` 处理关注/取关 mutation；关注/粉丝用户项仍由 legacy `MyFollowingsUser` 处理 follow mutation，留待各自高风险批次。
+- 在该组检查点，关注版面仍由 legacy `MyFavoritesBoard` 处理关注/取关 mutation，关注/粉丝用户项仍由 legacy `MyFollowingsUser` 处理 follow mutation；随后已由下述交互叶子组迁移。
+
+## 用户中心交互叶子组
+
+- `P15-USERCENTER-007`（已修复）：`MyFollowingsUser.unfollow` 未等待异步请求，Promise 被直接视为成功，失败响应仍会切换按钮并更新 Redux；现仅在 `await unfollowUser(id)` 返回成功后更新状态和 dispatch，失败显示“取关失败”。
+- `P15-USERCENTER-008`（已保留）：用户/版面关注操作没有请求取消或卸载保护；快速离开页面时请求仍会结束，本组不扩展全局 mutation 基础设施。
+- `P15-USERCENTER-009`（已保留）：侧栏回顶继续依赖 jQuery `animate` 以保持现有 500ms 行为；完整移除 jQuery 留给专门批次。
+- `P15-USERCENTER-010`（待后续修复）：`UserCenterNavigation` 当前直接把 `btn-show`/`btn-disappare` 动画类名保存为 React state，并在 document scroll 事件中切换；这是为保持旧行为而保留的表现层状态，不作为最终设计。后续与回顶 jQuery 清理一并改为语义化可见状态、由 render 派生 class、CSS transition 和原生滚动 API，同时补齐挂载时初始同步、234px 临界值、首次隐藏无闪烁及淡入/淡出/回顶手感的浏览器验收。

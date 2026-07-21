@@ -29,5 +29,8 @@
 - [`my-followings.md`](./my-followings.md)
 - [`my-fans.md`](./my-fans.md)
 - [`user-favorite-boards.md`](./user-favorite-boards.md)
+- [`user-center-navigation.md`](./user-center-navigation.md)
+- [`user-favorite-board-card.md`](./user-favorite-board-card.md)
+- [`user-follow-card.md`](./user-follow-card.md)
 
 审核结论由用户完成人工页面验收后填写。

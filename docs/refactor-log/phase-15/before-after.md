@@ -44,3 +44,10 @@
 - 之前：我的关注/粉丝由 `componentWillMount` 取数、`componentWillReceiveProps` 比对 Router props 后滚动和重取；现在：页签、当前页取数和视口各自由真实依赖 effect 表达，使用既有正整数页码解析。
 - 有意变化：关注与粉丝页首次进入也滚动到顶部；无效或非正页码回退第 1 页，和已迁移的主题/回复页保持一致。
 - 之前：关注版面在 constructor 中先请求再切换页签；现在：两个 effect 按相同顺序 dispatch。列表切片、分隔线、loading、空态和原卡片组件不变。
+
+## 用户中心交互叶子组
+
+- 之前：侧栏 class 在 mount/unmount 手工绑定滚动监听；现在：`useEffect` 负责同一监听与清理，阈值、按钮 class、导航 URL 和 jQuery 500ms 回顶行为不变。
+- 之前：关注版面卡片 class 用三项 state 驱动关注/取关；现在：函数组件用单一局部状态对象和具名异步 handler 保持请求、状态文案、DOM 与 CSS class 合同。
+- 之前：关注/粉丝卡片通过无状态 `connect` 只注入 dispatch，并在相同 id 下用 `componentWillReceiveProps` 复制 props；现在：由 keyed 卡片实例从当前用户数据初始化状态，直接使用 typed dispatch，不重建 props 生命周期模拟器。
+- 缺陷修复：旧取关 handler 未 `await Utility.unfollowUser(...)`，Promise 恒为 truthy，网络失败也会立即显示成功并 dispatch；现在等待真实布尔结果，失败时保留关注状态并显示“取关失败”。
