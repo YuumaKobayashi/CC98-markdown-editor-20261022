@@ -9,7 +9,7 @@ import DocumentTitle from "../DocumentTitle";
 import { Route, Link, Routes } from "react-router";
 import TopicTitleAndContentState = State.TopicTitleAndContentState;
 import { BoardEvent } from "../../States/BoardEvent";
-import { Pager } from "../Pager";
+import { Pager } from "@shared/ui/pagination";
 import {
   NotFoundTopic,
   UnauthorizedTopic,

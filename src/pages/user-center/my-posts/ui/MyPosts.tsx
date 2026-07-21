@@ -10,12 +10,12 @@ import { useAppDispatch, useAppSelector } from "@app/store";
 import { UserRecentPostItem as Post } from "@entities/post";
 import * as Actions from "@legacy/Actions/UserCenter";
 import { getRecentPosts } from "@legacy/AsyncActions/UserCenter";
-import Pager from "@legacy/Components/UserCenter/Pager";
 import type { UserRecentPost } from "@legacy/States/AppState";
 import {
   parseUserCenterIsHot,
   parseUserCenterPage,
 } from "@pages/user-center/model/route-params";
+import { UserCenterPager as Pager } from "@pages/user-center/pagination";
 
 type RouteParams = {
   page?: string;

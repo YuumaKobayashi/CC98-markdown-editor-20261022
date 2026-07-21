@@ -83,9 +83,6 @@ export class FocusBoardArea extends React.Component<
       window.location.href = `/board/${boardId}`;
     });
 
-    $("#myFocusUser").removeClass("focus-title-hover");
-    $("#myFocusFavorite").removeClass("focus-title-hover");
-    $("#myFocusBoard").addClass("focus-title-hover");
   }
 
   convertFocusBoard = (item: FocusBoard) => {

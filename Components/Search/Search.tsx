@@ -2,7 +2,7 @@
 // for more information see the following page on the TypeScript wiki:
 // https://github.com/Microsoft/TypeScript/wiki/JSX
 import * as React from "react";
-import { SearchTopicSingle } from "./SearchTopicSingle";
+import { SearchTopicItem } from "@entities/topic";
 import { SearchState } from "../../States/SearchState";
 import * as Utility from "../../Utility";
 import { FocusTopic } from "../../Props/FocusTopic";
@@ -301,7 +301,7 @@ export class Search extends React.Component<{}, SearchState> {
 
 function coverFocusPost(item: FocusTopic) {
   return (
-    <SearchTopicSingle
+    <SearchTopicItem
       title={item.title}
       hitCount={item.hitCount}
       id={item.id}

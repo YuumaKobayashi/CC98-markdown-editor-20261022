@@ -1,11 +1,11 @@
 ﻿import * as React from 'react';
 import * as Utility from '../../Utility';
-import { Pager } from '../Pager';
+import { Pager } from '@shared/ui/pagination';
 import { RouteComponent } from '../RouteComponent';
 import { SendTopic } from './Topic-SendTopic';
 import { Reply } from './Topic-Reply';
 import { TopicInfo } from './Topic-TopicInfo';
-import { Category } from './Topic-Category';
+import { TopicBreadcrumb } from '@entities/topic';
 export const QuoteTraceContext = React.createContext(context => { });
 export class CurUserPost extends RouteComponent<
   { history },
@@ -237,7 +237,7 @@ export class CurUserPost extends RouteComponent<
             alignItems: 'center'
           }}
         >
-          <Category
+          <TopicBreadcrumb
             topicInfo={this.state.topicInfo}
             boardInfo={this.state.boardInfo}
             topicId={this.match.params.topicId}
@@ -276,7 +276,7 @@ export class CurUserPost extends RouteComponent<
             marginTop: '1rem'
           }}
         >
-          <Category
+          <TopicBreadcrumb
             topicInfo={this.state.topicInfo}
             boardInfo={this.state.boardInfo}
             topicId={this.match.params.topicId}

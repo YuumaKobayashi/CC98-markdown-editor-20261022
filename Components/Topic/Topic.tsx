@@ -4,8 +4,8 @@ import $ from 'jquery';
 import { withRouter } from '@app/router/legacy-route-props';
 import { RouteComponent } from '../RouteComponent';
 import { SendTopic } from './Topic-SendTopic';
-import { Category } from './Topic-Category';
-import { Pager } from '../Pager';
+import { TopicBreadcrumb } from '@entities/topic';
+import { Pager } from '@shared/ui/pagination';
 import { Reply } from './Topic-Reply';
 import { NotFoundTopic, UnauthorizedTopic, ServerError } from '../Status';
 import { TopicInfo } from './Topic-TopicInfo';
@@ -245,7 +245,7 @@ export class Post extends RouteComponent<{ history }, { topicid, page, totalPage
             <DocumentTitle title={`${this.state.topicInfo.title || "帖子"} - CC98论坛`} />
             <div className="column" style={{ width: "100%" }}>
                 <div className="row" style={{ width: "100%", justifyContent: 'space-between', alignItems: "center" }}>
-                    <Category topicInfo={this.state.topicInfo} boardInfo={this.state.boardInfo} topicId={this.match.params.topicid} />
+                    <TopicBreadcrumb topicInfo={this.state.topicInfo} boardInfo={this.state.boardInfo} topicId={this.match.params.topicid} />
                     <Pager page={this.state.page} url={pagerUrl} totalPage={this.state.totalPage} />
                 </div>
                 {tip}
@@ -256,7 +256,7 @@ export class Post extends RouteComponent<{ history }, { topicid, page, totalPage
             </QuoteContext.Provider>
             <div className="column" style={{ width: "100%" }}>
                 <div className="row" style={{ width: "100%", justifyContent: "space-between", marginTop: "2rem" }}>
-                    <Category topicInfo={this.state.topicInfo} boardInfo={this.state.boardInfo} topicId={this.match.params.topicid} />
+                    <TopicBreadcrumb topicInfo={this.state.topicInfo} boardInfo={this.state.boardInfo} topicId={this.match.params.topicid} />
                     <Pager page={this.state.page} url={pagerUrl} totalPage={this.state.totalPage} /></div>
             </div>
             {sendTopic}

@@ -1,7 +1,7 @@
 ﻿import * as React from "react";
 import { FocusTopic } from "../../Props/FocusTopic";
 import { FocusBoard } from "../../Props/FocusBoard";
-import { FocusTopicSingle } from "./FocusTopicSingle";
+import { FocusTopicItem } from "@entities/topic";
 import { FocusTopicAreaState } from "../../States/FocusTopicAreaState";
 import * as Utility from "../../Utility";
 import { Spin } from "antd";
@@ -206,7 +206,7 @@ export class FocusTopicArea extends React.Component<
  */
 function convertFocusPost(item: FocusTopic) {
   return (
-    <FocusTopicSingle
+    <FocusTopicItem
       key={item.id}
       title={item.title}
       hitCount={item.hitCount}

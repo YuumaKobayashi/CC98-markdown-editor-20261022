@@ -9,9 +9,9 @@ import { useAppDispatch, useAppSelector } from "@app/store";
 import { UserRecentTopicItem as Topic } from "@entities/topic";
 import * as Actions from "@legacy/Actions/UserCenter";
 import { getRecentTopics } from "@legacy/AsyncActions/UserCenter";
-import Pager from "@legacy/Components/UserCenter/Pager";
 import type { UserRecentTopic } from "@legacy/States/AppState";
 import { parseUserCenterPage } from "@pages/user-center/model/route-params";
+import { UserCenterPager as Pager } from "@pages/user-center/pagination";
 
 type RouteParams = {
   page?: string;

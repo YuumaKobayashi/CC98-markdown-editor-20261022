@@ -5,7 +5,7 @@
 import * as React from "react";
 import Topic from "./ExactFavTopic";
 import { UserRecentTopic } from "../../States/AppState";
-import Pager from "./Pager";
+import { UserCenterPager as Pager } from "@pages/user-center/pagination";
 import * as Actions from "../../Actions/UserCenter";
 import { connect } from "react-redux";
 import { RootState, RootAction } from "../../Store";

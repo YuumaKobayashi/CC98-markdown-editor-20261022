@@ -1,6 +1,6 @@
 ﻿import * as React from "react";
 import { FocusTopic } from "../../Props/FocusTopic";
-import { FocusTopicSingle } from "../Focus/FocusTopicSingle";
+import { FocusTopicItem } from "@entities/topic";
 import { CardTopicSingle } from "../Focus/CardTopicSingle";
 import { NewTopicAreaState } from "../../States/NewTopicAreaState";
 import * as Utility from "../../Utility";
@@ -411,7 +411,7 @@ export default connect(mapState, mapDispatch)(AllNewTopic);
  */
 function convertFocusPost(item: FocusTopic, index: number) {
   return (
-    <FocusTopicSingle
+    <FocusTopicItem
       key={`classic_topic_${item.id}`}
       title={item.title}
       hitCount={item.hitCount}

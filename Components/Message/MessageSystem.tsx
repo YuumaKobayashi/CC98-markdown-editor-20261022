@@ -5,7 +5,7 @@ import * as React from 'react';
 import { MessageSystemState } from '../../States/MessageSystemState';
 import { MessageSystembox, MessageSystemProps } from '@entities/message';
 import * as Utility from '../../Utility';
-import { Pager } from '../Pager';
+import { Pager } from '@shared/ui/pagination';
 import DocumentTitle from '../DocumentTitle';
 import Store from '../../Store';
 

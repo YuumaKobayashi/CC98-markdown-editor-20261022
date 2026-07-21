@@ -261,7 +261,7 @@ const routes: RouteObject[] = [
           {
             path: "user/*",
             lazy: lazyNamed(
-              () => import("@legacy/Components/Focus/FocusUserArea"),
+              () => import("@pages/focus"),
               "FocusUserArea"
             ),
           },

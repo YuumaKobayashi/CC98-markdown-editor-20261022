@@ -5,7 +5,7 @@
 import * as React from 'react';
 import { UserInfo } from '../../States/AppState';
 import MyFollowingsUser from './MyFollowingsUser';
-import Pager from './Pager';
+import { UserCenterPager as Pager } from '@pages/user-center/pagination';
 import * as Utility from '../../Utility';
 import * as Actions from '../../Actions/UserCenter';
 import { connect } from 'react-redux';

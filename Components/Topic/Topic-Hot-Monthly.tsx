@@ -1,6 +1,6 @@
 ﻿import * as React from "react";
 import { FocusTopic } from "../../Props/FocusTopic";
-import { FocusTopicSingle } from "../Focus/FocusTopicSingle";
+import { FocusTopicItem } from "@entities/topic";
 import { FocusTopicAreaState } from "../../States/FocusTopicAreaState";
 import * as Utility from "../../Utility";
 import { Link } from "react-router";
@@ -49,7 +49,7 @@ export class Category extends React.Component {
  */
 function coverFocusPost(item: FocusTopic) {
   return (
-    <FocusTopicSingle
+    <FocusTopicItem
       title={item.title}
       hitCount={item.hitCount}
       id={item.id}

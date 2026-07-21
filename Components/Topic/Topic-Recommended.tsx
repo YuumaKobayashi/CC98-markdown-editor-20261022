@@ -1,6 +1,6 @@
 import * as React from "react";
 import { RecommendedTopic } from "../../Props/RecommendedTopic";
-import { RecommendedTopicSingle } from "../Focus/RecommendedTopicSingle";
+import { RecommendedTopicItem } from "@entities/topic";
 import { RecommendedTopicAreaState } from "../../States/RecommendedTopicAreaState";
 import * as Utility from "../../Utility";
 import { Link } from "react-router";
@@ -115,7 +115,7 @@ export class AllRecommendedTopic extends React.Component<{}, RecommendedTopicAre
  */
 function convertRecommendedTopic(item: RecommendedTopic, index: number) {
     return (
-        <RecommendedTopicSingle
+        <RecommendedTopicItem
             key={item.topic.id}
             topic={item.topic}
             content={item.content}
