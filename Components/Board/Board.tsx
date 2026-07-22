@@ -16,7 +16,7 @@ import {
   UnauthorizedBoard,
   ServerError
 } from "../Status";
-import { AdsComponent } from "../MainPage";
+import { HomeAdvertisementCarousel } from "@pages/home/advertisement";
 import { isLogOn } from "../../Utility";
 import moment from "moment";
 import { Avatar, Button, List, Modal, Spin, message } from "antd";
@@ -822,7 +822,7 @@ export class ListButtonAndAds extends React.Component<{ boardInfo; adsUrl }> {
         {sendInfo}
         <div style={{ height: "6.25rem" }}>
           {" "}
-          <AdsComponent />
+          <HomeAdvertisementCarousel />
         </div>
       </div>
     );

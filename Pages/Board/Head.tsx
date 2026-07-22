@@ -3,7 +3,7 @@ import * as Utility from "../../Utility";
 import { Link } from "react-router";
 import { IBoard } from "@cc98/api";
 import { Button } from "antd";
-import { AdsComponent } from "../../Components/MainPage";
+import { HomeAdvertisementCarousel } from "@pages/home/advertisement";
 import { BoardAnnouncement } from "@pages/board";
 
 interface Props {
@@ -80,7 +80,7 @@ export default class extends React.Component<Props, State> {
           ) : (
             tip
           )}
-          <AdsComponent />
+          <HomeAdvertisementCarousel />
         </div>
       </div>
     );

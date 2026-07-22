@@ -1,7 +1,7 @@
 ﻿import * as React from "react";
 import * as Utility from "../../Utility";
 import { Link } from "react-router";
-import { AdsComponent } from "../MainPage";
+import { HomeAdvertisementCarousel } from "@pages/home/advertisement";
 import moment from "moment";
 import { NoticeMessage } from "../NoticeMessage";
 import { Modal, Select } from "antd";
@@ -241,7 +241,7 @@ export class TopicInfo extends React.Component<
           </div>
         </div>
         <div className="topicInfo-ads">
-          <AdsComponent />
+          <HomeAdvertisementCarousel />
         </div>
         <NoticeMessage
           text="已将分享内容复制到剪贴板"

@@ -6,6 +6,13 @@ export { RecommendedFunctionComponent } from "./ui/RecommendedFunctionComponent"
 export { SchoolSuggestionBox } from "./ui/SchoolSuggestionBox";
 export { SpecialOfferComponent } from "./ui/SpecialOfferComponent";
 export {
+  HomeAdvertisementCarousel,
+  HomeHotTopics,
+  HomePage,
+  HomeStatistics,
+  RecommendedReading,
+} from "./ui/HomePage";
+export {
   MainPageColumn,
   MainPageTopicMoreProps,
   MainPageTopicState,

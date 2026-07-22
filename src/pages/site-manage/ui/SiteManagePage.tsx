@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import Ad from "@legacy/Components/SiteManage/Advertisement";
-import Announcement from "@legacy/Components/SiteManage/Announcement";
+import { SiteAdvertisementEditor } from "../advertisement";
+import { SiteAnnouncementEditor } from "../announcement";
 
 export function SiteManage() {
   return (
@@ -11,8 +11,8 @@ export function SiteManage() {
       >
         全站管理
       </div>
-      <Announcement />
-      <Ad />
+      <SiteAnnouncementEditor />
+      <SiteAdvertisementEditor />
     </div>
   );
 }
