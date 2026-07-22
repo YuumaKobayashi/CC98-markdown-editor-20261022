@@ -1,10 +1,10 @@
 # P15 函数组件 C 范围
 
-> 当前状态：前五组已形成至 `f47bd51a` 的代码/文档检查点；热门主题同构页面组代码检查点为 `8c53d6b5`，文档检查点获授权随本次提交形成；真实页面/API 验收仍开放，P15 尚未完成
+> 当前状态：以 `82bf9fda` 为基线的首页、搜索与站务组件组已完成代码、文档及机械验证，保留未暂存 diff 等待人工验收；P15 尚未完成
 
 ## 唯一大事
 
-将仍依赖 Redux、Router 或复杂 lifecycle 的 React class 按风险分组迁为函数组件，并随批次归入 `app/pages/features/entities/shared` owner。当前已形成五组检查点，并完成第六组 6 个热门主题同构页面 class 的代码检查点；P15 尚未完成。
+将仍依赖 Redux、Router 或复杂 lifecycle 的 React class 按风险分组迁为函数组件，并随批次归入 `app/pages/features/entities/shared` owner。当前批次已迁移首页、搜索与站务领域的 11 个 live class；真实页面/API 验收仍开放，P15 尚未完成。
 
 ## 已完成的无 Redux 简单组件组
 
@@ -68,3 +68,12 @@
 - 保留热门 API、页面标题、breadcrumb、DOM/CSS、主题字段和三个公开 URL；补充稳定 topic key；
 - 随机推荐、近期动态无限滚动、Message 缓存页和其他复杂生命周期不在本组；
 - 完成条件为 6 个目标 class 消失、AST 总数从 119 降至 113、两套类型检查和正式构建通过，代码与文档分别形成本地检查点；人工验收继续作为独立门禁。
+
+## 当前首页、搜索与站务组件组
+
+- 以 `82bf9fda` 为基线，迁移首页 5 个、搜索 4 个、站务 2 个 live React class；
+- 首页归入 `pages/home`，搜索保持 topic/board 两个独立 page 入口，站务编辑器归入既有 `pages/site-manage` owner；
+- 搜索改为路由与显式请求状态驱动，首页和公告的 mount 请求使用 effect cleanup，广告轮播 timer 正确清理；
+- 保留公开 URL、API、缓存、DOM/CSS、旧导出和冻结 UBB；不新增 Redux、依赖或 Router bridge；
+- 零调用 `RecommendedBoardComponent` 继续作为 P21 删除候选，不为凑足 12 个迁移；
+- 完成条件为 11 个目标 class 消失、AST 总数从 113 降至 102、两套类型检查和正式构建通过；人工验收继续独立开放。

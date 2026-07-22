@@ -51,3 +51,15 @@
 - `P15-HOTTOPIC-002`（已修复）：旧异步 `componentDidMount` 在页面卸载后仍可能 `setState`；现由 effect cleanup 忽略旧结果，不改变 API 请求本身。
 - `P15-HOTTOPIC-003`（已保留）：首次加载和请求失败仍只显示空白列表，没有 spinner、空态或重试入口；本组不扩展页面交互合同。
 - `ExactActivitiesPosts` 未发现运行时引用，登记为 P21 引用证明与删除候选，不为 class 计数而迁移。
+
+## 首页、搜索与站务组件组
+
+- `P15-HOME-001`（已修复）：广告组件初始化读取 `mainAds`，后续请求和登录清理使用 `mainAds-v2`；现统一为 `mainAds-v2`。
+- `P15-HOME-002`（已修复）：首页与广告异步结果可能在卸载后更新，广告 interval 依赖 class 实例清理；现分别由 effect cleanup 保护。
+- `P15-SEARCH-001`（已修复）：旧代码注释要求最多五个关键词，却用 `splice(5)` 取第五项之后的内容；现使用前五个关键词。
+- `P15-SEARCH-002`（已修复）：路由变化会重复注册 scroll listener，旧请求可能覆盖新搜索，展示依赖 jQuery 修正；现使用 cleanup、请求序号和声明式状态。
+- `P15-SEARCH-003`（已修复）：搜索结果缺少稳定 key，版面空数组不会显示无结果；现以实体 id 为 key，并统一空态。
+- `P15-SITEMANAGE-001`（已修复）：公告成功提示 timer 未清理；现卸载时清理且忽略旧响应。
+- `P15-SITEMANAGE-002`（已修复）：栏目编辑直接修改 state 数组，且空列表新增访问 `data[0].id`；现不可变更新并用最大 id 加一。
+- 搜索 API 仍不支持 AbortSignal；本组通过请求序号忽略旧结果，但不会取消已发出的网络请求。
+- `RecommendedBoardComponent` 与 `SearchState` 继续留作 P21 引用证明/删除候选。

@@ -38,5 +38,16 @@
 - [`monthly-hot-topic-category.md`](./monthly-hot-topic-category.md)
 - [`history-hot-topic.md`](./history-hot-topic.md)
 - [`history-hot-topic-category.md`](./history-hot-topic-category.md)
+- [`home-page.md`](./home-page.md)
+- [`recommended-reading.md`](./recommended-reading.md)
+- [`home-hot-topics.md`](./home-hot-topics.md)
+- [`home-advertisement-carousel.md`](./home-advertisement-carousel.md)
+- [`home-statistics.md`](./home-statistics.md)
+- [`topic-search-page.md`](./topic-search-page.md)
+- [`topic-search-breadcrumb.md`](./topic-search-breadcrumb.md)
+- [`board-search-page.md`](./board-search-page.md)
+- [`board-search-breadcrumb.md`](./board-search-breadcrumb.md)
+- [`site-announcement-editor.md`](./site-announcement-editor.md)
+- [`site-advertisement-editor.md`](./site-advertisement-editor.md)
 
 审核结论由用户完成人工页面验收后填写。

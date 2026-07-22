@@ -61,3 +61,14 @@
 | `Topic/Topic-Hot-History` | `pages/hot-topics/history` | 保留 `HistoryHotTopic`、`Category` named re-export；Router 改用新入口 |
 
 三个入口共享 `pages/hot-topics/ui` 实现，但继续保持独立 lazy route module。
+
+## 首页、搜索与站务组件组
+
+| 旧位置 | 新 owner | 兼容方式 |
+|---|---|---|
+| `Components/MainPage` 五个 live class | `pages/home`、`pages/home/main`、`pages/home/advertisement` | 旧具名符号 re-export；首页 Router 和广告调用方改用窄入口 |
+| `Components/Search/Search` | `pages/search/topics` | 保留 `Search`、`Category` named re-export；Router 改用 topic search 入口 |
+| `Components/Search/SearchBoard` | `pages/search/boards` | 保留 `SearchBoard`、`Category` named re-export；Router 改用 board search 入口 |
+| `Components/SiteManage/Announcement`、`Advertisement` | `pages/site-manage/announcement`、`advertisement` | 保留原 default export；SiteManage 直接组合 owner |
+
+`States/SearchState` 和 `RecommendedBoardComponent` 本组不删除，留待 P21 重新做引用证明。

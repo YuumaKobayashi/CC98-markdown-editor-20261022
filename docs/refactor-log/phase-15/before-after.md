@@ -58,3 +58,11 @@
 - 之前：mount 后异步结果无视组件是否已经卸载；现在：`useEffect` cleanup 标记旧结果，快速切换路由后不再更新已卸载页面。
 - 之前：`data.map(coverFocusPost)` 返回的主题项没有 React key；现在：使用稳定的 `topic.id`，不改变渲染 DOM 或顺序。
 - 未使用的 `from: 0` state 被移除；首次请求完成前仍显示空白列表，不新增 loading、空态或重试 UI。
+
+## 首页、搜索与站务组件组
+
+- 之前：首页由五个 live class 分担 mount 请求、props 随机选择和 interval；现在：具名函数按数据加载、数据变化和 timer 三类职责使用独立 effect，并清理旧结果与 interval。
+- 之前：广告初始化读取 `mainAds`、请求读取 `mainAds-v2`；现在：统一使用现有登录清理流程认可的 `mainAds-v2`。
+- 之前：主题搜索用 `componentWillReceiveProps`、共享 storage、实例布尔值和 jQuery class mutation维护请求；现在：pathname query、显式状态和请求序号共同决定 UI，滚动监听有 cleanup。
+- 有意变化：超过五个关键词时使用前五个而非误取第六项之后；非法编码显示空态；主题/版面结果补充稳定 key。
+- 之前：站务公告 timer 不清理，栏目编辑器直接修改 state 数组且空列表新增会访问 `data[0]`；现在：timer/异步结果受保护，列表不可变更新，新 ID 为最大值加一。
