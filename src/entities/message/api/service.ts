@@ -158,7 +158,7 @@ export async function sortContactList(recentContact) {
       if (flag === 1) {
         chatMan.message = await getRecentMessage(chatMan.id, 0, 10);
         if (chatMan.message) {
-          chatMan.lastContent = chatMan.message[0];
+          chatMan.lastContent = chatMan.message[0]?.content ?? "";
         }
         chatMan.isRead = true;
         recentContact = [chatMan];
@@ -208,7 +208,7 @@ export async function sortContactList(recentContact) {
         if (flag === 1) {
           chatMan.message = await getRecentMessage(chatMan.id, 0, 10);
           if (chatMan.message) {
-            chatMan.lastContent = chatMan.message[0];
+            chatMan.lastContent = chatMan.message[0]?.content ?? "";
           }
           chatMan.isRead = true;
           let chatContact = [chatMan];
@@ -258,7 +258,7 @@ export async function sortContactList(recentContact) {
           };
           chatMan.message = await getRecentMessage(chatMan.id, 0, 10);
           if (chatMan.message) {
-            chatMan.lastContent = chatMan.message[0];
+            chatMan.lastContent = chatMan.message[0]?.content ?? "";
           }
           recentContact = [chatMan];
         }
@@ -316,7 +316,7 @@ export async function sortContactList(recentContact) {
             };
             chatMan.message = await getRecentMessage(chatMan.id, 0, 10);
             if (chatMan.message) {
-              chatMan.lastContent = chatMan.message[0];
+              chatMan.lastContent = chatMan.message[0]?.content ?? "";
             }
             let chatContact = [chatMan];
             recentContact = chatContact.concat(recentContact);

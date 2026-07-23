@@ -184,43 +184,43 @@ const routes: RouteObject[] = [
       {
         path: "message",
         lazy: lazyNamed(
-          () => import("@legacy/Components/Message/Message"),
-          "Message"
+          () => import("@pages/message/layout"),
+          "MessageLayout"
         ),
         children: [
           {
             index: true,
-            lazy: lazyNamedWithRouteProps(
-              () => import("@legacy/Components/Message/MessageResponse"),
-              "MessageResponse"
+            lazy: lazyNamed(
+              () => import("@pages/message/responses"),
+              "MessageResponsesPage"
             ),
           },
           {
             path: "response/:page?",
-            lazy: lazyNamedWithRouteProps(
-              () => import("@legacy/Components/Message/MessageResponse"),
-              "MessageResponse"
+            lazy: lazyNamed(
+              () => import("@pages/message/responses"),
+              "MessageResponsesPage"
             ),
           },
           {
             path: "attme/:page?/*",
-            lazy: lazyNamedWithRouteProps(
-              () => import("@legacy/Components/Message/MessageAttme"),
-              "MessageAttme"
+            lazy: lazyNamed(
+              () => import("@pages/message/mentions"),
+              "MessageMentionsPage"
             ),
           },
           {
             path: "system/:page?/*",
-            lazy: lazyNamedWithRouteProps(
-              () => import("@legacy/Components/Message/MessageSystem"),
-              "MessageSystem"
+            lazy: lazyNamed(
+              () => import("@pages/message/system"),
+              "MessageSystemPage"
             ),
           },
           {
             path: "message/:page?/*",
             lazy: lazyNamed(
-              () => import("@legacy/Components/Message/MessageMessage"),
-              "MessageMessage"
+              () => import("@pages/message/private-messages"),
+              "PrivateMessagesPage"
             ),
           },
           {
