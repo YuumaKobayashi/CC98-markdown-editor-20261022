@@ -72,3 +72,15 @@
 | `Components/SiteManage/Announcement`、`Advertisement` | `pages/site-manage/announcement`、`advertisement` | 保留原 default export；SiteManage 直接组合 owner |
 
 `States/SearchState` 和 `RecommendedBoardComponent` 本组不删除，留待 P21 重新做引用证明。
+
+## 消息与私信组件组
+
+| 旧位置 | 新 owner | 兼容方式 |
+|---|---|---|
+| `Message/Message` | `pages/message/layout` | 保留 `Message` named re-export；Router 改用 layout 窄入口 |
+| `Message/MessageResponse` | `pages/message/responses` | 保留旧符号；index/response 路由共用新入口 |
+| `Message/MessageAttme` | `pages/message/mentions` | 保留旧符号；Router 移除 route props bridge |
+| `Message/MessageSystem` | `pages/message/system` | 保留旧符号；Router 移除 route props bridge |
+| `Message/MessageMessage`、`MessageWindow` | `pages/message/private-messages` | 保留两个旧符号；Router 改用私信 page 入口 |
+
+`MessageWindowProps`、`MessageWindowState`、`MessageMessageState`、`MessageResponseState`、`MessageSystemState` 不再被 live owner 消费，留待 P21 引用清理。

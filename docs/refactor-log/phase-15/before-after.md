@@ -66,3 +66,11 @@
 - 之前：主题搜索用 `componentWillReceiveProps`、共享 storage、实例布尔值和 jQuery class mutation维护请求；现在：pathname query、显式状态和请求序号共同决定 UI，滚动监听有 cleanup。
 - 有意变化：超过五个关键词时使用前五个而非误取第六项之后；非法编码显示空态；主题/版面结果补充稳定 key。
 - 之前：站务公告 timer 不清理，栏目编辑器直接修改 state 数组且空列表新增会访问 `data[0]`；现在：timer/异步结果受保护，列表不可变更新，新 ID 为最大值加一。
+
+## 消息与私信组件组
+
+- 之前：消息 layout 直接读取 Store，四个子页通过 jQuery 竞争修改 active class；现在：typed selector 和 pathname 在一次 render 中确定未读数与唯一 active 页签。
+- 之前：三类通知 class 在 mount/update 复制取数逻辑，且任意页首次进入都可能误用第一页缓存；现在：共享分页实现只在第 1 页、对应未读数为零时读缓存。
+- 之前：联系人页在 render 中修改 DOM class，并通过未读 DOM class 推断是否清缓存；现在：Redux 未读数、联系人 id 和显式加载状态决定缓存及展示。
+- 之前：窗口反复原地 reverse 消息数组，每次 update 手工重绑 textarea 事件，发送 timer 不清理；现在：不可变数组、React 事件和 cleanup 管理相同行为。
+- 有意变化：无聊天对象发送不再访问空 props；切换联系人会清空旧草稿；消息 prepend 在绘制前恢复锚点；deep link 新联系人的 `lastContent` 保存字符串内容而非整条消息对象。

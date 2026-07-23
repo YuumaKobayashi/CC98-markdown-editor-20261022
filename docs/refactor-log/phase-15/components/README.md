@@ -49,5 +49,11 @@
 - [`board-search-breadcrumb.md`](./board-search-breadcrumb.md)
 - [`site-announcement-editor.md`](./site-announcement-editor.md)
 - [`site-advertisement-editor.md`](./site-advertisement-editor.md)
+- [`message-layout.md`](./message-layout.md)
+- [`message-responses.md`](./message-responses.md)
+- [`message-mentions.md`](./message-mentions.md)
+- [`message-system.md`](./message-system.md)
+- [`private-messages.md`](./private-messages.md)
+- [`private-conversation-window.md`](./private-conversation-window.md)
 
 审核结论由用户完成人工页面验收后填写。

@@ -102,6 +102,18 @@ TypeScript AST 复核确认本组 6 个目标声明均已消失，当前剩余 1
 
 TypeScript AST 复核确认本组 11 个 live React class 全部消失，当前剩余 102 个非冻结 React class 声明；排除最终保留的 `ErrorBoundary` 后，仍有 101 个 P15 目标待迁，因此 P15 尚未完成。`RecommendedBoardComponent` 保留为 P21 零调用删除候选。
 
+## 消息与私信组件组
+
+| 原符号 | 新 owner | 状态 |
+|---|---|---|
+| `Message/Message` | `pages/message/layout` | 已实现，待人工验收 |
+| `Message/MessageResponse` | `pages/message/responses` | 已实现，待人工验收 |
+| `Message/MessageAttme` | `pages/message/mentions` | 已实现，待人工验收 |
+| `Message/MessageSystem` | `pages/message/system` | 已实现，待人工验收 |
+| `Message/MessageMessage`、`MessageWindow` | `pages/message/private-messages` | 已实现，待人工验收 |
+
+TypeScript AST 复核确认本组 6 个目标声明均已消失，当前剩余 96 个非冻结 React class 声明；排除最终保留的 `ErrorBoundary` 后，仍有 95 个 P15 目标待迁，因此 P15 尚未完成。
+
 ## P21 删除候选
 
 根 `Breadcrumb`、根 `Category/Test`、`MessageBar`、`FindIP`、`TopicReplyUserBar`、`ExactActivitiesPosts` 未发现运行时调用，本轮不为清零 class 而迁移。`CountDown` 只有 import 和注释 JSX，需在 P21 重新做引用/构建证明后决定删除。

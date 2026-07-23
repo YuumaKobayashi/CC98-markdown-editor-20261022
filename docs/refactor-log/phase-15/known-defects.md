@@ -63,3 +63,15 @@
 - `P15-SITEMANAGE-002`（已修复）：栏目编辑直接修改 state 数组，且空列表新增访问 `data[0].id`；现不可变更新并用最大 id 加一。
 - 搜索 API 仍不支持 AbortSignal；本组通过请求序号忽略旧结果，但不会取消已发出的网络请求。
 - `RecommendedBoardComponent` 与 `SearchState` 继续留作 P21 引用证明/删除候选。
+
+## 消息与私信组件组
+
+- `P15-MESSAGE-001`（已修复）：通知子页用 jQuery 修改父 layout 页签，setting 没有对应逻辑；现由 pathname 唯一派生。
+- `P15-MESSAGE-002`（已修复）：通知页首次挂载不区分页码就读取第一页缓存；现仅第 1 页且对应未读数为零时复用。
+- `P15-MESSAGE-003`（已修复）：联系人缓存失效依赖未读计数 DOM class，联系人选中和更多状态依赖 jQuery；现已移除联系人 Web Storage，相关状态由 React 管理。
+- `P15-MESSAGE-004`（已修复）：会话消息数组原地 reverse，textarea 事件在每次 update 重绑且没有卸载清理，发送 timer 也未清理；现使用不可变数组、React 事件和 cleanup。
+- `P15-MESSAGE-005`（已修复）：`sortContactList` 为 deep link 新联系人把整条消息对象写入 `lastContent`；现写入消息 `content` 字符串并处理空消息。
+- `P15-MESSAGE-006`（已保留）：`readAll` 在私信/设置页无操作，成功读取单类通知后仍清零全部本地未读计数；本组不扩大 API/Redux 协议。
+- `P15-MESSAGE-007`（待后续修改）：聊天窗口在输入框已有内容时切换联系人，当前会清空旧草稿；后续应按联系人保留草稿缓存，切回联系人时恢复尚未发送的内容。
+- 消息 API 不接受 AbortSignal；通知翻页和联系人切换通过请求序号忽略旧结果，但不会取消网络请求。
+- 五个旧 state/props class 已无 live owner 消费，留待 P21 引用证明后删除。

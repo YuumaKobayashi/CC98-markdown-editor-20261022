@@ -77,3 +77,12 @@
 - 保留公开 URL、API、缓存、DOM/CSS、旧导出和冻结 UBB；不新增 Redux、依赖或 Router bridge；
 - 零调用 `RecommendedBoardComponent` 继续作为 P21 删除候选，不为凑足 12 个迁移；
 - 完成条件为 11 个目标 class 消失、AST 总数从 113 降至 102、两套类型检查和正式构建通过；人工验收继续独立开放。
+
+## 当前消息与私信组件组
+
+- 以 `e2ec8348` 为基线，迁移消息 layout、三类通知页、私信联系人页和会话窗口，共 6 个 live class；
+- layout 和三类通知页归入 `pages/message` 独立窄入口，联系人页与窗口共同归入 `pages/message/private-messages`；
+- 用 pathname/Redux 派生页签和未读数，用路由页码 effect 表达通知取数，用 React state/事件承接联系人、会话、编辑与上传；
+- 仅会话 prepend 后的滚动锚点恢复使用一次有依据的 `useLayoutEffect`，其余副作用使用普通 effect；
+- 保留消息 API、Redux、缓存键、公开 URL、DOM/CSS、实体展示、上传和旧导出，不修改冻结 UBB；
+- 完成条件为 6 个目标 class 消失、AST 总数从 102 降至 96、两套类型检查和正式构建通过；人工验收继续独立开放。

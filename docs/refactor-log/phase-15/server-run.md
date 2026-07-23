@@ -58,3 +58,11 @@
 - 在允许子进程的同一工作树重跑成功，共转换 3,893 个模块；
 - 生成新的 `HomePage`、`topics`、`boards` 入口块，并更新 `site-manage` 与共享 advertisement 块；
 - 既有 Sass `@import`、Spectrum 旧 CSS、plugin timing 与大 chunk 警告继续存在，本组未修改。
+
+## 消息与私信组件组构建
+
+- 本组未启动 Node dev/preview server，没有 PID、端口或回收事项；
+- 沙箱内正式构建在 Vite 配置加载阶段因 Windows 子进程策略报既知 `spawn EPERM`；
+- 在允许子进程的同一工作树重跑成功，共转换 3,899 个模块；
+- 生成独立的 layout、responses、mentions、system、private-messages 入口块；通知页面之间只复用普通页码计算函数，不再共享配置驱动组件；
+- 既有 Sass `@import`、Spectrum 旧 CSS、plugin timing 与大 chunk 警告继续存在，本组未修改。
