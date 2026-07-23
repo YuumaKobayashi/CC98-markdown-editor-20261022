@@ -1,10 +1,10 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { Outlet, useLocation } from "react-router";
+import { Outlet } from "react-router";
 
 import { Footer } from "@app/layouts/footer";
-import { Header } from "@legacy/Components/Header";
-import ErrorControl from "@legacy/Components/ErrorControl";
+import { Header } from "@app/layouts/header";
+import { NavigationErrorReset } from "@app/providers/navigation-error-reset";
 import * as Status from "@legacy/Components/Status";
 import type { errorKeys } from "@legacy/Reducers/Error";
 import type { RootState } from "@app/store";
@@ -14,21 +14,15 @@ type Props = {
   errorMessage: errorKeys;
 };
 
-function PersistentHeader() {
-  const { pathname } = useLocation();
-  return <Header pathname={pathname} />;
-}
-
 function AppShellBeforeConnect({ isError, errorMessage }: Props) {
   const ErrorStatus = Status[errorMessage];
 
   return (
     <div className="main-container">
-      <PersistentHeader />
-      <ErrorControl />
+      <Header />
+      <NavigationErrorReset />
       {!isError ? <Outlet /> : <ErrorStatus />}
       <Footer />
-      {/* <NotificationController />*/}
     </div>
   );
 }

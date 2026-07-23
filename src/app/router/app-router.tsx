@@ -305,9 +305,7 @@ const routes: RouteObject[] = [
       },
       {
         path: "logon",
-        lazy: lazyDefaultWithRouteProps(
-          () => import("@legacy/Components/LogOn")
-        ),
+        lazy: lazyDefault(() => import("@pages/auth/login")),
       },
       {
         path: "search/*",
