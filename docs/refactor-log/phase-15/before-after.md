@@ -74,3 +74,13 @@
 - 之前：联系人页在 render 中修改 DOM class，并通过未读 DOM class 推断是否清缓存；现在：Redux 未读数、联系人 id 和显式加载状态决定缓存及展示。
 - 之前：窗口反复原地 reverse 消息数组，每次 update 手工重绑 textarea 事件，发送 timer 不清理；现在：不可变数组、React 事件和 cleanup 管理相同行为。
 - 有意变化：无聊天对象发送不再访问空 props；切换联系人会清空旧草稿；消息 prepend 在绘制前恢复锚点；deep link 新联系人的 `lastContent` 保存字符串内容而非整条消息对象。
+
+## Header、登录、通知与错误控制组
+
+- 之前：Header 的 Redux、Router、storage 监听、搜索 DOM 状态和导航混在三个 class 中，匿名 window/document handler 从不移除；现在：具名函数通过 typed hooks 与 Router hooks 直接表达依赖，监听均在 effect cleanup 中移除。
+- 之前：顶部搜索类型、hover、展开和输入值由 jQuery/DOM 持有；现在：由 React state 声明式渲染，仍保留主题、全站、版内、用户、版面及双重 URI 编码合同。
+- 之前：登录页使用 `connect`、legacy history、jQuery 表单编码和未清理 timer；现在：使用 typed dispatch、受控输入、refs、`URLSearchParams`和 timer cleanup，成功后仍整页返回。
+- 之前：缺少返回地址时可能把页面导航到空值；现在：仅接受当前 origin 的有效返回地址，否则回退 `/`。
+- 之前：停用通知控制器的 SignalR、storage、focus 和 Notification 副作用集中在 class lifecycle 且监听不清理；现在：按职责拆分 effect 并清理，但组件仍未挂载，运行时继续不连接。
+- 停用通知源码中的点击导航改用标准 `notification.onclick`；由于 owner 无运行时消费者，本批不会触发浏览器通知。
+- 之前：`ErrorControl` 只在接收到 pathname 变化 props 时清错；现在：依赖当前 pathname 的普通 effect 在首次壳层挂载和后续导航时清错，不使用首次提交标记或 previous-props 模拟器。

@@ -164,3 +164,23 @@
 - [ ] 会话首次加载、切换、加载更早消息后的滚动锚点、发送成功/403、200ms 刷新和未读刷新正常；
 - [ ] 上传按钮、文件选择、剪贴板粘贴、拖放、多图片、非图片拒绝及失败提示正常；
 - [ ] 无联系人、空消息、快速切换联系人和快速离页无崩溃、旧结果覆盖或卸载更新警告。
+
+## Header、登录、通知与错误控制组机械检查
+
+- [x] 三个内部批次分别通过 `npm run typecheck` 与 `git diff --check`；
+- [x] 6 个目标均由具名函数承接，legacy 文件只保留兼容 export；
+- [x] 新 owner 无 class、`connect`、直接 Store、legacy route props、`React.FC`、`isFirstCommit`、`useLayoutEffect`或展示修正 jQuery；
+- [x] AppShell 未导入或挂载 `NotificationController`；
+- [x] AST 最终确认总数为 90，6 个原目标符号均为 0；
+- [x] 整组 `npm run build` 成功；构建后 typecheck 与 `git diff --check` 成功。
+
+## Header、登录、通知与错误控制组人工验收
+
+- [x] 首页与普通页 Header 样式、持久性、Logo、导航、hover 菜单、签到、管理入口和隐私头像正常；
+- [x] 未读总数及四类计数、登录入口、注册入口和完整退出登录行为正常；
+- [x] 两个标签页间登录、退出、用户信息及隐私模式同步，反复导航后事件不会重复触发；
+- [x] 顶部主题、全站、版内、用户、版面搜索，Enter、空输入、下拉外部关闭、deep link 与 back/forward 正常；
+- [x] 登录空用户名/密码 shake、重复提交、成功、密码错误、锁定、未知错误及安全返回地址正常；
+- [x] 全局错误页首次进入及 pathname 变化后能清除，正常页面不被错误状态继续覆盖；
+- [x] 启动、登录和导航期间不存在 SignalR WebSocket、浏览器通知授权提示或 NotificationController 运行时副作用。
+- [x] 代码检查点已形成：`220d94d2`。

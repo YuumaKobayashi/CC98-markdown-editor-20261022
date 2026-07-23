@@ -55,5 +55,11 @@
 - [`message-system.md`](./message-system.md)
 - [`private-messages.md`](./private-messages.md)
 - [`private-conversation-window.md`](./private-conversation-window.md)
+- [`header-shell.md`](./header-shell.md)
+- [`header-user-menu.md`](./header-user-menu.md)
+- [`header-search.md`](./header-search.md)
+- [`login-page.md`](./login-page.md)
+- [`notification-controller.md`](./notification-controller.md)
+- [`navigation-error-reset.md`](./navigation-error-reset.md)
 
 审核结论由用户完成人工页面验收后填写。

@@ -114,6 +114,17 @@ TypeScript AST 复核确认本组 11 个 live React class 全部消失，当前�
 
 TypeScript AST 复核确认本组 6 个目标声明均已消失，当前剩余 96 个非冻结 React class 声明；排除最终保留的 `ErrorBoundary` 后，仍有 95 个 P15 目标待迁，因此 P15 尚未完成。
 
+## Header、登录、通知与错误控制组
+
+| 领域 | 原符号 | 新 owner | 状态 |
+|---|---|---|---|
+| Header 壳层 | `Header`、`DropDownConnect`、`SearchBeforeConnent` | `app/layouts/header` | 已实现，待人工验收 |
+| 登录 | `LogOnExact` | `pages/auth/login` | 已实现，待人工验收 |
+| 停用通知 | `NotificationController` | `features/message/realtime-notifications` | 已实现并保持未挂载 |
+| 错误控制 | `ErrorControl` | `app/providers/navigation-error-reset` | 已实现，待人工验收 |
+
+TypeScript AST 复核确认本组 6 个目标声明均已消失，当前剩余 90 个非冻结 React class 声明；排除最终保留的 `ErrorBoundary` 后，仍有 89 个 P15 目标待迁，因此 P15 尚未完成。
+
 ## P21 删除候选
 
-根 `Breadcrumb`、根 `Category/Test`、`MessageBar`、`FindIP`、`TopicReplyUserBar`、`ExactActivitiesPosts` 未发现运行时调用，本轮不为清零 class 而迁移。`CountDown` 只有 import 和注释 JSX，需在 P21 重新做引用/构建证明后决定删除。
+根 `Breadcrumb`、根 `Category/Test`、`MessageBar`、`FindIP`、`TopicReplyUserBar`、`ExactActivitiesPosts`、`ErrorEmitter` 未发现运行时调用，本轮不为清零 class 而迁移。`CountDown` 只有 import 和注释 JSX，需在 P21 重新做引用/构建证明后决定删除。

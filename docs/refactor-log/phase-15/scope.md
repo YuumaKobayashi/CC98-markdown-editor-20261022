@@ -1,10 +1,10 @@
 # P15 函数组件 C 范围
 
-> 当前状态：以 `82bf9fda` 为基线的首页、搜索与站务组件组已完成代码、文档及机械验证，保留未暂存 diff 等待人工验收；P15 尚未完成
+> 当前状态：以 `986ce9e5` 为基线的 Header、登录、通知与错误控制组已完成实现，保留未暂存 diff 等待人工验收；P15 尚未完成
 
 ## 唯一大事
 
-将仍依赖 Redux、Router 或复杂 lifecycle 的 React class 按风险分组迁为函数组件，并随批次归入 `app/pages/features/entities/shared` owner。当前批次已迁移首页、搜索与站务领域的 11 个 live class；真实页面/API 验收仍开放，P15 尚未完成。
+将仍依赖 Redux、Router 或复杂 lifecycle 的 React class 按风险分组迁为函数组件，并随批次归入 `app/pages/features/entities/shared` owner。当前批次迁移 Header、登录、停用通知源码与全局错误控制的 6 个 class；真实浏览器/API 验收仍开放，P15 尚未完成。
 
 ## 已完成的无 Redux 简单组件组
 
@@ -86,3 +86,13 @@
 - 仅会话 prepend 后的滚动锚点恢复使用一次有依据的 `useLayoutEffect`，其余副作用使用普通 effect；
 - 保留消息 API、Redux、缓存键、公开 URL、DOM/CSS、实体展示、上传和旧导出，不修改冻结 UBB；
 - 完成条件为 6 个目标 class 消失、AST 总数从 102 降至 96、两套类型检查和正式构建通过；人工验收继续独立开放。
+
+## 当前 Header、登录、通知与错误控制组
+
+- 以 `986ce9e5` 为基线，迁移 `Header`、`DropDownConnect`、`SearchBeforeConnent`、`LogOnExact`、`NotificationController`、`ErrorControl`；
+- Header 与搜索归入 `app/layouts/header`，登录归入 `pages/auth/login`，通知控制器归入 `features/message/realtime-notifications`，错误重置归入 `app/providers`；
+- Header 的 storage/document 监听改为具名 effect handler 并 cleanup；顶部搜索改为受控状态和 Router hooks，不再用 jQuery 修正 DOM；
+- 登录保留原 token、用户刷新、主题和整页返回合同，并为缺失、损坏或跨域返回地址回退 `/`；
+- `NotificationController` 只迁移源码，AppShell 继续不挂载，因此不得建立 SignalR 连接或请求浏览器通知权限；
+- `ErrorBoundary` 继续作为唯一允许保留的 React class，零调用 `ErrorEmitter` 留作 P21 删除候选；
+- 完成条件为 6 个目标 class 消失、AST 总数从 96 降至 90、两套类型检查和正式构建通过；人工验收继续独立开放。

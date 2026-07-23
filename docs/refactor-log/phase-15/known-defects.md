@@ -75,3 +75,17 @@
 - `P15-MESSAGE-007`（待后续修改）：聊天窗口在输入框已有内容时切换联系人，当前会清空旧草稿；后续应按联系人保留草稿缓存，切回联系人时恢复尚未发送的内容。
 - 消息 API 不接受 AbortSignal；通知翻页和联系人切换通过请求序号忽略旧结果，但不会取消网络请求。
 - 五个旧 state/props class 已无 live owner 消费，留待 P21 引用证明后删除。
+
+## Header、登录、通知与错误控制组
+
+- `P15-HEADER-001`（已修复）：Header 的两个匿名 storage listener 和搜索 document click/DOM listener 从不 cleanup；现改为具名 effect handler，并在卸载时移除。
+- `P15-HEADER-002`（已修复）：顶部搜索依赖 jQuery 持有搜索类型、输入和下拉显示；现由 React state 派生，路由上下文变化时同步回对应默认类型。
+- `P15-LOGIN-001`（已修复）：登录成功但 `logOnRedirectUrl` 缺失、损坏或跨域时，旧代码可能导航到无效地址；现统一回退 `/`。
+- `P15-ERROR-001`（有意变化）：全局错误重置现在首次挂载也执行，不再只模拟 class 的 update 分支；后续仍由 pathname 变化触发。
+- `P15-NOTIFY-001`（已保留）：`NotificationController` 仍未挂载，SignalR、跨标签页未读同步、标题闪烁和浏览器通知均不运行；本组不恢复实时通知。
+- `P15-NOTIFY-002`（待后续处理）：SignalR 仍是全局可变 singleton，标题闪烁器可能重复启动 interval；由于控制器保持停用，本组只补监听和连接 cleanup，不重构消息基础设施。
+- `P15-NOTIFY-003`（已修复但当前不可达）：旧浏览器通知把点击回调放进非标准 Notification options；新实现改为设置 `notification.onclick`。控制器保持未挂载，因此本批不会产生新的运行时行为。
+- `P15-HEADER-003`（后续需大规模重构）：本批只完成 class 到函数组件迁移、owner 归位和已授权的窄修复；`Header.tsx` 仍集中承担用户菜单、搜索、导航及多类持久化/浏览器事件职责。后续应单独立项拆分职责并治理状态与缓存，不在本批继续扩展。
+- `P15-NOTIFY-004`（后续需大规模重构）：实时通知仍依赖全局 SignalR singleton、storage 事件、标题闪烁和浏览器通知等耦合基础设施；恢复挂载前应单独重构连接生命周期、跨标签页协调与通知权限管理。
+- 登录源码仍包含既有 OIDC 客户端配置，认证协议与安全治理不属于函数组件迁移范围，文档不复制其具体值。
+- `ErrorBoundary` 按 P15 例外继续保留 class；零调用测试桩 `ErrorEmitter` 登记为 P21 删除候选。

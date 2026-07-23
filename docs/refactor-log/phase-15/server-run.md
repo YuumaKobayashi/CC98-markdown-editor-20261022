@@ -66,3 +66,12 @@
 - 在允许子进程的同一工作树重跑成功，共转换 3,899 个模块；
 - 生成独立的 layout、responses、mentions、system、private-messages 入口块；通知页面之间只复用普通页码计算函数，不再共享配置驱动组件；
 - 既有 Sass `@import`、Spectrum 旧 CSS、plugin timing 与大 chunk 警告继续存在，本组未修改。
+
+## Header、登录、通知与错误控制组构建
+
+- 本组未启动 Node dev/preview server，没有 PID、端口或回收事项；
+- Header、登录、通知/错误三个内部批次的两套 TypeScript 与 diff 检查已通过；
+- 受限沙箱首次构建在 Vite 配置加载阶段命中既知 `spawn EPERM`，在允许子进程的同一工作树重跑成功，共转换 3,900 个模块；
+- 生成独立 `login` 动态块；Header 与错误重置进入持久应用壳，停用通知 owner 因无运行时引用未进入执行路径；
+- 既有 Sass `@import`、Spectrum 旧 CSS、plugin timing 与大 chunk 警告继续存在，本组未修改；
+- 构建不替代真实登录态、跨标签页、搜索、错误路由及“通知保持停用”的浏览器验收。

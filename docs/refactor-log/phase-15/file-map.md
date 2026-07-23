@@ -84,3 +84,14 @@
 | `Message/MessageMessage`、`MessageWindow` | `pages/message/private-messages` | 保留两个旧符号；Router 改用私信 page 入口 |
 
 `MessageWindowProps`、`MessageWindowState`、`MessageMessageState`、`MessageResponseState`、`MessageSystemState` 不再被 live owner 消费，留待 P21 引用清理。
+
+## Header、登录、通知与错误控制组
+
+| 旧位置 | 新 owner | 兼容方式 |
+|---|---|---|
+| `Components/Header` 的三个 live class | `app/layouts/header` | 保留 `Header`、`Search`、`SearchBeforeConnent` named re-export；AppShell 改用新入口 |
+| `Components/LogOn` | `pages/auth/login` | 保留 default re-export；Router 改用登录 page 窄入口 |
+| `Components/NotificationController` | `features/message/realtime-notifications` | 保留 default/named re-export，但无运行时挂载点 |
+| `Components/ErrorControl` | `app/providers/navigation-error-reset` | 保留 default/named re-export；AppShell 改用新入口 |
+
+本组不删除全局 route-props 桥；Router 中其他 legacy class 仍在使用。`ErrorBoundary` 继续从旧入口挂载，`ErrorEmitter` 留待 P21。
