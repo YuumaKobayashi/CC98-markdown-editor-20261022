@@ -61,5 +61,11 @@
 - [`login-page.md`](./login-page.md)
 - [`notification-controller.md`](./notification-controller.md)
 - [`navigation-error-reset.md`](./navigation-error-reset.md)
+- [`user-profile-layout.md`](./user-profile-layout.md)
+- [`user-profile-overview.md`](./user-profile-overview.md)
+- [`user-profile-navigation.md`](./user-profile-navigation.md)
+- [`user-profile-avatar.md`](./user-profile-avatar.md)
+- [`user-profile-details.md`](./user-profile-details.md)
+- [`user-recent-topics.md`](./user-recent-topics.md)
 
 审核结论由用户完成人工页面验收后填写。

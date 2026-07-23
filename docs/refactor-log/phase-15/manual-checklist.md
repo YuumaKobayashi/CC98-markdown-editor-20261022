@@ -184,3 +184,22 @@
 - [x] 全局错误页首次进入及 pathname 变化后能清除，正常页面不被错误状态继续覆盖；
 - [x] 启动、登录和导航期间不存在 SignalR WebSocket、浏览器通知授权提示或 NotificationController 运行时副作用。
 - [x] 代码检查点已形成：`220d94d2`。
+
+## 公共用户详情页迁移组机械检查
+
+- [x] 两个内部批次均通过 `npm run typecheck`、`git diff --check` 与目标静态审计；
+- [x] 6 个目标均由具名函数承接，legacy 文件仅保留兼容 export；
+- [x] 新 owner 不含 class、`connect`、直接 Store、legacy route props、`React.FC`、`isFirstCommit`、`useLayoutEffect` 或展示修正 jQuery；
+- [x] AST 确认 React class 总数从 90 降至 84，6 个原目标符号均为 0；
+- [x] 整组 `npm run build` 成功；受限沙箱首次命中 `spawn EPERM`，允许子进程的同一工作树重跑通过；
+- [x] 构建后复跑 typecheck 与 `git diff --check` 成功。
+
+## 公共用户详情页迁移组人工验收
+
+- [ ] `/user/id/:id`、`/user/name/:name`、中文用户名、非法 method/id 与不存在用户显示正确；
+- [ ] 访问不存在用户后再访问正常用户可以恢复，name 路由以 replace 规范化为 id 路由；
+- [ ] 快速切换、deep link 与 back/forward 时旧响应不覆盖当前用户；
+- [ ] 头像、头像框、用户头衔、版主头衔、资料字段、锁定/禁言、生日蛋糕和签名 UBB 正常；
+- [ ] 关注、取关、重新关注、上限、失败、私信及本人/管理员导航正常；
+- [ ] 近期主题首次加载、滚动增量、最终批次、空态、失败后再次触发及切换用户正常；
+- [ ] 用户中心主页继续正确显示共享头像徽章，legacy manage 子页无回归。

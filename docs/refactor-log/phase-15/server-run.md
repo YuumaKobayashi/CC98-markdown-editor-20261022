@@ -75,3 +75,12 @@
 - 生成独立 `login` 动态块；Header 与错误重置进入持久应用壳，停用通知 owner 因无运行时引用未进入执行路径；
 - 既有 Sass `@import`、Spectrum 旧 CSS、plugin timing 与大 chunk 警告继续存在，本组未修改；
 - 构建不替代真实登录态、跨标签页、搜索、错误路由及“通知保持停用”的浏览器验收。
+
+## 公共用户详情页迁移组构建
+
+- 本组未启动 Node dev/preview server，没有 PID、端口或回收事项；
+- 页面壳/路由数据与用户展示/近期主题两个内部批次的两套 TypeScript、diff 与静态检查已通过；
+- 受限沙箱首次构建在 Vite 配置加载阶段命中既知 `spawn EPERM`，在允许子进程的同一工作树重跑成功，共转换 3,903 个模块；
+- 生成独立 `layout`、`overview` 与 `profile-avatar` 动态块，公共用户 manage 子页仍保持原入口；
+- 既有 Sass `@import`、Spectrum 旧 CSS、plugin timing 与大 chunk 警告继续存在，本组未修改；
+- 构建不替代真实登录态、用户 API、关注、头像配置、滚动、UBB 与浏览器验收。

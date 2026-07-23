@@ -84,3 +84,13 @@
 - 之前：停用通知控制器的 SignalR、storage、focus 和 Notification 副作用集中在 class lifecycle 且监听不清理；现在：按职责拆分 effect 并清理，但组件仍未挂载，运行时继续不连接。
 - 停用通知源码中的点击导航改用标准 `notification.onclick`；由于 owner 无运行时消费者，本批不会触发浏览器通知。
 - 之前：`ErrorControl` 只在接收到 pathname 变化 props 时清错；现在：依赖当前 pathname 的普通 effect 在首次壳层挂载和后续导航时清错，不使用首次提交标记或 previous-props 模拟器。
+
+## 公共用户详情页迁移组
+
+- 之前：不存在用户把全局存在状态永久置为 false，父壳随后不再挂载取数页；现在：`method/id` 改变会先 dispatch `USER_LOOKUP_STARTED`，可从不存在用户恢复到正常用户。
+- 之前：`UserExact` 通过 `connect`、`withRouter` 与 `componentWillReceiveProps`取数；现在：overview 以路由参数 effect 取数，只接受 `name` 或正整数 `id`，并用请求序号忽略旧响应。
+- 之前：用户展示子树依赖 props-to-state lifecycle 隐式复用；现在：详情主体以用户 id 建立 React 身份，切换用户会自然重置关注、头像框和近期主题状态。
+- 之前：头像徽章只在 mount 加载配置且徽章列表缺 key；现在：普通 effect 随展示头衔重算并忽略旧结果，徽章使用稳定 title id key。
+- 之前：非法生日字符串会解引用空正则匹配；现在：只有匹配成功才比较月日，字段仍按原字符串展示。
+- 之前：近期主题在最后不足 11 条后仍保留 scroll listener，并可能重复请求末页；现在：`hasMore` 在最终批次变为 false 并解除监听，用户切换立即清空并重新取数。
+- 主题与分隔线改用稳定 topic id key；公开 URL、关注文案、资料字段、签名 UBB、每批 10 条及 1500px 阈值保持不变。

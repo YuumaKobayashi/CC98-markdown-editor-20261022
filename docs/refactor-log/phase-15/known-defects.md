@@ -89,3 +89,13 @@
 - `P15-NOTIFY-004`（后续需大规模重构）：实时通知仍依赖全局 SignalR singleton、storage 事件、标题闪烁和浏览器通知等耦合基础设施；恢复挂载前应单独重构连接生命周期、跨标签页协调与通知权限管理。
 - 登录源码仍包含既有 OIDC 客户端配置，认证协议与安全治理不属于函数组件迁移范围，文档不复制其具体值。
 - `ErrorBoundary` 按 P15 例外继续保留 class；零调用测试桩 `ErrorEmitter` 登记为 P21 删除候选。
+
+## 公共用户详情页迁移组
+
+- `P15-USER-PROFILE-001`（已修复）：访问不存在用户后 `currentVisitingUserIsExisted=false` 会使父壳永久阻止新的详情请求；现在每次 `method/id` 变化先恢复查询状态。
+- `P15-USER-PROFILE-002`（已修复）：旧页码解析会把非数字或部分数字 id 交给请求；现在仅接受 `name` 或安全正整数 `id`，非法参数直接显示用户不存在。
+- `P15-USER-PROFILE-003`（已修复）：生日字符串非空但不符合日期格式时，旧实现解引用空匹配并崩溃；现在先检查匹配结果。
+- `P15-USER-PROFILE-004`（已修复）：头像徽章和近期主题列表缺少稳定 key；现分别使用 title id 与 topic id。
+- `P15-USER-PROFILE-005`（已修复）：近期主题最终批次不足 11 条时旧 scroll listener 不解除，可持续请求相同末页；现由 `hasMore=false` 停止监听。
+- `P15-USER-PROFILE-006`（已保留）：关注 API 仍使用既有返回字符串区分上限与其他失败；本批不扩展 follow 协议、取消请求或全局错误 UI。
+- `P15-USER-PROFILE-007`（已保留）：近期主题首次请求期间仍显示既有“没有主题”，请求失败仍只记录日志；本批不新增 spinner、错误态或重试按钮。

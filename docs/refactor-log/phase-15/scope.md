@@ -96,3 +96,14 @@
 - `NotificationController` 只迁移源码，AppShell 继续不挂载，因此不得建立 SignalR 连接或请求浏览器通知权限；
 - `ErrorBoundary` 继续作为唯一允许保留的 React class，零调用 `ErrorEmitter` 留作 P21 删除候选；
 - 完成条件为 6 个目标 class 消失、AST 总数从 96 降至 90、两套类型检查和正式构建通过；人工验收继续独立开放。
+
+## 当前公共用户详情页迁移组
+
+- 以 `69a67b04` 为基线，迁移 `UserBeforeConnent`、`UserExact`、`UserNavigationBeforeConnect`、`ExactAvatar`、`Profile`、`Activities` 六个 live class；
+- 页面 layout、overview、导航、资料与近期主题归入 `pages/user-profile`，共享头像徽章归入 `entities/user/profile-avatar`；
+- Router 使用 layout/overview 窄入口；旧六个文件只保留兼容 re-export，用户管理子页继续保持 legacy；
+- 新增 `USER_LOOKUP_STARTED`，在 `method/id` 改变时恢复用户存在状态；overview 只接受 `name` 或正整数 `id`，并继续将 name URL replace 为 id URL；
+- 头像配置、关注状态与近期主题均以当前用户为组件身份；请求序号阻止快速切换时的旧结果覆盖；
+- 近期主题保持 `size=11`、每批展示 10 条及 1500px 阈值，并在最终批次解除监听；
+- 不修改 Redux 数据结构、关注 API、用户管理子页、冻结 UBB/editor、样式或依赖；
+- 完成条件为 6 个目标 class 消失、AST 总数从 90 降至 84、两套类型检查和正式构建通过；真实 API、登录态、滚动与 UBB 验收继续独立开放。

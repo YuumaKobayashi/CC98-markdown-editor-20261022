@@ -95,3 +95,16 @@
 | `Components/ErrorControl` | `app/providers/navigation-error-reset` | 保留 default/named re-export；AppShell 改用新入口 |
 
 本组不删除全局 route-props 桥；Router 中其他 legacy class 仍在使用。`ErrorBoundary` 继续从旧入口挂载，`ErrorEmitter` 留待 P21。
+
+## 公共用户详情页迁移组
+
+| 旧位置 | 新 owner | 兼容方式 |
+|---|---|---|
+| `Components/UserCenter/User/User.tsx` | `pages/user-profile/layout` | 保留 default re-export；Router 改用 layout 窄入口 |
+| `Components/UserCenter/User/Router.tsx` | `pages/user-profile/overview` | 保留 default 与 `UserExactWithRouter` re-export；Router 改用 overview 窄入口 |
+| `Components/UserCenter/User/Navigation.tsx` | `pages/user-profile/layout` | 保留 default re-export |
+| `Components/UserCenter/ExactAvatar.tsx` | `entities/user/profile-avatar` | 保留 default re-export；用户中心 overview 改用 entity 窄入口 |
+| `Components/UserCenter/User/Profile.tsx` | `pages/user-profile/overview/ui/UserProfileDetails` | 保留 default re-export |
+| `Components/UserCenter/User/Activities.tsx` | `pages/user-profile/overview/ui/UserRecentTopics` | 保留 default re-export |
+
+`Components/UserCenter/User/Manage.tsx` 及其路由仍走 legacy 子页；全局 route-props 桥继续由其他消费者使用。
