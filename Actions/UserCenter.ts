@@ -10,6 +10,8 @@ export const usercenterPageLoadUnfinish = createAction(ActionTypes.USER_CENTER_P
 
 export const userNotFound = createAction(ActionTypes.USER_NOT_FOUND);
 
+export const userLookupStarted = createAction(ActionTypes.USER_LOOKUP_STARTED);
+
 export const userCenterLoading = createAction(ActionTypes.USER_CENTER_LOADING);
 
 export const userCenterLoaded = createAction(ActionTypes.USER_CENTER_LOADED);

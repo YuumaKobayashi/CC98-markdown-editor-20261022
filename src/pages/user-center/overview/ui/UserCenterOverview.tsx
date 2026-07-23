@@ -2,9 +2,9 @@ import * as React from "react";
 
 import { useAppDispatch, useAppSelector } from "@app/store";
 import { UserProfile } from "@entities/user";
+import { UserProfileAvatar } from "@entities/user/profile-avatar";
 import * as Actions from "@legacy/Actions/UserCenter";
 import { refreshCurrentUserInfo } from "@legacy/AsyncActions/UserCenter";
-import ExactAvatar from "@legacy/Components/UserCenter/ExactAvatar";
 
 import { UserRecentActivities } from "./UserRecentActivities";
 
@@ -26,7 +26,7 @@ export function UserCenterOverview() {
 
   return (
     <div className="user-center-exact">
-      <ExactAvatar userInfo={userInfo} />
+      <UserProfileAvatar userInfo={userInfo} />
       <UserProfile userInfo={userInfo} />
       <UserRecentActivities />
     </div>

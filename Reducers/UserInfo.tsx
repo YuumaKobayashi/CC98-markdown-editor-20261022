@@ -166,6 +166,8 @@ export default (
         currentVisitingUserPage: action.payload.page,
         currentVisitingUserId: action.payload.id,
       };
+    case ActionTypes.USER_LOOKUP_STARTED:
+      return { ...state, currentVisitingUserIsExisted: true };
     case ActionTypes.USER_NOT_FOUND:
       return { ...state, currentVisitingUserIsExisted: false };
     case ActionTypes.USER_CENTER_LOADING:

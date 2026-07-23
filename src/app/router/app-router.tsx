@@ -283,15 +283,13 @@ const routes: RouteObject[] = [
       },
       {
         path: "user/:method/:id",
-        lazy: lazyDefault(
-          () => import("@legacy/Components/UserCenter/User/User")
-        ),
+        lazy: lazyDefault(() => import("@pages/user-profile/layout")),
         children: [
           {
             index: true,
             lazy: lazyNamed(
-              () => import("@legacy/Components/UserCenter/User/Router"),
-              "UserExactWithRouter"
+              () => import("@pages/user-profile/overview"),
+              "UserProfileOverview"
             ),
           },
           {
