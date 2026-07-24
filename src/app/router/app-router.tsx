@@ -294,9 +294,7 @@ const routes: RouteObject[] = [
           },
           {
             path: "manage/*",
-            lazy: lazyDefault(
-              () => import("@legacy/Components/UserCenter/User/Manage")
-            ),
+            lazy: lazyDefault(() => import("@pages/user-profile/manage")),
           },
           { path: "*", element: null },
         ],
