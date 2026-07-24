@@ -4,3 +4,5 @@ export { RecommendedTopicItem } from "./ui/RecommendedTopicItem";
 export { SearchTopicItem } from "./ui/SearchTopicItem";
 export { TopicAwardInfo } from "./ui/TopicAwardInfo";
 export { TopicBreadcrumb } from "./ui/TopicBreadcrumb";
+export { NewTopicsBreadcrumb } from "./ui/NewTopicsBreadcrumb";
+export { RecommendedTopicsBreadcrumb } from "./ui/RecommendedTopicsBreadcrumb";

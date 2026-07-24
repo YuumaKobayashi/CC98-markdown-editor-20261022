@@ -1,6 +1,7 @@
 import * as React from "react";
 import { RecommendedTopic } from "../../Props/RecommendedTopic";
 import { RecommendedTopicItem } from "@entities/topic";
+import { RecommendedTopicsBreadcrumb as Category } from "@entities/topic";
 import { RecommendedTopicAreaState } from "../../States/RecommendedTopicAreaState";
 import * as Utility from "../../Utility";
 import { Link } from "react-router";
@@ -126,37 +127,4 @@ function convertRecommendedTopic(item: RecommendedTopic, index: number) {
 /**
  * 导航器组件
  */
-export class Category extends React.Component {
-    render() {
-        return (
-            <div
-                className="row"
-                style={{
-                    alignItems: "baseline",
-                    justifyContent: "flex-start",
-                    color: "grey",
-                    fontSize: "0.75rem",
-                    marginBottom: "1rem",
-                }}
-            >
-                <Link
-                    style={{ color: "grey", fontSize: "1rem", marginRight: "0.5rem" }}
-                    to={"/"}
-                >
-                    首页
-                </Link>
-                <i className="fa fa-chevron-right"></i>
-                <div
-                    style={{
-                        color: "grey",
-                        fontSize: "1rem",
-                        marginLeft: "0.5rem",
-                        marginRight: "0.5rem",
-                    }}
-                >
-                    随机精选
-                </div>
-            </div>
-        );
-    }
-}
+export { RecommendedTopicsBreadcrumb as Category } from "@entities/topic";

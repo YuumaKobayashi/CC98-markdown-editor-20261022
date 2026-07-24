@@ -1,6 +1,7 @@
 ﻿import * as React from "react";
 import { FocusTopic } from "../../Props/FocusTopic";
 import { FocusTopicItem } from "@entities/topic";
+import { NewTopicsBreadcrumb as Category } from "@entities/topic";
 import { CardTopicSingle } from "../Focus/CardTopicSingle";
 import { NewTopicAreaState } from "../../States/NewTopicAreaState";
 import * as Utility from "../../Utility";
@@ -499,37 +500,4 @@ function convertCardMediaOnlyPost(item: FocusTopic, index: number) {
 /**
  * 导航器组件
  */
-export class Category extends React.Component {
-  render() {
-    return (
-      <div
-        className="row"
-        style={{
-          alignItems: "baseline",
-          justifyContent: "flex-start",
-          color: "grey",
-          fontSize: "0.75rem",
-          marginBottom: "1rem",
-        }}
-      >
-        <Link
-          style={{ color: "grey", fontSize: "1rem", marginRight: "0.5rem" }}
-          to={"/"}
-        >
-          首页
-        </Link>
-        <i className="fa fa-chevron-right"></i>
-        <div
-          style={{
-            color: "grey",
-            fontSize: "1rem",
-            marginLeft: "0.5rem",
-            marginRight: "0.5rem",
-          }}
-        >
-          查看新帖
-        </div>
-      </div>
-    );
-  }
-}
+export { NewTopicsBreadcrumb as Category } from "@entities/topic";

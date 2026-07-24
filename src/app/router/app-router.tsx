@@ -94,8 +94,8 @@ const routes: RouteObject[] = [
       {
         path: "boardlist",
         lazy: lazyNamed(
-          () => import("@legacy/Components/Board/BoardList"),
-          "BoardList"
+          () => import("@pages/board-list"),
+          "BoardListPage"
         ),
       },
       {

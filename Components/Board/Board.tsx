@@ -16,10 +16,22 @@ import {
   UnauthorizedBoard,
   ServerError
 } from "../Status";
-import { HomeAdvertisementCarousel } from "@pages/home/advertisement";
 import { isLogOn } from "../../Utility";
 import moment from "moment";
 import { Avatar, Button, List, Modal, Spin, message } from "antd";
+import {
+  BoardActionsAndAdvertisement as ListButtonAndAds,
+  BoardBreadcrumb as Category,
+  BoardModerationRecordItem as BoardRecordContent,
+  BoardTagPagination as ListTagAndPager,
+} from "@pages/board";
+
+export {
+  BoardActionsAndAdvertisement as ListButtonAndAds,
+  BoardBreadcrumb as Category,
+  BoardModerationRecordItem as BoardRecordContent,
+  BoardTagPagination as ListTagAndPager,
+} from "@pages/board";
 
 export class RouteComponent<
   TProps,
@@ -255,50 +267,6 @@ export class BList extends RouteComponent<
  版面头部，包括版面图标、版面介绍、版主信息等
  */
 
-export class Category extends React.Component<{ boardId; boardInfo }, {}> {
-  render() {
-    const listUrl = `/board/${this.props.boardId}`;
-    return (
-      <div
-        className="row"
-        style={{
-          alignItems: "baseline",
-          width: "100% ",
-          justifyContent: "flex-start",
-          color: "grey",
-          fontSize: "0.75rem",
-          marginBottom: "1rem"
-        }}
-      >
-        <Link
-          style={{ color: "grey", fontSize: "1rem", marginRight: "0.5rem" }}
-          to={"/"}
-        >
-          首页
-        </Link>
-        <i className="fa fa-chevron-right"></i>
-        <Link
-          style={{
-            color: "grey",
-            fontSize: "1rem",
-            marginRight: "0.5rem",
-            marginLeft: "0.5rem"
-          }}
-          to="/boardlist"
-        >
-          版面列表
-        </Link>
-        <i className="fa fa-chevron-right"></i>
-        <Link
-          style={{ color: "grey", fontSize: "1rem", marginLeft: "0.5rem" }}
-          to={listUrl}
-        >
-          {this.props.boardInfo.name}
-        </Link>
-      </div>
-    );
-  }
-}
 export class ListHead extends RouteComponent<
   { boardId; boardInfo },
   {
@@ -598,236 +566,6 @@ export class ListHead extends RouteComponent<
 /**
  * 提供显示连续页码的交互效果。
  */
-export class ListTagAndPager extends React.Component<
-  { url: string; boardid: number; page: number; totalPage: number; tag },
-  {}
-> {
-  constructor(props, content) {
-    super(props, content);
-  }
-  generateTagButton(item) {
-    const url = `/board/${this.props.boardid}/tag/tag1/${item.id}`;
-    return (
-      <div>
-        <Link to={url}>
-          <button className="chooseTag">
-            {item.name}
-            <span className="tagNumber"></span>
-          </button>
-        </Link>
-      </div>
-    );
-  }
-  generateTag2Button(item) {
-    const url = `/board/${this.props.boardid}/tag/tag2/${item.id}`;
-    return (
-      <div>
-        <Link to={url}>
-          <button className="chooseTag">
-            {item.name}
-            <span className="tagNumber"></span>
-          </button>
-        </Link>
-      </div>
-    );
-  }
-  render() {
-    let tag1Btn = null;
-    let tag2Btn = null;
-    const url = `/board/${this.props.boardid}`;
-    if (this.props.tag && this.props.tag.length >= 1) {
-      tag1Btn = (
-        <div
-          style={{
-            maxWidth: "35rem",
-            lineHeight: "3rem",
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "flex-start",
-            width: "100%",
-            marginLeft: "0.3125rem",
-            marginRight: "0.3125rem",
-            borderTop: "dashed #EAEAEA thin",
-            marginBottom: "0.5rem"
-          }}
-        >
-          <div
-            className="row"
-            style={{ display: "flex", flexWrap: "wrap", maxWidth: "35rem" }}
-          >
-            <div>
-              <button className="chooseTag">
-                <Link to={url}>全部</Link>
-              </button>
-            </div>
-            {this.props.tag[0].tags.map(this.generateTagButton.bind(this))}
-          </div>
-        </div>
-      );
-    }
-    if (this.props.tag && this.props.tag.length === 2) {
-      tag2Btn = (
-        <div
-          style={{
-            maxWidth: "35rem",
-            lineHeight: "3rem",
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "flex-start",
-            width: "100%",
-            marginLeft: "0.3125rem",
-            marginRight: "0.3125rem",
-            borderTop: "dashed #EAEAEA thin",
-            marginBottom: "0.5rem"
-          }}
-        >
-          <div
-            className="row"
-            style={{ display: "flex", flexWrap: "wrap", maxWidth: "35rem" }}
-          >
-            <div>
-              <button className="chooseTag">
-                <Link to={url}>全部</Link>
-              </button>
-            </div>
-            {this.props.tag[1].tags.map(this.generateTag2Button.bind(this))}
-          </div>
-        </div>
-      );
-    }
-
-    return (
-      <div
-        className="row"
-        style={{
-          width: "100%",
-          marginLeft: "0.3125rem",
-          marginRight: "0.3125rem",
-          marginTop: "0.9375rem",
-          marginBottom: "1rem",
-          justifyContent: "space-between",
-          alignItems: "flex-end"
-        }}
-      >
-        <div>
-          {tag1Btn}
-
-          {tag2Btn}
-        </div>
-        <Pager
-          page={this.props.page}
-          url={this.props.url}
-          totalPage={this.props.totalPage}
-        />
-      </div>
-    );
-  }
-}
-
-export class ListButtonAndAds extends React.Component<{ boardInfo; adsUrl }> {
-  clickListener() {
-    let isLogon = false;
-    let isVerified = true;
-    let isLocked = false;
-    if (Utility.getMyInfo()) isLogon = true;
-    if (
-      Utility.getMyInfo() &&
-      !Utility.getMyInfo().isVerified
-    )
-      isVerified = false;
-    if (
-      Utility.getMyInfo() &&
-      Utility.getMyInfo().lockState !== 0
-    )
-      isLocked = true;
-    if (!isLogon) alert("请登陆！");
-    else if (!isVerified)
-      alert(
-        "您的帐号未认证，无法发言，请先前往https://account.cc98.org 认证激活。"
-      );
-    else if (isLocked) alert("您的账号被全站禁言！");
-  }
-
-  render() {
-    let sendInfo = null;
-    let isLogOn = false;
-    let isVerified = false;
-    let isLocked = true;
-    let tip = null;
-    if (Utility.getMyInfo()) {
-      isLogOn = true;
-      if (!Utility.getMyInfo().isVerified) {
-        isVerified = false;
-        tip = (
-          <div style={{ marginLeft: "1rem", color: "red" }}>
-            您的帐号未认证，无法发言，请先前往{" "}
-            <a target="_blank" href="https://account.cc98.org">https://account.cc98.org</a>{" "}
-            认证激活。
-          </div>
-        );
-      } else isVerified = true;
-      if (Utility.getMyInfo().lockState !== 0) {
-        isLocked = true;
-        tip = (
-          <div style={{ marginLeft: "1rem", color: "red" }}>您被全站禁言。</div>
-        );
-      } else isLocked = false;
-    } else {
-      tip = (
-        <div style={{ marginLeft: "1rem", color: "red" }}>
-          您还未登录，不能发帖，请先登录
-        </div>
-      );
-    }
-
-    const createTopicUrl = `/editor/postTopic/${this.props.boardInfo.id}`;
-    if (this.props.boardInfo.canVote) {
-      sendInfo = (
-        <div>
-          <Link className="button bgcolor" to={createTopicUrl}>
-            发主题
-          </Link>
-          <Link
-            style={{ marginLeft: "2rem" }}
-            className="button bgcolor"
-            to={`/editor/postVoteTopic/${this.props.boardInfo.id}`}
-          >
-            发投票
-          </Link>
-        </div>
-      );
-    } else
-      sendInfo = (
-        <Link className="button bgcolor" to={createTopicUrl}>
-          发主题
-        </Link>
-      );
-
-    if (isLocked || !isLogOn || !isVerified)
-      sendInfo = (
-        <div style={{ display: "flex", alignItems: "center" }}>{tip}</div>
-      );
-
-    return (
-      <div
-        className="row"
-        style={{
-          width: "100%",
-          height: "6.25rem",
-          alignItems: "flex-end",
-          justifyContent: "space-between",
-          marginTop: "1rem"
-        }}
-      >
-        {sendInfo}
-        <div style={{ height: "6.25rem" }}>
-          {" "}
-          <HomeAdvertisementCarousel />
-        </div>
-      </div>
-    );
-  }
-}
 export class ListTopContent extends React.Component<{ boardId }, { data }> {
   constructor(props, context) {
     super(props, context);
@@ -2166,67 +1904,6 @@ export class TopicTitleAndContent extends React.Component<
       console.log(this.props);
       return null;
     }
-  }
-}
-
-export class BoardRecordContent extends React.Component<BoardEvent> {
-  constructor(props, context) {
-    super(props, context);
-    this.ipOver = this.ipOver.bind(this);
-    this.ipOut = this.ipOut.bind(this);
-  }
-
-  ipOver() {
-    console.log("进入悬浮");
-    if (this.props.ip !== "*") {
-      console.log(this.props.ip);
-      $(`#ip_${this.props.id}`).removeClass("displaynone");
-    }
-  }
-
-  ipOut() {
-    console.log("退出悬浮");
-    $(`#ip_${this.props.id}`).addClass("displaynone");
-  }
-
-  render() {
-    let targetUserName;
-    if (this.props.targetUserName) {
-      targetUserName = (
-        <a href={`/user/name/${this.props.targetUserName}`} target="_blank">
-          {this.props.targetUserName}
-        </a>
-      );
-    } else if (!this.props.targetUserName && this.props.boardId != 182) {
-      targetUserName = "不适用";
-    } else {
-      targetUserName = "匿名用户";
-    }
-    return (
-      <div className="boardRecord" id="changeColor">
-        <div className="boardRecord-1">{targetUserName}</div>
-        <div className="boardRecord-2">
-          <a href={`/topic/${this.props.topicId}`} target="_blank">
-            {this.props.content}
-          </a>
-        </div>
-        <div className="boardRecord-3">
-          {moment(this.props.time).format("YY-MM-DD HH:mm")}
-        </div>
-        <div
-          className="boardRecord-4"
-          onMouseOver={this.ipOver}
-          onMouseOut={this.ipOut}
-        >
-          <a href={`/user/name/${this.props.operatorUserName}`} target="_blank">
-            {this.props.operatorUserName}
-          </a>
-        </div>
-        <div className="boardRecord-ip displaynone" id={`ip_${this.props.id}`}>
-          {this.props.ip}
-        </div>
-      </div>
-    );
   }
 }
 
