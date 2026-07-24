@@ -112,3 +112,12 @@
 - 之前：四个 class 分散保存表单与分页 state；现在：page 负责路由用户，三个具名函数分别负责删除、处罚与近期发言状态。
 - 之前：近期发言使用 `topicId` 作为 key，同主题多条发言会冲突；现在：key 同时包含主题、楼层和时间。
 - 删除范围、处罚操作、请求方法、提示文案、帖子展示与每页 10 条分页语义保持不变。
+
+## Focus 页面剩余壳层迁移组
+
+- 之前：版面标签在 mount 后由全局 jQuery 批量绑定 click/dblclick 并修改 class，卸载时不解绑；现在：每个标签使用 React handler，选中 class 由当前版面 state 派生。
+- 之前：每次 `FocusTopicArea` props 变化都会在 `getData` 末尾再次注册 wheel、touchmove 和两个 scroll listener；现在：普通 effect 为当前 handler 注册一次并在依赖变化或卸载时完整 cleanup。
+- 之前：快速切换版面时较早请求可晚到并覆盖新选择；现在：请求序号只允许当前 `id/name` 的首批和增量结果生效。
+- 之前：是否可加载由 class 字段控制，loading/done 和回顶按钮由 jQuery 修改 DOM class；现在：加载锁使用 ref，停止与按钮状态声明式派生相同 class。
+- 首次请求继续使用 offset 0；增量继续每批 20 条、最多 200 条，并按首条重复 id 截断旧尾部后拼接；三个 sessionStorage 键和失败后的可重试语义不变。
+- 回到顶部继续使用既有 jQuery 500ms 动画；公开 URL、DOM id/class、提示文案、版面双击整页跳转和 `FocusTopicItem` 字段映射保持不变。

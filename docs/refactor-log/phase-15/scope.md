@@ -1,10 +1,10 @@
 # P15 函数组件 C 范围
 
-> 当前状态：公共用户管理子页迁移组已完成实现与机械验证，停在真实管理员登录态/API 人工验收；P15 尚未完成、不提交、不 push、不自动进入下一组
+> 当前状态：Focus 页面剩余壳层迁移组已通过真实登录态/API/滚动人工验收，代码检查点为 `53e67ef8`；P15 尚未完成、不 push、不自动进入下一组
 
 ## 唯一大事
 
-将仍依赖 Redux、Router 或复杂 lifecycle 的 React class 按风险分组迁为函数组件，并随批次归入 `app/pages/features/entities/shared` owner。当前批次迁移公共用户管理页及三个管理操作面板的 4 个 class；真实管理员登录态、权限与 API 验收仍开放，P15 尚未完成。
+将仍依赖 Redux、Router 或复杂 lifecycle 的 React class 按风险分组迁为函数组件，并随批次归入 `app/pages/features/entities/shared` owner。当前批次迁移 Focus 版面选择和主题流两个 class；真实登录态、关注 API、滚动与浏览器验收仍开放，P15 尚未完成。
 
 ## 已完成的无 Redux 简单组件组
 
@@ -125,3 +125,14 @@
 - 保留原管理 API、token、操作文案、校验范围、帖子字段、版面名补全、分页和公开 URL；
 - 修复直达管理页可能沿用 Redux 中旧访问用户、name 路由无法取数及帖子 key 冲突；既有处罚解除校验和总页数显示合同继续保留；
 - 完成条件为 4 个目标 class 消失、AST 总数从 75 降至 71、两套类型检查和正式构建通过；真实管理员登录态、权限和 API 验收继续独立开放。
+
+## 当前 Focus 页面剩余壳层迁移组
+
+- 以 `a2ea94c8` 为基线，迁移 `FocusBoardArea`、`FocusTopicArea` 两个 live React class；
+- 两个组件共同归入既有 `pages/focus`，Router 的 index 与 `board/*` 子路由改用 page 窄入口，旧文件只保留兼容 re-export；
+- 保留关注版面、关注用户、收藏主题 API，`focusBoardList`、`currentFocusBoard`、`focusBoard_:id` sessionStorage 键，每批 20 条、最多 200 条、重复主题截断和 500ms 回顶合同；
+- 版面单击、双击和选中 class 改由 React 事件与 state 表达；滚动、触摸和 wheel 监听集中到普通 effect 并配对 cleanup；
+- 修复切换版面反复注册监听器以及旧请求晚到覆盖当前主题流；不修改 Redux、服务接口、公开 URL、DOM/CSS 或文案；
+- `CardTopicSingle`、音视频播放器、随机推荐和版面卡片属于 `/topic/new` 卡片视图，不在本组范围；
+- 完成条件为 2 个目标 class 消失、AST 总数从 71 降至 69、两套类型检查和正式构建通过；真实登录态、关注 API、缓存、触底加载和浏览器验收继续独立开放。
+- 2026-07-24 人工验收通过，代码检查点为 `53e67ef8`。

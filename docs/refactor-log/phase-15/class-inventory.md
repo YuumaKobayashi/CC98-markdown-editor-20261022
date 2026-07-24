@@ -152,12 +152,21 @@ TypeScript AST 复核确认本组 9 个目标声明均已消失，当前剩余 7
 
 | 原符号 | 新 owner | 状态 |
 |---|---|---|
-| `UserManage` | `pages/user-profile/manage` / `UserProfileManagePage` | 已实现，待人工验收 |
-| `Delete` | `pages/user-profile/manage` / `DeleteRecentUserContent` | 已实现，待人工验收 |
-| `Operation` | `pages/user-profile/manage` / `UserPunishmentForm` | 已实现，待人工验收 |
-| `ShowTopic` | `pages/user-profile/manage` / `UserRecentPostsManager` | 已实现，待人工验收 |
+| `UserManage` | `pages/user-profile/manage` / `UserProfileManagePage` | 已实现，人工验收通过 |
+| `Delete` | `pages/user-profile/manage` / `DeleteRecentUserContent` | 已实现，人工验收通过 |
+| `Operation` | `pages/user-profile/manage` / `UserPunishmentForm` | 已实现，人工验收通过 |
+| `ShowTopic` | `pages/user-profile/manage` / `UserRecentPostsManager` | 已实现，人工验收通过 |
 
 TypeScript AST 复核确认本组 4 个目标声明均已消失，当前剩余 71 个非冻结 React class 声明；排除最终保留的 `ErrorBoundary` 后，仍有 70 个 P15 目标待迁，因此 P15 尚未完成。
+
+## Focus 页面剩余壳层迁移组
+
+| 原符号 | 新 owner | 状态 |
+|---|---|---|
+| `FocusBoardArea` | `pages/focus` / `FocusBoardArea` | 已实现，人工验收通过 |
+| `FocusTopicArea` | `pages/focus` / `FocusTopicArea` | 已实现，人工验收通过 |
+
+TypeScript AST 复核确认本组 2 个目标声明均已消失，当前剩余 69 个非冻结 React class 声明；排除最终保留的 `ErrorBoundary` 后，仍有 68 个 P15 目标待迁，因此 P15 尚未完成。迁移后零引用的 `FocusBoardAreaState`、`FocusTopicAreaState` 保留为 P21 清理候选，本批不删除非 React 数据 class。
 
 ## P21 删除候选
 

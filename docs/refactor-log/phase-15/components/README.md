@@ -80,5 +80,7 @@
 - [`delete-recent-user-content.md`](./delete-recent-user-content.md)
 - [`user-punishment-form.md`](./user-punishment-form.md)
 - [`user-recent-posts-manager.md`](./user-recent-posts-manager.md)
+- [`focus-board-area.md`](./focus-board-area.md)
+- [`focus-topic-area.md`](./focus-topic-area.md)
 
-版面列表与展示叶子迁移组已于 2026-07-24 通过人工页面验收；其他批次结论以 `manual-checklist.md` 为准。
+版面列表与展示叶子、公共用户管理子页、Focus 页面剩余壳层迁移组已于 2026-07-24 通过人工页面验收；其他批次结论以 `manual-checklist.md` 为准。

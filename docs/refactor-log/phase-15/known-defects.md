@@ -29,7 +29,7 @@
 - `P15-TOPIC-002`（已修复）：Topic breadcrumb 把 props 复制到 state，首次 commit 为空且更新需额外 render；现直接读取当前 props。
 - `P15-FOCUS-001`（已修复）：Focus 页签选中状态由三个子页挂载副作用竞争维护，收藏页还使用 `useLayoutEffect`；现由布局按 pathname 唯一派生，支持 deep link 与 back/forward。
 - 通用 Pager 的 Go 输入仍是非受控输入，`nextPage` 仍按旧合同只在组件实例创建时取当前页；本组不主动改变该交互语义。
-- `FocusBoardArea`/`FocusTopicArea` 仍包含旧请求、缓存、滚动监听和 jQuery 事件绑定，留待后续高风险小批迁移。
+- `FocusBoardArea`/`FocusTopicArea` 当时保留的请求、缓存、滚动监听和 jQuery 事件绑定已在后续 Focus 页面剩余壳层组处理，见 `P15-FOCUS-*`。
 
 ## 用户中心 Redux 页面与壳层组
 
@@ -118,3 +118,12 @@
 - `P15-USER-MANAGE-005`（已保留）：解除处罚仍要求填写理由；TP 天数继续接受 `-1` 或 7 至 1000，未填写天数时也沿用旧比较行为；本批不改变后台操作合同。
 - `P15-USER-MANAGE-006`（已保留）：近期发言总页数仍按 `Math.floor(count / 10) + 1` 展示，整十条时会多显示一页；迁移保持现有展示语义。
 - `P15-USER-MANAGE-007`（已保留）：页面不新增前端管理员权限判断，真实授权仍由既有侧栏入口与后端 API 共同控制。
+
+## Focus 页面剩余壳层迁移组
+
+- `P15-FOCUS-001`（已修复）：旧 `getData` 在每次版面 props 变化后重复注册 wheel、touchmove 和 scroll listener，只在最终卸载各移除一次；现在 effect 每次先清理旧 handler。
+- `P15-FOCUS-002`（已修复）：快速切换版面时旧首批请求可晚到并覆盖当前主题流；现在使用请求序号忽略非当前结果。
+- `P15-FOCUS-003`（已修复）：旧版面标签的 jQuery click/dblclick handler 从不解绑；现在改为 React 事件与派生选中 class。
+- `P15-FOCUS-004`（已保留）：主题流仍依赖滚动、wheel、touchmove 触发和 300px 底部阈值，没有新增 IntersectionObserver、取消请求或错误/重试 UI。
+- `P15-FOCUS-005`（已保留）：回到顶部仍保留 jQuery 500ms 动画；本批只移除展示与事件绑定所需的 jQuery DOM 修改。
+- `P15-FOCUS-006`（后续清理）：`FocusBoardAreaState`、`FocusTopicAreaState` 迁移后零引用，留作 P21 删除候选；`CardTopicSingle` 与音视频/侧栏卡片另批迁移。

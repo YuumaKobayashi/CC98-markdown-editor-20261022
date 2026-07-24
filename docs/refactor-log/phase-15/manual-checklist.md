@@ -235,10 +235,32 @@
 
 ## 公共用户管理子页迁移组人工验收
 
-- [ ] 管理员从公共用户侧栏进入 manage 页，标题、用户身份与三块操作区域正确；
-- [ ] `/user/id/:id/manage`、`/user/name/:name/manage`、中文用户名、deep link、快速切换及 back/forward 正常；
-- [ ] 非法 method/id、不存在用户及随后访问正常用户时无旧用户内容或粘滞错误；
-- [ ] 删除主题/回复的 1、365、0、366 和非数字输入、成功/失败提示及真实 API 正常；
-- [ ] 锁定、屏蔽、TP、解除、TP 天数与理由校验、成功/失败提示及真实 API 正常；
-- [ ] 近期发言首次加载、前后分页、首尾禁用、快速翻页、版面名、链接、楼层、时间、IP 与内容正常；
-- [ ] 非管理员或无权限请求仍由既有入口和后端拒绝，不产生越权操作。
+- [x] 管理员从公共用户侧栏进入 manage 页，标题、用户身份与三块操作区域正确；
+- [x] `/user/id/:id/manage`、`/user/name/:name/manage`、中文用户名、deep link、快速切换及 back/forward 正常；
+- [x] 非法 method/id、不存在用户及随后访问正常用户时无旧用户内容或粘滞错误；
+- [x] 删除主题/回复的 1、365、0、366 和非数字输入、成功/失败提示及真实 API 正常；
+- [x] 锁定、屏蔽、TP、解除、TP 天数与理由校验、成功/失败提示及真实 API 正常；
+- [x] 近期发言首次加载、前后分页、首尾禁用、快速翻页、版面名、链接、楼层、时间、IP 与内容正常；
+- [x] 非管理员或无权限请求仍由既有入口和后端拒绝，不产生越权操作。
+
+## Focus 页面剩余壳层迁移组机械验证
+
+- [x] `FocusBoardArea`、`FocusTopicArea` 两个 React class 均由具名函数承接，旧文件仅保留 facade；
+- [x] Router index 与 `board/*` 使用 `pages/focus` 窄入口，user/favorite 子页直接组合同 owner 主题流；
+- [x] 新 owner 不含 class、`connect`、Store 直接读取、legacy route props、`React.FC`、`isFirstCommit`、`mounted` 或 `useLayoutEffect`；
+- [x] wheel、touchmove、scroll listener 均有同一 effect 的配对 cleanup；
+- [x] `npm run typecheck`、`git diff --check` 与目标静态审计通过；
+- [x] AST 总数从 71 降至 69，两个目标 class 数量为 0；
+- [x] 整组 `npm run build` 成功；受限沙箱首次命中 `spawn EPERM`，允许子进程的同一工作树重跑通过，共转换 3,913 个模块；
+- [x] 构建后复跑 typecheck 与 `git diff --check` 成功。
+- [x] 代码检查点已形成：`53e67ef8`。
+
+## Focus 页面剩余壳层迁移组人工验收
+
+- [x] `/focus`、`/focus/board`、`/focus/user`、`/focus/favorite` deep link、页签与 back/forward 正常；
+- [x] 关注版面缓存、默认/历史选中项、单击切换、双击进入版面及刷新后恢复正常；
+- [x] 关注版面、关注用户、收藏主题首次加载与空列表正常；
+- [x] 触底追加、重复边界、连续滚动、最终批次、200 条上限及 loading/done 文案正常；
+- [x] 回到顶部按钮显隐与 500ms 动画正常；
+- [x] 快速切换版面时旧响应不覆盖当前内容，切换不会积累重复请求；
+- [x] 请求失败后可再次触发；未登录、401/403 继续遵循既有错误处理。

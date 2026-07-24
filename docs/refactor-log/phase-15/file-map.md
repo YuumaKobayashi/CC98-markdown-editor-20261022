@@ -130,3 +130,12 @@ Board 主 route、Topic-New 与 Topic-Recommended lazy 入口保持原样；本�
 | `Components/UserCenter/Manage/ShowPost.tsx` | `pages/user-profile/manage/UserRecentPostsManager` | 旧 default export 保持兼容 |
 
 公共用户详情 layout、overview、侧栏与 Redux userInfo 结构不在本组改动；manage page 只通过 typed dispatch 更新既有访问页和用户 id。
+
+## Focus 页面剩余壳层迁移组
+
+| 旧位置 | 新 owner | 兼容方式 |
+|---|---|---|
+| `Components/Focus/FocusBoardArea.tsx` | `pages/focus/ui/FocusBoardArea` | 旧文件保留 named re-export；Router index 与 `board/*` 改用 page 窄入口 |
+| `Components/Focus/FocusTopicArea.tsx` | `pages/focus/ui/FocusTopicArea` | 旧文件保留组件和 props 类型 named re-export；Focus 三个子页改用 page 内部实现 |
+
+`Components/Focus/CardTopicSingle.tsx`、`CardBoard.tsx`、`CardRecommendTopic.tsx` 及内部音视频播放器继续服务 `/topic/new` 卡片视图，不在本组迁移。
