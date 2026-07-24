@@ -1,10 +1,10 @@
 # P15 函数组件 C 范围
 
-> 当前状态：版面列表与展示叶子迁移组已完成实现、机械验证与人工验收，代码检查点为 `fe9fc28c`；P15 尚未完成、不 push、不自动进入下一组
+> 当前状态：公共用户管理子页迁移组已完成实现与机械验证，停在真实管理员登录态/API 人工验收；P15 尚未完成、不提交、不 push、不自动进入下一组
 
 ## 唯一大事
 
-将仍依赖 Redux、Router 或复杂 lifecycle 的 React class 按风险分组迁为函数组件，并随批次归入 `app/pages/features/entities/shared` owner。当前批次迁移 Header、登录、停用通知源码与全局错误控制的 6 个 class；真实浏览器/API 验收仍开放，P15 尚未完成。
+将仍依赖 Redux、Router 或复杂 lifecycle 的 React class 按风险分组迁为函数组件，并随批次归入 `app/pages/features/entities/shared` owner。当前批次迁移公共用户管理页及三个管理操作面板的 4 个 class；真实管理员登录态、权限与 API 验收仍开放，P15 尚未完成。
 
 ## 已完成的无 Redux 简单组件组
 
@@ -116,3 +116,12 @@
 - 操作记录 IP hover 改用本地 state，移除该叶子的 jQuery；标签按钮补稳定 key，导航锚点不存在时安全忽略；
 - 旧文件继续兼容原 named export；Board 主页面、复杂列表/管理、topic 列表、Redux、Router bridge 与 Modal 不在本组迁移；
 - 完成条件为 9 个目标 class 消失、AST 总数从 84 降至 75、两套类型检查和正式构建通过；真实 API、登录态、图片、分页和 hover 验收继续独立开放。
+
+## 当前公共用户管理子页迁移组
+
+- 以 `f74d2733` 为基线，迁移用户管理页、删除近期内容、处罚操作和近期发言四个 live React class；
+- 四个组件共同归入 `pages/user-profile/manage`，Router 的 manage 子路由改用 page 窄入口，旧文件仅保留 default re-export；
+- 管理页直接以 `method/id` 路由为数据真相，支持 name 路由规范化为 id 路由，并用请求序号阻止快速切换时旧用户覆盖；
+- 保留原管理 API、token、操作文案、校验范围、帖子字段、版面名补全、分页和公开 URL；
+- 修复直达管理页可能沿用 Redux 中旧访问用户、name 路由无法取数及帖子 key 冲突；既有处罚解除校验和总页数显示合同继续保留；
+- 完成条件为 4 个目标 class 消失、AST 总数从 75 降至 71、两套类型检查和正式构建通过；真实管理员登录态、权限和 API 验收继续独立开放。

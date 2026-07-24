@@ -119,3 +119,14 @@
 | `Components/Topic/Topic-Recommended.tsx` 的 `Category` | `entities/topic/RecommendedTopicsBreadcrumb` | 页面内部改用新实现并继续 named re-export `Category` |
 
 Board 主 route、Topic-New 与 Topic-Recommended lazy 入口保持原样；本组只把 `/boardlist` 切到新 page 入口。
+
+## 公共用户管理子页迁移组
+
+| 旧位置 | 新 owner | 兼容方式 |
+|---|---|---|
+| `Components/UserCenter/User/Manage.tsx` | `pages/user-profile/manage/UserProfileManagePage` | 旧 default export 改为 re-export；Router 改用 manage 窄入口 |
+| `Components/UserCenter/Manage/DeleteTopicsAndPosts.tsx` | `pages/user-profile/manage/DeleteRecentUserContent` | 旧 default export 保持兼容 |
+| `Components/UserCenter/Manage/Operation.tsx` | `pages/user-profile/manage/UserPunishmentForm` | 旧 default export 保持兼容 |
+| `Components/UserCenter/Manage/ShowPost.tsx` | `pages/user-profile/manage/UserRecentPostsManager` | 旧 default export 保持兼容 |
+
+公共用户详情 layout、overview、侧栏与 Redux userInfo 结构不在本组改动；manage page 只通过 typed dispatch 更新既有访问页和用户 id。

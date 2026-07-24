@@ -93,3 +93,12 @@
 - `/boardlist` 生成独立 `board-list` 动态块；Board 主页面、新帖和随机精选仍保持各自原路由入口；
 - 既有 Sass `@import`、Spectrum 旧 CSS、plugin timing 与大 chunk 警告继续存在，本组未修改；
 - 构建不替代真实登录态、版面 API、图片、标签分页、广告、操作记录 hover 和浏览器验收。
+
+## 公共用户管理子页迁移组构建
+
+- 本组未启动 Node dev/preview server，没有 PID、端口或回收事项；
+- 四个目标组件的两套 TypeScript、diff 与静态检查已通过；
+- 受限沙箱首次构建在 Vite 配置加载阶段命中既知 `spawn EPERM`，在允许子进程的同一工作树重跑成功，共转换 3,913 个模块；
+- `/user/:method/:id/manage` 生成独立 `manage` 动态块，公共用户 layout 与 overview 继续保持各自窄入口；
+- 既有 Sass `@import`、Spectrum 旧 CSS、plugin timing 与大 chunk 警告继续存在，本组未修改；
+- 构建不替代真实管理员登录态、用户/管理 API、权限、分页和浏览器验收。

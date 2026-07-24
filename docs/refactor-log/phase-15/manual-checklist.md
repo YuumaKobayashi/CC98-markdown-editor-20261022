@@ -222,3 +222,23 @@
 - [x] 未登录、未认证、锁定、可投票和不可投票用户显示正确发帖入口或提示，首页广告正常；
 - [x] 操作记录的实名、匿名、不适用、主题/用户链接、时间和非 `*` IP hover 正常，`*` 不显示；
 - [x] `/newtopics`、`/recommendedtopics` 的 breadcrumb、列表、随机切换、滚动与 Redux 行为无回归。
+
+## 公共用户管理子页迁移组机械验证
+
+- [x] `UserManage`、`Delete`、`Operation`、`ShowTopic` 四个 React class 均由具名函数承接，旧文件仅保留 facade；
+- [x] Router manage 子路由使用 `pages/user-profile/manage` 窄入口；
+- [x] 新 owner 不含 class、`connect`、Store 直接读取、legacy route props、jQuery、`React.FC`、`isFirstCommit` 或 `useLayoutEffect`；
+- [x] `npm run typecheck`、`git diff --check` 与目标静态审计通过；
+- [x] AST 总数从 75 降至 71，四个目标 class 数量为 0；
+- [x] 整组 `npm run build` 成功；受限沙箱首次命中 `spawn EPERM`，允许子进程的同一工作树重跑通过；
+- [x] 构建后复跑 typecheck 与 `git diff --check` 成功。
+
+## 公共用户管理子页迁移组人工验收
+
+- [ ] 管理员从公共用户侧栏进入 manage 页，标题、用户身份与三块操作区域正确；
+- [ ] `/user/id/:id/manage`、`/user/name/:name/manage`、中文用户名、deep link、快速切换及 back/forward 正常；
+- [ ] 非法 method/id、不存在用户及随后访问正常用户时无旧用户内容或粘滞错误；
+- [ ] 删除主题/回复的 1、365、0、366 和非数字输入、成功/失败提示及真实 API 正常；
+- [ ] 锁定、屏蔽、TP、解除、TP 天数与理由校验、成功/失败提示及真实 API 正常；
+- [ ] 近期发言首次加载、前后分页、首尾禁用、快速翻页、版面名、链接、楼层、时间、IP 与内容正常；
+- [ ] 非管理员或无权限请求仍由既有入口和后端拒绝，不产生越权操作。

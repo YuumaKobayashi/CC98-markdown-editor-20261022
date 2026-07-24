@@ -103,3 +103,12 @@
 - 之前：发帖入口 class 含未调用的 `clickListener`，展示仍另行同步读取登录信息；现在：函数组件一次读取当前用户并直接派生同样的入口或提示，未调用方法删除。
 - 之前：操作记录通过 jQuery 按 DOM id 切换 IP class，并在 hover 时打印日志；现在：本地 hover state 声明式派生相同 `displaynone` class，不再查询或修改 DOM。
 - 之前：两个 topic breadcrumb 各自是纯 render class；现在：由 entity 具名函数承接，文案、样式和页面列表逻辑不变。
+
+## 公共用户管理子页迁移组
+
+- 之前：管理页优先读取 Redux `currentVisitingUserId`，直达另一个用户的 manage URL 时可能向旧用户发送管理请求；现在：严格从当前 `method/id` 路由解析目标用户。
+- 之前：`/user/name/:name/manage` 会对用户名执行 `parseInt` 而无法正确加载；现在：先按用户名取数，再 replace 到规范 `/user/id/:id/manage`。
+- 之前：快速切换管理对象时旧请求可覆盖当前页面；现在：请求序号只允许当前路由的结果生效。
+- 之前：四个 class 分散保存表单与分页 state；现在：page 负责路由用户，三个具名函数分别负责删除、处罚与近期发言状态。
+- 之前：近期发言使用 `topicId` 作为 key，同主题多条发言会冲突；现在：key 同时包含主题、楼层和时间。
+- 删除范围、处罚操作、请求方法、提示文案、帖子展示与每页 10 条分页语义保持不变。

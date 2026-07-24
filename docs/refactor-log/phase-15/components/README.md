@@ -76,5 +76,9 @@
 - [`board-moderation-record-item.md`](./board-moderation-record-item.md)
 - [`new-topics-breadcrumb.md`](./new-topics-breadcrumb.md)
 - [`recommended-topics-breadcrumb.md`](./recommended-topics-breadcrumb.md)
+- [`user-profile-manage-page.md`](./user-profile-manage-page.md)
+- [`delete-recent-user-content.md`](./delete-recent-user-content.md)
+- [`user-punishment-form.md`](./user-punishment-form.md)
+- [`user-recent-posts-manager.md`](./user-recent-posts-manager.md)
 
 版面列表与展示叶子迁移组已于 2026-07-24 通过人工页面验收；其他批次结论以 `manual-checklist.md` 为准。

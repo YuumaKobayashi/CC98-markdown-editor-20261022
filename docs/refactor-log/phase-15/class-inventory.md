@@ -148,6 +148,17 @@ TypeScript AST 复核确认本组 6 个目标声明均已消失，当前剩余 8
 
 TypeScript AST 复核确认本组 9 个目标声明均已消失，当前剩余 75 个非冻结 React class 声明；排除最终保留的 `ErrorBoundary` 后，仍有 74 个 P15 目标待迁，因此 P15 尚未完成。`RootBoardState`、`ChildBoardState` 是为兼容构造合同保留的非 React 数据 class，不计入该清单。
 
+## 公共用户管理子页迁移组
+
+| 原符号 | 新 owner | 状态 |
+|---|---|---|
+| `UserManage` | `pages/user-profile/manage` / `UserProfileManagePage` | 已实现，待人工验收 |
+| `Delete` | `pages/user-profile/manage` / `DeleteRecentUserContent` | 已实现，待人工验收 |
+| `Operation` | `pages/user-profile/manage` / `UserPunishmentForm` | 已实现，待人工验收 |
+| `ShowTopic` | `pages/user-profile/manage` / `UserRecentPostsManager` | 已实现，待人工验收 |
+
+TypeScript AST 复核确认本组 4 个目标声明均已消失，当前剩余 71 个非冻结 React class 声明；排除最终保留的 `ErrorBoundary` 后，仍有 70 个 P15 目标待迁，因此 P15 尚未完成。
+
 ## P21 删除候选
 
 根 `Breadcrumb`、根 `Category/Test`、`MessageBar`、`FindIP`、`TopicReplyUserBar`、`ExactActivitiesPosts`、`ErrorEmitter` 未发现运行时调用，本轮不为清零 class 而迁移。`CountDown` 只有 import 和注释 JSX，需在 P21 重新做引用/构建证明后决定删除。
