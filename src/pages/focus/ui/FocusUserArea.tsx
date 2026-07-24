@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { FocusTopicArea } from "@legacy/Components/Focus/FocusTopicArea";
+import { FocusTopicArea } from "./FocusTopicArea";
 
 /**
  * 表示我关注的版面的主题列表

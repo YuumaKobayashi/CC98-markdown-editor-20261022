@@ -240,14 +240,14 @@ const routes: RouteObject[] = [
           {
             index: true,
             lazy: lazyNamed(
-              () => import("@legacy/Components/Focus/FocusBoardArea"),
+              () => import("@pages/focus"),
               "FocusBoardArea"
             ),
           },
           {
             path: "board/*",
             lazy: lazyNamed(
-              () => import("@legacy/Components/Focus/FocusBoardArea"),
+              () => import("@pages/focus"),
               "FocusBoardArea"
             ),
           },
