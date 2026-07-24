@@ -108,3 +108,14 @@
 | `Components/UserCenter/User/Activities.tsx` | `pages/user-profile/overview/ui/UserRecentTopics` | 保留 default re-export |
 
 `Components/UserCenter/User/Manage.tsx` 及其路由仍走 legacy 子页；全局 route-props 桥继续由其他消费者使用。
+
+## 版面列表与展示叶子迁移组
+
+| 旧位置 | 新 owner | 兼容方式 |
+|---|---|---|
+| `Components/Board/BoardList.tsx` 的三个 React class | `pages/board-list` | 保留 `BoardList`、`RootBoard`、`ChildBoard` 与两个数据构造器 named re-export；Router 改用 `BoardListPage` |
+| `Components/Board/Board.tsx` 的四个展示叶子 | `pages/board` | 旧文件导入新实现供内部使用，并以原符号 named re-export |
+| `Components/Topic/Topic-New.tsx` 的 `Category` | `entities/topic/NewTopicsBreadcrumb` | 页面内部改用新实现并继续 named re-export `Category` |
+| `Components/Topic/Topic-Recommended.tsx` 的 `Category` | `entities/topic/RecommendedTopicsBreadcrumb` | 页面内部改用新实现并继续 named re-export `Category` |
+
+Board 主 route、Topic-New 与 Topic-Recommended lazy 入口保持原样；本组只把 `/boardlist` 切到新 page 入口。

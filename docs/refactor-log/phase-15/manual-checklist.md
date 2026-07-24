@@ -203,3 +203,22 @@
 - [ ] 关注、取关、重新关注、上限、失败、私信及本人/管理员导航正常；
 - [ ] 近期主题首次加载、滚动增量、最终批次、空态、失败后再次触发及切换用户正常；
 - [ ] 用户中心主页继续正确显示共享头像徽章，legacy manage 子页无回归。
+
+## 版面列表与展示叶子迁移组机械检查
+
+- [x] 三个内部批次均通过 `npm run typecheck`、`git diff --check` 与目标静态审计；
+- [x] 9 个目标 React class 均由具名函数承接，旧位置保持兼容 named export；
+- [x] 新组件不含 Redux/Store、`connect`、legacy route props、`React.FC`、`isFirstCommit`、`useLayoutEffect` 或展示修正 jQuery；
+- [x] AST 确认 React class 总数从 84 降至 75，9 个目标声明均为 0；
+- [x] 整组 `npm run build` 成功；受限沙箱首次命中 `spawn EPERM`，允许子进程的同一工作树重跑通过；
+- [x] 构建后复跑 typecheck 与 `git diff --check` 成功。
+- [x] 代码检查点已形成：`fe9fc28c`。
+
+## 版面列表与展示叶子迁移组人工验收
+
+- [x] `/boardlist` 的 API 数据、顺序、默认展开、反复展开/收起、主管链接和子版面链接正常；
+- [x] 版面导航定位、目标不存在保护、普通/无图片区布局与图片加载失败回退正常；
+- [x] 普通版面及 tag/list 路由的 breadcrumb、一级/二级标签、Pager、deep link 与 back/forward 正常；
+- [x] 未登录、未认证、锁定、可投票和不可投票用户显示正确发帖入口或提示，首页广告正常；
+- [x] 操作记录的实名、匿名、不适用、主题/用户链接、时间和非 `*` IP hover 正常，`*` 不显示；
+- [x] `/newtopics`、`/recommendedtopics` 的 breadcrumb、列表、随机切换、滚动与 Redux 行为无回归。

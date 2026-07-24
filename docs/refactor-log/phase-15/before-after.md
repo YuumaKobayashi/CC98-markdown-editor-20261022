@@ -94,3 +94,12 @@
 - 之前：非法生日字符串会解引用空正则匹配；现在：只有匹配成功才比较月日，字段仍按原字符串展示。
 - 之前：近期主题在最后不足 11 条后仍保留 scroll listener，并可能重复请求末页；现在：`hasMore` 在最终批次变为 false 并解除监听，用户切换立即清空并重新取数。
 - 主题与分隔线改用稳定 topic id key；公开 URL、关注文案、资料字段、签名 UBB、每批 10 条及 1500px 阈值保持不变。
+
+## 版面列表与展示叶子迁移组
+
+- 之前：`BoardList` 在 class mount 中请求版面并由两个 class 子组件组合；现在：页面使用 mount `useEffect`，区块用本地展开 state，子版面为无状态函数。
+- 之前：版面导航点击直接解引用目标 DOM；现在：目标不存在时安全忽略，正常锚点仍调用 `scrollIntoView`。
+- 之前：标签映射返回的外层元素没有 key；现在：使用稳定 tag id key，URL、层级和顺序不变。
+- 之前：发帖入口 class 含未调用的 `clickListener`，展示仍另行同步读取登录信息；现在：函数组件一次读取当前用户并直接派生同样的入口或提示，未调用方法删除。
+- 之前：操作记录通过 jQuery 按 DOM id 切换 IP class，并在 hover 时打印日志；现在：本地 hover state 声明式派生相同 `displaynone` class，不再查询或修改 DOM。
+- 之前：两个 topic breadcrumb 各自是纯 render class；现在：由 entity 具名函数承接，文案、样式和页面列表逻辑不变。

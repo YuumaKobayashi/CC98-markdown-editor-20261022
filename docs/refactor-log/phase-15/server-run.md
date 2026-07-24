@@ -84,3 +84,12 @@
 - 生成独立 `layout`、`overview` 与 `profile-avatar` 动态块，公共用户 manage 子页仍保持原入口；
 - 既有 Sass `@import`、Spectrum 旧 CSS、plugin timing 与大 chunk 警告继续存在，本组未修改；
 - 构建不替代真实登录态、用户 API、关注、头像配置、滚动、UBB 与浏览器验收。
+
+## 版面列表与展示叶子迁移组构建
+
+- 本组未启动 Node dev/preview server，没有 PID、端口或回收事项；
+- 版面列表、版面页展示叶子、topic breadcrumb 三个内部批次的两套 TypeScript、diff 与静态检查已通过；
+- 受限沙箱首次构建在 Vite 配置加载阶段命中既知 `spawn EPERM`，在允许子进程的同一工作树重跑成功，共转换 3,913 个模块；
+- `/boardlist` 生成独立 `board-list` 动态块；Board 主页面、新帖和随机精选仍保持各自原路由入口；
+- 既有 Sass `@import`、Spectrum 旧 CSS、plugin timing 与大 chunk 警告继续存在，本组未修改；
+- 构建不替代真实登录态、版面 API、图片、标签分页、广告、操作记录 hover 和浏览器验收。

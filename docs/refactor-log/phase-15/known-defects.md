@@ -99,3 +99,12 @@
 - `P15-USER-PROFILE-005`（已修复）：近期主题最终批次不足 11 条时旧 scroll listener 不解除，可持续请求相同末页；现由 `hasMore=false` 停止监听。
 - `P15-USER-PROFILE-006`（已保留）：关注 API 仍使用既有返回字符串区分上限与其他失败；本批不扩展 follow 协议、取消请求或全局错误 UI。
 - `P15-USER-PROFILE-007`（已保留）：近期主题首次请求期间仍显示既有“没有主题”，请求失败仍只记录日志；本批不新增 spinner、错误态或重试按钮。
+
+## 版面列表与展示叶子迁移组
+
+- `P15-BOARD-LIST-001`（已修复）：版面导航目标不存在时旧代码直接调用 `scrollIntoView` 并崩溃；现在使用空值保护。
+- `P15-BOARD-TAG-001`（已修复）：一级、二级标签列表的映射元素缺少 React key；现在使用稳定 tag id。
+- `P15-BOARD-RECORD-001`（已修复）：操作记录 IP hover 依赖全局 jQuery 查询并保留调试日志；现在由组件本地状态控制 class。
+- `P15-BOARD-ACTION-001`（已清理）：`ListButtonAndAds.clickListener` 从未绑定到任何 DOM 或调用方；迁移后删除，不影响现有登录/认证/锁定提示。
+- `P15-BOARD-LIST-002`（已保留）：`/Board/all` 失败时仍不提供 loading、错误或重试 UI；本批只迁移组件形态。
+- `P15-BOARD-RECORD-002`（已保留）：操作记录继续使用普通 `<a target="_blank">` 且不新增 `rel`；链接安全策略不在本批扩展。

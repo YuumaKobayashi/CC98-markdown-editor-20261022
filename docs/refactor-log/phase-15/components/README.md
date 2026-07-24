@@ -67,5 +67,14 @@
 - [`user-profile-avatar.md`](./user-profile-avatar.md)
 - [`user-profile-details.md`](./user-profile-details.md)
 - [`user-recent-topics.md`](./user-recent-topics.md)
+- [`board-list-page.md`](./board-list-page.md)
+- [`board-list-section.md`](./board-list-section.md)
+- [`child-board-list.md`](./child-board-list.md)
+- [`board-breadcrumb.md`](./board-breadcrumb.md)
+- [`board-tag-pagination.md`](./board-tag-pagination.md)
+- [`board-actions-and-advertisement.md`](./board-actions-and-advertisement.md)
+- [`board-moderation-record-item.md`](./board-moderation-record-item.md)
+- [`new-topics-breadcrumb.md`](./new-topics-breadcrumb.md)
+- [`recommended-topics-breadcrumb.md`](./recommended-topics-breadcrumb.md)
 
-审核结论由用户完成人工页面验收后填写。
+版面列表与展示叶子迁移组已于 2026-07-24 通过人工页面验收；其他批次结论以 `manual-checklist.md` 为准。
