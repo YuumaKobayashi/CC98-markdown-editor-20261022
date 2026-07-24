@@ -23,6 +23,7 @@ function PaginationLink({ text, url, active }: PaginationLinkProps) {
   );
 }
 
+//TODO: 修复多了选数量的部分
 export function Pager({ page: currentPage, url, totalPage }: PagerProps) {
   const [nextPage, setNextPage] = React.useState(currentPage);
 
