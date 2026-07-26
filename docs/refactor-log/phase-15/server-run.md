@@ -108,6 +108,15 @@
 - 本组未启动 Node dev/preview server，没有 PID、端口或回收事项；
 - 两个目标组件的 modern/legacy TypeScript、diff 与静态检查通过；
 - 受限沙箱首次构建在 Vite 配置加载阶段命中既知 `spawn EPERM`，在允许子进程的同一工作树重跑成功，共转换 3,913 个模块；
-- Focus index、board、user、favorite 子路由共用 `pages/focus` 动态块；`/topic/new` 卡片视图继续保持原入口；
+- Focus index、board、user、favorite 子路由共用 `pages/focus` 动态块；`/newtopics` 卡片视图继续保持原入口；
 - 既有 Sass `@import`、Spectrum 旧 CSS、plugin timing 与大 chunk 警告继续存在，本组未修改；
 - 构建不替代真实登录态、关注 API、sessionStorage、触底加载、快速切换、回顶和浏览器验收。
+
+## 主题发现页与卡片视图迁移组构建
+
+- 本组未启动 Node dev/preview server，没有 PID、端口或回收事项；
+- 七个目标组件的 modern/legacy TypeScript、diff、静态审计与 AST 统计通过；
+- 受限沙箱首次构建在 Vite 配置加载阶段命中既知 `spawn EPERM`，在允许子进程的同一工作树重跑成功；
+- `/newtopics`、`/recommendedtopics` 生成独立动态块，主题卡片和播放器从 `entities/topic` 共享；
+- 既有 Sass `@import`、Spectrum 旧 CSS、plugin timing 与大 chunk 警告继续存在，本组未修改；
+- 构建不替代真实登录态、主题/版面 API、sessionStorage、滚动、图片、DPlayer/APlayer 和浏览器验收。

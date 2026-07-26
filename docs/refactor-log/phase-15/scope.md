@@ -1,10 +1,10 @@
 # P15 函数组件 C 范围
 
-> 当前状态：Focus 页面剩余壳层迁移组已通过真实登录态/API/滚动人工验收，代码检查点为 `53e67ef8`；P15 尚未完成、不 push、不自动进入下一组
+> 当前状态：主题发现页与卡片视图迁移组已完成机械验证，等待真实登录态/API/播放器/滚动人工验收；P15 尚未完成、不提交、不 push、不自动进入下一组
 
 ## 唯一大事
 
-将仍依赖 Redux、Router 或复杂 lifecycle 的 React class 按风险分组迁为函数组件，并随批次归入 `app/pages/features/entities/shared` owner。当前批次迁移 Focus 版面选择和主题流两个 class；真实登录态、关注 API、滚动与浏览器验收仍开放，P15 尚未完成。
+将仍依赖 Redux、Router 或复杂 lifecycle 的 React class 按风险分组迁为函数组件，并随批次归入 `app/pages/features/entities/shared` owner。当前批次迁移主题发现页、卡片、音视频播放器和两侧栏共七个 class；真实登录态、主题 API、媒体播放、滚动与浏览器验收仍开放，P15 尚未完成。
 
 ## 已完成的无 Redux 简单组件组
 
@@ -133,6 +133,16 @@
 - 保留关注版面、关注用户、收藏主题 API，`focusBoardList`、`currentFocusBoard`、`focusBoard_:id` sessionStorage 键，每批 20 条、最多 200 条、重复主题截断和 500ms 回顶合同；
 - 版面单击、双击和选中 class 改由 React 事件与 state 表达；滚动、触摸和 wheel 监听集中到普通 effect 并配对 cleanup；
 - 修复切换版面反复注册监听器以及旧请求晚到覆盖当前主题流；不修改 Redux、服务接口、公开 URL、DOM/CSS 或文案；
-- `CardTopicSingle`、音视频播放器、随机推荐和版面卡片属于 `/topic/new` 卡片视图，不在本组范围；
+- `CardTopicSingle`、音视频播放器、随机推荐和版面卡片属于 `/newtopics` 卡片视图，不在本组范围；
 - 完成条件为 2 个目标 class 消失、AST 总数从 71 降至 69、两套类型检查和正式构建通过；真实登录态、关注 API、缓存、触底加载和浏览器验收继续独立开放。
 - 2026-07-24 人工验收通过，代码检查点为 `53e67ef8`。
+
+## 当前主题发现页与卡片视图迁移组
+
+- 以 `4e34e83a` 为基线，迁移 `AllNewTopic`、`AllRecommendedTopic`、`CardTopicSingle`、`VideoPlayer`、`AudioPlayer`、`CardBoard`、`CardRecommendTopic` 七个 live React class；
+- `/newtopics/*`、`/recommendedtopics/*` 分别归入 `pages/new-topics`、`pages/recommended-topics`，主题卡片与播放器归入 `entities/topic`，Router 改用新窄入口；
+- 保留三种新帖视图、Redux 隐私开关、用户偏好 API、所有 sessionStorage 键、20/500 条新帖合同、10 条随机主题合同、重复主题截断、500ms 回顶、版面 sticky 和播放器 DOM/CSS；
+- 图片展开和页面显隐改由 React state 表达；新帖 document listener 继续配对 cleanup；只有第三方播放器初始化及显示前 DOM 修正使用 `useLayoutEffect`；
+- 按用户决定，本组不修复既有版面 scroll listener 泄漏、播放器失败后空实例访问、可疑 OR 空值判断、索引/缺失 key、`debugger` 与调试日志，全部登记后续处理；
+- 迁移后零引用的 `NewTopicAreaState`、`RecommendedTopicAreaState`、`RandomTopicAreaState` 不删除，列入 P21 清理候选；
+- 完成条件为七个目标 class 消失、AST 总数从 69 降至 62、两套类型检查和正式构建通过；排除 `ErrorBoundary` 后仍有 61 个 P15 目标，真实登录态/API/播放器/滚动验收继续独立开放。

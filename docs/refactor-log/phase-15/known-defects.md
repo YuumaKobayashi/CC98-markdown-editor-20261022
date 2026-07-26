@@ -127,3 +127,13 @@
 - `P15-FOCUS-004`（已保留）：主题流仍依赖滚动、wheel、touchmove 触发和 300px 底部阈值，没有新增 IntersectionObserver、取消请求或错误/重试 UI。
 - `P15-FOCUS-005`（已保留）：回到顶部仍保留 jQuery 500ms 动画；本批只移除展示与事件绑定所需的 jQuery DOM 修改。
 - `P15-FOCUS-006`（后续清理）：`FocusBoardAreaState`、`FocusTopicAreaState` 迁移后零引用，留作 P21 删除候选；`CardTopicSingle` 与音视频/侧栏卡片另批迁移。
+
+## 主题发现页与卡片视图迁移组
+
+- `P15-TOPIC-DISCOVERY-001`（待后续修复）：`NewTopicsBoardSidebar` 沿用旧 `CardBoard` 行为，window scroll listener 不 cleanup；重复挂载可能积累 sticky handler。
+- `P15-TOPIC-DISCOVERY-002`（待后续修复）：DPlayer 构造异常被吞掉后仍会调用空播放器实例的 `on`；本批按用户要求保留失败路径，后续需补实例保护并做异常媒体验收。
+- `P15-TOPIC-DISCOVERY-003`（待后续复核）：版面和随机近期主题保留旧 OR 空值判断；后续应结合 service 的真实 null/undefined/字符串返回合同统一判断，避免在迁移批次内猜测错误语义。
+- `P15-TOPIC-DISCOVERY-004`（待后续修复）：版面项继续使用数组索引 key，随机近期主题外层继续缺少 key；本批不改变 React 身份策略。
+- `P15-TOPIC-DISCOVERY-005`（待后续清理）：新帖隐私按钮的 `debugger` 与随机近期主题的 console 调试日志按严格保真要求保留。
+- `P15-TOPIC-DISCOVERY-006`（已保留）：新帖首次/刷新请求失败时加载锁可能保持 false，页面没有独立错误或重试 UI；增量请求失败仍恢复加载锁。
+- `P15-TOPIC-DISCOVERY-007`（后续清理）：`NewTopicAreaState`、`RecommendedTopicAreaState`、`RandomTopicAreaState` 已无 live owner，留作 P21 引用证明与删除候选。

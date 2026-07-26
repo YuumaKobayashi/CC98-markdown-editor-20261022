@@ -138,4 +138,16 @@ Board 主 route、Topic-New 与 Topic-Recommended lazy 入口保持原样；本�
 | `Components/Focus/FocusBoardArea.tsx` | `pages/focus/ui/FocusBoardArea` | 旧文件保留 named re-export；Router index 与 `board/*` 改用 page 窄入口 |
 | `Components/Focus/FocusTopicArea.tsx` | `pages/focus/ui/FocusTopicArea` | 旧文件保留组件和 props 类型 named re-export；Focus 三个子页改用 page 内部实现 |
 
-`Components/Focus/CardTopicSingle.tsx`、`CardBoard.tsx`、`CardRecommendTopic.tsx` 及内部音视频播放器继续服务 `/topic/new` 卡片视图，不在本组迁移。
+`Components/Focus/CardTopicSingle.tsx`、`CardBoard.tsx`、`CardRecommendTopic.tsx` 及内部音视频播放器继续服务 `/newtopics` 卡片视图，不在本组迁移。
+
+## 主题发现页与卡片视图迁移组
+
+| 旧位置 | 新 owner | 兼容方式 |
+|---|---|---|
+| `Components/Topic/Topic-New.tsx` | `pages/new-topics/NewTopicsPage` | 保留 default、`NewTopicsPage` 与 `Category` re-export；Router 改用 page 窄入口 |
+| `Components/Topic/Topic-Recommended.tsx` | `pages/recommended-topics/RecommendedTopicsPage` | 保留 default、`AllRecommendedTopic`、`RecommendedTopicsPage` 与 `Category` re-export；Router 改用 page 窄入口 |
+| `Components/Focus/CardTopicSingle.tsx` | `entities/topic/TopicCard` | 保留 `CardTopicSingle`、`VideoPlayer`、`AudioPlayer` 别名 |
+| `Components/Focus/CardBoard.tsx` | `pages/new-topics/NewTopicsBoardSidebar` | 保留 `CardBoard` named re-export |
+| `Components/Focus/CardRecommendTopic.tsx` | `pages/new-topics/RandomRecentTopics` | 保留 `CardRecommendTopic` named re-export |
+
+服务 API、Redux reducer、公开 URL 和旧 State 文件均不迁移；legacy facade 留待 P21 依据引用证明删除。

@@ -168,6 +168,20 @@ TypeScript AST 复核确认本组 4 个目标声明均已消失，当前剩余 7
 
 TypeScript AST 复核确认本组 2 个目标声明均已消失，当前剩余 69 个非冻结 React class 声明；排除最终保留的 `ErrorBoundary` 后，仍有 68 个 P15 目标待迁，因此 P15 尚未完成。迁移后零引用的 `FocusBoardAreaState`、`FocusTopicAreaState` 保留为 P21 清理候选，本批不删除非 React 数据 class。
 
+## 主题发现页与卡片视图迁移组
+
+| 原符号 | 新 owner | 状态 |
+|---|---|---|
+| `Topic-New/AllNewTopic` | `pages/new-topics` / `NewTopicsPage` | 已实现，待人工验收 |
+| `Topic-Recommended/AllRecommendedTopic` | `pages/recommended-topics` / `RecommendedTopicsPage` | 已实现，待人工验收 |
+| `CardTopicSingle` | `entities/topic` / `TopicCard` | 已实现，待人工验收 |
+| `VideoPlayer` | `entities/topic` / `TopicVideoPlayer` | 已实现，待人工验收 |
+| `AudioPlayer` | `entities/topic` / `TopicAudioPlayer` | 已实现，待人工验收 |
+| `CardBoard` | `pages/new-topics` / `NewTopicsBoardSidebar` | 已实现，待人工验收 |
+| `CardRecommendTopic` | `pages/new-topics` / `RandomRecentTopics` | 已实现，待人工验收 |
+
+TypeScript AST 复核确认本组七个目标声明均已消失，当前剩余 62 个非冻结 React class 声明；排除最终保留的 `ErrorBoundary` 后，仍有 61 个 P15 目标待迁，因此 P15 尚未完成。三个零引用旧 State class 保留为 P21 清理候选。
+
 ## P21 删除候选
 
 根 `Breadcrumb`、根 `Category/Test`、`MessageBar`、`FindIP`、`TopicReplyUserBar`、`ExactActivitiesPosts`、`ErrorEmitter` 未发现运行时调用，本轮不为清零 class 而迁移。`CountDown` 只有 import 和注释 JSX，需在 P21 重新做引用/构建证明后决定删除。

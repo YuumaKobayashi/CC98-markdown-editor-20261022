@@ -264,3 +264,28 @@
 - [x] 回到顶部按钮显隐与 500ms 动画正常；
 - [x] 快速切换版面时旧响应不覆盖当前内容，切换不会积累重复请求；
 - [x] 请求失败后可再次触发；未登录、401/403 继续遵循既有错误处理。
+
+## 主题发现页与卡片视图迁移组机械验证
+
+- [x] 七个目标 React class 均由具名函数承接，旧文件仅保留兼容 facade；
+- [x] `/newtopics/*`、`/recommendedtopics/*` Router lazy import 使用 page 窄入口；
+- [x] 新 owner 不含 React class、`connect`、Store 直接读取、legacy route props、`React.FC`、`mounted` 或 `isFirstCommit`；
+- [x] `useLayoutEffect` 只存在于 DPlayer/APlayer 初始化边界；新帖 document listener 继续配对 cleanup；
+- [x] `npm run typecheck`、`npm run build`、`git diff --check` 与目标静态审计通过；
+- [x] AST 总数从 69 降至 62，七个目标 class 数量均为 0；
+- [x] 受限沙箱首次构建命中既知 `spawn EPERM`，允许子进程环境重跑成功；
+- [x] 既有缺陷均保持并登记，没有混入修复。
+- [x] 代码检查点已形成：`37727da2`。
+
+## 主题发现页与卡片视图迁移组人工验收
+
+- [x] `/newtopics` deep link、刷新、back/forward 和经典/卡片/只看媒体三种模式正常，偏好 PUT 与再次进入时恢复正常；
+- [x] Redux 隐私开关、本地 `showCardUser`、Header/跨标签页联动及用户统计正常；
+- [x] 首批 20 条、触底追加、重复边界、连续滚动、500 条上限、loading/done 和 500ms 回顶正常；
+- [x] 匿名主题、空标题、作者/主题/版面/最后回复链接及楼层锚点正常；
+- [x] 一至六图布局、缩略图切换、原图 URL、展开/收起和只看媒体正常；
+- [x] 横竖屏视频、菜单、全屏按钮、音频播放及卸载后销毁正常；
+- [x] 版面列表缓存、默认展开、链接、长短名称布局及上下滚动 sticky 正常；
+- [x] 随机近期主题和 `/recommendedtopics` 的 10 条缓存、换一换、上一批、链接及按钮显隐正常；
+- [x] 未登录、401/403、空列表、异常 API 和异常媒体继续遵循迁移前语义；
+- [x] 已登记的 listener、播放器失败路径、空值判断、key 与调试语句缺陷未在本批宣称修复。

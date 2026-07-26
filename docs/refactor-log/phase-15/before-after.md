@@ -121,3 +121,12 @@
 - 之前：是否可加载由 class 字段控制，loading/done 和回顶按钮由 jQuery 修改 DOM class；现在：加载锁使用 ref，停止与按钮状态声明式派生相同 class。
 - 首次请求继续使用 offset 0；增量继续每批 20 条、最多 200 条，并按首条重复 id 截断旧尾部后拼接；三个 sessionStorage 键和失败后的可重试语义不变。
 - 回到顶部继续使用既有 jQuery 500ms 动画；公开 URL、DOM id/class、提示文案、版面双击整页跳转和 `FocusTopicItem` 字段映射保持不变。
+
+## 主题发现页与卡片视图迁移组
+
+- 之前：`AllNewTopic` 通过 `connect`、class 字段和 jQuery 共同维护模式、加载锁、按钮 class 与区域显隐；现在：具名 page 使用 typed Redux hooks、state 和 ref 表达相同状态，document listener 仍在 mount effect 中注册并配对 cleanup。
+- 之前：`AllRecommendedTopic` 和右侧随机近期主题在 lifecycle 中读写当前/上一批缓存并直接修改按钮 DOM；现在：具名函数使用 state 派生相同 hidden/visibility，缓存键、10 条请求和单级返回合同不变。
+- 之前：主题卡片 mount 后用 jQuery删除匿名链接并切换图片 DOM；现在：匿名属性、原图、缩略图与选中 class 由 props/state 声明式派生，原图 URL 转换和最多六图布局不变。
+- 之前：DPlayer/APlayer 在 `componentDidMount` 创建并修改插件 DOM，在卸载时销毁；现在：只在 `useLayoutEffect` 中执行同样的显示前初始化、DOM 修正和销毁。
+- 之前：版面侧栏 mount 后取版面并注册 sticky scroll handler；现在：普通 mount effect 执行相同流程和位移算法。
+- 本组严格保真，不修复已识别的监听泄漏、播放器失败路径、OR 空值判断、列表 key 与调试语句；这些差异候选只登记、不改变。
