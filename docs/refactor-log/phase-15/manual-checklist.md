@@ -289,3 +289,24 @@
 - [x] 随机近期主题和 `/recommendedtopics` 的 10 条缓存、换一换、上一批、链接及按钮显隐正常；
 - [x] 未登录、401/403、空列表、异常 API 和异常媒体继续遵循迁移前语义；
 - [x] 已登记的 listener、播放器失败路径、空值判断、key 与调试语句缺陷未在本批宣称修复。
+
+## 用户中心资料、主题与转账设置迁移组机械验证
+
+- [x] `Config`、`UserCenterConfigAvatar`、`ConfigOthers` 匿名组件、`Theme`、`ThemeSettingComponent`、`Wealth` 均由具名函数承接，旧文件只保留兼容 facade；
+- [x] Router 的 `config/*`、`theme/*`、`transferwealth/*` lazy import 使用三个 page 窄入口；
+- [x] 新 owner 不含 React class、`connect`、Store 直接读取、legacy route props、`React.FC`、`useLayoutEffect`、`mounted` 或 `isFirstCommit`；
+- [x] 头像 selector、resize、cover 与 window mouse listener 均在同一普通 effect 中配对 cleanup；
+- [x] `npm run typecheck`、`npm run build`、`git diff --check` 与目标静态审计通过；
+- [x] AST 总数从 62 降至 56，六个目标 class 数量均为 0；
+- [x] 受限沙箱首次构建命中既知 `spawn EPERM`，允许子进程环境重跑成功，共转换 3,920 个模块；
+- [x] 既有缺陷均保持并登记，没有混入修复。
+
+## 用户中心资料、主题与转账设置迁移组人工验收
+
+- [x] `/usercenter/config`、`/usercenter/theme`、`/usercenter/transferwealth` deep link、用户中心页签、刷新与 back/forward 正常；
+- [x] 个人资料初始化、性别、生日未选择/保密/边界年月日、头衔、QQ、邮箱、简介、签名、重置与提交提示正常；
+- [x] 头像当前值、六个论坛头像、本地图片类型/最小尺寸、预览、移动、缩放、裁剪、上传、成功/失败与连续选择正常；
+- [x] 固定主题切换、未知主题回退、日夜开关、浏览器同步、起止时间、成功三秒提示与失败提示正常；
+- [x] 单人/多人转账、空白分隔与去重、金额/理由/余额校验、手续费预览、提交锁、成功名单与失败提示正常；
+- [x] 未登录、401/403、空头衔列表、异常图片/Canvas 和异常 API 继续遵循迁移前语义；
+- [x] 已登记的日期、异步回调、主题静默失败、转账输入/共享状态/Redux 原地修改缺陷未在本批宣称修复。

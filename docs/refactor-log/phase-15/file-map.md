@@ -151,3 +151,15 @@ Board 主 route、Topic-New 与 Topic-Recommended lazy 入口保持原样；本�
 | `Components/Focus/CardRecommendTopic.tsx` | `pages/new-topics/RandomRecentTopics` | 保留 `CardRecommendTopic` named re-export |
 
 服务 API、Redux reducer、公开 URL 和旧 State 文件均不迁移；legacy facade 留待 P21 依据引用证明删除。
+
+## 用户中心资料、主题与转账设置迁移组
+
+| 旧位置 | 新 owner | 兼容方式 |
+|---|---|---|
+| `Components/UserCenter/Config.tsx` | `pages/user-center/settings/UserCenterSettingsPage` | 保留 default 与 `Config` 别名；Router `config/*` 改用 settings 窄入口 |
+| `Components/UserCenter/ConfigAvatar.tsx` | `pages/user-center/settings/UserCenterAvatarSettings` | 保留 default 与 `UserCenterConfigAvatar` 别名 |
+| `Components/UserCenter/ConfigOthers.tsx` | `pages/user-center/settings/UserCenterProfileSettings` | 保留 default 与 `ConfigOthers` 别名 |
+| `Components/UserCenter/Theme.tsx` | `pages/user-center/theme/UserCenterThemePage`、`ThemeSettingsForm` | 保留 default、`Theme`、`ThemeSettingComponent`、主题列表和值类型导出；Router `theme/*` 改用 theme 窄入口 |
+| `Components/UserCenter/TransferWealth.tsx` | `pages/user-center/transfer-wealth/TransferWealthPage` | 保留 default 与 `Wealth` 别名；Router `transferwealth/*` 改用窄入口 |
+
+`EditableUserInfo` 归入 settings model；Redux reducer/action/thunk、`States/AppState`、认证与 HTTP service 均继续使用既有合同。

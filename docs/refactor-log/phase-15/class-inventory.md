@@ -172,15 +172,28 @@ TypeScript AST 复核确认本组 2 个目标声明均已消失，当前剩余 6
 
 | 原符号 | 新 owner | 状态 |
 |---|---|---|
-| `Topic-New/AllNewTopic` | `pages/new-topics` / `NewTopicsPage` | 已实现，待人工验收 |
-| `Topic-Recommended/AllRecommendedTopic` | `pages/recommended-topics` / `RecommendedTopicsPage` | 已实现，待人工验收 |
-| `CardTopicSingle` | `entities/topic` / `TopicCard` | 已实现，待人工验收 |
-| `VideoPlayer` | `entities/topic` / `TopicVideoPlayer` | 已实现，待人工验收 |
-| `AudioPlayer` | `entities/topic` / `TopicAudioPlayer` | 已实现，待人工验收 |
-| `CardBoard` | `pages/new-topics` / `NewTopicsBoardSidebar` | 已实现，待人工验收 |
-| `CardRecommendTopic` | `pages/new-topics` / `RandomRecentTopics` | 已实现，待人工验收 |
+| `Topic-New/AllNewTopic` | `pages/new-topics` / `NewTopicsPage` | 已实现，人工验收通过 |
+| `Topic-Recommended/AllRecommendedTopic` | `pages/recommended-topics` / `RecommendedTopicsPage` | 已实现，人工验收通过 |
+| `CardTopicSingle` | `entities/topic` / `TopicCard` | 已实现，人工验收通过 |
+| `VideoPlayer` | `entities/topic` / `TopicVideoPlayer` | 已实现，人工验收通过 |
+| `AudioPlayer` | `entities/topic` / `TopicAudioPlayer` | 已实现，人工验收通过 |
+| `CardBoard` | `pages/new-topics` / `NewTopicsBoardSidebar` | 已实现，人工验收通过 |
+| `CardRecommendTopic` | `pages/new-topics` / `RandomRecentTopics` | 已实现，人工验收通过 |
 
 TypeScript AST 复核确认本组七个目标声明均已消失，当前剩余 62 个非冻结 React class 声明；排除最终保留的 `ErrorBoundary` 后，仍有 61 个 P15 目标待迁，因此 P15 尚未完成。三个零引用旧 State class 保留为 P21 清理候选。
+
+## 用户中心资料、主题与转账设置迁移组
+
+| 原符号 | 新 owner | 状态 |
+|---|---|---|
+| `Config` | `pages/user-center/settings` / `UserCenterSettingsPage` | 已实现，待人工验收 |
+| `UserCenterConfigAvatar` | `pages/user-center/settings` / `UserCenterAvatarSettings` | 已实现，待人工验收 |
+| `ConfigOthers` 匿名 class | `pages/user-center/settings` / `UserCenterProfileSettings` | 已实现，待人工验收 |
+| `Theme` | `pages/user-center/theme` / `UserCenterThemePage` | 已实现，待人工验收 |
+| `ThemeSettingComponent` | `pages/user-center/theme` / `ThemeSettingsForm` | 已实现，待人工验收 |
+| `Wealth` | `pages/user-center/transfer-wealth` / `TransferWealthPage` | 已实现，待人工验收 |
+
+TypeScript AST 复核确认本组六个目标声明均已消失，当前剩余 56 个非冻结 React class 声明；排除最终保留的 `ErrorBoundary` 后，仍有 55 个 P15 目标待迁，因此 P15 尚未完成。
 
 ## P21 删除候选
 

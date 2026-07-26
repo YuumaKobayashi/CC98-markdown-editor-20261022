@@ -4,7 +4,7 @@
 
 ## 唯一大事
 
-将仍依赖 Redux、Router 或复杂 lifecycle 的 React class 按风险分组迁为函数组件，并随批次归入 `app/pages/features/entities/shared` owner。当前批次迁移主题发现页、卡片、音视频播放器和两侧栏共七个 class；真实登录态、主题 API、媒体播放、滚动与浏览器验收仍开放，P15 尚未完成。
+将仍依赖 Redux、Router 或复杂 lifecycle 的 React class 按风险分组迁为函数组件，并随批次归入 `app/pages/features/entities/shared` owner。当前批次迁移用户中心个人资料、头像、主题与财富转账设置共六个 class；真实登录态、资料/头像/主题/转账 API、Canvas、文件上传与浏览器验收仍开放，P15 尚未完成。
 
 ## 已完成的无 Redux 简单组件组
 
@@ -146,3 +146,15 @@
 - 按用户决定，本组不修复既有版面 scroll listener 泄漏、播放器失败后空实例访问、可疑 OR 空值判断、索引/缺失 key、`debugger` 与调试日志，全部登记后续处理；
 - 迁移后零引用的 `NewTopicAreaState`、`RecommendedTopicAreaState`、`RandomTopicAreaState` 不删除，列入 P21 清理候选；
 - 完成条件为七个目标 class 消失、AST 总数从 69 降至 62、两套类型检查和正式构建通过；排除 `ErrorBoundary` 后仍有 61 个 P15 目标，真实登录态/API/播放器/滚动验收继续独立开放。
+- 2026-07-26 人工验收通过，代码检查点为 `37727da2`，文档检查点为 `4c3ad089`。
+
+## 当前用户中心资料、主题与转账设置迁移组
+
+- 以 `4c3ad089` 为基线，迁移 `Config`、`UserCenterConfigAvatar`、`ConfigOthers` 匿名组件、`Theme`、`ThemeSettingComponent`、`Wealth` 六个 live React class；
+- 个人资料、头像与其他设置归入 `pages/user-center/settings`，主题页与表单归入 `pages/user-center/theme`，财富转账归入 `pages/user-center/transfer-wealth`；Router 三条子路由改用对应窄入口；
+- 保留 `/me`、头像上传/设置、主题、主题设置、财富转账 API，Redux state/action/thunk、公开 URL、DOM/CSS、校验、提示文案、默认头像与主题注册表合同；
+- 头像原生 mouse listener 继续在普通 effect 中集中注册并完整 cleanup；转账完成提示改由本次提交的显式 pending 状态驱动，不使用 previous-props 模拟 lifecycle；
+- 按用户决定，本组只迁移组件，不修复已识别的日期校验、异步回调、主题静默失败、转账输入/共享状态/Redux 原地修改等既有缺陷，全部登记后续处理；
+- 不迁移登录、收藏/历史、Board 主页面、编辑/主题管理和零调用候选，不新增依赖，不启动持续 Node server；
+- 完成条件为六个目标 class 消失、AST 总数从 62 降至 56、两套类型检查和正式构建通过；排除 `ErrorBoundary` 后仍有 55 个 P15 目标，真实登录态/API/Canvas/上传/主题/转账验收继续独立开放。
+- 2026-07-27 人工验收通过，代码检查点为 `37549b04`。

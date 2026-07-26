@@ -130,3 +130,12 @@
 - 之前：DPlayer/APlayer 在 `componentDidMount` 创建并修改插件 DOM，在卸载时销毁；现在：只在 `useLayoutEffect` 中执行同样的显示前初始化、DOM 修正和销毁。
 - 之前：版面侧栏 mount 后取版面并注册 sticky scroll handler；现在：普通 mount effect 执行相同流程和位移算法。
 - 本组严格保真，不修复已识别的监听泄漏、播放器失败路径、OR 空值判断、列表 key 与调试语句；这些差异候选只登记、不改变。
+
+## 用户中心资料、主题与转账设置迁移组
+
+- 之前：`Config` constructor 复制 Redux 用户资料并在 class 方法中校验、提交和重置；现在：page 以 typed Redux hooks 初始化同一编辑模型，普通 mount effect 设置用户中心页签，提交/reset 合同不变。
+- 之前：其他设置匿名 class 在 mount 拉取头衔并在 render 中构造年月日选项；现在：具名函数使用普通 effect 和受控字段，继续静默处理头衔请求失败并保留年份、保密值和可选头衔过滤。
+- 之前：头像 class 用实例字段保存 canvas、拖拽元素和偏移，并在 lifecycle 中绑定九个原生 mouse listener；现在：refs 保存同一可变交互数据，单个普通 effect 注册并配对移除所有 listener。
+- 之前：主题页和设置表单通过 `connect`、内部 state 与 ref 直接修改结果 span；现在：page 使用 typed hooks，表单用 state 派生相同结果文本和三秒显隐，主题 API、注册表、日夜推断和实际换肤调用不变。
+- 之前：财富转账通过 `componentWillReceiveProps` 比较共享 Redux loading/error 前后值；现在：提交时建立显式 pending workflow，只有本次操作观察到 loading 后才消费既有 success/error state，不引入 previous-props 模拟。
+- 本组按要求保留日期、文件异步、主题失败与转账输入/共享状态等已识别缺陷；公开 URL、DOM/CSS、文案、Redux 数据结构与 service API 不变。

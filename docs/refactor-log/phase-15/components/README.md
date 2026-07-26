@@ -89,5 +89,11 @@
 - [`topic-audio-player.md`](./topic-audio-player.md)
 - [`new-topics-board-sidebar.md`](./new-topics-board-sidebar.md)
 - [`random-recent-topics.md`](./random-recent-topics.md)
+- [`user-center-settings-page.md`](./user-center-settings-page.md)
+- [`user-center-avatar-settings.md`](./user-center-avatar-settings.md)
+- [`user-center-profile-settings.md`](./user-center-profile-settings.md)
+- [`user-center-theme-page.md`](./user-center-theme-page.md)
+- [`theme-settings-form.md`](./theme-settings-form.md)
+- [`transfer-wealth-page.md`](./transfer-wealth-page.md)
 
-版面列表与展示叶子、公共用户管理子页、Focus 页面剩余壳层迁移组已于 2026-07-24 通过人工页面验收；其他批次结论以 `manual-checklist.md` 为准。
+版面列表与展示叶子、公共用户管理子页、Focus 页面剩余壳层迁移组已于 2026-07-24 通过人工页面验收；主题发现页与卡片视图迁移组已于 2026-07-26 通过人工页面验收；其他批次结论以 `manual-checklist.md` 为准。

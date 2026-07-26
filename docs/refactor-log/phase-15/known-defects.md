@@ -137,3 +137,13 @@
 - `P15-TOPIC-DISCOVERY-005`（待后续清理）：新帖隐私按钮的 `debugger` 与随机近期主题的 console 调试日志按严格保真要求保留。
 - `P15-TOPIC-DISCOVERY-006`（已保留）：新帖首次/刷新请求失败时加载锁可能保持 false，页面没有独立错误或重试 UI；增量请求失败仍恢复加载锁。
 - `P15-TOPIC-DISCOVERY-007`（后续清理）：`NewTopicAreaState`、`RecommendedTopicAreaState`、`RandomTopicAreaState` 已无 live owner，留作 P21 引用证明与删除候选。
+
+## 用户中心资料、主题与转账设置迁移组
+
+- `P15-USER-SETTINGS-001`（待后续修复）：生日校验只拒绝未来日期，不拒绝被 `Date` 自动进位的非法月日；年份 `9999` 继续跳过该检查。本批保留既有提交合同。
+- `P15-USER-SETTINGS-002`（待后续修复）：资料成功提示的一秒 timer、头像 FileReader 与 canvas `toBlob` 异步回调不取消；组件卸载或快速重复选择时仍可能晚到。本批不增加 mounted 标记或改变反馈时序。
+- `P15-USER-SETTINGS-003`（已保留）：头像裁剪只支持鼠标事件，不支持 touch/pointer；本地文件、canvas/context、图片和 Blob 失败路径仍缺少完整空值保护。
+- `P15-USER-THEME-001`（已保留）：固定主题 PUT 失败继续静默；主题设置失败只显示 API `statusText/message`，不进入全局错误 UI。
+- `P15-USER-THEME-002`（待后续修复）：主题设置表单只在首次挂载读取传入 setting，三秒结果 timer 卸载时不清理；本批保持原局部状态和提示时序。
+- `P15-TRANSFER-WEALTH-001`（待后续重构）：转账继续复用用户中心全局 `isLoading/isError/errorMessage`，并由旧 thunk 原地修改 `currentUserInfo.wealth`；并发的其他用户中心请求仍可能干扰按钮或结果判定。
+- `P15-TRANSFER-WEALTH-002`（待后续修复）：金额正则允许多个小数点等异常格式，收款人前导空白可能产生空用户名；UI 声称最多 10 人但前端不校验，金额 `10` 可提交而输入提示写“请输入大于10的金额”。本批按用户要求保留。
