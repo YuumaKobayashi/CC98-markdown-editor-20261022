@@ -158,8 +158,9 @@ const routes: RouteObject[] = [
           },
           {
             path: "config/*",
-            lazy: lazyDefault(
-              () => import("@legacy/Components/UserCenter/Config")
+            lazy: lazyNamed(
+              () => import("@pages/user-center/settings"),
+              "UserCenterSettingsPage"
             ),
           },
           {
@@ -168,14 +169,16 @@ const routes: RouteObject[] = [
           },
           {
             path: "transferwealth/*",
-            lazy: lazyDefault(
-              () => import("@legacy/Components/UserCenter/TransferWealth")
+            lazy: lazyNamed(
+              () => import("@pages/user-center/transfer-wealth"),
+              "TransferWealthPage"
             ),
           },
           {
             path: "theme/*",
-            lazy: lazyDefault(
-              () => import("@legacy/Components/UserCenter/Theme")
+            lazy: lazyNamed(
+              () => import("@pages/user-center/theme"),
+              "UserCenterThemePage"
             ),
           },
           { path: "*", element: null },
