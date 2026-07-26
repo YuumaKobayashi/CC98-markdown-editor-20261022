@@ -6,3 +6,8 @@ export { TopicAwardInfo } from "./ui/TopicAwardInfo";
 export { TopicBreadcrumb } from "./ui/TopicBreadcrumb";
 export { NewTopicsBreadcrumb } from "./ui/NewTopicsBreadcrumb";
 export { RecommendedTopicsBreadcrumb } from "./ui/RecommendedTopicsBreadcrumb";
+export {
+  TopicAudioPlayer,
+  TopicCard,
+  TopicVideoPlayer,
+} from "./ui/TopicCard";

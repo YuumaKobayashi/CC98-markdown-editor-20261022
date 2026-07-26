@@ -270,15 +270,13 @@ const routes: RouteObject[] = [
       },
       {
         path: "newtopics/*",
-        lazy: lazyDefault(
-          () => import("@legacy/Components/Topic/Topic-New")
-        ),
+        lazy: lazyDefault(() => import("@pages/new-topics")),
       },
       {
         path: "recommendedtopics/*",
         lazy: lazyNamed(
-          () => import("@legacy/Components/Topic/Topic-Recommended"),
-          "AllRecommendedTopic"
+          () => import("@pages/recommended-topics"),
+          "RecommendedTopicsPage"
         ),
       },
       {
