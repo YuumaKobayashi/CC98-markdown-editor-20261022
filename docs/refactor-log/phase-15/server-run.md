@@ -129,3 +129,12 @@
 - `/usercenter/config`、`/usercenter/theme`、`/usercenter/transferwealth` 分别生成 `settings`、`theme`、`transfer-wealth` 动态块；
 - 既有 Sass `@import`、Spectrum 旧 CSS、plugin timing 与大 chunk 警告继续存在，本组未修改；
 - 构建不替代真实登录态、资料/头像/主题/转账 API、Canvas、文件上传与浏览器验收。
+
+## 用户中心近期动态、收藏与浏览历史迁移组构建
+
+- 本组未启动 Node dev/preview server，没有 PID、端口或回收事项；
+- 六个目标组件的 modern/legacy TypeScript、diff、静态审计与双 AST 统计通过；
+- 受限沙箱首次构建在 Vite 配置加载阶段命中既知 `spawn EPERM`，在允许子进程的同一工作树重跑成功，共转换 3,925 个模块；
+- `/usercenter/myfavorites`、`/usercenter/myhistory` 分别生成 `favorites`、`history` 动态块，overview 直接组合新近期主题 owner；
+- 既有 Sass `@import`、Spectrum 旧 CSS、plugin timing 与大 chunk 警告继续存在，本组未修改；
+- 构建不替代真实登录态、近期主题/收藏/历史 API、滚动、分页、Modal、back/forward 与浏览器验收。

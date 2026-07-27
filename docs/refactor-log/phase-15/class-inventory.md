@@ -4,6 +4,7 @@
 
 - 基线：`a38580e2`；
 - 使用 TypeScript AST 统计实际 class declaration，避免把注释中的旧代码算入；
+- 自用户中心近期动态、收藏与历史组起同时补充 class expression 口径；现有历史总数仍按 class declaration 延续，`Components/Topic/Topic-ReplierSignature.tsx` 的 `withRouter(class extends React.Component...)` 是唯一额外的非冻结 React class expression；
 - 扫描 `Components/**` 与 `src/**`；
 - 排除冻结的 `Ubb/**`、`Components/UbbEditor/**`、`Components/UbbContainer.tsx`；
 - `ErrorBoundary` 是唯一允许最终保留的 React class；同文件的 `ErrorEmitter` 仍属于 P15 目标。
@@ -186,14 +187,27 @@ TypeScript AST 复核确认本组七个目标声明均已消失，当前剩余 6
 
 | 原符号 | 新 owner | 状态 |
 |---|---|---|
-| `Config` | `pages/user-center/settings` / `UserCenterSettingsPage` | 已实现，待人工验收 |
-| `UserCenterConfigAvatar` | `pages/user-center/settings` / `UserCenterAvatarSettings` | 已实现，待人工验收 |
-| `ConfigOthers` 匿名 class | `pages/user-center/settings` / `UserCenterProfileSettings` | 已实现，待人工验收 |
-| `Theme` | `pages/user-center/theme` / `UserCenterThemePage` | 已实现，待人工验收 |
-| `ThemeSettingComponent` | `pages/user-center/theme` / `ThemeSettingsForm` | 已实现，待人工验收 |
-| `Wealth` | `pages/user-center/transfer-wealth` / `TransferWealthPage` | 已实现，待人工验收 |
+| `Config` | `pages/user-center/settings` / `UserCenterSettingsPage` | 已实现，人工验收通过 |
+| `UserCenterConfigAvatar` | `pages/user-center/settings` / `UserCenterAvatarSettings` | 已实现，人工验收通过 |
+| `ConfigOthers` 匿名 class | `pages/user-center/settings` / `UserCenterProfileSettings` | 已实现，人工验收通过 |
+| `Theme` | `pages/user-center/theme` / `UserCenterThemePage` | 已实现，人工验收通过 |
+| `ThemeSettingComponent` | `pages/user-center/theme` / `ThemeSettingsForm` | 已实现，人工验收通过 |
+| `Wealth` | `pages/user-center/transfer-wealth` / `TransferWealthPage` | 已实现，人工验收通过 |
 
 TypeScript AST 复核确认本组六个目标声明均已消失，当前剩余 56 个非冻结 React class 声明；排除最终保留的 `ErrorBoundary` 后，仍有 55 个 P15 目标待迁，因此 P15 尚未完成。
+
+## 用户中心近期动态、收藏与浏览历史迁移组
+
+| 原符号 | 新 owner | 状态 |
+|---|---|---|
+| `ExactActivitiesTopics/Activities` | `pages/user-center/overview` / `UserRecentTopicsActivityList` | 已实现，待人工验收 |
+| `MyFavoritesPosts/Posts` | `pages/user-center/favorites` / `UserCenterFavoriteTopicsPage` | 已实现，待人工验收 |
+| `ExactFavTopic` 匿名 class | `pages/user-center/favorites` / `UserCenterFavoriteTopicItem` | 已实现，待人工验收 |
+| `MyFavoritesAddModalcontent` | `features/favorites` / `FavoriteTopicGroupSelect` | 已实现，待人工验收 |
+| `MyFavoritesPostsManager` | `pages/user-center/favorites` / `FavoriteTopicGroupManager` | 已实现，待人工验收 |
+| `MyHistory/Posts` | `pages/user-center/history` / `UserCenterHistoryPage` | 已实现，待人工验收 |
+
+TypeScript AST 的历史 class declaration 口径从 56 降至 50，排除 `ErrorBoundary` 后仍有 49 个声明目标。补充 class expression 后，非冻结 React class 结构从 57 降至 51，排除 `ErrorBoundary` 后仍有 50 个实际目标；额外目标是 `Topic-ReplierSignature.tsx` 的 class expression。P15 尚未完成。
 
 ## P21 删除候选
 

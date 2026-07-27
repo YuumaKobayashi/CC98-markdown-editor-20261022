@@ -310,3 +310,24 @@
 - [x] 单人/多人转账、空白分隔与去重、金额/理由/余额校验、手续费预览、提交锁、成功名单与失败提示正常；
 - [x] 未登录、401/403、空头衔列表、异常图片/Canvas 和异常 API 继续遵循迁移前语义；
 - [x] 已登记的日期、异步回调、主题静默失败、转账输入/共享状态/Redux 原地修改缺陷未在本批宣称修复。
+
+## 用户中心近期动态、收藏与浏览历史迁移组机械验证
+
+- [x] 六个目标 React class 均由具名函数承接，六个旧文件仅保留兼容 re-export；
+- [x] Router 的 `myfavorites/*`、`myhistory/*` 使用 page 窄入口，overview 不再导入 legacy 近期动态 class；
+- [x] 新 owner 不含 React class、`connect`、Store 直读、legacy route props、`React.FC`、`useLayoutEffect`、`mounted` 或 `isFirstCommit`；
+- [x] 近期主题 window scroll listener 在同一普通 effect 中注册并 cleanup；
+- [x] `npm run typecheck`、`npm run build`、`git diff --check` 与目标静态审计通过；
+- [x] class declaration 口径从 56 降至 50；完整 class declaration/expression 口径从 57 降至 51；
+- [x] 受限沙箱首次构建命中既知 `spawn EPERM`，允许子进程环境重跑成功，共转换 3,925 个模块；
+- [x] 已识别的近期动态、收藏、历史与路由缺陷均保持并登记，没有混入修复。
+
+## 用户中心近期动态、收藏与浏览历史迁移组人工验收
+
+- [ ] 用户中心 overview 的近期主题缓存、空列表、首批请求、连续滚动、末批停止和异常 API 正常；
+- [ ] 收藏页 deep link、默认重定向、刷新、分页、三种排序、分组切换、搜索和 back/forward 正常；
+- [ ] 取消收藏、移动分组及操作后的主题/分组列表刷新正常；
+- [ ] 新增、重命名、删除分组的校验、十组上限、成功/失败提示和默认分组保护正常；
+- [ ] Topic 详情页共享收藏分组选择器、收藏/取消收藏和计数显示正常；
+- [ ] 浏览历史开关确认框、跨端设置文案、分页、空列表、403、异常 API 与快速切页正常；
+- [ ] 未登录、401/403、DOM/CSS、文案及五项已登记缺陷继续遵循迁移前语义。

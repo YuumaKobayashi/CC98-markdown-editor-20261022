@@ -163,3 +163,16 @@ Board 主 route、Topic-New 与 Topic-Recommended lazy 入口保持原样；本�
 | `Components/UserCenter/TransferWealth.tsx` | `pages/user-center/transfer-wealth/TransferWealthPage` | 保留 default 与 `Wealth` 别名；Router `transferwealth/*` 改用窄入口 |
 
 `EditableUserInfo` 归入 settings model；Redux reducer/action/thunk、`States/AppState`、认证与 HTTP service 均继续使用既有合同。
+
+## 用户中心近期动态、收藏与浏览历史迁移组
+
+| 旧位置 | 新 owner | 兼容方式 |
+|---|---|---|
+| `Components/UserCenter/ExactActivitiesTopics.tsx` | `pages/user-center/overview/UserRecentTopicsActivityList` | 保留 default/named re-export；overview 直接组合新 owner |
+| `Components/UserCenter/MyFavoritesPosts.tsx` | `pages/user-center/favorites/UserCenterFavoriteTopicsPage` | 保留 default/named re-export；Router `myfavorites/*` 改用 page 窄入口 |
+| `Components/UserCenter/ExactFavTopic.tsx` | `pages/user-center/favorites/UserCenterFavoriteTopicItem` | 保留 default/named re-export |
+| `Components/UserCenter/MyFavoritesAdd.tsx` | `features/favorites/FavoriteTopicGroupSelect` | 保留 default/named re-export；Topic 旧 class 继续通过 facade 复用 |
+| `Components/UserCenter/MyFavortitesManage.tsx` | `pages/user-center/favorites/FavoriteTopicGroupManager` | 保留 default/named re-export |
+| `Components/UserCenter/MyHistory.tsx` | `pages/user-center/history/UserCenterHistoryPage` | 保留 default/named re-export；Router `myhistory/*` 改用 page 窄入口 |
+
+收藏 service 继续位于 `features/favorites/api/service.ts`；新增 public barrel、分组类型和默认占位数据，不修改旧 Utility facade、Redux reducer/action/thunk 或 API wire shape。

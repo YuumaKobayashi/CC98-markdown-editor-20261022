@@ -158,3 +158,14 @@
 - 不迁移登录、收藏/历史、Board 主页面、编辑/主题管理和零调用候选，不新增依赖，不启动持续 Node server；
 - 完成条件为六个目标 class 消失、AST 总数从 62 降至 56、两套类型检查和正式构建通过；排除 `ErrorBoundary` 后仍有 55 个 P15 目标，真实登录态/API/Canvas/上传/主题/转账验收继续独立开放。
 - 2026-07-27 人工验收通过，代码检查点为 `37549b04`。
+
+## 当前用户中心近期动态、收藏与浏览历史迁移组
+
+- 以 `9939e63a` 为基线，迁移近期主题动态、收藏列表、收藏项、分组选择、分组管理和浏览历史六个 live React class；
+- 收藏列表与管理归入 `pages/user-center/favorites`，浏览历史归入 `pages/user-center/history`，近期主题动态归入既有 overview，跨 Topic/用户中心复用的分组选择器归入 `features/favorites`；
+- Router 的 `myfavorites/*`、`myhistory/*` 改用 page 窄入口，overview 不再反向导入 legacy class；六个旧文件仅保留兼容 re-export；
+- 保留 `/me/recent-topic`、收藏查询/搜索/分组/mutation、浏览记录与开关 API，Redux state/action/thunk、公开 URL、DOM/CSS、文案、分页和 11 条探测合同；
+- 近期动态的 scroll listener 在普通 effect 中注册并 cleanup；收藏的 keyword ref、请求后导航和既有重复请求语义保留；历史页不使用 previous-props 模拟器；
+- 已识别的 hasTotal 键错位、query 同步、请求竞争、HTTP 状态忽略、Redux 原地修改和历史开关反馈缺陷仅登记，不在本批修复；
+- `ExactActivitiesPosts` 继续作为 P21 零调用删除候选；Board、Topic 主链、Edit、登录、样式和依赖不在本组范围；
+- class declaration 口径从 56 降至 50；补充 class expression 后完整结构从 57 降至 51。排除 `ErrorBoundary` 后仍有 50 个实际 P15 目标，P15 尚未完成。

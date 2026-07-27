@@ -139,3 +139,13 @@
 - 之前：主题页和设置表单通过 `connect`、内部 state 与 ref 直接修改结果 span；现在：page 使用 typed hooks，表单用 state 派生相同结果文本和三秒显隐，主题 API、注册表、日夜推断和实际换肤调用不变。
 - 之前：财富转账通过 `componentWillReceiveProps` 比较共享 Redux loading/error 前后值；现在：提交时建立显式 pending workflow，只有本次操作观察到 loading 后才消费既有 success/error state，不引入 previous-props 模拟。
 - 本组按要求保留日期、文件异步、主题失败与转账输入/共享状态等已识别缺陷；公开 URL、DOM/CSS、文案、Redux 数据结构与 service API 不变。
+
+## 用户中心近期动态、收藏与浏览历史迁移组
+
+- 之前：用户中心 overview 反向导入 connected class，class 在 `componentWillMount` 检查缓存并手工注册 scroll listener；现在：overview 直接组合具名函数，初始缓存检查与 listener/cleanup 分成普通 effect，页码仍使用局部递增计数。
+- 之前：收藏页通过 `connect`、`withRouter`、实例 keyword 字段和 `componentWillReceiveProps` 协调筛选、搜索、分页与请求；现在：typed Redux hooks、Router hooks 和 keyword ref 承接同一数据流。
+- 保真：筛选/搜索事件仍先请求再导航，路由参数变化仍再次请求；分组刷新仍导航到不带 query 的当前路径，仅 query 变化仍不会同步 keyword。
+- 之前：收藏项和 Topic 详情分别通过 legacy 分组选择 class 打开 Modal；现在：`features/favorites/FavoriteTopicGroupSelect` 由两处通过兼容入口共享，默认分组、失败回退和回调合同不变。
+- 之前：分组管理 class 用 form ref、三个局部状态和 Notice DOM id 管理创建/重命名/删除；现在：函数组件使用相同 ref/state、表单校验、上限判断、API 顺序与提示 id。
+- 之前：历史页在 mount 刷新 `/me`、取当前页并标记页签，props 页码变化时取数和滚顶；现在：mount effect 处理用户刷新/页签，page effect 处理取数和滚顶。首次挂载也会在 effect 后滚顶，是本批记录的生命周期时序差异。
+- 收藏、历史与近期主题 thunk 的原地 Redux 修改、共享 loading/error、请求竞争和异常反馈均保持现状，只登记后续处理。

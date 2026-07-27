@@ -147,3 +147,12 @@
 - `P15-USER-THEME-002`（待后续修复）：主题设置表单只在首次挂载读取传入 setting，三秒结果 timer 卸载时不清理；本批保持原局部状态和提示时序。
 - `P15-TRANSFER-WEALTH-001`（待后续重构）：转账继续复用用户中心全局 `isLoading/isError/errorMessage`，并由旧 thunk 原地修改 `currentUserInfo.wealth`；并发的其他用户中心请求仍可能干扰按钮或结果判定。
 - `P15-TRANSFER-WEALTH-002`（待后续修复）：金额正则允许多个小数点等异常格式，收款人前导空白可能产生空用户名；UI 声称最多 10 人但前端不校验，金额 `10` 可提交而输入提示写“请输入大于10的金额”。本批按用户要求保留。
+
+## 用户中心近期动态、收藏与浏览历史迁移组
+
+- `P15-USER-ACTIVITY-001`（待后续修复）：近期主题 thunk 读取 `hasTotal.profile`，overview UI 与我的主题页读取 `hasTotal.mytopics`；scroll 事件还可能在 Redux loading props 更新前连续触发。本批保留键错位和并发语义。
+- `P15-USER-FAVORITES-001`（待后续修复）：收藏页仅 query 变化不会更新 keyword；分组刷新会导航到不含 `?keyword` 的路径；筛选/搜索事件先请求再导航，路由 effect 会再次请求。本批保持 URL、请求顺序和重复请求行为。
+- `P15-USER-FAVORITES-002`（待后续修复）：收藏 PUT/DELETE service 不检查 HTTP 状态；收藏列表、分组加载及 mutation 均无旧响应保护；分组管理异步异常可能使 confirm loading 保持。本批不扩展响应合同或增加竞态保护。
+- `P15-USER-HISTORY-001`（待后续修复）：历史 thunk 继续原地修改 Redux 数组、总页数和开关；开关提交没有 pending 锁、局部错误提示或快速重复操作保护。
+- `P15-USER-CENTER-ROUTE-001`（已保留）：收藏与历史的 page/order/group 继续使用宽松 `parseInt`/`Number` 解析；非法、部分数字和特殊数值 URL 的规范化留待独立路由修复。
+- AST 历史口径只统计 class declaration，遗漏了 `Topic-ReplierSignature.tsx` 的 React class expression；本组开始补充双口径，避免在该 class expression 仍存在时误报 P15 完成。
