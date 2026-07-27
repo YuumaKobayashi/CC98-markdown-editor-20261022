@@ -337,7 +337,7 @@ const routes: RouteObject[] = [
       },
       {
         path: "board/:id/:page?/*",
-        lazy: lazyDefault(() => import("@legacy/Pages/Board")),
+        lazy: lazyNamed(() => import("@pages/board"), "BoardPage"),
       },
       {
         path: "error/401/*",

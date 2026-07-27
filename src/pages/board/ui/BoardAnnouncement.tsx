@@ -9,8 +9,8 @@ import {
   unfollowBoard,
 } from "@features/follow/api/service";
 import { UbbContainer } from "@legacy/Components/UbbContainer";
-import { editBigPaper } from "@legacy/Pages/Board/action";
 import { UbbCodeOptions } from "@legacy/Ubb/UbbCodeExtension";
+import { editBigPaper } from "../api/service";
 
 const Panel = Collapse.Panel;
 const TextArea = Input.TextArea;
