@@ -169,3 +169,14 @@
 - 已识别的 hasTotal 键错位、query 同步、请求竞争、HTTP 状态忽略、Redux 原地修改和历史开关反馈缺陷仅登记，不在本批修复；
 - `ExactActivitiesPosts` 继续作为 P21 零调用删除候选；Board、Topic 主链、Edit、登录、样式和依赖不在本组范围；
 - class declaration 口径从 56 降至 50；补充 class expression 后完整结构从 57 降至 51。排除 `ErrorBoundary` 后仍有 50 个实际 P15 目标，P15 尚未完成。
+
+## 当前公开 Board 页面迁移组
+
+- 以 `22a6daae` 为基线，迁移 `Pages/Board` 中承接 `/board/:id/:page?/*` 的七个 class declaration 与一个匿名 class expression；
+- 页面、头部、主题列表、筛选、主题项、速览、底部操作、批量管理和事件记录共同归入既有 `pages/board`；原有函数组件也一并归位，避免新 owner 反向组合 legacy 页面；
+- Router 的公开 Board 路由改用 `pages/board/BoardPage` 窄入口，`Pages/Board/*` 与 `Pages/Board/action.ts` 只保留兼容 re-export；
+- 普通 effect 承接页面首次取数、列表首次并发取数、主题速览和事件记录；不使用 `useLayoutEffect`、previous-props、mounted 或 isFirstCommit；
+- 保留 Board/topic/tag/速览/大字报/小黑屋/事件/批量管理 API、公开 URL、DOM/CSS、AntD、UBB adapter、分页、权限与文案；
+- `/list/:boardId/...` 仍由 `Components/Board/Board.tsx` 的 12 个 class 承接，不进入本组；AnnualReview、Index、Topic、Edit 与 P21 候选也不迁移；
+- 完整 AST 口径从 75 declaration 加 2 expression 降至 68 declaration 加 1 expression；排除 `ErrorBoundary` 后仍有 68 个 P15 目标，P15 尚未完成；
+- 真实登录态、Board/topic/tag/管理 API、权限、分页、hover UBB、back/forward 与浏览器验收继续独立开放。

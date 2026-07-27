@@ -156,3 +156,14 @@
 - `P15-USER-HISTORY-001`（待后续修复）：历史 thunk 继续原地修改 Redux 数组、总页数和开关；开关提交没有 pending 锁、局部错误提示或快速重复操作保护。
 - `P15-USER-CENTER-ROUTE-001`（已保留）：收藏与历史的 page/order/group 继续使用宽松 `parseInt`/`Number` 解析；非法、部分数字和特殊数值 URL 的规范化留待独立路由修复。
 - AST 历史口径只统计 class declaration，遗漏了 `Topic-ReplierSignature.tsx` 的 React class expression；本组开始补充双口径，避免在该 class expression 仍存在时误报 P15 完成。
+
+## 当前公开 Board 页面迁移组
+
+- `P15-BOARD-PAGE-001`（待后续修复）：Board route 和列表只在首次挂载取数；浏览器 back/forward、同组件快速切换版面或仅路由 page 变化不会统一重取，事件触发的分页则继续先请求再拼接 pathname 导航。
+- `P15-BOARD-PAGE-002`（待后续修复）：Board、置顶、列表、标签和速览请求没有旧响应保护、取消或局部错误 UI；空版面与部分异常响应会继续显示永久 Spin 或在后续字段访问时异常。
+- `P15-BOARD-TAG-002`（待后续修复）：主题项继续直接执行 `localStorage.getItem("tagInfo").slice(4)` 和 `JSON.parse`；缓存缺失、格式变化或损坏时没有空值/解析保护。
+- `P15-BOARD-ROUTE-001`（已保留）：页码继续使用宽松 `parseInt`，分页目标继续通过 `window.location.pathname` 字符串截取拼接；非法页码、尾斜杠和特殊路径的规范化留待独立路由修复。
+- `P15-BOARD-MODERATION-001`（待后续修复）：小黑屋每次请求 6 条却以 21 条判断 `hasMore`，分页继续原地 `pop` 当前数组；小黑屋确定按钮仍只关闭批量管理状态，不能关闭小黑屋 Modal。
+- `P15-BOARD-MODERATION-002`（待后续修复）：批量锁沉/删除不检查 HTTP 状态，没有 pending 锁、成功/失败反馈或列表刷新；理由 Select 的调试日志和 Modal footer 缺 key 警告继续保留。
+- `P15-BOARD-RECORD-003`（待后续修复）：事件记录组件随 Footer 挂载，即使事件 Modal 尚未打开也会请求第一页；分页请求无异常、取消和旧响应保护。
+- `P15-CLASS-INVENTORY-001`（已修正口径）：历史 P15 AST 清单只扫描 `Components/** + src/**`，遗漏计划范围内 `Pages/**` 的 25 个 declaration 与 1 个 expression；自本组起同时维护历史窄口径和完整非冻结口径。

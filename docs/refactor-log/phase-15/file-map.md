@@ -176,3 +176,18 @@ Board 主 route、Topic-New 与 Topic-Recommended lazy 入口保持原样；本�
 | `Components/UserCenter/MyHistory.tsx` | `pages/user-center/history/UserCenterHistoryPage` | 保留 default/named re-export；Router `myhistory/*` 改用 page 窄入口 |
 
 收藏 service 继续位于 `features/favorites/api/service.ts`；新增 public barrel、分组类型和默认占位数据，不修改旧 Utility facade、Redux reducer/action/thunk 或 API wire shape。
+
+## 当前公开 Board 页面迁移组
+
+| 旧位置 | 新 owner | 兼容方式 |
+|---|---|---|
+| `Pages/Board/index.tsx` | `pages/board/BoardPage` | 旧文件保留 default re-export；Router `/board/:id/:page?/*` 改用 page 窄入口 |
+| `Pages/Board/Head.tsx` | `pages/board/BoardHeader`、既有 `BoardBreadcrumb` | 旧文件保留 default 与 `Category` 兼容别名 |
+| `Pages/Board/Body.tsx` | `pages/board/BoardContent` | 旧文件保留 default re-export |
+| `Pages/Board/ListHead.tsx` | `pages/board/BoardTopicToolbar` | 旧文件保留 default re-export |
+| `Pages/Board/PostList.tsx` | `pages/board/BoardTopicList` | 旧文件保留 default re-export |
+| `Pages/Board/PostItem.tsx` | `pages/board/BoardTopicListItem`、`BoardTopicPreviewCard` | 旧文件保留 default re-export |
+| `Pages/Board/Footer.tsx` | `pages/board/BoardFooterActions`、`BoardBatchManager`、`BoardModerationRecordList` | 旧文件保留 default re-export |
+| `Pages/Board/action.ts` | `pages/board/api/service.ts` | 旧文件 re-export 全部原 service 符号；wire shape 不变 |
+
+`Pages/Board/Announcement.tsx` 继续是既有 `BoardAnnouncement` facade；冻结 `UbbContainer` 只通过原 adapter 使用。旧 `/list/:boardId/...` 的 `Components/Board/Board.tsx`、其 Router 入口与旧 DOM 合同保持不变。

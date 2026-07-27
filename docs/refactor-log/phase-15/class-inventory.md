@@ -4,8 +4,8 @@
 
 - 基线：`a38580e2`；
 - 使用 TypeScript AST 统计实际 class declaration，避免把注释中的旧代码算入；
-- 自用户中心近期动态、收藏与历史组起同时补充 class expression 口径；现有历史总数仍按 class declaration 延续，`Components/Topic/Topic-ReplierSignature.tsx` 的 `withRouter(class extends React.Component...)` 是唯一额外的非冻结 React class expression；
-- 扫描 `Components/**` 与 `src/**`；
+- 自用户中心近期动态、收藏与历史组起同时补充 class expression 口径；该组沿用的历史口径只扫描 `Components/**` 与 `src/**`，因此当时只补出了 `Components/Topic/Topic-ReplierSignature.tsx`；
+- 自当前公开 Board 页面组起增加符合总计划范围的完整口径，同时扫描 `Components/**`、`Pages/**` 与 `src/**`；历史窄口径继续保留用于对照，不回写此前批次数字；
 - 排除冻结的 `Ubb/**`、`Components/UbbEditor/**`、`Components/UbbContainer.tsx`；
 - `ErrorBoundary` 是唯一允许最终保留的 React class；同文件的 `ErrorEmitter` 仍属于 P15 目标。
 
@@ -212,3 +212,20 @@ TypeScript AST 的历史 class declaration 口径从 56 降至 50，排除 `Erro
 ## P21 删除候选
 
 根 `Breadcrumb`、根 `Category/Test`、`MessageBar`、`FindIP`、`TopicReplyUserBar`、`ExactActivitiesPosts`、`ErrorEmitter` 未发现运行时调用，本轮不为清零 class 而迁移。`CountDown` 只有 import 和注释 JSX，需在 P21 重新做引用/构建证明后决定删除。
+
+## 完整口径修正与当前公开 Board 页面迁移组
+
+`frontend-refactoring-plan-v2.md` 明确把 `Components/**` 与 `Pages/**` 都列为迁移范围。当前组开始前的完整非冻结 AST 统计为 75 个 class declaration、2 个 class expression，共 77 个 React class 结构；排除允许保留的 `ErrorBoundary` 后有 76 个目标。相对历史窄口径新增的 `Pages/**` 为：AnnualReview 7 个、AnnualReviewV2 10 个、Board 7 个 declaration 加 1 个 expression、Index 1 个。
+
+| 原符号 | 新 owner | 状态 |
+|---|---|---|
+| `Pages/Board/index.tsx` 匿名 class expression | `pages/board` / `BoardPage` | 已实现，待人工验收 |
+| `Pages/Board/Body.tsx` / `Body` | `pages/board` / `BoardContent` | 已实现，待人工验收 |
+| `Pages/Board/Head.tsx` 匿名 class | `pages/board` / `BoardHeader` | 已实现，待人工验收 |
+| `Pages/Board/Head.tsx` / `Category` | `pages/board` / `BoardBreadcrumb` | 已实现，待人工验收 |
+| `Pages/Board/Footer.tsx` 匿名 class | `pages/board` / `BoardFooterActions` | 已实现，待人工验收 |
+| `Pages/Board/Footer.tsx` / `Manage` | `pages/board` / `BoardBatchManager` | 已实现，待人工验收 |
+| `Pages/Board/Footer.tsx` / `Record` | `pages/board` / `BoardModerationRecordList` | 已实现，待人工验收 |
+| `Pages/Board/PostItem.tsx` / `Card` | `pages/board` / `BoardTopicPreviewCard` | 已实现，待人工验收 |
+
+本组七个 declaration 与一个 expression 均已消失。完整口径现为 68 个 declaration 加 1 个 expression，共 69 个结构；排除 `ErrorBoundary` 后仍有 68 个目标。历史 `Components/** + src/**` 窄口径没有变化，仍为 50 个 declaration 加 1 个 expression，排除 `ErrorBoundary` 后 50 个目标。P15 尚未完成。

@@ -101,5 +101,13 @@
 - [`favorite-topic-group-select.md`](./favorite-topic-group-select.md)
 - [`favorite-topic-group-manager.md`](./favorite-topic-group-manager.md)
 - [`user-center-history-page.md`](./user-center-history-page.md)
+- [`board-page.md`](./board-page.md)
+- [`board-content.md`](./board-content.md)
+- [`board-header.md`](./board-header.md)
+- [`board-breadcrumb-reuse.md`](./board-breadcrumb-reuse.md)
+- [`board-footer-actions.md`](./board-footer-actions.md)
+- [`board-batch-manager.md`](./board-batch-manager.md)
+- [`board-moderation-record-list.md`](./board-moderation-record-list.md)
+- [`board-topic-preview-card.md`](./board-topic-preview-card.md)
 
-版面列表与展示叶子、公共用户管理子页、Focus 页面剩余壳层迁移组已于 2026-07-24 通过人工页面验收；主题发现页与卡片视图迁移组已于 2026-07-26 通过人工页面验收；用户中心资料、主题与转账设置迁移组已于 2026-07-27 通过人工页面验收；近期动态、收藏与浏览历史组仍待人工验收。其他批次结论以 `manual-checklist.md` 为准。
+版面列表与展示叶子、公共用户管理子页、Focus 页面剩余壳层迁移组已于 2026-07-24 通过人工页面验收；主题发现页与卡片视图迁移组已于 2026-07-26 通过人工页面验收；用户中心资料、主题与转账设置迁移组已于 2026-07-27 通过人工页面验收；近期动态、收藏与浏览历史组及当前公开 Board 页面组仍待人工验收。其他批次结论以 `manual-checklist.md` 为准。

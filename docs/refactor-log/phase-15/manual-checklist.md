@@ -331,3 +331,24 @@
 - [ ] Topic 详情页共享收藏分组选择器、收藏/取消收藏和计数显示正常；
 - [ ] 浏览历史开关确认框、跨端设置文案、分页、空列表、403、异常 API 与快速切页正常；
 - [ ] 未登录、401/403、DOM/CSS、文案及五项已登记缺陷继续遵循迁移前语义。
+
+## 当前公开 Board 页面迁移组机械验证
+
+- [x] `Pages/Board` 的七个 class declaration 与一个 class expression 均已消失，旧文件只保留兼容 re-export；
+- [x] Router `/board/:id/:page?/*` 使用 `pages/board/BoardPage` 窄入口，旧 `/list/:boardId/...` 入口未改；
+- [x] 新 owner 不含 React class、`withRouter`、`RouteComponent`、legacy route props、`React.SFC`、`React.FC`、`useLayoutEffect`、Store 直读、mounted 或 isFirstCommit；
+- [x] `npm run typecheck`、`npm run build`、`git diff --check`、目标静态审计和完整 AST 统计通过；
+- [x] 完整口径从 75 declaration 加 2 expression 降至 68 declaration 加 1 expression；排除 `ErrorBoundary` 后仍有 68 个目标；
+- [x] 受限沙箱首次构建命中既知 `spawn EPERM`，允许子进程环境重跑成功，共转换 3,925 个模块；
+- [x] 已识别的 Board 路由、空列表、缓存、请求竞争、小黑屋与管理操作缺陷均保持并登记。
+
+## 当前公开 Board 页面迁移组人工验收
+
+- [ ] `/board/:id`、`/board/:id/:page` deep link、刷新、页码跳转、back/forward 和快速切版面正常；
+- [ ] Board 正常、精华、保存、一级/二级标签、置顶主题、空版面、404、401/403、500 与异常 API 符合迁移前语义；
+- [ ] breadcrumb、大字报展开/编辑、关注、广告以及未登录、未认证、禁言、可发主题/投票状态正常；
+- [ ] 主题图标、高亮、匿名、空标题、标签、楼层分页、最后回复和延迟 hover 速览 UBB 正常；
+- [ ] 普通用户与版主的小黑屋、分页、解除 TP、确定/取消及已登记缺陷保持；
+- [ ] 批量管理的选择、零选择提示、锁沉/删除、理由、天数、成功/失败 API 语义和列表状态保持；
+- [ ] 版面事件打开、分页、匿名对象、时间/操作人、异常 API 与快速切页保持；
+- [ ] DOM/CSS、AntD、文案、公开 URL、冻结 UBB 及旧 `/list/:boardId/...` 回归正常。

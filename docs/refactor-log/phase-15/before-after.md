@@ -149,3 +149,12 @@
 - 之前：分组管理 class 用 form ref、三个局部状态和 Notice DOM id 管理创建/重命名/删除；现在：函数组件使用相同 ref/state、表单校验、上限判断、API 顺序与提示 id。
 - 之前：历史页在 mount 刷新 `/me`、取当前页并标记页签，props 页码变化时取数和滚顶；现在：mount effect 处理用户刷新/页签，page effect 处理取数和滚顶。首次挂载也会在 effect 后滚顶，是本批记录的生命周期时序差异。
 - 收藏、历史与近期主题 thunk 的原地 Redux 修改、共享 loading/error、请求竞争和异常反馈均保持现状，只登记后续处理。
+
+## 当前公开 Board 页面迁移组
+
+- 之前：公开 `/board/:id/:page?/*` 由 `Pages/Board` 匿名 route class、`withRouter` 和 `RouteComponent` 读取 id/page；现在：`BoardPage` 使用 Router hooks，首次 effect 继续按原顺序刷新 tagInfo、请求 Board 并导航错误页。
+- 之前：`Body` 在 mount 同时请求置顶主题、当前列表和标签，筛选/分页事件先请求再拼接 pathname 导航；现在：`BoardContent` 用普通 mount effect 和显式事件参数保持同一请求与导航顺序，不增加 props 变化模拟器。
+- 之前：头部两个 class 与三个 `React.SFC`/箭头组件分散在 legacy 目录；现在：全部使用具名函数归入 `pages/board`，既有 `BoardBreadcrumb` 直接承接相同 breadcrumb DOM。
+- 之前：主题速览 `Card` 在 mount 请求前十楼并通过冻结 UBB 渲染；现在：`BoardTopicPreviewCard` 使用普通 effect，Popover 延迟、loading、内容结构和 UBB options 不变。
+- 之前：Footer、Manage、Record 三个 class 管理小黑屋、批量锁沉/删除和事件记录；现在：三个具名函数保留同一 Modal、Transfer、分页、请求和局部 state 边界。
+- 本组只迁移当前公开 `/board` owner；旧 `/list` owner 不变。空列表 Spin、back/forward 不主动重取、tagInfo 解析、小黑屋分页和管理 mutation 等既有缺陷只登记、不修复。
