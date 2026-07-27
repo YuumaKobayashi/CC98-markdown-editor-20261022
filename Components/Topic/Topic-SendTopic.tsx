@@ -4,8 +4,6 @@ import $ from "jquery";
 import { UbbContainer } from ".././UbbContainer";
 import { Constants } from "../Constant";
 import { UbbEditor } from "../UbbEditor";
-import TopicManagement from "./Topic-TopicManagement-v2";
-import ManageHistory from "./Topic-ManageHistory";
 import { NoticeMessage, SendTopicNoticeMessage } from "../NoticeMessage";
 import { NavigationPrompt } from "@app/router/navigation-prompt";
 import { Button, Modal } from "antd";
@@ -13,7 +11,11 @@ import moment from "moment";
 import { MarkdownEditor } from "@integrations/markdown-editor";
 import * as Showdown from "showdown";
 import { RightTagHandler } from "../../Ubb/RightTagHandler";
-import { TopicIPData } from "@features/moderation";
+import {
+  TopicIPData,
+  TopicManagementDialog,
+  TopicManagementHistoryDialog,
+} from "@features/moderation";
 var xssFilter = require("showdown-xss-filter");
 
 interface Props {
@@ -1006,7 +1008,7 @@ ${newProps.content.content}[/quote]
         {cacheButton}
         {manageButtonRegion}
         {this.state.manageVisible && (
-          <TopicManagement
+          <TopicManagementDialog
             update={this.onChange}
             boardId={this.props.boardInfo.id}
             topicInfo={this.props.topicInfo}
@@ -1017,7 +1019,7 @@ ${newProps.content.content}[/quote]
           />
         )}
         {this.state.manageHistoryVisible && (
-          <ManageHistory
+          <TopicManagementHistoryDialog
             topicInfo={this.props.topicInfo}
             onClose={() => this.setState({ manageHistoryVisible: false })}
             visible={this.state.manageHistoryVisible}

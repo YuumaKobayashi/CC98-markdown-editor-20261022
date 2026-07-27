@@ -5,12 +5,14 @@ import { RouteComponent } from "../RouteComponent";
 import { Replier } from "./Topic-Replier";
 import { ReplyContent } from "./Topic-ReplyContent";
 import { Award } from "./Topic-Award";
-import PostManagement from "./Topic-PostManagement-v2";
-import Judge from "./Topic-Judge-v3";
 import ReplierSignature from "./Topic-ReplierSignature";
 import { Spin } from "antd";
 import moment from "moment";
 import { FloorSize } from "@entities/post";
+import {
+  PostManagementDialog,
+  PostRatingDialog,
+} from "@features/moderation";
 
 export { FloorSize } from "@entities/post";
 interface Props {
@@ -326,7 +328,7 @@ export class Reply extends React.Component<
         <div className="center" style={{ width: "71rem", marginRight: "1px" }}>
           {this.state.contents.map(this.generateContents.bind(this))}
           {this.state.pmVisible && (
-            <PostManagement
+            <PostManagementDialog
               m_wealth={this.state.m_wealth}
               d_wealth={this.state.d_wealth}
               boardName={this.state.boardName}
@@ -338,7 +340,7 @@ export class Reply extends React.Component<
               onCancel={this.handleCancel}
             />
           )}
-          <Judge
+          <PostRatingDialog
             item={this.state.item}
             update={this.update}
             onCancel={this.handleJudgeCancel}
