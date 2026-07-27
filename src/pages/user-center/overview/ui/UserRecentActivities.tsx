@@ -4,7 +4,7 @@
 
 import * as React from "react";
 
-import ExactActivitiesTopics from "@legacy/Components/UserCenter/ExactActivitiesTopics";
+import { UserRecentTopicsActivityList } from "./UserRecentTopicsActivityList";
 
 /**
  * 用户中心主页近期动态组件
@@ -13,7 +13,7 @@ export function UserRecentActivities() {
   return (
     <div className="user-activities">
       <p>发表的主题</p>
-      <ExactActivitiesTopics />
+      <UserRecentTopicsActivityList />
     </div>
   );
 }

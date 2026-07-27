@@ -125,9 +125,7 @@ const routes: RouteObject[] = [
           },
           {
             path: "myhistory/:page?/*",
-            lazy: lazyDefault(
-              () => import("@legacy/Components/UserCenter/MyHistory")
-            ),
+            lazy: lazyDefault(() => import("@pages/user-center/history")),
           },
           {
             path: "myposts/ishot/:ishot/:page?/*",
@@ -143,9 +141,7 @@ const routes: RouteObject[] = [
           },
           {
             path: "myfavorites/order/:order/group/:group/:page?",
-            lazy: lazyDefault(
-              () => import("@legacy/Components/UserCenter/MyFavoritesPosts")
-            ),
+            lazy: lazyDefault(() => import("@pages/user-center/favorites")),
           },
           {
             path: "myfavorites/*",
