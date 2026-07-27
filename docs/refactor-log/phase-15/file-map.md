@@ -191,3 +191,14 @@ Board 主 route、Topic-New 与 Topic-Recommended lazy 入口保持原样；本�
 | `Pages/Board/action.ts` | `pages/board/api/service.ts` | 旧文件 re-export 全部原 service 符号；wire shape 不变 |
 
 `Pages/Board/Announcement.tsx` 继续是既有 `BoardAnnouncement` facade；冻结 `UbbContainer` 只通过原 adapter 使用。旧 `/list/:boardId/...` 的 `Components/Board/Board.tsx`、其 Router 入口与旧 DOM 合同保持不变。
+
+## Topic 评分与管理弹窗迁移组
+
+| 旧位置 | 新 owner | 兼容方式 |
+|---|---|---|
+| `Components/Topic/Topic-PostManagement-v2.tsx` | `features/moderation/ui/PostManagementDialog` | 旧文件保留 default re-export；`Topic-Reply.tsx` 改用 moderation barrel |
+| `Components/Topic/Topic-Judge-v3.tsx` | `features/moderation/ui/PostRatingDialog` | 旧文件保留 default re-export；`Topic-Reply.tsx` 改用 moderation barrel |
+| `Components/Topic/Topic-TopicManagement-v2.tsx` | `features/moderation/ui/TopicManagementDialog` | 旧文件保留 default re-export；`Topic-SendTopic.tsx` 改用 moderation barrel |
+| `Components/Topic/Topic-ManageHistory.tsx` | `features/moderation/ui/TopicManagementHistoryDialog` | 旧文件保留 default re-export；`Topic-SendTopic.tsx` 改用 moderation barrel |
+
+四个新 owner 直接使用 `features/moderation/api/service`、`features/reactions/api/service` 与 `entities/board/api/service`；不再经 `Utility.ts` 总门面访问这些 API。Router、Redux、Topic 父组件 state/回调与公开 URL 均未改。

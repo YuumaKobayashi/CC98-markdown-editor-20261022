@@ -1,6 +1,6 @@
 # P15 首批人工确认
 
-> 当前状态：公开 Board 页面迁移组已完成机械验证，待人工验收；上一组近期动态、收藏与浏览历史也仍待人工验收。P15 尚未完成、不暂存、不提交、不 push、不自动进入下一组
+> 当前状态：Topic 评分与管理弹窗迁移组已完成机械验证，待人工验收；近期动态/收藏/历史与公开 Board 两组人工验收也仍开放。P15 尚未完成、不暂存、不提交、不 push、不自动进入下一组
 
 ## 已确认边界
 
@@ -154,4 +154,15 @@
 - [x] 不新增依赖，不启动持续 Node server，不触碰 `.vscode/`；
 - [x] 完成后保持全部改动未暂存、未提交、未 push，不自动进入下一批；
 - [ ] 用户完成本组真实登录态、Board/topic/tag/管理 API、权限、分页、hover UBB、back/forward 和浏览器人工验收；
+- [ ] 用户授权本组代码与文档形成本地检查点。
+
+## Topic 评分与管理弹窗迁移组授权
+
+- [x] 用户授权以 `673995ca` 为基线迁移四个仍被 Topic 主链调用的评分与管理弹窗 class；
+- [x] 四个 owner 归入 `features/moderation`，`Reply`/`SendTopic` 使用 public barrel，旧路径保留兼容 facade；
+- [x] 保留 API、参数顺序、父组件 props/callback、DOM/CSS、AntD 文案、父组件显隐、调试日志及已登记缺陷；
+- [x] `Judge`、`TopicJudgeV2`、`PostManagement` v1、`TopicManagement` v1 只登记 P21 候选，不为清零数字而迁移；
+- [x] `Award`、`ReplierSignature`、`Reply`、`SendTopic`、Topic 页面壳、旧 `/list` Board、Redux、Router、UBB/editor 与依赖不在本组范围；
+- [x] 不启动持续 Node server，不触碰 `.vscode/`，完成后保持全部改动未暂存、未提交、未 push，不自动进入下一批；
+- [ ] 用户完成本组真实登录态、发言/评分/主题管理 API、权限、Modal、快速操作和浏览器人工验收；
 - [ ] 用户授权本组代码与文档形成本地检查点。

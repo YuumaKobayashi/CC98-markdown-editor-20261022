@@ -352,3 +352,24 @@
 - [ ] 批量管理的选择、零选择提示、锁沉/删除、理由、天数、成功/失败 API 语义和列表状态保持；
 - [ ] 版面事件打开、分页、匿名对象、时间/操作人、异常 API 与快速切页保持；
 - [ ] DOM/CSS、AntD、文案、公开 URL、冻结 UBB 及旧 `/list/:boardId/...` 回归正常。
+
+## Topic 评分与管理弹窗迁移组机械验证
+
+- [x] 四个 live React class 均由 `features/moderation` 具名函数承接，四个旧文件只保留兼容 re-export；
+- [x] `Topic-Reply.tsx` 与 `Topic-SendTopic.tsx` 使用 moderation public barrel，不再导入四个 legacy 实现；
+- [x] 新 owner 不含 React class、legacy route props、Store 直读、`React.FC`、`useLayoutEffect`、mounted 或 isFirstCommit；
+- [x] API service 符号、参数顺序、HTTP URL 与父组件 props/callback 合同完成静态对照；
+- [x] `npm run typecheck`、`npm run build`、`git diff --check`、目标静态审计与完整 AST declaration/expression 统计通过；
+- [x] 完整口径从 68 declaration 加 1 expression 降至 64 declaration 加 1 expression；排除 `ErrorBoundary` 后仍有 64 个目标；
+- [x] 受限沙箱首次构建命中既知 `spawn EPERM`，允许子进程环境重跑成功，共转换 3,925 个模块；
+- [x] 已识别的 pending、解析、竞态、权限、默认值、高亮和管理记录缺陷均保持并登记，没有混入修复。
+
+## Topic 评分与管理弹窗迁移组人工验收
+
+- [ ] 发言管理的奖励财富、奖励威望、扣财富、扣威望、删除、TP、解除 TP，表单校验、零值、成功刷新、取消和异常 API 正常；
+- [ ] 评分 `+1/-1`、理由加载、未选择状态、资格/重复/过期等错误反馈及快速重复提交符合迁移前语义；
+- [ ] 主题锁定/解锁、允许/禁止热门、删除、移动、提升、版面固顶、全站固顶、精华、高亮九类菜单与天数正常；
+- [ ] 父版面/子版面选择、高亮加粗/斜体/颜色，以及普通作者、版主、管理员看到的权限表现保持；
+- [ ] 管理记录首次加载、7 条分页、匿名对象、时间、操作人、IP、异常 API 和快速切页正常；
+- [ ] Topic 正常页、热评、追踪页、回复编辑器、四类 Modal 开关、刷新回调、DOM/CSS 与文案回归正常；
+- [ ] 未登录、401/403、管理 API 异常及六项已登记缺陷继续遵循迁移前语义。

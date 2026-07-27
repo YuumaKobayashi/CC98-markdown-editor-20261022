@@ -158,3 +158,10 @@
 - 之前：主题速览 `Card` 在 mount 请求前十楼并通过冻结 UBB 渲染；现在：`BoardTopicPreviewCard` 使用普通 effect，Popover 延迟、loading、内容结构和 UBB options 不变。
 - 之前：Footer、Manage、Record 三个 class 管理小黑屋、批量锁沉/删除和事件记录；现在：三个具名函数保留同一 Modal、Transfer、分页、请求和局部 state 边界。
 - 本组只迁移当前公开 `/board` owner；旧 `/list` owner 不变。空列表 Spin、back/forward 不主动重取、tagInfo 解析、小黑屋分页和管理 mutation 等既有缺陷只登记、不修复。
+
+## Topic 评分与管理弹窗迁移组
+
+- 之前：`Reply` 与 `SendTopic` 直接组合四个 class 管理弹窗，并由各 class 通过 `Utility.ts` 总门面调用 API；现在：四个具名函数归入 `features/moderation`，调用方使用 public barrel，旧路径只保留 facade。
+- 之前：主题管理在 `componentDidMount` 加载版面，管理记录在挂载时加载第一页；现在：两个边界分别由普通首次 `useEffect` 表达，表单 ref、菜单、标签、颜色、分页和父组件显隐时序保持。
+- 保持：发言管理七类操作、评分理由与错误码、主题管理九类操作、7 条管理记录分页、HTTP 方法/URL/参数顺序、DOM/CSS、AntD 文案、调试日志和失败提示方式。
+- 延期：pending、宽松解析、吞异常、评分旧响应、权限过滤、移动默认值、高亮状态、记录 visible/错误/竞态缺陷保持；本组没有把行为修复混入 class 迁移。

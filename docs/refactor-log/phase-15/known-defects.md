@@ -167,3 +167,12 @@
 - `P15-BOARD-MODERATION-002`（待后续修复）：批量锁沉/删除不检查 HTTP 状态，没有 pending 锁、成功/失败反馈或列表刷新；理由 Select 的调试日志和 Modal footer 缺 key 警告继续保留。
 - `P15-BOARD-RECORD-003`（待后续修复）：事件记录组件随 Footer 挂载，即使事件 Modal 尚未打开也会请求第一页；分页请求无异常、取消和旧响应保护。
 - `P15-CLASS-INVENTORY-001`（已修正口径）：历史 P15 AST 清单只扫描 `Components/** + src/**`，遗漏计划范围内 `Pages/**` 的 25 个 declaration 与 1 个 expression；自本组起同时维护历史窄口径和完整非冻结口径。
+
+## Topic 评分与管理弹窗迁移组
+
+- `P15-TOPIC-POST-MANAGEMENT-001`（待后续修复）：发言管理没有局部 pending 锁，数值继续使用宽松 `parseInt`；表单和异步异常被统一吞掉，非 `ok` 结果直接 `alert` 原始字符串。`privilege` 与本地 option 状态继续不参与权限过滤或提交。
+- `P15-TOPIC-RATING-001`（待后续修复）：正负评分理由在切换页签时请求，没有 pending 去重、取消或旧响应保护；评分 API 抛错后可能保持 loading；未选择评分类型时的既有提示/未知错误路径不调整。
+- `P15-TOPIC-MANAGEMENT-001`（待后续修复）：主题管理继续不使用 `isManager/permissions` 过滤菜单；移动版面 Select 的默认显示混用版面名称和提交 ID，切换父版面后默认 child 仍写名称，并继续排除 id 182。
+- `P15-TOPIC-MANAGEMENT-002`（待后续修复）：高亮请求返回值不写入 `status`，因此请求正常返回时仍按 `ok` 刷新并关闭；所有主题管理 mutation 均无 pending 锁、取消和旧响应保护，版面缓存前缀兼容清理与调试日志保持。
+- `P15-TOPIC-HISTORY-001`（待后续修复）：管理记录忽略传入的 `visible` 值并在挂载时直接请求第一页；分页每次 7 条，没有异常 UI、取消或旧响应保护，快速切页可能被晚到响应覆盖。
+- `P15-TOPIC-LEGACY-001`（P21 候选）：Topic `Judge`、`TopicJudgeV2`、`PostManagement` v1、`TopicManagement` v1 未发现 JSX 调用，本批不为降低 class 数量而迁移；P21 仍需重新完成引用和构建证明后再删除。

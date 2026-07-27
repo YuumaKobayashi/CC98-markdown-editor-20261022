@@ -1,6 +1,6 @@
 # P15 函数组件 C 范围
 
-> 当前状态：主题发现页与卡片视图迁移组已完成机械验证，等待真实登录态/API/播放器/滚动人工验收；P15 尚未完成、不提交、不 push、不自动进入下一组
+> 当前状态：Topic 评分与管理弹窗迁移组已完成机械验证，等待真实登录态/API/权限/弹窗人工验收；近期动态/收藏/历史与公开 Board 两组人工验收仍开放。P15 尚未完成、不暂存、不提交、不 push、不自动进入下一组
 
 ## 唯一大事
 
@@ -180,3 +180,14 @@
 - `/list/:boardId/...` 仍由 `Components/Board/Board.tsx` 的 12 个 class 承接，不进入本组；AnnualReview、Index、Topic、Edit 与 P21 候选也不迁移；
 - 完整 AST 口径从 75 declaration 加 2 expression 降至 68 declaration 加 1 expression；排除 `ErrorBoundary` 后仍有 68 个 P15 目标，P15 尚未完成；
 - 真实登录态、Board/topic/tag/管理 API、权限、分页、hover UBB、back/forward 与浏览器验收继续独立开放。
+
+## 当前 Topic 评分与管理弹窗迁移组
+
+- 以 `673995ca` 为基线，迁移 `TopicPostManagementV2`、`TopicJudgeV3`、`TopicTopicManagementV2` 与 `Topic-ManageHistory` 匿名 class 四个 live React class；
+- 发言管理、评分、主题管理与管理记录共同归入既有 `features/moderation`，并由 public barrel 提供四个窄入口；`Topic-Reply.tsx` 与 `Topic-SendTopic.tsx` 不再反向导入 legacy 实现；
+- 保留财富/威望奖惩、删除、TP/解除 TP、正负评分、锁定/热门/删除/移动/提升/两级固顶/精华/高亮、管理记录分页及其 API 参数和提示合同；
+- 主题管理版面加载与管理记录首次请求使用普通 `useEffect`；其余交互由局部 state/ref 与事件表达，不使用 `useLayoutEffect`、mounted、isFirstCommit 或 previous-props 模拟器；
+- 四个旧文件只保留兼容 re-export；Router、Redux、公开 URL、DOM/CSS、AntD 文案、父组件显隐、UBB/editor 与依赖均不改；
+- `Judge`、`TopicJudgeV2`、`PostManagement` v1、`TopicManagement` v1 无 JSX 调用，登记为 P21 删除候选；`Award`、`ReplierSignature`、`Reply`、`SendTopic`、Topic 页面壳与旧 `/list` Board 不进入本组；
+- 完整 AST 从 68 declaration 加 1 expression 降至 64 declaration 加 1 expression；排除允许保留的 `ErrorBoundary` 后仍有 64 个目标。历史窄口径为 46 declaration 加 1 expression，排除后仍有 46 个目标；
+- 已识别的 pending、解析、请求竞态、权限过滤、移动默认值、高亮结果和管理记录错误处理缺陷只登记不修复；真实登录态、管理权限、Topic API、Modal、快速操作及浏览器验收继续独立开放。

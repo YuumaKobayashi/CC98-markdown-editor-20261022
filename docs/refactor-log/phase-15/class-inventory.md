@@ -211,7 +211,7 @@ TypeScript AST 的历史 class declaration 口径从 56 降至 50，排除 `Erro
 
 ## P21 删除候选
 
-根 `Breadcrumb`、根 `Category/Test`、`MessageBar`、`FindIP`、`TopicReplyUserBar`、`ExactActivitiesPosts`、`ErrorEmitter` 未发现运行时调用，本轮不为清零 class 而迁移。`CountDown` 只有 import 和注释 JSX，需在 P21 重新做引用/构建证明后决定删除。
+根 `Breadcrumb`、根 `Category/Test`、`MessageBar`、`FindIP`、`TopicReplyUserBar`、`ExactActivitiesPosts`、`ErrorEmitter`、Topic `Judge`、`TopicJudgeV2`、`PostManagement` v1、`TopicManagement` v1 未发现 JSX 调用，本轮不为清零 class 而迁移。`CountDown` 只有 import 和注释 JSX，需在 P21 重新做引用/构建证明后决定删除。
 
 ## 完整口径修正与当前公开 Board 页面迁移组
 
@@ -229,3 +229,14 @@ TypeScript AST 的历史 class declaration 口径从 56 降至 50，排除 `Erro
 | `Pages/Board/PostItem.tsx` / `Card` | `pages/board` / `BoardTopicPreviewCard` | 已实现，待人工验收 |
 
 本组七个 declaration 与一个 expression 均已消失。完整口径现为 68 个 declaration 加 1 个 expression，共 69 个结构；排除 `ErrorBoundary` 后仍有 68 个目标。历史 `Components/** + src/**` 窄口径没有变化，仍为 50 个 declaration 加 1 个 expression，排除 `ErrorBoundary` 后 50 个目标。P15 尚未完成。
+
+## Topic 评分与管理弹窗迁移组
+
+| 原符号 | 新 owner | 状态 |
+|---|---|---|
+| `TopicPostManagementV2` | `features/moderation` / `PostManagementDialog` | 已实现，待人工验收 |
+| `TopicJudgeV3` | `features/moderation` / `PostRatingDialog` | 已实现，待人工验收 |
+| `TopicTopicManagementV2` | `features/moderation` / `TopicManagementDialog` | 已实现，待人工验收 |
+| `Topic-ManageHistory` 匿名 class | `features/moderation` / `TopicManagementHistoryDialog` | 已实现，待人工验收 |
+
+TypeScript AST 复核确认四个目标 declaration 均已消失。完整口径从 68 个 declaration 加 1 个 expression 降至 64 个 declaration 加 1 个 expression，共 65 个结构；排除 `ErrorBoundary` 后仍有 64 个目标。历史 `Components/** + src/**` 窄口径从 50 个 declaration 加 1 个 expression 降至 46 个 declaration 加 1 个 expression，排除后仍有 46 个目标。唯一 class expression 仍是 `Topic-ReplierSignature.tsx`；P15 尚未完成。
