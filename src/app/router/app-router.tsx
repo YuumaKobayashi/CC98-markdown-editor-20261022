@@ -73,15 +73,15 @@ const routes: RouteObject[] = [
       {
         path: "topic/:topicid/:page?",
         lazy: lazyNamed(
-          () => import("@legacy/Components/Topic/Topic"),
-          "ShowTopic"
+          () => import("@pages/topic"),
+          "TopicPage"
         ),
       },
       {
         path: "topic/:topicId/postid/:postId/:page?",
-        lazy: lazyNamedWithRouteProps(
-          () => import("@legacy/Components/Topic/Topic-Trace"),
-          "CurUserPost"
+        lazy: lazyNamed(
+          () => import("@pages/topic"),
+          "TrackedTopicPage"
         ),
       },
       {
