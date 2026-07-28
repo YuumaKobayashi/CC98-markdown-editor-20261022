@@ -317,8 +317,8 @@ const routes: RouteObject[] = [
       {
         path: "signin/*",
         lazy: lazyNamed(
-          () => import("@legacy/Components/Signin"),
-          "Signin"
+          () => import("@pages/daily-signin"),
+          "DailySigninPage"
         ),
       },
       {
@@ -331,8 +331,8 @@ const routes: RouteObject[] = [
       {
         path: "editor/:mode/:id?/*",
         lazy: lazyNamed(
-          () => import("@legacy/Components/Edit"),
-          "ShowEdit"
+          () => import("@pages/editor"),
+          "EditorPage"
         ),
       },
       {
@@ -346,8 +346,8 @@ const routes: RouteObject[] = [
       {
         path: "index/*",
         lazy: lazyNamed(
-          () => import("@legacy/Pages/Index/Index"),
-          "Index"
+          () => import("@pages/legacy-index"),
+          "LegacyIndexPage"
         ),
       },
       {
