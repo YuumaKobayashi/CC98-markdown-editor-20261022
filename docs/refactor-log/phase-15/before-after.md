@@ -165,3 +165,12 @@
 - 之前：主题管理在 `componentDidMount` 加载版面，管理记录在挂载时加载第一页；现在：两个边界分别由普通首次 `useEffect` 表达，表单 ref、菜单、标签、颜色、分页和父组件显隐时序保持。
 - 保持：发言管理七类操作、评分理由与错误码、主题管理九类操作、7 条管理记录分页、HTTP 方法/URL/参数顺序、DOM/CSS、AntD 文案、调试日志和失败提示方式。
 - 延期：pending、宽松解析、吞异常、评分旧响应、权限过滤、移动默认值、高亮状态、记录 visible/错误/竞态缺陷保持；本组没有把行为修复混入 class 迁移。
+
+## 完整 Topic 主链迁移组
+
+- 之前：普通页和追踪页继承 `RouteComponent`，通过 legacy route props 与 lifecycle 组织取数；现在：两个具名页面直接使用 Router hooks，路由参数 effect 保持原请求顺序和刷新条件。
+- 之前：回复列表、编辑器及六个子组件以 class state、实例字段和 lifecycle 组合；现在：十个 owner 使用 `useState`、ref、普通 effect 与 Quote context，编辑器只通过 imperative handle 暴露 `isContentEmpty()`。
+- 之前：键盘监听、节流 timer、`onbeforeunload`、草稿缓存与 hash 滚动散落在 mount/unmount；现在：相同触发时机由 effect 表达，并为监听、timer 和全局 handler 配对 cleanup。
+- 之前：页面专用 HTTP 操作经 `Utility.ts` 总门面；现在：关注、投票、回复和通知归入 `pages/topic/api/service.ts`，其余调用直接使用既有领域 owner，wire shape 和调用顺序不变。
+- 保持：普通/热评/追踪回复、Quote context、匿名和权限展示、奖励、关注、点赞踩、投票、收藏、标签、管理弹窗、递归热评、楼层/hash、UBB/Markdown、DOM/CSS 与公开 URL。
+- 延期：页面及子组件的旧响应覆盖、错误吞噬、pending 锁、投票提示、追踪更新条件、缓存键分支和安全性边界只登记，不在本批改变。

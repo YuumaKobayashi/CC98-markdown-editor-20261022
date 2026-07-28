@@ -156,3 +156,12 @@
 - `Reply` 与 `SendTopic` 通过现有 Topic 动态块组合 moderation owner；Router 与公开 URL 未变化；
 - 既有 Sass `@import`、Spectrum 旧 CSS、plugin timing 与大 chunk 警告继续存在，本组未修改；
 - 构建不替代真实登录态、发言/评分/主题管理 API、权限、Modal、快速操作和浏览器人工验收。
+
+## 完整 Topic 主链迁移组构建
+
+- 本组未启动 Node dev/preview server，没有 PID、端口或回收事项；
+- 十个 owner 的 modern/legacy TypeScript、diff、静态审计与完整 AST 统计通过；
+- 受限沙箱首次构建在 Vite 配置加载阶段命中既知 `spawn EPERM`，在允许子进程的同一工作树重跑成功，共转换 3,927 个模块；
+- `/topic/:topicId/:page?` 与追踪路由生成新的 `topic` 动态块，Router 不再经 legacy route class；
+- 既有 Sass `@import`、Spectrum 旧 CSS、plugin timing 与大 chunk 警告继续存在，本组未修改；
+- 构建不替代真实登录态、Topic/回复/投票/关注/收藏/管理 API、权限、草稿、分页和浏览器人工验收。

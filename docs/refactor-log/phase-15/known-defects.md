@@ -176,3 +176,15 @@
 - `P15-TOPIC-MANAGEMENT-002`（待后续修复）：高亮请求返回值不写入 `status`，因此请求正常返回时仍按 `ok` 刷新并关闭；所有主题管理 mutation 均无 pending 锁、取消和旧响应保护，版面缓存前缀兼容清理与调试日志保持。
 - `P15-TOPIC-HISTORY-001`（待后续修复）：管理记录忽略传入的 `visible` 值并在挂载时直接请求第一页；分页每次 7 条，没有异常 UI、取消或旧响应保护，快速切页可能被晚到响应覆盖。
 - `P15-TOPIC-LEGACY-001`（P21 候选）：Topic `Judge`、`TopicJudgeV2`、`PostManagement` v1、`TopicManagement` v1 未发现 JSX 调用，本批不为降低 class 数量而迁移；P21 仍需重新完成引用和构建证明后再删除。
+
+## 完整 Topic 主链迁移组
+
+- `P15-TOPIC-PAGE-001`（待后续修复）：普通页、追踪页、回复列表、奖励、标签、投票和签名请求均无取消、请求序号或旧响应保护；快速切页、切主题或连续操作可能被晚到结果覆盖。
+- `P15-TOPIC-ROUTE-001`（已保留）：页码继续宽松 `parseInt`；追踪页只按规范化页码变化重取，同页更换 topic/post 参数可能保留旧数据，并继续重复请求 topic info。
+- `P15-TOPIC-KEYBOARD-001`（已保留）：键盘翻页继续依赖回复编辑器 ref；在未登录、未认证或禁言导致编辑器未挂载时，普通页仍可能访问缺失 ref。
+- `P15-TOPIC-REPLY-001`（待后续修复）：递归热评、回复列表和 hash 居中滚动继续依赖既有楼层/DOM 算法；请求失败缺少独立错误 UI，列表 key 与调试日志保持。
+- `P15-TOPIC-INTERACTION-001`（待后续修复）：关注、点赞踩、奖励和收藏操作缺少统一 pending/失败恢复；部分异常被吞掉或只 alert，快速重复操作可能留下禁用按钮或旧计数。
+- `P15-TOPIC-VOTE-001`（已保留）：投票成功继续主动抛出“投票成功”复用 catch 提示；非 ok 或异常路径可能不恢复 voting，提示和状态合同不在本批修复。
+- `P15-TOPIC-CONTENT-001`（已保留）：Markdown 继续把生成 HTML 写入 `innerHTML`；投票信息异常被吞掉，冻结 UBB/parser 不在本组修改。
+- `P15-TOPIC-COMPOSER-001`（已保留）：草稿类型判断继续含赋值分支；UBB 成功删除 topic 范围键，Markdown 仍删除无 topic id 的 `temporaryContent`；提交和通知无取消或旧响应保护。
+- `P15-TOPIC-LEGACY-002`（P21 候选）：`Judge`、`TopicJudgeV2`、`PostManagement` v1、`TopicManagement` v1 与 `TopicReplyUserBar` 文件继续保留；P21 必须重新完成引用和构建证明。

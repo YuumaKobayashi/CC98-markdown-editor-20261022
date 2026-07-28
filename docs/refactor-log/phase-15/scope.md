@@ -191,3 +191,15 @@
 - `Judge`、`TopicJudgeV2`、`PostManagement` v1、`TopicManagement` v1 无 JSX 调用，登记为 P21 删除候选；`Award`、`ReplierSignature`、`Reply`、`SendTopic`、Topic 页面壳与旧 `/list` Board 不进入本组；
 - 完整 AST 从 68 declaration 加 1 expression 降至 64 declaration 加 1 expression；排除允许保留的 `ErrorBoundary` 后仍有 64 个目标。历史窄口径为 46 declaration 加 1 expression，排除后仍有 46 个目标；
 - 已识别的 pending、解析、请求竞态、权限过滤、移动默认值、高亮结果和管理记录错误处理缺陷只登记不修复；真实登录态、管理权限、Topic API、Modal、快速操作及浏览器验收继续独立开放。
+- 2026-07-28 人工验收通过，代码检查点为 `57029e44`，文档检查点为 `908a3c7c`。
+
+## 当前完整 Topic 主链迁移组
+
+- 以 `908a3c7c` 为基线，迁移普通 Topic、追踪 Topic、回复列表、回复编辑器、奖励、关注用户、签名操作、回复内容、主题头部和投票十个 React class 结构；
+- 十个 owner 共同归入 `pages/topic`，新增 public barrel；Router 直接加载 `TopicPage`、`TrackedTopicPage`，不再使用 `RouteComponent`、`withRouter` 或 legacy route props；
+- 回复编辑器通过 `forwardRef(function ...)`、`useImperativeHandle` 保留 `isContentEmpty()`；Quote context、递归热评、键盘翻页、草稿、hash 居中滚动与父子回调合同保持；
+- 直接复用 board、topic、user、favorites、reactions、account、auth、posting、moderation 和 shared owner service；页面专用回复、投票、关注请求归入 `pages/topic/api/service.ts`；
+- 保留公开 URL、宽松 `parseInt`、Redux、Local Storage 键、API 顺序、UBB/Markdown、DOM/CSS、AntD 文案和 jQuery 滚动；已知请求竞态、错误吞噬与状态缺陷只登记；
+- 十个旧文件只保留原导出形状的兼容 facade；`Judge`、`TopicJudgeV2`、`PostManagement` v1、`TopicManagement` v1、`TopicReplyUserBar` 留待 P21；
+- AnnualReview、旧 `/list` Board、Edit、Index、登录和冻结 UBB/editor 不在本组，不新增依赖、不启动持续 Node server；
+- 完整 AST 从 64 declaration 加 1 expression 降至 55 declaration 加 0 expression；排除 `ErrorBoundary` 后仍有 54 个 P15 目标，P15 尚未完成。

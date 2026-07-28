@@ -213,6 +213,23 @@ TypeScript AST 的历史 class declaration 口径从 56 降至 50，排除 `Erro
 
 根 `Breadcrumb`、根 `Category/Test`、`MessageBar`、`FindIP`、`TopicReplyUserBar`、`ExactActivitiesPosts`、`ErrorEmitter`、Topic `Judge`、`TopicJudgeV2`、`PostManagement` v1、`TopicManagement` v1 未发现 JSX 调用，本轮不为清零 class 而迁移。`CountDown` 只有 import 和注释 JSX，需在 P21 重新做引用/构建证明后决定删除。
 
+## 完整 Topic 主链迁移组
+
+| 原符号 | 新 owner | 状态 |
+|---|---|---|
+| `Post` / `ShowTopic` | `pages/topic` / `TopicPage` | 已实现，待人工验收 |
+| `CurUserPost` | `pages/topic` / `TrackedTopicPage` | 已实现，待人工验收 |
+| `Reply` | `pages/topic` / `TopicReplyList` | 已实现，待人工验收 |
+| `SendTopic` | `pages/topic` / `TopicReplyComposer` | 已实现，待人工验收 |
+| `Award` | `pages/topic` / `TopicAwardList` | 已实现，待人工验收 |
+| `Replier` | `pages/topic` / `TopicReplier` | 已实现，待人工验收 |
+| `ReplierSignature` 匿名 class expression | `pages/topic` / `TopicReplySignature` | 已实现，待人工验收 |
+| `ReplyContent` | `pages/topic` / `TopicReplyContent` | 已实现，待人工验收 |
+| `TopicInfo` | `pages/topic` / `TopicHeader` | 已实现，待人工验收 |
+| `VoteContent` | `pages/topic` / `TopicVote` | 已实现，待人工验收 |
+
+完整 TypeScript AST 复核确认十个目标结构均已消失：64 个 declaration 加 1 个 expression 降至 55 个 declaration 加 0 个 expression。排除允许保留的 `ErrorBoundary` 后仍有 54 个 P15 目标。P21 候选文件未删除；`ReplyContent` 迁出后不再携带未使用的 `PostManagement` v1 import。
+
 ## 完整口径修正与当前公开 Board 页面迁移组
 
 `frontend-refactoring-plan-v2.md` 明确把 `Components/**` 与 `Pages/**` 都列为迁移范围。当前组开始前的完整非冻结 AST 统计为 75 个 class declaration、2 个 class expression，共 77 个 React class 结构；排除允许保留的 `ErrorBoundary` 后有 76 个目标。相对历史窄口径新增的 `Pages/**` 为：AnnualReview 7 个、AnnualReviewV2 10 个、Board 7 个 declaration 加 1 个 expression、Index 1 个。

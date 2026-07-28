@@ -202,3 +202,20 @@ Board 主 route、Topic-New 与 Topic-Recommended lazy 入口保持原样；本�
 | `Components/Topic/Topic-ManageHistory.tsx` | `features/moderation/ui/TopicManagementHistoryDialog` | 旧文件保留 default re-export；`Topic-SendTopic.tsx` 改用 moderation barrel |
 
 四个新 owner 直接使用 `features/moderation/api/service`、`features/reactions/api/service` 与 `entities/board/api/service`；不再经 `Utility.ts` 总门面访问这些 API。Router、Redux、Topic 父组件 state/回调与公开 URL 均未改。
+
+## 完整 Topic 主链迁移组
+
+| 旧位置 | 新 owner | 兼容方式 |
+|---|---|---|
+| `Components/Topic/Topic.tsx` | `pages/topic/TopicPage` | 保留 default、`Post`、`ShowTopic` 和 Quote context 导出；Router 改用 page barrel |
+| `Components/Topic/Topic-Trace.tsx` | `pages/topic/TrackedTopicPage` | 保留 default、`CurUserPost` 和 Quote context 导出 |
+| `Components/Topic/Topic-Reply.tsx` | `pages/topic/TopicReplyList` | 保留 default、`Reply`、`ContentState`、`FloorSize` 导出 |
+| `Components/Topic/Topic-SendTopic.tsx` | `pages/topic/TopicReplyComposer` | 保留 default、`SendTopic` 和 handle 类型导出 |
+| `Components/Topic/Topic-Award.tsx` | `pages/topic/TopicAwardList` | 保留 default 与 `Award` 导出 |
+| `Components/Topic/Topic-Replier.tsx` | `pages/topic/TopicReplier` | 保留 default 与 `Replier` 导出 |
+| `Components/Topic/Topic-ReplierSignature.tsx` | `pages/topic/TopicReplySignature` | 保留原 default 导出 |
+| `Components/Topic/Topic-ReplyContent.tsx` | `pages/topic/TopicReplyContent` | 保留 default 与 `ReplyContent` 导出 |
+| `Components/Topic/Topic-TopicInfo.tsx` | `pages/topic/TopicHeader` | 保留 default 与 `TopicInfo` 导出 |
+| `Components/Topic/VoteInfo.tsx` | `pages/topic/TopicVote` | 保留 default、`VoteContent` 与 `voteInfo` 导出 |
+
+`pages/topic/api/service.ts` 承接关注、投票、回复提交和通知全部回复等页面专用 HTTP 操作；其他调用继续使用既有领域 owner。Router 只依赖 `TopicPage`、`TrackedTopicPage` 两个 public 入口。

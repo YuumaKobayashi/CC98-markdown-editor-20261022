@@ -164,5 +164,16 @@
 - [x] `Judge`、`TopicJudgeV2`、`PostManagement` v1、`TopicManagement` v1 只登记 P21 候选，不为清零数字而迁移；
 - [x] `Award`、`ReplierSignature`、`Reply`、`SendTopic`、Topic 页面壳、旧 `/list` Board、Redux、Router、UBB/editor 与依赖不在本组范围；
 - [x] 不启动持续 Node server，不触碰 `.vscode/`，完成后保持全部改动未暂存、未提交、未 push，不自动进入下一批；
-- [ ] 用户完成本组真实登录态、发言/评分/主题管理 API、权限、Modal、快速操作和浏览器人工验收；
-- [ ] 用户授权本组代码与文档形成本地检查点。
+- [x] 用户完成本组真实登录态、发言/评分/主题管理 API、权限、Modal、快速操作和浏览器人工验收；
+- [x] 本组代码检查点已形成：`57029e44`；文档检查点已形成：`908a3c7c`。
+
+## 完整 Topic 主链迁移组授权
+
+- [x] 用户授权以 `908a3c7c` 为基线迁移 Topic 主链十个 React class 结构；
+- [x] 页面 owner 归入 `pages/topic`，Router 直接使用两个页面入口，旧文件保留完整兼容导出；
+- [x] 保留 API、Redux、URL、DOM/CSS、文案、草稿、Quote、递归热评与已登记缺陷；
+- [x] AnnualReview、旧 `/list` Board、Edit、Index、登录、冻结 UBB/editor 和全部 P21 候选不进入本组；
+- [x] 年度回顾暂不处理，不新增依赖，不启动持续 Node server，不触碰 `.vscode/`；
+- [x] 完成后保持全部改动未暂存、未提交、未 push，并停在本组人工验收门禁；
+- [x] 用户完成本组真实页面、登录态、Topic/回复/投票/管理 API、草稿、分页与浏览器人工验收；
+- [x] 用户授权本组代码与文档形成本地检查点；代码检查点已形成：`2f9669c1`。

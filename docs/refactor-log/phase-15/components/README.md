@@ -113,5 +113,15 @@
 - [`post-rating-dialog.md`](./post-rating-dialog.md)
 - [`topic-management-dialog.md`](./topic-management-dialog.md)
 - [`topic-management-history-dialog.md`](./topic-management-history-dialog.md)
+- [`topic-page.md`](./topic-page.md)
+- [`tracked-topic-page.md`](./tracked-topic-page.md)
+- [`topic-reply-list.md`](./topic-reply-list.md)
+- [`topic-reply-composer.md`](./topic-reply-composer.md)
+- [`topic-award-list.md`](./topic-award-list.md)
+- [`topic-replier.md`](./topic-replier.md)
+- [`topic-reply-signature.md`](./topic-reply-signature.md)
+- [`topic-reply-content.md`](./topic-reply-content.md)
+- [`topic-header.md`](./topic-header.md)
+- [`topic-vote.md`](./topic-vote.md)
 
-版面列表与展示叶子、公共用户管理子页、Focus 页面剩余壳层迁移组已于 2026-07-24 通过人工页面验收；主题发现页与卡片视图迁移组已于 2026-07-26 通过人工页面验收；用户中心资料、主题与转账设置迁移组已于 2026-07-27 通过人工页面验收；近期动态、收藏与浏览历史组、公开 Board 页面组及 Topic 评分与管理弹窗组仍待人工验收。其他批次结论以 `manual-checklist.md` 为准。
+版面列表与展示叶子、公共用户管理子页、Focus 页面剩余壳层迁移组已于 2026-07-24 通过人工页面验收；主题发现页与卡片视图迁移组已于 2026-07-26 通过人工页面验收；用户中心资料、主题与转账设置迁移组已于 2026-07-27 通过人工页面验收；Topic 评分与管理弹窗组已于 2026-07-28 通过人工验收。近期动态/收藏/历史、公开 Board 与完整 Topic 主链仍待人工验收。其他批次结论以 `manual-checklist.md` 为准。
