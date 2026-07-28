@@ -212,7 +212,7 @@ TypeScript AST 的历史 class declaration 口径从 56 降至 50，排除 `Erro
 
 ## P21 删除候选
 
-根 `Breadcrumb`、根 `Category/Test`、`MessageBar`、`FindIP`、`TopicReplyUserBar`、`ExactActivitiesPosts`、`ErrorEmitter`、Topic `Judge`、`TopicJudgeV2`、`PostManagement` v1、`TopicManagement` v1 未发现 JSX 调用，本轮不为清零 class 而迁移。`CountDown` 只有 import 和注释 JSX，需在 P21 重新做引用/构建证明后决定删除。
+根 `Breadcrumb`、根 `Category/Test`、`FindIP`、`TopicReplyUserBar`、`ExactActivitiesPosts`、`ErrorEmitter`、Topic `Judge`、`TopicJudgeV2`、`PostManagement` v1、`TopicManagement` v1 未发现 JSX 调用，本轮不为清零 class 而迁移。`CountDown` 只有 import 和注释 JSX，需在 P21 重新做引用/构建证明后决定删除。此前列入本段的 `MessageBar` 经完整运行链复核确认由冻结 UBB handler 实际渲染，已从 P21 候选撤回并纳入当前 live 迁移。
 
 ## 完整 Topic 主链迁移组
 
@@ -281,3 +281,19 @@ TypeScript AST 复核确认四个目标 declaration 均已消失。完整口径�
 | `TopicTitleAndContent` | `pages/board/legacy-list` / `LegacyBoardTopicItem` | 已实现，用户免检；P21 删除候选 |
 
 TypeScript AST 复核确认 12 个目标 declaration 均已消失。完整非冻结 React class 口径从 55 个 declaration 加 0 个 expression 降至 43 个 declaration 加 0 个 expression；排除唯一允许保留的 `ErrorBoundary` 后仍有 42 个 P15 目标。年度回顾的 React class 继续计入总数，但文件未被本批修改。用户免除本组人工验收；当前迁移结果以 `79e648ca` 暂留，P21 重新完成仓内引用、外部入口与生产构建证明后删除整条旧 `/list` Board 链。
+
+## 剩余 live 非年度回顾主链迁移组
+
+| 原符号 | 新 owner | 状态 |
+|---|---|---|
+| `EditForm` / `ShowEdit` | `pages/editor` / `EditorPage` | 已实现，待人工验收 |
+| `Edit.tsx` / `TagNotice` | `pages/editor` / `EditorTagNotice` | 已实现，待人工验收 |
+| `Edit.tsx` / `Category` | `pages/editor` / `EditorBreadcrumb` | 已实现，待人工验收 |
+| `Edit.tsx` / `InputTitle` | `pages/editor` / `EditorTitleInput` | 已实现，待人工验收 |
+| `Edit.tsx` / `TmpForm`、`Tmp` | `pages/editor` / `HousingTemplateDialog` | 已实现，待人工验收 |
+| `EditVoteIput.tsx` / `Vote` | `pages/editor` / `EditorVoteSettings` | 已实现，待人工验收 |
+| `Signin` / `ShowSignin` | `pages/daily-signin` / `DailySigninPage` | 已实现，待人工验收 |
+| `Pages/Index/Index.tsx` / `Index` | `pages/legacy-index` / `LegacyIndexPage` | 已实现，待人工验收 |
+| `Common/MessageBar.tsx` / `MessageBar` | `shared/ui/feedback` / `MessageBar` | 已实现，待人工验收 |
+
+完整 AST 复核确认九个 live declaration 均已消失，从 43 declaration 加 0 expression 降至 34 declaration 加 0 expression；排除 `ErrorBoundary` 后仍有 33 个 P15 目标。年度回顾、`Tags`、`Options`、`RouteComponent` 与其他 P21 候选继续计入总数但未迁移。

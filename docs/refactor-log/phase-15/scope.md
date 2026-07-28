@@ -1,10 +1,10 @@
 # P15 函数组件 C 范围
 
-> 当前状态：旧 `/list` Board 主链迁移已完成机械验证，用户于 2026-07-28 明确免除人工验收并决定暂留代码、P21 重新完成引用/构建证明后删除；Topic 评分与管理弹窗、完整 Topic 主链已通过人工验收，近期动态/收藏/历史与当前公开 `/board` 两组人工验收仍开放。P15 尚未完成、不 push、不自动进入下一组。
+> 当前状态：剩余 live 非年度回顾主链迁移已完成机械验证，停在编辑器、签到、旧 `/index` 与 UBB MessageBar 人工验收门禁；旧 `/list` Board 由用户免除人工验收并暂留至 P21，Topic 两组已通过人工验收，近期动态/收藏/历史与当前公开 `/board` 两组人工验收仍开放。P15 尚未完成、不暂存、不提交、不 push、不自动进入下一组。
 
 ## 唯一大事
 
-将仍依赖 Redux、Router 或复杂 lifecycle 的 React class 按风险分组迁为函数组件，并随批次归入 `app/pages/features/entities/shared` owner。当前批次迁移旧 `/list` Board 主链的 12 个 class 结构；年度回顾、当前公开 `/board` owner、Edit、Index、登录、冻结 UBB/editor 和 P21 候选均不进入本批。
+将仍依赖 Redux、Router 或复杂 lifecycle 的 React class 按风险分组迁为函数组件，并随批次归入 `app/pages/features/entities/shared` owner。当前批次只迁移仍有真实路由或运行时 JSX 调用的 9 个 class 结构；年度回顾、`ErrorBoundary` 和零调用 P21 候选不进入本批。
 
 ## 已完成的无 Redux 简单组件组
 
@@ -216,3 +216,14 @@
 - `Components/Board/Board.tsx` 仅保留原导出形状的兼容 facade；当前公开 `/board/:id/...` owner、后端 API、Redux schema、Local Storage、样式、依赖和冻结目录均不修改；
 - `Pages/AnnualReview/**`、`Pages/AnnualReviewV2/**` 明确排除；完成后完整非冻结 AST 为 43 declaration 加 0 expression，排除 `ErrorBoundary` 后仍有 42 个 P15 目标；
 - 机械验证已通过；用户明确免除真实 `/list` 路由、登录态、权限、Board/topic/tag/管理 API 与浏览器回归，不把免检记为验收通过；当前实现暂留，P21 重新完成引用、外部入口与构建证明后删除整条旧链。
+
+## 当前剩余 live 非年度回顾主链迁移组
+
+- 以 `78898e75` 为基线，仅迁移编辑器链 `EditForm`、`TagNotice`、编辑器 `Category`、`InputTitle`、`TmpForm`、`Vote`，以及真实路由使用的 `Signin`、`Index` 和冻结 UBB 实际渲染的 `MessageBar`；
+- 编辑器归入 `pages/editor`，签到与旧 Index 分别归入 `pages/daily-signin`、`pages/legacy-index`，MessageBar 归入既有 `shared/ui/feedback`；Router 直接加载三个 page owner；
+- `EditorPage` 使用 Router hooks、typed dispatch、局部 state/ref 和普通 effect；`mode/id` 变化重新初始化，标签 DOM/class 与 jQuery 选择语义保留，并为 document/element 监听配对 cleanup；
+- 直接复用 board、topic、account、auth、posting、user 与 shared owner；原帖加载、发主题、编辑及 @通知的页面专用 wire 操作归入 `pages/editor/api/service.ts`；
+- 保留发主题/投票主题/编辑、UBB/Markdown、标签、匿名、通知、财富、类型、8000 字限制、图片、住房模板、投票、@通知、缓存、签到 storage/reload 和公开 URL；
+- `Components/Edit.tsx` 继续原样保留零调用 `Tags`、`Options`，其余旧路径保留兼容导出；`RouteComponent`、CountDown、旧 Topic v1/v2、旧 breadcrumb、FindIP、近期回复与年度回顾留待 P21 或后续授权；
+- 修正旧清单对 `MessageBar` 的误判：冻结 UBB 的权限标签 handler 存在运行时 JSX 调用，因此本组迁移但不修改任何 `Ubb/**` 文件；
+- 请求竞态、无 pending、错误吞噬、发帖状态分支、标签 DOM/日志、住房模板字段判断和签到失败仍 reload 等缺陷只登记；完整 AST 从 43 declaration 加 0 expression 降至 34 declaration 加 0 expression，排除 `ErrorBoundary` 后仍有 33 个目标。

@@ -419,3 +419,28 @@
 - [ ] 已登记的路由混用、竞态、权限时序、参数顺序、追加分页和批量操作缺陷未被误报修复。
 
 以上项目未执行，不标记为人工验收通过。用户于 2026-07-28 明确免除本组人工验收并授权形成代码、文档本地检查点；当前迁移代码暂时保留，P21 重新完成仓内引用、外部入口与生产构建证明后删除 `/list` route、legacy owner 与兼容 facade。不 push，不自动进入下一组。
+
+## 剩余 live 非年度回顾主链迁移组机械验证
+
+- [x] 九个实际路由/调用 React class 均由具名函数承接，零调用 class、年度回顾和 `ErrorBoundary` 未迁移；
+- [x] Router 直接加载 `EditorPage`、`DailySigninPage`、`LegacyIndexPage`，冻结 UBB 继续通过 MessageBar facade 工作；
+- [x] 旧导出 `ShowEdit`、五个编辑器叶子、`Vote`/`props`、签到、Index、MessageBar/MessageType 均保留；
+- [x] 新 owner 不含 class、`RouteComponent`、`withRouter`、`connect`、Store 直读、`React.FC`、`useLayoutEffect`、mounted、isFirstCommit 或 previous-props 模拟器；
+- [x] 组件本身使用具名 `function`；组件内部 helper、handler 与异步动作经 AST 复核均为 `const + 箭头函数`，内部普通 function declaration/expression 为 0；
+- [x] modern/legacy typecheck、生产 build、`git diff --check`、目标静态审计和完整 AST 统计通过；
+- [x] 完整 AST 从 43 declaration 加 0 expression 降至 34 declaration 加 0 expression；排除 `ErrorBoundary` 后仍有 33 个目标；
+- [x] 受限环境首次 build 命中既知 `spawn EPERM`，在获准环境重跑成功，共转换 3,939 个模块；
+- [x] API、Redux、URL、Local Storage、DOM/CSS、文案和已登记缺陷保持；package、lockfile、年度回顾与冻结 UBB/editor 未改。
+
+## 剩余 live 非年度回顾主链迁移组人工验收
+
+- [ ] `/editor/postTopic/:boardId`、`postVoteTopic`、`edit/:postId` deep link、刷新、参数切换和 back/forward 正常；
+- [ ] UBB/Markdown 切换、标题、0/1/2 层标签、普通/学术/活动类型、消息提醒和 8000 字限制正常；
+- [ ] 匿名状态、财富、投票设置/校验、图片上传、住房模板、编辑主题/回复、缓存、@通知和跳转正常；
+- [ ] 发帖/编辑异常、未登录、权限差异及 400/401/402/403/404/500 继续遵循迁移前语义；
+- [ ] 签到已签/未签、补签日历、UBB 内容、storage、reload 和异常 API 正常；
+- [ ] `/index` 刷新和标题正常；UBB need-reply/poster-only/allow-viewer MessageBar 的 Info/Warning/default 样式正常；
+- [ ] Topic、Board、发帖入口和冻结 UBB/editor 回归正常；
+- [ ] 已登记的竞态、无 pending、状态分支、标签 DOM、住房模板和签到缺陷未被误报修复。
+
+本组停在人工验收门禁；改动保持未暂存、未提交、未 push。

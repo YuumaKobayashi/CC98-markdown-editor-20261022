@@ -1,6 +1,6 @@
 # P15 首批人工确认
 
-> 当前状态：旧 `/list` Board 主链迁移已完成机械验证，用户于 2026-07-28 明确免除人工验收并决定暂留代码、P21 重新完成引用/构建证明后删除；Topic 评分与管理弹窗、完整 Topic 主链已通过人工验收，近期动态/收藏/历史与当前公开 `/board` 两组验收仍开放。P15 尚未完成、不 push、不自动进入下一组。
+> 当前状态：剩余 live 非年度回顾主链迁移已完成机械验证，停在人工验收门禁；旧 `/list` Board 由用户免检并暂留至 P21，Topic 两组已通过人工验收，近期动态/收藏/历史与当前公开 `/board` 仍开放。P15 尚未完成、不暂存、不提交、不 push、不自动进入下一组。
 
 ## 已确认边界
 
@@ -191,3 +191,16 @@
 - [x] 当前迁移代码暂时保留，P21 在重新完成仓内引用、外部入口与生产构建证明后删除 `/list` route、legacy owner 与兼容 facade；
 - [x] 用户授权本组代码与文档形成本地检查点。
 - [x] 本组代码检查点已形成：`79e648ca`。
+
+## 剩余 live 非年度回顾主链迁移组授权
+
+- [x] 用户授权以 `78898e75` 为基线，只迁移仍有真实路由或运行时 JSX 调用的九个 React class；
+- [x] 编辑器、签到、旧 Index 分别归入 page owner，MessageBar 归入 shared feedback；Router 直接加载三个 page 入口；
+- [x] 保留编辑器/签到 API、Redux、URL、Local Storage、DOM/CSS、AntD 文案、冻结 UBB/editor、旧导出和已登记缺陷；
+- [x] `mode/id` 变化重新初始化，迁移后的 jQuery document/element 监听器允许配对 cleanup；
+- [x] 年度回顾、`ErrorBoundary`、`Tags`、`Options`、CountDown、旧 Topic v1/v2、旧 breadcrumb、FindIP、近期回复及其他零调用候选不迁移；
+- [x] 修正 MessageBar 零调用误判，但不修改任何 `Ubb/**` 文件；
+- [x] 不新增依赖，不启动持续 Node server，不触碰 `.vscode/`；
+- [x] 完成后保持全部改动未暂存、未提交、未 push，并停在本组人工验收门禁；
+- [ ] 用户完成编辑器、签到、旧 Index、UBB MessageBar、异常 API、权限与浏览器人工验收；
+- [ ] 用户授权本组代码与文档形成本地检查点。

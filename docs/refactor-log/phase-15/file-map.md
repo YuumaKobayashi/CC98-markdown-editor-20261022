@@ -238,3 +238,16 @@ Board 主 route、Topic-New 与 Topic-Recommended lazy 入口保持原样；本�
 | `TopicTitleAndContent` | `LegacyBoardTopicItem` | facade 保留 `TopicTitleAndContent` |
 
 四个既有共享叶子继续由 facade 以 `Category`、`ListButtonAndAds`、`ListTagAndPager`、`BoardRecordContent` 原名导出。`@pages/board` 新增公开入口 `LegacyBoardPage`；其余 owner 仅为兼容 facade 提供别名，不新增业务 API。
+
+## 剩余 live 非年度回顾主链迁移组
+
+| 旧位置/导出 | 新 owner | 兼容方式 |
+|---|---|---|
+| `Components/Edit.tsx` / `ShowEdit` | `pages/editor/EditorPage` | Router 直接加载；旧文件保留 `ShowEdit` 别名 |
+| `TagNotice`、编辑器 `Category`、`InputTitle`、`Tmp` | `pages/editor` 内部 UI | 旧文件保留同名别名；`Tags`、`Options` class 原样保留 |
+| `Components/EditVoteIput.tsx` / `Vote`、`props` | `pages/editor/EditorVoteSettings` | facade 保留组件、类型及 `Vote.isFormIllegal` |
+| `Components/Signin.tsx` / `Signin`、`ShowSignin` | `pages/daily-signin/DailySigninPage` | Router 直接加载；旧文件保留两个别名 |
+| `Pages/Index/Index.tsx` / `Index` | `pages/legacy-index/LegacyIndexPage` | Router 直接加载；旧文件保留 `Index` |
+| `Components/Common/MessageBar.tsx` | `shared/ui/feedback/MessageBar` | 冻结 UBB 不改 import，旧文件转导 `MessageBar`、`MessageType` |
+
+`pages/editor/api/service.ts` 仅承接需要保持原始 wire 行为的页面请求；其余能力继续使用现有领域 service。`RouteComponent` 因编辑器迁出而失去最后一个 live 消费者，本批不删除，留待 P21 证明。

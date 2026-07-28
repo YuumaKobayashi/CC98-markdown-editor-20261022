@@ -184,3 +184,12 @@
 - 保持：`/list` 外壳与内部 `/board/...` 匹配混用、每页 20 条、首页置顶、标签层级、主题图标/高亮/匿名/分页、小黑屋、批量管理、大字报、冻结 UBB、DOM/CSS、AntD 文案和 jQuery 操作。
 - 延期：请求竞态、错误吞噬、`isMaster` 初始化、关注状态同步、`BestTopics` 参数顺序、小黑屋追加分页、批量操作无 pending/刷新和逐主题标签请求等缺陷只登记。
 - 收口：用户免除本组人工验收，当前迁移结果暂留；P21 在重新完成仓内引用、外部入口与生产构建证明后删除 `/list` route、legacy owner 与兼容 facade，不把免检记为验收通过。
+
+## 剩余 live 非年度回顾主链迁移组
+
+- 之前：`EditForm` 继承 `RouteComponent`、经 `withRouter` 消费 route props，并把页面请求、六类提交和五个 live 子组件集中在 legacy 文件；现在：`EditorPage` 直接使用 Router hooks、typed dispatch 与普通 effect，页面专用 wire 操作进入 editor service。
+- 之前：标题标签 class 通过 receive-props、didMount/didUpdate 和全局 jQuery handler 组合；现在：props/state 由明确 effect 表达，标签 DOM/class 与选择算法保持，监听器增加成对 cleanup。
+- 之前：住房模板和投票设置依赖 class state/实例表单；现在：函数组件使用局部 state 与 `useRef<FormInstance>`，旧 `Vote.isFormIllegal` 兼容形状保留。
+- 之前：签到和旧 `/index` 由 Router lazy import legacy class；现在：Router 直接加载 page owner，签到请求/storage/reload 顺序与 `/index` 仅设置标题的行为不变。
+- 之前：`MessageBar` 被清单误判为零调用；现在：确认冻结 UBB 权限标签 handler 实际渲染后迁入 shared feedback，冻结目录与旧 import 均不修改。
+- 保持：编辑器 API/body/status/text 顺序、UBB/Markdown、标签、匿名、投票、住房模板、缓存、DOM/CSS、文案、签到和继承缺陷；零调用 class 不为降低 AST 数量而迁移。

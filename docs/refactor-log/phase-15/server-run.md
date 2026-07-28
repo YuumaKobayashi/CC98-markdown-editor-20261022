@@ -174,3 +174,12 @@
 - Vite 8.1.4 共转换 3,932 个模块，生成/更新 `board` 动态块（约 47.56 kB）；
 - 既有 Sass `@import`、Spectrum 旧 CSS、plugin timing 与大 chunk 警告继续存在，本组未修改；
 - 构建只证明机械门禁；用户于 2026-07-28 明确免除真实 `/list`、登录态、Board/topic/tag/关注/管理 API、权限、分页、back/forward 和浏览器人工验收。当前实现暂留，P21 完成引用/构建证明后删除，不把免检记为验收通过。
+
+## 剩余 live 非年度回顾主链迁移组构建
+
+- 本组未启动 Node dev/preview server，没有 PID、端口或回收事项；
+- 九个目标的 modern/legacy TypeScript、diff、静态审计与完整 AST 统计通过；
+- 受限环境首次 `npm run build` 在 Vite 配置加载阶段命中既知 `spawn EPERM`，在获准环境重跑相同命令成功；
+- Vite 8.1.4 共转换 3,939 个模块；按统一函数语法复核并修正后再次构建，生成 `editor`（约 30.54 kB）、`daily-signin`（约 8.31 kB）、`legacy-index`（约 0.17 kB）并更新 `feedback`（约 1.07 kB）动态块；
+- 既有 Sass `@import`、Spectrum 旧 CSS、plugin timing 与大 chunk 警告继续存在，本组未修改；
+- 构建不替代真实编辑器、签到、旧 Index、UBB MessageBar、登录态/API/权限和浏览器人工验收。

@@ -200,3 +200,14 @@
 - `P15-LEGACY-BOARD-MODERATION-001`（已保留）：小黑屋分页继续把新页追加到旧列表，事件记录初始版面 id 和请求时机沿用旧实现；失败缺少独立错误 UI。
 - `P15-LEGACY-BOARD-MODERATION-002`（已保留）：批量锁沉/删除继续依赖全局 checkbox 与 jQuery DOM，操作没有 pending 锁、可靠反馈或列表刷新，快速重复操作可能重复提交。
 - `P15-LEGACY-BOARD-PAGING-001`（已保留）：页码和版面参数继续宽松 `parseInt`，首页置顶、标签路由与特殊列表页码遵循旧字符串/数字混合判断。
+
+## 剩余 live 非年度回顾主链迁移组
+
+- `P15-EDITOR-REQUEST-001`（待后续修复）：初始化、标签、发帖、编辑、@通知和财富请求没有取消、请求序号或旧响应保护；`mode/id` 快速变化时旧请求可能覆盖新页面。
+- `P15-EDITOR-SUBMIT-001`（已保留）：UBB/Markdown 提交逻辑继续重复且没有 pending 锁；402/400 分支提示后仍可能继续读取 response body 和跳转，只有 403 提前返回，异常处理方式不一致。
+- `P15-EDITOR-TAGS-001`（已保留）：标题标签继续读取和写入全局 jQuery DOM、保留调试日志，二级标签 `.find(...).subTags` 缺少空值保护；本批只为迁移后的监听器增加 cleanup。
+- `P15-EDITOR-EDIT-001`（已保留）：编辑两层标签时切换 tag1 而不选 tag2 仍可能按原标签提交；编辑请求结果不检查状态，清缓存并跳转。
+- `P15-EDITOR-HOUSING-001`（已保留）：住房模板取消只关闭子组件局部 visible；水电“其他”输入继续错误依赖 `elecRadio`，字段覆盖和表单日志保持。
+- `P15-EDITOR-ROUTE-001`（明确变化）：新页面按 `mode/id` 变化重新初始化，替代旧 class 只在 mount 请求的行为；仍无竞态保护，列入 back/forward 人工验收。
+- `P15-SIGNIN-001`（已保留）：签到 POST 不等待即请求全局配置，结果未检查；随后仍清内容、写 storage 并 reload，失败可能表现为已执行后续流程。
+- `P15-LIVE-INVENTORY-001`（已修正）：`MessageBar` 并非零调用；冻结 UBB 的 need-reply/poster-only/allow-viewer handler 经 `MessageBarTagHandlerBase` 实际渲染它。其余零调用候选继续留待 P21。
