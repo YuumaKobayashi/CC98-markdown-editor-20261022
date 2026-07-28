@@ -86,9 +86,9 @@ const routes: RouteObject[] = [
       },
       {
         path: "list/:boardId/:type?/:page?/*",
-        lazy: lazyNamedWithRouteProps(
-          () => import("@legacy/Components/Board/Board"),
-          "BList"
+        lazy: lazyNamed(
+          () => import("@pages/board"),
+          "LegacyBoardPage"
         ),
       },
       {
