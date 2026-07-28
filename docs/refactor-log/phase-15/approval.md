@@ -1,6 +1,6 @@
 # P15 首批人工确认
 
-> 当前状态：Topic 评分与管理弹窗迁移组已完成机械验证，待人工验收；近期动态/收藏/历史与公开 Board 两组人工验收也仍开放。P15 尚未完成、不暂存、不提交、不 push、不自动进入下一组
+> 当前状态：旧 `/list` Board 主链迁移已完成机械验证，用户于 2026-07-28 明确免除人工验收并决定暂留代码、P21 重新完成引用/构建证明后删除；Topic 评分与管理弹窗、完整 Topic 主链已通过人工验收，近期动态/收藏/历史与当前公开 `/board` 两组验收仍开放。P15 尚未完成、不 push、不自动进入下一组。
 
 ## 已确认边界
 
@@ -176,4 +176,18 @@
 - [x] 年度回顾暂不处理，不新增依赖，不启动持续 Node server，不触碰 `.vscode/`；
 - [x] 完成后保持全部改动未暂存、未提交、未 push，并停在本组人工验收门禁；
 - [x] 用户完成本组真实页面、登录态、Topic/回复/投票/管理 API、草稿、分页与浏览器人工验收；
-- [x] 用户授权本组代码与文档形成本地检查点；代码检查点已形成：`2f9669c1`。
+- [x] 用户授权本组代码与文档形成本地检查点；代码检查点已形成：`2f9669c1`，文档检查点已形成：`bf9eabaf`。
+
+## 旧 `/list` Board 主链迁移组授权
+
+- [x] 用户授权以 `bf9eabaf` 为基线迁移 `Components/Board/Board.tsx` 内 12 个 React class 结构；
+- [x] 11 个业务 owner 归入 `pages/board/legacy-list`，Router 直接加载 `LegacyBoardPage`，旧文件保留完整兼容导出；
+- [x] 文件内 route bridge 删除并转导根 `RouteComponent`，不再由本主链使用 `withRouter` 或 legacy route props；
+- [x] 保留 API、Redux、公开 URL、Local Storage、DOM/CSS、文案、jQuery、冻结 UBB、路由混用和已登记缺陷；
+- [x] `Pages/AnnualReview/**`、`Pages/AnnualReviewV2/**`、当前公开 `/board` owner、Edit、Index、登录和 P21 候选不进入本组；
+- [x] 不新增依赖，不启动持续 Node server，不触碰 `.vscode/`；
+- [x] 完成机械验证后保持全部改动未暂存、未提交、未 push，并停在本组决策门禁；
+- [x] 用户明确免除本组 `/list` deep link、登录态、Board/topic/tag/关注/管理 API、权限、分页、back/forward 与浏览器人工验收；不得记为人工验收通过；
+- [x] 当前迁移代码暂时保留，P21 在重新完成仓内引用、外部入口与生产构建证明后删除 `/list` route、legacy owner 与兼容 facade；
+- [x] 用户授权本组代码与文档形成本地检查点。
+- [x] 本组代码检查点已形成：`79e648ca`。

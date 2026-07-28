@@ -174,3 +174,13 @@
 - 之前：页面专用 HTTP 操作经 `Utility.ts` 总门面；现在：关注、投票、回复和通知归入 `pages/topic/api/service.ts`，其余调用直接使用既有领域 owner，wire shape 和调用顺序不变。
 - 保持：普通/热评/追踪回复、Quote context、匿名和权限展示、奖励、关注、点赞踩、投票、收藏、标签、管理弹窗、递归热评、楼层/hash、UBB/Markdown、DOM/CSS 与公开 URL。
 - 延期：页面及子组件的旧响应覆盖、错误吞噬、pending 锁、投票提示、追踪更新条件、缓存键分支和安全性边界只登记，不在本批改变。
+
+## 旧 `/list` Board 主链迁移组
+
+- 之前：`Components/Board/Board.tsx` 同时包含本地 route bridge 与 11 个 class 业务组件；现在：业务组件归入 `pages/board/legacy-list`，旧文件只保留兼容转导。
+- 之前：Router lazy import legacy `BList`，由 `withRouter` 和 class route props 取得参数；现在：Router 直接加载 `LegacyBoardPage`，页面用 Router hooks 读取 `boardId/type/page`。
+- 之前：列表切换由 mount、receive-props 和 class state 共同驱动；现在：路由参数与列表请求由普通 effect 和显式事件表达，不引入 previous-props 或首次提交模拟器。
+- 之前：Board/topic/follow/moderation 请求经 legacy 总门面；现在：直接调用现有领域 owner service，并复用已迁移的 breadcrumb、操作/广告、标签分页和事件记录叶子。
+- 保持：`/list` 外壳与内部 `/board/...` 匹配混用、每页 20 条、首页置顶、标签层级、主题图标/高亮/匿名/分页、小黑屋、批量管理、大字报、冻结 UBB、DOM/CSS、AntD 文案和 jQuery 操作。
+- 延期：请求竞态、错误吞噬、`isMaster` 初始化、关注状态同步、`BestTopics` 参数顺序、小黑屋追加分页、批量操作无 pending/刷新和逐主题标签请求等缺陷只登记。
+- 收口：用户免除本组人工验收，当前迁移结果暂留；P21 在重新完成仓内引用、外部入口与生产构建证明后删除 `/list` route、legacy owner 与兼容 facade，不把免检记为验收通过。

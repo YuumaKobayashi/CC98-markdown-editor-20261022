@@ -188,3 +188,15 @@
 - `P15-TOPIC-CONTENT-001`（已保留）：Markdown 继续把生成 HTML 写入 `innerHTML`；投票信息异常被吞掉，冻结 UBB/parser 不在本组修改。
 - `P15-TOPIC-COMPOSER-001`（已保留）：草稿类型判断继续含赋值分支；UBB 成功删除 topic 范围键，Markdown 仍删除无 topic id 的 `temporaryContent`；提交和通知无取消或旧响应保护。
 - `P15-TOPIC-LEGACY-002`（P21 候选）：`Judge`、`TopicJudgeV2`、`PostManagement` v1、`TopicManagement` v1 与 `TopicReplyUserBar` 文件继续保留；P21 必须重新完成引用和构建证明。
+
+## 旧 `/list` Board 主链迁移组
+
+- `P15-LEGACY-BOARD-DELETE-001`（P21 候选）：用户免除本组人工验收；当前迁移实现只作为临时兼容检查点保留，P21 必须重新完成仓内引用、外部入口与生产构建证明后删除 `/list` route、`pages/board/legacy-list` owner 和 `Components/Board/Board.tsx` 兼容 facade。免检不表示以下缺陷已验证或修复。
+- `P15-LEGACY-BOARD-ROUTE-001`（已保留）：外层公开入口继续是 `/list/:boardId/:type?/:page?/*`，内部路由、链接与部分导航仍使用 `/board/...`；新旧参数与匹配语义混用，不在本批统一。
+- `P15-LEGACY-BOARD-PAGE-001`（待后续修复）：版面、主题、标签、关注与记录请求没有取消、请求序号或旧响应保护，异常多被吞掉；快速切版、翻页或 back/forward 可能被晚到结果覆盖。普通列表仍混用初始版面 id 与当前路由 id。
+- `P15-LEGACY-BOARD-PERMISSION-001`（已保留）：`isMaster`/解除 TP 能力从初始空版面信息计算，后续版面信息到达时不重新同步，管理入口可能维持旧权限状态。
+- `P15-LEGACY-BOARD-FOLLOW-001`（已保留）：头部关注局部状态不随新版面 props 可靠同步，关注/取消关注参数与状态更新沿用旧顺序，且没有 pending 锁或统一错误恢复。
+- `P15-LEGACY-BOARD-TOPICS-001`（已保留）：`BestTopics` 继续按旧参数顺序调用 service；主题项逐条请求标签并保留调试日志，没有合并、缓存、取消或旧响应保护。
+- `P15-LEGACY-BOARD-MODERATION-001`（已保留）：小黑屋分页继续把新页追加到旧列表，事件记录初始版面 id 和请求时机沿用旧实现；失败缺少独立错误 UI。
+- `P15-LEGACY-BOARD-MODERATION-002`（已保留）：批量锁沉/删除继续依赖全局 checkbox 与 jQuery DOM，操作没有 pending 锁、可靠反馈或列表刷新，快速重复操作可能重复提交。
+- `P15-LEGACY-BOARD-PAGING-001`（已保留）：页码和版面参数继续宽松 `parseInt`，首页置顶、标签路由与特殊列表页码遵循旧字符串/数字混合判断。

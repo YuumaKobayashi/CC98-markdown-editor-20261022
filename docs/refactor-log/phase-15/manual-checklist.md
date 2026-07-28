@@ -396,3 +396,26 @@
 - [x] 已登记的请求竞态、错误吞噬、投票提示、追踪更新和 composer 缺陷未被误报修复。
 
 以上完整 Topic 主链迁移项目已于 2026-07-28 完成人工验收；代码检查点 `2f9669c1`。
+
+## 旧 `/list` Board 主链迁移组机械验证
+
+- [x] `Components/Board/Board.tsx` 的 12 个 React class 结构均已消失，11 个业务 owner 由具名函数承接；
+- [x] Router 直接从 `@pages/board` 加载 `LegacyBoardPage`，旧 facade 保留全部原导出名并转导根 `RouteComponent`；
+- [x] 新 owner 不含 React class、`RouteComponent`、`withRouter`、`connect`、Store 直读、`React.FC`、`useLayoutEffect`、mounted、isFirstCommit 或 previous-props 模拟器；
+- [x] `npm run typecheck`、`npm run build`、`git diff --check`、目标静态审计和完整 AST 统计通过；
+- [x] 完整 AST 从 55 declaration 加 0 expression 降至 43 declaration 加 0 expression；排除 `ErrorBoundary` 后仍有 42 个目标；
+- [x] 受限环境首次构建命中既知 `spawn EPERM`，在获准环境重跑同一命令成功，共转换 3,932 个模块；
+- [x] API、Redux、公开 URL、Local Storage、DOM/CSS、文案和已识别缺陷均保持；package、lockfile、年度回顾与冻结 UBB/editor 未改。
+
+## 旧 `/list` Board 主链迁移组人工验收（用户免检）
+
+- [ ] `/list` deep link、刷新、切版、分页、back/forward 及内部 `/board/...` 匹配保持；
+- [ ] 版面图标、大字报编辑、关注状态、版主、子版面、发帖入口和广告正常；
+- [ ] 普通、置顶、精华、保存、单标签、双标签列表及每页 20 条合同正常；
+- [ ] 主题图标、高亮、匿名、楼层页码、最后回复、冻结 UBB hover 与链接正常；
+- [ ] 事件记录、小黑屋、解除 TP、批量锁沉/删除及分页正常；
+- [ ] 未登录、权限差异、异常 API、401/403/404/500 继续遵循迁移前语义；
+- [ ] 当前公开 `/board`、Topic、发帖入口和冻结 UBB 回归正常；
+- [ ] 已登记的路由混用、竞态、权限时序、参数顺序、追加分页和批量操作缺陷未被误报修复。
+
+以上项目未执行，不标记为人工验收通过。用户于 2026-07-28 明确免除本组人工验收并授权形成代码、文档本地检查点；当前迁移代码暂时保留，P21 重新完成仓内引用、外部入口与生产构建证明后删除 `/list` route、legacy owner 与兼容 facade。不 push，不自动进入下一组。

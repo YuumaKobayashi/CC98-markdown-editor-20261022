@@ -7,6 +7,7 @@
 - 自用户中心近期动态、收藏与历史组起同时补充 class expression 口径；该组沿用的历史口径只扫描 `Components/**` 与 `src/**`，因此当时只补出了 `Components/Topic/Topic-ReplierSignature.tsx`；
 - 自当前公开 Board 页面组起增加符合总计划范围的完整口径，同时扫描 `Components/**`、`Pages/**` 与 `src/**`；历史窄口径继续保留用于对照，不回写此前批次数字；
 - 排除冻结的 `Ubb/**`、`Components/UbbEditor/**`、`Components/UbbContainer.tsx`；
+- 只统计继承 React component 基类或 legacy `RouteComponent` 的 React class 结构，不把数据模型 class 与第三方编辑器 plugin class 计入；年度回顾仍在完整总数中，但按用户决定不进入当前实现批次；
 - `ErrorBoundary` 是唯一允许最终保留的 React class；同文件的 `ErrorEmitter` 仍属于 P15 目标。
 
 ## 基线分布
@@ -257,3 +258,26 @@ TypeScript AST 的历史 class declaration 口径从 56 降至 50，排除 `Erro
 | `Topic-ManageHistory` 匿名 class | `features/moderation` / `TopicManagementHistoryDialog` | 已实现，待人工验收 |
 
 TypeScript AST 复核确认四个目标 declaration 均已消失。完整口径从 68 个 declaration 加 1 个 expression 降至 64 个 declaration 加 1 个 expression，共 65 个结构；排除 `ErrorBoundary` 后仍有 64 个目标。历史 `Components/** + src/**` 窄口径从 50 个 declaration 加 1 个 expression 降至 46 个 declaration 加 1 个 expression，排除后仍有 46 个目标。唯一 class expression 仍是 `Topic-ReplierSignature.tsx`；P15 尚未完成。
+
+## 完整 Topic 主链迁移组
+
+十个目标结构已迁移至 `pages/topic`。完整非冻结口径从 64 个 declaration 加 1 个 expression 降至 55 个 declaration 加 0 个 expression；排除 `ErrorBoundary` 后仍有 54 个目标。该组代码检查点为 `2f9669c1`、文档检查点为 `bf9eabaf`，并于 2026-07-28 通过人工验收。
+
+## 旧 `/list` Board 主链迁移组
+
+| 原符号 | 新 owner | 状态 |
+|---|---|---|
+| 文件内 `RouteComponent` | 根 `Components/RouteComponent` route bridge | 已实现，用户免检；P21 删除候选 |
+| `BList` | `pages/board/legacy-list` / `LegacyBoardPage` | 已实现，用户免检；P21 删除候选 |
+| `ListHead` | `pages/board/legacy-list` / `LegacyBoardHeader` | 已实现，用户免检；P21 删除候选 |
+| `ListTopContent` | `pages/board/legacy-list` / `LegacyBoardTopTopics` | 已实现，用户免检；P21 删除候选 |
+| `BestTopics` | `pages/board/legacy-list` / `LegacyBoardBestTopicItems` | 已实现，用户免检；P21 删除候选 |
+| `ListContent` | `pages/board/legacy-list` / `LegacyBoardTopicList` | 已实现，用户免检；P21 删除候选 |
+| `ListTagContent` | `pages/board/legacy-list` / `LegacyBoardOneTagTopics` | 已实现，用户免检；P21 删除候选 |
+| `ListTagsContent` | `pages/board/legacy-list` / `LegacyBoardTwoTagTopics` | 已实现，用户免检；P21 删除候选 |
+| `BoardRecord` | `pages/board/legacy-list` / `LegacyBoardRecords` | 已实现，用户免检；P21 删除候选 |
+| `ListBestContent` | `pages/board/legacy-list` / `LegacyBoardFeaturedTopics` | 已实现，用户免检；P21 删除候选 |
+| `ListSaveContent` | `pages/board/legacy-list` / `LegacyBoardSavedTopics` | 已实现，用户免检；P21 删除候选 |
+| `TopicTitleAndContent` | `pages/board/legacy-list` / `LegacyBoardTopicItem` | 已实现，用户免检；P21 删除候选 |
+
+TypeScript AST 复核确认 12 个目标 declaration 均已消失。完整非冻结 React class 口径从 55 个 declaration 加 0 个 expression 降至 43 个 declaration 加 0 个 expression；排除唯一允许保留的 `ErrorBoundary` 后仍有 42 个 P15 目标。年度回顾的 React class 继续计入总数，但文件未被本批修改。用户免除本组人工验收；当前迁移结果以 `79e648ca` 暂留，P21 重新完成仓内引用、外部入口与生产构建证明后删除整条旧 `/list` Board 链。

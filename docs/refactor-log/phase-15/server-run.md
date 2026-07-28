@@ -165,3 +165,12 @@
 - `/topic/:topicId/:page?` 与追踪路由生成新的 `topic` 动态块，Router 不再经 legacy route class；
 - 既有 Sass `@import`、Spectrum 旧 CSS、plugin timing 与大 chunk 警告继续存在，本组未修改；
 - 构建不替代真实登录态、Topic/回复/投票/关注/收藏/管理 API、权限、草稿、分页和浏览器人工验收。
+
+## 旧 `/list` Board 主链迁移组构建
+
+- 本组未启动 Node dev/preview server，没有 PID、端口或回收事项；
+- modern/legacy TypeScript、diff、目标静态审计与完整 AST 统计通过；
+- 受限环境首次 `npm run build` 在 Vite 配置加载阶段命中既知 `spawn EPERM`，在获准环境重跑相同命令成功；
+- Vite 8.1.4 共转换 3,932 个模块，生成/更新 `board` 动态块（约 47.56 kB）；
+- 既有 Sass `@import`、Spectrum 旧 CSS、plugin timing 与大 chunk 警告继续存在，本组未修改；
+- 构建只证明机械门禁；用户于 2026-07-28 明确免除真实 `/list`、登录态、Board/topic/tag/关注/管理 API、权限、分页、back/forward 和浏览器人工验收。当前实现暂留，P21 完成引用/构建证明后删除，不把免检记为验收通过。

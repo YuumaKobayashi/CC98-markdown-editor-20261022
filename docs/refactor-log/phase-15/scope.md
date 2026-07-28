@@ -1,10 +1,10 @@
 # P15 函数组件 C 范围
 
-> 当前状态：Topic 评分与管理弹窗迁移组已完成机械验证，等待真实登录态/API/权限/弹窗人工验收；近期动态/收藏/历史与公开 Board 两组人工验收仍开放。P15 尚未完成、不暂存、不提交、不 push、不自动进入下一组
+> 当前状态：旧 `/list` Board 主链迁移已完成机械验证，用户于 2026-07-28 明确免除人工验收并决定暂留代码、P21 重新完成引用/构建证明后删除；Topic 评分与管理弹窗、完整 Topic 主链已通过人工验收，近期动态/收藏/历史与当前公开 `/board` 两组人工验收仍开放。P15 尚未完成、不 push、不自动进入下一组。
 
 ## 唯一大事
 
-将仍依赖 Redux、Router 或复杂 lifecycle 的 React class 按风险分组迁为函数组件，并随批次归入 `app/pages/features/entities/shared` owner。当前批次迁移用户中心个人资料、头像、主题与财富转账设置共六个 class；真实登录态、资料/头像/主题/转账 API、Canvas、文件上传与浏览器验收仍开放，P15 尚未完成。
+将仍依赖 Redux、Router 或复杂 lifecycle 的 React class 按风险分组迁为函数组件，并随批次归入 `app/pages/features/entities/shared` owner。当前批次迁移旧 `/list` Board 主链的 12 个 class 结构；年度回顾、当前公开 `/board` owner、Edit、Index、登录、冻结 UBB/editor 和 P21 候选均不进入本批。
 
 ## 已完成的无 Redux 简单组件组
 
@@ -203,3 +203,16 @@
 - 十个旧文件只保留原导出形状的兼容 facade；`Judge`、`TopicJudgeV2`、`PostManagement` v1、`TopicManagement` v1、`TopicReplyUserBar` 留待 P21；
 - AnnualReview、旧 `/list` Board、Edit、Index、登录和冻结 UBB/editor 不在本组，不新增依赖、不启动持续 Node server；
 - 完整 AST 从 64 declaration 加 1 expression 降至 55 declaration 加 0 expression；排除 `ErrorBoundary` 后仍有 54 个 P15 目标，P15 尚未完成。
+- 2026-07-28 人工验收通过，代码检查点为 `2f9669c1`，文档检查点为 `bf9eabaf`。
+
+## 当前旧 `/list` Board 主链迁移组
+
+- 以 `bf9eabaf` 为基线，迁移 `Components/Board/Board.tsx` 内本地 `RouteComponent` 与 `BList`、`ListHead`、置顶/精华/保存/标签/普通列表、事件记录和主题项共 12 个 React class 结构；
+- 11 个业务 owner 归入 `src/pages/board/legacy-list/`；本地 route bridge 删除，legacy facade 的 `RouteComponent` 改为转导根 `Components/RouteComponent`；
+- 新增 `LegacyBoardPage`，Router 的 `list/:boardId/:type?/:page?/*` 直接从 `@pages/board` 加载，不再向本主链注入 `withRouter` 或 legacy route props；
+- 具名函数使用 `useState`、普通 `useEffect`、Router hooks 与必要 ref；直接调用 board、topic、follow、moderation、user、shared owner service，并复用既有 Board breadcrumb、操作/广告、标签分页和事件记录项；
+- 保留 `/list` 外壳与内部 `/board/...` 路由/链接混用、宽松 `parseInt`、每页 20 条、首页置顶、标签层级、匿名/高亮/页码/最后回复、小黑屋、批量管理、大字报、冻结 UBB、DOM/CSS、AntD 文案及必要 jQuery；
+- 请求竞态与错误吞噬、`isMaster` 初始化时序、关注状态同步、`BestTopics` 参数顺序、路由参数混用、小黑屋追加分页、批量操作和逐主题标签请求等既有缺陷只登记，不在迁移中修复；
+- `Components/Board/Board.tsx` 仅保留原导出形状的兼容 facade；当前公开 `/board/:id/...` owner、后端 API、Redux schema、Local Storage、样式、依赖和冻结目录均不修改；
+- `Pages/AnnualReview/**`、`Pages/AnnualReviewV2/**` 明确排除；完成后完整非冻结 AST 为 43 declaration 加 0 expression，排除 `ErrorBoundary` 后仍有 42 个 P15 目标；
+- 机械验证已通过；用户明确免除真实 `/list` 路由、登录态、权限、Board/topic/tag/管理 API 与浏览器回归，不把免检记为验收通过；当前实现暂留，P21 重新完成引用、外部入口与构建证明后删除整条旧链。

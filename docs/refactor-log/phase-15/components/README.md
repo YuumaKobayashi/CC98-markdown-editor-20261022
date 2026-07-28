@@ -123,5 +123,17 @@
 - [`topic-reply-content.md`](./topic-reply-content.md)
 - [`topic-header.md`](./topic-header.md)
 - [`topic-vote.md`](./topic-vote.md)
+- [`legacy-board-route-bridge.md`](./legacy-board-route-bridge.md)
+- [`legacy-board-page.md`](./legacy-board-page.md)
+- [`legacy-board-header.md`](./legacy-board-header.md)
+- [`legacy-board-top-topics.md`](./legacy-board-top-topics.md)
+- [`legacy-board-best-topic-items.md`](./legacy-board-best-topic-items.md)
+- [`legacy-board-topic-list.md`](./legacy-board-topic-list.md)
+- [`legacy-board-one-tag-topics.md`](./legacy-board-one-tag-topics.md)
+- [`legacy-board-two-tag-topics.md`](./legacy-board-two-tag-topics.md)
+- [`legacy-board-records.md`](./legacy-board-records.md)
+- [`legacy-board-featured-topics.md`](./legacy-board-featured-topics.md)
+- [`legacy-board-saved-topics.md`](./legacy-board-saved-topics.md)
+- [`legacy-board-topic-item.md`](./legacy-board-topic-item.md)
 
-版面列表与展示叶子、公共用户管理子页、Focus 页面剩余壳层迁移组已于 2026-07-24 通过人工页面验收；主题发现页与卡片视图迁移组已于 2026-07-26 通过人工页面验收；用户中心资料、主题与转账设置迁移组已于 2026-07-27 通过人工页面验收；Topic 评分与管理弹窗组已于 2026-07-28 通过人工验收。近期动态/收藏/历史、公开 Board 与完整 Topic 主链仍待人工验收。其他批次结论以 `manual-checklist.md` 为准。
+版面列表与展示叶子、公共用户管理子页、Focus 页面剩余壳层迁移组已于 2026-07-24 通过人工页面验收；主题发现页与卡片视图迁移组已于 2026-07-26 通过人工页面验收；用户中心资料、主题与转账设置迁移组已于 2026-07-27 通过人工页面验收；Topic 评分与管理弹窗、完整 Topic 主链已于 2026-07-28 通过人工验收。近期动态/收藏/历史与当前公开 `/board` 仍待人工验收；旧 `/list` Board 由用户免除人工验收，当前暂留并计划在 P21 完成引用/构建证明后删除，不得记为验收通过。其他批次结论以 `manual-checklist.md` 为准。

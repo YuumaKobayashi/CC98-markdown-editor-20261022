@@ -219,3 +219,22 @@ Board 主 route、Topic-New 与 Topic-Recommended lazy 入口保持原样；本�
 | `Components/Topic/VoteInfo.tsx` | `pages/topic/TopicVote` | 保留 default、`VoteContent` 与 `voteInfo` 导出 |
 
 `pages/topic/api/service.ts` 承接关注、投票、回复提交和通知全部回复等页面专用 HTTP 操作；其他调用继续使用既有领域 owner。Router 只依赖 `TopicPage`、`TrackedTopicPage` 两个 public 入口。
+
+## 旧 `/list` Board 主链迁移组
+
+| 旧导出 | 新 owner | 兼容方式 |
+|---|---|---|
+| 文件内 `RouteComponent` | 根 `Components/RouteComponent` | `Components/Board/Board.tsx` 直接转导 |
+| `BList` | `LegacyBoardPage` | facade 以 `BList` 别名导出；Router 直接加载新 page |
+| `ListHead` | `LegacyBoardHeader` | facade 保留 `ListHead` |
+| `ListTopContent` | `LegacyBoardTopTopics` | facade 保留 `ListTopContent` |
+| `BestTopics` | `LegacyBoardBestTopicItems` | facade 保留 `BestTopics` |
+| `ListContent` | `LegacyBoardTopicList` | facade 保留 `ListContent` |
+| `ListTagContent` | `LegacyBoardOneTagTopics` | facade 保留 `ListTagContent` |
+| `ListTagsContent` | `LegacyBoardTwoTagTopics` | facade 保留 `ListTagsContent` |
+| `BoardRecord` | `LegacyBoardRecords` | facade 保留 `BoardRecord` |
+| `ListBestContent` | `LegacyBoardFeaturedTopics` | facade 保留 `ListBestContent` |
+| `ListSaveContent` | `LegacyBoardSavedTopics` | facade 保留 `ListSaveContent` |
+| `TopicTitleAndContent` | `LegacyBoardTopicItem` | facade 保留 `TopicTitleAndContent` |
+
+四个既有共享叶子继续由 facade 以 `Category`、`ListButtonAndAds`、`ListTagAndPager`、`BoardRecordContent` 原名导出。`@pages/board` 新增公开入口 `LegacyBoardPage`；其余 owner 仅为兼容 facade 提供别名，不新增业务 API。
