@@ -9,10 +9,10 @@ import { initWatermark } from "spatial-watermark";
 
 import { createAppRoot } from "@app/providers/create-app-root";
 import { registerLegacyUtilityEffects } from "@app/legacy/register-utility-effects";
-import { Constants } from "@shared/config/runtime-config";
-import { IndexedDB } from "@shared/storage/indexed-db";
-import { shouldUseIndexedDb } from "@shared/config/platform";
-import { checkThemeToChange } from "@shared/theme/runtime";
+import { Constants } from "@foundation/config/runtime-config";
+import { IndexedDB } from "@foundation/storage/indexed-db";
+import { shouldUseIndexedDb } from "@foundation/config/platform";
+import { checkThemeToChange } from "@foundation/theme/runtime";
 import moment from "moment";
 moment.locale("zh-cn");
 

@@ -20,13 +20,13 @@ import { getToken } from "@features/auth/api/session";
 import { noticeMessageShow } from "@features/message/api/service";
 import { uploadEvent } from "@features/posting/api/service";
 import { findIP } from "@features/moderation/api/service";
-import { atHanderler, quoteJudger } from "@shared/lib/text";
+import { atHanderler, quoteJudger } from "@foundation/lib/text";
 import {
   getAccessToken,
   getLocalStorage,
   removeLocalStorage,
   setLocalStorage,
-} from "@shared/storage/web-storage";
+} from "@foundation/storage/web-storage";
 import { sendAtNotification, submitTopicReply } from "../api/service";
 import {
   TopicIPData,

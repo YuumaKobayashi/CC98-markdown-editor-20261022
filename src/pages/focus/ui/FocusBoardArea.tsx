@@ -6,7 +6,7 @@ import type { FocusBoard } from "@legacy/Props/FocusBoard";
 import {
   getStorage,
   setStorage,
-} from "@shared/storage/web-storage";
+} from "@foundation/storage/web-storage";
 
 import { FocusTopicArea } from "./FocusTopicArea";
 

@@ -3,7 +3,7 @@ import { Link } from "react-router";
 
 import { getBoardName } from "@entities/board/api/service";
 import { getToken } from "@features/auth/api/session";
-import { cc98Fetch } from "@shared/api/http";
+import { cc98Fetch } from "@foundation/api/http";
 
 interface UserRecentPostsManagerProps {
   /**

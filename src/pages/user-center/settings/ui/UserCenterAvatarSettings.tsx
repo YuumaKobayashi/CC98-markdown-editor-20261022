@@ -3,7 +3,7 @@ import * as React from "react";
 import { useAppDispatch, useAppSelector } from "@app/store";
 import { getToken } from "@features/auth/api/session";
 import { refreshCurrentUserInfo } from "@legacy/AsyncActions/UserCenter";
-import { cc98Fetch } from "@shared/api/http";
+import { cc98Fetch } from "@foundation/api/http";
 
 //TODO：逻辑独立与优化
 

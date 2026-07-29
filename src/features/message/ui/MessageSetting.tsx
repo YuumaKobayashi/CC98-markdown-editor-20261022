@@ -8,7 +8,7 @@ import { NoticeMessage } from "@shared/ui/feedback";
 import {
   getLocalStorage,
   setLocalStorage,
-} from "@shared/storage/web-storage";
+} from "@foundation/storage/web-storage";
 import { noticeMessageShow } from "../api/service";
 import { NoticeSetting } from "../model/types";
 

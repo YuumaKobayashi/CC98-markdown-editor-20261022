@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { cc98Fetch } from "@shared/api/http";
+import { cc98Fetch } from "@foundation/api/http";
 
 import type { EditableUserInfo } from "../model/editable-user-info";
 

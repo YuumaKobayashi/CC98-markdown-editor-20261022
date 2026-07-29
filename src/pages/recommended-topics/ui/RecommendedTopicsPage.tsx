@@ -11,7 +11,7 @@ import {
   getStorage,
   removeStorage,
   setStorage,
-} from "@shared/storage/web-storage";
+} from "@foundation/storage/web-storage";
 import { DocumentTitle } from "@shared/ui/document-title";
 
 const renderRecommendedTopic = (item: RecommendedTopic) => (

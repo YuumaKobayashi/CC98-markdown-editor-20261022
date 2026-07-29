@@ -27,8 +27,8 @@ import {
   getLocalStorage,
   removeLocalStorage,
   setLocalStorage,
-} from "@shared/storage/web-storage";
-import { atHanderler } from "@shared/lib/text";
+} from "@foundation/storage/web-storage";
+import { atHanderler } from "@foundation/lib/text";
 import {
   createEditorTopic,
   getEditorBoard,

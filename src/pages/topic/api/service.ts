@@ -1,6 +1,6 @@
 import { formAuthorizeHeader } from "@features/auth/api/session";
-import { cc98Fetch } from "@shared/api/http";
-import { getAccessToken } from "@shared/storage/web-storage";
+import { cc98Fetch } from "@foundation/api/http";
+import { getAccessToken } from "@foundation/storage/web-storage";
 
 export async function updateFollowedUser(
   userId: number,

@@ -5,11 +5,11 @@ import $ from "jquery";
 import { getFocusTopic } from "@entities/topic/api/service";
 import { FocusTopicItem } from "@entities/topic";
 import type { FocusTopic } from "@legacy/Props/FocusTopic";
-import { isBottom } from "@shared/lib/dom";
+import { isBottom } from "@foundation/lib/dom";
 import {
   getStorage,
   setStorage,
-} from "@shared/storage/web-storage";
+} from "@foundation/storage/web-storage";
 
 export interface FocusTopicAreaProps {
   id: number;

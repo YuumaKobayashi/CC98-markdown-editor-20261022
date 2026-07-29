@@ -8,11 +8,11 @@ import {
 import {
     getLocalStorage,
     setLocalStorage
-} from "@shared/storage/web-storage";
+} from "@foundation/storage/web-storage";
 
 import { formAuthorizeHeader } from "@features/auth/api/session";
-import { cc98Fetch } from "@shared/api/http";
-import { shouldUseIndexedDb } from "@shared/config/platform";
+import { cc98Fetch } from "@foundation/api/http";
+import { shouldUseIndexedDb } from "@foundation/config/platform";
 
 /**
  * 使用用户id批量查询用户信息

@@ -1,7 +1,7 @@
 import {
   getLegacyMessageCounts,
   LegacyMessageCounts,
-} from "@shared/lib/legacy-utility-effects";
+} from "@foundation/lib/legacy-utility-effects";
 
 export namespace BlinkTitle {
   let title: string;

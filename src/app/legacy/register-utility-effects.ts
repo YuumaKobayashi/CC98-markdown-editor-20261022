@@ -2,7 +2,7 @@ import store, { Actions } from "@app/store";
 import { navigate } from "@app/router/navigation";
 import * as ErrorActions from "@legacy/Actions/Error";
 import * as UserCenterActions from "@legacy/Actions/UserCenter";
-import { configureLegacyUtilityEffects } from "@shared/lib/legacy-utility-effects";
+import { configureLegacyUtilityEffects } from "@foundation/lib/legacy-utility-effects";
 
 export function registerLegacyUtilityEffects(): void {
   configureLegacyUtilityEffects({

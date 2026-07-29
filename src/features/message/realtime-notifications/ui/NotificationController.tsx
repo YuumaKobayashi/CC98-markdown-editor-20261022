@@ -5,7 +5,7 @@ import { navigate } from "@app/router/navigation";
 import { refreshCurrentMessageCount } from "@legacy/AsyncActions/Message";
 import type { MessageInfo } from "@legacy/Reducers/Message";
 import { CC98SignalR } from "@legacy/SignalR";
-import { setLocalStorage } from "@shared/storage/web-storage";
+import { setLocalStorage } from "@foundation/storage/web-storage";
 import { BlinkTitle } from "../../title-blinker";
 
 const messageEvents = [

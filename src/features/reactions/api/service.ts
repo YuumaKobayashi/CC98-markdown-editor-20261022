@@ -1,6 +1,6 @@
 import { formAuthorizeHeader } from "@features/auth/api/session";
-import { cc98Fetch } from "@shared/api/http";
-import { throwLegacyError } from "@shared/lib/legacy-utility-effects";
+import { cc98Fetch } from "@foundation/api/http";
+import { throwLegacyError } from "@foundation/lib/legacy-utility-effects";
 import { getTopic } from "@entities/topic/api/service";
 
 export async function like(topicid, postid): Promise<number> {

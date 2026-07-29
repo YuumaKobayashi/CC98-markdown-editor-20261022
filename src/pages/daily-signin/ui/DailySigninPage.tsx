@@ -12,7 +12,7 @@ import { getMyInfo } from "@entities/user/storage/current-user";
 import {
   removeLocalStorage,
   setLocalStorage,
-} from "@shared/storage/web-storage";
+} from "@foundation/storage/web-storage";
 
 interface SigninInfo {
   hasSignedInToday?: boolean;

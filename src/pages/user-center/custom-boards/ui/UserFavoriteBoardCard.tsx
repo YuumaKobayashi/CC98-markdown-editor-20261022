@@ -3,7 +3,7 @@ import { Link } from "react-router";
 
 import { getToken } from "@features/auth/api/session";
 import type { UserFavoritesBoardInfo } from "@legacy/States/AppState";
-import { cc98Fetch } from "@shared/api/http";
+import { cc98Fetch } from "@foundation/api/http";
 
 interface UserFavoriteBoardCardProps {
   board: UserFavoritesBoardInfo;

@@ -1,2 +1,2 @@
 export * from "@features/auth/api/session";
-export * from "@shared/api/http";
+export * from "@foundation/api/http";

@@ -1,12 +1,12 @@
-import { Constants } from "@shared/config/runtime-config";
+import { Constants } from "@foundation/config/runtime-config";
 import {
   getAccessToken,
   getLocalStorage,
   removeLocalStorage,
   setLocalStorage,
-} from "@shared/storage/web-storage";
+} from "@foundation/storage/web-storage";
 import { getMyInfo } from "@entities/user/storage/current-user";
-import { logOffAndNavigate } from "@shared/lib/legacy-utility-effects";
+import { logOffAndNavigate } from "@foundation/lib/legacy-utility-effects";
 
 /**
  * 获取当前的用户登录令牌。

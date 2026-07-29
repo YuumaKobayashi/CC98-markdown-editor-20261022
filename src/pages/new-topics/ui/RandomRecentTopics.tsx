@@ -7,7 +7,7 @@ import {
   getStorage,
   removeStorage,
   setStorage,
-} from "@shared/storage/web-storage";
+} from "@foundation/storage/web-storage";
 
 const cutOffTitle = (title: string) =>
   title.length > 30 ? `${title.slice(0, 28)}...` : title;

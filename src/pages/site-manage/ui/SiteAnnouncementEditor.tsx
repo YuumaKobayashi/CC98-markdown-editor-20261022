@@ -4,7 +4,7 @@ import { Button, Input } from "antd";
 
 import { getToken, formAuthorizeHeader } from "@features/auth/api/session";
 import { UbbContainer } from "@legacy/Components/UbbContainer";
-import { cc98Fetch } from "@shared/api/http";
+import { cc98Fetch } from "@foundation/api/http";
 
 const { TextArea } = Input;
 

@@ -1,7 +1,7 @@
 import { removeUserInfo as removeUserInfoInIndexDB } from "@entities/user/storage/user-cache";
 import { getUserInfo } from "@entities/user/api/get-user-info";
-import { getLocalStorage, removeLocalStorage } from "@shared/storage/web-storage";
-import { cc98Fetch } from "@shared/api/http";
+import { getLocalStorage, removeLocalStorage } from "@foundation/storage/web-storage";
+import { cc98Fetch } from "@foundation/api/http";
 
 export function getThisUserInfo(userId, usersInfo) {
   for (let i in usersInfo) {

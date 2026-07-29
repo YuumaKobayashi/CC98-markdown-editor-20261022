@@ -16,12 +16,12 @@ import { setUserTopicViewMode } from "@features/account/api/service";
 import { isLogOn } from "@features/auth/api/session";
 import type { FocusTopic } from "@legacy/Props/FocusTopic";
 import type { MyInfo } from "@legacy/States/AppState";
-import { pDebounce } from "@shared/lib/async";
-import { isBottom } from "@shared/lib/dom";
+import { pDebounce } from "@foundation/lib/async";
+import { isBottom } from "@foundation/lib/dom";
 import {
   setLocalStorage,
   setStorage,
-} from "@shared/storage/web-storage";
+} from "@foundation/storage/web-storage";
 import { DocumentTitle } from "@shared/ui/document-title";
 
 import { NewTopicsBoardSidebar } from "./NewTopicsBoardSidebar";

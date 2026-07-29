@@ -1,8 +1,8 @@
 import $ from "jquery";
-import { Constants } from "@shared/config/runtime-config";
+import { Constants } from "@foundation/config/runtime-config";
 import { getToken, formAuthorizeHeader } from "@features/auth/api/session";
-import { cc98Fetch } from "@shared/api/http";
-import { throwLegacyError } from "@shared/lib/legacy-utility-effects";
+import { cc98Fetch } from "@foundation/api/http";
+import { throwLegacyError } from "@foundation/lib/legacy-utility-effects";
 
 export async function sendTopic(topicId) {
   try {

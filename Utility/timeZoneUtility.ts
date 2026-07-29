@@ -1,1 +1,1 @@
-export * from "@shared/lib/time-zone";
+export * from "@foundation/lib/time-zone";

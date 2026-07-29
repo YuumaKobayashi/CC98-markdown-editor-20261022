@@ -18,7 +18,7 @@ import {
 } from "@entities/topic/api/service";
 import { mutliDelete, mutliLock } from "@features/moderation/api/service";
 import type { TopicTitleAndContentState } from "@legacy/States/AppState";
-import { getListTotalPage, getTagLayer } from "@shared/lib/page";
+import { getListTotalPage, getTagLayer } from "@foundation/lib/page";
 import { Pager } from "@shared/ui/pagination";
 
 import { BoardTagPagination } from "../../ui/BoardTagPagination";

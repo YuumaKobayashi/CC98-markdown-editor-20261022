@@ -2,7 +2,7 @@ import * as React from "react";
 import { Link } from "react-router";
 
 import type { UserInfo } from "@legacy/States/AppState";
-import { cc98Fetch } from "@shared/api/http";
+import { cc98Fetch } from "@foundation/api/http";
 
 interface DisplayTitle {
   id: number;

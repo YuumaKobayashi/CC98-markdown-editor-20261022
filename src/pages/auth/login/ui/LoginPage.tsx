@@ -3,13 +3,13 @@ import * as React from "react";
 import { Actions, useAppDispatch } from "@app/store";
 import { getMyInfo } from "@entities/user/storage/current-user";
 import { refreshUserInfo } from "@features/account/api/service";
-import { Constants } from "@shared/config/runtime-config";
+import { Constants } from "@foundation/config/runtime-config";
 import {
   removeLocalStorage,
   removeStorage,
   setLocalStorage,
-} from "@shared/storage/web-storage";
-import { changeTheme } from "@shared/theme/runtime";
+} from "@foundation/storage/web-storage";
+import { changeTheme } from "@foundation/theme/runtime";
 import DocumentTitle from "@shared/ui/document-title";
 
 type TokenResponse = {

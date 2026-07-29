@@ -15,8 +15,8 @@ import {
   removeLocalStorage,
   removeStorage,
   setLocalStorage,
-} from "@shared/storage/web-storage";
-import { changeTheme } from "@shared/theme/runtime";
+} from "@foundation/storage/web-storage";
+import { changeTheme } from "@foundation/theme/runtime";
 
 type SearchType = "主题" | "全站" | "版内" | "用户" | "版面";
 

@@ -4,9 +4,9 @@ import { useAppDispatch, useAppSelector } from "@app/store";
 import { formAuthorizeHeader } from "@features/auth/api/session";
 import * as UserCenterActions from "@legacy/Actions/UserCenter";
 import type { ThemeSetting } from "@legacy/States/AppState";
-import { cc98Fetch } from "@shared/api/http";
-import { themeList, type ThemeItem } from "@shared/theme/registry";
-import { changeTheme, getRealThemeNumber } from "@shared/theme/runtime";
+import { cc98Fetch } from "@foundation/api/http";
+import { themeList, type ThemeItem } from "@foundation/theme/registry";
+import { changeTheme, getRealThemeNumber } from "@foundation/theme/runtime";
 
 import {
   ThemeSettingsForm,

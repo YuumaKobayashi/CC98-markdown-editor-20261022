@@ -12,7 +12,7 @@ import {
 } from "@features/favorites";
 import { noticeMessageShow } from "@features/message/api/service";
 import { HomeAdvertisementCarousel } from "@pages/home/advertisement";
-import { copyToClipboard } from "@shared/lib/dom";
+import { copyToClipboard } from "@foundation/lib/dom";
 import { NoticeMessage } from "@legacy/Components/NoticeMessage";
 
 export interface TopicHeaderProps {

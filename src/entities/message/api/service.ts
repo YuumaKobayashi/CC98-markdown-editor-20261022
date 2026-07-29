@@ -1,10 +1,10 @@
 import { getToken, formAuthorizeHeader, isLogOn } from "@features/auth/api/session";
-import { cc98Fetch } from "@shared/api/http";
-import { throwLegacyError } from "@shared/lib/legacy-utility-effects";
+import { cc98Fetch } from "@foundation/api/http";
+import { throwLegacyError } from "@foundation/lib/legacy-utility-effects";
 import { getBoardName } from "@entities/board/api/service";
 import { getBasicTopicsInfo, getThisTopicInfo } from "@entities/topic/api/service";
 import { getBasicUsersInfo, getThisUserInfo } from "@entities/user/api/service";
-import { transerTime } from "@shared/lib/time";
+import { transerTime } from "@foundation/lib/time";
 
 /*
  * 获取最近N个联系人的信息

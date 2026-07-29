@@ -1,4 +1,4 @@
-import { Constants } from "@shared/config/runtime-config";
+import { Constants } from "@foundation/config/runtime-config";
 
 export async function cc98Fetch(
   url: string,

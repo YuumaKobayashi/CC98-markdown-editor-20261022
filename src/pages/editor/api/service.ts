@@ -1,4 +1,4 @@
-import { cc98Fetch } from "@shared/api/http";
+import { cc98Fetch } from "@foundation/api/http";
 import {
   formAuthorizeHeader,
   getToken,

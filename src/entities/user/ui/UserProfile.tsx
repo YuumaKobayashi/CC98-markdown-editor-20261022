@@ -9,7 +9,7 @@ import { Link } from "react-router";
 import { UbbContainer } from "@legacy/Components/UbbContainer";
 import type { UserInfo } from "@legacy/States/AppState";
 import { UbbCodeOptions } from "@legacy/Ubb/Core";
-import { isoTime2LocalTime } from "@shared/lib/time-zone";
+import { isoTime2LocalTime } from "@foundation/lib/time-zone";
 
 interface UserProfileProps {
   userInfo: UserInfo;

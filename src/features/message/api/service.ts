@@ -1,7 +1,7 @@
 import $ from "jquery";
 import { formAuthorizeHeader } from "@features/auth/api/session";
-import { cc98Fetch } from "@shared/api/http";
-import { clearLegacyMessageCounts, getLegacyMessageCounts, throwLegacyError } from "@shared/lib/legacy-utility-effects";
+import { cc98Fetch } from "@foundation/api/http";
+import { clearLegacyMessageCounts, getLegacyMessageCounts, throwLegacyError } from "@foundation/lib/legacy-utility-effects";
 
 /**
  * 发送私信的函数

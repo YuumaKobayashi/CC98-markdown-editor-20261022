@@ -1,5 +1,5 @@
 import { UserInfo } from "@legacy/States/AppState";
-import { IndexedDB } from "@shared/storage/indexed-db";
+import { IndexedDB } from "@foundation/storage/indexed-db";
 
 /**
  * 向storage中添加用户信息

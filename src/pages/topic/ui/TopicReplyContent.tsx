@@ -4,7 +4,7 @@ import { Card, Tag } from "antd";
 
 import { UbbContainer } from "@legacy/Components/UbbContainer";
 import { UbbCodeOptions } from "@legacy/Ubb/UbbCodeExtension";
-import { atUserMdUrl, atUserUbbUrl } from "@shared/lib/text";
+import { atUserMdUrl, atUserUbbUrl } from "@foundation/lib/text";
 import { getTopicVote } from "../api/service";
 import { TopicVote, type voteInfo } from "./TopicVote";
 

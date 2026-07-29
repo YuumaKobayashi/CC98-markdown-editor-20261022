@@ -1,1 +1,1 @@
-export * from "@shared/config/platform";
+export * from "@foundation/config/platform";

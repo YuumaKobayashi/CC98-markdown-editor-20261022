@@ -1,5 +1,5 @@
 import { MyInfo } from "@legacy/States/AppState";
-import { getLocalStorage } from "@shared/storage/web-storage";
+import { getLocalStorage } from "@foundation/storage/web-storage";
 
 /**
  * 获取当前的用户信息。

@@ -1,7 +1,7 @@
 import { getMyInfo } from "@entities/user/storage/current-user";
-import { removeStorage } from "@shared/storage/web-storage";
+import { removeStorage } from "@foundation/storage/web-storage";
 import { formAuthorizeHeader } from "@features/auth/api/session";
-import { cc98Fetch } from "@shared/api/http";
+import { cc98Fetch } from "@foundation/api/http";
 import { refreshUserInfo } from "@features/account/api/service";
 
 /**

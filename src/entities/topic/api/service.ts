@@ -1,14 +1,14 @@
 import * as State from "@legacy/States/AppState";
 import { getUserInfo } from "@entities/user/api/get-user-info";
 import { getUsersInfo } from "@entities/user/api/get-users-info";
-import { setLocalStorage, getLocalStorage } from "@shared/storage/web-storage";
+import { setLocalStorage, getLocalStorage } from "@foundation/storage/web-storage";
 import { getToken, formAuthorizeHeader, isLogOn } from "@features/auth/api/session";
-import { cc98Fetch } from "@shared/api/http";
-import { throwLegacyError } from "@shared/lib/legacy-utility-effects";
+import { cc98Fetch } from "@foundation/api/http";
+import { throwLegacyError } from "@foundation/lib/legacy-utility-effects";
 import { getBoardName } from "@entities/board/api/service";
 import { getBasicUsersInfo, getThisUserInfo } from "@entities/user/api/service";
-import { replaceHttpToHttps } from "@shared/lib/text";
-import { transerRecentTime, transerTimeToYearMonthDay } from "@shared/lib/time";
+import { replaceHttpToHttps } from "@foundation/lib/text";
+import { transerRecentTime, transerTimeToYearMonthDay } from "@foundation/lib/time";
 
 export async function getBoardTopicAsync(curPage, boardId, totalTopicCount) {
   try {

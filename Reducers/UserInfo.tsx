@@ -8,7 +8,7 @@ import { RootAction } from "../Store";
 import { addUserInfo } from "@entities/user/storage/user-cache";
 import { getMyInfo } from "@entities/user/storage/current-user";
 import { isLogOn } from "@features/auth/api/session";
-import { getLocalStorage, setLocalStorage } from "@shared/storage/web-storage";
+import { getLocalStorage, setLocalStorage } from "@foundation/storage/web-storage";
 
 /**
  * 用户中心用Store

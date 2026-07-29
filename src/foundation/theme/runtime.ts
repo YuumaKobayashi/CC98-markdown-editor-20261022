@@ -1,6 +1,6 @@
-import { Constants } from "@shared/config/runtime-config";
-import { getLocalStorage, setLocalStorage } from "@shared/storage/web-storage";
-import { themeDayNightGroups, themeList } from "@shared/theme/registry";
+import { Constants } from "@foundation/config/runtime-config";
+import { getLocalStorage, setLocalStorage } from "@foundation/storage/web-storage";
+import { themeDayNightGroups, themeList } from "@foundation/theme/registry";
 import $ from "jquery";
 
 interface ThemeSetting {

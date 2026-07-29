@@ -4,7 +4,7 @@ import { Button, Checkbox, Input, Table } from "antd";
 import moment from "moment";
 
 import { getToken } from "@features/auth/api/session";
-import { cc98Fetch } from "@shared/api/http";
+import { cc98Fetch } from "@foundation/api/http";
 
 const columnTypeNames = ["推荐阅读", "推荐功能", "校园新闻", "Banner", "", "", "福利优惠"];
 const urls = [

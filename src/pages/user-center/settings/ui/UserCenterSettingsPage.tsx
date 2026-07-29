@@ -6,7 +6,7 @@ import * as UserCenterActions from "@legacy/Actions/UserCenter";
 import { refreshCurrentUserInfo } from "@legacy/AsyncActions/UserCenter";
 import type { ChangeUserInfo } from "@legacy/States/AppState";
 import { getToken } from "@features/auth/api/session";
-import { cc98Fetch } from "@shared/api/http";
+import { cc98Fetch } from "@foundation/api/http";
 
 import {
   createEditableUserInfo,

@@ -1,1 +1,1 @@
-export * from "@shared/config/runtime-config";
+export * from "@foundation/config/runtime-config";

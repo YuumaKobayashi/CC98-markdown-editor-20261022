@@ -1,1 +1,1 @@
-export * from "@shared/storage/indexed-db";
+export * from "@foundation/storage/indexed-db";

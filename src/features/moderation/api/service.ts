@@ -1,6 +1,6 @@
 import $ from "jquery";
 import { formAuthorizeHeader } from "@features/auth/api/session";
-import { cc98Fetch } from "@shared/api/http";
+import { cc98Fetch } from "@foundation/api/http";
 
 /**
  * 风评接口v1.0

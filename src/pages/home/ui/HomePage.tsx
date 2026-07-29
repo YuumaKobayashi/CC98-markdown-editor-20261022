@@ -4,13 +4,13 @@ import { Link } from "react-router";
 
 import { getMyInfo } from "@entities/user/storage/current-user";
 import { getToken } from "@features/auth/api/session";
-import { cc98Fetch } from "@shared/api/http";
+import { cc98Fetch } from "@foundation/api/http";
 import {
   getLocalStorage,
   getStorage,
   setLocalStorage,
   setStorage,
-} from "@shared/storage/web-storage";
+} from "@foundation/storage/web-storage";
 import { DocumentTitle } from "@shared/ui/document-title";
 
 import {

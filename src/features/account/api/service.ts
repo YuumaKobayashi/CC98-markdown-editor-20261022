@@ -1,8 +1,8 @@
 import { getMyInfo } from "@entities/user/storage/current-user";
-import { setLocalStorage, getLocalStorage } from "@shared/storage/web-storage";
+import { setLocalStorage, getLocalStorage } from "@foundation/storage/web-storage";
 import { formAuthorizeHeader, isLogOn } from "@features/auth/api/session";
-import { cc98Fetch } from "@shared/api/http";
-import { changeLegacyCurrentUser, throwLegacyError } from "@shared/lib/legacy-utility-effects";
+import { cc98Fetch } from "@foundation/api/http";
+import { changeLegacyCurrentUser, throwLegacyError } from "@foundation/lib/legacy-utility-effects";
 
 /**
  * 刷新当前用户信息
