@@ -1,5 +1,10 @@
 {
   "extends": "./tsconfig.base.json",
+  "files": [
+    "src/foundation/types/images.d.ts",
+    "src/foundation/types/react-18-compat.d.ts",
+    "src/foundation/types/third.d.ts"
+  ],
   "compilerOptions": {
     "target": "ES2015",
     "moduleResolution": "Node10",
@@ -9,7 +14,7 @@
   "include": [
     "*.ts",
     "*.tsx",
-    "@types/**/*.ts",
+    "@types/@cc98/**/*.ts",
     "Actions/**/*.ts",
     "Actions/**/*.tsx",
     "AsyncActions/**/*.ts",

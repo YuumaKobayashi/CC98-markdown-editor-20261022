@@ -1,6 +1,6 @@
 # CC98 前端目录重构执行计划
 
-> 状态：R0、R1、F1-A、F1-B、F1-C 的代码实施、机械检查和人工验收均已完成；F1-D 未授权。
+> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D 的代码实施、机械检查和人工验收均已完成；A1 未授权。
 >
 > 架构依据：`docs/frontend-directory-architecture-inventory.md`。
 >
@@ -18,52 +18,54 @@ R1  三层目录骨架、alias、架构检查           已完成
 F1-A Foundation 核心能力迁址               已完成（含人工验收）
 F1-B Foundation 通用 UI 迁址               已完成（含人工验收）
 F1-C Foundation 第三方集成迁址             已完成（含人工验收）
+F1-D 类型、基础样式和主题入口迁址           已完成（含人工验收）
 ```
 
-### 当前停点：F1-C 已完成，等待 F1-D 单独授权
+### 当前停点：F1-D 已完成，等待 A1 单独授权
 
-本批只迁移已经确认属于第三方适配的 4 个源码文件：
+本批只迁移已经确认属于 Foundation 的 34 个声明和样式文件：
 
 ```text
-src/integrations/charts
-  → src/foundation/integrations/charts              2 个
+@types/{images,react-18-compat,third}.d.ts
+  → src/foundation/types                            3 个
 
-src/integrations/markdown-editor
-  → src/foundation/integrations/markdown-editor     2 个
+Styles/{Site,spectrum}.scss
+  → src/foundation/styles                           2 个
+
+Themes/*.scss
+  → src/foundation/theme/themes                    29 个
 ```
 
 明确不在本批处理：
 
 ```text
-src/app
-src/pages
-src/features
-src/entities
-播放器、水印和其他直接第三方包调用
-Upload、UBB、Topic 等业务
-AnnualReview 页面实现和路由
-F1-D 类型、基础样式和主题入口
+@types/@cc98 中的业务 API 声明
+Styles/{MainPage,UbbEditor,UserCenter,Vote}.scss
+页面、组件、UBB 和其他业务源码
+Sass @import 转换
+P12-CSS-001 与其他视觉修复
+.vscode/
 ```
 
 实施顺序：
 
-1. 固定 4 个源文件和 4 个消费者文件；
-2. 整体移动目录，不改适配逻辑、注释、props、导出名和第三方依赖；
-3. 将 `@integrations/*` import 更新为 `@foundation/integrations/*`；
-4. 删除 TypeScript、Vite 和架构检查器中的旧 alias 与临时目录判定；
-5. 运行架构检查、现代/legacy typecheck、正式 build 和 `git diff --check`；
-6. 用 `rg` 证明活跃源码和配置中的 `@integrations`、`src/integrations` 为零后删除空目录；
-7. 保留执行计划中的历史路径文字，不把历史证据误算为活跃依赖；
+1. 固定 3 个环境/第三方声明、2 个全局样式文件和 29 个主题入口；
+2. 整体移动文件，只修正 `Site.scss`、主题入口和 manifest 的必要路径；
+3. modern 配置由 `src` glob 纳入新声明，legacy 配置显式纳入 3 个声明；
+4. 保留 `@types/@cc98` 和 4 个业务 SCSS，不把业务 owner 混入 Foundation；
+5. 运行保真审计、架构检查、modern/legacy typecheck、正式 build 和 `git diff --check`；
+6. 核对 29 个主题 id/key/顺序、产物数量和 HTML `themeNames` 合同；
+7. 保留历史 refactor 日志中的旧路径文字，不把历史证据误算为活跃依赖；
 8. 单独交付本批审核结果；未经要求不 commit、不 push。
 
 行为保持条件：
 
-- `MarkdownEditor`、`MarkdownEditorProps`、默认高度、工具栏、预览和图片上传回调合同不变；
-- `IntervalChart`、`IntervalChartProps` 及其返回 `null` 的兼容桩行为不变；
-- AnnualReview 继续冻结，不恢复路由或图表渲染；
-- 不新增根级聚合 barrel，不顺手迁播放器、水印、Upload 或 UBB。
+- 环境、浏览器和第三方声明的可见范围不变，`@cc98/api` 业务合同不变；
+- `Site.scss` 的导入顺序、选择器、变量、注释和 AntD 导入不变；
+- 29 个主题的 id、key、顺序、文件名和生成 CSS 名称合同不变；
+- 不拆分样式、不转换 Sass `@import`，不顺手修复既有 CSS 缺陷或警告。
 
-机械检查通过不代表人工验收通过。本批的独立编辑页和主题回复编辑器 Markdown 输入、预览、任务列表、图片上传与自动高度已由用户于 2026-07-29 人工审核确认通过。
+机械检查通过不代表人工验收通过。本批默认主题和“沧海启明”主题的 CSS 加载、切换、刷新持久化，以及 Header、Board、Topic、用户中心和编辑器基础布局已由用户于 2026-07-30 人工审核确认通过。
 
 ### F1-A 实施记录（2026-07-29）
 
@@ -194,6 +196,53 @@ src/integrations/markdown-editor
 - 主题回复编辑器的同组行为：人工审核通过（用户确认）；
 - AnnualReview 继续冻结，仅由 legacy typecheck 覆盖两个图表消费者，不恢复路由或图表渲染；
 - F1-C 人工验收结论由用户于 2026-07-29 确认，并已获得本地提交授权；F1-D 未授权，不自动进入下一批。
+
+### F1-D 实施记录（2026-07-30）
+
+基线与范围：
+
+- 基线为 `dev20260716` 的 `19c736b3`；
+- 3 个环境/第三方声明已从 `@types` 迁入 `src/foundation/types`；
+- `Styles/{Site,spectrum}.scss` 已迁入 `src/foundation/styles`，29 个主题已从 `Themes` 迁入 `src/foundation/theme/themes`；
+- `@types/@cc98` 的 19 个业务 API 声明和 `Styles/{MainPage,UbbEditor,UserCenter,Vote}.scss` 均保留原位；
+- TypeScript 文件发现和主题 manifest 已同步更新，根目录 `Themes` 已清空删除，`.vscode/` 未改动。
+
+文件与 owner 映射：
+
+```text
+@types/{images,react-18-compat,third}.d.ts
+  → src/foundation/types                            3 个
+
+Styles/{Site,spectrum}.scss
+  → src/foundation/styles                           2 个
+
+Themes/*.scss
+  → src/foundation/theme/themes                    29 个
+```
+
+保真与结构证据：
+
+- 3 个声明和 `spectrum.scss` 与基线原 owner 内容一致；
+- `Site.scss` 只有 4 条业务/UBB 样式相对路径修正，其他内容与基线一致；
+- 29 个主题均只修改 `Site.scss` 导入行，其中 `new_year_2026_light.scss` 同步清理该行原有的一个尾随空格；原 BOM、行尾和 EOF 状态保持；
+- manifest 仍为连续 id 1–29，key、顺序和 SCSS 文件名均与基线一致，首项 `css_blue`、末项 `css_cc98_23rd_light`；
+- 未新增公开导出、alias、依赖、allowlist 或架构例外。
+
+机械证据：
+
+- 保真审计：通过，覆盖 3 个声明、`Site.scss`、`spectrum.scss`、29 个主题及 manifest 合同，并只放行批准的路径与单行尾随空格差异；
+- `npm run check:architecture`：通过，261 个源码文件、1141 个 import、0 个 allowlist 违规；
+- `npm run typecheck`：modern 与 legacy 均通过；
+- `npm run build`：通过，3939 modules transformed，生成 29 个主题 CSS；沙箱内首次运行因既知 `spawn EPERM` 失败，在允许子进程的环境原样重跑成功；
+- `git diff --check`：通过；
+- 构建仍只有既有 Sass `@import`、Spectrum/Lightning CSS 和 chunk-size 警告。
+
+人工检查与停点：
+
+- 默认主题和“沧海启明”主题的 CSS 请求、切换与刷新持久化：人工审核通过（用户确认）；
+- Header、Board、Topic、用户中心和编辑器的基础布局：人工审核通过（用户确认）；
+- `P12-CSS-001` 为既有缺陷，不在本批修复或验收为新增回归；
+- F1-D 人工验收结论由用户于 2026-07-30 确认，并已获得本地提交授权；A1 未授权，不自动进入下一批。
 
 ## 1. 实施结论
 
@@ -1550,7 +1599,7 @@ R1  增加架构检查脚本                            已完成
 - 检查脚本结果；
 - 无业务行为变化证明。
 
-骨架和本计划确认后，F1-A、F1-B、F1-C 均已完成代码实施、机械检查和人工验收；当前停在 F1-D 单独授权之前。
+骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D 均已完成代码实施、机械检查和人工验收；当前停在 A1 单独授权之前。
 
 ## 22. 已确认决策与后续边界
 
@@ -1564,7 +1613,7 @@ R1  增加架构检查脚本                            已完成
 
 后续仍需逐批审核：
 
-1. F1-D 类型、基础样式和主题入口迁址；
+1. A1 Application Shell 的完整源文件、消费者和兼容边界；
 2. 每个 Module 的 owner、公开入口和跨模块依赖；
 3. 混合 service 的拆分时机；
 4. AnnualReview 与 UBB 是否继续冻结；

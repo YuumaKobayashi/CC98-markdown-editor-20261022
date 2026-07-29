@@ -117,14 +117,14 @@ react-redux 的异步 action（用户中心）
 - /Props React 组件的 Props 类
 - /Reducers Redux 组件
 - /States React 组件的 State 类
-- /Themes 网站主题
+- /src/foundation/theme/themes 网站主题
 - /Ubb Ubb 解析引擎
 - /Utility 函数集
 - /ActionTypes.tsx Redux 的 Action 类型
 - /src/app/bootstrap/index.tsx 程序入口
 - /adddna.scss zza 的样式表
 - /package.json 项目依赖
-- /Site.scss 网站的主样式表
+- /src/foundation/styles/Site.scss 网站的主样式表
 - /Store.tsx Redux 的 store 组件
 - /UbbEditor.scss Ubb 编辑器样式表
 - /UserCenter.scss 用户中心样式表
