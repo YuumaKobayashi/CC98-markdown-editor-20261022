@@ -1,1 +1,1 @@
-export { Pager } from "@shared/ui/pagination";
+export { Pager } from "@foundation/ui/pagination";

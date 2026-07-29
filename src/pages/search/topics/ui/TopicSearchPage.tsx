@@ -6,7 +6,7 @@ import { Link, useLocation } from "react-router";
 import { getSearchTopic } from "@entities/topic/api/service";
 import { SearchTopicItem } from "@entities/topic";
 import { FocusTopic } from "@legacy/Props/FocusTopic";
-import { DocumentTitle } from "@shared/ui/document-title";
+import { DocumentTitle } from "@foundation/ui/document-title";
 
 interface SearchInfo {
   boardId: number;

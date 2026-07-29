@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 
 import { getBoardRecord, getBoardTag } from "@entities/board/api/service";
 import type { BoardEvent } from "@legacy/States/BoardEvent";
-import { Pager } from "@shared/ui/pagination";
+import { Pager } from "@foundation/ui/pagination";
 
 import { BoardModerationRecordItem } from "../../ui/BoardModerationRecordItem";
 

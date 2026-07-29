@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Link } from "react-router";
 
-import { Pager } from "@shared/ui/pagination";
+import { Pager } from "@foundation/ui/pagination";
 
 interface BoardTag {
   id: number;

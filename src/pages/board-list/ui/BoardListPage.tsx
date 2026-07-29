@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { cc98Fetch } from "@foundation/api/http";
-import DocumentTitle from "@shared/ui/document-title";
+import DocumentTitle from "@foundation/ui/document-title";
 import type { RootBoardState } from "../model/board-list";
 import { BoardListSection } from "./BoardListSection";
 

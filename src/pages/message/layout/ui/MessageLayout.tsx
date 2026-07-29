@@ -3,7 +3,7 @@ import { NavLink, Outlet, useLocation } from "react-router";
 
 import { useAppSelector } from "@app/store";
 import { readAll } from "@features/message/api/service";
-import { DocumentTitle } from "@shared/ui/document-title";
+import { DocumentTitle } from "@foundation/ui/document-title";
 
 type MessageSection = "response" | "attme" | "system" | "message" | "setting";
 

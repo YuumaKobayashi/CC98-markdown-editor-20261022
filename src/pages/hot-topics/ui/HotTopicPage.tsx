@@ -3,7 +3,7 @@ import * as React from "react";
 import { FocusTopicItem } from "@entities/topic";
 import { getMonthlyHotTopic } from "@entities/topic/api/service";
 import type { FocusTopic } from "@legacy/Props/FocusTopic";
-import DocumentTitle from "@shared/ui/document-title";
+import DocumentTitle from "@foundation/ui/document-title";
 
 export type HotTopicKind = "weekly" | "monthly" | "history";
 

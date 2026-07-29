@@ -1,1 +1,1 @@
-export { MessageBar, MessageType } from "@shared/ui/feedback";
+export { MessageBar, MessageType } from "@foundation/ui/feedback";

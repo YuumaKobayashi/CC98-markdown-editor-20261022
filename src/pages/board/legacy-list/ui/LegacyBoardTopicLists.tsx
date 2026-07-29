@@ -19,7 +19,7 @@ import {
 import { mutliDelete, mutliLock } from "@features/moderation/api/service";
 import type { TopicTitleAndContentState } from "@legacy/States/AppState";
 import { getListTotalPage, getTagLayer } from "@foundation/lib/page";
-import { Pager } from "@shared/ui/pagination";
+import { Pager } from "@foundation/ui/pagination";
 
 import { BoardTagPagination } from "../../ui/BoardTagPagination";
 import { LegacyBoardTopicItem } from "./LegacyBoardTopicItem";

@@ -10,7 +10,7 @@ import {
   setLocalStorage,
 } from "@foundation/storage/web-storage";
 import { changeTheme } from "@foundation/theme/runtime";
-import DocumentTitle from "@shared/ui/document-title";
+import DocumentTitle from "@foundation/ui/document-title";
 
 type TokenResponse = {
   access_token: string;

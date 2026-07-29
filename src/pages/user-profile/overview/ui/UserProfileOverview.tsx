@@ -5,7 +5,7 @@ import { Actions, useAppDispatch } from "@app/store";
 import { getUserInfo } from "@entities/user/api/get-user-info";
 import type { UserInfo } from "@legacy/States/AppState";
 import { UserProfileAvatar } from "@entities/user/profile-avatar";
-import DocumentTitle from "@shared/ui/document-title";
+import DocumentTitle from "@foundation/ui/document-title";
 import { UserProfileDetails } from "./UserProfileDetails";
 import { UserRecentTopics } from "./UserRecentTopics";
 

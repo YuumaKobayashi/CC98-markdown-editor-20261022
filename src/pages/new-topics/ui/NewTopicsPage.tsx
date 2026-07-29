@@ -22,7 +22,7 @@ import {
   setLocalStorage,
   setStorage,
 } from "@foundation/storage/web-storage";
-import { DocumentTitle } from "@shared/ui/document-title";
+import { DocumentTitle } from "@foundation/ui/document-title";
 
 import { NewTopicsBoardSidebar } from "./NewTopicsBoardSidebar";
 import { RandomRecentTopics } from "./RandomRecentTopics";

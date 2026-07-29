@@ -14,7 +14,7 @@ import {
   ServerError,
   UnauthorizedBoard,
 } from "@legacy/Components/Status";
-import DocumentTitle from "@shared/ui/document-title";
+import DocumentTitle from "@foundation/ui/document-title";
 
 import { BoardActionsAndAdvertisement } from "../../ui/BoardActionsAndAdvertisement";
 import { BoardBreadcrumb } from "../../ui/BoardBreadcrumb";

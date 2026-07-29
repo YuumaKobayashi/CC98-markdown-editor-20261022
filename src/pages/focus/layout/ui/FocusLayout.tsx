@@ -5,7 +5,7 @@
 import * as React from "react";
 import { Link, Outlet, useLocation } from "react-router";
 
-import DocumentTitle from "@shared/ui/document-title";
+import DocumentTitle from "@foundation/ui/document-title";
 
 type FocusSection = "board" | "user" | "favorite" | null;
 

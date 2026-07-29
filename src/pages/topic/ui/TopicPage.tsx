@@ -10,7 +10,7 @@ import { getFavState } from "@features/favorites";
 import { type NoticeSetting } from "@features/message";
 import { noticeMessageShow } from "@features/message/api/service";
 import { TopicBreadcrumb } from "@entities/topic";
-import { Pager } from "@shared/ui/pagination";
+import { Pager } from "@foundation/ui/pagination";
 import { getTotalPageof10 } from "@foundation/lib/page";
 import { getLocalStorage } from "@foundation/storage/web-storage";
 import DocumentTitle from "@legacy/Components/DocumentTitle";

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { DocumentTitle } from "@shared/ui/document-title";
+import { DocumentTitle } from "@foundation/ui/document-title";
 
 export function LegacyIndexPage(): React.ReactElement {
   return <DocumentTitle title="CC98论坛" />;

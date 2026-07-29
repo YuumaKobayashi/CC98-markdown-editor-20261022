@@ -11,7 +11,7 @@ import {
 import { getFavState } from "@features/favorites";
 import { noticeMessageShow } from "@features/message/api/service";
 import { TopicBreadcrumb } from "@entities/topic";
-import { Pager } from "@shared/ui/pagination";
+import { Pager } from "@foundation/ui/pagination";
 import { QuoteTraceContext, type TopicQuote } from "../model/quote-context";
 import { TopicHeader } from "./TopicHeader";
 import {

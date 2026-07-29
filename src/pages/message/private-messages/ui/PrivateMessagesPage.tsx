@@ -9,7 +9,7 @@ import {
 } from "@entities/message/api/service";
 import type { MessagePersonInfo } from "@legacy/Props/MessagePersonInfo";
 import type { MessageProps } from "@legacy/Props/MessageProps";
-import { DocumentTitle } from "@shared/ui/document-title";
+import { DocumentTitle } from "@foundation/ui/document-title";
 
 import { PrivateConversationWindow } from "./PrivateConversationWindow";
 

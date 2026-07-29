@@ -1,4 +1,4 @@
 export {
   DocumentTitle as default,
   DocumentTitle,
-} from "@shared/ui/document-title";
+} from "@foundation/ui/document-title";

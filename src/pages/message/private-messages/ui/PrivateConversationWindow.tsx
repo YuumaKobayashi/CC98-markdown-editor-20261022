@@ -21,7 +21,7 @@ import { uploadFile } from "@features/posting/api/service";
 import { refreshCurrentMessageCount } from "@legacy/AsyncActions/Message";
 import type { MessagePersonInfo } from "@legacy/Props/MessagePersonInfo";
 import type { MessageProps } from "@legacy/Props/MessageProps";
-import { DocumentTitle } from "@shared/ui/document-title";
+import { DocumentTitle } from "@foundation/ui/document-title";
 
 type MessageLoadStatus = "more" | "loading" | "done";
 type ScrollAction = "bottom" | "prepend" | null;

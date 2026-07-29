@@ -11,7 +11,7 @@ import {
   setLocalStorage,
   setStorage,
 } from "@foundation/storage/web-storage";
-import { DocumentTitle } from "@shared/ui/document-title";
+import { DocumentTitle } from "@foundation/ui/document-title";
 
 import {
   MainPageColumn,

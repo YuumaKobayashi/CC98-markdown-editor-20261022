@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router";
 
 import { getSearchBoard } from "@entities/board/api/service";
 import { FocusBoard } from "@legacy/Props/FocusBoard";
-import { DocumentTitle } from "@shared/ui/document-title";
+import { DocumentTitle } from "@foundation/ui/document-title";
 
 const parseBoardSearch = (search: string) => {
   const match = search.match(/^\?keyword=(.*)$/);

@@ -3,7 +3,7 @@ import { Outlet } from "react-router";
 
 import { useAppSelector } from "@app/store";
 import { LogOut } from "@legacy/Components/Status";
-import DocumentTitle from "@shared/ui/document-title";
+import DocumentTitle from "@foundation/ui/document-title";
 import { UserCenterNavigation } from "./UserCenterNavigation";
 
 /**

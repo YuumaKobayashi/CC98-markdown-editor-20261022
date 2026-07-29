@@ -5,8 +5,8 @@ import { useParams } from "react-router";
 import { MessageSystembox, type MessageSystemProps } from "@entities/message";
 import { getMessageSystem } from "@entities/message/api/service";
 import { getTotalPage } from "@features/moderation/api/service";
-import { DocumentTitle } from "@shared/ui/document-title";
-import { Pager } from "@shared/ui/pagination";
+import { DocumentTitle } from "@foundation/ui/document-title";
+import { Pager } from "@foundation/ui/pagination";
 
 import {
   getMessagePageCount,

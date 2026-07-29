@@ -1,6 +1,6 @@
 # CC98 前端目录重构执行计划
 
-> 状态：R0、R1、F1-A 代码实施、机械检查和人工验收均已完成；F1-B 未授权。
+> 状态：R0、R1、F1-A、F1-B 代码实施、机械检查和人工验收均已完成；F1-C 未授权。
 >
 > 架构依据：`docs/frontend-directory-architecture-inventory.md`。
 >
@@ -16,25 +16,23 @@
 R0  恢复 2a69a0f0 代码基线                 已完成
 R1  三层目录骨架、alias、架构检查           已完成
 F1-A Foundation 核心能力迁址               已完成（含人工验收）
-F1-B Foundation 通用 UI 迁址               未授权
+F1-B Foundation 通用 UI 迁址               已完成（含人工验收）
+F1-C Foundation 第三方集成迁址             未授权
 ```
 
-### 当前停点：F1-A 已完成，等待 F1-B 单独授权
+### 当前停点：F1-B 已完成，等待 F1-C 单独授权
 
-本批只迁移已经确认不依赖上层业务的 14 个源码文件：
+本批只迁移已经确认属于通用视觉能力的 7 个源码文件：
 
 ```text
-src/shared/api       → src/foundation/api         1 个
-src/shared/config    → src/foundation/config      2 个
-src/shared/lib       → src/foundation/lib         7 个
-src/shared/storage   → src/foundation/storage     2 个
-src/shared/theme     → src/foundation/theme       2 个
+src/shared/ui/document-title → src/foundation/ui/document-title  2 个
+src/shared/ui/feedback       → src/foundation/ui/feedback        3 个
+src/shared/ui/pagination     → src/foundation/ui/pagination      2 个
 ```
 
 明确不在本批处理：
 
 ```text
-src/shared/ui
 src/integrations
 src/app
 src/pages
@@ -45,23 +43,22 @@ src/entities
 
 实施顺序：
 
-1. 固定 14 个源文件、全部消费者和 Storage/HTTP/主题副作用清单；
-2. 整体移动目录，不改函数、类型、常量值和运行时逻辑；
-3. 将对应 `@shared/*` import 更新为 `@foundation/*`；
+1. 固定 7 个源文件、29 个消费者文件和 33 条 import/export；
+2. 整体移动目录，不改组件逻辑、注释、props、导出名和 Router Link 行为；
+3. 将 `@shared/ui/*` import/export 更新为 `@foundation/ui/*`；
 4. 运行架构检查、现代/legacy typecheck、正式 build 和 `git diff --check`；
-5. 用 `rg` 证明五个旧路径及其 import 为零后，删除空目录；
-6. 因为 `src/shared/ui` 仍存在，本批不删除 `@shared` alias；
+5. 用 `rg` 证明活跃源码和配置中的 `@shared` 为零后，删除旧 alias 和空目录；
+6. 保留历史 refactor 日志中的旧路径文字，不把历史证据误算为活跃依赖；
 7. 单独交付本批审核结果；未经要求不 commit、不 push。
 
 行为保持条件：
 
-- HTTP 请求方法、参数、响应处理不变；
-- Storage 数据库名、store 名和 key 不变；
-- 主题注册表、默认主题及切换副作用不变；
-- `legacy-utility-effects` 的加载时机和副作用不变；
-- 不顺手拆 service、不改缓存策略、不做命名清理。
+- `DocumentTitle` 的默认/具名导出和标题副作用不变；
+- `NoticeMessage`、`SendTopicNoticeMessage`、`MessageBar` 和 `MessageType` 的导出及 DOM 合同不变；
+- `Pager`、`PagerProps`、页码状态、URL 拼接、`#1` 锚点和 Router Link 行为不变；
+- 不新增聚合 barrel，不顺手改样式或修复既有 TODO。
 
-机械检查通过不代表人工验收通过。本批的主题切换、Storage 持久化、真实 API 请求和浏览器登录验收已由用户于 2026-07-29 人工审核确认通过。
+机械检查通过不代表人工验收通过。本批的页面标题、分页链接、消息提示和兼容转导已由用户于 2026-07-29 人工审核确认通过。
 
 ### F1-A 实施记录（2026-07-29）
 
@@ -106,7 +103,49 @@ src/shared/theme     → src/foundation/theme       2 个
 - 至少一条真实 API 请求：人工审核通过（用户确认）；
 - 浏览器登录验收：人工审核通过（用户确认）；
 - 本轮 Codex 浏览器环境不可用，不把未执行的自动化浏览器操作记作验收证据，验收结论以用户人工审核为准；
-- F1-A 代码已提交于 `096f512c`，未 push；F1-B 未授权，当前停在进入 F1-B 前的单独授权点。
+- F1-A 代码已提交于 `096f512c`，未 push；其后 F1-B 已于 2026-07-29 获得单独实施授权。
+
+### F1-B 实施记录（2026-07-29）
+
+基线与范围：
+
+- 基线为 `dev20260716` 的 `3ed05f8b`；
+- 7 个源码文件已经从 `src/shared/ui` 保真迁入 `src/foundation/ui`；
+- 29 个消费者文件中的 33 条 import/export 已机械切换为 `@foundation/ui/*`，其中包括 4 个根目录兼容转导；
+- `src/shared` 已清空删除，TypeScript、Vite 和架构检查器中的 `@shared` alias 已同步移除；
+- F1-C、业务模块、UBB、AnnualReview 和 `.vscode/` 均未改动。
+
+文件与 owner 映射：
+
+```text
+src/shared/ui/document-title → src/foundation/ui/document-title  2 个
+src/shared/ui/feedback       → src/foundation/ui/feedback        3 个
+src/shared/ui/pagination     → src/foundation/ui/pagination      2 个
+```
+
+保真与结构证据：
+
+- 7 个迁移文件的工作树 blob 与基线旧 owner blob 逐一相同，内容差异为 0；
+- 29 个消费者回退 `@foundation/ui` 为 `@shared/ui` 后，与基线相比非 alias 差异为 0；
+- 活跃源码和配置中的 `@shared` 使用为 0，`src/shared` 旧 owner 已不存在；
+- `@foundation/ui/*` 保持 29 个消费者文件、33 条 import/export；
+- 未新增 barrel、公开符号、依赖、allowlist 或架构例外。
+
+机械证据：
+
+- `npm run check:architecture`：通过，258 个源码文件、1140 个 import、0 个 allowlist 违规；
+- `npm run typecheck`：modern 与 legacy 均通过；
+- `npm run build`：通过，3939 modules transformed；沙箱内首次运行因既知 `spawn EPERM` 失败，在允许子进程的环境重跑同一命令成功；
+- `git diff --check`：通过；
+- 构建仍只有既有 Sass `@import`、Spectrum/Lightning CSS 和 chunk-size 警告。
+
+人工检查与停点：
+
+- 页面标题更新及默认/具名 `DocumentTitle` 消费：人工审核通过（用户确认）；
+- Pager 首尾、前后、跳页链接与 `#1` 锚点：人工审核通过（用户确认）；
+- NoticeMessage、SendTopicNoticeMessage、MessageBar 的 DOM/样式：人工审核通过（用户确认）；
+- 4 个根目录兼容转导：人工审核通过（用户确认）；
+- F1-B 人工验收结论由用户于 2026-07-29 确认；F1-C 未授权，不自动进入下一批。
 
 ## 1. 实施结论
 
@@ -1463,7 +1502,7 @@ R1  增加架构检查脚本                            已完成
 - 检查脚本结果；
 - 无业务行为变化证明。
 
-骨架和本计划确认后，F1-A 已获得单独授权并完成代码实施、机械检查和人工验收；当前停在进入 F1-B 前的单独授权点。
+骨架和本计划确认后，F1-A、F1-B 均已完成代码实施、机械检查和人工验收；当前停在 F1-C 单独授权之前。
 
 ## 22. 已确认决策与后续边界
 
@@ -1477,7 +1516,7 @@ R1  增加架构检查脚本                            已完成
 
 后续仍需逐批审核：
 
-1. F1-B Foundation 通用 UI 迁址；
+1. F1-C Foundation 第三方集成迁址；
 2. 每个 Module 的 owner、公开入口和跨模块依赖；
 3. 混合 service 的拆分时机；
 4. AnnualReview 与 UBB 是否继续冻结；
