@@ -1,5 +1,5 @@
 import React from "react";
-import { IntervalChart } from "@integrations/charts";
+import { IntervalChart } from "@foundation/integrations/charts";
 import QueueAnim from "rc-queue-anim";
 
 export default class extends React.Component<{ data }> {

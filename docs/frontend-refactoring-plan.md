@@ -1,6 +1,6 @@
 # CC98 前端目录重构执行计划
 
-> 状态：R0、R1、F1-A、F1-B 代码实施、机械检查和人工验收均已完成；F1-C 未授权。
+> 状态：R0、R1、F1-A、F1-B、F1-C 的代码实施、机械检查和人工验收均已完成；F1-D 未授权。
 >
 > 架构依据：`docs/frontend-directory-architecture-inventory.md`。
 >
@@ -17,48 +17,53 @@ R0  恢复 2a69a0f0 代码基线                 已完成
 R1  三层目录骨架、alias、架构检查           已完成
 F1-A Foundation 核心能力迁址               已完成（含人工验收）
 F1-B Foundation 通用 UI 迁址               已完成（含人工验收）
-F1-C Foundation 第三方集成迁址             未授权
+F1-C Foundation 第三方集成迁址             已完成（含人工验收）
 ```
 
-### 当前停点：F1-B 已完成，等待 F1-C 单独授权
+### 当前停点：F1-C 已完成，等待 F1-D 单独授权
 
-本批只迁移已经确认属于通用视觉能力的 7 个源码文件：
+本批只迁移已经确认属于第三方适配的 4 个源码文件：
 
 ```text
-src/shared/ui/document-title → src/foundation/ui/document-title  2 个
-src/shared/ui/feedback       → src/foundation/ui/feedback        3 个
-src/shared/ui/pagination     → src/foundation/ui/pagination      2 个
+src/integrations/charts
+  → src/foundation/integrations/charts              2 个
+
+src/integrations/markdown-editor
+  → src/foundation/integrations/markdown-editor     2 个
 ```
 
 明确不在本批处理：
 
 ```text
-src/integrations
 src/app
 src/pages
 src/features
 src/entities
-任何 Topic、User、Favorite、Board、Post 业务模块
+播放器、水印和其他直接第三方包调用
+Upload、UBB、Topic 等业务
+AnnualReview 页面实现和路由
+F1-D 类型、基础样式和主题入口
 ```
 
 实施顺序：
 
-1. 固定 7 个源文件、29 个消费者文件和 33 条 import/export；
-2. 整体移动目录，不改组件逻辑、注释、props、导出名和 Router Link 行为；
-3. 将 `@shared/ui/*` import/export 更新为 `@foundation/ui/*`；
-4. 运行架构检查、现代/legacy typecheck、正式 build 和 `git diff --check`；
-5. 用 `rg` 证明活跃源码和配置中的 `@shared` 为零后，删除旧 alias 和空目录；
-6. 保留历史 refactor 日志中的旧路径文字，不把历史证据误算为活跃依赖；
-7. 单独交付本批审核结果；未经要求不 commit、不 push。
+1. 固定 4 个源文件和 4 个消费者文件；
+2. 整体移动目录，不改适配逻辑、注释、props、导出名和第三方依赖；
+3. 将 `@integrations/*` import 更新为 `@foundation/integrations/*`；
+4. 删除 TypeScript、Vite 和架构检查器中的旧 alias 与临时目录判定；
+5. 运行架构检查、现代/legacy typecheck、正式 build 和 `git diff --check`；
+6. 用 `rg` 证明活跃源码和配置中的 `@integrations`、`src/integrations` 为零后删除空目录；
+7. 保留执行计划中的历史路径文字，不把历史证据误算为活跃依赖；
+8. 单独交付本批审核结果；未经要求不 commit、不 push。
 
 行为保持条件：
 
-- `DocumentTitle` 的默认/具名导出和标题副作用不变；
-- `NoticeMessage`、`SendTopicNoticeMessage`、`MessageBar` 和 `MessageType` 的导出及 DOM 合同不变；
-- `Pager`、`PagerProps`、页码状态、URL 拼接、`#1` 锚点和 Router Link 行为不变；
-- 不新增聚合 barrel，不顺手改样式或修复既有 TODO。
+- `MarkdownEditor`、`MarkdownEditorProps`、默认高度、工具栏、预览和图片上传回调合同不变；
+- `IntervalChart`、`IntervalChartProps` 及其返回 `null` 的兼容桩行为不变；
+- AnnualReview 继续冻结，不恢复路由或图表渲染；
+- 不新增根级聚合 barrel，不顺手迁播放器、水印、Upload 或 UBB。
 
-机械检查通过不代表人工验收通过。本批的页面标题、分页链接、消息提示和兼容转导已由用户于 2026-07-29 人工审核确认通过。
+机械检查通过不代表人工验收通过。本批的独立编辑页和主题回复编辑器 Markdown 输入、预览、任务列表、图片上传与自动高度已由用户于 2026-07-29 人工审核确认通过。
 
 ### F1-A 实施记录（2026-07-29）
 
@@ -146,6 +151,49 @@ src/shared/ui/pagination     → src/foundation/ui/pagination      2 个
 - NoticeMessage、SendTopicNoticeMessage、MessageBar 的 DOM/样式：人工审核通过（用户确认）；
 - 4 个根目录兼容转导：人工审核通过（用户确认）；
 - F1-B 人工验收结论由用户于 2026-07-29 确认；F1-C 未授权，不自动进入下一批。
+
+### F1-C 实施记录（2026-07-29）
+
+基线与范围：
+
+- 基线为 `dev20260716` 的 `74ca59b2`；
+- 4 个源码文件已经从 `src/integrations/{charts,markdown-editor}` 保真迁入 `src/foundation/integrations/*`；
+- 4 个消费者的 import 已机械切换为 `@foundation/integrations/*`，其中包括 2 个活跃 Application 消费者和 2 个冻结的 AnnualReview 消费者；
+- `src/integrations` 已清空删除，TypeScript、Vite 和架构检查器中的 `@integrations` alias 及临时目录判定已同步移除；
+- 播放器、水印、直接第三方包调用、Upload、UBB、AnnualReview 页面实现、路由、F1-D 和 `.vscode/` 均未改动。
+
+文件与 owner 映射：
+
+```text
+src/integrations/charts
+  → src/foundation/integrations/charts              2 个
+
+src/integrations/markdown-editor
+  → src/foundation/integrations/markdown-editor     2 个
+```
+
+保真与结构证据：
+
+- 4 个新 owner 文件的工作树 blob 与基线旧 owner blob 逐一相同，内容差异为 0；
+- 4 个消费者与基线相比均只有 `@integrations/*` → `@foundation/integrations/*` 的 alias 差异；
+- 活跃源码和可执行配置中的 `@integrations`、`src/integrations` 使用均为 0，旧 owner 目录已不存在；
+- `MarkdownEditor`、`MarkdownEditorProps`、`IntervalChart`、`IntervalChartProps` 的公开入口和合同保持不变；
+- 未新增根级 barrel、依赖、allowlist 或架构例外。
+
+机械证据：
+
+- `npm run check:architecture`：通过，258 个源码文件、1140 个 import、0 个 allowlist 违规；
+- `npm run typecheck`：modern 与 legacy 均通过；
+- `npm run build`：通过，3939 modules transformed；沙箱内首次运行因既知 `spawn EPERM` 失败，在允许子进程的环境重跑同一命令成功；
+- `git diff --check`：通过；
+- 构建仍只有既有 Sass `@import`、Spectrum/Lightning CSS 和 chunk-size 警告。
+
+人工检查与停点：
+
+- 独立编辑页的 Markdown 输入、预览、任务列表、图片上传和自动高度：人工审核通过（用户确认）；
+- 主题回复编辑器的同组行为：人工审核通过（用户确认）；
+- AnnualReview 继续冻结，仅由 legacy typecheck 覆盖两个图表消费者，不恢复路由或图表渲染；
+- F1-C 人工验收结论由用户于 2026-07-29 确认，并已获得本地提交授权；F1-D 未授权，不自动进入下一批。
 
 ## 1. 实施结论
 
@@ -1502,7 +1550,7 @@ R1  增加架构检查脚本                            已完成
 - 检查脚本结果；
 - 无业务行为变化证明。
 
-骨架和本计划确认后，F1-A、F1-B 均已完成代码实施、机械检查和人工验收；当前停在 F1-C 单独授权之前。
+骨架和本计划确认后，F1-A、F1-B、F1-C 均已完成代码实施、机械检查和人工验收；当前停在 F1-D 单独授权之前。
 
 ## 22. 已确认决策与后续边界
 
@@ -1516,7 +1564,7 @@ R1  增加架构检查脚本                            已完成
 
 后续仍需逐批审核：
 
-1. F1-C Foundation 第三方集成迁址；
+1. F1-D 类型、基础样式和主题入口迁址；
 2. 每个 Module 的 owner、公开入口和跨模块依赖；
 3. 混合 service 的拆分时机；
 4. AnnualReview 与 UBB 是否继续冻结；

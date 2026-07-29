@@ -11,11 +11,11 @@ application → modules → foundation
 ```
 
 - `src/app`、`src/pages` 是迁移期 Application owner，`src/features`、`src/entities` 是迁移期 Module owner；
-- `src/integrations` 是尚待 F1-C 归位的 Foundation owner；
+- 第三方适配已经归入 `src/foundation/integrations`；
 - Foundation 不得依赖 Modules 或 Application，Modules 不得依赖 Application；
 - `@legacy/*` 是迁移期兼容桥，只允许已迁入模块连接尚未归位的旧实现，不得作为新业务代码的默认依赖入口；
 - `Ubb/` 与 `Components/UbbEditor/` 继续原地冻结。
 
 ## 路径别名
 
-目标 alias 为 `@application/*`、`@modules/*`、`@foundation/*`。迁移期继续保留 `@app/*`、`@pages/*`、`@features/*`、`@entities/*`、`@integrations/*`；`@legacy/*` 临时对应仓库根目录。
+目标 alias 为 `@application/*`、`@modules/*`、`@foundation/*`。迁移期继续保留 `@app/*`、`@pages/*`、`@features/*`、`@entities/*`；`@legacy/*` 临时对应仓库根目录。

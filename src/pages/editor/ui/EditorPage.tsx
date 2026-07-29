@@ -5,7 +5,7 @@ import { Button, Modal } from "antd";
 import { useNavigate, useParams } from "react-router";
 
 import { UbbEditor } from "@legacy/Components/UbbEditor";
-import { MarkdownEditor } from "@integrations/markdown-editor";
+import { MarkdownEditor } from "@foundation/integrations/markdown-editor";
 import { useAppDispatch } from "@app/store";
 import * as ErrorActions from "@legacy/Actions/Error";
 import {

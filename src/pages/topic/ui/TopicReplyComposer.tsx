@@ -10,7 +10,7 @@ import {
 import { NavigationPrompt } from "@app/router/navigation-prompt";
 import { Button, Modal } from "antd";
 import moment from "moment";
-import { MarkdownEditor } from "@integrations/markdown-editor";
+import { MarkdownEditor } from "@foundation/integrations/markdown-editor";
 import * as Showdown from "showdown";
 import { RightTagHandler } from "@legacy/Ubb/RightTagHandler";
 import { isMaster } from "@entities/board/api/service";
