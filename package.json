@@ -10,6 +10,7 @@
   "scripts": {
     "dev": "vite --config vite.config.mjs",
     "build": "node scripts/build-vite.mjs",
+    "check:architecture": "node scripts/check-architecture.mjs",
     "typecheck": "npm run typecheck:modern && npm run typecheck:legacy",
     "typecheck:modern": "tsc --noEmit -p tsconfig.json",
     "typecheck:legacy": "tsc --noEmit -p tsconfig.legacy.json"

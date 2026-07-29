@@ -262,6 +262,9 @@ export default defineConfig(({ command }) => ({
   ],
   resolve: {
     alias: [
+      { find: "@application", replacement: path.join(root, "src/application") },
+      { find: "@modules", replacement: path.join(root, "src/modules") },
+      { find: "@foundation", replacement: path.join(root, "src/foundation") },
       { find: "@app", replacement: path.join(root, "src/app") },
       { find: "@pages", replacement: path.join(root, "src/pages") },
       { find: "@features", replacement: path.join(root, "src/features") },
