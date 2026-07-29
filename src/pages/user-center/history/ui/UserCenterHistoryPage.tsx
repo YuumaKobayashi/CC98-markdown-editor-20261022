@@ -6,7 +6,7 @@ import * as React from "react";
 import { Checkbox, Modal } from "antd";
 import { useParams } from "react-router";
 
-import { useAppDispatch, useAppSelector } from "@app/store";
+import { useAppDispatch, useAppSelector } from "@application/store";
 import { UserRecentTopicItem as Topic } from "@entities/topic";
 import * as Actions from "@legacy/Actions/UserCenter";
 import { refreshCurrentUserInfo } from "@legacy/AsyncActions/UserCenter";

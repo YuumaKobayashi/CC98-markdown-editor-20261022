@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { useAppDispatch, useAppSelector } from "@app/store";
+import { useAppDispatch, useAppSelector } from "@application/store";
 import { UserProfile } from "@entities/user";
 import { UserProfileAvatar } from "@entities/user/profile-avatar";
 import * as Actions from "@legacy/Actions/UserCenter";

@@ -7,7 +7,7 @@ import {
   NoticeMessage,
   SendTopicNoticeMessage,
 } from "@legacy/Components/NoticeMessage";
-import { NavigationPrompt } from "@app/router/navigation-prompt";
+import { NavigationPrompt } from "@application/router/navigation-prompt";
 import { Button, Modal } from "antd";
 import moment from "moment";
 import { MarkdownEditor } from "@foundation/integrations/markdown-editor";

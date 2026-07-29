@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Link } from "react-router";
 
-import { useAppDispatch } from "@app/store";
+import { useAppDispatch } from "@application/store";
 import * as Actions from "@legacy/Actions/UserCenter";
 import type { UserInfo } from "@legacy/States/AppState";
 import { followUser, unfollowUser } from "../api/service";

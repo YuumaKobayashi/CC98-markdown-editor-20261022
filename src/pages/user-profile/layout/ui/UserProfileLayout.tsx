@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Outlet, useParams } from "react-router";
 
-import { Actions, useAppDispatch, useAppSelector } from "@app/store";
+import { Actions, useAppDispatch, useAppSelector } from "@application/store";
 import { NotFoundUser } from "@legacy/Components/Status";
 import { UserProfileNavigation } from "./UserProfileNavigation";
 

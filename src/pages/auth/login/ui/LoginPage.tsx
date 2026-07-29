@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Actions, useAppDispatch } from "@app/store";
+import { Actions, useAppDispatch } from "@application/store";
 import { getMyInfo } from "@entities/user/storage/current-user";
 import { refreshUserInfo } from "@features/account/api/service";
 import { Constants } from "@foundation/config/runtime-config";

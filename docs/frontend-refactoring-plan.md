@@ -1,6 +1,6 @@
 # CC98 前端目录重构执行计划
 
-> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D 的代码实施、机械检查和人工验收均已完成；A1 未授权。
+> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1 的代码实施、机械检查和人工验收均已完成；M1 未授权。
 >
 > 架构依据：`docs/frontend-directory-architecture-inventory.md`。
 >
@@ -19,53 +19,51 @@ F1-A Foundation 核心能力迁址               已完成（含人工验收）
 F1-B Foundation 通用 UI 迁址               已完成（含人工验收）
 F1-C Foundation 第三方集成迁址             已完成（含人工验收）
 F1-D 类型、基础样式和主题入口迁址           已完成（含人工验收）
+A1   Application Shell 迁址                 已完成（含人工验收）
 ```
 
-### 当前停点：F1-D 已完成，等待 A1 单独授权
+### 当前停点：A1 已完成，等待 M1 单独授权
 
-本批只迁移已经确认属于 Foundation 的 34 个声明和样式文件：
+本批只迁移已经确认属于 Application Shell 的 18 个源码文件：
 
 ```text
-@types/{images,react-18-compat,third}.d.ts
-  → src/foundation/types                            3 个
+src/app/{bootstrap,providers,router,store,layouts}
+  → src/application/{bootstrap,providers,router,store,layouts}
 
-Styles/{Site,spectrum}.scss
-  → src/foundation/styles                           2 个
-
-Themes/*.scss
-  → src/foundation/theme/themes                    29 个
+src/app/legacy
+  → src/application/compatibility
 ```
 
 明确不在本批处理：
 
 ```text
-@types/@cc98 中的业务 API 声明
-Styles/{MainPage,UbbEditor,UserCenter,Vote}.scss
-页面、组件、UBB 和其他业务源码
-Sass @import 转换
-P12-CSS-001 与其他视觉修复
+src/pages 的 Route 页面迁址
+src/features、src/entities 和业务 Module 迁址
+Router 路径、lazy、Provider、Store 或 CrossTabSync 重构
+ErrorBoundary 函数化
+业务逻辑、API、Redux schema 和既有缺陷修复
 .vscode/
 ```
 
 实施顺序：
 
-1. 固定 3 个环境/第三方声明、2 个全局样式文件和 29 个主题入口；
-2. 整体移动文件，只修正 `Site.scss`、主题入口和 manifest 的必要路径；
-3. modern 配置由 `src` glob 纳入新声明，legacy 配置显式纳入 3 个声明；
-4. 保留 `@types/@cc98` 和 4 个业务 SCSS，不把业务 owner 混入 Foundation；
-5. 运行保真审计、架构检查、modern/legacy typecheck、正式 build 和 `git diff --check`；
-6. 核对 29 个主题 id/key/顺序、产物数量和 HTML `themeNames` 合同；
-7. 保留历史 refactor 日志中的旧路径文字，不把历史证据误算为活跃依赖；
+1. 固定 `src/app` 下 18 个 Application Shell 源文件和全部活跃消费者；
+2. 完整迁入 `src/application`，仅将 `legacy` 目录改名为 `compatibility`；
+3. 将活跃 `@app/*` import 和根 Store facade 改到 `@application/*`；
+4. 更新 Vite 开发/构建入口，删除 TypeScript、Vite 和架构检查器中的 `@app` 迁移 alias；
+5. 合并 Application README，删除已经清空的 `src/app`；
+6. 运行保真审计、架构检查、modern/legacy typecheck、正式 build 和 `git diff --check`；
+7. 证明主入口、React Root、Browser Router 和 Router Provider 仍各只有一个；
 8. 单独交付本批审核结果；未经要求不 commit、不 push。
 
 行为保持条件：
 
-- 环境、浏览器和第三方声明的可见范围不变，`@cc98/api` 业务合同不变；
-- `Site.scss` 的导入顺序、选择器、变量、注释和 AntD 导入不变；
-- 29 个主题的 id、key、顺序、文件名和生成 CSS 名称合同不变；
-- 不拆分样式、不转换 Sass `@import`，不顺手修复既有 CSS 缺陷或警告。
+- Router 路径数组、嵌套关系、lazy loader 和 chunk 边界不变；
+- Provider 顺序仍为 `ErrorBoundary → Provider → CrossTabSync → ConfigProvider → AppRouter`；
+- reducer 仍只有 `error`、`userInfo`、`message`，CrossTabSync handler/key 合同不变；
+- Store hooks、Actions、Router、navigation 和布局导出名不变，ErrorBoundary 保持 class。
 
-机械检查通过不代表人工验收通过。本批默认主题和“沧海启明”主题的 CSS 加载、切换、刷新持久化，以及 Header、Board、Topic、用户中心和编辑器基础布局已由用户于 2026-07-30 人工审核确认通过。
+机械检查通过不代表人工验收通过。本批首页与深链接刷新、lazy 路由切换、Header/Footer、登录/登出导航、错误恢复和双标签页既有行为已由用户于 2026-07-30 人工审核确认通过。
 
 ### F1-A 实施记录（2026-07-29）
 
@@ -243,6 +241,48 @@ Themes/*.scss
 - Header、Board、Topic、用户中心和编辑器的基础布局：人工审核通过（用户确认）；
 - `P12-CSS-001` 为既有缺陷，不在本批修复或验收为新增回归；
 - F1-D 人工验收结论由用户于 2026-07-30 确认，并已获得本地提交授权；A1 未授权，不自动进入下一批。
+
+### A1 实施记录（2026-07-30）
+
+基线与范围：
+
+- 基线为 `dev20260716` 的 `0e49e1ee`；
+- `src/app` 下 18 个源码文件已完整迁入 `src/application`，其中 `legacy` 改名为 `compatibility`；
+- 原 `src/app/README.md` 的 Router、Store 和 Provider 边界已合并到 `src/application/README.md`，旧空目录已删除；
+- 34 个活跃源码消费者和根 `Store.tsx` facade 已切换到新路径，`.vscode/` 未改动。
+
+文件与 owner 映射：
+
+```text
+src/app/{bootstrap,providers,router,store,layouts}
+  → src/application/{bootstrap,providers,router,store,layouts}
+
+src/app/legacy
+  → src/application/compatibility
+```
+
+保真与结构证据：
+
+- 18 个迁址源码在逆归一化路径后与基线 blob 完全一致，注释、BOM、行尾和 EOF 均保持；
+- 34 个消费者只修改 `@app/*` import，根 Store facade 只修改说明和 re-export 路径；
+- Router 路径数组、lazy 声明、Provider 顺序、Store reducer 结构和 CrossTabSync 内容未改；
+- 活跃源码和配置中的 `@app/*`、`src/app/*` 均为 0，物理 `src/app` 不存在；
+- Vite `main`、`createRoot`、`createBrowserRouter` 和 `RouterProvider` 均保持唯一。
+
+机械证据：
+
+- 保真审计：通过，覆盖 18 个迁址源码、34 个纯 import 消费者和根 Store facade；
+- `npm run check:architecture`：通过，261 个源码文件、1141 个 import、0 个 allowlist 违规；
+- `npm run typecheck`：modern 与 legacy 均通过；
+- `npm run build`：通过，3939 modules transformed；沙箱内首次运行因既知 `spawn EPERM` 失败，在允许子进程的环境原样重跑成功；
+- `git diff --check`：通过；
+- 构建仍只有既有 Sass `@import`、Spectrum/Lightning CSS 和 chunk-size 警告。
+
+人工检查与停点：
+
+- 首页与深链接刷新、lazy 路由切换、Header/Footer、登录/登出导航、错误恢复和双标签页既有行为：人工审核通过（用户确认）；
+- A1 人工验收结论由用户于 2026-07-30 确认，并已获得本地提交授权；
+- M1 未授权，不自动进入下一批。
 
 ## 1. 实施结论
 
@@ -1599,7 +1639,7 @@ R1  增加架构检查脚本                            已完成
 - 检查脚本结果；
 - 无业务行为变化证明。
 
-骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D 均已完成代码实施、机械检查和人工验收；当前停在 A1 单独授权之前。
+骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1 均已完成代码实施、机械检查和人工验收；当前停在 M1 单独授权之前。
 
 ## 22. 已确认决策与后续边界
 
@@ -1613,8 +1653,7 @@ R1  增加架构检查脚本                            已完成
 
 后续仍需逐批审核：
 
-1. A1 Application Shell 的完整源文件、消费者和兼容边界；
-2. 每个 Module 的 owner、公开入口和跨模块依赖；
-3. 混合 service 的拆分时机；
-4. AnnualReview 与 UBB 是否继续冻结；
-5. 各批浏览器、登录、API、权限与 UBB 人工验收范围。
+1. M1 各 Module 的 owner、公开入口和跨模块依赖；
+2. 混合 service 的拆分时机；
+3. AnnualReview 与 UBB 是否继续冻结；
+4. 后续各批浏览器、登录、API、权限与 UBB 人工验收范围。

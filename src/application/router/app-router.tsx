@@ -7,9 +7,9 @@ import {
 } from "react-router";
 import { RouterProvider } from "react-router/dom";
 
-import { AppShell } from "@app/layouts/app-shell";
-import { withRouter } from "@app/router/legacy-route-props";
-import { bindAppNavigate } from "@app/router/navigation";
+import { AppShell } from "@application/layouts/app-shell";
+import { withRouter } from "@application/router/legacy-route-props";
+import { bindAppNavigate } from "@application/router/navigation";
 import * as Status from "@legacy/Components/Status";
 
 type RouteModule = Record<string, unknown>;

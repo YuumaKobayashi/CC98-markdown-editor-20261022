@@ -1,5 +1,5 @@
 ﻿import * as React from "react";
-import { match } from "@app/router/legacy-route-props";
+import { match } from "@application/router/legacy-route-props";
 export class RouteComponent<
   TProps,
   TState,

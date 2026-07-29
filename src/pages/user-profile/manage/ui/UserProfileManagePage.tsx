@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useNavigate, useParams } from "react-router";
 
-import { Actions, useAppDispatch } from "@app/store";
+import { Actions, useAppDispatch } from "@application/store";
 import { getUserInfo } from "@entities/user/api/get-user-info";
 import type { UserInfo } from "@legacy/States/AppState";
 

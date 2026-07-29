@@ -1,4 +1,4 @@
-﻿import { match } from "@app/router/legacy-route-props";
+﻿import { match } from "@application/router/legacy-route-props";
 import { MessageMatch } from '../Match/Match'
 /**
  * 热门话题

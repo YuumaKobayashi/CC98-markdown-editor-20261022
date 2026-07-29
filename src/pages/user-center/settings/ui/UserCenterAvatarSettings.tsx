@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { useAppDispatch, useAppSelector } from "@app/store";
+import { useAppDispatch, useAppSelector } from "@application/store";
 import { getToken } from "@features/auth/api/session";
 import { refreshCurrentUserInfo } from "@legacy/AsyncActions/UserCenter";
 import { cc98Fetch } from "@foundation/api/http";

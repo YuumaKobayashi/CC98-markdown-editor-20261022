@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import { Actions, useAppDispatch, useAppSelector } from "@app/store";
-import { navigate } from "@app/router/navigation";
+import { Actions, useAppDispatch, useAppSelector } from "@application/store";
+import { navigate } from "@application/router/navigation";
 import { refreshCurrentMessageCount } from "@legacy/AsyncActions/Message";
 import type { MessageInfo } from "@legacy/Reducers/Message";
 import { CC98SignalR } from "@legacy/SignalR";

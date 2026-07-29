@@ -1,1 +1,1 @@
-export { Footer } from "@app/layouts/footer";
+export { Footer } from "@application/layouts/footer";

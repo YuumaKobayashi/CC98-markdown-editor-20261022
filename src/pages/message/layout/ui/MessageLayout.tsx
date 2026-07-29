@@ -1,7 +1,7 @@
 import * as React from "react";
 import { NavLink, Outlet, useLocation } from "react-router";
 
-import { useAppSelector } from "@app/store";
+import { useAppSelector } from "@application/store";
 import { readAll } from "@features/message/api/service";
 import { DocumentTitle } from "@foundation/ui/document-title";
 

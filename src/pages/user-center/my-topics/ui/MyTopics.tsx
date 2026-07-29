@@ -5,7 +5,7 @@
 import * as React from "react";
 import { useParams } from "react-router";
 
-import { useAppDispatch, useAppSelector } from "@app/store";
+import { useAppDispatch, useAppSelector } from "@application/store";
 import { UserRecentTopicItem as Topic } from "@entities/topic";
 import * as Actions from "@legacy/Actions/UserCenter";
 import { getRecentTopics } from "@legacy/AsyncActions/UserCenter";

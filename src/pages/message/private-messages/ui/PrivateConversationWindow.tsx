@@ -9,7 +9,7 @@ import {
   type DragEvent,
 } from "react";
 
-import { useAppDispatch, useAppSelector } from "@app/store";
+import { useAppDispatch, useAppSelector } from "@application/store";
 import { MessageReceiver, MessageSender } from "@entities/message";
 import {
   getRecentMessage,

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useLocation } from "react-router";
 
-import { Actions, useAppDispatch } from "@app/store";
+import { Actions, useAppDispatch } from "@application/store";
 
 export function NavigationErrorReset() {
   const dispatch = useAppDispatch();

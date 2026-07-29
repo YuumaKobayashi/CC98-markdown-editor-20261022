@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
 import moment from "moment";
 
-import { useAppSelector } from "@app/store";
+import { useAppSelector } from "@application/store";
 import { isLogOn } from "@features/auth/api/session";
 import { submitTopicVote } from "../api/service";
 

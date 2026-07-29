@@ -1,7 +1,7 @@
 ﻿import * as React from "react";
 import * as Utility from "../../Utility";
 import $ from "jquery";
-import { match } from "@app/router/legacy-route-props";
+import { match } from "@application/router/legacy-route-props";
 interface Props {
   topicId;
   userId;

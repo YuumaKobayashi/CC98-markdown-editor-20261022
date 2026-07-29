@@ -6,7 +6,7 @@ import { useNavigate, useParams } from "react-router";
 
 import { UbbEditor } from "@legacy/Components/UbbEditor";
 import { MarkdownEditor } from "@foundation/integrations/markdown-editor";
-import { useAppDispatch } from "@app/store";
+import { useAppDispatch } from "@application/store";
 import * as ErrorActions from "@legacy/Actions/Error";
 import {
   getBoardName,

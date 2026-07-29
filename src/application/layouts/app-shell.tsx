@@ -2,12 +2,12 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Outlet } from "react-router";
 
-import { Footer } from "@app/layouts/footer";
-import { Header } from "@app/layouts/header";
-import { NavigationErrorReset } from "@app/providers/navigation-error-reset";
+import { Footer } from "@application/layouts/footer";
+import { Header } from "@application/layouts/header";
+import { NavigationErrorReset } from "@application/providers/navigation-error-reset";
 import * as Status from "@legacy/Components/Status";
 import type { errorKeys } from "@legacy/Reducers/Error";
-import type { RootState } from "@app/store";
+import type { RootState } from "@application/store";
 
 type Props = {
   isError: boolean;

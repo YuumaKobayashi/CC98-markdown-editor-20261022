@@ -2,4 +2,4 @@ export {
   Header,
   Search,
   SearchBeforeConnent,
-} from "@app/layouts/header";
+} from "@application/layouts/header";

@@ -1,5 +1,5 @@
-import store, { Actions } from "@app/store";
-import { navigate } from "@app/router/navigation";
+import store, { Actions } from "@application/store";
+import { navigate } from "@application/router/navigation";
 import * as ErrorActions from "@legacy/Actions/Error";
 import * as UserCenterActions from "@legacy/Actions/UserCenter";
 import { configureLegacyUtilityEffects } from "@foundation/lib/legacy-utility-effects";

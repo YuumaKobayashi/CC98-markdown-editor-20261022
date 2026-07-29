@@ -53,9 +53,9 @@ npm run build
 
 ### ./src
 
-逐阶段迁入的目标源码边界。当前入口位于 `src/app/bootstrap/index.tsx`，Provider 树位于 `src/app/providers`；其余旧业务源码会在对应阶段迁入 `pages`、`features`、`entities`、`shared` 或 `integrations`。
+逐阶段迁入的目标源码边界。当前入口位于 `src/application/bootstrap/index.tsx`，Provider 树位于 `src/application/providers`；其余旧业务源码会在对应阶段迁入 `pages`、`features`、`entities` 或目标 Modules。
 
-主依赖方向为 `app → pages → features → entities → shared`。`@legacy/*` 只作为新旧目录共存期间的临时兼容桥。
+目标依赖方向为 `application → modules → foundation`。`@legacy/*` 只作为新旧目录共存期间的临时兼容桥。
 
 ### ./Actions
 
@@ -121,7 +121,7 @@ react-redux 的异步 action（用户中心）
 - /Ubb Ubb 解析引擎
 - /Utility 函数集
 - /ActionTypes.tsx Redux 的 Action 类型
-- /src/app/bootstrap/index.tsx 程序入口
+- /src/application/bootstrap/index.tsx 程序入口
 - /adddna.scss zza 的样式表
 - /package.json 项目依赖
 - /src/foundation/styles/Site.scss 网站的主样式表

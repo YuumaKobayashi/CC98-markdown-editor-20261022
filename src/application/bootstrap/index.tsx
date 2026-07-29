@@ -7,8 +7,8 @@ import "whatwg-fetch";
 import "blueimp-canvas-to-blob";
 import { initWatermark } from "spatial-watermark";
 
-import { createAppRoot } from "@app/providers/create-app-root";
-import { registerLegacyUtilityEffects } from "@app/legacy/register-utility-effects";
+import { createAppRoot } from "@application/providers/create-app-root";
+import { registerLegacyUtilityEffects } from "@application/compatibility/register-utility-effects";
 import { Constants } from "@foundation/config/runtime-config";
 import { IndexedDB } from "@foundation/storage/indexed-db";
 import { shouldUseIndexedDb } from "@foundation/config/platform";

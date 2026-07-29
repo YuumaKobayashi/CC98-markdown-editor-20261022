@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { useAppDispatch, useAppSelector } from "@app/store";
+import { useAppDispatch, useAppSelector } from "@application/store";
 import * as Actions from "@legacy/Actions/UserCenter";
 import { getCurrentUserFavoriteBoards } from "@legacy/AsyncActions/UserCenter";
 import type { UserFavoritesBoardInfo } from "@legacy/States/AppState";

@@ -2,7 +2,7 @@ import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import * as React from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 
-import { useAppDispatch, useAppSelector, Actions } from "@app/store";
+import { useAppDispatch, useAppSelector, Actions } from "@application/store";
 import { getTopicInfo } from "@entities/topic/api/service";
 import { getUserInfo } from "@entities/user/api/get-user-info";
 import { getMyInfo } from "@entities/user/storage/current-user";

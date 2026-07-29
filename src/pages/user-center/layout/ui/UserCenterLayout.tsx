@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Outlet } from "react-router";
 
-import { useAppSelector } from "@app/store";
+import { useAppSelector } from "@application/store";
 import { LogOut } from "@legacy/Components/Status";
 import DocumentTitle from "@foundation/ui/document-title";
 import { UserCenterNavigation } from "./UserCenterNavigation";

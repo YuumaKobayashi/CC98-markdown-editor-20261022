@@ -4,9 +4,9 @@ import zhCN from "antd/es/locale/zh_CN";
 import { Provider } from "react-redux";
 
 import ErrorBoundary from "@legacy/Components/ErrorBoundary";
-import store from "@app/store";
-import { CrossTabSync } from "@app/providers/cross-tab-sync";
-import { AppRouter } from "@app/router/app-router";
+import store from "@application/store";
+import { CrossTabSync } from "@application/providers/cross-tab-sync";
+import { AppRouter } from "@application/router/app-router";
 
 /**
  * 创建保持旧运行行为的应用 Provider 树。

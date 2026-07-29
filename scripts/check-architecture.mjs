@@ -13,7 +13,6 @@ const aliasRoots = new Map([
   ["@application", "src/application"],
   ["@modules", "src/modules"],
   ["@foundation", "src/foundation"],
-  ["@app", "src/app"],
   ["@pages", "src/pages"],
   ["@features", "src/features"],
   ["@entities", "src/entities"],
@@ -102,8 +101,6 @@ function pathLayer(absolutePath) {
   if (
     relativePath === "src/application" ||
     relativePath.startsWith("src/application/") ||
-    relativePath === "src/app" ||
-    relativePath.startsWith("src/app/") ||
     relativePath === "src/pages" ||
     relativePath.startsWith("src/pages/")
   ) {

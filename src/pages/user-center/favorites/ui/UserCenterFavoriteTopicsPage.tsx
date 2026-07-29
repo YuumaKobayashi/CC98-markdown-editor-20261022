@@ -6,7 +6,7 @@ import * as React from "react";
 import { Button, Input, Select } from "antd";
 import { useLocation, useNavigate, useParams } from "react-router";
 
-import { useAppDispatch, useAppSelector } from "@app/store";
+import { useAppDispatch, useAppSelector } from "@application/store";
 import {
   defaultFavoriteTopicGroups,
   getFavoriteAllTopic,

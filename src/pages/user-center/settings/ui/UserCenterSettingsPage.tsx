@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { useAppDispatch, useAppSelector } from "@app/store";
+import { useAppDispatch, useAppSelector } from "@application/store";
 import { ConfigSignature } from "@features/account";
 import * as UserCenterActions from "@legacy/Actions/UserCenter";
 import { refreshCurrentUserInfo } from "@legacy/AsyncActions/UserCenter";

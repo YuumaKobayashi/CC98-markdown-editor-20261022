@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Link } from "react-router";
 
-import { useAppSelector } from "@app/store";
+import { useAppSelector } from "@application/store";
 
 export function UserProfileNavigation() {
   const currentUserPrivilege = useAppSelector(

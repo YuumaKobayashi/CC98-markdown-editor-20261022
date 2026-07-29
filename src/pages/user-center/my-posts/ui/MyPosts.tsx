@@ -6,7 +6,7 @@ import * as React from "react";
 import { Button } from "antd";
 import { useNavigate, useParams } from "react-router";
 
-import { useAppDispatch, useAppSelector } from "@app/store";
+import { useAppDispatch, useAppSelector } from "@application/store";
 import { UserRecentPostItem as Post } from "@entities/post";
 import * as Actions from "@legacy/Actions/UserCenter";
 import { getRecentPosts } from "@legacy/AsyncActions/UserCenter";

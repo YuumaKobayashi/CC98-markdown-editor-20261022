@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { useAppDispatch, useAppSelector } from "@app/store";
+import { useAppDispatch, useAppSelector } from "@application/store";
 import * as UserCenterActions from "@legacy/Actions/UserCenter";
 import { sendWealthTo } from "@legacy/AsyncActions/UserCenter";
 
