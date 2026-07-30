@@ -2,9 +2,9 @@ import * as React from "react";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router";
 
-import { MessageAttmebox, type MessageResponseProps } from "@modules/message";
-import { getMessageAttme } from "@modules/message";
-import { getTotalPage } from "@modules/moderation";
+import { MessageAttmebox, type MessageResponseProps } from "@modules/notification";
+import { getMessageAttme } from "@modules/notification";
+import { getTotalPage } from "@modules/notification";
 import { DocumentTitle } from "@foundation/ui/document-title";
 import { Pager } from "@foundation/ui/pagination";
 

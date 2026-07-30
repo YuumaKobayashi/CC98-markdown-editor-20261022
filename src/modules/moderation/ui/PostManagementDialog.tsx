@@ -2,16 +2,16 @@ import * as React from "react";
 import { Form, Input, InputNumber, Menu, Modal, Select, Tag } from "antd";
 import type { FormInstance } from "antd";
 import {
-  addPrestige,
   cancelStopBoardPost,
-  deductPrestige,
   deletePost,
   stopBoardPost,
 } from "../api/service";
 import {
+  addPrestige,
   awardWealth,
+  deductPrestige,
   deductWealth,
-} from "@modules/reaction";
+} from "@modules/post-rating";
 
 const FormItem = Form.Item;
 const Option = Select.Option;

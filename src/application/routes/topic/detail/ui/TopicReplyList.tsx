@@ -12,11 +12,9 @@ import {
   getTraceTopics,
 } from "@modules/topic";
 import { getMyInfo } from "@modules/session";
-import { queryWealth } from "@modules/session";
-import {
-  PostManagementDialog,
-  PostRatingDialog,
-} from "@modules/moderation";
+import { queryWealth } from "@modules/wealth";
+import { PostRatingDialog } from "@modules/post-rating";
+import { PostManagementDialog } from "@modules/moderation";
 import { TopicAwardList } from "./TopicAwardList";
 import { TopicReplier } from "./TopicReplier";
 import { TopicReplyContent } from "./TopicReplyContent";

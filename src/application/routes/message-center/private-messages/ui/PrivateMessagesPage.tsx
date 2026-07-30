@@ -7,11 +7,11 @@ import {
   getRecentContact,
   sortContactList,
 } from "@modules/message";
-import type { MessagePersonInfo } from "@legacy/Props/MessagePersonInfo";
-import type { MessageProps } from "@legacy/Props/MessageProps";
+import type { MessagePersonInfo, MessageProps } from "@modules/message";
 import { DocumentTitle } from "@foundation/ui/document-title";
 
 import { PrivateConversationWindow } from "./PrivateConversationWindow";
+import { parsePrivateMessageContactRoute } from "../model/contact-route";
 
 type ContactLoadStatus = "idle" | "loading" | "done";
 
@@ -32,7 +32,9 @@ export function PrivateMessagesPage() {
 
     const load = async () => {
       let recentContacts = (await getRecentContact(0, 7)) ?? [];
-      recentContacts = (await sortContactList([...recentContacts])) ?? [];
+      const { urlId, urlName } = parsePrivateMessageContactRoute(location.href);
+      recentContacts =
+        (await sortContactList([...recentContacts], urlId, urlName)) ?? [];
       if (requestId.current !== currentRequest) return;
 
       setContacts(recentContacts);

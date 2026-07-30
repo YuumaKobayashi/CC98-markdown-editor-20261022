@@ -1,73 +1,66 @@
 {
   "violations": [
     {
-      "from": "src/modules/message/compat/ui/MessageAttmebox.tsx",
+      "from": "src/modules/notification/ui/MessageAttmebox.tsx",
       "specifier": "@legacy/Components/UbbContainer",
       "rule": "legacy-dependency",
-      "reason": "M1 relocates the complete Message compatibility implementation while UBB remains frozen.",
+      "reason": "M3.5 preserves the existing Notification rendering while UBB remains frozen.",
       "removeWhen": "The UBB module migration provides its public rendering entry."
     },
     {
-      "from": "src/modules/message/compat/ui/MessageAttmebox.tsx",
+      "from": "src/modules/notification/ui/MessageAttmebox.tsx",
       "specifier": "@legacy/Ubb/UbbCodeExtension",
       "rule": "legacy-dependency",
-      "reason": "M1 relocates the complete Message compatibility implementation while UBB remains frozen.",
+      "reason": "M3.5 preserves the existing Notification rendering while UBB remains frozen.",
       "removeWhen": "The UBB module migration provides its public compatibility-mode contract."
     },
     {
-      "from": "src/modules/message/compat/ui/MessagePerson.tsx",
+      "from": "src/modules/message/ui/MessagePerson.tsx",
       "specifier": "@legacy/Components/UbbContainer",
       "rule": "legacy-dependency",
-      "reason": "M1 relocates the complete Message compatibility implementation while UBB remains frozen.",
+      "reason": "M3.5 preserves the existing Message rendering while UBB remains frozen.",
       "removeWhen": "The UBB module migration provides its public rendering entry."
     },
     {
-      "from": "src/modules/message/compat/ui/MessagePerson.tsx",
-      "specifier": "@legacy/Props/MessagePersonInfo",
-      "rule": "legacy-dependency",
-      "reason": "M1 preserves the existing private-message contact contract without moving legacy Props.",
-      "removeWhen": "The Message contract split moves MessagePersonInfo behind the Message public entry."
-    },
-    {
-      "from": "src/modules/message/compat/ui/MessageReceiver.tsx",
+      "from": "src/modules/message/ui/MessageReceiver.tsx",
       "specifier": "@legacy/Components/UbbContainer",
       "rule": "legacy-dependency",
-      "reason": "M1 relocates the complete Message compatibility implementation while UBB remains frozen.",
+      "reason": "M3.5 preserves the existing Message rendering while UBB remains frozen.",
       "removeWhen": "The UBB module migration provides its public rendering entry."
     },
     {
-      "from": "src/modules/message/compat/ui/MessageResponsebox.tsx",
+      "from": "src/modules/notification/ui/MessageResponsebox.tsx",
       "specifier": "@legacy/Components/UbbContainer",
       "rule": "legacy-dependency",
-      "reason": "M1 relocates the complete Message compatibility implementation while UBB remains frozen.",
+      "reason": "M3.5 preserves the existing Notification rendering while UBB remains frozen.",
       "removeWhen": "The UBB module migration provides its public rendering entry."
     },
     {
-      "from": "src/modules/message/compat/ui/MessageResponsebox.tsx",
+      "from": "src/modules/notification/ui/MessageResponsebox.tsx",
       "specifier": "@legacy/Ubb/UbbCodeExtension",
       "rule": "legacy-dependency",
-      "reason": "M1 relocates the complete Message compatibility implementation while UBB remains frozen.",
+      "reason": "M3.5 preserves the existing Notification rendering while UBB remains frozen.",
       "removeWhen": "The UBB module migration provides its public compatibility-mode contract."
     },
     {
-      "from": "src/modules/message/compat/ui/MessageSender.tsx",
+      "from": "src/modules/message/ui/MessageSender.tsx",
       "specifier": "@legacy/Components/UbbContainer",
       "rule": "legacy-dependency",
-      "reason": "M1 relocates the complete Message compatibility implementation while UBB remains frozen.",
+      "reason": "M3.5 preserves the existing Message rendering while UBB remains frozen.",
       "removeWhen": "The UBB module migration provides its public rendering entry."
     },
     {
-      "from": "src/modules/message/compat/ui/MessageSystembox.tsx",
+      "from": "src/modules/notification/ui/MessageSystembox.tsx",
       "specifier": "@legacy/Components/UbbContainer",
       "rule": "legacy-dependency",
-      "reason": "M1 relocates the complete Message compatibility implementation while UBB remains frozen.",
+      "reason": "M3.5 preserves the existing Notification rendering while UBB remains frozen.",
       "removeWhen": "The UBB module migration provides its public rendering entry."
     },
     {
-      "from": "src/modules/message/compat/ui/MessageSystembox.tsx",
+      "from": "src/modules/notification/ui/MessageSystembox.tsx",
       "specifier": "@legacy/Ubb/UbbCodeExtension",
       "rule": "legacy-dependency",
-      "reason": "M1 relocates the complete Message compatibility implementation while UBB remains frozen.",
+      "reason": "M3.5 preserves the existing Notification rendering while UBB remains frozen.",
       "removeWhen": "The UBB module migration provides its public compatibility-mode contract."
     },
     {
@@ -197,39 +190,25 @@
       "removeWhen": "The User contract migration owns the public UserInfo type."
     },
     {
-      "from": "src/modules/notification/compat/realtime-notifications/ui/NotificationController.tsx",
+      "from": "src/modules/notification/realtime-notifications/ui/NotificationController.tsx",
       "specifier": "@application/store",
       "rule": "layer-direction",
-      "reason": "M2 relocates the complete notification compatibility implementation while Redux ownership remains in Application.",
+      "reason": "M3.5 preserves the realtime notification state bridge while Redux ownership remains in Application.",
       "removeWhen": "S1 moves notification state and actions behind the Notification module public entry."
     },
     {
-      "from": "src/modules/notification/compat/realtime-notifications/ui/NotificationController.tsx",
-      "specifier": "@application/router/navigation",
-      "rule": "layer-direction",
-      "reason": "M2 preserves the existing notification click navigation behavior before route-model extraction.",
-      "removeWhen": "M3 moves notification URL handling to the Application route model."
-    },
-    {
-      "from": "src/modules/notification/compat/realtime-notifications/ui/NotificationController.tsx",
+      "from": "src/modules/notification/realtime-notifications/ui/NotificationController.tsx",
       "specifier": "@legacy/AsyncActions/Message",
       "rule": "legacy-dependency",
-      "reason": "M2 preserves the existing unread-count refresh behavior without moving legacy async actions.",
+      "reason": "M3.5 preserves the existing unread-count refresh behavior without moving legacy async actions.",
       "removeWhen": "S1 moves notification state and refresh behavior behind the Notification module public entry."
     },
     {
-      "from": "src/modules/notification/compat/realtime-notifications/ui/NotificationController.tsx",
+      "from": "src/modules/notification/realtime-notifications/ui/NotificationController.tsx",
       "specifier": "@legacy/Reducers/Message",
       "rule": "legacy-dependency",
-      "reason": "M2 preserves the existing message-count contract without moving legacy reducer types.",
+      "reason": "M3.5 preserves the existing message-count contract without moving legacy reducer types.",
       "removeWhen": "S1 moves notification state and types behind the Notification module public entry."
-    },
-    {
-      "from": "src/modules/notification/compat/realtime-notifications/ui/NotificationController.tsx",
-      "specifier": "@legacy/SignalR",
-      "rule": "legacy-dependency",
-      "reason": "M2 preserves the existing CC98 notification connection and event lifecycle.",
-      "removeWhen": "M3 splits the realtime notification protocol and its SignalR adapter."
     }
   ]
 }

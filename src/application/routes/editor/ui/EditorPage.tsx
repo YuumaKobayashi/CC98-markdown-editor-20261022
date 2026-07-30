@@ -20,9 +20,9 @@ import {
   getTopicInfo,
 } from "@modules/topic";
 import { getMyInfo } from "@modules/session";
-import { getUserWealth } from "@modules/session";
+import { getUserWealth } from "@modules/wealth";
 import { getToken } from "@modules/session";
-import { uploadEvent } from "@modules/posting";
+import { uploadEvent } from "@modules/upload";
 import {
   getLocalStorage,
   removeLocalStorage,

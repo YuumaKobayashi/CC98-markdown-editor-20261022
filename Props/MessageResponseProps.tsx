@@ -1,1 +1,1 @@
-export { MessageResponseProps } from "@modules/message";
+export { MessageResponseProps } from "@modules/notification";

@@ -4,6 +4,7 @@ import { NavLink, Outlet, useLocation } from "react-router";
 import { useAppSelector } from "@application/store";
 import { readAll } from "@modules/notification";
 import { DocumentTitle } from "@foundation/ui/document-title";
+import { parseReadAllNotificationSection } from "../../notifications/model/route";
 
 type MessageSection = "response" | "attme" | "system" | "message" | "setting";
 
@@ -27,7 +28,7 @@ export function MessageLayout() {
   const getCounterClassName = (count: number | undefined) =>
     `message-counterNav${count ? "" : " displaynone"}`;
   const handleReadAll = () => {
-    void readAll();
+    void readAll(parseReadAllNotificationSection(pathname));
   };
 
   return (

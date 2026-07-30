@@ -3,8 +3,10 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router";
 
 import { getMyInfo } from "@modules/session";
-import { getToken } from "@modules/session";
-import { cc98Fetch } from "@foundation/api/http";
+import {
+  getAdvertisements,
+  getMainPageData,
+} from "@modules/site-content";
 import {
   getLocalStorage,
   getStorage,
@@ -201,15 +203,7 @@ const loadAdvertisements = async () => {
   const cached = getStorage("mainAds-v2") as MainPageColumn[] | undefined;
   if (cached) return cached;
 
-  const token = await getToken();
-  const headers = new Headers();
-  headers.append("Authorization", token);
-  headers.append("Content-Type", "application/json");
-  const response = await cc98Fetch("/config/global/advertisement", {
-    method: "GET",
-    headers,
-  });
-  const data = await response.json();
+  const data = await getAdvertisements();
   const ads = data.map(
     (item) =>
       new MainPageColumn(item.imageUrl, item.title, item.url, item.content)
@@ -315,8 +309,7 @@ const loadMainPageData = async () => {
   const cached = getLocalStorage<any>("mainPageData");
   if (cached) return cached;
 
-  const response = await cc98Fetch("/config/index");
-  const data = await response.json();
+  const data = await getMainPageData();
   if (data.hotTopic?.length) {
     setLocalStorage("mainPageData", data, 60);
     setLocalStorage("mainPageHotTopic", data.hotTopic);

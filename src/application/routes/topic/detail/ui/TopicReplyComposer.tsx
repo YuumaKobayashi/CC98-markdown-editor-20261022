@@ -15,10 +15,10 @@ import * as Showdown from "showdown";
 import { RightTagHandler } from "@legacy/Ubb/RightTagHandler";
 import { isMaster } from "@modules/board";
 import { getMyInfo } from "@modules/session";
-import { getUserWealth } from "@modules/session";
+import { getUserWealth } from "@modules/wealth";
 import { getToken } from "@modules/session";
 import { noticeMessageShow } from "@modules/notification";
-import { uploadEvent } from "@modules/posting";
+import { uploadEvent } from "@modules/upload";
 import { findIP } from "@modules/moderation";
 import { atHanderler, quoteJudger } from "@foundation/lib/text";
 import {

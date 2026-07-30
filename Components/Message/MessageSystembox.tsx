@@ -1,1 +1,1 @@
-export { MessageSystembox } from "@modules/message";
+export { MessageSystembox } from "@modules/notification";

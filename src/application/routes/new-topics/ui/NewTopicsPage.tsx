@@ -12,7 +12,7 @@ import {
 } from "@modules/topic";
 import { getAllNewTopic } from "@modules/topic";
 import { getMyInfo } from "@modules/session";
-import { setUserTopicViewMode } from "@modules/session";
+import { setUserTopicViewMode } from "@modules/user-preference";
 import { isLogOn } from "@modules/session";
 import type { FocusTopic } from "@legacy/Props/FocusTopic";
 import type { MyInfo } from "@legacy/States/AppState";

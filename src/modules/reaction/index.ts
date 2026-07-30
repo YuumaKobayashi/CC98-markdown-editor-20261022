@@ -1,1 +1,1 @@
-export * from "./api/legacy-service";
+export * from "./api/service";

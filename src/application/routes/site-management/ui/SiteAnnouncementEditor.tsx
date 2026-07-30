@@ -2,9 +2,12 @@ import * as React from "react";
 import { useEffect, useRef, useState } from "react";
 import { Button, Input } from "antd";
 
-import { getToken, formAuthorizeHeader } from "@modules/session";
+import {
+  changeSiteAnnouncement as updateSiteAnnouncement,
+  clearMainPageCache as refreshMainPageCache,
+  getPublicGlobalConfig,
+} from "@modules/site-content";
 import { UbbContainer } from "@legacy/Components/UbbContainer";
-import { cc98Fetch } from "@foundation/api/http";
 
 const { TextArea } = Input;
 
@@ -15,8 +18,7 @@ export function SiteAnnouncementEditor() {
 
   useEffect(() => {
     const load = async () => {
-      const response = await cc98Fetch("/config/global");
-      const data = await response.json();
+      const data = await getPublicGlobalConfig();
       setAnnouncement(data.announcement);
     };
     void load();
@@ -35,16 +37,7 @@ export function SiteAnnouncementEditor() {
 
   const changeSiteAnnouncement = async () => {
     try {
-      const token = await getToken();
-      const headers = new Headers();
-      headers.append("Authorization", token);
-      headers.append("Content-Type", "application/json");
-      const response = await cc98Fetch("/config/global/announcement", {
-        method: "PUT",
-        headers,
-        body: JSON.stringify({ announcement }),
-      });
-      if (response.status !== 200) throw new Error(response.status.toString());
+      await updateSiteAnnouncement(announcement);
       showTemporaryInfo("修改全站公告成功");
     } catch (error) {
       setInfo(`修改失败${error.message}`);
@@ -53,12 +46,7 @@ export function SiteAnnouncementEditor() {
 
   const clearMainPageCache = async () => {
     try {
-      const headers = await formAuthorizeHeader();
-      const response = await cc98Fetch("/config/index/update", {
-        method: "PUT",
-        headers,
-      });
-      if (response.status !== 200) throw new Error(response.status.toString());
+      await refreshMainPageCache();
       showTemporaryInfo("清除首页缓存成功");
     } catch (error) {
       setInfo(`清除首页缓存失败 ${error.message}`);

@@ -1,1 +1,1 @@
-export { MessageSystemProps } from "@modules/message";
+export { MessageSystemProps } from "@modules/notification";

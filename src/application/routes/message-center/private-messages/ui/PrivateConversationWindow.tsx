@@ -13,14 +13,13 @@ import { useAppDispatch, useAppSelector } from "@application/store";
 import { MessageReceiver, MessageSender } from "@modules/message";
 import {
   getRecentMessage,
+  sendMessage,
   sortRecentMessage,
 } from "@modules/message";
 import { getMyInfo } from "@modules/session";
-import { sendMessage } from "@modules/notification";
-import { uploadFile } from "@modules/posting";
+import { uploadFile } from "@modules/upload";
 import { refreshCurrentMessageCount } from "@legacy/AsyncActions/Message";
-import type { MessagePersonInfo } from "@legacy/Props/MessagePersonInfo";
-import type { MessageProps } from "@legacy/Props/MessageProps";
+import type { MessagePersonInfo, MessageProps } from "@modules/message";
 import { DocumentTitle } from "@foundation/ui/document-title";
 
 type MessageLoadStatus = "more" | "loading" | "done";

@@ -4,10 +4,10 @@ import moment from "moment";
 import ResignCalendar from "@legacy/Components/ReSignCalendar";
 import { UbbEditor } from "@legacy/Components/UbbEditor";
 import {
-  getGlobalConfig,
   getSigninInfo,
   signin,
-} from "@modules/session";
+} from "@modules/daily-signin";
+import { getGlobalConfig } from "@modules/site-content";
 import { getMyInfo } from "@modules/session";
 import {
   removeLocalStorage,

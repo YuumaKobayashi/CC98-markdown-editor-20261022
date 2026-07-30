@@ -1,6 +1,6 @@
 # CC98 前端目录重构执行计划
 
-> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1、A2.2 均已完成；A2.3–A2.11 的代码实施、机械检查和主代理人工代码审核均已完成，A 阶段完成。浏览器、登录、真实 API、权限与 UBB 运行验收未执行；当前停在 M3 前，M3 未获授权。
+> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6 的代码实施、机械检查和主代理人工代码审核均已完成，A、M 阶段完成。浏览器、登录、真实 API、权限、SignalR 与 UBB 运行验收未执行；当前停在 S1 前，S1 未获授权。
 >
 > 架构依据：`docs/frontend-directory-architecture-inventory.md`。
 >
@@ -33,9 +33,54 @@ A2.8 Board                                  已完成（owner 拆分单独人工
 A2.9 Topic Detail                           已完成（人工代码审核通过；运行验收未执行）
 A2.10 Editor                                已完成（按用户规则直接审核通过；运行验收未执行）
 A2.11 Route 迁址收口                        已完成（人工代码审核通过；运行验收未执行）
+M3.1 Account Service                        已完成（主代理逐函数审核通过；运行验收未执行）
+M3.2 Reactions Service                      已完成（主代理逐函数审核通过；运行验收未执行）
+M3.3 Moderation Service                     已完成（主代理逐函数审核通过；运行验收未执行）
+M3.4 Posting Service                        已完成（主代理逐函数审核通过；运行验收未执行）
+M3.5 Message 与 Notification                已完成（主代理逐函数审核通过；运行验收未执行）
+M3.6 Site Content                           已完成（主代理逐函数审核通过；运行验收未执行）
 ```
 
-### 当前停点：A 阶段已完成，停在 M3 前；M3 未获授权
+### 当前停点：A、M 阶段已完成，停在 S1 前；S1 未获授权
+
+### M3.1–M3.6 实施记录（2026-07-30）
+
+实施基线：
+
+```text
+dev20260716  3ce2d08c  docs(a2): record route relocation completion
+```
+
+owner 与合同拆分：
+
+- M3.1 将旧 Account Service 的 9 个函数按合同拆入 Session、Daily Signin、Site Content、Wealth、User Preference 与 Annual Review；AnnualReview 页面、Router 与页面行为继续冻结；
+- M3.2 将点赞/点踩合同归入 Reaction，将奖惩财富合同归入 Post Rating；
+- M3.3 将评分、评价标签与 `PostRatingDialog` 归入 Post Rating，Moderation 仅保留审核管理合同；
+- M3.4 将发帖/编辑归入 Posting，将上传函数归入 Upload；原文件中的整段注释代码与中文注释完整保留；
+- M3.5 将私信数据、类型与 UI 归入 Message，将通知数据、类型、UI、SignalR 与标题闪烁归入 Notification；路由字符串解析仍由 Application 持有，只通过 Notification 根入口绑定导航；
+- M3.6 将首页和站点管理页的共享站点配置请求归入 Site Content；首页 localStorage/sessionStorage 缓存、60 秒 TTL、热点聚合、管理页请求竞态保护与 UI 状态仍留在对应 Route。
+
+保真与人工审核：
+
+- 六个子阶段均由独立子代理实施，主代理在每批后逐函数核对 URL、方法、Headers、body、返回值、异常协议、调用点、生命周期及完整注释，发现的 owner 越界、遗漏函数与 EOF 行尾漂移均在该批通过前修正；
+- Message、Notification 与 Post Rating 的整文件迁址按 blob 或逐行差异复核；类型字段及注释、SignalR 事件名和启停顺序、浏览器通知点击路径、上传 localStorage 键和值、首页缓存键与失效时机均保持不变；
+- 迁移只调整 owner、公共入口和必要 import；未改写业务逻辑、权限判断、Redux/Storage 协议、DOM/CSS、公开 URL 或 Router 序列；
+- 新文件采用所在目录既有文本格式；三个迁入文件中的行尾空格来自原文件并为逐字节保真而保留，不视为新增格式清理。
+
+机械证据：
+
+- `npm run check:architecture`：通过，286 个源码文件、1158 个 import、30 个既有 allowlist；
+- `npm run typecheck`：modern 与 legacy 均通过；
+- 各子阶段 `npm run build` 均通过，最终为 3987 modules transformed；沙箱内因既知 `spawn EPERM` 失败的批次均在允许子进程的环境原样重跑成功；
+- `git diff --check` 对当时已跟踪改动无命中；未跟踪新文件额外空白审计仅命中上述 3 处原文件行尾空格保真例外；旧 compat/legacy service 与深层 import 闭包、Router 路径序列复核、BOM/CRLF/LF/EOF 及注释检查均通过；
+- 构建仍只有既有 Sass `@import`、Spectrum/Lightning CSS 和 chunk-size 警告。
+
+人工检查与停点：
+
+- M3.1–M3.6 均已通过主代理人工代码审核；M 阶段至此完成；
+- 浏览器直达与交互、登录态、真实 API、管理员/非管理员权限、SignalR 多标签与通知权限、上传、编辑器、UBB 及缓存运行行为均未执行，不记为通过；
+- 本批未 commit、未 push，未修改用户本地 `.vscode/`；
+- 当前停止，不实施未获授权的 S1、C1 或 Legacy 收口。
 
 ### A2.3–A2.11 当前实施记录（2026-07-30）
 
@@ -1718,7 +1763,7 @@ R1  增加架构检查脚本                            已完成
 - 检查脚本结果；
 - 无业务行为变化证明。
 
-骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1、A2.2 均已完成；A2.3–A2.11 已完成代码实施、机械检查和主代理人工代码审核，A 阶段完成。浏览器、登录、真实 API、权限与 UBB 运行验收未执行，旧 `/list` 仍仅适用既有免检结论。当前停在 M3 前，M3 未获授权。
+骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6 均已完成代码实施、机械检查和主代理人工代码审核，A、M 阶段完成。浏览器、登录、真实 API、权限、SignalR 与 UBB 运行验收未执行，旧 `/list` 仍仅适用既有免检结论。当前停在 S1 前，S1 未获授权。
 
 ## 22. 已确认决策与后续边界
 
@@ -1733,7 +1778,7 @@ R1  增加架构检查脚本                            已完成
 
 后续仍需单独授权或审核：
 
-1. M3 混合 Service 合同拆分的实施授权与逐批边界；
-2. A2.3–A2.11 尚未执行的浏览器、登录、真实 API、权限、分页、编辑器与 UBB 运行验收；
+1. S1 状态与缓存归位的实施授权与逐批边界；
+2. A2.3–A2.11 与 M3.1–M3.6 尚未执行的浏览器、登录、真实 API、权限、分页、SignalR、通知权限、上传、编辑器、缓存与 UBB 运行验收；
 3. 旧 `/list` 免检边界是否继续保留；
 4. AnnualReview 与 UBB 是否继续冻结。

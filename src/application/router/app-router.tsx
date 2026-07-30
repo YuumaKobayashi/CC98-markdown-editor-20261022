@@ -10,6 +10,9 @@ import { RouterProvider } from "react-router/dom";
 import { AppShell } from "@application/layouts/app-shell";
 import { withRouter } from "@application/router/legacy-route-props";
 import { bindAppNavigate } from "@application/router/navigation";
+import {
+  bindMessageNotificationNavigation,
+} from "@application/routes/message-center/notifications/model/route";
 import * as Status from "@legacy/Components/Status";
 
 type RouteModule = Record<string, unknown>;
@@ -363,6 +366,7 @@ const routes: RouteObject[] = [
 
 export const appRouter = createBrowserRouter(routes);
 bindAppNavigate(appRouter.navigate.bind(appRouter));
+bindMessageNotificationNavigation();
 
 export function AppRouter() {
   return <RouterProvider router={appRouter} />;

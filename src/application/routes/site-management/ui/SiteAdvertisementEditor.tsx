@@ -3,8 +3,11 @@ import { useRef, useState } from "react";
 import { Button, Checkbox, Input, Table } from "antd";
 import moment from "moment";
 
-import { getToken } from "@modules/session";
-import { cc98Fetch } from "@foundation/api/http";
+import {
+  getIndexColumnInfo,
+  putIndexColumnInfo,
+} from "@modules/site-content";
+import type { ForumIndexColumnInfo } from "@modules/site-content";
 
 const columnTypeNames = ["推荐阅读", "推荐功能", "校园新闻", "Banner", "", "", "福利优惠"];
 const urls = [
@@ -16,31 +19,6 @@ const urls = [
   "",
   "/config/global/special-offer",
 ];
-
-interface ForumIndexColumnInfo {
-  id: number;
-  /** 1=推荐阅读，2=推荐功能，3=校园新闻，4=Banner，7=福利优惠 */
-  type: number;
-  /** 必须，Banner表示对Banner的简单描述 */
-  title: string;
-  /** 只有推荐阅读需要 */
-  content: string;
-  /** 校园新闻不需要 */
-  url: string;
-  /** 校园新闻不需要 */
-  imageUrl: string;
-  /** 排序权重，只有推荐阅读和推荐功能需要 */
-  orderWeight: number;
-  /** 是否显示 */
-  enable: boolean;
-  /** Banner和福利优惠需要，大于0的整数 */
-  days: number;
-  /** */
-  isNew: boolean;
-  /** */
-  expiredTime: string;
-  visibility: number;
-}
 
 export function SiteAdvertisementEditor() {
   const [info, setInfo] = useState("");
@@ -54,11 +32,7 @@ export function SiteAdvertisementEditor() {
     setType(urls.indexOf(url) + 1);
     setData([]);
     try {
-      const token = await getToken();
-      const headers = new Headers();
-      headers.append("Authorization", token);
-      const response = await cc98Fetch(`${url}/all`, { headers });
-      const nextData = await response.json();
+      const nextData = await getIndexColumnInfo(url);
       if (requestId.current === currentRequest) setData(nextData);
     } catch (error) {
       if (requestId.current === currentRequest) setInfo(error.message);
@@ -90,19 +64,8 @@ export function SiteAdvertisementEditor() {
   const putCurData = async (index: number) => {
     const item = data[index];
     if (!item) return;
-    const url = item.isNew ? "/index/column/" : `/index/column/${item.id}`;
-    const method = item.isNew ? "POST" : "PUT";
     try {
-      const token = await getToken();
-      const headers = new Headers();
-      headers.append("Authorization", token);
-      headers.append("Content-Type", "application/json");
-      const response = await cc98Fetch(url, {
-        method,
-        headers,
-        body: JSON.stringify(item),
-      });
-      if (response.status !== 200) throw new Error(response.status.toString());
+      await putIndexColumnInfo(item);
       setInfo("修改成功");
     } catch (error) {
       setInfo(error.message);
