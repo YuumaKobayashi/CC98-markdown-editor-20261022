@@ -2,8 +2,8 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 
-import { getMyInfo } from "@modules/user";
-import { getToken } from "@features/auth/api/session";
+import { getMyInfo } from "@modules/session";
+import { getToken } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
 import {
   getLocalStorage,

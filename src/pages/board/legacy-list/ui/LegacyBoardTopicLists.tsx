@@ -16,7 +16,7 @@ import {
   getTopicByOneTag,
   getTopicByTwoTags,
 } from "@modules/topic";
-import { mutliDelete, mutliLock } from "@features/moderation/api/service";
+import { mutliDelete, mutliLock } from "@modules/moderation";
 import type { TopicTitleAndContentState } from "@legacy/States/AppState";
 import { getListTotalPage, getTagLayer } from "@foundation/lib/page";
 import { Pager } from "@foundation/ui/pagination";

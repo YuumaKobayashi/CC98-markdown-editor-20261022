@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { UserRecentTopicItem as Topic } from "@modules/topic";
-import { getToken } from "@features/auth/api/session";
+import { getToken } from "@modules/session";
 import type { UserRecentTopic } from "@legacy/States/AppState";
 import { cc98Fetch } from "@foundation/api/http";
 

@@ -11,7 +11,7 @@ import {
   deleteFavoriteTopic,
   FavoriteTopicGroupSelect,
   setFavoriteTopic,
-} from "@features/favorites";
+} from "@modules/favorite-topic";
 import type { UserRecentTopic } from "@legacy/States/AppState";
 
 type UserCenterFavoriteTopicItemProps = {

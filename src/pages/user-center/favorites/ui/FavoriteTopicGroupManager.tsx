@@ -7,7 +7,7 @@ import {
   deleteFavGroup,
   type FavoriteTopicGroup,
   updateFavGroup,
-} from "@features/favorites";
+} from "@modules/favorite-topic";
 import { NoticeMessage } from "@legacy/Components/NoticeMessage";
 import { noticeMessageShow } from "@legacy/Utility";
 

@@ -2,7 +2,7 @@ import * as State from "@legacy/States/AppState";
 import { getUserInfo } from "@modules/user";
 import { getUsersInfo } from "@modules/user";
 import { setLocalStorage, getLocalStorage } from "@foundation/storage/web-storage";
-import { getToken, formAuthorizeHeader, isLogOn } from "@features/auth/api/session";
+import { getToken, formAuthorizeHeader, isLogOn } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
 import { throwLegacyError } from "@foundation/lib/legacy-utility-effects";
 import { getBoardName } from "@modules/board";

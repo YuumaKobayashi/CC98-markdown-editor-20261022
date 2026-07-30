@@ -1,8 +1,8 @@
 import * as React from "react";
 
 import { Actions, useAppDispatch } from "@application/store";
-import { getMyInfo } from "@modules/user";
-import { refreshUserInfo } from "@features/account/api/service";
+import { getMyInfo } from "@modules/session";
+import { refreshUserInfo } from "@modules/session";
 import { Constants } from "@foundation/config/runtime-config";
 import {
   removeLocalStorage,

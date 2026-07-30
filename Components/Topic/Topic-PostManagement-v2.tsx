@@ -1,1 +1,1 @@
-export { PostManagementDialog as default } from "@features/moderation";
+export { PostManagementDialog as default } from "@modules/moderation";

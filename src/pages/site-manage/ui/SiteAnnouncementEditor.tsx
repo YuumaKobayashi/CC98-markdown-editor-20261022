@@ -2,7 +2,7 @@ import * as React from "react";
 import { useEffect, useRef, useState } from "react";
 import { Button, Input } from "antd";
 
-import { getToken, formAuthorizeHeader } from "@features/auth/api/session";
+import { getToken, formAuthorizeHeader } from "@modules/session";
 import { UbbContainer } from "@legacy/Components/UbbContainer";
 import { cc98Fetch } from "@foundation/api/http";
 

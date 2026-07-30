@@ -11,12 +11,12 @@ import {
   getTopicContent,
   getTraceTopics,
 } from "@modules/topic";
-import { getMyInfo } from "@modules/user";
-import { queryWealth } from "@features/account/api/service";
+import { getMyInfo } from "@modules/session";
+import { queryWealth } from "@modules/session";
 import {
   PostManagementDialog,
   PostRatingDialog,
-} from "@features/moderation";
+} from "@modules/moderation";
 import { TopicAwardList } from "./TopicAwardList";
 import { TopicReplier } from "./TopicReplier";
 import { TopicReplyContent } from "./TopicReplyContent";

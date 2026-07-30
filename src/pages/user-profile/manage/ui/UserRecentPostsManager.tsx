@@ -2,7 +2,7 @@ import * as React from "react";
 import { Link } from "react-router";
 
 import { getBoardName } from "@modules/board";
-import { getToken } from "@features/auth/api/session";
+import { getToken } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
 
 interface UserRecentPostsManagerProps {

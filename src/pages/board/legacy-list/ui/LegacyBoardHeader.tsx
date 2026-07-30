@@ -6,7 +6,7 @@ import {
   followBoard,
   isFollowThisBoard,
   unfollowBoard,
-} from "@features/follow/api/service";
+} from "@modules/follow";
 import { UbbContainer } from "@legacy/Components/UbbContainer";
 
 import { editBigPaper } from "../../api/service";

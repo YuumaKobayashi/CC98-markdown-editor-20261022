@@ -8,8 +8,8 @@ import {
   getTopicInfo,
   getTraceTopicsCount,
 } from "@modules/topic";
-import { getFavState } from "@features/favorites";
-import { noticeMessageShow } from "@features/message/api/service";
+import { getFavState } from "@modules/favorite-topic";
+import { noticeMessageShow } from "@modules/notification";
 import { TopicBreadcrumb } from "@modules/topic";
 import { Pager } from "@foundation/ui/pagination";
 import { QuoteTraceContext, type TopicQuote } from "../model/quote-context";

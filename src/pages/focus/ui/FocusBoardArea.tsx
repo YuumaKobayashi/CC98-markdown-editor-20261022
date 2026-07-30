@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { getBoardName } from "@modules/board";
-import { getMyInfo } from "@modules/user";
+import { getMyInfo } from "@modules/session";
 import type { FocusBoard } from "@legacy/Props/FocusBoard";
 import {
   getStorage,

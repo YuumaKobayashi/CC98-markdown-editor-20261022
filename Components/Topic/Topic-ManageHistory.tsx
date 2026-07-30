@@ -1,1 +1,1 @@
-export { TopicManagementHistoryDialog as default } from "@features/moderation";
+export { TopicManagementHistoryDialog as default } from "@modules/moderation";

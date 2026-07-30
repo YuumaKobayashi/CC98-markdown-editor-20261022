@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { getToken } from "@features/auth/api/session";
+import { getToken } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
 
 interface ForumUserOperation {

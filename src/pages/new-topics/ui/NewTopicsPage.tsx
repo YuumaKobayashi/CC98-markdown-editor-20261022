@@ -11,9 +11,9 @@ import {
   TopicCard,
 } from "@modules/topic";
 import { getAllNewTopic } from "@modules/topic";
-import { getMyInfo } from "@modules/user";
-import { setUserTopicViewMode } from "@features/account/api/service";
-import { isLogOn } from "@features/auth/api/session";
+import { getMyInfo } from "@modules/session";
+import { setUserTopicViewMode } from "@modules/session";
+import { isLogOn } from "@modules/session";
 import type { FocusTopic } from "@legacy/Props/FocusTopic";
 import type { MyInfo } from "@legacy/States/AppState";
 import { pDebounce } from "@foundation/lib/async";

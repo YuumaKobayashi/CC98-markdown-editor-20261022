@@ -1,4 +1,4 @@
-import { formAuthorizeHeader } from "@features/auth/api/session";
+import { formAuthorizeHeader } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
 import { getAccessToken } from "@foundation/storage/web-storage";
 

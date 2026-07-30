@@ -3,7 +3,7 @@ import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
 import { Link } from "react-router";
 
 import { updateUserInfo } from "@modules/user";
-import { getMyInfo } from "@modules/user";
+import { getMyInfo } from "@modules/session";
 import { updateFollowedUser } from "../api/service";
 
 export interface TopicReplierProps {

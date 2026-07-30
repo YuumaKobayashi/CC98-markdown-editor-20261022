@@ -14,12 +14,12 @@ import { MarkdownEditor } from "@foundation/integrations/markdown-editor";
 import * as Showdown from "showdown";
 import { RightTagHandler } from "@legacy/Ubb/RightTagHandler";
 import { isMaster } from "@modules/board";
-import { getMyInfo } from "@modules/user";
-import { getUserWealth } from "@features/account/api/service";
-import { getToken } from "@features/auth/api/session";
-import { noticeMessageShow } from "@features/message/api/service";
-import { uploadEvent } from "@features/posting/api/service";
-import { findIP } from "@features/moderation/api/service";
+import { getMyInfo } from "@modules/session";
+import { getUserWealth } from "@modules/session";
+import { getToken } from "@modules/session";
+import { noticeMessageShow } from "@modules/notification";
+import { uploadEvent } from "@modules/posting";
+import { findIP } from "@modules/moderation";
 import { atHanderler, quoteJudger } from "@foundation/lib/text";
 import {
   getAccessToken,
@@ -32,7 +32,7 @@ import {
   TopicIPData,
   TopicManagementDialog,
   TopicManagementHistoryDialog,
-} from "@features/moderation";
+} from "@modules/moderation";
 var xssFilter = require("showdown-xss-filter");
 
 interface Props {

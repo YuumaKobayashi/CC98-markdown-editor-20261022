@@ -141,11 +141,11 @@
       "removeWhen": "The User contract migration owns UserInfo."
     },
     {
-      "from": "src/modules/user/compat/current-user.ts",
+      "from": "src/modules/session/compat/current-user.ts",
       "specifier": "@legacy/States/AppState",
       "rule": "legacy-dependency",
-      "reason": "M1 keeps the current-session user reader in a compatibility leaf until Session migration.",
-      "removeWhen": "M2 moves the current-session user contract into modules/session."
+      "reason": "M2 preserves the existing current-session MyInfo contract while legacy state types remain frozen.",
+      "removeWhen": "The Session contract migration owns the current-user type."
     },
     {
       "from": "src/modules/user/ui/profile-avatar/UserProfileAvatar.tsx",
@@ -176,11 +176,60 @@
       "removeWhen": "The UBB module migration provides its public options contract."
     },
     {
-      "from": "src/features/auth/api/session.ts",
-      "specifier": "@modules/user/compat/current-user",
-      "rule": "module-public-api",
-      "reason": "M1 keeps the current-session user reader behind a narrow compatibility leaf to avoid evaluating the full User barrel from Auth.",
-      "removeWhen": "M2 moves Auth and the current-session user reader into modules/session and exposes them through the Session public entry."
+      "from": "src/modules/follow/ui/UserFollowCard.tsx",
+      "specifier": "@application/store",
+      "rule": "layer-direction",
+      "reason": "M2 relocates the complete reusable Follow UI while its Redux dispatch contract remains in the Application store.",
+      "removeWhen": "S1 moves Follow actions and state behind the Follow module public entry."
+    },
+    {
+      "from": "src/modules/follow/ui/UserFollowCard.tsx",
+      "specifier": "@legacy/Actions/UserCenter",
+      "rule": "legacy-dependency",
+      "reason": "M2 preserves the existing Follow UI dispatch behavior without moving legacy User Center actions.",
+      "removeWhen": "S1 moves Follow actions and state behind the Follow module public entry."
+    },
+    {
+      "from": "src/modules/follow/ui/UserFollowCard.tsx",
+      "specifier": "@legacy/States/AppState",
+      "rule": "legacy-dependency",
+      "reason": "M2 preserves the existing UserFollowCard props contract without moving legacy user state types.",
+      "removeWhen": "The User contract migration owns the public UserInfo type."
+    },
+    {
+      "from": "src/modules/notification/compat/realtime-notifications/ui/NotificationController.tsx",
+      "specifier": "@application/store",
+      "rule": "layer-direction",
+      "reason": "M2 relocates the complete notification compatibility implementation while Redux ownership remains in Application.",
+      "removeWhen": "S1 moves notification state and actions behind the Notification module public entry."
+    },
+    {
+      "from": "src/modules/notification/compat/realtime-notifications/ui/NotificationController.tsx",
+      "specifier": "@application/router/navigation",
+      "rule": "layer-direction",
+      "reason": "M2 preserves the existing notification click navigation behavior before route-model extraction.",
+      "removeWhen": "M3 moves notification URL handling to the Application route model."
+    },
+    {
+      "from": "src/modules/notification/compat/realtime-notifications/ui/NotificationController.tsx",
+      "specifier": "@legacy/AsyncActions/Message",
+      "rule": "legacy-dependency",
+      "reason": "M2 preserves the existing unread-count refresh behavior without moving legacy async actions.",
+      "removeWhen": "S1 moves notification state and refresh behavior behind the Notification module public entry."
+    },
+    {
+      "from": "src/modules/notification/compat/realtime-notifications/ui/NotificationController.tsx",
+      "specifier": "@legacy/Reducers/Message",
+      "rule": "legacy-dependency",
+      "reason": "M2 preserves the existing message-count contract without moving legacy reducer types.",
+      "removeWhen": "S1 moves notification state and types behind the Notification module public entry."
+    },
+    {
+      "from": "src/modules/notification/compat/realtime-notifications/ui/NotificationController.tsx",
+      "specifier": "@legacy/SignalR",
+      "rule": "legacy-dependency",
+      "reason": "M2 preserves the existing CC98 notification connection and event lifecycle.",
+      "removeWhen": "M3 splits the realtime notification protocol and its SignalR adapter."
     }
   ]
 }

@@ -1,1 +1,1 @@
-export * from "@features/message/title-blinker";
+export * from "@modules/notification";

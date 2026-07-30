@@ -9,8 +9,8 @@ import {
   deleteFavoriteTopic,
   FavoriteTopicGroupSelect,
   setFavoriteTopic,
-} from "@features/favorites";
-import { noticeMessageShow } from "@features/message/api/service";
+} from "@modules/favorite-topic";
+import { noticeMessageShow } from "@modules/notification";
 import { HomeAdvertisementCarousel } from "@pages/home/advertisement";
 import { copyToClipboard } from "@foundation/lib/dom";
 import { NoticeMessage } from "@legacy/Components/NoticeMessage";

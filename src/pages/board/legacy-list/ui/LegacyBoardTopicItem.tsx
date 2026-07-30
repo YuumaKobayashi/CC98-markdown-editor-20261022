@@ -4,7 +4,7 @@ import moment from "moment";
 import { Link } from "react-router";
 
 import { getTagNamebyId } from "@modules/topic";
-import { getMyInfo } from "@modules/user";
+import { getMyInfo } from "@modules/session";
 import type { TopicTitleAndContentState } from "@legacy/States/AppState";
 
 const createPager = (replyCount: number) => {

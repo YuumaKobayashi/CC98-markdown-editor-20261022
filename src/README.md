@@ -10,7 +10,7 @@
 application → modules → foundation
 ```
 
-- `src/application` 是 Application Shell owner，`src/pages` 仍是迁移期 Route owner；`src/features` 是迁移期 Module owner；
+- `src/application` 是 Application Shell owner，`src/pages` 仍是迁移期 Route owner；业务能力统一由 `src/modules` 承载；
 - 第三方适配已经归入 `src/foundation/integrations`；
 - 环境/第三方声明、全局样式入口和 29 个主题已经分别归入 `src/foundation/{types,styles,theme/themes}`；
 - `@types/@cc98` 和 `Styles/{MainPage,UbbEditor,UserCenter,Vote}.scss` 仍由后续业务阶段处理；
@@ -20,4 +20,4 @@ application → modules → foundation
 
 ## 路径别名
 
-目标 alias 为 `@application/*`、`@modules/*`、`@foundation/*`。迁移期继续保留 `@pages/*`、`@features/*`；`@legacy/*` 临时对应仓库根目录。
+目标 alias 为 `@application/*`、`@modules/*`、`@foundation/*`。迁移期继续保留 `@pages/*`；`@legacy/*` 临时对应仓库根目录。

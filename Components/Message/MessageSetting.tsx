@@ -1,1 +1,1 @@
-export { MessageSetting, NoticeSetting } from "@features/message";
+export { MessageSetting, NoticeSetting } from "@modules/notification";

@@ -2,7 +2,7 @@ import { cc98Fetch } from "@foundation/api/http";
 import {
   formAuthorizeHeader,
   getToken,
-} from "@features/auth/api/session";
+} from "@modules/session";
 
 function createJsonHeaders(token: string): Headers {
   const headers = new Headers();

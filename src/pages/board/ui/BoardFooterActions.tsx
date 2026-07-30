@@ -16,7 +16,7 @@ import {
   getTpUsers,
   isMaster,
 } from "@modules/board";
-import { cancelStopBoardPost } from "@features/moderation/api/service";
+import { cancelStopBoardPost } from "@modules/moderation";
 
 import {
   getBoardRecords,

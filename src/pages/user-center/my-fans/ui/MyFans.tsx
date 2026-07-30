@@ -2,7 +2,7 @@ import * as React from "react";
 import { useParams } from "react-router";
 
 import { useAppDispatch, useAppSelector } from "@application/store";
-import { UserFollowCard } from "@features/follow";
+import { UserFollowCard } from "@modules/follow";
 import * as Actions from "@legacy/Actions/UserCenter";
 import { getUserFansInfo } from "@legacy/AsyncActions/UserCenter";
 import type { UserInfo } from "@legacy/States/AppState";

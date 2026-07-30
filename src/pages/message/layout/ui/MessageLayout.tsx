@@ -2,7 +2,7 @@ import * as React from "react";
 import { NavLink, Outlet, useLocation } from "react-router";
 
 import { useAppSelector } from "@application/store";
-import { readAll } from "@features/message/api/service";
+import { readAll } from "@modules/notification";
 import { DocumentTitle } from "@foundation/ui/document-title";
 
 type MessageSection = "response" | "attme" | "system" | "message" | "setting";

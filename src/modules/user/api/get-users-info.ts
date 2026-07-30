@@ -10,7 +10,7 @@ import {
     setLocalStorage
 } from "@foundation/storage/web-storage";
 
-import { formAuthorizeHeader } from "@features/auth/api/session";
+import { formAuthorizeHeader } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
 import { shouldUseIndexedDb } from "@foundation/config/platform";
 

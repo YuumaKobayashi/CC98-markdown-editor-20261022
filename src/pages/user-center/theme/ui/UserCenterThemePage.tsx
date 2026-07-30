@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { useAppDispatch, useAppSelector } from "@application/store";
-import { formAuthorizeHeader } from "@features/auth/api/session";
+import { formAuthorizeHeader } from "@modules/session";
 import * as UserCenterActions from "@legacy/Actions/UserCenter";
 import type { ThemeSetting } from "@legacy/States/AppState";
 import { cc98Fetch } from "@foundation/api/http";

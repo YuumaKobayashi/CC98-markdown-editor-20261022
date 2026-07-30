@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Link } from "react-router";
 
-import { getToken } from "@features/auth/api/session";
+import { getToken } from "@modules/session";
 import type { UserFavoritesBoardInfo } from "@legacy/States/AppState";
 import { cc98Fetch } from "@foundation/api/http";
 

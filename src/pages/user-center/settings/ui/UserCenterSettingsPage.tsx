@@ -1,11 +1,11 @@
 import * as React from "react";
 
 import { useAppDispatch, useAppSelector } from "@application/store";
-import { ConfigSignature } from "@features/account";
+import { ConfigSignature } from "@modules/user";
 import * as UserCenterActions from "@legacy/Actions/UserCenter";
 import { refreshCurrentUserInfo } from "@legacy/AsyncActions/UserCenter";
 import type { ChangeUserInfo } from "@legacy/States/AppState";
-import { getToken } from "@features/auth/api/session";
+import { getToken } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
 
 import {

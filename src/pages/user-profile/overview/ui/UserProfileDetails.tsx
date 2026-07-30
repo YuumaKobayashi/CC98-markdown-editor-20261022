@@ -2,7 +2,7 @@ import * as React from "react";
 import { Tag } from "antd";
 import { Link } from "react-router";
 
-import { followUser, unfollowUser } from "@features/follow";
+import { followUser, unfollowUser } from "@modules/follow";
 import { UbbContainer } from "@legacy/Components/UbbContainer";
 import type { UserInfo } from "@legacy/States/AppState";
 import { UbbCodeOptions } from "@legacy/Ubb/Core";

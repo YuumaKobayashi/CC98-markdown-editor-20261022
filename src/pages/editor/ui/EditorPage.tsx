@@ -19,10 +19,10 @@ import {
   getTopicContent,
   getTopicInfo,
 } from "@modules/topic";
-import { getMyInfo } from "@modules/user";
-import { getUserWealth } from "@features/account/api/service";
-import { getToken } from "@features/auth/api/session";
-import { uploadEvent } from "@features/posting/api/service";
+import { getMyInfo } from "@modules/session";
+import { getUserWealth } from "@modules/session";
+import { getToken } from "@modules/session";
+import { uploadEvent } from "@modules/posting";
 import {
   getLocalStorage,
   removeLocalStorage,

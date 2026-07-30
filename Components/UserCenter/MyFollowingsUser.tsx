@@ -1,1 +1,1 @@
-export { UserFollowCard as default } from "@features/follow";
+export { UserFollowCard as default } from "@modules/follow";

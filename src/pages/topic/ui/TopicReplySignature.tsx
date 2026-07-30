@@ -5,13 +5,13 @@ import moment from "moment";
 import $ from "jquery";
 
 import { isMaster } from "@modules/board";
-import { getMyInfo } from "@modules/user";
+import { getMyInfo } from "@modules/session";
 import {
   dislike,
   like,
   refreshLikeState,
-} from "@features/reactions/api/service";
-import { noticeMessageShow } from "@features/message/api/service";
+} from "@modules/reaction";
+import { noticeMessageShow } from "@modules/notification";
 import { NoticeMessage } from "@legacy/Components/NoticeMessage";
 import { UbbContainer } from "@legacy/Components/UbbContainer";
 import { UbbCodeOptions } from "@legacy/Ubb/UbbCodeExtension";

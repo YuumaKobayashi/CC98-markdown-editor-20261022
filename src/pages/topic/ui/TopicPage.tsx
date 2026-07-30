@@ -5,10 +5,10 @@ import $ from "jquery";
 
 import { getBoardInfo, getBoards } from "@modules/board";
 import { getTopicInfo } from "@modules/topic";
-import { getMyInfo } from "@modules/user";
-import { getFavState } from "@features/favorites";
-import { type NoticeSetting } from "@features/message";
-import { noticeMessageShow } from "@features/message/api/service";
+import { getMyInfo } from "@modules/session";
+import { getFavState } from "@modules/favorite-topic";
+import { type NoticeSetting } from "@modules/notification";
+import { noticeMessageShow } from "@modules/notification";
 import { TopicBreadcrumb } from "@modules/topic";
 import { Pager } from "@foundation/ui/pagination";
 import { getTotalPageof10 } from "@foundation/lib/page";

@@ -15,9 +15,9 @@ import {
   getRecentMessage,
   sortRecentMessage,
 } from "@modules/message";
-import { getMyInfo } from "@modules/user";
-import { sendMessage } from "@features/message/api/service";
-import { uploadFile } from "@features/posting/api/service";
+import { getMyInfo } from "@modules/session";
+import { sendMessage } from "@modules/notification";
+import { uploadFile } from "@modules/posting";
 import { refreshCurrentMessageCount } from "@legacy/AsyncActions/Message";
 import type { MessagePersonInfo } from "@legacy/Props/MessagePersonInfo";
 import type { MessageProps } from "@legacy/Props/MessageProps";

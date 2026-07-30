@@ -1,2 +1,2 @@
 export * from "@foundation/storage/web-storage";
-export { getMyInfo } from "@modules/user";
+export { getMyInfo } from "@modules/session";

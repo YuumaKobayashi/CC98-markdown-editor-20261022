@@ -11,7 +11,7 @@ import {
   defaultFavoriteTopicGroups,
   getFavoriteAllTopic,
   type FavoriteTopicGroup,
-} from "@features/favorites";
+} from "@modules/favorite-topic";
 import * as Actions from "@legacy/Actions/UserCenter";
 import { getFavoritePosts } from "@legacy/AsyncActions/UserCenter";
 import type { UserRecentTopic } from "@legacy/States/AppState";

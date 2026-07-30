@@ -1,7 +1,7 @@
 import { boardInfo } from "../model/board-info";
-import { getMyInfo } from "@modules/user";
+import { getMyInfo } from "@modules/session";
 import { setStorage, getStorage, setLocalStorage, getLocalStorage } from "@foundation/storage/web-storage";
-import { getToken, formAuthorizeHeader } from "@features/auth/api/session";
+import { getToken, formAuthorizeHeader } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
 
 /*

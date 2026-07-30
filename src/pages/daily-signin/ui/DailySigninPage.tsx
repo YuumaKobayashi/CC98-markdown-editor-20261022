@@ -7,8 +7,8 @@ import {
   getGlobalConfig,
   getSigninInfo,
   signin,
-} from "@features/account/api/service";
-import { getMyInfo } from "@modules/user";
+} from "@modules/session";
+import { getMyInfo } from "@modules/session";
 import {
   removeLocalStorage,
   setLocalStorage,

@@ -4,7 +4,7 @@ import { useParams } from "react-router";
 
 import { MessageAttmebox, type MessageResponseProps } from "@modules/message";
 import { getMessageAttme } from "@modules/message";
-import { getTotalPage } from "@features/moderation/api/service";
+import { getTotalPage } from "@modules/moderation";
 import { DocumentTitle } from "@foundation/ui/document-title";
 import { Pager } from "@foundation/ui/pagination";
 

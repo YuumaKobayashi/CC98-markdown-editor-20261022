@@ -1,1 +1,1 @@
-export { PostRatingDialog as default } from "@features/moderation";
+export { PostRatingDialog as default } from "@modules/moderation";

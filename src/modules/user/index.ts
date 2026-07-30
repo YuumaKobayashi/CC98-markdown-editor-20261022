@@ -7,6 +7,6 @@ export {
   getUsersInfo as getCachedUsersInfo,
   removeUserInfo,
 } from "./cache/user-cache";
-export { getMyInfo } from "./compat/current-user";
+export { ConfigSignature } from "./ui/ConfigSignature";
 export { UserProfile } from "./ui/UserProfile";
 export { UserProfileAvatar } from "./ui/profile-avatar";

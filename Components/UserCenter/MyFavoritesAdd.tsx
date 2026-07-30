@@ -1,4 +1,4 @@
 export {
   FavoriteTopicGroupSelect as default,
   FavoriteTopicGroupSelect,
-} from "@features/favorites";
+} from "@modules/favorite-topic";
