@@ -1,6 +1,6 @@
 # CC98 前端目录重构执行计划
 
-> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1 的代码实施、机械检查和人工验收均已完成；M1 未授权。
+> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1 的代码实施、机械检查和人工验收均已完成；M2 未授权。
 >
 > 架构依据：`docs/frontend-directory-architecture-inventory.md`。
 >
@@ -20,50 +20,48 @@ F1-B Foundation 通用 UI 迁址               已完成（含人工验收）
 F1-C Foundation 第三方集成迁址             已完成（含人工验收）
 F1-D 类型、基础样式和主题入口迁址           已完成（含人工验收）
 A1   Application Shell 迁址                 已完成（含人工验收）
+M1   核心数据模块迁址                       已完成（含人工验收）
 ```
 
-### 当前停点：A1 已完成，等待 M1 单独授权
+### 当前停点：M1 已完成，等待 M2 单独授权
 
-本批只迁移已经确认属于 Application Shell 的 18 个源码文件：
+本批已经将 34 个核心 Entity 源文件迁入五个 Module：
 
 ```text
-src/app/{bootstrap,providers,router,store,layouts}
-  → src/application/{bootstrap,providers,router,store,layouts}
-
-src/app/legacy
-  → src/application/compatibility
+src/entities/board    → src/modules/board
+src/entities/topic    → src/modules/topic
+src/entities/post     → src/modules/post
+src/entities/user     → src/modules/user
+src/entities/message  → src/modules/message/compat
 ```
 
-明确不在本批处理：
+其中 User 的当前会话读取暂存于 `modules/user/compat`，Message 的混合 service 暂存于 `modules/message/compat`；合同拆分和最终 owner 调整留待后续批次。
+
+明确未在本批处理：
 
 ```text
 src/pages 的 Route 页面迁址
-src/features、src/entities 和业务 Module 迁址
-Router 路径、lazy、Provider、Store 或 CrossTabSync 重构
-ErrorBoundary 函数化
-业务逻辑、API、Redux schema 和既有缺陷修复
+src/features 的交互 Module 迁址
+States、Props、UBB 和业务类型合同迁址
+Router、Redux、API、缓存时机和 Storage 键重构
 .vscode/
 ```
 
-实施顺序：
+结构结果：
 
-1. 固定 `src/app` 下 18 个 Application Shell 源文件和全部活跃消费者；
-2. 完整迁入 `src/application`，仅将 `legacy` 目录改名为 `compatibility`；
-3. 将活跃 `@app/*` import 和根 Store facade 改到 `@application/*`；
-4. 更新 Vite 开发/构建入口，删除 TypeScript、Vite 和架构检查器中的 `@app` 迁移 alias；
-5. 合并 Application README，删除已经清空的 `src/app`；
-6. 运行保真审计、架构检查、modern/legacy typecheck、正式 build 和 `git diff --check`；
-7. 证明主入口、React Root、Browser Router 和 Router Provider 仍各只有一个；
-8. 单独交付本批审核结果；未经要求不 commit、不 push。
+- 五个 Module 均以根 `index.ts` 作为唯一公共入口；
+- 模块内部使用相对路径，跨模块消费者使用 `@modules/<module>`；
+- Auth → User current-user 保留一条带删除条件的深路径 allowlist；
+- 25 条旧 `States`、`Props`、UBB 合同依赖逐条登记临时 allowlist；
+- 活跃源码和配置中的 `@entities` 为 0，旧 alias 和物理目录已删除。
 
-行为保持条件：
+已知问题：
 
-- Router 路径数组、嵌套关系、lazy loader 和 chunk 边界不变；
-- Provider 顺序仍为 `ErrorBoundary → Provider → CrossTabSync → ConfigProvider → AppRouter`；
-- reducer 仍只有 `error`、`userInfo`、`message`，CrossTabSync handler/key 合同不变；
-- Store hooks、Actions、Router、navigation 和布局导出名不变，ErrorBoundary 保持 class。
+- 单一根 barrel 使 Topic API 与 TopicCard/APlayer/DPlayer、User API 与 UserProfile/UBB 进入相同静态共享图；
+- 正式产物初始静态 JS 从基线 `1,899,118` 字节增至 `1,957,009` 字节，增加 `57,891` 字节；
+- 用户于 2026-07-30 审核后接受该 chunk 重组，不在 M1 改为多级公开入口；后续如优化，必须作为单独获批的公开 API/构建边界批处理。
 
-机械检查通过不代表人工验收通过。本批首页与深链接刷新、lazy 路由切换、Header/Footer、登录/登出导航、错误恢复和双标签页既有行为已由用户于 2026-07-30 人工审核确认通过。
+机械检查通过不代表人工验收通过。M1 的迁址结果、临时 allowlist 和上述已知 chunk 问题已由用户于 2026-07-30 审核确认通过。
 
 ### F1-A 实施记录（2026-07-29）
 
@@ -283,6 +281,38 @@ src/app/legacy
 - 首页与深链接刷新、lazy 路由切换、Header/Footer、登录/登出导航、错误恢复和双标签页既有行为：人工审核通过（用户确认）；
 - A1 人工验收结论由用户于 2026-07-30 确认，并已获得本地提交授权；
 - M1 未授权，不自动进入下一批。
+
+### M1 实施记录（2026-07-30）
+
+基线与范围：
+
+- 基线为 `dev20260716` 的 `3e39037b`；
+- `src/entities/{board,topic,post,user,message}` 下 34 个源码文件已迁入对应 Module，并新增 Board、Message 两个根公共入口；
+- User 查询缓存归入 `cache`，`getMyInfo` 暂存于 `compat`；Message 保持完整混合实现并落入 `message/compat`；
+- 89 个含旧路径的活跃源码、兼容 facade 和模块内部文件完成机械切换，`.vscode/` 未改动。
+
+保真与结构证据：
+
+- 34 个迁址文件按批准的 import/export 变换生成期望内容后逐字节一致，注释、BOM、行尾和 EOF 保持，其中 `board-info.ts` 原有无末尾换行状态保留；
+- Board、Topic、Post、User、Message 均有根 `index.ts`，模块内部不从自己的 barrel 反向导入；
+- 活跃源码与 TypeScript、Vite、架构检查配置中的 `@entities` 为 0，物理 `src/entities` 已删除；
+- 旧兼容 facade 的原导出名和 default export 保持；User 缓存同名查询通过 `getCachedUserInfo`、`getCachedUsersInfo` 在根入口区分，再由旧 IndexedDB facade 映射回原名；
+- `States/**`、`Props/**`、UBB、AnnualReview、Router、Reducers、API 合同、Storage 键和缓存失效时机未迁移或重构。
+
+架构与机械证据：
+
+- `npm run check:architecture`：通过，263 个源码文件、1133 个 import、26 个逐条登记的临时 allowlist；
+- 26 条中，25 条对应 M1 明确冻结的旧类型/Props/UBB 合同，1 条对应 Auth → User current-user 的临时深路径；每条均有原因和删除条件；
+- `npm run typecheck`：modern 与 legacy 均通过；
+- `npm run build`：通过，3941 modules transformed；沙箱内因既知 `spawn EPERM` 失败，在允许子进程的环境原样重跑成功；
+- `git diff --check`：通过；构建仍只有既有 Sass `@import`、Spectrum/Lightning CSS 和 chunk-size 警告。
+
+已知问题与审核结论：
+
+- 与 `3e39037b` 临时基线产物对照后，单一根 barrel 使初始静态共享图增加 `57,891` 字节，并把 TopicCard/APlayer/DPlayer、UserProfile/UBB 与相应 API 合并进共享 chunk；
+- 多级公开 API 子入口可以恢复更细的 lazy 边界，但会改变 M1 已确认的“唯一根入口”规则，因此未擅自实施；
+- 用户于 2026-07-30 审核确认接受当前 chunk 重组，并授权记录该问题和创建本地提交；
+- M2 未授权，不自动进入下一批。
 
 ## 1. 实施结论
 
@@ -1639,7 +1669,7 @@ R1  增加架构检查脚本                            已完成
 - 检查脚本结果；
 - 无业务行为变化证明。
 
-骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1 均已完成代码实施、机械检查和人工验收；当前停在 M1 单独授权之前。
+骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1 均已完成代码实施、机械检查和人工验收；当前停在 M2 单独授权之前。
 
 ## 22. 已确认决策与后续边界
 
@@ -1649,11 +1679,12 @@ R1  增加架构检查脚本                            已完成
 2. 在当前目录直接回退，不创建 worktree；
 3. 丢弃 D1/D2 迁移结果，不保留只读对照；
 4. 第一轮只建骨架、alias 和检查脚本，不迁业务文件；
-5. 未经用户要求，不 commit、不 push。
+5. M1 使用五个 Module 根入口，并接受已记录的共享 chunk 重组；
+6. 未经用户要求，不 commit、不 push。
 
 后续仍需逐批审核：
 
-1. M1 各 Module 的 owner、公开入口和跨模块依赖；
+1. M2 各交互 Module 的 owner、公开入口和跨模块依赖；
 2. 混合 service 的拆分时机；
 3. AnnualReview 与 UBB 是否继续冻结；
 4. 后续各批浏览器、登录、API、权限与 UBB 人工验收范围。
