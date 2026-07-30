@@ -265,7 +265,6 @@ export default defineConfig(({ command }) => ({
       { find: "@application", replacement: path.join(root, "src/application") },
       { find: "@modules", replacement: path.join(root, "src/modules") },
       { find: "@foundation", replacement: path.join(root, "src/foundation") },
-      { find: "@pages", replacement: path.join(root, "src/pages") },
       { find: "@legacy", replacement: root },
       { find: "path", replacement: path.join(root, "node_modules/path-browserify/index.js") },
       { find: /^~antd/, replacement: path.join(root, "node_modules/antd") },

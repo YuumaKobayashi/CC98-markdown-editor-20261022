@@ -228,7 +228,7 @@ const routes: RouteObject[] = [
           {
             path: "setting/*",
             lazy: lazyNamed(
-              () => import("@modules/notification"),
+              () => import("@application/routes/message-center/settings"),
               "MessageSetting"
             ),
           },
