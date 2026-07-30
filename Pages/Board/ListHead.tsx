@@ -1,1 +1,1 @@
-export { BoardTopicToolbar as default } from "@pages/board";
+export { BoardTopicToolbar as default } from "@application/routes/board";

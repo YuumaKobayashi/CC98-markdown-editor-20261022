@@ -1,1 +1,1 @@
-export * from "@pages/board/api/service";
+export * from "@application/routes/board/api/service";

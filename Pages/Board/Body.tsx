@@ -1,1 +1,1 @@
-export { BoardContent as default } from "@pages/board";
+export { BoardContent as default } from "@application/routes/board";

@@ -1,1 +1,1 @@
-export { BoardFooterActions as default } from "@pages/board";
+export { BoardFooterActions as default } from "@application/routes/board";

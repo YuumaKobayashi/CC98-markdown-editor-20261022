@@ -21,7 +21,7 @@ import type { TopicTitleAndContentState } from "@legacy/States/AppState";
 import { getListTotalPage, getTagLayer } from "@foundation/lib/page";
 import { Pager } from "@foundation/ui/pagination";
 
-import { BoardTagPagination } from "../../ui/BoardTagPagination";
+import { BoardTagPagination } from "@application/routes/board";
 import { LegacyBoardTopicItem } from "./LegacyBoardTopicItem";
 
 type BoardRouteParams = {

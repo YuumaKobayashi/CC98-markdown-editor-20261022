@@ -1,1 +1,1 @@
-export { BoardTopicListItem as default } from "@pages/board";
+export { BoardTopicListItem as default } from "@application/routes/board";

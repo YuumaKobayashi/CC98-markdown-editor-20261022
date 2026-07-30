@@ -90,14 +90,14 @@ const routes: RouteObject[] = [
       {
         path: "list/:boardId/:type?/:page?/*",
         lazy: lazyNamed(
-          () => import("@pages/board"),
+          () => import("@application/routes/legacy-board-list"),
           "LegacyBoardPage"
         ),
       },
       {
         path: "boardlist",
         lazy: lazyNamed(
-          () => import("@pages/board-list"),
+          () => import("@application/routes/board-list"),
           "BoardListPage"
         ),
       },
@@ -340,7 +340,7 @@ const routes: RouteObject[] = [
       },
       {
         path: "board/:id/:page?/*",
-        lazy: lazyNamed(() => import("@pages/board"), "BoardPage"),
+        lazy: lazyNamed(() => import("@application/routes/board"), "BoardPage"),
       },
       {
         path: "error/401/*",

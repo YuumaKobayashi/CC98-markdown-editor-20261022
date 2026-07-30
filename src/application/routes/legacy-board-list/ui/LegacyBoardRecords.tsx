@@ -5,7 +5,7 @@ import { getBoardRecord, getBoardTag } from "@modules/board";
 import type { BoardEvent } from "@legacy/States/BoardEvent";
 import { Pager } from "@foundation/ui/pagination";
 
-import { BoardModerationRecordItem } from "../../ui/BoardModerationRecordItem";
+import { BoardModerationRecordItem } from "@application/routes/board";
 
 type BoardRecordRouteParams = {
   boardId?: string;

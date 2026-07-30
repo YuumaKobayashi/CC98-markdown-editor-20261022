@@ -9,7 +9,7 @@ import {
 } from "@modules/follow";
 import { UbbContainer } from "@legacy/Components/UbbContainer";
 
-import { editBigPaper } from "../../api/service";
+import { editBigPaper } from "@application/routes/board/api/service";
 
 interface LegacyBoardHeaderProps {
   boardId: any;

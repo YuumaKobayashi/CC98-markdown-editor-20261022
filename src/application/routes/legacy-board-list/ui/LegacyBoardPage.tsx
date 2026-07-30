@@ -16,8 +16,8 @@ import {
 } from "@legacy/Components/Status";
 import DocumentTitle from "@foundation/ui/document-title";
 
-import { BoardActionsAndAdvertisement } from "../../ui/BoardActionsAndAdvertisement";
-import { BoardBreadcrumb } from "../../ui/BoardBreadcrumb";
+import { BoardActionsAndAdvertisement } from "@application/routes/board";
+import { BoardBreadcrumb } from "@application/routes/board";
 import { LegacyBoardHeader } from "./LegacyBoardHeader";
 import { LegacyBoardRecords } from "./LegacyBoardRecords";
 import {

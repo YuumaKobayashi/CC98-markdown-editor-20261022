@@ -18,16 +18,3 @@ export {
   BoardTopicPreviewCard,
 } from "./ui/BoardTopicListItem";
 export { BoardTopicToolbar } from "./ui/BoardTopicToolbar";
-export {
-  LegacyBoardBestTopicItems,
-  LegacyBoardFeaturedTopics,
-  LegacyBoardHeader,
-  LegacyBoardOneTagTopics,
-  LegacyBoardPage,
-  LegacyBoardRecords,
-  LegacyBoardSavedTopics,
-  LegacyBoardTopTopics,
-  LegacyBoardTopicItem,
-  LegacyBoardTopicList,
-  LegacyBoardTwoTagTopics,
-} from "./legacy-list";

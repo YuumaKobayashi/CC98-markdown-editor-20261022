@@ -4,4 +4,4 @@ export {
   ChildBoardList as ChildBoard,
   RootBoardState,
   ChildBoardState,
-} from "@pages/board-list";
+} from "@application/routes/board-list";

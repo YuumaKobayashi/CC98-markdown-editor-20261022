@@ -4,6 +4,8 @@ export {
   BoardBreadcrumb as Category,
   BoardModerationRecordItem as BoardRecordContent,
   BoardTagPagination as ListTagAndPager,
+} from "@application/routes/board";
+export {
   LegacyBoardBestTopicItems as BestTopics,
   LegacyBoardFeaturedTopics as ListBestContent,
   LegacyBoardHeader as ListHead,
@@ -15,4 +17,4 @@ export {
   LegacyBoardTopicItem as TopicTitleAndContent,
   LegacyBoardTopicList as ListContent,
   LegacyBoardTwoTagTopics as ListTagsContent,
-} from "@pages/board";
+} from "@application/routes/legacy-board-list";
