@@ -1,6 +1,6 @@
 # CC98 前端目录重构执行计划
 
-> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2 的代码实施、机械检查和人工验收均已完成；A2 未授权。
+> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1 的代码实施、机械检查和人工验收均已完成；A2.2 未授权。
 >
 > 架构依据：`docs/frontend-directory-architecture-inventory.md`。
 >
@@ -22,51 +22,61 @@ F1-D 类型、基础样式和主题入口迁址           已完成（含人工�
 A1   Application Shell 迁址                 已完成（含人工验收）
 M1   核心数据模块迁址                       已完成（含人工验收）
 M2   明确边界的交互模块迁址                 已完成（含人工验收）
+A2.1 低耦合 Route 入口迁址                  已完成（含人工验收）
 ```
 
-### 当前停点：M2 已完成，等待 A2 单独授权
+### 当前停点：A2.1 已完成，等待 A2.2 单独授权
 
-本批已经将 27 个交互实现文件迁入对应 Module：
+本批已经将三个低耦合 Route 入口完整迁入 Application：
 
 ```text
-Auth、getMyInfo、Account service  → src/modules/session/{api,compat}
-ConfigSignature                   → src/modules/user/ui
-Favorites                         → src/modules/favorite-topic
-Follow                            → src/modules/follow
-Reactions                         → src/modules/reaction/api/legacy-service.ts
-Moderation                        → src/modules/moderation
-Posting                           → src/modules/posting/api/legacy-service.ts
-Feature Message                   → src/modules/notification/compat
+src/pages/auth/login
+  → src/application/routes/login
+
+src/pages/daily-signin
+  → src/application/routes/daily-signin
+
+src/pages/legacy-index
+  → src/application/routes/legacy-index
 ```
 
-其中 `current-user.ts` 已从 User compat 迁入 Session compat；Account、Reactions、Moderation、Posting 和 Feature Message 的混合合同保持完整，合同拆分留待 M3。
+基线为 `dev20260716` 的 `6534592a`，代码检查点为 `fcdbb296`。六个迁址文件保持既有 `index.ts + ui/` 结构，Router 三个 lazy import 和三个根目录兼容 facade 已切换到 `@application/routes/*`。
 
 明确未在本批处理：
 
 ```text
-src/pages 的 Route 页面迁址和 @pages alias 收口
-混合 Service 的 M3 合同拆分
-States、Props、UBB 和剩余业务类型合同迁址
-Redux schema、API wire shape、缓存时机和 Storage 键重构
-AnnualReview 页面和 NotificationController 运行时挂载
+A2.2 及后续 Route 迁址
+@pages alias 和 src/pages 收口
+登录/签到业务逻辑、API、Redux、Storage、主题与跳转重构
+UBB、补签日历、DOM/CSS、公开 URL 和 Router 顺序修改
+架构检查器、allowlist、M3、S1
 .vscode/
 ```
 
-结构结果：
+保真与结构证据：
 
-- Session、User、Favorite Topic、Follow、Reaction、Moderation、Posting、Notification 均以根 `index.ts` 作为唯一公共入口；
-- 模块内部使用相对路径，跨模块消费者使用 `@modules/<module>`；
-- 原 Auth → User current-user 深路径条目和旧 User current-user 条目已删除；
-- 新增 9 条带原因和删除条件的临时条目，allowlist 总数由 26 条变为 33 条；
-- 活跃源码和配置中的 `@features`、`src/features` 和 Module 深导入为 0，旧 alias 和物理目录已删除。
+- 六个迁址文件的工作树 blob 与原 owner 的 `6534592a` blob 逐一相同，Git 暂存审计均为 `R100`；
+- 注释、BOM、CRLF/LF、EOF、组件逻辑与 `index.ts` 导出合同保持；
+- `/logon`、`/signin/*`、`/index/*` 的 URL、顺序和 lazy export 名称保持；
+- `LoginPage` 的 default/named export、`DailySigninPage`、旧 `Signin`/`ShowSignin` 和旧 `Index` facade 合同保持；
+- 三个旧物理 owner 和对应 `@pages/*` 活跃 import 均为 0；剩余 `@pages` alias 留待 A2.11；
+- login、daily-signin、legacy-index 各自仍生成一个独立 lazy chunk，入口 HTML 不包含这三个 chunk。
 
-已知问题：
+机械证据：
 
-- 相对 `bc554763`，正式产物初始静态 JS 从 `1,957,009` 字节增至 `2,026,289` 字节，增加 `69,280` 字节；
-- `/message/setting` 原 lazy chunk 为 `4,604` 字节，迁址后 `Message-_L85qvKM.js` 为 `12,068` 字节，增加 `7,464` 字节，并进入初始静态共享图；
-- 用户于 2026-07-30 审核后接受该 chunk 重组，不在 M2 增加深层公共入口；后续如优化，必须作为单独获批的公开 API/构建边界批处理。
+- `npm run check:architecture`：通过，266 个源码文件、1128 个 import、33 个既有 allowlist；
+- `npm run typecheck`：modern 与 legacy 均通过；
+- `npm run build`：通过，3969 modules transformed；沙箱内首次运行因既知 `spawn EPERM` 失败，在允许子进程的环境原样重跑成功；
+- `git diff --check` 与六个新位置文件的额外空白检查：通过；
+- 构建仍只有既有 Sass `@import`、Spectrum/Lightning CSS 和 chunk-size 警告。
 
-机械检查通过不代表人工验收通过。M2 的迁址结果、临时 allowlist 和上述已知 chunk 问题已由用户于 2026-07-30 审核确认通过。
+人工检查与停点：
+
+- `/logon` 的直达/刷新、失败提示、成功登录和原地址返回：人工审核通过（用户确认）；
+- `/signin` 的已/未签到、UBB、签到/补签和缓存刷新：人工审核通过（用户确认）；
+- `/index` 的 AppShell 与“CC98论坛”标题：人工审核通过（用户确认）；
+- 三条路由的 back/forward、Header/Footer 和错误边界：人工审核通过（用户确认）；
+- A2.1 人工验收结论由用户于 2026-07-30 确认，并已获得本地提交授权；A2.2 未授权，不自动进入下一批。
 
 ### F1-A 实施记录（2026-07-29）
 
@@ -1709,7 +1719,7 @@ R1  增加架构检查脚本                            已完成
 - 检查脚本结果；
 - 无业务行为变化证明。
 
-骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1 均已完成代码实施、机械检查和人工验收；当前停在 M2 单独授权之前。
+骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1 均已完成代码实施、机械检查和人工验收；当前停在 A2.2 单独授权之前。
 
 ## 22. 已确认决策与后续边界
 
@@ -1724,7 +1734,7 @@ R1  增加架构检查脚本                            已完成
 
 后续仍需逐批审核：
 
-1. M2 各交互 Module 的 owner、公开入口和跨模块依赖；
+1. A2.2 Home、Search、Site Management 的 Route owner、公开入口和跨层依赖；
 2. 混合 service 的拆分时机；
 3. AnnualReview 与 UBB 是否继续冻结；
 4. 后续各批浏览器、登录、API、权限与 UBB 人工验收范围。
