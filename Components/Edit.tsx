@@ -6,7 +6,7 @@ export {
   EditorTagNotice as TagNotice,
   EditorTitleInput as InputTitle,
   HousingTemplateDialog as Tmp,
-} from "@pages/editor";
+} from "@application/routes/editor";
 
 /**
  * 编辑界面的标签。

@@ -334,7 +334,7 @@ const routes: RouteObject[] = [
       {
         path: "editor/:mode/:id?/*",
         lazy: lazyNamed(
-          () => import("@pages/editor"),
+          () => import("@application/routes/editor"),
           "EditorPage"
         ),
       },
