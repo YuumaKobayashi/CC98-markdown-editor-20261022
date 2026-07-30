@@ -2,20 +2,22 @@ import * as React from "react";
 
 import { useAppDispatch } from "@application/store";
 import { synchronizeSessionStorageEvent } from "@modules/session";
+import { synchronizeShowCardUserStorageEvent } from "@modules/user-preference";
 
 type CrossTabStorageHandler = (
   event: StorageEvent,
   dispatch: ReturnType<typeof useAppDispatch>
 ) => void;
 
-/**
- * S1.1 只接管当前用户；showCardUser 仍由 Header 保持到 S1.2。
- */
+/** Application-level cross-tab synchronization handlers. */
 export const crossTabSyncHandlers: Readonly<
   Record<string, CrossTabStorageHandler>
 > = Object.freeze({
   userInfo(event, dispatch) {
     dispatch(synchronizeSessionStorageEvent(event));
+  },
+  showCardUser(event) {
+    synchronizeShowCardUserStorageEvent(event);
   },
 });
 

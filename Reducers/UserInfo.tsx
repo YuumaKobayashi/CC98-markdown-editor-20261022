@@ -6,7 +6,6 @@ import * as ActionTypes from "../ActionTypes";
 import * as Appstate from "../States/AppState";
 import { RootAction } from "../Store";
 import { getMyInfo } from "@modules/session";
-import { getLocalStorage } from "@foundation/storage/web-storage";
 
 /**
  * 用户中心用Store
@@ -97,12 +96,6 @@ export class UserInfoStore {
    * 转账成功的用户名数组
    */
   transferSuccessUsers: string[] = [];
-
-  /**
-   * 是否显示用户信息
-   */
-  showCardUser: boolean = getLocalStorage("showCardUser") === "false" ? false : true;;
-
 
   constructor() {
     const currentUserInfo = getMyInfo() || new Appstate.UserInfo();
@@ -270,9 +263,6 @@ export default (
         ...state,
         hasTotal: { ...state.hasTotal, myfavoriteposts: false },
       };
-    case ActionTypes.CHANGE_USER_INFO_VISIBLE:
-        return { ...state, showCardUser: action.payload.showCardUser };
-
     default:
       return state;
   }

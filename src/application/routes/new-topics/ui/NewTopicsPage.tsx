@@ -4,7 +4,6 @@ import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import $ from "jquery";
 
-import { Actions, useAppDispatch, useAppSelector } from "@application/store";
 import {
   FocusTopicItem,
   NewTopicsBreadcrumb,
@@ -12,16 +11,17 @@ import {
 } from "@modules/topic";
 import { getAllNewTopic } from "@modules/topic";
 import { getMyInfo } from "@modules/session";
-import { setUserTopicViewMode } from "@modules/user-preference";
+import {
+  setShowCardUser,
+  setUserTopicViewMode,
+  useShowCardUser,
+} from "@modules/user-preference";
 import { isLogOn } from "@modules/session";
 import type { FocusTopic } from "@legacy/Props/FocusTopic";
 import type { MyInfo } from "@legacy/States/AppState";
 import { pDebounce } from "@foundation/lib/async";
 import { isBottom } from "@foundation/lib/dom";
-import {
-  setLocalStorage,
-  setStorage,
-} from "@foundation/storage/web-storage";
+import { setStorage } from "@foundation/storage/web-storage";
 import { DocumentTitle } from "@foundation/ui/document-title";
 
 import { NewTopicsBoardSidebar } from "./NewTopicsBoardSidebar";
@@ -85,10 +85,7 @@ const renderMediaOnlyTopic = (item: FocusTopic) => (
  * 全站最新主题页面。
  */
 export function NewTopicsPage() {
-  const dispatch = useAppDispatch();
-  const showCardUser = useAppSelector(
-    (state) => state.userInfo.showCardUser
-  );
+  const showCardUser = useShowCardUser();
   const [myInfo] = useState<MyInfo | null>(() =>
     isLogOn() ? getMyInfo() : null
   );
@@ -232,8 +229,7 @@ export function NewTopicsPage() {
 
   const handleVisibilityChange = (visible: boolean) => {
     debugger;
-    dispatch(Actions.changeUserInfoVisible(visible));
-    setLocalStorage("showCardUser", visible, 0);
+    setShowCardUser(visible);
   };
 
   const classicButtonClassName = `focus-board new-topic${

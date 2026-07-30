@@ -2,9 +2,13 @@ import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import * as React from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 
-import { useAppDispatch, useAppSelector, Actions } from "@application/store";
+import { useAppDispatch, useAppSelector } from "@application/store";
 import { getTopicInfo } from "@modules/topic";
 import { getUserInfo } from "@modules/user";
+import {
+  setShowCardUser,
+  useShowCardUser,
+} from "@modules/user-preference";
 import {
   logOut,
   selectCurrentUser,
@@ -27,9 +31,7 @@ function UserMenu() {
   const isLoggedOn = useAppSelector(selectIsLogOn);
   const userInfo = useAppSelector(selectCurrentUser);
   const messageCount = useAppSelector((state) => state.message);
-  const showCardUser = useAppSelector(
-    (state) => state.userInfo.showCardUser
-  );
+  const showCardUser = useShowCardUser();
   const [hoverElement, setHoverElement] = React.useState<string | null>(null);
 
   const logOff = React.useCallback(() => {
@@ -39,28 +41,6 @@ function UserMenu() {
   }, [dispatch]);
 
   React.useEffect(() => {
-    const handleStorage = (event: StorageEvent) => {
-      if (
-        event.key === "showCardUser" &&
-        event.oldValue !== event.newValue &&
-        event.newValue
-      ) {
-        dispatch(
-          Actions.changeUserInfoVisible(
-            getLocalStorage<string>("showCardUser") === "true"
-          )
-        );
-      }
-    };
-
-    window.addEventListener("storage", handleStorage);
-    return () => window.removeEventListener("storage", handleStorage);
-  }, [dispatch]);
-
-  React.useEffect(() => {
-    const storedVisibility = getLocalStorage<string>("showCardUser");
-    dispatch(Actions.changeUserInfoVisible(storedVisibility !== "false"));
-
     if (isLoggedOn) {
       void dispatch(refreshCurrentMessageCount() as any);
     }
@@ -117,8 +97,7 @@ function UserMenu() {
   };
 
   const handleVisibilityChange = (visible: boolean) => {
-    dispatch(Actions.changeUserInfoVisible(visible));
-    setLocalStorage("showCardUser", visible, 0);
+    setShowCardUser(visible);
   };
 
   return (

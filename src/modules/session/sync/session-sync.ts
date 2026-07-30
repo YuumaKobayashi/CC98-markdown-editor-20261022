@@ -7,10 +7,7 @@ import type { CurrentUser } from "../model/types";
 const parseStoredCurrentUser = (value: string): CurrentUser =>
   JSON.parse(value.slice(4)) as CurrentUser;
 
-/**
- * storage 事件只会发送给其他标签页。S1.1 仅接管 userInfo；
- * showCardUser 继续由 S1.2 迁移。
- */
+/** storage 事件只会发送给其他标签页；此处只处理 Session 的 userInfo。 */
 export function synchronizeSessionStorageEvent(event: StorageEvent) {
   return (dispatch: Dispatch): void => {
     if (event.key !== "userInfo") return;

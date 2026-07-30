@@ -99,9 +99,3 @@ export const userCenterTransferWealthSuccess = createAction(ActionTypes.USER_CEN
 }));
 
 export const changeUserFavoriteTopicGroup = createAction(ActionTypes.USER_CENTER_FAVORITE_GROUP_CHANGE);
-
-
-export const changeUserInfoVisible = createAction(ActionTypes.CHANGE_USER_INFO_VISIBLE, (showCardUser: boolean) => ({
-    type: ActionTypes.CHANGE_USER_INFO_VISIBLE,
-    payload: { showCardUser },
-  }));
