@@ -1,4 +1,4 @@
 export {
   DailySigninPage as ShowSignin,
   DailySigninPage as Signin,
-} from "@pages/daily-signin";
+} from "@application/routes/daily-signin";

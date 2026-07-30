@@ -298,7 +298,7 @@ const routes: RouteObject[] = [
       },
       {
         path: "logon",
-        lazy: lazyDefault(() => import("@pages/auth/login")),
+        lazy: lazyDefault(() => import("@application/routes/login")),
       },
       {
         path: "search/*",
@@ -317,7 +317,7 @@ const routes: RouteObject[] = [
       {
         path: "signin/*",
         lazy: lazyNamed(
-          () => import("@pages/daily-signin"),
+          () => import("@application/routes/daily-signin"),
           "DailySigninPage"
         ),
       },
@@ -346,7 +346,7 @@ const routes: RouteObject[] = [
       {
         path: "index/*",
         lazy: lazyNamed(
-          () => import("@pages/legacy-index"),
+          () => import("@application/routes/legacy-index"),
           "LegacyIndexPage"
         ),
       },
