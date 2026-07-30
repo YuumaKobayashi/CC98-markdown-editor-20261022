@@ -1,6 +1,6 @@
 # CC98 前端目录重构执行计划
 
-> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1 的代码实施、机械检查和人工验收均已完成；M2 未授权。
+> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2 的代码实施、机械检查和人工验收均已完成；A2 未授权。
 >
 > 架构依据：`docs/frontend-directory-architecture-inventory.md`。
 >
@@ -21,47 +21,52 @@ F1-C Foundation 第三方集成迁址             已完成（含人工验收）
 F1-D 类型、基础样式和主题入口迁址           已完成（含人工验收）
 A1   Application Shell 迁址                 已完成（含人工验收）
 M1   核心数据模块迁址                       已完成（含人工验收）
+M2   明确边界的交互模块迁址                 已完成（含人工验收）
 ```
 
-### 当前停点：M1 已完成，等待 M2 单独授权
+### 当前停点：M2 已完成，等待 A2 单独授权
 
-本批已经将 34 个核心 Entity 源文件迁入五个 Module：
+本批已经将 27 个交互实现文件迁入对应 Module：
 
 ```text
-src/entities/board    → src/modules/board
-src/entities/topic    → src/modules/topic
-src/entities/post     → src/modules/post
-src/entities/user     → src/modules/user
-src/entities/message  → src/modules/message/compat
+Auth、getMyInfo、Account service  → src/modules/session/{api,compat}
+ConfigSignature                   → src/modules/user/ui
+Favorites                         → src/modules/favorite-topic
+Follow                            → src/modules/follow
+Reactions                         → src/modules/reaction/api/legacy-service.ts
+Moderation                        → src/modules/moderation
+Posting                           → src/modules/posting/api/legacy-service.ts
+Feature Message                   → src/modules/notification/compat
 ```
 
-其中 User 的当前会话读取暂存于 `modules/user/compat`，Message 的混合 service 暂存于 `modules/message/compat`；合同拆分和最终 owner 调整留待后续批次。
+其中 `current-user.ts` 已从 User compat 迁入 Session compat；Account、Reactions、Moderation、Posting 和 Feature Message 的混合合同保持完整，合同拆分留待 M3。
 
 明确未在本批处理：
 
 ```text
-src/pages 的 Route 页面迁址
-src/features 的交互 Module 迁址
-States、Props、UBB 和业务类型合同迁址
-Router、Redux、API、缓存时机和 Storage 键重构
+src/pages 的 Route 页面迁址和 @pages alias 收口
+混合 Service 的 M3 合同拆分
+States、Props、UBB 和剩余业务类型合同迁址
+Redux schema、API wire shape、缓存时机和 Storage 键重构
+AnnualReview 页面和 NotificationController 运行时挂载
 .vscode/
 ```
 
 结构结果：
 
-- 五个 Module 均以根 `index.ts` 作为唯一公共入口；
+- Session、User、Favorite Topic、Follow、Reaction、Moderation、Posting、Notification 均以根 `index.ts` 作为唯一公共入口；
 - 模块内部使用相对路径，跨模块消费者使用 `@modules/<module>`；
-- Auth → User current-user 保留一条带删除条件的深路径 allowlist；
-- 25 条旧 `States`、`Props`、UBB 合同依赖逐条登记临时 allowlist；
-- 活跃源码和配置中的 `@entities` 为 0，旧 alias 和物理目录已删除。
+- 原 Auth → User current-user 深路径条目和旧 User current-user 条目已删除；
+- 新增 9 条带原因和删除条件的临时条目，allowlist 总数由 26 条变为 33 条；
+- 活跃源码和配置中的 `@features`、`src/features` 和 Module 深导入为 0，旧 alias 和物理目录已删除。
 
 已知问题：
 
-- 单一根 barrel 使 Topic API 与 TopicCard/APlayer/DPlayer、User API 与 UserProfile/UBB 进入相同静态共享图；
-- 正式产物初始静态 JS 从基线 `1,899,118` 字节增至 `1,957,009` 字节，增加 `57,891` 字节；
-- 用户于 2026-07-30 审核后接受该 chunk 重组，不在 M1 改为多级公开入口；后续如优化，必须作为单独获批的公开 API/构建边界批处理。
+- 相对 `bc554763`，正式产物初始静态 JS 从 `1,957,009` 字节增至 `2,026,289` 字节，增加 `69,280` 字节；
+- `/message/setting` 原 lazy chunk 为 `4,604` 字节，迁址后 `Message-_L85qvKM.js` 为 `12,068` 字节，增加 `7,464` 字节，并进入初始静态共享图；
+- 用户于 2026-07-30 审核后接受该 chunk 重组，不在 M2 增加深层公共入口；后续如优化，必须作为单独获批的公开 API/构建边界批处理。
 
-机械检查通过不代表人工验收通过。M1 的迁址结果、临时 allowlist 和上述已知 chunk 问题已由用户于 2026-07-30 审核确认通过。
+机械检查通过不代表人工验收通过。M2 的迁址结果、临时 allowlist 和上述已知 chunk 问题已由用户于 2026-07-30 审核确认通过。
 
 ### F1-A 实施记录（2026-07-29）
 
@@ -313,6 +318,41 @@ src/app/legacy
 - 多级公开 API 子入口可以恢复更细的 lazy 边界，但会改变 M1 已确认的“唯一根入口”规则，因此未擅自实施；
 - 用户于 2026-07-30 审核确认接受当前 chunk 重组，并授权记录该问题和创建本地提交；
 - M2 未授权，不自动进入下一批。
+
+### M2 实施记录（2026-07-30）
+
+基线与范围：
+
+- 基线为 `dev20260716` 的 `bc554763`，代码检查点为 `7d331868`；
+- 26 个 Feature 实现文件及 `current-user.ts` 按 owner 迁入 Session、User、Favorite Topic、Follow、Reaction、Moderation、Posting 和 Notification；
+- 68 个兼容 facade/消费者文件及 User 根入口完成批准范围内的 import/export 机械切换，73 个文件中的 97 处 `@features/*` 引用归零；
+- `src/features`、TypeScript/Vite/架构检查器中的 `@features` alias 已删除，`.vscode/` 未改动；
+- ConfigSignature 归 User；current-user 归 Session；Account、Reactions、Moderation、Posting、Feature Message 的混合合同保持完整，未执行 M3。
+
+保真与结构证据：
+
+- 27 个迁址文件按批准的 import/export 变换生成期望内容后与 `bc554763` blob 逐字节一致，0 个非路径差异；
+- 68 个兼容 facade/消费者文件及 User 根入口按同样规则回退后，0 个非路径差异；
+- 原有逻辑、注释、API、错误行为、Storage/缓存时机、BOM、CRLF/LF 和 EOF 均保持；默认导出和旧 `Utility*`、`Components/*` facade 合同不变；
+- 八个涉及的 Module 均以根 `index.ts` 作为唯一公共入口；模块内部相对导入、跨模块根入口导入，Module 深导入、自 barrel 导入和循环依赖扫描均为 0；
+- `/message/setting` 仍使用原 URL 和 `MessageSetting` 名称，仅将 lazy import 切换到 Notification 根入口；
+- NotificationController 保持未挂载状态；AnnualReview、UBB、Redux schema、Router URL 和 API wire shape 未进入本批。
+
+架构与机械证据：
+
+- `npm run check:architecture`：通过，266 个源码文件、1128 个 import、33 个逐条登记的临时 allowlist；
+- 删除 2 条过时条目并新增 9 条：Session current-user → legacy `MyInfo` 1 条、Follow UI → Application/legacy 3 条、NotificationController → Application/legacy 5 条；每条均记录现存原因及由 S1、M3 或 Legacy 阶段删除的条件；
+- `npm run typecheck`：modern 与 legacy 均通过；
+- `npm run build`：通过，3969 modules transformed；沙箱内因既知 `spawn EPERM` 失败，在允许子进程的环境原样重跑成功；
+- `git diff --check` 与未跟踪新文件额外空白检查：通过；
+- 构建仍只有既有 Sass `@import`、Spectrum/Lightning CSS 和 chunk-size 警告。
+
+已知问题与审核结论：
+
+- 相对 `bc554763`，初始静态 JS 增加 `69,280` 字节；`/message/setting` 对应 chunk 增加 `7,464` 字节并进入初始静态共享图；
+- 不为规避该 chunk 重组新增深层公开入口，也未改变 M2 的“唯一根入口”规则；
+- 用户于 2026-07-30 完成登录态/token、当前用户、收藏、关注、反应、管理评分、发帖编辑上传、消息与通知相关人工审核并确认通过；
+- A2、M3 均未授权，不自动进入下一批。
 
 ## 1. 实施结论
 
