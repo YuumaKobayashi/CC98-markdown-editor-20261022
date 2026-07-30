@@ -2,4 +2,4 @@ export {
   QuoteContext,
   TopicPage as Post,
   TopicPage as ShowTopic,
-} from "@pages/topic";
+} from "@application/routes/topic/detail";

@@ -1,2 +1,2 @@
-export { TopicHeader as TopicInfo } from "@pages/topic";
+export { TopicHeader as TopicInfo } from "@application/routes/topic/detail";
 

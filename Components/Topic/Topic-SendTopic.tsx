@@ -1,2 +1,2 @@
-export { TopicReplyComposer as SendTopic } from "@pages/topic";
-export type { TopicReplyComposerHandle } from "@pages/topic";
+export { TopicReplyComposer as SendTopic } from "@application/routes/topic/detail";
+export type { TopicReplyComposerHandle } from "@application/routes/topic/detail";

@@ -1,2 +1,2 @@
-export { TopicVote as VoteContent } from "@pages/topic";
-export type { voteInfo } from "@pages/topic";
+export { TopicVote as VoteContent } from "@application/routes/topic/detail";
+export type { voteInfo } from "@application/routes/topic/detail";

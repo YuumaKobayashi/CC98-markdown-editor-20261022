@@ -76,14 +76,14 @@ const routes: RouteObject[] = [
       {
         path: "topic/:topicid/:page?",
         lazy: lazyNamed(
-          () => import("@pages/topic"),
+          () => import("@application/routes/topic/detail"),
           "TopicPage"
         ),
       },
       {
         path: "topic/:topicId/postid/:postId/:page?",
         lazy: lazyNamed(
-          () => import("@pages/topic"),
+          () => import("@application/routes/topic/detail"),
           "TrackedTopicPage"
         ),
       },

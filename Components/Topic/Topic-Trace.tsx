@@ -1,4 +1,4 @@
 export {
   QuoteTraceContext,
   TrackedTopicPage as CurUserPost,
-} from "@pages/topic";
+} from "@application/routes/topic/detail";

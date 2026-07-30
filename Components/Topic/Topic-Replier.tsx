@@ -1,1 +1,1 @@
-export { TopicReplier as Replier } from "@pages/topic";
+export { TopicReplier as Replier } from "@application/routes/topic/detail";

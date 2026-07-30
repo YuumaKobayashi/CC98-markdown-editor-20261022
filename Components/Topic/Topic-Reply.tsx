@@ -2,4 +2,4 @@ export {
   ContentState,
   FloorSize,
   TopicReplyList as Reply,
-} from "@pages/topic";
+} from "@application/routes/topic/detail";

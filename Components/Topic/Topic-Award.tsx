@@ -1,1 +1,1 @@
-export { TopicAwardList as Award } from "@pages/topic";
+export { TopicAwardList as Award } from "@application/routes/topic/detail";
