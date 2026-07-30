@@ -3,4 +3,4 @@ export {
   RecommendedTopicsPage,
   AllRecommendedTopic,
   Category,
-} from "@pages/recommended-topics";
+} from "@application/routes/recommended-topics";

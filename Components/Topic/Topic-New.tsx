@@ -2,4 +2,4 @@ export {
   NewTopicsPage as default,
   NewTopicsPage,
   Category,
-} from "@pages/new-topics";
+} from "@application/routes/new-topics";

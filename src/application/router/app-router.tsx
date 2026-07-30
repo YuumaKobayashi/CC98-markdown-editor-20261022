@@ -55,21 +55,21 @@ const routes: RouteObject[] = [
       {
         path: "topic/hot-monthly",
         lazy: lazyNamed(
-          () => import("@pages/hot-topics/monthly"),
+          () => import("@application/routes/topic/hot/monthly"),
           "MonthlyHotTopic"
         ),
       },
       {
         path: "topic/hot-weekly",
         lazy: lazyNamed(
-          () => import("@pages/hot-topics/weekly"),
+          () => import("@application/routes/topic/hot/weekly"),
           "WeeklyHotTopic"
         ),
       },
       {
         path: "topic/hot-history",
         lazy: lazyNamed(
-          () => import("@pages/hot-topics/history"),
+          () => import("@application/routes/topic/hot/history"),
           "HistoryHotTopic"
         ),
       },
@@ -272,12 +272,12 @@ const routes: RouteObject[] = [
       },
       {
         path: "newtopics/*",
-        lazy: lazyDefault(() => import("@pages/new-topics")),
+        lazy: lazyDefault(() => import("@application/routes/new-topics")),
       },
       {
         path: "recommendedtopics/*",
         lazy: lazyNamed(
-          () => import("@pages/recommended-topics"),
+          () => import("@application/routes/recommended-topics"),
           "RecommendedTopicsPage"
         ),
       },

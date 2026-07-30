@@ -1,1 +1,1 @@
-export { RandomRecentTopics as CardRecommendTopic } from "@pages/new-topics";
+export { RandomRecentTopics as CardRecommendTopic } from "@application/routes/new-topics";

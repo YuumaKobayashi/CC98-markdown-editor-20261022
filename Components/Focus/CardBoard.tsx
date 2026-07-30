@@ -1,1 +1,1 @@
-export { NewTopicsBoardSidebar as CardBoard } from "@pages/new-topics";
+export { NewTopicsBoardSidebar as CardBoard } from "@application/routes/new-topics";
