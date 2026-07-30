@@ -1,1 +1,1 @@
-export { FocusBoardArea } from "@pages/focus";
+export { FocusBoardArea } from "@application/routes/focus";

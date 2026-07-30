@@ -1,1 +1,1 @@
-export { FocusLayout as default, FocusLayout } from "@pages/focus/layout";
+export { FocusLayout as default, FocusLayout } from "@application/routes/focus/layout";

@@ -1,2 +1,2 @@
-export { FocusTopicArea } from "@pages/focus";
-export type { FocusTopicAreaProps } from "@pages/focus";
+export { FocusTopicArea } from "@application/routes/focus";
+export type { FocusTopicAreaProps } from "@application/routes/focus";

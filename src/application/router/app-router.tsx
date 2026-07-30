@@ -237,33 +237,33 @@ const routes: RouteObject[] = [
       },
       {
         path: "focus",
-        lazy: lazyDefault(() => import("@pages/focus/layout")),
+        lazy: lazyDefault(() => import("@application/routes/focus/layout")),
         children: [
           {
             index: true,
             lazy: lazyNamed(
-              () => import("@pages/focus"),
+              () => import("@application/routes/focus"),
               "FocusBoardArea"
             ),
           },
           {
             path: "board/*",
             lazy: lazyNamed(
-              () => import("@pages/focus"),
+              () => import("@application/routes/focus"),
               "FocusBoardArea"
             ),
           },
           {
             path: "user/*",
             lazy: lazyNamed(
-              () => import("@pages/focus"),
+              () => import("@application/routes/focus"),
               "FocusUserArea"
             ),
           },
           {
             path: "favorite/*",
             lazy: lazyNamed(
-              () => import("@pages/focus"),
+              () => import("@application/routes/focus"),
               "FocusFavoriteArea"
             ),
           },

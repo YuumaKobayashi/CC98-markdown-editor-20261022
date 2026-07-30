@@ -1,1 +1,1 @@
-export { FocusFavoriteArea } from "@pages/focus";
+export { FocusFavoriteArea } from "@application/routes/focus";
