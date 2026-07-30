@@ -1,6 +1,6 @@
 # CC98 前端目录重构执行计划
 
-> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1、A2.2 的代码实施、机械检查和人工验收均已完成；A2.3 的代码实施、机械检查和人工逐行代码审核已完成，浏览器、登录、API 与权限运行验收未执行；A2.4 已获本次授权但尚未实施。
+> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1、A2.2 均已完成；A2.3–A2.11 的代码实施、机械检查和主代理人工代码审核均已完成，A 阶段完成。浏览器、登录、真实 API、权限与 UBB 运行验收未执行；当前停在 M3 前，M3 未获授权。
 >
 > 架构依据：`docs/frontend-directory-architecture-inventory.md`。
 >
@@ -25,59 +25,57 @@ M2   明确边界的交互模块迁址                 已完成（含人工验�
 A2.1 低耦合 Route 入口迁址                  已完成（含人工验收）
 A2.2 Home、Search、Site Management          已完成（含人工验收）
 A2.3 User Profile                           已完成（人工代码审核通过；运行验收未执行）
+A2.4 User Center                            已完成（人工代码审核通过；运行验收未执行）
+A2.5 Message Center                         已完成（人工代码审核通过；运行验收未执行）
+A2.6 Focus                                  已完成（人工代码审核通过；运行验收未执行）
+A2.7 Topic Discovery                        已完成（人工代码审核通过；运行验收未执行）
+A2.8 Board                                  已完成（owner 拆分单独人工审核通过；运行验收未执行）
+A2.9 Topic Detail                           已完成（人工代码审核通过；运行验收未执行）
+A2.10 Editor                                已完成（按用户规则直接审核通过；运行验收未执行）
+A2.11 Route 迁址收口                        已完成（人工代码审核通过；运行验收未执行）
 ```
 
-### 当前停点：A2.3 代码检查点已完成，A2.4 已获本次授权但尚未实施
+### 当前停点：A 阶段已完成，停在 M3 前；M3 未获授权
 
-本批已经将三个 User Profile Route owner 完整迁入 Application：
+### A2.3–A2.11 当前实施记录（2026-07-30）
 
-```text
-src/pages/user-profile/layout
-  → src/application/routes/user-profile/layout
-
-src/pages/user-profile/overview
-  → src/application/routes/user-profile/overview
-
-src/pages/user-profile/manage
-  → src/application/routes/user-profile/manage
-```
-
-基线为 `dev20260716` 的 `05a92461`，代码检查点为 `3733694b`。12 个迁址文件保持既有 `layout/overview/manage`、根入口和 `ui/` 结构；Router 三个 lazy import 与九个根目录兼容 facade 共 12 行引用已切换到 `@application/routes/user-profile/*`。
-
-明确未在本批处理：
+代码检查点：
 
 ```text
-A2.4 及后续 Route 迁址的代码实施
-@pages alias 和 src/pages 收口
-User Profile 业务逻辑、API、权限、分页、Redux、DOM/CSS 和公开 URL 修改
-架构检查器、allowlist、M3、S1
-.vscode/
+A2.3  User Profile             3733694b（对应文档检查点 5b20bebb）
+A2.4  User Center              b35d9bf9
+A2.5  Message Center           cb2f0b87
+A2.6  Focus                    38af6e31
+A2.7  Topic Discovery          2bec49cc
+A2.8  Board                    25f67f89
+A2.9  Topic Detail             cf8b4008
+A2.10 Editor                   b58d2dce
+A2.11 Route 迁址收口           01df3f50
 ```
 
 保真与结构证据：
 
-- 12 个迁址文件的目标 blob 与原 owner 的 `05a92461` blob 逐一相同，代码检查点审计均为 `R100`：`layout` 3 个、`overview` 4 个、`manage` 5 个；
-- 注释、BOM、LF、EOF、目录内部结构、组件逻辑、相对路径和根入口导出均保持；
-- `/user/:method/:id` 与 `manage/*` 子路由、Router 顺序、lazy default/named export 名称保持；
-- name/id 校验与规范化跳转、管理员导航与管理入口、最近主题滚动分页和最近发言分页合同保持；
-- `layout`、`overview`、`manage` 的 default/named export，以及九个根目录兼容 facade 的公开导出合同保持；
-- 三个旧物理 owner 和对应 `@pages/user-profile/*` 活跃 import 均为 0；剩余 `@pages` alias 留待 A2.11。
+- User Profile、User Center、Message Center、Focus、Topic Discovery、Board、Topic Detail 与 Editor 的 Route owner 已迁入 `src/application/routes`；A2.8 的 Board 与 Legacy Board List 两个 Route owner 拆分由主代理单独人工审核；
+- 迁址批保持既有注释、目录结构、组件逻辑、相对路径、default/named export、兼容 facade 及公开 URL 合同；旧 owner 和对应 `@pages/*` 活跃引用逐批闭包；
+- A2.11 删除空的 `src/pages`，移除 TypeScript、Vite 与架构检查器中的 `@pages` alias；活跃源码和配置中的 `@pages`、`src/pages` 使用均为 0，历史文档叙述保留；
+- Router 的 45 个动态 import 全部指向 `@application/routes/*` 公共入口；从 Router 提取的 55 项 `path`、`index` 与 `Navigate to` 序列相对 `2a69a0f0` 差异为 0；
+- A2.10 的 9 个迁址文件均为 `R100`，另只有 4 行必要引用替换，按用户“机械移动后引用改动不超过 10 行可直接通过”的规则由主代理直接审核通过；
+- A2.3–A2.11 未实施 M3、S1、UBB 或 AnnualReview 迁移，未修改业务逻辑、API、权限、Redux、Storage、DOM/CSS 或公开 URL。
 
 机械证据：
 
-- `npm run check:architecture`：通过，266 个源码文件、1128 个 import、33 个既有 allowlist；
+- 各批 `npm run check:architecture` 均通过；A2.11 最终结果为 267 个源码文件、1128 个 import、33 个既有 allowlist；
 - `npm run typecheck`：modern 与 legacy 均通过；
-- `npm run build`：通过，3969 modules transformed；沙箱内首次运行因既知 `spawn EPERM` 失败，在允许子进程的环境原样重跑成功；
-- `git diff --check`、旧 owner/旧 alias 全仓闭包检查和 12 个新位置文件的 blob/BOM/LF/EOF 检查：通过；
+- `npm run build`：通过，3970 modules transformed；沙箱内因既知 `spawn EPERM` 失败的批次均在允许子进程的环境原样重跑成功；
+- `git diff --check`、旧 owner/旧 alias 全仓闭包、Router 入口与 URL 序列检查，以及各迁址批的 blob/BOM/行尾/EOF 检查：通过；
 - 构建仍只有既有 Sass `@import`、Spectrum/Lightning CSS 和 chunk-size 警告。
 
 人工检查与停点：
 
-- 主代理已逐行审核 Router 三行与九个兼容 facade 共 12 行引用替换，确认全部只指向对应迁址 owner，无业务逻辑、注释、URL 或导出合同改动，人工代码审核通过；
-- 主代理已审核 12 个 `R100` 迁址及 name/id 规范化、管理权限和最近主题/发言分页实现，确认与 `05a92461` 一致；
-- `/user/name/:id`、`/user/id/:id` 与 `/manage` 的浏览器直达、刷新、back/forward 和规范化跳转：未执行；
-- 登录态、真实 API、管理员/非管理员权限、最近主题滚动加载与最近发言分页的运行验收：未执行；
-- 用户本次已整体授权 A 阶段剩余子阶段；下一批 A2.4 授权有效但尚未实施，本检查点未进入 A2.4。
+- A2.3–A2.11 各批主代理人工代码审核均已通过；A2.8 owner 拆分单独审核，A2.10 按上述用户规则直接通过；
+- 浏览器直达、刷新、back/forward、登录态、真实 API、管理员/非管理员权限、分页与滚动加载、编辑器及 UBB 行为运行验收：均未执行，不记为通过；
+- 旧 `/list` 路由仍只保留既有免检结论，不改写为人工验收通过；
+- A 阶段至此完成；当前停止，不实施未获授权的 M3。
 
 ### F1-A 实施记录（2026-07-29）
 
@@ -1720,7 +1718,7 @@ R1  增加架构检查脚本                            已完成
 - 检查脚本结果；
 - 无业务行为变化证明。
 
-骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1、A2.2 均已完成代码实施、机械检查和人工验收；A2.3 已完成代码实施、机械检查和人工逐行代码审核，浏览器、登录、API 与权限运行验收未执行。当前停在 A2.3 代码检查点之后；A2.4 已获本次授权但尚未实施。
+骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1、A2.2 均已完成；A2.3–A2.11 已完成代码实施、机械检查和主代理人工代码审核，A 阶段完成。浏览器、登录、真实 API、权限与 UBB 运行验收未执行，旧 `/list` 仍仅适用既有免检结论。当前停在 M3 前，M3 未获授权。
 
 ## 22. 已确认决策与后续边界
 
@@ -1733,10 +1731,9 @@ R1  增加架构检查脚本                            已完成
 5. M1 使用五个 Module 根入口，并接受已记录的共享 chunk 重组；
 6. 未经用户要求，不 commit、不 push。
 
-后续仍需逐批审核：
+后续仍需单独授权或审核：
 
-1. A2.4 User Center 的 Route owner、公开入口和跨层依赖；
-2. A2.3 尚未执行的浏览器、登录、真实 API、权限与分页运行验收；
-3. 混合 service 的拆分时机；
-4. AnnualReview 与 UBB 是否继续冻结；
-5. 后续各批浏览器、登录、API、权限与 UBB 人工验收范围。
+1. M3 混合 Service 合同拆分的实施授权与逐批边界；
+2. A2.3–A2.11 尚未执行的浏览器、登录、真实 API、权限、分页、编辑器与 UBB 运行验收；
+3. 旧 `/list` 免检边界是否继续保留；
+4. AnnualReview 与 UBB 是否继续冻结。
