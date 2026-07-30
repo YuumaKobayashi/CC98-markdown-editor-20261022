@@ -1,6 +1,6 @@
 # CC98 前端目录重构执行计划
 
-> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6 的代码实施、机械检查和主代理人工代码审核均已完成，A、M 阶段完成。S1 Redux 消费审计和计划细化已完成，但 S1 代码实施仍未获授权。浏览器、登录、真实 API、权限、SignalR 与 UBB 运行验收未执行；当前停在 S1.1 前。
+> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1 的代码实施、机械检查和主代理人工代码审核均已完成，A、M 阶段完成，S1 已启动。浏览器、登录、真实 API、权限、SignalR、跨标签与 UBB 运行验收未执行；当前停在 S1.1 人工验收前，不启动 S1.2。
 >
 > 架构依据：`docs/frontend-directory-architecture-inventory.md`。
 >
@@ -40,9 +40,10 @@ M3.4 Posting Service                        已完成（主代理逐函数审核
 M3.5 Message 与 Notification                已完成（主代理逐函数审核通过；运行验收未执行）
 M3.6 Site Content                           已完成（主代理逐函数审核通过；运行验收未执行）
 S1.0 Redux 消费与 Storage 合同审计          已完成（仅计划细化；未实施代码）
+S1.1 Session 与跨标签同步                   已完成（人工代码审核通过；运行验收未执行）
 ```
 
-### 当前停点：A、M 阶段已完成，S1 计划已细化；停在 S1.1 前，S1 代码未获授权
+### 当前停点：S1.1 代码与机械检查已完成；停在人工验收前，不启动 S1.2
 
 ### M3.1–M3.6 实施记录（2026-07-30）
 
@@ -81,7 +82,7 @@ owner 与合同拆分：
 - M3.1–M3.6 均已通过主代理人工代码审核；M 阶段至此完成；
 - 浏览器直达与交互、登录态、真实 API、管理员/非管理员权限、SignalR 多标签与通知权限、上传、编辑器、UBB 及缓存运行行为均未执行，不记为通过；
 - 本批未 commit、未 push，未修改用户本地 `.vscode/`；
-- 当前停止，不实施未获授权的 S1 代码、C1 或 Legacy 收口。
+- M3 批次结束时停止在 S1.1 前；后续 S1.1 已获单独授权并完成，当前停点见上文。
 
 ### A2.3–A2.11 当前实施记录（2026-07-30）
 
@@ -1563,6 +1564,16 @@ Home、New Topics、Recommended Topics、Random Topics 和 Focus 的既有页面
 
 ### S1.1 Session 与跨标签同步
 
+状态：代码实施、机械检查和主代理人工代码审核已完成；浏览器、登录、真实 API、锁定用户与双标签运行验收未执行，当前停在人工验收前。
+
+实施结果：
+
+- Session Module 已建立 `model`、`persistence` 和 `sync`，根入口统一公开登录、登出、当前用户更新、刷新、selector 与现有非 Redux Session 兼容接口；
+- Application Store 已注册 Session reducer；legacy `userInfo` 不再保存 `isLogOn` 或 `currentUserInfo`，旧 thunk 和组件的对应消费均已迁移；
+- 当前标签页写入 `userInfo` 后立即更新 Session，其他标签页由唯一的 `CrossTabSync` 处理；Header 仅暂留 S1.2 才迁移的 `showCardUser` listener；
+- 保留现有 Storage 键、编码、TTL、锁定用户处理、登录提示、100ms 返回、刷新时机、四类清理范围、主题复位与页面跳转；
+- `npm run check:architecture` 通过（292 个源码文件、1194 个 import、29 个有条件 allowlist），modern/legacy typecheck、正式 build（3992 modules transformed）和 `git diff --check` 均通过；构建只有既有 Sass、Lightning CSS 与 chunk-size 警告。
+
 目标目录：
 
 ```text
@@ -1793,7 +1804,7 @@ User Center
 - Redux 终态采用 Session 与 Notification unread 两个业务 slice；Application Error 退出 Redux；
 - 采用严格保真迁移，已知缺陷单独登记；
 - AnnualReview、UBB、公开 URL、API wire shape、DOM/CSS、Storage 键/TTL 和 `.vscode/` 不进入 S1 修改范围；
-- S1 计划细化不等于代码实施授权；当前仍停在 S1.1 前。
+- S1.1 已按单独授权完成代码与机械检查；当前停在 S1.1 人工验收前，未经授权不启动 S1.2。
 
 ## 16. C1：样式与主题归位
 
@@ -2030,7 +2041,7 @@ R1  增加架构检查脚本                            已完成
 - 检查脚本结果；
 - 无业务行为变化证明。
 
-骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6 均已完成代码实施、机械检查和主代理人工代码审核，A、M 阶段完成。S1 Redux 消费审计和计划细化已完成，但未实施代码。浏览器、登录、真实 API、权限、SignalR 与 UBB 运行验收未执行，旧 `/list` 仍仅适用既有免检结论。当前停在 S1.1 前，S1 代码未获授权。
+骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1 均已完成代码实施、机械检查和主代理人工代码审核，A、M 阶段完成，S1 已启动。浏览器、登录、真实 API、权限、SignalR、跨标签与 UBB 运行验收未执行，旧 `/list` 仍仅适用既有免检结论。当前停在 S1.1 人工验收前，不启动 S1.2。
 
 ## 22. 已确认决策与后续边界
 
@@ -2047,7 +2058,7 @@ R1  增加架构检查脚本                            已完成
 
 后续仍需单独授权或审核：
 
-1. S1.1–S1.7 状态与缓存归位的代码实施授权及每批人工验收；
+1. S1.1 人工验收，以及 S1.2–S1.7 状态与缓存归位的代码实施授权和每批人工验收；
 2. A2.3–A2.11 与 M3.1–M3.6 尚未执行的浏览器、登录、真实 API、权限、分页、SignalR、通知权限、上传、编辑器、缓存与 UBB 运行验收；
 3. 旧 `/list` 免检边界是否继续保留；
 4. AnnualReview 与 UBB 是否继续冻结。

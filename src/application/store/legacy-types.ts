@@ -1,6 +1,7 @@
 import type { ErrorStore } from "@legacy/Reducers/Error";
 import type { MessageInfo } from "@legacy/Reducers/Message";
 import type { UserInfoStore } from "@legacy/Reducers/UserInfo";
+import type { SessionState } from "@modules/session";
 
 type LegacyActionCreators =
   & typeof import("@legacy/Actions/UserCenter")
@@ -9,11 +10,12 @@ type LegacyActionCreators =
 
 type LegacyThunkActionCreators = typeof import("@legacy/AsyncActions");
 
-/** The three reducer branches that remain live after Router owns URL state. */
+/** S1.1 adds Session while the remaining legacy branches await later S1 batches. */
 export interface RootState {
   error: ErrorStore;
   userInfo: UserInfoStore;
   message: MessageInfo;
+  session: SessionState;
 }
 
 /** Compatibility union for existing reducer and thunk annotations. */

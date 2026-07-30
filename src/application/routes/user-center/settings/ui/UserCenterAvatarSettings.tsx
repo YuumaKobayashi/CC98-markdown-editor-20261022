@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { useAppDispatch, useAppSelector } from "@application/store";
-import { getToken } from "@modules/session";
+import { getToken, selectCurrentUser } from "@modules/session";
 import { refreshCurrentUserInfo } from "@legacy/AsyncActions/UserCenter";
 import { cc98Fetch } from "@foundation/api/http";
 
@@ -63,7 +63,7 @@ const defaultAvatarFiles = [
  */
 export function UserCenterAvatarSettings() {
   const dispatch = useAppDispatch();
-  const userInfo = useAppSelector((state) => state.userInfo.currentUserInfo);
+  const userInfo = useAppSelector(selectCurrentUser);
   const [state, setState] = React.useState<AvatarSettingsState>(() => ({
     avatarURL: "",
     info: "",

@@ -5,28 +5,17 @@
 import * as ActionTypes from "../ActionTypes";
 import * as Appstate from "../States/AppState";
 import { RootAction } from "../Store";
-import { addUserInfo } from "@modules/user";
 import { getMyInfo } from "@modules/session";
-import { isLogOn } from "@modules/session";
-import { getLocalStorage, setLocalStorage } from "@foundation/storage/web-storage";
+import { getLocalStorage } from "@foundation/storage/web-storage";
 
 /**
  * 用户中心用Store
  */
 export class UserInfoStore {
   /**
-   * 表示用户是否登录
-   */
-  isLogOn: boolean = isLogOn();
-  /**
    * 当前组件是否正在加载
    */
   isLoading: boolean = false;
-  /**
-   * 表示当前登录用户的用户信息
-   */
-  currentUserInfo: Appstate.UserInfo =
-    getMyInfo() || new Appstate.UserInfo();
   /**
    * 表示当前访问的用户页的页面状态
    */
@@ -116,10 +105,11 @@ export class UserInfoStore {
 
 
   constructor() {
+    const currentUserInfo = getMyInfo() || new Appstate.UserInfo();
     this.totalPage.myfollowings = Math.ceil(
-      this.currentUserInfo.followCount / 10
+      currentUserInfo.followCount / 10
     );
-    this.totalPage.myfans = Math.ceil(this.currentUserInfo.fanCount / 10);
+    this.totalPage.myfans = Math.ceil(currentUserInfo.fanCount / 10);
   }
 }
 
@@ -152,14 +142,9 @@ export default (
   action: RootAction
 ): UserInfoStore => {
   switch (action.type) {
-    case ActionTypes.USER_LOG_ON:
-      return { ...state, isLogOn: true, ...new UserInfoStore() };
-    case ActionTypes.USER_LOG_OFF:
-      return { ...state, isLogOn: false };
-    case ActionTypes.CHANGE_USERINFO:
-      setLocalStorage("userInfo", action.payload.newInfo, 2592000);
-      addUserInfo(action.payload.newInfo);
-      return { ...state, currentUserInfo: action.payload.newInfo };
+    case ActionTypes.RESET_USER_INFO_AFTER_LOGIN:
+      // 原 USER_LOG_ON 会重建尚未迁移的用户中心页面状态。
+      return { ...state, ...new UserInfoStore() };
     case ActionTypes.CHANGE_VISITING_USER:
       return {
         ...state,

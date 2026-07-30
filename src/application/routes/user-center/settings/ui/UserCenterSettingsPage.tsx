@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { useAppDispatch, useAppSelector } from "@application/store";
 import { ConfigSignature } from "@modules/user";
+import { selectCurrentUser } from "@modules/session";
 import * as UserCenterActions from "@legacy/Actions/UserCenter";
 import { refreshCurrentUserInfo } from "@legacy/AsyncActions/UserCenter";
 import type { ChangeUserInfo } from "@legacy/States/AppState";
@@ -23,9 +24,7 @@ import { UserCenterProfileSettings } from "./UserCenterProfileSettings";
  */
 export function UserCenterSettingsPage() {
   const dispatch = useAppDispatch();
-  const currentUserInfo = useAppSelector(
-    (state) => state.userInfo.currentUserInfo
-  );
+  const currentUserInfo = useAppSelector(selectCurrentUser);
 
   // 获取用户信息与修改用户信息的 API 字段名不完全一致，
   // 因此先转换成修改 API 所需、并便于表单编辑的数据结构。

@@ -2,9 +2,7 @@ import * as ActionTypes from '../ActionTypes';
 import * as Appstate from '../States/AppState';
 import { createAction } from './ActionCreator';
 
-export const userLogIn = createAction(ActionTypes.USER_LOG_ON);
-
-export const userLogOff = createAction(ActionTypes.USER_LOG_OFF);
+export const resetUserInfoAfterLogin = createAction(ActionTypes.RESET_USER_INFO_AFTER_LOGIN);
 
 export const usercenterPageLoadUnfinish = createAction(ActionTypes.USER_CENTER_PAGE_LOAD_UNFINISH);
 
@@ -21,11 +19,6 @@ export const userCenterSolveError = createAction(ActionTypes.USER_CENTER_SOLVE_E
 export const usercenterPageLoadFinish = createAction(ActionTypes.USER_CENTER_PAGE_LOAD_FINISH, (totalPage: number) => ({
     type: ActionTypes.USER_CENTER_PAGE_LOAD_FINISH,
     payload: { totalPage }
-}));
-
-export const changeUserInfo = createAction(ActionTypes.CHANGE_USERINFO, (newInfo: Appstate.UserInfo ) => ({
-    type: ActionTypes.CHANGE_USERINFO,
-    payload: { newInfo }
 }));
 
 export const changeCurrentVisitingUserPage = createAction(ActionTypes.CHANGE_VISITING_USER, (page: 'exact' | 'manage' = 'exact', id: number) => ({

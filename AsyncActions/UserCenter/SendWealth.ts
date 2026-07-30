@@ -4,6 +4,10 @@ import * as Actions from '../../Actions/UserCenter';
 import * as Appstate from '../../States/AppState';
 import { RootState, RootAction } from '../../Store';
 import * as Utility from '../../Utility';
+import {
+    selectCurrentUser,
+    updateCurrentUser,
+} from "@modules/session";
 
 /**
  * 给指定用户转账
@@ -36,9 +40,11 @@ export const sendWealth: ActionCreator<ThunkAction<Promise<Action>, RootState, v
         // 服务器返回转账成功的用户名数组
         const successNames: string[] = await res.json();
         // 更新store中的信息，减掉相应的财富值
-        const userInfo = getState().userInfo.currentUserInfo;
-        userInfo.wealth -= successNames.length * wealth;
-        dispatch(Actions.changeUserInfo(userInfo));
+        const userInfo = selectCurrentUser(getState());
+        dispatch(updateCurrentUser({
+            ...userInfo,
+            wealth: userInfo.wealth - successNames.length * wealth,
+        }) as any);
         dispatch(Actions.userCenterTransferWealthSuccess(successNames));
         return dispatch(Actions.userCenterLoaded());
     } catch (e) {

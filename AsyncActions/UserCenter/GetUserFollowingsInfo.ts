@@ -5,6 +5,7 @@ import * as Appstate from '../../States/AppState';
 import { RootState, RootAction } from '../../Store';
 import * as Utility from '../../Utility';
 import { getUsersInfo } from '../../Utility/Fetch/getUsersInfo';
+import { selectCurrentUser } from "@modules/session";
 
 /**
  * 获取用户的关注信息
@@ -16,7 +17,7 @@ export const getUserFollowingsInfo: ActionCreator<ThunkAction<Promise<Action>, R
         dispatch(Actions.userCenterLoading());
         const store = getState().userInfo;
         // 没有关注
-        if (store.currentUserInfo.followCount === 0) {
+        if (selectCurrentUser(getState()).followCount === 0) {
             return dispatch(Actions.userCenterLoaded());
         }
         // 如果未请求完所有帖子并且帖子总数小于请求的页数

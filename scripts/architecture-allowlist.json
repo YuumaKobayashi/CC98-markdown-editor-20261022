@@ -134,13 +134,6 @@
       "removeWhen": "The User contract migration owns UserInfo."
     },
     {
-      "from": "src/modules/session/compat/current-user.ts",
-      "specifier": "@legacy/States/AppState",
-      "rule": "legacy-dependency",
-      "reason": "M2 preserves the existing current-session MyInfo contract while legacy state types remain frozen.",
-      "removeWhen": "The Session contract migration owns the current-user type."
-    },
-    {
       "from": "src/modules/user/ui/profile-avatar/UserProfileAvatar.tsx",
       "specifier": "@legacy/States/AppState",
       "rule": "legacy-dependency",

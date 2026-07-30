@@ -2,20 +2,17 @@ import * as React from "react";
 import { Link } from "react-router";
 
 import { useAppSelector } from "@application/store";
+import { selectCurrentUser } from "@modules/session";
 
 export function UserProfileNavigation() {
-  const currentUserPrivilege = useAppSelector(
-    (state) => state.userInfo.currentUserInfo.privilege
-  );
+  const currentUser = useAppSelector(selectCurrentUser);
   const currentVisitingUserPage = useAppSelector(
     (state) => state.userInfo.currentVisitingUserPage
   );
   const currentVisitingUserId = useAppSelector(
     (state) => state.userInfo.currentVisitingUserId
   );
-  const currentUserId = useAppSelector(
-    (state) => state.userInfo.currentUserInfo.id
-  );
+  const currentUserId = currentUser.id;
 
   return (
     <div className="user-center-navigation" id="userCenterNavigation">
@@ -43,7 +40,7 @@ export function UserProfileNavigation() {
           </li>
         ) : null}
         <hr />
-        {currentUserPrivilege === "管理员" ? (
+        {currentUser.privilege === "管理员" ? (
           <li>
             <Link
               to={`/user/id/${currentVisitingUserId}/manage`}

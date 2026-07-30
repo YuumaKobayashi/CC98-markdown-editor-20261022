@@ -1,8 +1,11 @@
 import * as React from "react";
 
 import { useAppDispatch, useAppSelector } from "@application/store";
-import { formAuthorizeHeader } from "@modules/session";
-import * as UserCenterActions from "@legacy/Actions/UserCenter";
+import {
+  formAuthorizeHeader,
+  selectCurrentUser,
+  updateCurrentUser,
+} from "@modules/session";
 import type { ThemeSetting } from "@legacy/States/AppState";
 import { cc98Fetch } from "@foundation/api/http";
 import { themeList, type ThemeItem } from "@foundation/theme/registry";
@@ -15,7 +18,7 @@ import {
 
 export function UserCenterThemePage() {
   const dispatch = useAppDispatch();
-  const userInfo = useAppSelector((state) => state.userInfo.currentUserInfo);
+  const userInfo = useAppSelector(selectCurrentUser);
 
   const handleThemeSettingChange = async (
     setting: ThemeSetting
@@ -34,7 +37,7 @@ export function UserCenterThemePage() {
 
       const theme = getRealThemeNumber(userInfo.theme, setting);
       dispatch(
-        UserCenterActions.changeUserInfo({
+        updateCurrentUser({
           ...userInfo,
           theme,
           themeSetting: setting,
@@ -61,7 +64,7 @@ export function UserCenterThemePage() {
         throw new Error(response.statusText);
       }
 
-      dispatch(UserCenterActions.changeUserInfo({ ...userInfo, theme }));
+      dispatch(updateCurrentUser({ ...userInfo, theme }));
       changeTheme(theme);
     } catch {
       // 旧页面固定主题切换失败时保持静默。

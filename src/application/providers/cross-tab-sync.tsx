@@ -1,14 +1,23 @@
 import * as React from "react";
 
-type CrossTabStorageHandler = (event: StorageEvent) => void;
+import { useAppDispatch } from "@application/store";
+import { synchronizeSessionStorageEvent } from "@modules/session";
+
+type CrossTabStorageHandler = (
+  event: StorageEvent,
+  dispatch: ReturnType<typeof useAppDispatch>
+) => void;
 
 /**
- * P09 deliberately starts with no synchronized keys. Existing userInfo and
- * showCardUser listeners remain in Header until P17 owns their migration.
+ * S1.1 只接管当前用户；showCardUser 仍由 Header 保持到 S1.2。
  */
 export const crossTabSyncHandlers: Readonly<
   Record<string, CrossTabStorageHandler>
-> = Object.freeze({});
+> = Object.freeze({
+  userInfo(event, dispatch) {
+    dispatch(synchronizeSessionStorageEvent(event));
+  },
+});
 
 export const CROSS_TAB_SYNC_KEYS: readonly string[] = Object.freeze(
   Object.keys(crossTabSyncHandlers)
@@ -22,6 +31,8 @@ interface CrossTabSyncProps {
 export function CrossTabSync({
   children,
 }: CrossTabSyncProps): React.ReactElement<any> {
+  const dispatch = useAppDispatch();
+
   React.useEffect(() => {
     function handleStorage(event: StorageEvent): void {
       if (event.key === null) {
@@ -30,13 +41,13 @@ export function CrossTabSync({
 
       const handler = crossTabSyncHandlers[event.key];
       if (handler) {
-        handler(event);
+        handler(event, dispatch);
       }
     }
 
     window.addEventListener("storage", handleStorage);
     return () => window.removeEventListener("storage", handleStorage);
-  }, []);
+  }, [dispatch]);
 
   return children;
 }

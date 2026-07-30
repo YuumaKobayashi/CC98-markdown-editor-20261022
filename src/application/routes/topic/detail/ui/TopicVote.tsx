@@ -4,7 +4,10 @@ import { Link } from "react-router";
 import moment from "moment";
 
 import { useAppSelector } from "@application/store";
-import { isLogOn } from "@modules/session";
+import {
+  isLogOn,
+  selectCurrentUser,
+} from "@modules/session";
 import { submitTopicVote } from "../api/service";
 
 type VoteItem = {
@@ -48,9 +51,7 @@ export function TopicVote({
   topicInfo,
   getInfo,
 }: TopicVoteProps) {
-  const currentUserId = useAppSelector(
-    (state) => state.userInfo.currentUserInfo.id
-  );
+  const currentUserId = useAppSelector(selectCurrentUser).id;
   const [items, setItems] = useState<number[]>(
     voteInfo.myRecord ? voteInfo.myRecord.items : []
   );

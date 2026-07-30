@@ -1,23 +1,9 @@
 import * as React from "react";
 
-import { Actions, useAppDispatch } from "@application/store";
-import { getMyInfo } from "@modules/session";
-import { refreshUserInfo } from "@modules/session";
-import { Constants } from "@foundation/config/runtime-config";
-import {
-  removeLocalStorage,
-  removeStorage,
-  setLocalStorage,
-} from "@foundation/storage/web-storage";
+import { useAppDispatch } from "@application/store";
+import { logIn } from "@modules/session";
 import { changeTheme } from "@foundation/theme/runtime";
 import DocumentTitle from "@foundation/ui/document-title";
-
-type TokenResponse = {
-  access_token: string;
-  expires_in: number;
-  refresh_token: string;
-  token_type: string;
-};
 
 const getLoginReturnUrl = (): string => {
   if (window.history.length === 1) return "/";
@@ -80,47 +66,14 @@ export function LoginPage() {
 
     setLoginMessage("登录中");
     setIsLoggingIn(true);
-    dispatch(Actions.userLogOff());
 
     try {
-      const requestBody = new URLSearchParams({
-        client_id: "9a1fd200-8687-44b1-4c20-08d50a96e5cd",
-        client_secret: "REDACTED_CLIENT_SECRET",
-        grant_type: "password",
-        username: loginName,
-        password: loginPassword,
-        scope: "cc98-api openid offline_access",
-      });
-      const response = await fetch(
-        `${Constants.config.openIdUrl}/connect/token`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: requestBody,
-        }
+      const userInfo = await dispatch(
+        logIn({ userName: loginName, password: loginPassword })
       );
-
-      if (response.status !== 200) {
-        throw new Error(response.status.toString());
-      }
-
-      const data = (await response.json()) as TokenResponse;
-      const token = `${data.token_type} ${data.access_token}`;
-      removeStorage("mainAds-v2");
-      setLocalStorage("accessToken", token, data.expires_in);
-      setLocalStorage("refresh_token", data.refresh_token, 2592000);
-      await refreshUserInfo();
-
-      const userInfo = getMyInfo();
-      if (userInfo.lockState === 1 || userInfo.lockState === 2) {
-        throw new Error("账号已锁定");
-      }
 
       setLoginMessage("登录成功 正在返回");
       changeTheme(userInfo.theme);
-      dispatch(Actions.userLogIn());
 
       const timer = window.setTimeout(() => {
         timersRef.current.delete(timer);
@@ -128,10 +81,6 @@ export function LoginPage() {
       }, 100);
       timersRef.current.add(timer);
     } catch (error) {
-      removeLocalStorage("userInfo");
-      removeLocalStorage("accessToken");
-      removeLocalStorage("refresh_token");
-
       const message = error instanceof Error ? error.message : String(error);
       let info: string;
       switch (message) {
@@ -146,7 +95,6 @@ export function LoginPage() {
       }
       setLoginMessage(`登录失败 ${info}`);
       setIsLoggingIn(false);
-      dispatch(Actions.userLogOff());
     }
   };
 

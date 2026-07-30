@@ -5,34 +5,27 @@ import { Link, useLocation, useNavigate } from "react-router";
 import { useAppDispatch, useAppSelector, Actions } from "@application/store";
 import { getTopicInfo } from "@modules/topic";
 import { getUserInfo } from "@modules/user";
-import { getMyInfo } from "@modules/session";
-import { isLogOn } from "@modules/session";
+import {
+  logOut,
+  selectCurrentUser,
+  selectIsLogOn,
+} from "@modules/session";
 import { refreshCurrentMessageCount } from "@legacy/AsyncActions/Message";
 import { refreshCurrentUserInfo } from "@legacy/AsyncActions/UserCenter";
-import type { UserInfo } from "@legacy/States/AppState";
 import {
   getLocalStorage,
-  removeLocalStorage,
-  removeStorage,
   setLocalStorage,
 } from "@foundation/storage/web-storage";
-import { changeTheme } from "@foundation/theme/runtime";
 
 type SearchType = "主题" | "全站" | "版内" | "用户" | "版面";
 
 //TODO: 这个文件需要大规模重写。
 
-// TODO：统一使用库缓存系统
-const parseStoredObject = <T,>(value: string): T =>
-  JSON.parse(value.slice(4)) as T;
-
 function UserMenu() {
   const dispatch = useAppDispatch();
   const { pathname } = useLocation();
-  const isLoggedOn = useAppSelector((state) => state.userInfo.isLogOn);
-  const userInfo = useAppSelector(
-    (state) => state.userInfo.currentUserInfo
-  );
+  const isLoggedOn = useAppSelector(selectIsLogOn);
+  const userInfo = useAppSelector(selectCurrentUser);
   const messageCount = useAppSelector((state) => state.message);
   const showCardUser = useAppSelector(
     (state) => state.userInfo.showCardUser
@@ -41,50 +34,12 @@ function UserMenu() {
 
   const logOff = React.useCallback(() => {
     setHoverElement(null);
-    removeLocalStorage("accessToken");
-    removeLocalStorage("refresh_token");
-    removeLocalStorage("userInfo");
-    removeLocalStorage("usePWA");
-    removeLocalStorage("showCardUser");
-    removeStorage("all");
-    changeTheme(0);
-    dispatch(Actions.userLogOff());
+    dispatch(logOut());
     window.location.href = "/";
   }, [dispatch]);
 
   React.useEffect(() => {
     const handleStorage = (event: StorageEvent) => {
-      if (event.key === "userInfo") {
-        if (event.oldValue && event.newValue) {
-          const oldValue = parseStoredObject<UserInfo>(event.oldValue);
-          const newValue = parseStoredObject<UserInfo>(event.newValue);
-          const comparableOldValue = {
-            ...oldValue,
-            lastLogOnTime: undefined,
-          };
-          const comparableNewValue = {
-            ...newValue,
-            lastLogOnTime: undefined,
-          };
-          if (
-            JSON.stringify(comparableOldValue) ===
-            JSON.stringify(comparableNewValue)
-          ) {
-            return;
-          }
-        }
-
-        if (event.newValue) {
-          const newUserInfo = parseStoredObject<UserInfo>(event.newValue);
-          changeTheme(newUserInfo.theme);
-          dispatch(Actions.changeUserInfo(newUserInfo));
-          dispatch(Actions.userLogIn());
-        } else {
-          logOff();
-        }
-        return;
-      }
-
       if (
         event.key === "showCardUser" &&
         event.oldValue !== event.newValue &&
@@ -100,17 +55,17 @@ function UserMenu() {
 
     window.addEventListener("storage", handleStorage);
     return () => window.removeEventListener("storage", handleStorage);
-  }, [dispatch, logOff]);
+  }, [dispatch]);
 
   React.useEffect(() => {
     const storedVisibility = getLocalStorage<string>("showCardUser");
     dispatch(Actions.changeUserInfoVisible(storedVisibility !== "false"));
 
-    if (isLogOn()) {
+    if (isLoggedOn) {
       void dispatch(refreshCurrentMessageCount() as any);
     }
 
-    if (isLogOn() && !getLocalStorage("shouldNotRefreshUserInfo")) {
+    if (isLoggedOn && !getLocalStorage("shouldNotRefreshUserInfo")) {
       void dispatch(refreshCurrentUserInfo() as any);
       setLocalStorage("shouldNotRefreshUserInfo", true, 86400);
     }
@@ -151,10 +106,9 @@ function UserMenu() {
     pathname === "/" ? "topBarUserCenter-mainPage" : "topBarUserCenter";
   const messageClassName =
     pathname === "/" ? "topBarMessageDetails-mainPage" : "topBarMessageDetails";
-  const storedUserInfo = getMyInfo();
   const signinInfo =
-    storedUserInfo &&
-    getLocalStorage(`signin_${storedUserInfo.id}`)
+    userInfo &&
+    getLocalStorage(`signin_${userInfo.id}`)
       ? "已签到"
       : "签到";
 

@@ -5,6 +5,7 @@ import * as Appstate from '../../States/AppState';
 import { RootState, RootAction } from '../../Store';
 import * as Utility from '../../Utility';
 import { getUsersInfo } from '../../Utility/Fetch/getUsersInfo';
+import { selectCurrentUser } from "@modules/session";
 
 /**
  * 获取用户的粉丝信息
@@ -16,7 +17,7 @@ export const getUserFansInfo: ActionCreator<ThunkAction<Promise<Action>, RootSta
         dispatch(Actions.userCenterLoading());
         const store = getState().userInfo;
         // 没有粉丝
-        if (store.currentUserInfo.fanCount === 0) {
+        if (selectCurrentUser(getState()).fanCount === 0) {
             return dispatch(Actions.userCenterLoaded());
         }
         // 如果未请求完所有帖子并且帖子总数小于请求的页数

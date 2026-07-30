@@ -2,6 +2,7 @@ import * as React from "react";
 import { Outlet } from "react-router";
 
 import { useAppSelector } from "@application/store";
+import { selectIsLogOn } from "@modules/session";
 import { LogOut } from "@legacy/Components/Status";
 import DocumentTitle from "@foundation/ui/document-title";
 import { UserCenterNavigation } from "./UserCenterNavigation";
@@ -10,7 +11,7 @@ import { UserCenterNavigation } from "./UserCenterNavigation";
  * 用户中心页面
  */
 export function UserCenterLayout() {
-  const isLogOn = useAppSelector((state) => state.userInfo.isLogOn);
+  const isLogOn = useAppSelector(selectIsLogOn);
 
   if (!isLogOn) {
     return <LogOut />;

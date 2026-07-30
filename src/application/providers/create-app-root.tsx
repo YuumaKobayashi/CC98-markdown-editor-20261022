@@ -11,8 +11,7 @@ import { AppRouter } from "@application/router/app-router";
 /**
  * 创建保持旧运行行为的应用 Provider 树。
  *
- * CrossTabSync 是 P09 新增的无 DOM 应用壳；同步白名单为空，现有 Header
- * storage 合同仍保持原状。
+ * CrossTabSync 是唯一的应用级跨标签入口；S1.1 起接管当前用户同步。
  */
 export function createAppRoot(): React.ReactElement<any> {
   return (

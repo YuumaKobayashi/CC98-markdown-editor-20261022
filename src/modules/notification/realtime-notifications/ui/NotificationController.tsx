@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { Actions, useAppDispatch, useAppSelector } from "@application/store";
+import { selectIsLogOn } from "@modules/session";
 import { refreshCurrentMessageCount } from "@legacy/AsyncActions/Message";
 import type { MessageInfo } from "@legacy/Reducers/Message";
 import { CC98SignalR } from "../signalr";
@@ -20,7 +21,7 @@ const parseStoredMessageCount = (value: string): MessageInfo =>
 
 export function NotificationController() {
   const dispatch = useAppDispatch();
-  const isLoggedOn = useAppSelector((state) => state.userInfo.isLogOn);
+  const isLoggedOn = useAppSelector(selectIsLogOn);
   const messageCount = useAppSelector((state) => state.message);
 
   const handleNotifyMessageReceive = React.useCallback(() => {

@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { useAppDispatch, useAppSelector } from "@application/store";
+import { selectCurrentUser } from "@modules/session";
 import * as UserCenterActions from "@legacy/Actions/UserCenter";
 import { sendWealthTo } from "@legacy/AsyncActions/UserCenter";
 
@@ -11,9 +12,7 @@ interface PendingSubmission {
 
 export function TransferWealthPage() {
   const dispatch = useAppDispatch();
-  const userInfo = useAppSelector(
-    (state) => state.userInfo.currentUserInfo
-  );
+  const userInfo = useAppSelector(selectCurrentUser);
   const isLoading = useAppSelector((state) => state.userInfo.isLoading);
   const isError = useAppSelector((state) => state.userInfo.isError);
   const errorMessage = useAppSelector(

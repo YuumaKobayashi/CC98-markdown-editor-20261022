@@ -5,8 +5,16 @@ import {
   removeLocalStorage,
   setLocalStorage,
 } from "@foundation/storage/web-storage";
-import { getMyInfo } from "../compat/current-user";
+import type { CurrentUser } from "../model/types";
 import { logOffAndNavigate } from "@foundation/lib/legacy-utility-effects";
+
+/**
+ * 获取当前的用户信息。
+ * @returns {CurrentUser} 当前的用户信息。
+ */
+export function getMyInfo(): CurrentUser {
+  return getLocalStorage<CurrentUser>("userInfo");
+}
 
 /**
  * 获取当前的用户登录令牌。

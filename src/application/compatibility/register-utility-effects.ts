@@ -1,7 +1,10 @@
 import store, { Actions } from "@application/store";
 import { navigate } from "@application/router/navigation";
 import * as ErrorActions from "@legacy/Actions/Error";
-import * as UserCenterActions from "@legacy/Actions/UserCenter";
+import {
+  sessionInvalidated,
+  updateCurrentUser,
+} from "@modules/session";
 import { configureLegacyUtilityEffects } from "@foundation/lib/legacy-utility-effects";
 
 export function registerLegacyUtilityEffects(): void {
@@ -10,11 +13,11 @@ export function registerLegacyUtilityEffects(): void {
       store.dispatch(ErrorActions.throwError(error));
     },
     logOffAndNavigate() {
-      store.dispatch(UserCenterActions.userLogOff());
+      store.dispatch(sessionInvalidated());
       navigate("/logon");
     },
     changeCurrentUser(userInfo) {
-      store.dispatch(UserCenterActions.changeUserInfo(userInfo));
+      store.dispatch(updateCurrentUser(userInfo));
     },
     getMessageCounts() {
       return store.getState().message;

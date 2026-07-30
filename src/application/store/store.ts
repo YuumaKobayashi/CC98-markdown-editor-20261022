@@ -7,6 +7,7 @@ import * as UserActions from "@legacy/Actions/UserCenter";
 import error from "@legacy/Reducers/Error";
 import message from "@legacy/Reducers/Message";
 import userInfo from "@legacy/Reducers/UserInfo";
+import { sessionReducer } from "@modules/session";
 
 import type { RootState } from "./legacy-types";
 import { listenerMiddleware } from "./listener-middleware";
@@ -21,6 +22,7 @@ const rootReducer = combineReducers<RootState>({
   error,
   userInfo,
   message,
+  session: sessionReducer,
 });
 
 export const store = configureStore({

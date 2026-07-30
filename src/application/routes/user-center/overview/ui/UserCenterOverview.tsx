@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { useAppDispatch, useAppSelector } from "@application/store";
+import { selectCurrentUser } from "@modules/session";
 import { UserProfile } from "@modules/user";
 import { UserProfileAvatar } from "@modules/user";
 import * as Actions from "@legacy/Actions/UserCenter";
@@ -13,7 +14,7 @@ import { UserRecentActivities } from "./UserRecentActivities";
  */
 export function UserCenterOverview() {
   const dispatch = useAppDispatch();
-  const userInfo = useAppSelector((state) => state.userInfo.currentUserInfo);
+  const userInfo = useAppSelector(selectCurrentUser);
 
   //组件加载时更新store与缓存中的状态
   React.useEffect(() => {

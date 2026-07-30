@@ -4,6 +4,7 @@ import * as Actions from '../../Actions/UserCenter';
 import * as Appstate from '../../States/AppState';
 import { RootState, RootAction } from '../../Store';
 import * as Utility from '../../Utility';
+import { selectCurrentUser } from "@modules/session";
 
 /**
  * 获取当前用户收藏的版面信息
@@ -12,7 +13,7 @@ import * as Utility from '../../Utility';
 export const getCurrentUserFavoriteBoards: ActionCreator<ThunkAction<Promise<Action>, RootState, null, RootAction>> = () => async (dispatch, getState) => {
     try {
         dispatch(Actions.userCenterLoading());
-        const currentBoardIds = getState().userInfo.currentUserInfo.customBoards;
+        const currentBoardIds = selectCurrentUser(getState()).customBoards;
         const prevBoardIds = getState().userInfo.currentUserFavoriteBoards.map((item) => item.id);
         // 如果用户信息中的版面IDs和store中的信息不匹配则需要重新加载
         const shouldLoading = currentBoardIds.length !== prevBoardIds.length
@@ -21,7 +22,7 @@ export const getCurrentUserFavoriteBoards: ActionCreator<ThunkAction<Promise<Act
             return dispatch(Actions.userCenterLoaded());
         }
         // 批量查询
-        const query = getState().userInfo.currentUserInfo.customBoards.join('&id=');
+        const query = selectCurrentUser(getState()).customBoards.join('&id=');
         const url = `/board/?id=${query}`;
         const headers = await Utility.formAuthorizeHeader();
         const res = await Utility.cc98Fetch(url, { headers });
