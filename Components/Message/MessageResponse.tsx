@@ -1,1 +1,1 @@
-export { MessageResponsesPage as MessageResponse } from "@pages/message/responses";
+export { MessageResponsesPage as MessageResponse } from "@application/routes/message-center/responses";

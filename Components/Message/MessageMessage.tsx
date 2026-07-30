@@ -1,1 +1,1 @@
-export { PrivateMessagesPage as MessageMessage } from "@pages/message/private-messages";
+export { PrivateMessagesPage as MessageMessage } from "@application/routes/message-center/private-messages";

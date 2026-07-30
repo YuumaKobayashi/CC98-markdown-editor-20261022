@@ -186,42 +186,42 @@ const routes: RouteObject[] = [
       {
         path: "message",
         lazy: lazyNamed(
-          () => import("@pages/message/layout"),
+          () => import("@application/routes/message-center/layout"),
           "MessageLayout"
         ),
         children: [
           {
             index: true,
             lazy: lazyNamed(
-              () => import("@pages/message/responses"),
+              () => import("@application/routes/message-center/responses"),
               "MessageResponsesPage"
             ),
           },
           {
             path: "response/:page?",
             lazy: lazyNamed(
-              () => import("@pages/message/responses"),
+              () => import("@application/routes/message-center/responses"),
               "MessageResponsesPage"
             ),
           },
           {
             path: "attme/:page?/*",
             lazy: lazyNamed(
-              () => import("@pages/message/mentions"),
+              () => import("@application/routes/message-center/mentions"),
               "MessageMentionsPage"
             ),
           },
           {
             path: "system/:page?/*",
             lazy: lazyNamed(
-              () => import("@pages/message/system"),
+              () => import("@application/routes/message-center/system"),
               "MessageSystemPage"
             ),
           },
           {
             path: "message/:page?/*",
             lazy: lazyNamed(
-              () => import("@pages/message/private-messages"),
+              () => import("@application/routes/message-center/private-messages"),
               "PrivateMessagesPage"
             ),
           },

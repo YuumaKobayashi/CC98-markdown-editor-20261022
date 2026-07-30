@@ -1,1 +1,1 @@
-export { PrivateConversationWindow as MessageWindow } from "@pages/message/private-messages";
+export { PrivateConversationWindow as MessageWindow } from "@application/routes/message-center/private-messages";

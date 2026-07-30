@@ -1,1 +1,1 @@
-export { MessageMentionsPage as MessageAttme } from "@pages/message/mentions";
+export { MessageMentionsPage as MessageAttme } from "@application/routes/message-center/mentions";

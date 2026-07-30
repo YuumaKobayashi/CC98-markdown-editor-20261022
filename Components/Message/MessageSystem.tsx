@@ -1,1 +1,1 @@
-export { MessageSystemPage as MessageSystem } from "@pages/message/system";
+export { MessageSystemPage as MessageSystem } from "@application/routes/message-center/system";
