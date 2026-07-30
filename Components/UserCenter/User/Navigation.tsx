@@ -1,1 +1,1 @@
-export { UserProfileNavigation as default } from "@pages/user-profile/layout/ui/UserProfileNavigation";
+export { UserProfileNavigation as default } from "@application/routes/user-profile/layout/ui/UserProfileNavigation";

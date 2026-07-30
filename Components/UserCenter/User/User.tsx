@@ -1,1 +1,1 @@
-export { UserProfileLayout as default } from "@pages/user-profile/layout";
+export { UserProfileLayout as default } from "@application/routes/user-profile/layout";

@@ -1,1 +1,1 @@
-export { UserProfileManagePage as default } from "@pages/user-profile/manage";
+export { UserProfileManagePage as default } from "@application/routes/user-profile/manage";

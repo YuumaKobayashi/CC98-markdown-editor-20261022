@@ -1,1 +1,1 @@
-export { UserRecentTopics as default } from "@pages/user-profile/overview/ui/UserRecentTopics";
+export { UserRecentTopics as default } from "@application/routes/user-profile/overview/ui/UserRecentTopics";

@@ -1,1 +1,1 @@
-export { UserProfileDetails as default } from "@pages/user-profile/overview/ui/UserProfileDetails";
+export { UserProfileDetails as default } from "@application/routes/user-profile/overview/ui/UserProfileDetails";

@@ -1,1 +1,1 @@
-export { UserPunishmentForm as default } from "@pages/user-profile/manage";
+export { UserPunishmentForm as default } from "@application/routes/user-profile/manage";

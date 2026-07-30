@@ -1,4 +1,4 @@
 export {
   UserProfileOverview as default,
   UserExactWithRouter,
-} from "@pages/user-profile/overview";
+} from "@application/routes/user-profile/overview";

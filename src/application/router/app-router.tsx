@@ -283,18 +283,18 @@ const routes: RouteObject[] = [
       },
       {
         path: "user/:method/:id",
-        lazy: lazyDefault(() => import("@pages/user-profile/layout")),
+        lazy: lazyDefault(() => import("@application/routes/user-profile/layout")),
         children: [
           {
             index: true,
             lazy: lazyNamed(
-              () => import("@pages/user-profile/overview"),
+              () => import("@application/routes/user-profile/overview"),
               "UserProfileOverview"
             ),
           },
           {
             path: "manage/*",
-            lazy: lazyDefault(() => import("@pages/user-profile/manage")),
+            lazy: lazyDefault(() => import("@application/routes/user-profile/manage")),
           },
           { path: "*", element: null },
         ],

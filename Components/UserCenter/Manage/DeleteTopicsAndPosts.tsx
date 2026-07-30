@@ -1,1 +1,1 @@
-export { DeleteRecentUserContent as default } from "@pages/user-profile/manage";
+export { DeleteRecentUserContent as default } from "@application/routes/user-profile/manage";
