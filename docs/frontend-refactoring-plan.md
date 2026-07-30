@@ -1,6 +1,6 @@
 # CC98 前端目录重构执行计划
 
-> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6 的代码实施、机械检查和主代理人工代码审核均已完成，A、M 阶段完成。浏览器、登录、真实 API、权限、SignalR 与 UBB 运行验收未执行；当前停在 S1 前，S1 未获授权。
+> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6 的代码实施、机械检查和主代理人工代码审核均已完成，A、M 阶段完成。S1 Redux 消费审计和计划细化已完成，但 S1 代码实施仍未获授权。浏览器、登录、真实 API、权限、SignalR 与 UBB 运行验收未执行；当前停在 S1.1 前。
 >
 > 架构依据：`docs/frontend-directory-architecture-inventory.md`。
 >
@@ -39,9 +39,10 @@ M3.3 Moderation Service                     已完成（主代理逐函数审核
 M3.4 Posting Service                        已完成（主代理逐函数审核通过；运行验收未执行）
 M3.5 Message 与 Notification                已完成（主代理逐函数审核通过；运行验收未执行）
 M3.6 Site Content                           已完成（主代理逐函数审核通过；运行验收未执行）
+S1.0 Redux 消费与 Storage 合同审计          已完成（仅计划细化；未实施代码）
 ```
 
-### 当前停点：A、M 阶段已完成，停在 S1 前；S1 未获授权
+### 当前停点：A、M 阶段已完成，S1 计划已细化；停在 S1.1 前，S1 代码未获授权
 
 ### M3.1–M3.6 实施记录（2026-07-30）
 
@@ -80,7 +81,7 @@ owner 与合同拆分：
 - M3.1–M3.6 均已通过主代理人工代码审核；M 阶段至此完成；
 - 浏览器直达与交互、登录态、真实 API、管理员/非管理员权限、SignalR 多标签与通知权限、上传、编辑器、UBB 及缓存运行行为均未执行，不记为通过；
 - 本批未 commit、未 push，未修改用户本地 `.vscode/`；
-- 当前停止，不实施未获授权的 S1、C1 或 Legacy 收口。
+- 当前停止，不实施未获授权的 S1 代码、C1 或 Legacy 收口。
 
 ### A2.3–A2.11 当前实施记录（2026-07-30）
 
@@ -1428,25 +1429,141 @@ Route URL 解析应移回 Application Route model，不保留在 Module API。
 
 ## 15. S1：状态与缓存归位
 
-这一步在目录迁址和 API owner 稳定后执行。
+这一步在目录迁址和 API owner 稳定后执行。S1 只调整状态、持久化和缓存 owner，不改变公开 URL、API wire shape、权限、DOM/CSS、Storage 键与 TTL、分页规则或用户可见时序。
 
-### S1.1 Store 结构
+目标终态：
+
+- Redux 只保留真正跨页面共享的 `session` 与 `notification` 两个业务 slice；
+- 全局错误、用户偏好、公开资料页导航、转账和用户中心远端列表退出 Redux；
+- `application/store` 只负责 Store 装配，业务 state、action、selector 归对应 Module；
+- 页面状态继续由 Application Route 持有；
+- 现存直接 mutation、共享 loading 等缺陷只登记，不在迁移批顺手修复；
+- 每个子批独立实施、检查和人工验收，未经授权不自动进入下一批。
+
+### S1.0 Redux 消费与 Storage 合同基线
+
+状态：已完成只读消费审计和计划细化；未实施任何 Redux、缓存或组件代码。
+
+当前 Store 仍有三个 legacy reducer 分支：
 
 ```text
-application/store
+error
+userInfo
+message
 ```
 
-只拥有：
+当前共有 30 个组件源码直接读取 Redux 或 dispatch Redux action：
 
-- `configureStore`；
-- reducer 注册；
-- middleware 组合；
-- typed hooks；
-- AppDispatch/RootState。
+```text
+Application 壳层与错误
+  AppShell
+  NavigationErrorReset
+  EditorPage
 
-业务 slice、action、selector 归对应 Module。
+Session、当前用户与用户偏好
+  Header
+  LoginPage
+  NewTopicsPage
+  TopicVote
+  UserCenterLayout
+  UserCenterOverview
+  UserCenterSettingsPage
+  UserCenterAvatarSettings
+  UserCenterThemePage
 
-### S1.2 Session
+公开用户资料页
+  UserProfileLayout
+  UserProfileNavigation
+  UserProfileOverview
+  UserProfileManagePage
+
+用户中心远端数据与页面操作
+  UserRecentTopicsActivityList
+  MyTopics
+  MyPosts
+  UserCenterFavoriteTopicsPage
+  UserFavoriteBoards
+  UserCenterHistoryPage
+  MyFollowings
+  MyFans
+  TransferWealthPage
+
+Message 与 Notification
+  MessageLayout
+  PrivateConversationWindow
+  NotificationController
+
+Module UI 与 legacy 零调用组件
+  UserFollowCard
+  ExactActivitiesPosts
+```
+
+其中：
+
+- `NotificationController` 只有 Module 和根兼容入口导出，当前没有运行挂载点；S1 只迁移其状态接口，不擅自启用 SignalR Controller；
+- `ExactActivitiesPosts` 仓内零调用，S1 将其改为等价的非 Redux 兼容组件，但继续保持不可达，不在本批删除；
+- `createAppRoot` 只提供 Redux Provider，不计入业务消费者；
+- `registerLegacyUtilityEffects` 通过 `store.dispatch/getState` 桥接全局错误、登出、当前用户更新和消息计数，属于必须闭合的非组件消费者。
+
+当前旧 thunk 合同包括：
+
+```text
+refreshCurrentMessageCount
+refreshCurrentUserInfo
+getRecentTopics / getRecentPosts / getHotPosts
+getFavoritePosts
+getCurrentUserFavoriteBoards
+getHistoryPosts / setBrowsingHistoryEnabled
+getUserFollowingsInfo / getUserFansInfo
+sendWealth
+```
+
+这些 thunk 目前共享 `userInfo.isLoading/isError/errorMessage`、`hasTotal`、`totalPage` 和 `currentUserCenterPage`，部分代码还直接修改 `getState()` 返回的数组或字段。实施时必须整体迁移“数据、分页、完成状态、loading/error、请求动作”，不能只移动数组或顺手修复直接 mutation。
+
+S1 必须保持的 Storage 合同：
+
+```text
+Session
+  accessToken
+  refresh_token
+  userInfo
+  shouldNotRefreshUserInfo
+  logOnRedirectUrl
+  usePWA
+  对应的 *_expirationTime
+
+Notification
+  messageCount
+  signalr
+  noticeSetting
+
+User Preference / Theme
+  showCardUser
+  user-set-theme
+  use-theme
+  defaultEmojiType
+
+User / Board / Topic / Daily Signin cache
+  userId_${id}
+  userName_${name}
+  boardsInfo
+  boardInfo
+  tagInfo
+  signin_${userId}
+
+Posting / Editor drafts
+  contentCache
+  temporaryContent
+  temporaryContent-${topicId}
+  react-mde-imageurl
+  react-mde-imageurl-status
+```
+
+Home、New Topics、Recommended Topics、Random Topics 和 Focus 的既有页面私有 cache 继续由对应 Application Route 持有，不因 S1 移入 Redux 或领域全局状态；其中包括 `mainPageData`、`mainPageHotTopic`、`mainAds-v2`、`AllNewTopic`、`AllNewMediaTopic`、`CurrentRandomTopics`、`LastRandomTopics`、`CurrentRecommendedTopics`、`LastRecommendedTopics`、`focusBoardList`、`currentFocusBoard` 和 `focusBoard_${boardId}`。
+
+### S1.1 Session 与跨标签同步
+
+目标目录：
 
 ```text
 modules/session/model
@@ -1454,79 +1571,229 @@ modules/session/persistence
 modules/session/sync
 ```
 
-统一：
+实施要求：
 
-- token；
-- 当前用户；
-- refresh；
-- 登录状态；
-- 跨标签页事件。
+- 建立 Session slice、action、selector、persistence 和 sync，统一 token、当前用户、refresh、登录状态和跨标签事件；
+- Session Module 根入口公开登录、登出、当前用户更新、刷新及 selector，不允许消费者深导入；
+- 保持 `accessToken`、`refresh_token`、`userInfo` 的现有编码、TTL、锁定用户处理、登录返回地址和刷新时机；
+- 迁移 Header、LoginPage、UserCenterLayout、UserCenterOverview、用户设置/头像/主题页、TopicVote 和公开资料导航中的当前用户消费；
+- `storage` 事件只处理其他标签页；当前标签页写入持久化后必须立即 dispatch 本地 Session 更新；
+- 将 Header 中的 `userInfo` listener 迁入唯一的应用级 `CrossTabSync`，禁止 Header 和 User Center 各自维护当前用户真相源；
+- 登录、登出、资料修改、头像修改和主题修改必须在所有标签页保持一致；
+- 不改变登录成功/失败提示、100ms 返回时机、退出清理项、Session Storage 清空、主题复位和页面跳转。
 
-Header 与 User Center 只消费 Session，不自行读取多套当前用户真相源。
+本批结束时，`userInfo` reducer 中只允许暂存尚未迁移的页面/业务字段，不再作为 Session 的 owner。
 
-### S1.3 用户资料缓存
+### S1.2 用户偏好
 
-```text
-modules/user/cache
-```
-
-明确：
-
-```text
-对象        公共 UserInfo
-键          ID/用户名
-TTL         当前 3600 秒
-介质        Foundation Storage
-失效条件    用户资料修改、头像修改等
-```
-
-### S1.4 其他领域缓存
-
-```text
-modules/board/cache          boardsInfo
-modules/topic/cache          tagInfo
-modules/daily-signin/cache   当日签到
-```
-
-### S1.5 用户偏好
+目标目录：
 
 ```text
 modules/user-preference/persistence
 ```
 
-包括：
+实施要求：
 
-- 主题；
-- Topic 浏览模式；
-- 通知设置；
-- Emoji 分类；
-- TopicCard 用户信息显隐。
+- 提供 `showCardUser` 的读取、写入和订阅 hook；
+- 同标签页写入后主动通知订阅者，其他标签页由统一 `CrossTabSync` 响应 `storage` 事件；
+- 迁移 Header 和 NewTopicsPage，删除其 `showCardUser` Redux selector/action 及 Header 私有 listener；
+- 保持 `showCardUser` 缺省为显示、字符串布尔编码、永不过期和退出时删除的行为；
+- 主题、Topic 浏览模式、通知设置、Emoji 分类继续保留原键、默认值、API 调用和失效时机；
+- 不把整份用户偏好或当前用户对象复制进新的 preference slice。
 
-### S1.6 草稿
+### S1.3 Notification 未读计数
+
+目标目录：
+
+```text
+modules/notification/model
+```
+
+目标接口：
+
+- Notification slice 使用四个非可选数值字段：`systemCount`、`atCount`、`replyCount`、`messageCount`；
+- Module 根入口公开未读计数 selector、整体替换 action 和 `refreshUnreadCount`；
+- `application/store` 只注册 Notification reducer，不拥有其业务 action 或 selector。
+
+实施要求：
+
+- 将 legacy `message` reducer、action 和 `refreshCurrentMessageCount` thunk 迁入 Notification；
+- 迁移 Header、MessageLayout、PrivateConversationWindow 和 NotificationController；
+- 保持 `/me/unread-count`、`messageCount` Storage 键、请求时机、消息页清零、SignalR 事件、跨标签刷新、标题闪烁和浏览器通知行为；
+- 保持 NotificationController 未挂载，不因迁移新增启动点；
+- Utility 兼容桥改为调用 Notification 公共接口，不再直接读取 `state.message`。
+
+### S1.4 用户中心远端数据本地化
+
+用户中心各子页分别拥有自己的数据、分页、完成状态和 loading/error，不建立汇总所有子页状态的 `UserCenterLayout` Route Context；当前 tab 与页码从 URL 派生，不再由 Redux 记录 `currentUserCenterPage`。
+
+按以下六组分开实施和验收：
+
+```text
+主题与回复
+  UserCenterOverview
+  UserRecentTopicsActivityList
+  MyTopics
+  MyPosts
+  ExactActivitiesPosts
+
+收藏主题
+  UserCenterFavoriteTopicsPage
+
+收藏版面
+  UserFavoriteBoards
+
+浏览历史
+  UserCenterHistoryPage
+
+关注
+  MyFollowings
+  UserFollowCard
+
+粉丝
+  MyFans
+  UserFollowCard
+```
+
+实施要求：
+
+- 保持每个接口的 URL、参数、11 条探测规则、每页 10 条展示、空数组、越界、前后翻页和错误行为；
+- Overview 与 MyTopics 分别管理并请求各自的最近主题状态，不共享跨 Route 缓存；切换子路由后按目标页面自身生命周期重新请求；
+- 页面级 loading/error 不再共用一个全局布尔值，但 DOM、提示文本和可见时机必须与旧行为一致；
+- `browsingHistoryEnabled` 更新当前用户 Session 字段，同时由历史页 owner 管理列表清空和重新请求；
+- UserFollowCard 通过回调通知关注/粉丝列表 owner，不再 dispatch 修改两份全局数组；
+- ExactActivitiesPosts 转为等价的非 Redux 兼容组件，继续保持零调用，不删除其公开导出；
+- 每完成一组即停止检查，不把六组合成一个不可审核的大批次。
+
+### S1.5 页面与壳层状态
+
+公开用户资料页：
+
+- 删除 `currentVisitingUserPage`、`currentVisitingUserId`、`currentVisitingUserIsExisted`；
+- 当前 exact/manage 模式和用户标识从路由参数派生；
+- 用户存在性、加载结果及页面级错误由 `UserProfileLayout` Route Context 持有；
+- 保持管理员权限、ID/用户名访问、不存在用户、重定向和返回行为。
+
+财富转账：
+
+- TransferWealthPage 本地管理 loading、error、errorMessage 和成功用户名；
+- 保持 `/me/transfer-wealth`、请求 body、部分成功名单和错误提示；
+- 成功后只通过 Session 公共接口更新当前用户财富值，不直接修改 Store 对象。
+
+Application Error：
+
+- 将 `error` reducer 迁为 Application 壳层 Error Provider；
+- 保持现有 `errorKeys`、`Status` 组件映射、AppShell 条件渲染和路由切换清除；
+- Editor 和 legacy Utility 通过统一命令式上报适配进入 Provider；
+- 不把 HTTP 异常统一化、Router errorElement 或错误文案重构混入本批。
+
+### S1.6 缓存与草稿归位
+
+用户资料缓存：
+
+```text
+owner       modules/user/cache
+对象        公共 UserInfo
+键          userId_${id} / userName_${name}
+TTL         3600 秒
+介质        IndexedDB，保留现有 localStorage 回退
+失效条件    用户资料修改、头像修改及既有显式清理点
+```
+
+其他领域缓存：
+
+```text
+modules/board/cache          boardsInfo / boardInfo
+modules/topic/cache          tagInfo
+modules/daily-signin/cache   signin_${userId}
+```
+
+草稿与上传恢复：
 
 ```text
 modules/posting/drafts
 ```
 
-接管：
+- 接管回复草稿、发帖失败缓存和 Editor 内容恢复；
+- 保持 `contentCache`、`temporaryContent`、`temporaryContent-${topicId}`、`react-mde-imageurl`、`react-mde-imageurl-status` 的键、编码、写入、读取和删除时机；
+- 不修改 `autoClearLocalStorage` 的保留白名单；
+- 不将页面私有缓存泛化为全局 cache，也不引入 RTK Query 或新的持久化库。
 
-- 回复草稿；
-- 发帖失败缓存；
-- Editor 内容恢复。
+### S1.7 Redux 闭包
 
-不在本批擅自改键或失效时机。
+目标 `RootState`：
 
-### S1.7 页面状态
+```text
+{
+  session,
+  notification
+}
+```
 
-继续位于 Application：
+闭包要求：
 
-- 路由参数；
-- 筛选；
-- 当前页；
-- tab；
-- 页面滚动；
-- 页面聚合 loading/error；
-- Home/New Topics/Focus 页面私有缓存。
+- 全仓业务组件不再读取 `state.userInfo`、`state.message`、`state.error`；
+- 除 Application Store 装配外，不再存在业务 `connect`、旧 Redux thunk、直接 `store.getState/dispatch` 或从根 Store 聚合 legacy `Actions` 的调用；
+- `application/store` 只保留 `configureStore`、reducer 注册、middleware、typed hooks、`AppDispatch` 和 `RootState`；
+- Session、Notification 的 slice、action 和 selector 只由各自 Module 根入口公开；
+- 根 `Store.tsx` 仅作为兼容转导保留至 LEGACY；
+- 旧 Actions、Reducers、AsyncActions 只有在全仓静态引用、动态入口、TypeScript 配置和兼容消费者全部归零后才删除；
+- 更新 Application/Module README、架构 allowlist、文件地图和本计划状态；
+- 不启动 C1，不 commit，不 push。
+
+### S1 验证与人工验收
+
+每个子批必须运行：
+
+```text
+npm run check:architecture
+npm run typecheck
+npm run build
+git diff --check
+```
+
+同时检查：
+
+- modern/legacy typecheck 均通过；
+- 未跟踪新文件的空白和文本格式；
+- Module 根入口、深导入、自 barrel、循环依赖和架构 allowlist；
+- `@legacy/Actions`、`@legacy/AsyncActions`、`@legacy/Reducers`、根 `Store` 和旧相对路径的全仓引用闭包；
+- 30 个直接组件消费者和 Utility 桥均有明确迁移结果；
+- 未修改 `.vscode/`、AnnualReview、UBB、公开 URL、API wire shape、DOM/CSS 或未授权业务逻辑。
+
+人工验收边界：
+
+```text
+Session
+  登录成功/失败、登出、refresh、锁定用户
+  同标签页更新
+  双标签登录/登出/资料/头像/主题同步
+
+Notification
+  四类未读数、消息页刷新、私信已读
+  SignalR 更新、标题闪烁、跨标签刷新
+  NotificationController 继续未挂载
+
+User Center
+  深链页码、前后翻页、空结果、越界、刷新、返回
+  热门回复、收藏筛选/分组、历史开关、关注/取关和错误路径
+
+页面与错误
+  公开资料 exact/manage、管理员权限、不存在用户
+  发帖错误页、路由切换清错、转账部分成功
+
+缓存与草稿
+  TTL、失效、跨标签偏好、编辑器恢复和失败缓存
+```
+
+构建和 typecheck 只算机械证据。浏览器、登录、真实 API、权限、SignalR、缓存和手工验收必须分别记录；未执行不得记为通过。每批完成机械检查和主代理代码审核后停止，等待人工验收及单独提交授权。
+
+### S1 固定边界
+
+- Redux 终态采用 Session 与 Notification unread 两个业务 slice；Application Error 退出 Redux；
+- 采用严格保真迁移，已知缺陷单独登记；
+- AnnualReview、UBB、公开 URL、API wire shape、DOM/CSS、Storage 键/TTL 和 `.vscode/` 不进入 S1 修改范围；
+- S1 计划细化不等于代码实施授权；当前仍停在 S1.1 前。
 
 ## 16. C1：样式与主题归位
 
@@ -1763,7 +2030,7 @@ R1  增加架构检查脚本                            已完成
 - 检查脚本结果；
 - 无业务行为变化证明。
 
-骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6 均已完成代码实施、机械检查和主代理人工代码审核，A、M 阶段完成。浏览器、登录、真实 API、权限、SignalR 与 UBB 运行验收未执行，旧 `/list` 仍仅适用既有免检结论。当前停在 S1 前，S1 未获授权。
+骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6 均已完成代码实施、机械检查和主代理人工代码审核，A、M 阶段完成。S1 Redux 消费审计和计划细化已完成，但未实施代码。浏览器、登录、真实 API、权限、SignalR 与 UBB 运行验收未执行，旧 `/list` 仍仅适用既有免检结论。当前停在 S1.1 前，S1 代码未获授权。
 
 ## 22. 已确认决策与后续边界
 
@@ -1774,11 +2041,13 @@ R1  增加架构检查脚本                            已完成
 3. 丢弃 D1/D2 迁移结果，不保留只读对照；
 4. 第一轮只建骨架、alias 和检查脚本，不迁业务文件；
 5. M1 使用五个 Module 根入口，并接受已记录的共享 chunk 重组；
-6. 未经用户要求，不 commit、不 push。
+6. S1 Redux 终态只保留 Session 与 Notification unread 两个业务 slice，Application Error 退出 Redux；
+7. S1 采用严格保真迁移，已知缺陷只登记，不顺手修复；
+8. 未经用户要求，不 commit、不 push。
 
 后续仍需单独授权或审核：
 
-1. S1 状态与缓存归位的实施授权与逐批边界；
+1. S1.1–S1.7 状态与缓存归位的代码实施授权及每批人工验收；
 2. A2.3–A2.11 与 M3.1–M3.6 尚未执行的浏览器、登录、真实 API、权限、分页、SignalR、通知权限、上传、编辑器、缓存与 UBB 运行验收；
 3. 旧 `/list` 免检边界是否继续保留；
 4. AnnualReview 与 UBB 是否继续冻结。
