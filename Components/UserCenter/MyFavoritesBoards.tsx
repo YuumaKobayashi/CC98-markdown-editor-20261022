@@ -1,1 +1,1 @@
-export { UserFavoriteBoards as default } from "@pages/user-center/custom-boards";
+export { UserFavoriteBoards as default } from "@application/routes/user-center/custom-boards";

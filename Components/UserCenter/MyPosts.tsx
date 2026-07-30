@@ -1,1 +1,1 @@
-export { MyPosts as default, MyPosts } from "@pages/user-center/my-posts";
+export { MyPosts as default, MyPosts } from "@application/routes/user-center/my-posts";

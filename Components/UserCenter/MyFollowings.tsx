@@ -1,1 +1,1 @@
-export { MyFollowings as default } from "@pages/user-center/my-followings";
+export { MyFollowings as default } from "@application/routes/user-center/my-followings";

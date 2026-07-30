@@ -1,1 +1,1 @@
-export { MyFans as default } from "@pages/user-center/my-fans";
+export { MyFans as default } from "@application/routes/user-center/my-fans";

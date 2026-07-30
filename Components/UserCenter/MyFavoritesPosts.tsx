@@ -1,4 +1,4 @@
 export {
   UserCenterFavoriteTopicsPage as default,
   UserCenterFavoriteTopicsPage,
-} from "@pages/user-center/favorites";
+} from "@application/routes/user-center/favorites";

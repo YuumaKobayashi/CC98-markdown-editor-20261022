@@ -103,37 +103,37 @@ const routes: RouteObject[] = [
       },
       {
         path: "usercenter",
-        lazy: lazyDefault(() => import("@pages/user-center/layout")),
+        lazy: lazyDefault(() => import("@application/routes/user-center/layout")),
         children: [
           {
             index: true,
             lazy: lazyNamed(
-              () => import("@pages/user-center/overview"),
+              () => import("@application/routes/user-center/overview"),
               "UserCenterOverview"
             ),
           },
           {
             path: "myfollowings/:page?/*",
-            lazy: lazyDefault(() => import("@pages/user-center/my-followings")),
+            lazy: lazyDefault(() => import("@application/routes/user-center/my-followings")),
           },
           {
             path: "myfans/:page?/*",
-            lazy: lazyDefault(() => import("@pages/user-center/my-fans")),
+            lazy: lazyDefault(() => import("@application/routes/user-center/my-fans")),
           },
           {
             path: "mytopics/:page?/*",
             lazy: lazyDefault(
-              () => import("@pages/user-center/my-topics")
+              () => import("@application/routes/user-center/my-topics")
             ),
           },
           {
             path: "myhistory/:page?/*",
-            lazy: lazyDefault(() => import("@pages/user-center/history")),
+            lazy: lazyDefault(() => import("@application/routes/user-center/history")),
           },
           {
             path: "myposts/ishot/:ishot/:page?/*",
             lazy: lazyDefault(
-              () => import("@pages/user-center/my-posts")
+              () => import("@application/routes/user-center/my-posts")
             ),
           },
           {
@@ -144,7 +144,7 @@ const routes: RouteObject[] = [
           },
           {
             path: "myfavorites/order/:order/group/:group/:page?",
-            lazy: lazyDefault(() => import("@pages/user-center/favorites")),
+            lazy: lazyDefault(() => import("@application/routes/user-center/favorites")),
           },
           {
             path: "myfavorites/*",
@@ -158,25 +158,25 @@ const routes: RouteObject[] = [
           {
             path: "config/*",
             lazy: lazyNamed(
-              () => import("@pages/user-center/settings"),
+              () => import("@application/routes/user-center/settings"),
               "UserCenterSettingsPage"
             ),
           },
           {
             path: "mycustomboards/*",
-            lazy: lazyDefault(() => import("@pages/user-center/custom-boards")),
+            lazy: lazyDefault(() => import("@application/routes/user-center/custom-boards")),
           },
           {
             path: "transferwealth/*",
             lazy: lazyNamed(
-              () => import("@pages/user-center/transfer-wealth"),
+              () => import("@application/routes/user-center/transfer-wealth"),
               "TransferWealthPage"
             ),
           },
           {
             path: "theme/*",
             lazy: lazyNamed(
-              () => import("@pages/user-center/theme"),
+              () => import("@application/routes/user-center/theme"),
               "UserCenterThemePage"
             ),
           },

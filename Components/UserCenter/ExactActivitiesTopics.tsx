@@ -1,4 +1,4 @@
 export {
   UserRecentTopicsActivityList as default,
   UserRecentTopicsActivityList,
-} from "@pages/user-center/overview";
+} from "@application/routes/user-center/overview";

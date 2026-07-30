@@ -1,4 +1,4 @@
 export {
   FavoriteTopicGroupManager as default,
   FavoriteTopicGroupManager,
-} from "@pages/user-center/favorites";
+} from "@application/routes/user-center/favorites";

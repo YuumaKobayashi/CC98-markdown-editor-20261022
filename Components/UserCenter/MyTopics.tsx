@@ -1,1 +1,1 @@
-export { MyTopics as default, MyTopics } from "@pages/user-center/my-topics";
+export { MyTopics as default, MyTopics } from "@application/routes/user-center/my-topics";

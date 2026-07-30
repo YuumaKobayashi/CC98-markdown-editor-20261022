@@ -1,4 +1,4 @@
 export {
   UserCenterSettingsPage as Config,
   UserCenterSettingsPage as default,
-} from "@pages/user-center/settings";
+} from "@application/routes/user-center/settings";

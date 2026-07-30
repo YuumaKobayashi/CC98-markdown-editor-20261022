@@ -10,8 +10,8 @@ import { UserRecentTopicItem as Topic } from "@modules/topic";
 import * as Actions from "@legacy/Actions/UserCenter";
 import { getRecentTopics } from "@legacy/AsyncActions/UserCenter";
 import type { UserRecentTopic } from "@legacy/States/AppState";
-import { parseUserCenterPage } from "@pages/user-center/model/route-params";
-import { UserCenterPager as Pager } from "@pages/user-center/pagination";
+import { parseUserCenterPage } from "@application/routes/user-center/model/route-params";
+import { UserCenterPager as Pager } from "@application/routes/user-center/pagination";
 
 type RouteParams = {
   page?: string;

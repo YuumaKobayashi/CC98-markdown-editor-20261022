@@ -6,8 +6,8 @@ import { UserFollowCard } from "@modules/follow";
 import * as Actions from "@legacy/Actions/UserCenter";
 import { getUserFansInfo } from "@legacy/AsyncActions/UserCenter";
 import type { UserInfo } from "@legacy/States/AppState";
-import { parseUserCenterPage } from "@pages/user-center/model/route-params";
-import { UserCenterPager as Pager } from "@pages/user-center/pagination";
+import { parseUserCenterPage } from "@application/routes/user-center/model/route-params";
+import { UserCenterPager as Pager } from "@application/routes/user-center/pagination";
 
 type RouteParams = {
   page?: string;

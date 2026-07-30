@@ -1,1 +1,1 @@
-export { UserCenterNavigation as default } from "@pages/user-center/layout";
+export { UserCenterNavigation as default } from "@application/routes/user-center/layout";

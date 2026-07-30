@@ -1,1 +1,1 @@
-export { UserFavoriteBoardCard as default } from "@pages/user-center/custom-boards";
+export { UserFavoriteBoardCard as default } from "@application/routes/user-center/custom-boards";

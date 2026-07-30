@@ -15,7 +15,7 @@ import {
 import * as Actions from "@legacy/Actions/UserCenter";
 import { getFavoritePosts } from "@legacy/AsyncActions/UserCenter";
 import type { UserRecentTopic } from "@legacy/States/AppState";
-import { UserCenterPager as Pager } from "@pages/user-center/pagination";
+import { UserCenterPager as Pager } from "@application/routes/user-center/pagination";
 
 import { FavoriteTopicGroupManager } from "./FavoriteTopicGroupManager";
 import { UserCenterFavoriteTopicItem as Topic } from "./UserCenterFavoriteTopicItem";

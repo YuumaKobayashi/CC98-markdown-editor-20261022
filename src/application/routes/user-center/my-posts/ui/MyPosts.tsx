@@ -14,8 +14,8 @@ import type { UserRecentPost } from "@legacy/States/AppState";
 import {
   parseUserCenterIsHot,
   parseUserCenterPage,
-} from "@pages/user-center/model/route-params";
-import { UserCenterPager as Pager } from "@pages/user-center/pagination";
+} from "@application/routes/user-center/model/route-params";
+import { UserCenterPager as Pager } from "@application/routes/user-center/pagination";
 
 type RouteParams = {
   page?: string;

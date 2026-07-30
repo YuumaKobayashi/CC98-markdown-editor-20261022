@@ -1,1 +1,1 @@
-export { UserCenterOverview as default } from "@pages/user-center/overview";
+export { UserCenterOverview as default } from "@application/routes/user-center/overview";

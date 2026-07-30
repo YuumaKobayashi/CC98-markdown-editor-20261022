@@ -4,11 +4,11 @@ export {
   UserCenterThemePage as default,
   themeDayNightGroups,
   themeList,
-} from "@pages/user-center/theme";
+} from "@application/routes/user-center/theme";
 export type {
   ThemeDayNightGroup,
   ThemeItem,
   ThemeSettingFailResult,
   ThemeSettingResult,
   ThemeSettingSuccessResult,
-} from "@pages/user-center/theme";
+} from "@application/routes/user-center/theme";

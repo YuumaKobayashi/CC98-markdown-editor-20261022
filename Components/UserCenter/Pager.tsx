@@ -1,1 +1,1 @@
-export { UserCenterPager as default } from "@pages/user-center/pagination";
+export { UserCenterPager as default } from "@application/routes/user-center/pagination";

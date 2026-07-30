@@ -1,4 +1,4 @@
 export {
   UserCenterHistoryPage as default,
   UserCenterHistoryPage,
-} from "@pages/user-center/history";
+} from "@application/routes/user-center/history";

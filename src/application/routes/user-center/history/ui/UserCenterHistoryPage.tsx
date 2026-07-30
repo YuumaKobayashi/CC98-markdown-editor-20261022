@@ -15,7 +15,7 @@ import {
   setBrowsingHistoryEnabled,
 } from "@legacy/AsyncActions/UserCenter/GetMyHistoryPosts";
 import type { UserRecentTopic } from "@legacy/States/AppState";
-import { UserCenterPager as Pager } from "@pages/user-center/pagination";
+import { UserCenterPager as Pager } from "@application/routes/user-center/pagination";
 
 type RouteParams = {
   page?: string;
