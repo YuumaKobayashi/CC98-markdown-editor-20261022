@@ -10,14 +10,14 @@ export {
   RecommendedFunctionComponent,
   SchoolSuggestionBox,
   SpecialOfferComponent,
-} from "@pages/home";
+} from "@application/routes/home";
 export {
   HomeAdvertisementCarousel as AdsComponent,
   HomeHotTopics as HotTopicComponent,
   HomePage as MainPage,
   HomeStatistics as MainPageCountComponent,
   RecommendedReading as RecommendedReadingComponent,
-} from "@pages/home";
+} from "@application/routes/home";
 
 /**
  * 首页热门话题类

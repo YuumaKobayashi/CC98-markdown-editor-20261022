@@ -1,4 +1,4 @@
 export {
   BoardSearchBreadcrumb as Category,
   BoardSearchPage as SearchBoard,
-} from "@pages/search/boards";
+} from "@application/routes/search/board";

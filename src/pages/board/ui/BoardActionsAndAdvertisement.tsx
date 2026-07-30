@@ -2,7 +2,7 @@ import * as React from "react";
 import { Link } from "react-router";
 
 import { getMyInfo } from "@modules/session";
-import { HomeAdvertisementCarousel } from "@pages/home/advertisement";
+import { HomeAdvertisementCarousel } from "@application/routes/home/advertisement";
 
 interface BoardActionsAndAdvertisementProps {
   boardInfo: {

@@ -11,7 +11,7 @@ import {
   setFavoriteTopic,
 } from "@modules/favorite-topic";
 import { noticeMessageShow } from "@modules/notification";
-import { HomeAdvertisementCarousel } from "@pages/home/advertisement";
+import { HomeAdvertisementCarousel } from "@application/routes/home/advertisement";
 import { copyToClipboard } from "@foundation/lib/dom";
 import { NoticeMessage } from "@legacy/Components/NoticeMessage";
 

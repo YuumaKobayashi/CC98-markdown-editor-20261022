@@ -1,4 +1,4 @@
 export {
   TopicSearchBreadcrumb as Category,
   TopicSearchPage as Search,
-} from "@pages/search/topics";
+} from "@application/routes/search/topic";

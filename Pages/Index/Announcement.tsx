@@ -1,1 +1,1 @@
-export { Announcement } from "@pages/home";
+export { Announcement } from "@application/routes/home";

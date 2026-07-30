@@ -1,1 +1,1 @@
-export { SiteManage } from "@pages/site-manage";
+export { SiteManage } from "@application/routes/site-management";

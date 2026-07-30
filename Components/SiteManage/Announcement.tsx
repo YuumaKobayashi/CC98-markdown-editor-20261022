@@ -1,1 +1,1 @@
-export { SiteAnnouncementEditor as default } from "@pages/site-manage/announcement";
+export { SiteAnnouncementEditor as default } from "@application/routes/site-management/announcement";

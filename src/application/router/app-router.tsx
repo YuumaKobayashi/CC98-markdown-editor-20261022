@@ -47,7 +47,10 @@ const routes: RouteObject[] = [
     children: [
       {
         index: true,
-        lazy: lazyNamed(() => import("@pages/home/main"), "HomePage"),
+        lazy: lazyNamed(
+          () => import("@application/routes/home/main"),
+          "HomePage"
+        ),
       },
       {
         path: "topic/hot-monthly",
@@ -303,14 +306,14 @@ const routes: RouteObject[] = [
       {
         path: "search/*",
         lazy: lazyNamed(
-          () => import("@pages/search/topics"),
+          () => import("@application/routes/search/topic"),
           "TopicSearchPage"
         ),
       },
       {
         path: "searchBoard/*",
         lazy: lazyNamed(
-          () => import("@pages/search/boards"),
+          () => import("@application/routes/search/board"),
           "BoardSearchPage"
         ),
       },
@@ -324,7 +327,7 @@ const routes: RouteObject[] = [
       {
         path: "sitemanage/*",
         lazy: lazyNamed(
-          () => import("@pages/site-manage"),
+          () => import("@application/routes/site-management"),
           "SiteManage"
         ),
       },
