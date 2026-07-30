@@ -1,1 +1,6 @@
-export * from "@entities/user/storage/user-cache";
+export {
+  addUserInfo,
+  getCachedUserInfo as getUserInfo,
+  getCachedUsersInfo as getUsersInfo,
+  removeUserInfo,
+} from "@modules/user";

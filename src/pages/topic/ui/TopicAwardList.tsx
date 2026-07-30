@@ -2,9 +2,9 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import $ from "jquery";
 
-import { TopicAwardInfo } from "@entities/topic";
-import { getThisUserInfobyName } from "@entities/user/api/service";
-import { getUsersInfo } from "@entities/user/api/get-users-info";
+import { TopicAwardInfo } from "@modules/topic";
+import { getThisUserInfobyName } from "@modules/user";
+import { getUsersInfo } from "@modules/user";
 
 export interface TopicAwardListProps {
   postId: any;

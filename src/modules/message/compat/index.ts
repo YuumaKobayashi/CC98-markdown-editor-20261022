@@ -1,3 +1,4 @@
+export * from "./api/service";
 export { MessageAttmebox } from "./ui/MessageAttmebox";
 export { MessagePerson } from "./ui/MessagePerson";
 export { MessageReceiver } from "./ui/MessageReceiver";

@@ -9,9 +9,9 @@ import {
   FocusTopicItem,
   NewTopicsBreadcrumb,
   TopicCard,
-} from "@entities/topic";
-import { getAllNewTopic } from "@entities/topic/api/service";
-import { getMyInfo } from "@entities/user/storage/current-user";
+} from "@modules/topic";
+import { getAllNewTopic } from "@modules/topic";
+import { getMyInfo } from "@modules/user";
 import { setUserTopicViewMode } from "@features/account/api/service";
 import { isLogOn } from "@features/auth/api/session";
 import type { FocusTopic } from "@legacy/Props/FocusTopic";

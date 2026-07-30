@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useParams } from "react-router";
 
-import { getBoardRecord, getBoardTag } from "@entities/board/api/service";
+import { getBoardRecord, getBoardTag } from "@modules/board";
 import type { BoardEvent } from "@legacy/States/BoardEvent";
 import { Pager } from "@foundation/ui/pagination";
 

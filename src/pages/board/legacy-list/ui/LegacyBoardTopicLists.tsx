@@ -7,7 +7,7 @@ import {
   getBoardInfo,
   getBoardTag,
   isMaster,
-} from "@entities/board/api/service";
+} from "@modules/board";
 import {
   GetTopTopics,
   getBestTopics,
@@ -15,7 +15,7 @@ import {
   getSaveTopics,
   getTopicByOneTag,
   getTopicByTwoTags,
-} from "@entities/topic/api/service";
+} from "@modules/topic";
 import { mutliDelete, mutliLock } from "@features/moderation/api/service";
 import type { TopicTitleAndContentState } from "@legacy/States/AppState";
 import { getListTotalPage, getTagLayer } from "@foundation/lib/page";

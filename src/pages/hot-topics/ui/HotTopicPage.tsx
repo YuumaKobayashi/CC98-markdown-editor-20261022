@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import { FocusTopicItem } from "@entities/topic";
-import { getMonthlyHotTopic } from "@entities/topic/api/service";
+import { FocusTopicItem } from "@modules/topic";
+import { getMonthlyHotTopic } from "@modules/topic";
 import type { FocusTopic } from "@legacy/Props/FocusTopic";
 import DocumentTitle from "@foundation/ui/document-title";
 

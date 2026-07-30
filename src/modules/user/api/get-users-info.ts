@@ -3,7 +3,7 @@ import { UserInfo } from "@legacy/States/AppState";
 import {
     getUsersInfo as getIndexedDBUsersInfo,
     addUserInfo
-} from "@entities/user/storage/user-cache";
+} from "../cache/user-cache";
 
 import {
     getLocalStorage,

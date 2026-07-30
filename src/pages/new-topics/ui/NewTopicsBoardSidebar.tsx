@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Collapse } from "antd";
 import { Link } from "react-router";
 
-import { getBoards } from "@entities/board/api/service";
+import { getBoards } from "@modules/board";
 
 const { Panel } = Collapse;
 

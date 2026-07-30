@@ -2,9 +2,9 @@ import * as React from "react";
 import { useNavigate, useParams } from "react-router";
 
 import { Actions, useAppDispatch } from "@application/store";
-import { getUserInfo } from "@entities/user/api/get-user-info";
+import { getUserInfo } from "@modules/user";
 import type { UserInfo } from "@legacy/States/AppState";
-import { UserProfileAvatar } from "@entities/user/profile-avatar";
+import { UserProfileAvatar } from "@modules/user";
 import DocumentTitle from "@foundation/ui/document-title";
 import { UserProfileDetails } from "./UserProfileDetails";
 import { UserRecentTopics } from "./UserRecentTopics";

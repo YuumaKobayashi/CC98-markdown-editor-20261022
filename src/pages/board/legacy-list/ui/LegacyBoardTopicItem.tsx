@@ -3,8 +3,8 @@ import $ from "jquery";
 import moment from "moment";
 import { Link } from "react-router";
 
-import { getTagNamebyId } from "@entities/topic/api/service";
-import { getMyInfo } from "@entities/user/storage/current-user";
+import { getTagNamebyId } from "@modules/topic";
+import { getMyInfo } from "@modules/user";
 import type { TopicTitleAndContentState } from "@legacy/States/AppState";
 
 const createPager = (replyCount: number) => {

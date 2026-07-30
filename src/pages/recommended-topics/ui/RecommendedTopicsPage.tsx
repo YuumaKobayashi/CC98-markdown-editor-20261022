@@ -4,8 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import {
   RecommendedTopicItem,
   RecommendedTopicsBreadcrumb,
-} from "@entities/topic";
-import { getRandomRecommendedTopic } from "@entities/topic/api/service";
+} from "@modules/topic";
+import { getRandomRecommendedTopic } from "@modules/topic";
 import type { RecommendedTopic } from "@legacy/Props/RecommendedTopic";
 import {
   getStorage,

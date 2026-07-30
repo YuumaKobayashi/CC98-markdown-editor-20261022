@@ -3,15 +3,15 @@ import { useEffect, useState } from "react";
 import { Spin } from "antd";
 import $ from "jquery";
 
-import { isMaster } from "@entities/board/api/service";
-import { FloorSize } from "@entities/post";
+import { isMaster } from "@modules/board";
+import { FloorSize } from "@modules/post";
 import {
   getCurUserTopicContent,
   getHotReplyContent,
   getTopicContent,
   getTraceTopics,
-} from "@entities/topic/api/service";
-import { getMyInfo } from "@entities/user/storage/current-user";
+} from "@modules/topic";
+import { getMyInfo } from "@modules/user";
 import { queryWealth } from "@features/account/api/service";
 import {
   PostManagementDialog,
@@ -22,7 +22,7 @@ import { TopicReplier } from "./TopicReplier";
 import { TopicReplyContent } from "./TopicReplyContent";
 import { TopicReplySignature } from "./TopicReplySignature";
 
-export { FloorSize } from "@entities/post";
+export { FloorSize } from "@modules/post";
 
 export interface TopicReplyListProps {
   topicId: any;

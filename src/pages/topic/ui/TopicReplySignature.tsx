@@ -4,8 +4,8 @@ import { Link, useLocation, useNavigate } from "react-router";
 import moment from "moment";
 import $ from "jquery";
 
-import { isMaster } from "@entities/board/api/service";
-import { getMyInfo } from "@entities/user/storage/current-user";
+import { isMaster } from "@modules/board";
+import { getMyInfo } from "@modules/user";
 import {
   dislike,
   like,

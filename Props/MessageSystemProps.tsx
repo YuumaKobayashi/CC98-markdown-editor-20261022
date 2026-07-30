@@ -1,1 +1,1 @@
-export { MessageSystemProps } from "@entities/message";
+export { MessageSystemProps } from "@modules/message";

@@ -2,7 +2,7 @@ import * as React from "react";
 import { Checkbox, Form, Input, Menu, Modal, Select } from "antd";
 import type { FormInstance } from "antd";
 import { SketchPicker } from "react-color";
-import { getBoards } from "@entities/board/api/service";
+import { getBoards } from "@modules/board";
 import {
   addBoardTopTopic,
   cancelBestTopic,

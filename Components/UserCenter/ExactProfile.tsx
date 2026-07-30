@@ -1,1 +1,1 @@
-export { UserProfile as default, UserProfile } from "@entities/user";
+export { UserProfile as default, UserProfile } from "@modules/user";

@@ -1,1 +1,1 @@
-export { MessageResponsebox } from "@entities/message";
+export { MessageResponsebox } from "@modules/message";

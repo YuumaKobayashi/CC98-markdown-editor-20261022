@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import { getBoardName } from "@entities/board/api/service";
-import { getMyInfo } from "@entities/user/storage/current-user";
+import { getBoardName } from "@modules/board";
+import { getMyInfo } from "@modules/user";
 import type { FocusBoard } from "@legacy/Props/FocusBoard";
 import {
   getStorage,

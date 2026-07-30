@@ -4,7 +4,7 @@ import { Popover, Spin, Tag, Tooltip } from "antd";
 import moment from "moment";
 import { Link } from "react-router";
 
-import { getMyInfo } from "@entities/user/storage/current-user";
+import { getMyInfo } from "@modules/user";
 import { UbbContainer } from "@legacy/Components/UbbContainer";
 import { UbbCodeOptions } from "@legacy/Ubb/UbbCodeExtension";
 

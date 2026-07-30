@@ -1,1 +1,1 @@
-export * from "@entities/board/model/board-info";
+export { boardInfo } from "@modules/board";

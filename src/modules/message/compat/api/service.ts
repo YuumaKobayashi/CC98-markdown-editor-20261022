@@ -1,9 +1,9 @@
 import { getToken, formAuthorizeHeader, isLogOn } from "@features/auth/api/session";
 import { cc98Fetch } from "@foundation/api/http";
 import { throwLegacyError } from "@foundation/lib/legacy-utility-effects";
-import { getBoardName } from "@entities/board/api/service";
-import { getBasicTopicsInfo, getThisTopicInfo } from "@entities/topic/api/service";
-import { getBasicUsersInfo, getThisUserInfo } from "@entities/user/api/service";
+import { getBoardName } from "@modules/board";
+import { getBasicTopicsInfo, getThisTopicInfo } from "@modules/topic";
+import { getBasicUsersInfo, getThisUserInfo } from "@modules/user";
 import { transerTime } from "@foundation/lib/time";
 
 /*

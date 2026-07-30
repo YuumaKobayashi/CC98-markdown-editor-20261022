@@ -1,5 +1,5 @@
-import { removeUserInfo as removeUserInfoInIndexDB } from "@entities/user/storage/user-cache";
-import { getUserInfo } from "@entities/user/api/get-user-info";
+import { removeUserInfo as removeUserInfoInIndexDB } from "../cache/user-cache";
+import { getUserInfo } from "./get-user-info";
 import { getLocalStorage, removeLocalStorage } from "@foundation/storage/web-storage";
 import { cc98Fetch } from "@foundation/api/http";
 

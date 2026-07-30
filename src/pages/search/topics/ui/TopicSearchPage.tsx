@@ -2,9 +2,9 @@ import * as React from "react";
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router";
 
-// import { getBoardName } from "@entities/board/api/service";
-import { getSearchTopic } from "@entities/topic/api/service";
-import { SearchTopicItem } from "@entities/topic";
+// import { getBoardName } from "@modules/board";
+import { getSearchTopic } from "@modules/topic";
+import { SearchTopicItem } from "@modules/topic";
 import { FocusTopic } from "@legacy/Props/FocusTopic";
 import { DocumentTitle } from "@foundation/ui/document-title";
 

@@ -2,7 +2,7 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router";
 
-import { getSearchBoard } from "@entities/board/api/service";
+import { getSearchBoard } from "@modules/board";
 import { FocusBoard } from "@legacy/Props/FocusBoard";
 import { DocumentTitle } from "@foundation/ui/document-title";
 

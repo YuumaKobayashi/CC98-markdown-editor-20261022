@@ -1,3 +1,186 @@
 {
-  "violations": []
+  "violations": [
+    {
+      "from": "src/modules/message/compat/ui/MessageAttmebox.tsx",
+      "specifier": "@legacy/Components/UbbContainer",
+      "rule": "legacy-dependency",
+      "reason": "M1 relocates the complete Message compatibility implementation while UBB remains frozen.",
+      "removeWhen": "The UBB module migration provides its public rendering entry."
+    },
+    {
+      "from": "src/modules/message/compat/ui/MessageAttmebox.tsx",
+      "specifier": "@legacy/Ubb/UbbCodeExtension",
+      "rule": "legacy-dependency",
+      "reason": "M1 relocates the complete Message compatibility implementation while UBB remains frozen.",
+      "removeWhen": "The UBB module migration provides its public compatibility-mode contract."
+    },
+    {
+      "from": "src/modules/message/compat/ui/MessagePerson.tsx",
+      "specifier": "@legacy/Components/UbbContainer",
+      "rule": "legacy-dependency",
+      "reason": "M1 relocates the complete Message compatibility implementation while UBB remains frozen.",
+      "removeWhen": "The UBB module migration provides its public rendering entry."
+    },
+    {
+      "from": "src/modules/message/compat/ui/MessagePerson.tsx",
+      "specifier": "@legacy/Props/MessagePersonInfo",
+      "rule": "legacy-dependency",
+      "reason": "M1 preserves the existing private-message contact contract without moving legacy Props.",
+      "removeWhen": "The Message contract split moves MessagePersonInfo behind the Message public entry."
+    },
+    {
+      "from": "src/modules/message/compat/ui/MessageReceiver.tsx",
+      "specifier": "@legacy/Components/UbbContainer",
+      "rule": "legacy-dependency",
+      "reason": "M1 relocates the complete Message compatibility implementation while UBB remains frozen.",
+      "removeWhen": "The UBB module migration provides its public rendering entry."
+    },
+    {
+      "from": "src/modules/message/compat/ui/MessageResponsebox.tsx",
+      "specifier": "@legacy/Components/UbbContainer",
+      "rule": "legacy-dependency",
+      "reason": "M1 relocates the complete Message compatibility implementation while UBB remains frozen.",
+      "removeWhen": "The UBB module migration provides its public rendering entry."
+    },
+    {
+      "from": "src/modules/message/compat/ui/MessageResponsebox.tsx",
+      "specifier": "@legacy/Ubb/UbbCodeExtension",
+      "rule": "legacy-dependency",
+      "reason": "M1 relocates the complete Message compatibility implementation while UBB remains frozen.",
+      "removeWhen": "The UBB module migration provides its public compatibility-mode contract."
+    },
+    {
+      "from": "src/modules/message/compat/ui/MessageSender.tsx",
+      "specifier": "@legacy/Components/UbbContainer",
+      "rule": "legacy-dependency",
+      "reason": "M1 relocates the complete Message compatibility implementation while UBB remains frozen.",
+      "removeWhen": "The UBB module migration provides its public rendering entry."
+    },
+    {
+      "from": "src/modules/message/compat/ui/MessageSystembox.tsx",
+      "specifier": "@legacy/Components/UbbContainer",
+      "rule": "legacy-dependency",
+      "reason": "M1 relocates the complete Message compatibility implementation while UBB remains frozen.",
+      "removeWhen": "The UBB module migration provides its public rendering entry."
+    },
+    {
+      "from": "src/modules/message/compat/ui/MessageSystembox.tsx",
+      "specifier": "@legacy/Ubb/UbbCodeExtension",
+      "rule": "legacy-dependency",
+      "reason": "M1 relocates the complete Message compatibility implementation while UBB remains frozen.",
+      "removeWhen": "The UBB module migration provides its public compatibility-mode contract."
+    },
+    {
+      "from": "src/modules/post/ui/UserRecentPostItem.tsx",
+      "specifier": "@legacy/States/AppState",
+      "rule": "legacy-dependency",
+      "reason": "M1 preserves the existing UserRecentPost type contract without moving legacy state types.",
+      "removeWhen": "The Post or user-activity contract migration owns UserRecentPost."
+    },
+    {
+      "from": "src/modules/topic/api/service.ts",
+      "specifier": "@legacy/States/AppState",
+      "rule": "legacy-dependency",
+      "reason": "M1 preserves the complete Topic service and its existing response contracts.",
+      "removeWhen": "The Topic contract migration moves its business types behind the Topic public entry."
+    },
+    {
+      "from": "src/modules/topic/ui/FocusTopicItem.tsx",
+      "specifier": "@legacy/Props/FocusTopic",
+      "rule": "legacy-dependency",
+      "reason": "M1 preserves the existing FocusTopic UI contract without moving legacy Props.",
+      "removeWhen": "The Topic contract migration owns FocusTopic."
+    },
+    {
+      "from": "src/modules/topic/ui/RecommendedTopicItem.tsx",
+      "specifier": "@legacy/Props/RecommendedTopic",
+      "rule": "legacy-dependency",
+      "reason": "M1 preserves the existing RecommendedTopic UI contract without moving legacy Props.",
+      "removeWhen": "The Topic contract migration owns RecommendedTopic."
+    },
+    {
+      "from": "src/modules/topic/ui/SearchTopicItem.tsx",
+      "specifier": "@legacy/Props/FocusTopic",
+      "rule": "legacy-dependency",
+      "reason": "M1 preserves the existing FocusTopic UI contract without moving legacy Props.",
+      "removeWhen": "The Topic contract migration owns FocusTopic."
+    },
+    {
+      "from": "src/modules/topic/ui/TopicCard.tsx",
+      "specifier": "@legacy/Props/FocusTopic",
+      "rule": "legacy-dependency",
+      "reason": "M1 preserves the existing TopicCard contract without moving legacy Props.",
+      "removeWhen": "The Topic contract migration owns FocusTopic."
+    },
+    {
+      "from": "src/modules/topic/ui/UserRecentTopicItem.tsx",
+      "specifier": "@legacy/States/AppState",
+      "rule": "legacy-dependency",
+      "reason": "M1 preserves the existing UserRecentTopic type contract without moving legacy state types.",
+      "removeWhen": "The Topic or user-activity contract migration owns UserRecentTopic."
+    },
+    {
+      "from": "src/modules/user/api/get-user-info.ts",
+      "specifier": "@legacy/States/AppState",
+      "rule": "legacy-dependency",
+      "reason": "M1 preserves the existing public UserInfo contract without moving legacy state types.",
+      "removeWhen": "The User contract migration owns UserInfo."
+    },
+    {
+      "from": "src/modules/user/api/get-users-info.ts",
+      "specifier": "@legacy/States/AppState",
+      "rule": "legacy-dependency",
+      "reason": "M1 preserves the existing public UserInfo contract without moving legacy state types.",
+      "removeWhen": "The User contract migration owns UserInfo."
+    },
+    {
+      "from": "src/modules/user/cache/user-cache.ts",
+      "specifier": "@legacy/States/AppState",
+      "rule": "legacy-dependency",
+      "reason": "M1 preserves the existing cached UserInfo contract and cache behavior.",
+      "removeWhen": "The User contract migration owns UserInfo."
+    },
+    {
+      "from": "src/modules/user/compat/current-user.ts",
+      "specifier": "@legacy/States/AppState",
+      "rule": "legacy-dependency",
+      "reason": "M1 keeps the current-session user reader in a compatibility leaf until Session migration.",
+      "removeWhen": "M2 moves the current-session user contract into modules/session."
+    },
+    {
+      "from": "src/modules/user/ui/profile-avatar/UserProfileAvatar.tsx",
+      "specifier": "@legacy/States/AppState",
+      "rule": "legacy-dependency",
+      "reason": "M1 preserves the existing UserInfo avatar component contract.",
+      "removeWhen": "The User contract migration owns UserInfo."
+    },
+    {
+      "from": "src/modules/user/ui/UserProfile.tsx",
+      "specifier": "@legacy/Components/UbbContainer",
+      "rule": "legacy-dependency",
+      "reason": "M1 relocates UserProfile while UBB remains frozen.",
+      "removeWhen": "The UBB module migration provides its public rendering entry."
+    },
+    {
+      "from": "src/modules/user/ui/UserProfile.tsx",
+      "specifier": "@legacy/States/AppState",
+      "rule": "legacy-dependency",
+      "reason": "M1 preserves the existing UserInfo profile component contract.",
+      "removeWhen": "The User contract migration owns UserInfo."
+    },
+    {
+      "from": "src/modules/user/ui/UserProfile.tsx",
+      "specifier": "@legacy/Ubb/Core",
+      "rule": "legacy-dependency",
+      "reason": "M1 relocates UserProfile while UBB remains frozen.",
+      "removeWhen": "The UBB module migration provides its public options contract."
+    },
+    {
+      "from": "src/features/auth/api/session.ts",
+      "specifier": "@modules/user/compat/current-user",
+      "rule": "module-public-api",
+      "reason": "M1 keeps the current-session user reader behind a narrow compatibility leaf to avoid evaluating the full User barrel from Auth.",
+      "removeWhen": "M2 moves Auth and the current-session user reader into modules/session and exposes them through the Session public entry."
+    }
+  ]
 }

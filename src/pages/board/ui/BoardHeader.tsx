@@ -3,7 +3,7 @@ import type { IBoard } from "@cc98/api";
 import { Button } from "antd";
 import { Link } from "react-router";
 
-import { getMyInfo } from "@entities/user/storage/current-user";
+import { getMyInfo } from "@modules/user";
 import { HomeAdvertisementCarousel } from "@pages/home/advertisement";
 
 import { BoardAnnouncement } from "./BoardAnnouncement";

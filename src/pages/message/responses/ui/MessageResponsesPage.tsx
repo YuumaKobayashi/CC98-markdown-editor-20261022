@@ -5,8 +5,8 @@ import { useParams } from "react-router";
 import {
   MessageResponsebox,
   type MessageResponseProps,
-} from "@entities/message";
-import { getMessageResponse } from "@entities/message/api/service";
+} from "@modules/message";
+import { getMessageResponse } from "@modules/message";
 import { getTotalPage } from "@features/moderation/api/service";
 import { DocumentTitle } from "@foundation/ui/document-title";
 import { Pager } from "@foundation/ui/pagination";

@@ -1,3 +1,4 @@
+export * from "./api/service";
 export { UserRecentTopicItem } from "./ui/UserRecentTopicItem";
 export { FocusTopicItem } from "./ui/FocusTopicItem";
 export { RecommendedTopicItem } from "./ui/RecommendedTopicItem";

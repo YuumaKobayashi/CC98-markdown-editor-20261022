@@ -1,1 +1,1 @@
-export { TopicAwardInfo as default } from "@entities/topic";
+export { TopicAwardInfo as default } from "@modules/topic";

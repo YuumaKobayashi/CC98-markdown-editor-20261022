@@ -1,1 +1,1 @@
-export { RecommendedTopicItem as RecommendedTopicSingle } from "@entities/topic";
+export { RecommendedTopicItem as RecommendedTopicSingle } from "@modules/topic";

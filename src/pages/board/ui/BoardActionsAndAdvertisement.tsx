@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Link } from "react-router";
 
-import { getMyInfo } from "@entities/user/storage/current-user";
+import { getMyInfo } from "@modules/user";
 import { HomeAdvertisementCarousel } from "@pages/home/advertisement";
 
 interface BoardActionsAndAdvertisementProps {

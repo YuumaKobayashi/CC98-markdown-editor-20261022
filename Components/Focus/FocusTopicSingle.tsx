@@ -1,1 +1,1 @@
-export { FocusTopicItem as FocusTopicSingle } from "@entities/topic";
+export { FocusTopicItem as FocusTopicSingle } from "@modules/topic";

@@ -10,12 +10,12 @@ import {
 } from "react";
 
 import { useAppDispatch, useAppSelector } from "@application/store";
-import { MessageReceiver, MessageSender } from "@entities/message";
+import { MessageReceiver, MessageSender } from "@modules/message";
 import {
   getRecentMessage,
   sortRecentMessage,
-} from "@entities/message/api/service";
-import { getMyInfo } from "@entities/user/storage/current-user";
+} from "@modules/message";
+import { getMyInfo } from "@modules/user";
 import { sendMessage } from "@features/message/api/service";
 import { uploadFile } from "@features/posting/api/service";
 import { refreshCurrentMessageCount } from "@legacy/AsyncActions/Message";

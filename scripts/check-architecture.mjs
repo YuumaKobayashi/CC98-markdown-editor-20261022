@@ -15,7 +15,6 @@ const aliasRoots = new Map([
   ["@foundation", "src/foundation"],
   ["@pages", "src/pages"],
   ["@features", "src/features"],
-  ["@entities", "src/entities"],
 ]);
 
 function toProjectPath(filePath) {
@@ -92,9 +91,7 @@ function pathLayer(absolutePath) {
     relativePath === "src/modules" ||
     relativePath.startsWith("src/modules/") ||
     relativePath === "src/features" ||
-    relativePath.startsWith("src/features/") ||
-    relativePath === "src/entities" ||
-    relativePath.startsWith("src/entities/")
+    relativePath.startsWith("src/features/")
   ) {
     return "modules";
   }

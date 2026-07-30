@@ -2,11 +2,11 @@ import * as React from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router";
 
-import { MessagePerson } from "@entities/message";
+import { MessagePerson } from "@modules/message";
 import {
   getRecentContact,
   sortContactList,
-} from "@entities/message/api/service";
+} from "@modules/message";
 import type { MessagePersonInfo } from "@legacy/Props/MessagePersonInfo";
 import type { MessageProps } from "@legacy/Props/MessageProps";
 import { DocumentTitle } from "@foundation/ui/document-title";

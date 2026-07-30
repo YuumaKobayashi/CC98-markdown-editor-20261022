@@ -12,14 +12,14 @@ import {
   getBoardName,
   getBoardTagV2,
   isMaster,
-} from "@entities/board/api/service";
+} from "@modules/board";
 import {
   getTagIdbyName,
   getTagNamebyId,
   getTopicContent,
   getTopicInfo,
-} from "@entities/topic/api/service";
-import { getMyInfo } from "@entities/user/storage/current-user";
+} from "@modules/topic";
+import { getMyInfo } from "@modules/user";
 import { getUserWealth } from "@features/account/api/service";
 import { getToken } from "@features/auth/api/session";
 import { uploadEvent } from "@features/posting/api/service";

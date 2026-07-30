@@ -2,7 +2,7 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 
-import { getMyInfo } from "@entities/user/storage/current-user";
+import { getMyInfo } from "@modules/user";
 import { getToken } from "@features/auth/api/session";
 import { cc98Fetch } from "@foundation/api/http";
 import {

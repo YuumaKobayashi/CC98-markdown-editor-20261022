@@ -1,1 +1,1 @@
-export { TopicBreadcrumb as Category } from "@entities/topic";
+export { TopicBreadcrumb as Category } from "@modules/topic";

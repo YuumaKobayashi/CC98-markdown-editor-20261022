@@ -5,8 +5,8 @@
 import * as ActionTypes from "../ActionTypes";
 import * as Appstate from "../States/AppState";
 import { RootAction } from "../Store";
-import { addUserInfo } from "@entities/user/storage/user-cache";
-import { getMyInfo } from "@entities/user/storage/current-user";
+import { addUserInfo } from "@modules/user";
+import { getMyInfo } from "@modules/user";
 import { isLogOn } from "@features/auth/api/session";
 import { getLocalStorage, setLocalStorage } from "@foundation/storage/web-storage";
 

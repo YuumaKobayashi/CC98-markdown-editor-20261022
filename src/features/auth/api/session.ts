@@ -5,7 +5,7 @@ import {
   removeLocalStorage,
   setLocalStorage,
 } from "@foundation/storage/web-storage";
-import { getMyInfo } from "@entities/user/storage/current-user";
+import { getMyInfo } from "@modules/user/compat/current-user";
 import { logOffAndNavigate } from "@foundation/lib/legacy-utility-effects";
 
 /**

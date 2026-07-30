@@ -4,7 +4,7 @@ import { Link } from "react-router";
 import { Modal } from "antd";
 import moment from "moment";
 
-import { getTagNamebyId } from "@entities/topic/api/service";
+import { getTagNamebyId } from "@modules/topic";
 import {
   deleteFavoriteTopic,
   FavoriteTopicGroupSelect,

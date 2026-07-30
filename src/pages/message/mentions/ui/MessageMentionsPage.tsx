@@ -2,8 +2,8 @@ import * as React from "react";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router";
 
-import { MessageAttmebox, type MessageResponseProps } from "@entities/message";
-import { getMessageAttme } from "@entities/message/api/service";
+import { MessageAttmebox, type MessageResponseProps } from "@modules/message";
+import { getMessageAttme } from "@modules/message";
 import { getTotalPage } from "@features/moderation/api/service";
 import { DocumentTitle } from "@foundation/ui/document-title";
 import { Pager } from "@foundation/ui/pagination";

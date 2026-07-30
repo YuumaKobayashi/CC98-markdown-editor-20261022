@@ -1,12 +1,12 @@
 import * as State from "@legacy/States/AppState";
-import { getUserInfo } from "@entities/user/api/get-user-info";
-import { getUsersInfo } from "@entities/user/api/get-users-info";
+import { getUserInfo } from "@modules/user";
+import { getUsersInfo } from "@modules/user";
 import { setLocalStorage, getLocalStorage } from "@foundation/storage/web-storage";
 import { getToken, formAuthorizeHeader, isLogOn } from "@features/auth/api/session";
 import { cc98Fetch } from "@foundation/api/http";
 import { throwLegacyError } from "@foundation/lib/legacy-utility-effects";
-import { getBoardName } from "@entities/board/api/service";
-import { getBasicUsersInfo, getThisUserInfo } from "@entities/user/api/service";
+import { getBoardName } from "@modules/board";
+import { getBasicUsersInfo, getThisUserInfo } from "@modules/user";
 import { replaceHttpToHttps } from "@foundation/lib/text";
 import { transerRecentTime, transerTimeToYearMonthDay } from "@foundation/lib/time";
 

@@ -1,1 +1,1 @@
-export * from "@entities/user/api/get-user-info";
+export { getUserInfo } from "@modules/user";

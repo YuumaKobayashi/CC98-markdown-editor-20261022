@@ -1,1 +1,1 @@
-export { MessageResponseProps } from "@entities/message";
+export { MessageResponseProps } from "@modules/message";

@@ -2,8 +2,8 @@ import * as React from "react";
 import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
 import { Link } from "react-router";
 
-import { updateUserInfo } from "@entities/user/api/service";
-import { getMyInfo } from "@entities/user/storage/current-user";
+import { updateUserInfo } from "@modules/user";
+import { getMyInfo } from "@modules/user";
 import { updateFollowedUser } from "../api/service";
 
 export interface TopicReplierProps {

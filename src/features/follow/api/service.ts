@@ -1,4 +1,4 @@
-import { getMyInfo } from "@entities/user/storage/current-user";
+import { getMyInfo } from "@modules/user";
 import { removeStorage } from "@foundation/storage/web-storage";
 import { formAuthorizeHeader } from "@features/auth/api/session";
 import { cc98Fetch } from "@foundation/api/http";

@@ -15,7 +15,7 @@ import moment from "moment";
 import {
   getTpUsers,
   isMaster,
-} from "@entities/board/api/service";
+} from "@modules/board";
 import { cancelStopBoardPost } from "@features/moderation/api/service";
 
 import {

@@ -1,1 +1,1 @@
-export { MessageSender } from "@entities/message";
+export { MessageSender } from "@modules/message";

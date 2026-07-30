@@ -3,9 +3,9 @@ import * as React from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 
 import { useAppDispatch, useAppSelector, Actions } from "@application/store";
-import { getTopicInfo } from "@entities/topic/api/service";
-import { getUserInfo } from "@entities/user/api/get-user-info";
-import { getMyInfo } from "@entities/user/storage/current-user";
+import { getTopicInfo } from "@modules/topic";
+import { getUserInfo } from "@modules/user";
+import { getMyInfo } from "@modules/user";
 import { isLogOn } from "@features/auth/api/session";
 import { refreshCurrentMessageCount } from "@legacy/AsyncActions/Message";
 import { refreshCurrentUserInfo } from "@legacy/AsyncActions/UserCenter";

@@ -1,1 +1,1 @@
-export { MessageSendReceiveProps } from "@entities/message";
+export { MessageSendReceiveProps } from "@modules/message";

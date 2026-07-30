@@ -2,8 +2,8 @@ import * as React from "react";
 import { Spin } from "antd";
 import $ from "jquery";
 
-import { getFocusTopic } from "@entities/topic/api/service";
-import { FocusTopicItem } from "@entities/topic";
+import { getFocusTopic } from "@modules/topic";
+import { FocusTopicItem } from "@modules/topic";
 import type { FocusTopic } from "@legacy/Props/FocusTopic";
 import { isBottom } from "@foundation/lib/dom";
 import {

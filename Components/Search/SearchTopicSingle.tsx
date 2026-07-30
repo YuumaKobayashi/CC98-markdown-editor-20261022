@@ -1,1 +1,1 @@
-export { SearchTopicItem as SearchTopicSingle } from "@entities/topic";
+export { SearchTopicItem as SearchTopicSingle } from "@modules/topic";

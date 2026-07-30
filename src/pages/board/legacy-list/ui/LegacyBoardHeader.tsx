@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Link } from "react-router";
 
-import { isMaster } from "@entities/board/api/service";
+import { isMaster } from "@modules/board";
 import {
   followBoard,
   isFollowThisBoard,

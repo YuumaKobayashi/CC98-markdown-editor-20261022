@@ -8,7 +8,7 @@ import {
   getSigninInfo,
   signin,
 } from "@features/account/api/service";
-import { getMyInfo } from "@entities/user/storage/current-user";
+import { getMyInfo } from "@modules/user";
 import {
   removeLocalStorage,
   setLocalStorage,

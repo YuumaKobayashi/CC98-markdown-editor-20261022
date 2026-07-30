@@ -3,4 +3,4 @@ export {
   RecommendedTopicsPage,
   RecommendedTopicsPage as AllRecommendedTopic,
 } from "./ui/RecommendedTopicsPage";
-export { RecommendedTopicsBreadcrumb as Category } from "@entities/topic";
+export { RecommendedTopicsBreadcrumb as Category } from "@modules/topic";

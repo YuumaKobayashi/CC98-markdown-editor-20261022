@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Link } from "react-router";
 
-import { getBoardName } from "@entities/board/api/service";
+import { getBoardName } from "@modules/board";
 import { getToken } from "@features/auth/api/session";
 import { cc98Fetch } from "@foundation/api/http";
 
