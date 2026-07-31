@@ -37,11 +37,6 @@ export const changeUserFansInfo = createAction(ActionTypes.CHANGE_USER_FANS_INFO
     payload: { fansInfo }
 }));
 
-export const changeUserFollowingsInfo = createAction(ActionTypes.CHANGE_USER_FOLLOWINGS_INFO, (followingsInfo: Appstate.UserInfo[]) => ({
-    type: ActionTypes.CHANGE_USER_FOLLOWINGS_INFO,
-    payload: { followingsInfo }
-}));
-
 export const changeUserCenterPage = createAction(ActionTypes.CHNAGE_USER_CENTER_PAGE, (page: 'profile' | 'config' | 'mytopics' |'myposts' | 'myfollowings' | 'myfans') => ({
     type: ActionTypes.CHNAGE_USER_CENTER_PAGE,
     payload: { page }

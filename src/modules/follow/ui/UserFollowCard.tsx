@@ -1,13 +1,12 @@
 import * as React from "react";
 import { Link } from "react-router";
 
-import { useAppDispatch } from "@application/store";
-import * as Actions from "@legacy/Actions/UserCenter";
 import type { UserInfo } from "@legacy/States/AppState";
 import { followUser, unfollowUser } from "../api/service";
 
 interface UserFollowCardProps {
   user: UserInfo;
+  onFollowingChange: (userId: number, isFollowing: boolean) => void;
 }
 
 interface FollowState {
@@ -23,8 +22,10 @@ const createInitialFollowState = (isFollowing: boolean): FollowState => ({
 });
 
 //用户中心我的关注&我的粉丝用户通用组件
-export function UserFollowCard({ user }: UserFollowCardProps) {
-  const dispatch = useAppDispatch();
+export function UserFollowCard({
+  user,
+  onFollowingChange,
+}: UserFollowCardProps) {
   const [followState, setFollowState] = React.useState(() =>
     createInitialFollowState(user.isFollowing),
   );
@@ -42,7 +43,7 @@ export function UserFollowCard({ user }: UserFollowCardProps) {
         buttonInfo: "重新关注",
         isFollowing: false,
       });
-      dispatch(Actions.unfollowUser(user.id));
+      onFollowingChange(user.id, false);
       return;
     }
     setFollowState({
@@ -65,7 +66,7 @@ export function UserFollowCard({ user }: UserFollowCardProps) {
         buttonInfo: "已关注",
         isFollowing: true,
       });
-      dispatch(Actions.followUser(user.id));
+      onFollowingChange(user.id, true);
       return;
     }
     if (result === "follow_count_limited") {

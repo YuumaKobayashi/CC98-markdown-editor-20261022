@@ -1,10 +1,12 @@
 import * as React from "react";
 import { useParams } from "react-router";
 
-import { useAppDispatch, useAppSelector } from "@application/store";
-import { UserFollowCard } from "@modules/follow";
-import * as Actions from "@legacy/Actions/UserCenter";
-import { getUserFollowingsInfo } from "@legacy/AsyncActions/UserCenter";
+import { useAppSelector } from "@application/store";
+import {
+  getCurrentUserFollowings,
+  UserFollowCard,
+} from "@modules/follow";
+import { selectCurrentUser } from "@modules/session";
 import type { UserInfo } from "@legacy/States/AppState";
 import { parseUserCenterPage } from "@application/routes/user-center/model/route-params";
 import { UserCenterPager as Pager } from "@application/routes/user-center/pagination";
@@ -15,24 +17,87 @@ type RouteParams = {
 
 //用户中心我的关注组件
 export function MyFollowings() {
-  const dispatch = useAppDispatch();
   const { page } = useParams<RouteParams>();
   const currentPage = parseUserCenterPage(page);
-  const userFollowings = useAppSelector(
-    (state) => state.userInfo.currentUserFollowingInfo,
+  const currentUser = useAppSelector(selectCurrentUser);
+  const [userFollowings, setUserFollowings] = React.useState<UserInfo[]>([]);
+  const userFollowingsRef = React.useRef<UserInfo[]>([]);
+  const [totalPage, setTotalPage] = React.useState(() =>
+    Math.ceil(currentUser.followCount / 10),
   );
-  const totalPage = useAppSelector(
-    (state) => state.userInfo.totalPage.myfollowings,
-  );
-  const isLoading = useAppSelector((state) => state.userInfo.isLoading);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [, setErrorMessage] = React.useState("");
+
+  const loadUserFollowings = async (nextPage: number) => {
+    setIsLoading(true);
+    setErrorMessage("");
+
+    // 没有关注
+    if (currentUser.followCount === 0) {
+      setIsLoading(false);
+      return;
+    }
+
+    const currentFollowings = userFollowingsRef.current;
+    // 如果未请求完所有帖子并且帖子总数小于请求的页数
+    // 换言之，当用户向后翻页，或直接通过url定位页数时
+    let shouldLoad =
+      currentFollowings.length < (nextPage - 1) * 10 + 1;
+    // 当用户向前翻页，且之前的页数中存在未加载过的项
+    if (!shouldLoad) {
+      for (
+        let index = (nextPage - 1) * 10;
+        index < Math.min(nextPage * 10, currentFollowings.length);
+        index++
+      ) {
+        if (!currentFollowings[index]) {
+          shouldLoad = true;
+          break;
+        }
+      }
+    }
+
+    if (!shouldLoad) {
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      const followData = await getCurrentUserFollowings(nextPage);
+      // 当请求到空数组时，必然是因为用户通过url访问到了越界的长度
+      if (followData.length === 0) {
+        userFollowingsRef.current = [];
+        setUserFollowings([]);
+        setTotalPage(0);
+        setIsLoading(false);
+        return;
+      }
+
+      const nextFollowings = currentFollowings.slice();
+      followData.forEach((item, index) => {
+        nextFollowings[index + (nextPage - 1) * 10] = item;
+      });
+      userFollowingsRef.current = nextFollowings;
+      setUserFollowings(nextFollowings);
+      setIsLoading(false);
+    } catch (error) {
+      setErrorMessage(
+        error instanceof Error ? error.message : String(error),
+      );
+    }
+  };
+
+  const changeFollowingState = (userId: number, isFollowing: boolean) => {
+    const nextFollowings = userFollowingsRef.current.map((item) =>
+      item.id === userId ? { ...item, isFollowing } : item,
+    );
+    userFollowingsRef.current = nextFollowings;
+    setUserFollowings(nextFollowings);
+  };
 
   React.useEffect(() => {
-    dispatch(getUserFollowingsInfo(currentPage));
-  }, [currentPage, dispatch]);
-
-  React.useEffect(() => {
-    dispatch(Actions.changeUserCenterPage("myfollowings"));
-  }, [dispatch]);
+    void loadUserFollowings(currentPage);
+  }, [currentPage]);
 
   React.useEffect(() => {
     window.scroll(0, 0);
@@ -56,7 +121,11 @@ export function MyFollowings() {
   const followingItems = userFollowings
     .slice((currentPage - 1) * 10, currentPage * 10)
     .map((item: UserInfo) => (
-      <UserFollowCard key={item.id} user={item} />
+      <UserFollowCard
+        key={item.id}
+        user={item}
+        onFollowingChange={changeFollowingState}
+      />
     ));
   //添加分隔线
   for (let index = 1; index < followingItems.length; index += 2) {

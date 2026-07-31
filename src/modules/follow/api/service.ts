@@ -3,6 +3,32 @@ import { removeStorage } from "@foundation/storage/web-storage";
 import { formAuthorizeHeader } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
 import { refreshUserInfo } from "@modules/session";
+import { getUsersInfo } from "@modules/user";
+import type { UserInfo } from "@legacy/States/AppState";
+
+/**
+ * 获取当前用户关注的用户信息。
+ * @param page 当前页数
+ * @author AsukaSong
+ */
+export async function getCurrentUserFollowings(
+  page: number,
+): Promise<UserInfo[]> {
+  const headers = await formAuthorizeHeader();
+  const url = `/me/followee?from=${(page - 1) * 10}&size=10`;
+  const response = await cc98Fetch(url, { headers });
+
+  if (response.status !== 200) {
+    throw new Error(response.statusText);
+  }
+
+  const userIds: number[] = await response.json();
+  if (userIds.length === 0) {
+    return [];
+  }
+
+  return await getUsersInfo(userIds);
+}
 
 /**
  * 关注指定id的用户

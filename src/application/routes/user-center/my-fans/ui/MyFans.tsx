@@ -34,6 +34,12 @@ export function MyFans() {
     window.scroll(0, 0);
   }, [currentPage]);
 
+  const changeFollowingState = (userId: number, isFollowing: boolean) => {
+    dispatch(
+      isFollowing ? Actions.followUser(userId) : Actions.unfollowUser(userId),
+    );
+  };
+
   if (isLoading) {
     return (
       <div className="user-center-loading">
@@ -52,7 +58,11 @@ export function MyFans() {
   const fanItems = userFans
     .slice((currentPage - 1) * 10, currentPage * 10)
     .map((item: UserInfo) => (
-      <UserFollowCard key={item.id} user={item} />
+      <UserFollowCard
+        key={item.id}
+        user={item}
+        onFollowingChange={changeFollowingState}
+      />
     ));
   //添加分隔线
   for (let index = 1; index < fanItems.length; index += 2) {

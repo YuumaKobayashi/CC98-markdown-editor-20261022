@@ -183,18 +183,11 @@
       "removeWhen": "The UBB module migration provides its public options contract."
     },
     {
-      "from": "src/modules/follow/ui/UserFollowCard.tsx",
-      "specifier": "@application/store",
-      "rule": "layer-direction",
-      "reason": "M2 relocates the complete reusable Follow UI while its Redux dispatch contract remains in the Application store.",
-      "removeWhen": "S1 moves Follow actions and state behind the Follow module public entry."
-    },
-    {
-      "from": "src/modules/follow/ui/UserFollowCard.tsx",
-      "specifier": "@legacy/Actions/UserCenter",
+      "from": "src/modules/follow/api/service.ts",
+      "specifier": "@legacy/States/AppState",
       "rule": "legacy-dependency",
-      "reason": "M2 preserves the existing Follow UI dispatch behavior without moving legacy User Center actions.",
-      "removeWhen": "S1 moves Follow actions and state behind the Follow module public entry."
+      "reason": "S1.4 preserves the existing UserInfo response contract while localizing following request state.",
+      "removeWhen": "The User contract migration owns the public UserInfo type."
     },
     {
       "from": "src/modules/follow/ui/UserFollowCard.tsx",

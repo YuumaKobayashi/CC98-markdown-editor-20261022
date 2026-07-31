@@ -48,10 +48,6 @@ export class UserInfoStore {
    */
   currentUserFansInfo: Appstate.UserInfo[] = [];
   /**
-   * 当前用户关注的用户信息数组
-   */
-  currentUserFollowingInfo: Appstate.UserInfo[] = [];
-  /**
    * 当前用户所在的页面
    */
   currentUserCenterPage:
@@ -68,20 +64,15 @@ export class UserInfoStore {
 
   constructor() {
     const currentUserInfo = getMyInfo() || new Appstate.UserInfo();
-    this.totalPage.myfollowings = Math.ceil(
-      currentUserInfo.followCount / 10
-    );
     this.totalPage.myfans = Math.ceil(currentUserInfo.fanCount / 10);
   }
 }
 
 class hasTotal {
-  myfollowings: boolean = true;
   myfans: boolean = true;
 }
 
 class TotalPage {
-  myfollowings: number;
   myfans: number;
 }
 
@@ -127,44 +118,25 @@ export default (
       };
     case ActionTypes.CHANGE_USER_FANS_INFO:
       return { ...state, currentUserFansInfo: action.payload.fansInfo };
-    case ActionTypes.CHANGE_USER_FOLLOWINGS_INFO:
-      return {
-        ...state,
-        currentUserFollowingInfo: action.payload.followingsInfo,
-      };
     case ActionTypes.CHNAGE_USER_CENTER_PAGE:
       return { ...state, currentUserCenterPage: action.payload.page };
     case ActionTypes.USER_CENTER_FOLLOW_USER: {
-      let userFollowingInfo = state.currentUserFollowingInfo;
-      let currentUserFollowingInfo: Appstate.UserInfo[] = userFollowingInfo.map(
-        (item) =>
-          item.id === action.payload.userId
-            ? { ...item, isFollowing: true }
-            : item
-      );
       let userFansInfo = state.currentUserFansInfo;
       let currentUserFansInfo: Appstate.UserInfo[] = userFansInfo.map((item) =>
         item.id === action.payload.userId
           ? { ...item, isFollowing: true }
           : item
       );
-      return { ...state, currentUserFollowingInfo, currentUserFansInfo };
+      return { ...state, currentUserFansInfo };
     }
     case ActionTypes.USER_CENTER_UNFOLLOW_USER: {
-      let userFollowingInfo = state.currentUserFollowingInfo;
-      let currentUserFollowingInfo: Appstate.UserInfo[] = userFollowingInfo.map(
-        (item) =>
-          item.id === action.payload.userId
-            ? { ...item, isFollowing: false }
-            : item
-      );
       let userFansInfo = state.currentUserFansInfo;
       let currentUserFansInfo: Appstate.UserInfo[] = userFansInfo.map((item) =>
         item.id === action.payload.userId
           ? { ...item, isFollowing: false }
           : item
       );
-      return { ...state, currentUserFollowingInfo, currentUserFansInfo };
+      return { ...state, currentUserFansInfo };
     }
     case ActionTypes.USER_CENTER_SOLVE_ERROR:
       return { ...state, errorMessage: "", isError: false };
