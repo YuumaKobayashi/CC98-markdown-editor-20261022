@@ -1,6 +1,6 @@
 # CC98 前端目录重构执行计划
 
-> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3 与 S1.4 六组的代码实施、机械检查和主代理人工代码审核均已完成，A、M 阶段完成，S1 已启动。S1.4 第三至第六组已获用户审批；完整的浏览器、登录、真实 API、权限、SignalR、跨标签与 UBB 运行验收未执行，当前停在 S1.5 实施授权前。
+> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组与 S1.5 的代码实施、机械检查和主代理人工代码审核均已完成，A、M 阶段完成，S1 已启动。S1.4 第三至第六组与 S1.5 已获用户审批；完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账与 UBB 运行验收未执行，当前停在 S1.5 提交授权前。
 >
 > 架构依据：`docs/frontend-directory-architecture-inventory.md`。
 >
@@ -49,9 +49,10 @@ S1.4 第三组：收藏版面                       已完成（用户审批通�
 S1.4 第四组：浏览历史                       已完成（用户审批通过；运行验收未执行）
 S1.4 第五组：关注                           已完成（用户审批通过；资料页缓存缺陷另记；完整运行验收未执行）
 S1.4 第六组：粉丝                           已完成（用户审批通过；完整运行验收未执行）
+S1.5 页面与壳层状态                         已完成（用户审批通过；完整运行验收未执行）
 ```
 
-### 当前停点：S1.4 第六组已获用户审批；不启动 S1.5
+### 当前停点：S1.5 已获用户审批；等待提交授权，不启动 S1.6
 
 ### M3.1–M3.6 实施记录（2026-07-30）
 
@@ -1752,6 +1753,22 @@ modules/notification/model
 
 ### S1.5 页面与壳层状态
 
+状态：代码实施、机械检查和主代理人工代码审核已完成，用户已批准当前检查点；浏览器、真实 API、管理员权限、转账部分成功和错误页完整运行验收未执行，当前停在提交授权前。
+
+实施结果：
+
+- UserProfileLayout 已统一解析 `method/id` 与 exact/manage 模式、请求公共 `UserInfo`、忽略旧响应并保留用户名到 ID 的规范重定向；Layout 通过公开 Route Context 向导航、详情与管理页提供已解析用户，非法参数、未知用户与加载 spinner 均退出 Redux；
+- Wealth Module 根入口已公开 `transferWealth`，保持 `/me/transfer-wealth`、PUT、授权头、JSON body、非成功 `statusText` 错误和成功用户名数组；TransferWealthPage 本地持有 loading/error/errorMessage/成功名单，保留输入校验、去重、部分成功文案和按钮状态，成功后只通过 Session `updateCurrentUser` 更新最新当前用户财富；
+- Application 已建立 Error Provider、`ApplicationErrorKey` 与 report/clear 命令接口；AppShell 保持 Header/Footer 并以原 Status 映射替换 Outlet，NavigationErrorReset 继续按 pathname 清错，Editor 与 legacy Utility 统一命令式上报；
+- legacy `error` reducer/action/ActionType 已删除；公开资料页与转账专用 userInfo 字段、action、ActionType、SendWealth thunk 和出口已删除。`refreshCurrentUserInfo`、其失败 action 与最小 userInfo 错误兼容状态明确留给 S1.7；
+- `npm run check:architecture` 通过（300 个源码文件、1199 个 import、28 条有条件 allowlist），modern/legacy typecheck、正式 build（3986 modules transformed）均通过；受限环境首次 build 因 `spawn EPERM` 失败，按原命令在允许子进程的环境重跑成功，构建只有既有 Sass、Lightning CSS 与 chunk-size 警告。
+
+后续调整记录：
+
+- 用户于 2026-07-31 人工审核通过当前 `useUserProfileContext` 与 UserProfileLayout 集中取数方案；该方案是 S1.5 的已批准检查点，不视为永久冻结。后续可在资料缓存归位或 Redux 闭包阶段重新评估 Context 接口形状、加载状态暴露和取数边界，但必须单独授权、重新核对路由与请求行为，不能以此记录自动修改现有逻辑。
+
+实施要求：
+
 公开用户资料页：
 
 - 删除 `currentVisitingUserPage`、`currentVisitingUserId`、`currentVisitingUserIsExisted`；
@@ -1878,7 +1895,7 @@ User Center
 - Redux 终态采用 Session 与 Notification unread 两个业务 slice；Application Error 退出 Redux；
 - 采用严格保真迁移，已知缺陷单独登记；
 - AnnualReview、UBB、公开 URL、API wire shape、DOM/CSS、Storage 键/TTL 和 `.vscode/` 不进入 S1 修改范围；
-- S1.1–S1.3 与 S1.4 六组已按单独授权完成代码与机械检查，S1.4 第三至第六组已获用户审批；未经授权不启动 S1.5。
+- S1.1–S1.3、S1.4 六组与 S1.5 已按单独授权完成代码与机械检查，S1.4 第三至第六组与 S1.5 已获用户审批；未经提交授权不提交 S1.5，未经实施授权不启动 S1.6。
 
 ## 16. C1：样式与主题归位
 
@@ -2115,7 +2132,7 @@ R1  增加架构检查脚本                            已完成
 - 检查脚本结果；
 - 无业务行为变化证明。
 
-骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3 与 S1.4 六组均已完成代码实施、机械检查和主代理人工代码审核，A、M 阶段完成，S1 已启动。S1.4 第三至第六组已获用户审批；完整的浏览器、登录、真实 API、权限、SignalR、跨标签与 UBB 运行验收未执行，旧 `/list` 仍仅适用既有免检结论。当前停在 S1.5 实施授权前。
+骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组与 S1.5 均已完成代码实施、机械检查和主代理人工代码审核，A、M 阶段完成，S1 已启动。S1.4 第三至第六组与 S1.5 已获用户审批；完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账与 UBB 运行验收未执行，旧 `/list` 仍仅适用既有免检结论。当前停在 S1.5 提交授权前。
 
 ## 22. 已确认决策与后续边界
 
@@ -2132,7 +2149,8 @@ R1  增加架构检查脚本                            已完成
 
 后续仍需单独授权或审核：
 
-1. S1.1–S1.3 与 S1.4 六组尚未执行的完整浏览器、登录与真实 API 运行验收，以及 S1.5–S1.7 状态与缓存归位的代码实施授权和每批人工验收；
-2. A2.3–A2.11 与 M3.1–M3.6 尚未执行的浏览器、登录、真实 API、权限、分页、SignalR、通知权限、上传、编辑器、缓存与 UBB 运行验收；
-3. 旧 `/list` 免检边界是否继续保留；
-4. AnnualReview 与 UBB 是否继续冻结。
+1. S1.1–S1.3、S1.4 六组与 S1.5 尚未执行的完整浏览器、登录与真实 API 运行验收，以及 S1.6–S1.7 缓存与 Redux 闭包的代码实施授权和每批人工验收；
+2. 当前 `useUserProfileContext` 接口及 UserProfileLayout 集中取数边界是否随资料缓存归位或 Redux 闭包再次调整；
+3. A2.3–A2.11 与 M3.1–M3.6 尚未执行的浏览器、登录、真实 API、权限、分页、SignalR、通知权限、上传、编辑器、缓存与 UBB 运行验收；
+4. 旧 `/list` 免检边界是否继续保留；
+5. AnnualReview 与 UBB 是否继续冻结。
