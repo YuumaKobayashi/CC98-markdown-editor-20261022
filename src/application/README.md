@@ -20,9 +20,10 @@
 
 ## Store 边界
 
-- `store` 注册 Session slice，并暂时承载 `error`、`userInfo`、`message` 三个 legacy reducer；
+- `store` 注册 Session 与 Notification slice，并暂时承载 `error`、`userInfo` 两个 legacy reducer；
 - Session 是登录状态和当前用户的唯一 Redux owner；legacy `userInfo` 只保留后续 S1 批次尚未迁移的页面和远端数据状态；
+- Notification 是四类未读计数的唯一 Redux owner；Application Store 只负责注册 reducer，业务 action、selector 和刷新行为由 Notification Module 公开；
 - Router 不再写入 Redux，也不再拥有独立 `history`、reducer 或 middleware；
 - 新代码使用 `@application/store` 与 typed hooks，旧代码暂由根 `Store.tsx` facade 兼容；
 - listener middleware 保留当前用户写入 User cache 的跨模块编排，`CrossTabSync` 统一处理 `userInfo` 和 `showCardUser` 跨标签事件；
-- User Preference Module 直接持有 `showCardUser` 的持久化与订阅合同，不建立 Redux slice；Notification、页面状态、RTK Query 和其余旧 reducer 清理分别归后续 S1 批次。
+- User Preference Module 直接持有 `showCardUser` 的持久化与订阅合同，不建立 Redux slice；页面状态、RTK Query 和其余旧 reducer 清理分别归后续 S1 批次。
