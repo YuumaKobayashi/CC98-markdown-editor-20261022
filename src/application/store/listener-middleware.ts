@@ -32,7 +32,7 @@ startAppListening({
   },
 });
 
-// 旧 USER_LOG_ON 会重建 userInfo 中仍待 S1.2–S1.5 迁移的页面状态。
+// 旧 USER_LOG_ON 会重建 S1.7 尚待删除的 userInfo 错误兼容状态。
 startAppListening({
   actionCreator: sessionAuthenticated,
   effect: (_, listenerApi) => {

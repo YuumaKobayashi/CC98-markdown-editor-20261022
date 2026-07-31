@@ -36,3 +36,35 @@ export async function getUserWealth() {
   // }
   return wealth;
 }
+
+/**
+ * 给指定用户转账
+ * @param userNames 要转账的用户名数组
+ * @param wealth 转账数目
+ * @param reason 理由
+ * @author AsukaSong
+ */
+export async function transferWealth(
+  userNames: string[],
+  wealth: number,
+  reason: string
+): Promise<string[]> {
+  const headers = await formAuthorizeHeader();
+  headers.append("Content-Type", "application/json");
+  const url = "/me/transfer-wealth";
+  const body = {
+    userNames,
+    wealth,
+    reason,
+  };
+  const response = await cc98Fetch(url, {
+    method: "PUT",
+    headers,
+    body: JSON.stringify(body),
+  });
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
+  // 服务器返回转账成功的用户名数组
+  return response.json();
+}

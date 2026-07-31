@@ -1,33 +1,109 @@
 import * as React from "react";
-import { Outlet, useParams } from "react-router";
+import { Outlet, useMatch, useNavigate, useParams } from "react-router";
 
-import { Actions, useAppDispatch, useAppSelector } from "@application/store";
 import { NotFoundUser } from "@legacy/Components/Status";
+import { getUserInfo } from "@modules/user";
+import type { UserInfo } from "@legacy/States/AppState";
+import { UserProfileProvider } from "../model/user-profile-context";
 import { UserProfileNavigation } from "./UserProfileNavigation";
 
+type LoadedUser = {
+  requestKey: string;
+  canonicalKey: string;
+  userInfo: UserInfo;
+};
+
+type UserProfileLoadState =
+  | { status: "loading"; requestKey: string }
+  | { status: "not-found"; requestKey: string }
+  | ({ status: "loaded" } & LoadedUser);
+
+const parseUserKey = (
+  method: string | undefined,
+  id: string | undefined
+): number | string | null => {
+  if (!id) return null;
+  if (method === "name") return id;
+  if (method !== "id" || !/^[1-9]\d*$/.test(id)) return null;
+
+  const numericId = Number(id);
+  return Number.isSafeInteger(numericId) ? numericId : null;
+};
+
 export function UserProfileLayout() {
-  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { method, id } = useParams<{ method: string; id: string }>();
-  const userExists = useAppSelector(
-    (state) => state.userInfo.currentVisitingUserIsExisted
+  const isManagePage = !!useMatch("/user/:method/:id/manage/*");
+  const page = isManagePage ? "manage" : "exact";
+  const requestKey = `${method ?? ""}/${id ?? ""}`;
+  const requestIdRef = React.useRef(0);
+  const loadedUserRef = React.useRef<LoadedUser | null>(null);
+  const [loadState, setLoadState] = React.useState<UserProfileLoadState>(
+    { status: "loading", requestKey }
   );
+  const userKey = parseUserKey(method, id);
 
   React.useEffect(() => {
-    dispatch(Actions.userLookupStarted());
-  }, [dispatch, id, method]);
+    const loadedUser = loadedUserRef.current;
+    if (
+      loadedUser &&
+      (loadedUser.requestKey === requestKey ||
+        loadedUser.canonicalKey === requestKey)
+    ) {
+      return;
+    }
 
-  const hasValidRoute =
-    !!id &&
-    (method === "name" ||
-      (method === "id" &&
-        /^[1-9]\d*$/.test(id) &&
-        Number.isSafeInteger(Number(id))));
+    const currentRequestId = ++requestIdRef.current;
+    if (userKey === null) {
+      loadedUserRef.current = null;
+      setLoadState({ status: "not-found", requestKey });
+      return;
+    }
 
-  if (!hasValidRoute) {
-    return <NotFoundUser />;
-  }
+    loadedUserRef.current = null;
+    setLoadState({ status: "loading", requestKey });
 
-  if (!userExists) {
+    const loadUser = async () => {
+      const userInfo =
+        typeof userKey === "number"
+          ? await getUserInfo(userKey)
+          : await getUserInfo(userKey);
+      if (currentRequestId !== requestIdRef.current) return;
+      if (!userInfo) {
+        setLoadState({ status: "not-found", requestKey });
+        return;
+      }
+
+      const canonicalKey = `id/${userInfo.id}`;
+      loadedUserRef.current = { requestKey, canonicalKey, userInfo };
+      setLoadState({
+        status: "loaded",
+        requestKey,
+        canonicalKey,
+        userInfo,
+      });
+
+      if (requestKey !== canonicalKey) {
+        void navigate(
+          `/user/id/${userInfo.id}${page === "manage" ? "/manage" : ""}`,
+          { replace: true }
+        );
+      }
+    };
+
+    void loadUser();
+  }, [navigate, page, requestKey, userKey]);
+
+  const loadedUserMatchesRequest =
+    loadState.status === "loaded" &&
+    (loadState.requestKey === requestKey ||
+      loadState.canonicalKey === requestKey);
+  const userNotFound =
+    userKey === null ||
+    (loadState.status === "not-found" &&
+      loadState.requestKey === requestKey);
+
+  if (userNotFound) {
     return <NotFoundUser />;
   }
 
@@ -38,10 +114,22 @@ export function UserProfileLayout() {
           <p>用户详情</p>
         </div>
         <div className="user-center-body">
-          <UserProfileNavigation />
-          <div className="user-center-router">
-            <Outlet />
-          </div>
+          {!loadedUserMatchesRequest ? (
+            <div className="user-center-router">
+              <div className="user-center-loading">
+                <p className="fa fa-spinner fa-pulse fa-2x fa-fw" />
+              </div>
+            </div>
+          ) : (
+            <UserProfileProvider
+              value={{ page, userInfo: loadState.userInfo }}
+            >
+              <UserProfileNavigation />
+              <div className="user-center-router">
+                <Outlet />
+              </div>
+            </UserProfileProvider>
+          )}
         </div>
       </div>
     </div>

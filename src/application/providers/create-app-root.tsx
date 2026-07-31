@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 
 import ErrorBoundary from "@legacy/Components/ErrorBoundary";
 import store from "@application/store";
+import { ApplicationErrorProvider } from "@application/providers/application-error";
 import { CrossTabSync } from "@application/providers/cross-tab-sync";
 import { AppRouter } from "@application/router/app-router";
 
@@ -17,11 +18,13 @@ export function createAppRoot(): React.ReactElement<any> {
   return (
     <ErrorBoundary>
       <Provider store={store}>
-        <CrossTabSync>
-          <ConfigProvider locale={zhCN}>
-            <AppRouter />
-          </ConfigProvider>
-        </CrossTabSync>
+        <ApplicationErrorProvider>
+          <CrossTabSync>
+            <ConfigProvider locale={zhCN}>
+              <AppRouter />
+            </ConfigProvider>
+          </CrossTabSync>
+        </ApplicationErrorProvider>
       </Provider>
     </ErrorBoundary>
   );

@@ -1,6 +1,6 @@
 # Application
 
-应用级启动、Provider、Router、Store、持久布局和页面入口编排的 owner。P06 迁入 `bootstrap` 与最小 Provider 树，P09 迁入唯一根 Store，P14 迁入单一 Router 与持久 `AppShell`，A1 将这些 Application Shell 文件归入本目录。
+应用级启动、Provider、Router、Store、持久布局和页面入口编排的 owner。P06 迁入 `bootstrap` 与最小 Provider 树，P09 迁入唯一根 Store，P14 迁入单一 Router 与持久 `AppShell`，A1 将这些 Application Shell 文件归入本目录，S1.5 将壳层错误退出 Redux。
 
 依赖边界：
 
@@ -18,10 +18,17 @@
 - `router/navigation.ts` 为组件树外的登录失效等旧副作用提供单一导航端口；
 - 业务取数仍由既有组件 lifecycle/service 负责，P14 不引入 loader/action。
 
+## Error Provider 边界
+
+- `ApplicationErrorProvider` 是 AppShell 业务错误的唯一状态 owner，仍按原 `ApplicationErrorKey` 映射 `Components/Status`；
+- AppShell 在错误时只替换根 `Outlet`，Header、Footer 与路由切换清错继续保持挂载；
+- Editor 和 legacy Utility 通过 `reportApplicationError` 命令式上报，组件树外调用不再 dispatch Redux action；
+- HTTP 异常统一化、Router `errorElement` 和错误文案重构不属于 S1.5。
+
 ## Store 边界
 
-- `store` 注册 Session 与 Notification slice，并暂时承载 `error`、`userInfo` 两个 legacy reducer；
-- Session 是登录状态和当前用户的唯一 Redux owner；legacy `userInfo` 只保留后续 S1 批次尚未迁移的页面和远端数据状态；
+- `store` 注册 Session 与 Notification slice，并暂时承载 `userInfo` 这一个 legacy reducer；Application Error 已退出 Redux；
+- Session 是登录状态和当前用户的唯一 Redux owner；legacy `userInfo` 只保留 `refreshCurrentUserInfo` 失败时写入的错误兼容状态，等待 S1.7 收口；
 - Notification 是四类未读计数的唯一 Redux owner；Application Store 只负责注册 reducer，业务 action、selector 和刷新行为由 Notification Module 公开；
 - Router 不再写入 Redux，也不再拥有独立 `history`、reducer 或 middleware；
 - 新代码使用 `@application/store` 与 typed hooks，旧代码暂由根 `Store.tsx` facade 兼容；

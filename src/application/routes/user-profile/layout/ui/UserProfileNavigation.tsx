@@ -3,15 +3,12 @@ import { Link } from "react-router";
 
 import { useAppSelector } from "@application/store";
 import { selectCurrentUser } from "@modules/session";
+import { useUserProfileContext } from "../model/user-profile-context";
 
 export function UserProfileNavigation() {
   const currentUser = useAppSelector(selectCurrentUser);
-  const currentVisitingUserPage = useAppSelector(
-    (state) => state.userInfo.currentVisitingUserPage
-  );
-  const currentVisitingUserId = useAppSelector(
-    (state) => state.userInfo.currentVisitingUserId
-  );
+  const { page, userInfo } = useUserProfileContext();
+  const visitingUserId = userInfo.id;
   const currentUserId = currentUser.id;
 
   return (
@@ -19,9 +16,9 @@ export function UserProfileNavigation() {
       <ul>
         <li>
           <Link
-            to={`/user/id/${currentVisitingUserId}`}
+            to={`/user/id/${visitingUserId}`}
             className={
-              currentVisitingUserPage === "exact"
+              page === "exact"
                 ? "user-center-navigation-active fa-home"
                 : "fa-home"
             }
@@ -31,7 +28,7 @@ export function UserProfileNavigation() {
           </Link>
         </li>
         <hr />
-        {currentVisitingUserId === currentUserId ? (
+        {visitingUserId === currentUserId ? (
           <li>
             <Link to="/usercenter" className="fa-user-circle-o">
               <span style={{ width: "0.5rem" }} />
@@ -43,9 +40,9 @@ export function UserProfileNavigation() {
         {currentUser.privilege === "管理员" ? (
           <li>
             <Link
-              to={`/user/id/${currentVisitingUserId}/manage`}
+              to={`/user/id/${visitingUserId}/manage`}
               className={
-                currentVisitingUserPage === "manage"
+                page === "manage"
                   ? "user-center-navigation-active fa-cog"
                   : "fa-cog"
               }

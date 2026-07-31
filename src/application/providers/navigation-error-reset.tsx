@@ -1,15 +1,14 @@
 import * as React from "react";
 import { useLocation } from "react-router";
 
-import { Actions, useAppDispatch } from "@application/store";
+import { clearApplicationError } from "@application/providers/application-error";
 
 export function NavigationErrorReset() {
-  const dispatch = useAppDispatch();
   const { pathname } = useLocation();
 
   React.useEffect(() => {
-    dispatch(Actions.solveError());
-  }, [dispatch, pathname]);
+    clearApplicationError();
+  }, [pathname]);
 
   return null;
 }

@@ -1,68 +1,45 @@
 import * as React from "react";
 
 import { useAppDispatch, useAppSelector } from "@application/store";
-import { selectCurrentUser } from "@modules/session";
-import * as UserCenterActions from "@legacy/Actions/UserCenter";
-import { sendWealthTo } from "@legacy/AsyncActions/UserCenter";
-
-interface PendingSubmission {
-  amount: number;
-  observedLoading: boolean;
-}
+import { selectCurrentUser, updateCurrentUser } from "@modules/session";
+import { transferWealth } from "@modules/wealth";
 
 export function TransferWealthPage() {
   const dispatch = useAppDispatch();
   const userInfo = useAppSelector(selectCurrentUser);
-  const isLoading = useAppSelector((state) => state.userInfo.isLoading);
-  const isError = useAppSelector((state) => state.userInfo.isError);
-  const errorMessage = useAppSelector(
-    (state) => state.userInfo.errorMessage
-  );
-  const successNames = useAppSelector(
-    (state) => state.userInfo.transferSuccessUsers
+  const currentUserRef = React.useRef(userInfo);
+  currentUserRef.current = userInfo;
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [isError, setIsError] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState("");
+  const [successNames, setSuccessNames] = React.useState<string[]>([]);
+  const [completedAmount, setCompletedAmount] = React.useState<number | null>(
+    null
   );
   const [userNames, setUserNames] = React.useState("");
   const [wealth, setWealth] = React.useState("");
   const [reason, setReason] = React.useState("");
   const [info, setInfo] = React.useState("");
-  const [pendingSubmission, setPendingSubmission] =
-    React.useState<PendingSubmission | null>(null);
 
   React.useEffect(() => {
-    if (!pendingSubmission) return;
-    if (isLoading && !pendingSubmission.observedLoading) {
-      setPendingSubmission({
-        ...pendingSubmission,
-        observedLoading: true,
-      });
-      return;
-    }
-    if (!pendingSubmission.observedLoading || isLoading) return;
+    if (completedAmount === null || isError) return;
+    setInfo(
+      `成功给${successNames.join(" ")}转账了总计${
+        completedAmount * successNames.length
+      }个财富值`
+    );
+  }, [completedAmount, isError, successNames]);
 
-    if (isError) {
-      setInfo(errorMessage);
-    } else {
-      setInfo(
-        `成功给${successNames.join(" ")}转账了总计${
-          pendingSubmission.amount * successNames.length
-        }个财富值`
-      );
-    }
-    setPendingSubmission(null);
-  }, [
-    errorMessage,
-    isError,
-    isLoading,
-    pendingSubmission,
-    successNames,
-  ]);
-
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     if (isLoading) return;
 
     try {
-      dispatch(UserCenterActions.userCenterSolveError());
+      setIsError(false);
+      setErrorMessage("");
+      // 清理上次转账可能遗留的信息
+      setSuccessNames([]);
+      setCompletedAmount(null);
       const amount = Number.parseFloat(wealth);
       if (!userNames) throw new Error("请输入收款人信息");
       if (wealth.match(/[^\d\.]/) || amount < 10) {
@@ -78,14 +55,31 @@ export function TransferWealthPage() {
       }
 
       setInfo("转账中");
-      setPendingSubmission({ amount, observedLoading: false });
-      dispatch(sendWealthTo(names, amount, reason));
+      setIsLoading(true);
+      const transferredUsers = await transferWealth(names, amount, reason);
+      // 更新store中的信息，减掉相应的财富值
+      dispatch(
+        updateCurrentUser({
+          ...currentUserRef.current,
+          wealth:
+            currentUserRef.current.wealth -
+            transferredUsers.length * amount,
+        })
+      );
+      setSuccessNames(transferredUsers);
+      setCompletedAmount(amount);
     } catch (error) {
-      setInfo((error as Error).message);
+      const message = (error as Error).message;
+      setIsError(true);
+      setErrorMessage(message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleWealthChange = (value: string, namesValue: string) => {
+    setIsError(false);
+    setErrorMessage("");
     const amount = Number.parseFloat(value);
     if (namesValue === "" || value === "") {
       setUserNames(namesValue);
@@ -184,7 +178,9 @@ export function TransferWealthPage() {
           转账
         </button>
       </form>
-      <p className="transfer-wealth-info">{info}</p>
+      <p className="transfer-wealth-info">
+        {isError ? errorMessage : info}
+      </p>
     </div>
   );
 }

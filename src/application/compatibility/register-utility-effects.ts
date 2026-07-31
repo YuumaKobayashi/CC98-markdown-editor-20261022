@@ -1,6 +1,6 @@
 import store from "@application/store";
 import { navigate } from "@application/router/navigation";
-import * as ErrorActions from "@legacy/Actions/Error";
+import { reportApplicationError } from "@application/providers/application-error";
 import {
   replaceUnreadCount,
   selectUnreadCount,
@@ -14,7 +14,7 @@ import { configureLegacyUtilityEffects } from "@foundation/lib/legacy-utility-ef
 export function registerLegacyUtilityEffects(): void {
   configureLegacyUtilityEffects({
     throwError(error) {
-      store.dispatch(ErrorActions.throwError(error));
+      reportApplicationError(error);
     },
     logOffAndNavigate() {
       store.dispatch(sessionInvalidated());

@@ -6,8 +6,7 @@ import { useNavigate, useParams } from "react-router";
 
 import { UbbEditor } from "@legacy/Components/UbbEditor";
 import { MarkdownEditor } from "@foundation/integrations/markdown-editor";
-import { useAppDispatch } from "@application/store";
-import * as ErrorActions from "@legacy/Actions/Error";
+import { reportApplicationError } from "@application/providers/application-error";
 import {
   getBoardName,
   getBoardTagV2,
@@ -151,7 +150,6 @@ function handlePostErrorText(text: string): string {
 export function EditorPage(): React.ReactElement {
   const { mode = "", id } = useParams<"mode" | "id">();
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const converterRef = React.useRef(
     new Showdown.Converter({
       tables: true,
@@ -409,7 +407,7 @@ export function EditorPage(): React.ReactElement {
     const topicId = await response.text();
     console.log("topicid=" + topicId);
     if (topicId === "cannot_post_in_this_board") {
-      dispatch(ErrorActions.throwError("CannotPost"));
+      reportApplicationError("CannotPost");
     } else {
       await sendAtNotification(topicId, state.content, token);
       removeLocalStorage("contentCache");
