@@ -1,0 +1,132 @@
+//以下是版面列表的样式~~---------------------------------------------------------
+.boardList {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 1140px;
+  align-items: center;
+}
+
+.boardGuide {
+  position: fixed;
+  margin-left: 1140px;
+  width: 5rem;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: #eaeaea solid thin;
+  color: #505050;
+  font-size: 0.75rem;
+}
+
+.boardOption {
+  border-bottom: #eaeaea dashed 3px;
+  margin-top: 0.4rem;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.anArea {
+  display: flex;
+  flex-direction: column;
+  width: 1140px;
+  box-sizing: border-box;
+  background-color: $background_color_textarea;
+  margin-bottom: 2rem;
+}
+
+.hideBoard {
+  width: 2rem;
+  height: 1.25rem;
+  margin-left: 2rem;
+  border-radius: 5px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #000000;
+  font-size: 0.88rem;
+  font-family: 微软雅黑;
+  color: rgb(80, 80, 80);
+  text-align: center;
+  cursor: pointer;
+}
+
+.areaName {
+  display: flex;
+  flex-direction: row;
+  font-size: 1rem;
+  font-family: 微软雅黑;
+  color: #fff;
+  margin-left: 1.1rem;
+
+  a {
+    font-size: 1rem;
+    font-family: 微软雅黑;
+    color: #fff;
+  }
+}
+
+.expendBoardList {
+  width: 2.5rem;
+  margin-top: 0rem;
+  font-size: 0.75rem;
+  color: #fff;
+  border: #fff solid thin;
+  border-radius: 1rem;
+  text-align: center;
+  height: 1.25rem;
+  line-height: 1.25rem;
+  cursor: pointer;
+  margin-right: 2rem;
+}
+
+.areaContent {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.boardContent {
+  display: flex;
+  margin: 1.1rem 1rem 1.1rem 1.1rem;
+  width: 15.6rem;
+}
+
+.noImgBoardContent {
+  display: flex;
+  flex-direction: column;
+  margin: 0px 1rem 1.1rem 1.1rem;
+  width: 15.6rem;
+}
+
+.boardBlock {
+  margin-left: 0.5rem;
+}
+
+.greenBackdrop {
+  height: 6rem;
+  width: 6rem;
+  background-size: 100%;
+  border-radius: 50%;
+  background-color: $theme_color_main;
+}
+
+.listTitle {}
+
+.boardName2 {
+  font-size: 0.88rem;
+  font-family: 微软雅黑;
+  color: #000000;
+  margin-top: 0.75rem;
+  letter-spacing: 2px;
+}
+
+.boardInfo {
+  font-size: 0.75rem;
+  font-family: 微软雅黑;
+  color: #000000;
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+}
+

@@ -1,0 +1,38 @@
+.reputation {
+  font-size: 0.75rem;
+  margin-left: 1rem;
+}
+
+#changeTopColor {
+  background-color: #fffaf0;
+}
+
+.lastReply {
+  width: 12rem;
+  white-space: nowrap;
+  text-align: left;
+}
+
+.listTitleAndPager {
+  display: flex;
+  margin-left: 0.5rem;
+  align-items: flex-end;
+  width: 40rem;
+  padding-left: 1rem;
+}
+
+.topicIcon {
+  width: 8.5rem;
+}
+
+.listTitleAndIcon {
+  overflow: hidden;
+  align-items: center;
+}
+
+.listTitle {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  align-items: center;
+  overflow: hidden;
+}

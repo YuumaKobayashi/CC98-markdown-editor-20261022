@@ -1,31 +1,4 @@
-﻿@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 0.5;
-  }
-}
-
-@keyframes fadeOut {
-  0% {
-    opacity: 0.5;
-    visibility: visible;
-  }
-
-  80% {
-    opacity: 0.5;
-    visibility: visible;
-  }
-
-  100% {
-    visibility: hidden;
-    opacity: 0;
-  }
-}
-
-.user-center {
+﻿.user-center {
 
   button,
   ul,
@@ -198,9 +171,9 @@
       display: flex;
       flex-wrap: wrap;
 
-      @import "../src/modules/user/ui/profile-avatar/UserProfileAvatar.module";
+      @import "../../../modules/user/ui/profile-avatar/UserProfileAvatar.module";
 
-      @import "../src/modules/user/ui/UserProfile.module";
+      @import "../../../modules/user/ui/UserProfile.module";
 
       .user-activities {
         width: 100%;
@@ -528,7 +501,7 @@
       }
     }
 
-    @import "../src/modules/user/ui/ConfigSignature.module";
+    @import "../../../modules/user/ui/ConfigSignature.module";
 
     .config-submit {
       display: flex;
@@ -691,72 +664,7 @@
       }
     }
 
-    .user-manage {
-      &>div {
-        margin-bottom: 2rem;
-      }
-
-      h2 {
-        margin-bottom: 2rem;
-      }
-
-      .user-manage-info {
-        display: flex;
-
-        p {
-          margin-right: 5rem;
-        }
-      }
-
-      .user-manager {
-        display: flex;
-
-        &>* {
-          margin-right: 1rem;
-        }
-
-        p {
-          margin: 0;
-        }
-
-        button {
-          width: 5rem;
-        }
-      }
-    }
-
-    .user-manage-return {
-      color: red;
-    }
-
-    .user-manage-post {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .user-manage-post-content {
-      width: 20rem;
-      overflow: hidden;
-      text-align: center;
-      max-height: 1.3rem;
-    }
-
-    .user-manage-post-ip {
-      width: 7rem;
-    }
-
-    .user-manage-post-board {
-      width: 7rem;
-    }
-
-    .user-manage-post-floor {
-      width: 3rem;
-    }
-
-    .user-manage-post-date {
-      width: 9rem;
-    }
+    @import "../user-profile/UserProfileManagement.module";
 
     .user-center-transfer-wealth {
 

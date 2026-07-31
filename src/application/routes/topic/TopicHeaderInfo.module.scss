@@ -1,0 +1,49 @@
+.topicInfo-info {
+  display: flex;
+  flex-direction: row;
+  width: 71.2rem;
+  height: 6.5rem;
+  border: rgb(106, 113, 119) solid 2px;
+  font-family: 微软雅黑;
+  box-sizing: border-box;
+}
+
+.topicInfo-boardInfo {
+  width: 10.6rem;
+  height: 6.4rem;
+  display: flex;
+  background-color: rgb(106, 113, 119);
+  align-items: center;
+}
+
+.topicInfo-boardImage {
+  width: 4rem;
+  height: 4rem;
+  margin-left: 0.5rem;
+}
+
+.topicInfo-boardMessage {
+  display: flex;
+  flex-direction: column;
+  margin-left: 1rem;
+  color: #6b7178;
+  height: 3rem;
+  align-self: center;
+  border-left: #6b7178 solid 1.5px;
+  width: 7rem;
+  align-items: center;
+}
+
+.topicInfo-title {
+  width: 52.2rem;
+  height: 6.25rem;
+  display: flex;
+  background-color: $background_color_textarea;
+  color: #000;
+  font-size: 1rem;
+}
+
+.topicInfo-ads {
+  width: 18.65rem;
+  height: 6.25rem;
+}

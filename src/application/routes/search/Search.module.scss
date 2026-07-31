@@ -1,0 +1,29 @@
+/**********************************搜索页的样式*********************************/
+.rusultErr {
+  font-size: 16px;
+  color: $color-thinBlack;
+  margin-top: 100px;
+  text-align: center;
+}
+
+.noResult {
+  display: flex;
+  flex-direction: column;
+
+  .noResultPic {
+    width: 50%;
+    align-self: center;
+  }
+
+  .noResultText {
+    font-size: 16px;
+    color: $color-thinBlack;
+    margin-top: 20px;
+    align-self: center;
+  }
+}
+
+.noResult.displaynone {
+  display: none;
+}
+

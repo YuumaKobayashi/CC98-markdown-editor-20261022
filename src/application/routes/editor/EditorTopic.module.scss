@@ -1,0 +1,90 @@
+#sendTopic {
+  border: #cccccc solid thin;
+  display: flex;
+  flex-direction: column;
+
+  #sendTopic-options {
+    background-color: #fff;
+    border-bottom: #cccccc solid thin;
+  }
+
+  #sendTopic-input {
+    background-color: #fff;
+    height: 34.5rem;
+    padding: 1rem;
+    border: none;
+    width: 96.5%;
+  }
+}
+
+.editor__menu {
+  float: left;
+  margin: 0 2px;
+  vertical-align: text-top;
+  padding-left: 0.3125rem;
+}
+
+.editor__menu li {
+  list-style: none;
+  float: left;
+  list-style-type: none;
+  margin-right: 2px;
+  margin-left: 2px;
+}
+
+.editor__menu--bold {
+  background-image: url(/images/editOption.png);
+  background-size: 380px 60px;
+  border-bottom-color: rgb(255, 255, 255);
+  display: block;
+  height: 20px;
+  list-style-type: none;
+  width: 20px;
+  border-left-width: 5px;
+  border-right-width: 5px;
+  border-style: solid;
+  border-width: 5px;
+  border-color: rgb(255, 255, 255);
+  cursor: pointer;
+  background-color: #fff;
+}
+
+.wmd-spacer1 {
+  margin: 5px 4px;
+  width: 0px;
+  height: 20px;
+  padding-left: 0px;
+  padding-right: 0px;
+  border-right: 1px solid #ddd;
+  text-indent: 110%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-transform: capitalize;
+}
+
+#sendTopic-send {
+  display: inline-block;
+  outline: none;
+  cursor: pointer;
+  text-align: center;
+  width: 50px;
+  margin-top: 20px;
+  background-color: rgb(128, 187, 235);
+  color: #fff;
+  text-decoration: none;
+  font: 14px/100% Arial, Helvetica, sans-serif;
+  padding: 0.5em 2em 0.55em;
+  letter-spacing: 5px;
+  -webkit-border-radius: 0.5em;
+  -moz-border-radius: 0.5em;
+  border-radius: 0.5em;
+}
+
+#quoteOverflow {
+  overflow-y: auto;
+}
+
+.userDetails {
+  z-index: 1;
+}
+

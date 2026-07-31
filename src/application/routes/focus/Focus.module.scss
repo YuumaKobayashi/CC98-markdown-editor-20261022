@@ -1,0 +1,275 @@
+/*****************************************以下为我的关注的样式*********************************/
+.focus-root {
+  display: flex;
+  justify-content: center;
+}
+
+.focus {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 1140px;
+  min-height: 780px;
+  margin-bottom: 60px;
+
+  .top-button {
+    width: 6rem;
+    position: fixed;
+    bottom: 5%;
+    right: 5%;
+    height: 2rem;
+    border-radius: 1rem;
+    opacity: 0.5;
+    display: none;
+    z-index: 2;
+    margin: 0;
+    padding: 0.7rem;
+    border: 0;
+    font-size: 1.1rem;
+    // text-align: center;
+    // vertical-align: middle;
+    cursor: pointer;
+    line-height: 2rem;
+
+    .top-button-text {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+    }
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    &:active {
+      opacity: 1;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .top-button.btn-show {
+    animation-name: fadeIn;
+    animation-duration: 1s;
+    display: inherit;
+  }
+
+  .top-button.btn-disappear {
+    display: inherit;
+    animation-name: fadeOut;
+    animation-duration: 500ms;
+    animation-fill-mode: forwards;
+  }
+
+  .focus-topic-loading {
+    margin-top: 20px;
+    text-align: center;
+
+    img {
+      width: 200px;
+      height: 18px;
+    }
+  }
+
+  .focus-topic-loaddone {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 16px;
+    color: $color-black;
+  }
+}
+
+.focus-nav {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+}
+
+.focus-title {
+  height: 40px;
+  line-height: 40px;
+  font-size: 20px;
+  color: #6b7178;
+  flex-shrink: 0;
+  margin-right: 20px;
+  cursor: pointer;
+
+  &:hover {
+    @extend .focus-title-hover;
+  }
+}
+
+.focus-title-hover {
+  color: #fb6165;
+  border-bottom: 2px solid #fb6165;
+}
+
+.recommendation-button-area {
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 30px;
+
+  .recommendation-button {
+    display: block;
+    background-color: $theme_color_main;
+    color: #ffffff;
+    text-align: center;
+    vertical-align: middle; //设置元素的垂直对齐方式
+    border: 1px solid $theme_color_main;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    border-radius: 0.25rem;
+    line-height: normal;
+    white-space: nowrap;
+    font-family: 微软雅黑;
+    margin-right: 1rem;
+    //margin-top: 1rem;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+
+  .recommendation-button:hover {
+    color: $theme_color_main;
+    background-color: transparent;
+  }
+
+  .recommendation-button:active {
+    color: #ffffff;
+    background-color: $theme_color_main;
+  }
+
+  i {
+    margin-right: 3px;
+  }
+}
+
+.focus-board-area {
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 30px;
+
+  .refresh-button {
+    position: absolute;
+    right: 0;
+    display: block;
+    background-color: $theme_color_main;
+    color: #ffffff;
+    text-align: center;
+    vertical-align: middle; //设置元素的垂直对齐方式
+    border: 1px solid $theme_color_main;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    border-radius: 0.25rem;
+    line-height: normal;
+    white-space: nowrap;
+    font-family: 微软雅黑;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+
+  .refresh-button:hover {
+    color: $theme_color_main;
+    background-color: transparent;
+  }
+
+  .refresh-button:active {
+    color: #ffffff;
+    background-color: $theme_color_main;
+  }
+
+  i {
+    margin-right: 3px;
+  }
+
+  .focus-board {
+    display: block;
+    color: $theme_color_main;
+    background-color: transparent;
+    text-align: center;
+    vertical-align: middle; //设置元素的垂直对齐方式
+    border: 1px solid $theme_color_main;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    border-radius: 0.25rem;
+    line-height: normal;
+    white-space: nowrap;
+    font-family: 微软雅黑;
+    margin-right: 1rem;
+    margin-top: 1rem;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+
+  .focus-board.new-topic {
+    margin-top: 0rem;
+  }
+
+  .focus-hover {
+    background-color: $theme_color_main;
+    color: #ffffff;
+  }
+
+  .focus-boardTip {
+    font-size: 0.8rem;
+    color: darkgrey;
+    margin-top: 1.8rem;
+  }
+}
+
+.focus-topic-area {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.45rem;
+
+  .focus-topic-topicArea {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .focus-topic-getMore {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    cursor: pointer;
+    color: $theme_color_main;
+    justify-content: center;
+
+    div {
+      margin-top: 10px;
+      text-align: center;
+    }
+  }
+
+  // .focus-topic-loading {
+  //   margin-top: 20px;
+  //   text-align: center;
+
+  //   img {
+  //     width: 200px;
+  //     height: 18px;
+  //   }
+  // }
+
+  // .focus-topic-loaddone {
+  //   margin-top: 20px;
+  //   text-align: center;
+  //   font-size: 16px;
+  //   color: $color-black;
+  // }
+}
+
+.focus-allNewTopic {
+  color: #6b7178;
+  min-height: 20px;
+  font-size: 20px;
+  display: flex;
+  align-items: baseline;
+
+  i {
+    flex-basis: 22px;
+    font-size: 20px;
+  }
+}
+
