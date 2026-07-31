@@ -1,0 +1,39 @@
+//---------------恢复一些被reset的样式------------------
+p {
+  -webkit-margin-before: 1em;
+  -webkit-margin-after: 1em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+}
+
+button {
+  line-height: normal;
+}
+
+*,
+*::before,
+*::after {
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
+}
+
+ul {
+  display: block;
+  list-style-type: disc;
+  -webkit-margin-after: 1em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  -webkit-padding-start: 40px;
+  -moz-padding-start: 40px;
+}
+
+li {
+  display: list-item;
+  text-align: -webkit-match-parent;
+}
+
+input[type="radio"] {
+  margin: 3px 3px 0px 5px;
+}
+
+//------------到此为止---------------

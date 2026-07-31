@@ -1,25 +1,11 @@
 ﻿@import "../../../Styles/UserCenter.scss";
 @import "../../../Styles/MainPage.scss";
 @import "../../../Components/UbbEditor/stylesheet.scss";
-@import "spectrum.scss";
+@import "vendors/spectrum";
 @import "../../../Styles/Vote.scss";
-@import "~antd/dist/antd.css";
+@import "vendors/antd";
 
-$bgcolor: #e9e9e9;
-$bgcolor2: #f5fafd;
-$color-body: rgb(245, 250, 255);
-$color-thinBlack: rgb(120, 120, 120);
-$color-board: rgb(51, 153, 255);
-$color-thinBlue: rgb(51, 187, 255);
-$color-border: rgb(233, 233, 233);
-$color-focus: rgb(245, 245, 245);
-$color-gray: rgb(153, 153, 153);
-$color-post: rgb(252, 252, 252);
-$color-red: rgb(255, 60, 60);
-$color-black: rgb(32, 32, 32);
-// $color-bg: #79b8ca;
-$color-url: #0b5394;
-$color-urlVisited: #741b47;
+@import "variables/legacy";
 
 // 如需开启首页灰度
 // 把 .main-container .header::after 的 display: none; 注释掉
@@ -38,64 +24,11 @@ $color-urlVisited: #741b47;
   pointer-events: none;
 }
 
-blockquote {
-  color: #666;
-  margin: 0;
-  padding-left: 3em;
-  border-left: 0.5em #eee solid;
-}
+@import "base/document";
 
-body {
-  margin: 0;
-  padding: 0;
-  color: black;
-}
+@import "reset/restore";
 
-//---------------恢复一些被reset的样式------------------
-p {
-  -webkit-margin-before: 1em;
-  -webkit-margin-after: 1em;
-  -webkit-margin-start: 0px;
-  -webkit-margin-end: 0px;
-}
-
-button {
-  line-height: normal;
-}
-
-*,
-*::before,
-*::after {
-  -webkit-box-sizing: content-box;
-  box-sizing: content-box;
-}
-
-ul {
-  display: block;
-  list-style-type: disc;
-  -webkit-margin-after: 1em;
-  -webkit-margin-start: 0px;
-  -webkit-margin-end: 0px;
-  -webkit-padding-start: 40px;
-  -moz-padding-start: 40px;
-}
-
-li {
-  display: list-item;
-  text-align: -webkit-match-parent;
-}
-
-input[type="radio"] {
-  margin: 3px 3px 0px 5px;
-}
-
-//------------到此为止---------------
-
-#root {
-  width: 100%;
-  font-size: 16px;
-  font-family: 微软雅黑;
-}
+@import "base/root";
 
 .main-container {
   display: flex;
@@ -4167,10 +4100,7 @@ variable {
   overflow: hidden;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-}
+@import "reset/global-zero";
 
 .signature iframe {
   width: 500px;
