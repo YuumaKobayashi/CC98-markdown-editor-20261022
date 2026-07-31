@@ -53,17 +53,9 @@ npm run build
 
 ### ./src
 
-逐阶段迁入的目标源码边界。当前入口位于 `src/application/bootstrap/index.tsx`，Provider 树位于 `src/application/providers`；其余旧业务源码会在对应阶段迁入 `pages`、`features`、`entities` 或目标 Modules。
+目标源码边界。当前入口位于 `src/application/bootstrap/index.tsx`，Provider 树位于 `src/application/providers`；Application Routes、业务 Modules 与 Foundation 能力均从各自根入口组合。
 
 目标依赖方向为 `application → modules → foundation`。`@legacy/*` 只作为新旧目录共存期间的临时兼容桥。
-
-### ./Actions
-
-react-redux 的 action
-
-### ./AsyncActions
-
-react-redux 的异步 action（用户中心）
 
 ### ./Components
 
@@ -113,19 +105,17 @@ react-redux 的异步 action（用户中心）
 - /UbbContainer.tsx Ubb 解析器
 - /UbbEditor.tsx Ubb 编辑器
 - /IndexedDB Indexed 数据库 用户信息缓存
-- /Match Redux 组件
+- /Match 旧路由匹配参数类型
 - /Props React 组件的 Props 类
-- /Reducers Redux 组件
 - /States React 组件的 State 类
 - /src/foundation/theme/themes 网站主题
 - /Ubb Ubb 解析引擎
 - /Utility 函数集
-- /ActionTypes.tsx Redux 的 Action 类型
 - /src/application/bootstrap/index.tsx 程序入口
 - /adddna.scss zza 的样式表
 - /package.json 项目依赖
 - /src/foundation/styles/Site.scss 网站的主样式表
-- /Store.tsx Redux 的 store 组件
+- /Store.tsx 到 `src/application/store` 的 legacy 兼容转导
 - /UbbEditor.scss Ubb 编辑器样式表
 - /UserCenter.scss 用户中心样式表
 - /Utility.tsx 函数集

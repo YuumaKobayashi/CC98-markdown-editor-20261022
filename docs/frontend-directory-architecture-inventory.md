@@ -8,7 +8,7 @@
 
 当前 CC98 前端是单入口 SPA，不是 MPA，也不是多个独立站点：
 
-- Vite 的应用入口只有 `src/app/bootstrap/index.tsx`；
+- Vite 的应用入口只有 `src/application/bootstrap/index.tsx`；
 - 主题文件虽然也在构建 `input` 中，但它们是样式入口，不是独立 HTML 应用；
 - 页面只创建一个 React Root；
 - 全站只有一个 `createBrowserRouter` 和一棵路由树；
@@ -1056,14 +1056,11 @@ src/modules/*/pages        → src/application/routes/*
 当前根目录仍有：
 
 ```text
-Actions/
-AsyncActions/
 Components/
 IndexedDB/
 Match/
 Pages/
 Props/
-Reducers/
 States/
 Styles/
 Themes/

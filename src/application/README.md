@@ -1,6 +1,6 @@
 # Application
 
-应用级启动、Provider、Router、Store、持久布局和页面入口编排的 owner。P06 迁入 `bootstrap` 与最小 Provider 树，P09 迁入唯一根 Store，P14 迁入单一 Router 与持久 `AppShell`，A1 将这些 Application Shell 文件归入本目录，S1.5 将壳层错误退出 Redux，S1.6 将领域缓存和 Posting 草稿归还 Module。
+应用级启动、Provider、Router、Store、持久布局和页面入口编排的 owner。P06 迁入 `bootstrap` 与最小 Provider 树，P09 迁入唯一根 Store，P14 迁入单一 Router 与持久 `AppShell`，A1 将这些 Application Shell 文件归入本目录，S1.5 将壳层错误退出 Redux，S1.6 将领域缓存和 Posting 草稿归还 Module，S1.7 完成 legacy Redux 闭包。
 
 依赖边界：
 
@@ -27,13 +27,14 @@
 
 ## Store 边界
 
-- `store` 注册 Session 与 Notification slice，并暂时承载 `userInfo` 这一个 legacy reducer；Application Error 已退出 Redux；
-- Session 是登录状态和当前用户的唯一 Redux owner；legacy `userInfo` 只保留 `refreshCurrentUserInfo` 失败时写入的错误兼容状态，等待 S1.7 收口；
+- `store` 只注册 Session 与 Notification slice，`RootState` 由唯一 Store 推导为 `{ session, notification }`；Application Error 和 legacy `userInfo` 均已退出 Redux；
+- Session 是登录状态和当前用户的唯一 Redux owner；`refreshCurrentUserInfo` 由 Session 公共入口保留原静默失败合同，不再写入独立错误状态；
 - Notification 是四类未读计数的唯一 Redux owner；Application Store 只负责注册 reducer，业务 action、selector 和刷新行为由 Notification Module 公开；
 - Router 不再写入 Redux，也不再拥有独立 `history`、reducer 或 middleware；
-- 新代码使用 `@application/store` 与 typed hooks，旧代码暂由根 `Store.tsx` facade 兼容；
+- Application 组件使用 `@application/store` 与 typed hooks；根 `Store.tsx` 只保留到 LEGACY 阶段的兼容转导，已无活动消费者；
+- Store 装配点向 Utility 兼容适配器注入 `dispatch/getState`，适配器不再自行导入或持有根 Store；
 - listener middleware 保留当前用户通过 User 公共策略接口写入 cache 的跨模块编排，`CrossTabSync` 统一处理 `userInfo` 和 `showCardUser` 跨标签事件；
-- User Preference Module 直接持有 `showCardUser` 的持久化与订阅合同，不建立 Redux slice；页面状态、RTK Query 和其余旧 reducer 清理分别归后续 S1 批次。
+- User Preference Module 直接持有 `showCardUser` 的持久化与订阅合同，不建立 Redux slice；页面状态、领域缓存和草稿均由既有 Route/Module owner 持有，不引入 RTK Query。
 
 ## 缓存与草稿边界
 

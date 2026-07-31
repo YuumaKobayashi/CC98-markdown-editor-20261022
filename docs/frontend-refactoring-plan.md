@@ -1,6 +1,6 @@
 # CC98 前端目录重构执行计划
 
-> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5 与 S1.6 的代码实施、机械检查和主代理人工代码审核均已完成，A、M 阶段完成，S1 已启动。S1.4 第三至第六组、S1.5 与 S1.6 已获用户审批；完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账、缓存、草稿与 UBB 运行验收未执行，当前停在 S1.7 实施授权前。
+> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6 与 S1.7 的代码实施、机械检查和主代理人工代码审核均已完成，A、M 阶段及 S1 代码实施完成。S1.4 第三至第六组、S1.5、S1.6 与 S1.7 已获用户审批并完成本地提交；完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账、缓存、草稿与 UBB 运行验收未执行，当前停在 C1 实施授权前。
 >
 > 架构依据：`docs/frontend-directory-architecture-inventory.md`。
 >
@@ -51,9 +51,10 @@ S1.4 第五组：关注                           已完成（用户审批通过
 S1.4 第六组：粉丝                           已完成（用户审批通过；完整运行验收未执行）
 S1.5 页面与壳层状态                         已完成（用户审批通过；完整运行验收未执行）
 S1.6 缓存与草稿归位                         已完成（用户审批通过；完整运行验收未执行）
+S1.7 Redux 闭包                            已完成（用户审批通过；完整运行验收未执行）
 ```
 
-### 当前停点：S1.6 已获用户审批并完成本地提交；S1.7 未获实施授权，不自动启动
+### 当前停点：S1.7 已获用户审批并完成本地提交；C1 未获实施授权，不自动启动
 
 ### M3.1–M3.6 实施记录（2026-07-30）
 
@@ -1842,6 +1843,16 @@ modules/posting/drafts
 
 ### S1.7 Redux 闭包
 
+状态：代码实施、机械检查和主代理人工代码审核已完成，用户已批准当前检查点并完成本地提交；浏览器、登录、真实 API、权限、SignalR、跨标签、通知标题、缓存与草稿完整运行验收未执行。
+
+实施结果：
+
+- Application Store 只注册 Session 与 Notification reducer，`RootState` 和 `AppDispatch` 由实际 Store 推导；legacy `userInfo` reducer、Actions 聚合、action/thunk 联合类型、登录重置 listener 与临时 middleware 检查开关均已删除；
+- `refreshCurrentUserInfo` 已归入 Session 公共入口，Header 与四个 User Center 页面改用 Module API；成功时仍刷新 Session，失败时保留页面可观察的静默结束行为，不再写入无人读取的 Redux 错误状态；
+- Utility 兼容适配器改由唯一 Store 装配点注入 `dispatch/getState`，错误上报、登录失效跳转、当前用户更新、未读计数读取与清零合同不变；NotificationController 使用显式结构化 state/dispatch 类型，不反向依赖 Application；
+- 根 `Actions/`、`AsyncActions/`、`Reducers/`、`ActionTypes.tsx` 与 `application/store/legacy-types.ts` 已在静态引用、动态入口和 TypeScript 配置归零后删除；根 `Store.tsx` 继续作为零活动消费者的兼容转导，其他 legacy 类型与 UBB 依赖不在本批清理；
+- `npm run check:architecture` 通过（305 个源码文件、1193 个 import、28 条有条件 allowlist），modern/legacy typecheck 与正式 build（3986 modules transformed）均通过；受限环境首次 build 因 `spawn EPERM` 失败，按原命令在允许子进程的环境重跑成功，构建只有既有 Sass、Lightning CSS 与 chunk-size 警告。
+
 目标 `RootState`：
 
 ```text
@@ -1914,7 +1925,7 @@ User Center
 - Redux 终态采用 Session 与 Notification unread 两个业务 slice；Application Error 退出 Redux；
 - 采用严格保真迁移，已知缺陷单独登记；
 - AnnualReview、UBB、公开 URL、API wire shape、DOM/CSS、Storage 键/TTL 和 `.vscode/` 不进入 S1 修改范围；
-- S1.1–S1.3、S1.4 六组、S1.5 与 S1.6 已按单独授权完成代码与机械检查，S1.4 第三至第六组、S1.5 与 S1.6 已获用户审批并完成本地提交；未经实施授权不启动 S1.7。
+- S1.1–S1.3、S1.4 六组、S1.5、S1.6 与 S1.7 已按单独授权完成代码与机械检查，S1.4 第三至第六组、S1.5、S1.6 与 S1.7 已获用户审批并完成本地提交；未经实施授权不启动 C1。
 
 ## 16. C1：样式与主题归位
 
@@ -2151,7 +2162,7 @@ R1  增加架构检查脚本                            已完成
 - 检查脚本结果；
 - 无业务行为变化证明。
 
-骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5 与 S1.6 均已完成代码实施、机械检查和主代理人工代码审核，A、M 阶段完成，S1 已启动。S1.4 第三至第六组、S1.5 与 S1.6 已获用户审批并完成本地提交；完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账、缓存、草稿与 UBB 运行验收未执行，旧 `/list` 仍仅适用既有免检结论。当前停在 S1.7 实施授权前。
+骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6 与 S1.7 均已完成代码实施、机械检查和主代理人工代码审核，A、M 阶段及 S1 代码实施完成。S1.4 第三至第六组、S1.5、S1.6 与 S1.7 已获用户审批并完成本地提交；完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账、缓存、草稿与 UBB 运行验收未执行，旧 `/list` 仍仅适用既有免检结论。当前停在 C1 实施授权前。
 
 ## 22. 已确认决策与后续边界
 
@@ -2168,7 +2179,7 @@ R1  增加架构检查脚本                            已完成
 
 后续仍需单独授权或审核：
 
-1. S1.1–S1.3、S1.4 六组、S1.5 与 S1.6 尚未执行的完整浏览器、登录、真实 API、缓存与草稿运行验收，以及 S1.7 Redux 闭包的代码实施授权；
+1. S1.1–S1.3、S1.4 六组、S1.5、S1.6 与 S1.7 尚未执行的完整浏览器、登录、真实 API、SignalR、跨标签、缓存与草稿运行验收，以及 C1 的代码实施授权；
 2. 当前 `useUserProfileContext` 接口及 UserProfileLayout 集中取数边界是否随资料缓存归位或 Redux 闭包再次调整；
 3. A2.3–A2.11 与 M3.1–M3.6 尚未执行的浏览器、登录、真实 API、权限、分页、SignalR、通知权限、上传、编辑器、缓存与 UBB 运行验收；
 4. 旧 `/list` 免检边界是否继续保留；
