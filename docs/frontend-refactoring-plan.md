@@ -1,6 +1,6 @@
 # CC98 前端目录重构执行计划
 
-> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组与 S1.5 的代码实施、机械检查和主代理人工代码审核均已完成，A、M 阶段完成，S1 已启动。S1.4 第三至第六组与 S1.5 已获用户审批；完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账与 UBB 运行验收未执行，当前停在 S1.5 提交授权前。
+> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5 与 S1.6 的代码实施、机械检查和主代理人工代码审核均已完成，A、M 阶段完成，S1 已启动。S1.4 第三至第六组、S1.5 与 S1.6 已获用户审批；完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账、缓存、草稿与 UBB 运行验收未执行，当前停在 S1.7 实施授权前。
 >
 > 架构依据：`docs/frontend-directory-architecture-inventory.md`。
 >
@@ -50,9 +50,10 @@ S1.4 第四组：浏览历史                       已完成（用户审批通�
 S1.4 第五组：关注                           已完成（用户审批通过；资料页缓存缺陷另记；完整运行验收未执行）
 S1.4 第六组：粉丝                           已完成（用户审批通过；完整运行验收未执行）
 S1.5 页面与壳层状态                         已完成（用户审批通过；完整运行验收未执行）
+S1.6 缓存与草稿归位                         已完成（用户审批通过；完整运行验收未执行）
 ```
 
-### 当前停点：S1.5 已获用户审批；等待提交授权，不启动 S1.6
+### 当前停点：S1.6 已获用户审批并完成本地提交；S1.7 未获实施授权，不自动启动
 
 ### M3.1–M3.6 实施记录（2026-07-30）
 
@@ -1665,7 +1666,7 @@ modules/notification/model
 
 ### S1.4 用户中心远端数据本地化
 
-状态：六组“主题与回复”“收藏主题”“收藏版面”“浏览历史”“关注”“粉丝”的代码实施、机械检查和主代理人工代码审核已完成，第三至第六组已获用户审批；完整的浏览器、登录与真实 API 运行验收未执行，当前停在 S1.5 实施授权前。
+状态：六组“主题与回复”“收藏主题”“收藏版面”“浏览历史”“关注”“粉丝”的代码实施、机械检查和主代理人工代码审核已完成，第三至第六组已获用户审批；完整的浏览器、登录与真实 API 运行验收未执行；本节完成时停在 S1.5 实施授权前。
 
 第一组实施结果：
 
@@ -1753,7 +1754,7 @@ modules/notification/model
 
 ### S1.5 页面与壳层状态
 
-状态：代码实施、机械检查和主代理人工代码审核已完成，用户已批准当前检查点；浏览器、真实 API、管理员权限、转账部分成功和错误页完整运行验收未执行，当前停在提交授权前。
+状态：代码实施、机械检查和主代理人工代码审核已完成，用户已批准当前检查点并完成本地提交；浏览器、真实 API、管理员权限、转账部分成功和错误页完整运行验收未执行。
 
 实施结果：
 
@@ -1790,6 +1791,24 @@ Application Error：
 - 不把 HTTP 异常统一化、Router errorElement 或错误文案重构混入本批。
 
 ### S1.6 缓存与草稿归位
+
+状态：代码实施、机械检查和主代理逐文件人工代码审核已完成，用户已批准当前检查点并完成本地提交；浏览器、IndexedDB/localStorage 回退、缓存过期与失效、跨零点签到、草稿恢复、失败缓存、图片上传三态和 Storage 容量清理运行验收未执行。
+
+实施基线：
+
+```text
+dev20260716  23fc818f  docs(s1.5): record page and shell state localization
+```
+
+实施结果：
+
+- User cache 新增统一策略接口，单个/批量公共资料查询和 Application listener 根据平台使用 IndexedDB 或 localStorage 回退；旧 IndexedDB facade 继续保留，`getBasicUsersInfo` 的 localStorage-only 兼容行为不变；
+- 用户资料和头像修改成功后先失效 ID/用户名缓存，再沿用既有异步刷新写回最新 `/me`；TopicReplier 的既有显式失效点复用同一接口，未扩大到关注列表和公开资料 Context；
+- Board、Topic、Daily Signin 分别接管 `boardsInfo`/`boardInfo`、`tagInfo`、`signin_${userId}`；旧 TopicManagement 和 BoardTopicListItem 的无保护原始解析行为继续通过 Module 兼容接口保留；
+- Posting 接管 Editor 内容、按 topic 回复草稿、失败回复内容和 Markdown 图片上传恢复状态；Upload 只保留通用文件上传，Application 页面不再直接拼接这些 Storage 键；
+- `contentCache`、`temporaryContent`、`temporaryContent-${topicId}`、`post-cache-${topicId}`、`react-mde-imageurl` 与 `react-mde-imageurl-status` 的编码和读写/删除时机保持；Markdown 成功清理旧无 topic 键、草稿类型赋值分支与 `autoClearLocalStorage` 白名单均未修复或修改；
+- `npm run check:architecture` 通过（306 个源码文件、1209 个 import、28 条有条件 allowlist），modern/legacy typecheck、正式 build 和 `git diff --check` 均通过；构建仍只有既有 Sass、Lightning CSS 与 chunk-size 警告。
+- 用户于 2026-07-31 人工审核通过当前检查点；代码检查点为 `62bb6fcd refactor(s1.6): localize caches and drafts`，完整运行验收仍按上述边界保留。
 
 用户资料缓存：
 
@@ -1895,7 +1914,7 @@ User Center
 - Redux 终态采用 Session 与 Notification unread 两个业务 slice；Application Error 退出 Redux；
 - 采用严格保真迁移，已知缺陷单独登记；
 - AnnualReview、UBB、公开 URL、API wire shape、DOM/CSS、Storage 键/TTL 和 `.vscode/` 不进入 S1 修改范围；
-- S1.1–S1.3、S1.4 六组与 S1.5 已按单独授权完成代码与机械检查，S1.4 第三至第六组与 S1.5 已获用户审批；未经提交授权不提交 S1.5，未经实施授权不启动 S1.6。
+- S1.1–S1.3、S1.4 六组、S1.5 与 S1.6 已按单独授权完成代码与机械检查，S1.4 第三至第六组、S1.5 与 S1.6 已获用户审批并完成本地提交；未经实施授权不启动 S1.7。
 
 ## 16. C1：样式与主题归位
 
@@ -2132,7 +2151,7 @@ R1  增加架构检查脚本                            已完成
 - 检查脚本结果；
 - 无业务行为变化证明。
 
-骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组与 S1.5 均已完成代码实施、机械检查和主代理人工代码审核，A、M 阶段完成，S1 已启动。S1.4 第三至第六组与 S1.5 已获用户审批；完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账与 UBB 运行验收未执行，旧 `/list` 仍仅适用既有免检结论。当前停在 S1.5 提交授权前。
+骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5 与 S1.6 均已完成代码实施、机械检查和主代理人工代码审核，A、M 阶段完成，S1 已启动。S1.4 第三至第六组、S1.5 与 S1.6 已获用户审批并完成本地提交；完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账、缓存、草稿与 UBB 运行验收未执行，旧 `/list` 仍仅适用既有免检结论。当前停在 S1.7 实施授权前。
 
 ## 22. 已确认决策与后续边界
 
@@ -2149,7 +2168,7 @@ R1  增加架构检查脚本                            已完成
 
 后续仍需单独授权或审核：
 
-1. S1.1–S1.3、S1.4 六组与 S1.5 尚未执行的完整浏览器、登录与真实 API 运行验收，以及 S1.6–S1.7 缓存与 Redux 闭包的代码实施授权和每批人工验收；
+1. S1.1–S1.3、S1.4 六组、S1.5 与 S1.6 尚未执行的完整浏览器、登录、真实 API、缓存与草稿运行验收，以及 S1.7 Redux 闭包的代码实施授权；
 2. 当前 `useUserProfileContext` 接口及 UserProfileLayout 集中取数边界是否随资料缓存归位或 Redux 闭包再次调整；
 3. A2.3–A2.11 与 M3.1–M3.6 尚未执行的浏览器、登录、真实 API、权限、分页、SignalR、通知权限、上传、编辑器、缓存与 UBB 运行验收；
 4. 旧 `/list` 免检边界是否继续保留；
