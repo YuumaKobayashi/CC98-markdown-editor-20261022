@@ -1970,69 +1970,216 @@ foundation/theme/themes
 
 29 个现有主题入口和生成文件名合同必须保持。
 
-## 17. Legacy 和兼容出口收口
+## 17. Z：根目录 legacy 浏览器源码收口
 
-### Legacy.1 删除条件
+Z 是 C1 之后的最终源码归位阶段。目标不是把根目录旧文件机械搬进 `src`，而是让每个仍保留的运行能力都落到真实 owner，并删除已经失去职责的 facade、ambient 业务声明和双编译配置。
 
-旧 facade 或 `@legacy` 文件必须同时满足：
+新增本计划不等于授权实施 Z。C1 仍先单独实施和验收；Z0–Z5 每批完成机械检查和主代理逐文件审核后停止，等待用户人工验收及单独提交授权，不自动进入下一批。
 
-- 仓内 import 为 0；
-- Router 不可达；
-- 动态 import/require 为 0；
-- 构建模板无引用；
-- 外部固定 URL 已核对；
-- typecheck/build 通过；
-- 对应人工检查完成或用户明确免除。
+### Z 终态
 
-### Legacy.2 Utility.ts
-
-禁止新代码继续通过 `Utility.ts` 总门面调用现代能力。
-
-收口顺序：
+浏览器业务源码只存在于：
 
 ```text
-列出每个导出
-定位直接调用方
-改为 Module/Foundation 公共入口
-证明导出为 0
-删除单个导出
+src/application
+src/modules
+src/foundation
 ```
 
-不能整文件直接删除。
-
-### Legacy.3 P21 候选
-
-16 个零调用 class/P21 候选必须重新做引用证明，不能因为从旧基点重开就直接删除。
-
-### Legacy.4 AnnualReview
-
-继续冻结：
+完成后删除以下根级源码入口或目录：
 
 ```text
-Pages/AnnualReview
-Pages/AnnualReviewV2
+@types/@cc98
+Components
+IndexedDB
+Match
+Pages
+Props
+States
+Styles
+Ubb
+Utility
+config
+SignalR.ts
+Store.tsx
+Utility.ts
+tsconfig.legacy.json
 ```
 
-除非用户单独授权：
+同时满足：
 
-- 是否仍有外部入口；
-- 是否独立站点；
-- 是否进入 Application Route；
-- 是否形成独立 application。
+- `@legacy/*` 使用数为 0，并从 TypeScript、Vite 和架构脚本中移除该 alias；
+- 现代 `tsconfig.json` 覆盖全部活动源码，不再维护根目录 legacy include 和双编译分支；
+- 根目录只保留构建、部署、文档、模板、公开静态资源和工程配置；
+- 旧 `/list` 继续由 `src/application/routes/legacy-board-list` 承接，URL 与现有免检边界不变；除非用户另行授权，不借 Z 删除该公开路由；
+- `.vscode/` 始终不进入 Z。
 
-### Legacy.5 UBB
+### Z0：全量清单、可达性和合同冻结
 
-目标 owner 是 `modules/ubb`，但 UBB 源码迁移单独审核：
+实施任何删除前，建立以当前 HEAD 为准的 tracked file map、owner map 和 consumer map，至少覆盖：
 
-- Tag Handler；
-- UbbContainer；
-- UbbEditor；
-- 权限标签；
-- Math/Media；
-- DOM/CSS；
-- 内容安全。
+```text
+静态 import/export
+Router lazy 入口
+dynamic import / require
+UBB handler 注册和反射式构造
+Vite、HTML、EJS、部署与公开静态资源入口
+CSS/SCSS、JSON、图片、字体和媒体资源引用
+外部固定 URL 与独立页面入口
+```
 
-在专门验收前继续冻结，其他目录迁移通过公共兼容入口使用。
+每个候选分别标记“被加载”“运行时可达”“存在直接调用”，不能用单次 `rg` 的零调用结果代替可达性证明。旧 facade 或文件只有在仓内 import、Router、动态入口、构建模板、外部固定入口和资源引用全部闭包后才允许删除。
+
+Z0 同时冻结下列行为合同：
+
+- 公开 URL、Router 参数、lazy 边界和旧 `/list` 行为；
+- API URL、method、headers、body、response wire shape 和错误语义；
+- Storage/IndexedDB 键、TTL、序列化格式、失效与跨标签行为；
+- UBB 输出、权限标签、内容安全、DOM、CSS、播放器、数学公式和编辑器行为；
+- SignalR、通知、Session、主题和缓存行为。
+
+16 个零调用/P21 候选仍逐项做上述证明；禁止因类名陈旧、文件短或当前无静态调用而批量删除混合文件。
+
+### Z1：业务类型和数据模型按 owner 收口
+
+删除 ambient `declare module '@cc98/api'` 聚合。业务消费者改为从相应 Module 根入口导入类型，Route 私有模型留在对应 Application Route，浏览器/第三方环境声明才允许留在 `foundation/types`。
+
+类型 owner 按下表执行：
+
+| Owner | 迁入合同 |
+| --- | --- |
+| `modules/board` | `IBoard`、`IBoardGroup`、`IBoardMasterTitle`、`FocusBoard`、版面收藏和版面合同 |
+| `modules/topic` | `IBasicTopic`、`IHotTopic`、`ITopic`、`ITag/ITagGroup`、`FocusTopic`、`RecommendedTopic`、`RandomTopic`、主题列表合同 |
+| `modules/post` | `IPost`、`IAward`、`ILike/ILikeState`、帖子内容和最近回复合同 |
+| `modules/user` | `IBasicUser`、`IUser/UserInfo`、用户资料与修改资料合同 |
+| `modules/session` | 当前用户 `MyInfo` 消费者统一改用现有 `CurrentUser` 公共合同，不再复制一份当前用户类 |
+| `modules/message` | `IMessageContent`、`IRecentMessage`、私信会话和消息 DTO |
+| `modules/notification` | 通知设置、回复通知和系统通知 DTO |
+| `modules/daily-signin` | `ISignIn` |
+| `modules/site-content` | `ISite`、`IConfig`、`IIndex`、首页栏目和推荐内容 API 合同 |
+| `modules/user-preference` | 用户主题偏好合同；不得与 `foundation/theme` 的运行时配置类型混为同一 owner |
+| `modules/wealth` | `TransferWealthInfo` 等财富请求合同 |
+| 对应 Application Route | 仅该 Route 使用的页面 props/state、Router match 和展示模型 |
+
+同名或重复合同先对照真实 API wire shape 合并；不能因为字段相似就改变可空性、日期表示、字段大小写或废弃字段。`@types/@cc98`、`Props/`、`States/` 和 `Match/` 只有在所有消费者改到真实 owner 后删除。
+
+#### Z1 注释与未知类型保真约束
+
+类型搬移不是重新设计合同。迁移时必须逐声明保留原文件的 JSDoc、行注释、块注释、TODO、FIXME、字段说明、废弃说明和“不知道有什么用”等不确定性记录；只允许为 import、export、owner 路径和 `class` → `interface/type` 的必要语法调整改动代码结构，不得顺手润色、删减、合并或用新解释覆盖原始注释。
+
+原声明没有明确类型，且无法从 API schema、实际 wire shape、稳定调用合同或运行时证据唯一确定时：
+
+- 当批先显式写成 `any`，保持原有宽松语义，不凭字段名猜测类型；
+- 不用错误的窄类型、非空断言或类型断言掩盖未知合同；
+- 在本批类型债务清单中记录原路径、原 symbol、字段名、当前 owner、活动消费者、未知原因、待核对证据和移除 `any` 的条件；
+- 后续另立类型查明批次，结合真实 API、Storage 数据、运行时样本和全部消费者逐项收窄；未经证据不得批量用 `unknown`、`object` 或推断类型替换。
+
+类型迁移批删除旧文件前必须完成专项检查：
+
+```text
+原声明与新声明逐 symbol 对照
+原始注释逐条存在且文本未漂移
+字段名、大小写、可选性、联合值和日期表示未漂移
+所有新增显式 any 均能在类型债务清单中反查
+旧路径、ambient module 和旧 owner 消费者归零
+```
+
+文件被拆到多个 owner 时，按 symbol 建立 source → destination 清单并逐条审核注释；不能仅凭 rename similarity、typecheck 或 build 结果宣称注释保真。Z5 负责核对“源码中的临时 `any`”与债务清单一致，但不在 alias/目录闭包批中顺手收窄类型。
+
+#### Z1 class / interface / type 规则
+
+当前审计结论：`States/`、`Props/`、`Match/` 以及已经进入 `src` 的 Message、Notification、Board、Home 数据模型，绝大多数只承载 JSON、API DTO、React props/state 或 Storage 对象，没有 `instanceof`、原型方法或运行时身份，应在 owner 迁移时消除“伪 class”。
+
+- `interface`：对象 shape、API DTO、React props/state、Storage 记录及需要 `extends` 的公共结构合同；`UserInfo/MyInfo`、`BoardEvent`、`FocusTopic`、Message/Notification DTO 等使用这一类；
+- `type`：联合、字面量、元组、函数签名、映射/条件类型和交叉组合；不因“删除 class”就默认改成 `type`；
+- `class`：确实依赖构造过程、方法、`private/protected`、继承、`instanceof`、框架生命周期或运行时注册/分派的对象。
+
+只有字段赋值的构造器不构成保留 class 的理由。`PagerState`、`TopicState`、`Board`、`HotTopic`、`RootBoardState`、`ChildBoardState`、`MainPageColumn` 一类改为 `interface`，现有 `new` 改为对象字面量、具名 mapper 或 `createXxx` 工厂；工厂必须保持字段、默认值、序列化结果和调用时机。空构造器直接删除。
+
+以下 class 不在 Z 中机械改写：
+
+- UBB Token、Segment、Engine、Handler 及其继承/注册体系；
+- 播放器、数学公式、错误边界等具有实例生命周期或 React error boundary 语义的 class；
+- 第三方插件要求继承的 adapter class。
+
+UBB 内部的纯 options/context data 可在逐文件审核后单独改为 `interface`，但不能与 UBB 迁址混做。React class 转函数也不作为 Z 的默认要求。
+
+### Z2：UBB 完整迁入 `modules/ubb`
+
+将以下能力作为一个受控业务批迁入 `src/modules/ubb`：
+
+```text
+Ubb/**
+Components/UbbContainer.tsx
+Components/UbbEditor/**
+States/UbbEditorState.tsx
+C1 已归位的 UBB 样式入口
+```
+
+Module 根入口只导出业务需要的 `UbbContainer`、`UbbEditor`、解析/渲染公共合同和必要扩展点；Application、其他 Module 不得深层导入 handler 或实现文件。原 `@legacy/Ubb/*`、`@legacy/Components/Ubb*` 消费者一次性切换为 `@modules/ubb`。
+
+本批采用完整文件迁址加必要路径修正，保留：
+
+- Handler 名称、注册顺序、动态构造和扩展能力；
+- UBB/Markdown 解析结果、嵌套/空标签、quote 和 URL 文本处理；
+- 权限、仅楼主、回复可见、指定用户可见等访问控制；
+- 图片、上传、音频、视频、Bilibili、数学公式和 sandbox 行为；
+- 编辑器按钮 JSON、emoji 资源、光标/选区、预览、上传压缩和草稿交互；
+- DOM 结构、className、CSS、错误降级与内容安全边界。
+
+不在本批现代化 Handler class、改写解析算法、修改公开扩展 API 或顺手修复已知 UBB 缺陷。机械检查通过后仍必须单独记录浏览器 UBB/editor/media/permission 验收；未执行不得记为通过。
+
+### Z3：Pages、Components 和根级适配器归真实 owner
+
+按消费者闭包处理剩余根级源码：
+
+- `Pages/` 中非 AnnualReview facade 的调用方改到现有 Application Route 公共入口；旧 `/list` 实现只保留 `src/application/routes/legacy-board-list` 的真实 owner；
+- `Components/` 的短 facade 先切换全部调用方再删除；仍有实现的 UI 按复用范围进入业务 Module、Application layout/route 或 Foundation 通用能力，不建立新的泛化 `shared/components` 垃圾桶；
+- `Utility.ts` 逐导出迁到 Module/Foundation 公共入口，逐项证明零消费者后删除，不整文件猜测性删除；
+- `Utility/`、`IndexedDB/` 按数据和副作用 owner 进入 Foundation storage/lib 或对应 Module cache；Storage 键、TTL 和序列化保持不变；
+- 根 `config/` 归 `foundation/config`，根 `SignalR.ts` 归 Notification 的实时通知实现或在兼容消费者归零后删除；
+- 根 `Store.tsx` 在零消费者后删除，Store 真实入口继续为 `application/store`；
+- `Styles/` 必须已由 C1 完成真实归位，Z 只做零引用和空目录闭包，不重新设计样式。
+
+每个实现文件必须确定唯一 owner；无法确定 owner、必须改变业务逻辑才能编译或可能存在外部 facade 消费者时立即停批审核。
+
+### Z4：AnnualReview 完整移除
+
+用户已决定不保留 AnnualReview。Z4 删除：
+
+```text
+Pages/AnnualReview/**
+Pages/AnnualReviewV2/**
+src/modules/annual-review/**
+Utility 中 getAnnualReview / getAnnualReviewV2 兼容导出
+仅由 AnnualReview 使用的样式、图表适配和资源
+```
+
+不恢复 Route，不迁成新的 Application，不保留空 Module 或兼容 facade。删除前仍核对 Router、动态入口、Vite/HTML/EJS、部署模板、固定 URL 和静态资源；发现仓外独立部署合同或仍被其他业务消费的共享资源时暂停并列出证据，不能连带删除共享能力。
+
+AnnualReview 功能本身不再要求运行验收；需要确认主 Router、首页、登录、构建入口、图表适配的剩余消费者和公开静态资源未受影响。
+
+### Z5：alias、双编译和根目录闭包
+
+最后一批只做全仓闭包：
+
+- 确认 `@legacy`、旧相对 Store/Utility/Components/Pages/Props/States/Ubb import、动态 require 和根级源码引用全部为 0；
+- 删除 `@legacy/*` alias、`tsconfig.legacy.json`、Vite legacy compiler options 分支和已失效 architecture allowlist；
+- 清理现代 `tsconfig.json` 对 `@types/@cc98` 的 include，确认业务合同全部从真实 Module 根入口解析；
+- 删除空的根级源码目录和兼容文件，更新 Application/Modules/Foundation/根 README、架构目录清单和本计划状态；
+- 核对 Z1 类型债务清单与实际临时 `any` 一致，未查明项明确移交后续独立类型收窄阶段，不伪记为已解决；
+- 不回写历史 phase 记录，不把旧阶段未执行的人工验收改记为通过。
+
+Z5 终验执行：
+
+```powershell
+npm run check:architecture
+npm run typecheck
+npm run build
+git diff --check
+```
+
+并做全仓活动代码搜索和主代理逐文件审核，确认公开 URL、API wire shape、Storage/IndexedDB、DOM/CSS、Session、Notification、SignalR、主题、缓存和 UBB 合同未漂移。完整浏览器、登录、真实 API、权限、SignalR、跨标签、通知、缓存、编辑器、媒体和 UBB 验收仍分别记录为“未执行”或实际结果。
 
 ## 18. 每批必做检查
 
@@ -2133,7 +2280,7 @@ docs(...): record <同一迁移批>
 - 必须同时修改业务逻辑才能编译；
 - Storage 键或缓存失效时机不明；
 - 旧 facade 可能有外部消费者；
-- UBB/AnnualReview 被意外纳入；
+- UBB/AnnualReview 在未到对应 Z 子批或未获实施授权时被意外纳入；
 - build/typecheck 失败且不能确认是环境问题；
 - 工作区出现不属于本批的新变更。
 
@@ -2175,12 +2322,18 @@ R1  增加架构检查脚本                            已完成
 5. M1 使用五个 Module 根入口，并接受已记录的共享 chunk 重组；
 6. S1 Redux 终态只保留 Session 与 Notification unread 两个业务 slice，Application Error 退出 Redux；
 7. S1 采用严格保真迁移，已知缺陷只登记，不顺手修复；
-8. 未经用户要求，不 commit、不 push。
+8. 未经用户要求，不 commit、不 push；
+9. C1 后新增 Z0–Z5 根目录源码收口阶段，浏览器业务源码终态只位于 `src/application`、`src/modules` 和 `src/foundation`；
+10. AnnualReview 完整移除，不恢复 Route、不建立新 Application 或空兼容 Module；
+11. UBB 功能保留并完整迁入 `src/modules/ubb`，迁址阶段不改写解析器、Handler 体系或扩展合同；
+12. `@types/@cc98` 业务声明按真实业务 owner 迁入各 Module，不把 ambient `@cc98/api` 聚合搬入 Foundation；
+13. 纯数据 class 优先改为 `interface`，联合/组合类型使用 `type`，只有存在真实运行时身份、继承、方法或生命周期的对象保留 `class`；
+14. 类型搬移必须保留全部原始注释；没有明确类型且缺少唯一证据的字段先显式写成 `any`、登记类型债务，后续通过独立类型查明批次收窄。
 
 后续仍需单独授权或审核：
 
-1. S1.1–S1.3、S1.4 六组、S1.5、S1.6 与 S1.7 尚未执行的完整浏览器、登录、真实 API、SignalR、跨标签、缓存与草稿运行验收，以及 C1 的代码实施授权；
+1. S1.1–S1.3、S1.4 六组、S1.5、S1.6 与 S1.7 尚未执行的完整浏览器、登录、真实 API、SignalR、跨标签、缓存与草稿运行验收，以及 C1 和后续每个 Z 子批的代码实施授权；
 2. 当前 `useUserProfileContext` 接口及 UserProfileLayout 集中取数边界是否随资料缓存归位或 Redux 闭包再次调整；
 3. A2.3–A2.11 与 M3.1–M3.6 尚未执行的浏览器、登录、真实 API、权限、分页、SignalR、通知权限、上传、编辑器、缓存与 UBB 运行验收；
-4. 旧 `/list` 免检边界是否继续保留；
-5. AnnualReview 与 UBB 是否继续冻结。
+4. 旧 `/list` 免检边界是否继续保留；在另行确认前，Z 只删除根 facade，不删除该公开 Route；
+5. UBB 迁入 `modules/ubb` 后的浏览器、权限标签、编辑器、媒体、数学公式和扩展 API 人工验收。
