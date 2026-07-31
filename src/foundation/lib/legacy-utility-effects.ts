@@ -1,8 +1,8 @@
 export interface LegacyMessageCounts {
-  atCount?: number;
-  messageCount?: number;
-  replyCount?: number;
-  systemCount?: number;
+  atCount: number;
+  messageCount: number;
+  replyCount: number;
+  systemCount: number;
 }
 
 export interface LegacyUtilityEffects {

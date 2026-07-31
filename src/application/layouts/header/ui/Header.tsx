@@ -3,6 +3,10 @@ import * as React from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 
 import { useAppDispatch, useAppSelector } from "@application/store";
+import {
+  refreshUnreadCount,
+  selectUnreadCount,
+} from "@modules/notification";
 import { getTopicInfo } from "@modules/topic";
 import { getUserInfo } from "@modules/user";
 import {
@@ -14,7 +18,6 @@ import {
   selectCurrentUser,
   selectIsLogOn,
 } from "@modules/session";
-import { refreshCurrentMessageCount } from "@legacy/AsyncActions/Message";
 import { refreshCurrentUserInfo } from "@legacy/AsyncActions/UserCenter";
 import {
   getLocalStorage,
@@ -30,7 +33,7 @@ function UserMenu() {
   const { pathname } = useLocation();
   const isLoggedOn = useAppSelector(selectIsLogOn);
   const userInfo = useAppSelector(selectCurrentUser);
-  const messageCount = useAppSelector((state) => state.message);
+  const messageCount = useAppSelector(selectUnreadCount);
   const showCardUser = useShowCardUser();
   const [hoverElement, setHoverElement] = React.useState<string | null>(null);
 
@@ -42,7 +45,7 @@ function UserMenu() {
 
   React.useEffect(() => {
     if (isLoggedOn) {
-      void dispatch(refreshCurrentMessageCount() as any);
+      void dispatch(refreshUnreadCount());
     }
 
     if (isLoggedOn && !getLocalStorage("shouldNotRefreshUserInfo")) {

@@ -8,6 +8,13 @@ export {
   MessageSystemProps,
   NoticeSetting,
 } from "./model/types";
+export type { UnreadCount } from "./model/types";
+export {
+  notificationReducer,
+  replaceUnreadCount,
+} from "./model/unread-count-slice";
+export { selectUnreadCount } from "./model/selectors";
+export { refreshUnreadCount } from "./model/refresh-unread-count";
 export {
   NotificationController,
   NotificationController as default,

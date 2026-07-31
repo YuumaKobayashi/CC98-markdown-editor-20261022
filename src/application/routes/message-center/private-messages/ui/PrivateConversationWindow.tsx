@@ -16,9 +16,12 @@ import {
   sendMessage,
   sortRecentMessage,
 } from "@modules/message";
+import {
+  refreshUnreadCount,
+  selectUnreadCount,
+} from "@modules/notification";
 import { getMyInfo } from "@modules/session";
 import { uploadFile } from "@modules/upload";
-import { refreshCurrentMessageCount } from "@legacy/AsyncActions/Message";
 import type { MessagePersonInfo, MessageProps } from "@modules/message";
 import { DocumentTitle } from "@foundation/ui/document-title";
 
@@ -57,9 +60,8 @@ export function PrivateConversationWindow({
   onContactUpdate,
 }: PrivateConversationWindowProps) {
   const dispatch = useAppDispatch();
-  const unreadMessageCount = useAppSelector(
-    (state) => state.message.messageCount
-  );
+  const unreadMessageCount =
+    useAppSelector(selectUnreadCount).messageCount;
 
   // messages 按时间升序保存，便于从上到下渲染旧消息到新消息。
   const [messages, setMessages] = useState<MessageProps[]>([]);
@@ -84,9 +86,9 @@ export function PrivateConversationWindow({
   unreadCountRef.current = unreadMessageCount;
 
   // 只有本地仍显示未读时才向服务端重新同步总未读数。
-  const refreshUnreadCount = () => {
+  const refreshUnreadCountIfNeeded = () => {
     if (unreadCountRef.current) {
-      void dispatch(refreshCurrentMessageCount() as any);
+      void dispatch(refreshUnreadCount());
     }
   };
 
@@ -103,7 +105,7 @@ export function PrivateConversationWindow({
     // 合并接口结果和联系人缓存；过期请求只允许完成读取，不更新界面。
     const load = async () => {
       const recentMessages = (await getRecentMessage(contact.id, 0, 10)) ?? [];
-      refreshUnreadCount();
+      refreshUnreadCountIfNeeded();
       if (requestId.current !== currentRequest) return;
 
       const descendingMessages = mergeRecentMessages(
@@ -149,7 +151,7 @@ export function PrivateConversationWindow({
 
     const newMessages =
       (await getRecentMessage(contact.id, oldDescending.length, 10)) ?? [];
-    refreshUnreadCount();
+    refreshUnreadCountIfNeeded();
     if (
       requestId.current !== currentRequest ||
       contactIdRef.current !== contact.id

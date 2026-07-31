@@ -2,11 +2,10 @@ import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 
 import * as ErrorActions from "@legacy/Actions/Error";
-import * as MessageActions from "@legacy/Actions/Message";
 import * as UserActions from "@legacy/Actions/UserCenter";
 import error from "@legacy/Reducers/Error";
-import message from "@legacy/Reducers/Message";
 import userInfo from "@legacy/Reducers/UserInfo";
+import { notificationReducer } from "@modules/notification";
 import { sessionReducer } from "@modules/session";
 
 import type { RootState } from "./legacy-types";
@@ -15,13 +14,12 @@ import { listenerMiddleware } from "./listener-middleware";
 export const Actions = {
   ...UserActions,
   ...ErrorActions,
-  ...MessageActions,
 };
 
 const rootReducer = combineReducers<RootState>({
   error,
   userInfo,
-  message,
+  notification: notificationReducer,
   session: sessionReducer,
 });
 

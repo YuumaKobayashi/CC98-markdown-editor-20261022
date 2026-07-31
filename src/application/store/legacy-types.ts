@@ -1,20 +1,19 @@
 import type { ErrorStore } from "@legacy/Reducers/Error";
-import type { MessageInfo } from "@legacy/Reducers/Message";
 import type { UserInfoStore } from "@legacy/Reducers/UserInfo";
+import type { UnreadCount } from "@modules/notification";
 import type { SessionState } from "@modules/session";
 
 type LegacyActionCreators =
   & typeof import("@legacy/Actions/UserCenter")
-  & typeof import("@legacy/Actions/Error")
-  & typeof import("@legacy/Actions/Message");
+  & typeof import("@legacy/Actions/Error");
 
 type LegacyThunkActionCreators = typeof import("@legacy/AsyncActions");
 
-/** S1.1 adds Session while the remaining legacy branches await later S1 batches. */
+/** S1.1 adds Session and S1.3 adds Notification while legacy branches await later batches. */
 export interface RootState {
   error: ErrorStore;
   userInfo: UserInfoStore;
-  message: MessageInfo;
+  notification: UnreadCount;
   session: SessionState;
 }
 

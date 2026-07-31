@@ -1,31 +1,33 @@
 import * as React from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import { Actions, useAppDispatch, useAppSelector } from "@application/store";
 import { selectIsLogOn } from "@modules/session";
-import { refreshCurrentMessageCount } from "@legacy/AsyncActions/Message";
-import type { MessageInfo } from "@legacy/Reducers/Message";
 import { CC98SignalR } from "../signalr";
 import { setLocalStorage } from "@foundation/storage/web-storage";
 import {
   navigateToNotificationResponse,
 } from "../../lib/notification-navigation";
 import { BlinkTitle } from "../../lib/title-blinker";
+import { refreshUnreadCount } from "../../model/refresh-unread-count";
+import { selectUnreadCount } from "../../model/selectors";
+import type { UnreadCount } from "../../model/types";
+import { replaceUnreadCount } from "../../model/unread-count-slice";
 
 const messageEvents = [
   "NotifyMessageReceive",
   "NotifyNotificationReceive",
 ] as const;
 
-const parseStoredMessageCount = (value: string): MessageInfo =>
-  JSON.parse(value.slice(4)) as MessageInfo;
+const parseStoredMessageCount = (value: string): UnreadCount =>
+  JSON.parse(value.slice(4)) as UnreadCount;
 
 export function NotificationController() {
-  const dispatch = useAppDispatch();
-  const isLoggedOn = useAppSelector(selectIsLogOn);
-  const messageCount = useAppSelector((state) => state.message);
+  const dispatch = useDispatch();
+  const isLoggedOn = useSelector(selectIsLogOn);
+  const messageCount = useSelector(selectUnreadCount);
 
   const handleNotifyMessageReceive = React.useCallback(() => {
-    void dispatch(refreshCurrentMessageCount() as any);
+    void dispatch(refreshUnreadCount() as any);
 
     if (
       typeof Notification !== "undefined" &&
@@ -62,7 +64,7 @@ export function NotificationController() {
     }
 
     let isActive = true;
-    void dispatch(refreshCurrentMessageCount() as any);
+    void dispatch(refreshUnreadCount() as any);
 
     const startConnection = async () => {
       await CC98SignalR.start();
@@ -105,7 +107,7 @@ export function NotificationController() {
         event.newValue
       ) {
         dispatch(
-          Actions.changeMessageCount(
+          replaceUnreadCount(
             parseStoredMessageCount(event.newValue)
           )
         );

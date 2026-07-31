@@ -1,5 +1,12 @@
 type UserBooleanSetting = "是" | "否";
 
+export interface UnreadCount {
+  systemCount: number;
+  atCount: number;
+  replyCount: number;
+  messageCount: number;
+}
+
 /**
  * 用户消息设置选项。
  */

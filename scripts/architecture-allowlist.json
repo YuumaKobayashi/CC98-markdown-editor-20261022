@@ -181,27 +181,6 @@
       "rule": "legacy-dependency",
       "reason": "M2 preserves the existing UserFollowCard props contract without moving legacy user state types.",
       "removeWhen": "The User contract migration owns the public UserInfo type."
-    },
-    {
-      "from": "src/modules/notification/realtime-notifications/ui/NotificationController.tsx",
-      "specifier": "@application/store",
-      "rule": "layer-direction",
-      "reason": "M3.5 preserves the realtime notification state bridge while Redux ownership remains in Application.",
-      "removeWhen": "S1 moves notification state and actions behind the Notification module public entry."
-    },
-    {
-      "from": "src/modules/notification/realtime-notifications/ui/NotificationController.tsx",
-      "specifier": "@legacy/AsyncActions/Message",
-      "rule": "legacy-dependency",
-      "reason": "M3.5 preserves the existing unread-count refresh behavior without moving legacy async actions.",
-      "removeWhen": "S1 moves notification state and refresh behavior behind the Notification module public entry."
-    },
-    {
-      "from": "src/modules/notification/realtime-notifications/ui/NotificationController.tsx",
-      "specifier": "@legacy/Reducers/Message",
-      "rule": "legacy-dependency",
-      "reason": "M3.5 preserves the existing message-count contract without moving legacy reducer types.",
-      "removeWhen": "S1 moves notification state and types behind the Notification module public entry."
     }
   ]
 }

@@ -2,7 +2,7 @@ import * as React from "react";
 import { NavLink, Outlet, useLocation } from "react-router";
 
 import { useAppSelector } from "@application/store";
-import { readAll } from "@modules/notification";
+import { readAll, selectUnreadCount } from "@modules/notification";
 import { DocumentTitle } from "@foundation/ui/document-title";
 import { parseReadAllNotificationSection } from "../../notifications/model/route";
 
@@ -20,7 +20,7 @@ const getActiveSection = (pathname: string): MessageSection => {
 
 export function MessageLayout() {
   const { pathname } = useLocation();
-  const unreadCount = useAppSelector((state) => state.message);
+  const unreadCount = useAppSelector(selectUnreadCount);
   const activeSection = getActiveSection(pathname);
 
   const getNavClassName = (section: MessageSection) =>

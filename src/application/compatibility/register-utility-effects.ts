@@ -1,6 +1,10 @@
-import store, { Actions } from "@application/store";
+import store from "@application/store";
 import { navigate } from "@application/router/navigation";
 import * as ErrorActions from "@legacy/Actions/Error";
+import {
+  replaceUnreadCount,
+  selectUnreadCount,
+} from "@modules/notification";
 import {
   sessionInvalidated,
   updateCurrentUser,
@@ -20,11 +24,11 @@ export function registerLegacyUtilityEffects(): void {
       store.dispatch(updateCurrentUser(userInfo));
     },
     getMessageCounts() {
-      return store.getState().message;
+      return selectUnreadCount(store.getState());
     },
     clearMessageCounts() {
       store.dispatch(
-        Actions.changeMessageCount({
+        replaceUnreadCount({
           messageCount: 0,
           systemCount: 0,
           atCount: 0,
