@@ -1,6 +1,6 @@
 # CC98 前端目录重构执行计划
 
-> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3 的代码实施、机械检查和主代理人工代码审核均已完成，A、M 阶段完成，S1 已启动。浏览器、登录、真实 API、权限、SignalR、跨标签与 UBB 运行验收未执行；当前停在 S1.3 人工验收前，不启动 S1.4。
+> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3 与 S1.4 第一组的代码实施、机械检查和主代理人工代码审核均已完成，A、M 阶段完成，S1 已启动。浏览器、登录、真实 API、权限、SignalR、跨标签与 UBB 运行验收未执行；当前停在 S1.4 第一组人工验收前，不启动收藏主题组。
 >
 > 架构依据：`docs/frontend-directory-architecture-inventory.md`。
 >
@@ -43,9 +43,10 @@ S1.0 Redux 消费与 Storage 合同审计          已完成（仅计划细化�
 S1.1 Session 与跨标签同步                   已完成（人工代码审核通过；运行验收未执行）
 S1.2 用户偏好                               已完成（人工代码审核通过；运行验收未执行）
 S1.3 Notification 未读计数                  已完成（人工代码审核通过；运行验收未执行）
+S1.4 第一组：主题与回复                     已完成（人工代码审核通过；运行验收未执行）
 ```
 
-### 当前停点：S1.3 代码与机械检查已完成；停在人工验收前，不启动 S1.4
+### 当前停点：S1.4 第一组代码与机械检查已完成；停在人工验收前，不启动收藏主题组
 
 ### M3.1–M3.6 实施记录（2026-07-30）
 
@@ -1658,6 +1659,16 @@ modules/notification/model
 
 ### S1.4 用户中心远端数据本地化
 
+状态：第一组“主题与回复”的代码实施、机械检查和主代理人工代码审核已完成；浏览器、登录与真实 API 运行验收未执行，当前停在第一组人工验收前，不启动收藏主题组。
+
+第一组实施结果：
+
+- Topic 与 Post Module 根入口已公开当前用户主题/回复分页请求，保持 `/me/recent-topic`、`/me/recent-post`、`/me/hot-post`、授权头、`size=11` 探测、前 10 条展示、顺序补充 `boardName`、非 200 `statusText` 错误及回复 `Math.floor(count / 10) + 1` 总页数算法；
+- UserRecentTopicsActivityList、MyTopics 与 MyPosts 已分别持有数据、分页、完成状态和 loading/error；Overview 与 MyTopics 不共享跨 Route 缓存，MyTopics 保留稀疏页缓存，MyPosts 保留 recent/hot 切换时的同页覆盖与 count 分页行为；
+- UserCenterOverview 不再写入 `currentUserCenterPage`，但继续通过 Session 刷新当前用户；ExactActivitiesPosts 已转为无 Redux 的本地状态兼容组件，保留默认导出、零调用状态及原无参 thunk 实际对应的 hot-post 请求；
+- legacy recent-topic/recent-post/hot-post thunk 文件、对应 action、ActionType、reducer 数据字段和已闭合分页分支已删除；后五组仍使用的 currentUserCenterPage、共享 loading/error 与通用分页 action 暂时保留；
+- `npm run check:architecture` 通过（297 个源码文件、1206 个 import、27 条有条件 allowlist），modern/legacy typecheck、正式 build（3993 modules transformed）和 `git diff --check` 均通过；受限环境首次 build 因 `spawn EPERM` 失败，按原命令在允许子进程的环境重跑成功，构建只有既有 Sass、Lightning CSS 与 chunk-size 警告。
+
 用户中心各子页分别拥有自己的数据、分页、完成状态和 loading/error，不建立汇总所有子页状态的 `UserCenterLayout` Route Context；当前 tab 与页码从 URL 派生，不再由 Redux 记录 `currentUserCenterPage`。
 
 按以下六组分开实施和验收：
@@ -1826,7 +1837,7 @@ User Center
 - Redux 终态采用 Session 与 Notification unread 两个业务 slice；Application Error 退出 Redux；
 - 采用严格保真迁移，已知缺陷单独登记；
 - AnnualReview、UBB、公开 URL、API wire shape、DOM/CSS、Storage 键/TTL 和 `.vscode/` 不进入 S1 修改范围；
-- S1.1–S1.3 已按单独授权完成代码与机械检查；当前停在 S1.3 人工验收前，未经授权不启动 S1.4。
+- S1.1–S1.3 与 S1.4 第一组已按单独授权完成代码与机械检查；当前停在第一组人工验收前，未经授权不启动收藏主题组。
 
 ## 16. C1：样式与主题归位
 
@@ -2063,7 +2074,7 @@ R1  增加架构检查脚本                            已完成
 - 检查脚本结果；
 - 无业务行为变化证明。
 
-骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3 均已完成代码实施、机械检查和主代理人工代码审核，A、M 阶段完成，S1 已启动。浏览器、登录、真实 API、权限、SignalR、跨标签与 UBB 运行验收未执行，旧 `/list` 仍仅适用既有免检结论。当前停在 S1.3 人工验收前，不启动 S1.4。
+骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3 与 S1.4 第一组均已完成代码实施、机械检查和主代理人工代码审核，A、M 阶段完成，S1 已启动。浏览器、登录、真实 API、权限、SignalR、跨标签与 UBB 运行验收未执行，旧 `/list` 仍仅适用既有免检结论。当前停在 S1.4 第一组人工验收前，不启动收藏主题组。
 
 ## 22. 已确认决策与后续边界
 
@@ -2080,7 +2091,7 @@ R1  增加架构检查脚本                            已完成
 
 后续仍需单独授权或审核：
 
-1. S1.1–S1.3 人工验收，以及 S1.4–S1.7 状态与缓存归位的代码实施授权和每批人工验收；
+1. S1.1–S1.3 与 S1.4 第一组人工验收，以及 S1.4 后五组至 S1.7 状态与缓存归位的代码实施授权和每批人工验收；
 2. A2.3–A2.11 与 M3.1–M3.6 尚未执行的浏览器、登录、真实 API、权限、分页、SignalR、通知权限、上传、编辑器、缓存与 UBB 运行验收；
 3. 旧 `/list` 免检边界是否继续保留；
 4. AnnualReview 与 UBB 是否继续冻结。
