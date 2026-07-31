@@ -1,6 +1,11 @@
 import { boardInfo } from "../model/board-info";
+import {
+  readBoardInfoCache,
+  readBoardsInfoCache,
+  writeBoardInfoCache,
+  writeBoardsInfoCache,
+} from "../cache/board-cache";
 import { getMyInfo } from "@modules/session";
-import { setStorage, getStorage, setLocalStorage, getLocalStorage } from "@foundation/storage/web-storage";
 import { getToken, formAuthorizeHeader } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
 import type { UserFavoritesBoardInfo } from "@legacy/States/AppState";
@@ -67,12 +72,12 @@ export async function getSearchBoard(word: string) {
 }
 
 export async function getBoards() {
-  const boards = getLocalStorage("boardsInfo");
+  const boards = readBoardsInfoCache();
   if (!boards) {
     const url = "/board/all";
     const response = await cc98Fetch(url);
     const data = await response.json();
-    setLocalStorage("boardsInfo", data, 3600);
+    writeBoardsInfoCache(data);
     return data;
   } else {
     return boards;
@@ -104,9 +109,9 @@ export async function getCurrentUserFavoriteBoards(
 
 export async function getBoardId(boardName: string) {
   let boardInfo =
-    getStorage("boardInfo") ||
+    readBoardInfoCache<any[]>() ||
     (await fetch("/static/boardinfo.json").then((res) => res.json()));
-  setStorage("boardInfo", boardInfo);
+  writeBoardInfoCache(boardInfo);
   let boardResult = [];
   //看是否包含
   for (let i in boardInfo) {

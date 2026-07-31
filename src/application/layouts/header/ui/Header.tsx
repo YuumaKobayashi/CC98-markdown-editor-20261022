@@ -7,6 +7,7 @@ import {
   refreshUnreadCount,
   selectUnreadCount,
 } from "@modules/notification";
+import { hasSignedInToday } from "@modules/daily-signin";
 import { getTopicInfo } from "@modules/topic";
 import { getUserInfo } from "@modules/user";
 import {
@@ -91,7 +92,7 @@ function UserMenu() {
     pathname === "/" ? "topBarMessageDetails-mainPage" : "topBarMessageDetails";
   const signinInfo =
     userInfo &&
-    getLocalStorage(`signin_${userInfo.id}`)
+    hasSignedInToday(userInfo.id)
       ? "已签到"
       : "签到";
 

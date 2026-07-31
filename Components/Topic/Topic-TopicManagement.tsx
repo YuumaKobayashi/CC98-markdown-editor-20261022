@@ -1,5 +1,6 @@
 ﻿import * as React from 'react';
 import * as Utility from '../../Utility';
+import { readBoardsInfoCache, readLegacyRawBoardsInfoCache } from '@modules/board';
 declare global {
     interface JQuery { spectrum: any}
 }
@@ -23,8 +24,8 @@ export class TopicManagement extends React.Component<Props, { state, reason, tip
         this.daysInput = this.daysInput.bind(this);
         this.boardInput = this.boardInput.bind(this);
         let data = []
-        if(Utility.getLocalStorage('boardsInfo')){
-            data = JSON.parse(Utility.getLocalStorage("boardsInfo"));
+        if(readBoardsInfoCache()){
+            data = JSON.parse(readBoardsInfoCache());
         }
       
         this.state = {
@@ -204,7 +205,7 @@ export class TopicManagement extends React.Component<Props, { state, reason, tip
     handleTopBoardSelect(e) {
         const boardId = e.target.value;
         console.log("target="+boardId)
-        const boardsInfo = JSON.parse(localStorage.getItem("boardsInfo"));
+        const boardsInfo = readLegacyRawBoardsInfoCache();
         for (let board of boardsInfo) {
             
             if (board.id == boardId) {
@@ -219,7 +220,7 @@ export class TopicManagement extends React.Component<Props, { state, reason, tip
       
         //console.log(this.props.topicInfo);
         let info;
-        let boardsInfo = JSON.parse(localStorage.getItem("boardsInfo")) || [];
+        let boardsInfo = readLegacyRawBoardsInfoCache() || [];
         let selectBoard = <select style={{marginRight:"1.5rem"}} onChange={this.handleTopBoardSelect.bind(this)}>
             {boardsInfo.map(this.returnBoardOption)}
         </select>;

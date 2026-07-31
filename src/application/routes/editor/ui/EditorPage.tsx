@@ -21,12 +21,12 @@ import {
 import { getMyInfo } from "@modules/session";
 import { getUserWealth } from "@modules/wealth";
 import { getToken } from "@modules/session";
-import { uploadEvent } from "@modules/upload";
 import {
-  getLocalStorage,
-  removeLocalStorage,
-  setLocalStorage,
-} from "@foundation/storage/web-storage";
+  clearEditorContentCache,
+  getEditorContentCache,
+  setEditorContentCache,
+  uploadEvent,
+} from "@modules/posting";
 import { atHanderler } from "@foundation/lib/text";
 import {
   createEditorTopic,
@@ -200,8 +200,8 @@ export function EditorPage(): React.ReactElement {
           let type = topicInfo.type;
           const tagsV2 = await getBoardTagV2(data.boardId);
           // TODO： cache?
-          setLocalStorage("contentCache", data.content);
-          const cache = getLocalStorage("contentCache");
+          setEditorContentCache(data.content);
+          const cache = getEditorContentCache();
           console.log("cache after saving = " + cache);
 
           response = await getEditorBoard(data.boardId, token);
@@ -373,7 +373,7 @@ export function EditorPage(): React.ReactElement {
       }
       const topicId = await response.text();
       await sendAtNotification(topicId, state.mdeState, token);
-      removeLocalStorage("contentCache");
+      clearEditorContentCache();
       navigate(`/topic/${topicId}`);
     } catch (error) {
       console.log(error);
@@ -410,7 +410,7 @@ export function EditorPage(): React.ReactElement {
       reportApplicationError("CannotPost");
     } else {
       await sendAtNotification(topicId, state.content, token);
-      removeLocalStorage("contentCache");
+      clearEditorContentCache();
       navigate(`/topic/${topicId}`);
     }
   };
@@ -459,7 +459,7 @@ export function EditorPage(): React.ReactElement {
     const pageFloor = floor % 10 === 0 ? 10 : floor % 10;
     const page =
       floor % 10 === 0 ? floor / 10 : (floor - (floor % 10)) / 10 + 1;
-    removeLocalStorage("contentCache");
+    clearEditorContentCache();
     navigate(`/topic/${state.postInfo.topicId}/${page}#${pageFloor}`);
   };
 
@@ -528,7 +528,7 @@ export function EditorPage(): React.ReactElement {
   };
 
   // 旧 render 会读取缓存，即使结果没有参与 JSX。
-  getLocalStorage("contentCache");
+  getEditorContentCache();
   const boardUrl = `/board/${state.boardId}`;
   let editor: React.ReactNode;
   let titleInput: React.ReactNode = null;

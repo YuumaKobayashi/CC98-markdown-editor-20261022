@@ -1,18 +1,12 @@
 import { UserInfo } from "@legacy/States/AppState";
 
 import {
-    getUserInfo as getIndexedDBUserInfo,
-    addUserInfo
-} from "../cache/user-cache";
-
-import {
-    getLocalStorage,
-    setLocalStorage
-} from "@foundation/storage/web-storage";
+    readUserInfoCache,
+    writeUserInfoCache
+} from "../cache/public-user-cache";
 
 import { formAuthorizeHeader } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
-import { shouldUseIndexedDb } from "@foundation/config/platform";
 
 /**
  * 使用用户id查询用户信息
@@ -32,13 +26,8 @@ export async function getUserInfo(key: number | string): Promise<UserInfo> {
     let userInfo: UserInfo;
     try {
         // 在缓存中查询
-        if(shouldUseIndexedDb) {
-            userInfo = await getIndexedDBUserInfo(key);
-            if(userInfo) return userInfo;
-        } else {
-            userInfo = getLocalStorage(typeof key === 'number' ? `userId_${key}`: `userName_${key}`);
-            if(userInfo) return userInfo;
-        }
+        userInfo = await readUserInfoCache(key);
+        if(userInfo) return userInfo;
 
         // api请求
         const url = typeof key === 'number' ? `/user/${key}` : `/user/name/${encodeURIComponent(key)}`;
@@ -47,12 +36,7 @@ export async function getUserInfo(key: number | string): Promise<UserInfo> {
         userInfo = await res.json();
 
         //缓存
-        if(shouldUseIndexedDb) {
-            addUserInfo(userInfo);
-        } else {
-            setLocalStorage(`userId_${userInfo.id}`, userInfo, 3600);
-            setLocalStorage(`userName_${userInfo.name}`, userInfo, 3600);
-        }
+        void writeUserInfoCache(userInfo);
 
         return userInfo;
     } catch(e) {

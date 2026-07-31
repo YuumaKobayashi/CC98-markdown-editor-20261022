@@ -18,14 +18,20 @@ import { getMyInfo } from "@modules/session";
 import { getUserWealth } from "@modules/wealth";
 import { getToken } from "@modules/session";
 import { noticeMessageShow } from "@modules/notification";
-import { uploadEvent } from "@modules/upload";
+import {
+  clearFailedReplyCache,
+  clearLegacyTemporaryContent,
+  clearReplyDraft,
+  getFailedReplyCache,
+  getReplyDraft,
+  setFailedReplyCache,
+  setReplyDraft,
+  uploadEvent,
+} from "@modules/posting";
 import { findIP } from "@modules/moderation";
 import { atHanderler, quoteJudger } from "@foundation/lib/text";
 import {
   getAccessToken,
-  getLocalStorage,
-  removeLocalStorage,
-  setLocalStorage,
 } from "@foundation/storage/web-storage";
 import { sendAtNotification, submitTopicReply } from "../api/service";
 import {
@@ -140,7 +146,7 @@ export const TopicReplyComposer = React.forwardRef(function TopicReplyComposer(
   ref: React.ForwardedRef<TopicReplyComposerHandle>
 ) {
   const initialContent =
-    getLocalStorage<string>("temporaryContent-" + props.topicInfo.id) || "";
+    getReplyDraft(props.topicInfo.id) || "";
   const [state, setState] = React.useState<State>({
     content: initialContent,
     notifyAllReplier: false,
@@ -170,7 +176,6 @@ export const TopicReplyComposer = React.forwardRef(function TopicReplyComposer(
       extensions: [xssFilter],
     });
   }
-  const cacheKey = `post-cache-${props.topicInfo.id}`;
   const setLegacyState = (
     patch:
       | Partial<State>
@@ -236,7 +241,7 @@ export const TopicReplyComposer = React.forwardRef(function TopicReplyComposer(
     } else if ((type = "markdown")) {
       content = stateRef.current.mdeState;
     }
-    setLocalStorage(cacheKey, content);
+    setFailedReplyCache(props.topicInfo.id, content);
     setLegacyState({
       postCache: content,
     });
@@ -244,12 +249,12 @@ export const TopicReplyComposer = React.forwardRef(function TopicReplyComposer(
 
   const getCache = () => {
     setLegacyState({
-      postCache: getLocalStorage(cacheKey),
+      postCache: getFailedReplyCache(props.topicInfo.id),
     });
   };
 
   const cleancache = () => {
-    removeLocalStorage(cacheKey);
+    clearFailedReplyCache(props.topicInfo.id);
     setLegacyState({
       postCache: "",
     });
@@ -349,9 +354,7 @@ export const TopicReplyComposer = React.forwardRef(function TopicReplyComposer(
           await sendAtNotification(topicId, postId, token, atUsers);
         }
 
-        removeLocalStorage(
-          "temporaryContent-" + props.topicInfo.id
-        );
+        clearReplyDraft(props.topicInfo.id);
         setLegacyState({
           buttonDisabled: false,
           buttonInfo: "回复",
@@ -447,7 +450,7 @@ export const TopicReplyComposer = React.forwardRef(function TopicReplyComposer(
           const topicId = props.topicInfo.id;
           await sendAtNotification(topicId, postId, token, atUsers);
         }
-        removeLocalStorage("temporaryContent");
+        clearLegacyTemporaryContent();
         resetNotifyAllReplier();
         props.onChange();
 
@@ -589,19 +592,17 @@ ${nextContent.content}[/quote]
 
     return () => {
       if (stateRef.current.content) {
-        setLocalStorage(
-          "temporaryContent-" + propsRef.current.topicInfo.id,
+        setReplyDraft(
+          propsRef.current.topicInfo.id,
           stateRef.current.content
         );
       } else if (stateRef.current.mdeState) {
-        setLocalStorage(
-          "temporaryContent-" + propsRef.current.topicInfo.id,
+        setReplyDraft(
+          propsRef.current.topicInfo.id,
           stateRef.current.mdeState
         );
       } else {
-        removeLocalStorage(
-          "temporaryContent-" + propsRef.current.topicInfo.id
-        );
+        clearReplyDraft(propsRef.current.topicInfo.id);
       }
       window.onbeforeunload = null;
     };
@@ -918,7 +919,7 @@ ${nextContent.content}[/quote]
       const manageButtonRegion = <div>{manageItems}</div>;
       //缓存按钮
       let cacheButton = null;
-      if (getLocalStorage(cacheKey)) {
+      if (getFailedReplyCache(props.topicInfo.id)) {
         cacheButton = (
           <div>
             <div style={{ display: "flex", justifyContent: "space-between" }}>

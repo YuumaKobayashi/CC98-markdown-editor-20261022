@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { useAppDispatch, useAppSelector } from "@application/store";
 import { getToken, selectCurrentUser } from "@modules/session";
+import { invalidateUserInfoCache } from "@modules/user";
 import { refreshCurrentUserInfo } from "@legacy/AsyncActions/UserCenter";
 import { cc98Fetch } from "@foundation/api/http";
 
@@ -392,8 +393,11 @@ export function UserCenterAvatarSettings() {
         avatarURL: "",
       });
 
-      // 更新成功后重新获取当前用户信息，使全局 store 中的头像同步刷新。
-      dispatch(refreshCurrentUserInfo());
+      // 先失效公共资料缓存，再重新获取当前用户信息并写回最新头像。
+      void invalidateUserInfoCache(userInfo.id, userInfo.name).then(
+        () => dispatch(refreshCurrentUserInfo()),
+        () => dispatch(refreshCurrentUserInfo())
+      );
     } catch {
       patchState({
         info: "修改失败",

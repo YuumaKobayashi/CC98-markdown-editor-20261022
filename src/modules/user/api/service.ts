@@ -1,6 +1,8 @@
-import { removeUserInfo as removeUserInfoInIndexDB } from "../cache/user-cache";
+import {
+  invalidateUserInfoCache,
+  readLocalUserInfoCache,
+} from "../cache/public-user-cache";
 import { getUserInfo } from "./get-user-info";
-import { getLocalStorage, removeLocalStorage } from "@foundation/storage/web-storage";
 import { cc98Fetch } from "@foundation/api/http";
 
 export function getThisUserInfo(userId, usersInfo) {
@@ -105,11 +107,7 @@ export async function getPortraitUrl(userName) {
 }
 
 export async function updateUserInfo(id, name) {
-  const key = `userId_${id}`;
-  const key1 = `userName_${name}`;
-  removeLocalStorage(key);
-  removeLocalStorage(key1);
-  await removeUserInfoInIndexDB(id);
+  await invalidateUserInfoCache(id, name);
   await getUserInfo(id);
 }
 
@@ -118,7 +116,7 @@ export async function getBasicUsersInfo(userIds: number[]) {
   let finalUsersInfo = [];
   //检查本地是否有缓存
   for (let i = 0; i < userIds.length; i++) {
-    let thisUserInfo = getLocalStorage(`userId_${userIds[i]}`);
+    let thisUserInfo = readLocalUserInfoCache(userIds[i]);
     if (thisUserInfo) {
       finalUsersInfo.push(thisUserInfo);
     } else {

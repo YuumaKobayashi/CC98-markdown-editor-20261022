@@ -4,29 +4,19 @@ import moment from "moment";
 import ResignCalendar from "@legacy/Components/ReSignCalendar";
 import { UbbEditor } from "@legacy/Components/UbbEditor";
 import {
+  clearSignedInToday,
   getSigninInfo,
+  markSignedInToday,
   signin,
 } from "@modules/daily-signin";
 import { getGlobalConfig } from "@modules/site-content";
 import { getMyInfo } from "@modules/session";
-import {
-  removeLocalStorage,
-  setLocalStorage,
-} from "@foundation/storage/web-storage";
 
 interface SigninInfo {
   hasSignedInToday?: boolean;
   lastReward?: number;
   lastSignInCount: number;
   lastSignInTime: number;
-}
-
-function getSigninCacheLifetime(): number {
-  return (
-    new Date(new Date().setHours(0, 0, 0, 0)).getTime() +
-    86400000 -
-    new Date().getTime()
-  ) / 1000;
 }
 
 export function DailySigninPage(): React.ReactElement {
@@ -52,11 +42,7 @@ export function DailySigninPage(): React.ReactElement {
     setContent("");
 
     const userInfo = getMyInfo();
-    setLocalStorage(
-      `signin_${userInfo.id}`,
-      true,
-      getSigninCacheLifetime()
-    );
+    markSignedInToday(userInfo.id);
     window.location.reload();
   };
 
@@ -69,11 +55,7 @@ export function DailySigninPage(): React.ReactElement {
 
   if (signinInfo.hasSignedInToday) {
     const userInfo = getMyInfo();
-    setLocalStorage(
-      `signin_${userInfo.id}`,
-      true,
-      getSigninCacheLifetime()
-    );
+    markSignedInToday(userInfo.id);
     info = (
       <div>
         <div className="row" style={{ justifyContent: "center" }}>
@@ -90,7 +72,7 @@ export function DailySigninPage(): React.ReactElement {
     );
   } else {
     const userInfo = getMyInfo();
-    removeLocalStorage(`signin_${userInfo.id}`);
+    clearSignedInToday(userInfo.id);
     info = (
       <div className="column">
         <div className="row">你今天还未签到</div>

@@ -1,7 +1,7 @@
 import * as State from "@legacy/States/AppState";
 import { getUserInfo } from "@modules/user";
 import { getUsersInfo } from "@modules/user";
-import { setLocalStorage, getLocalStorage } from "@foundation/storage/web-storage";
+import { readTagInfoCache, writeTagInfoCache } from "../cache/tag-cache";
 import { getToken, formAuthorizeHeader, isLogOn } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
 import { throwLegacyError } from "@foundation/lib/legacy-utility-effects";
@@ -1019,8 +1019,8 @@ export async function getPostInfo(postId) {
 }
 
 export async function getTagInfo() {
-  if (getLocalStorage("tagInfo")) {
-    return getLocalStorage("tagInfo");
+  if (readTagInfoCache()) {
+    return readTagInfoCache();
   } else {
     return await getNewTagInfo();
   }
@@ -1031,7 +1031,7 @@ export async function getNewTagInfo() {
   const headers = await formAuthorizeHeader();
   const response = await cc98Fetch(url, { headers });
   const data = await response.json();
-  setLocalStorage("tagInfo", data, 600);
+  writeTagInfoCache(data);
   return data;
 }
 

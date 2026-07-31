@@ -2,7 +2,7 @@ import * as React from "react";
 import { Checkbox, Form, Input, Menu, Modal, Select } from "antd";
 import type { FormInstance } from "antd";
 import { SketchPicker } from "react-color";
-import { getBoards } from "@modules/board";
+import { clearInvalidBoardsInfoCache, getBoards } from "@modules/board";
 import {
   addBoardTopTopic,
   cancelBestTopic,
@@ -242,10 +242,7 @@ export function TopicManagementDialog(props: TopicManagementDialogProps) {
 
   React.useEffect(() => {
     const loadBoards = async () => {
-      const previousBoards = localStorage.getItem("boardsInfo");
-      if (previousBoards && previousBoards.indexOf("obj-") !== 0) {
-        localStorage.removeItem("boardsInfo");
-      }
+      clearInvalidBoardsInfoCache();
       const response = await getBoards();
       setBoardsData(response);
     };

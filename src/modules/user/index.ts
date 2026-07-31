@@ -7,6 +7,12 @@ export {
   getUsersInfo as getCachedUsersInfo,
   removeUserInfo,
 } from "./cache/user-cache";
+export {
+  invalidateUserInfoCache,
+  readUserInfoCache,
+  readUsersInfoCache,
+  writeUserInfoCache,
+} from "./cache/public-user-cache";
 export { ConfigSignature } from "./ui/ConfigSignature";
 export { UserProfile } from "./ui/UserProfile";
 export { UserProfileAvatar } from "./ui/profile-avatar";

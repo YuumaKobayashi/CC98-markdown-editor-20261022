@@ -5,6 +5,7 @@ import moment from "moment";
 import { Link } from "react-router";
 
 import { getMyInfo } from "@modules/session";
+import { readRawTagInfoCache } from "@modules/topic";
 import { UbbContainer } from "@legacy/Components/UbbContainer";
 import { UbbCodeOptions } from "@legacy/Ubb/UbbCodeExtension";
 
@@ -114,7 +115,7 @@ export function BoardTopicListItem({
     pager.push(1, 2, 3, 4, -1, totalPage - 2, totalPage - 1, totalPage);
   }
 
-  const tagInfo = JSON.parse(localStorage.getItem("tagInfo").slice(4));
+  const tagInfo = readRawTagInfoCache<any[]>();
   let tag1 = "";
   let tag2 = "";
 

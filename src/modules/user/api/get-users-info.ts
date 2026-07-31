@@ -1,18 +1,12 @@
 import { UserInfo } from "@legacy/States/AppState";
 
 import {
-    getUsersInfo as getIndexedDBUsersInfo,
-    addUserInfo
-} from "../cache/user-cache";
-
-import {
-    getLocalStorage,
-    setLocalStorage
-} from "@foundation/storage/web-storage";
+    readUsersInfoCache,
+    writeUserInfoCache
+} from "../cache/public-user-cache";
 
 import { formAuthorizeHeader } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
-import { shouldUseIndexedDb } from "@foundation/config/platform";
 
 /**
  * 使用用户id批量查询用户信息
@@ -32,11 +26,7 @@ export async function getUsersInfo(keys: (number | string)[]): Promise<UserInfo[
     try {
         // 缓存未命中的项，其值为对应的key，以便进一步通过api查询
         let infos: (UserInfo | number | string)[];
-        if(shouldUseIndexedDb) {
-            infos = (await getIndexedDBUsersInfo(keys)).map((item, index) => (item || keys[index]));
-        } else {
-            infos = keys.map(item => (getLocalStorage(typeof item === 'number' ? `userId_${item}`: `userName_${item}`)) || item);
-        }
+        infos = (await readUsersInfoCache(keys)).map((item, index) => (item || keys[index]));
 
         // 批量查询未命中的项
         let querys = infos.filter(item => (typeof item === 'number' || typeof item === 'string')) as number[] | string[];
@@ -54,12 +44,7 @@ export async function getUsersInfo(keys: (number | string)[]): Promise<UserInfo[
                 let userInfo = queryInfo.shift();
                 // 未命中的项加入缓存
                 if(userInfo){
-                    if(shouldUseIndexedDb) {
-                        addUserInfo(userInfo);
-                    } else {
-                        setLocalStorage(`userId_${userInfo.id}`, userInfo, 3600);
-                        setLocalStorage(`userName_${userInfo.name}`, userInfo, 3600);
-                    }
+                    void writeUserInfoCache(userInfo);
 
                     return userInfo;
                 }

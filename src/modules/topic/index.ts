@@ -1,4 +1,5 @@
 export * from "./api/service";
+export { readRawTagInfoCache } from "./cache/tag-cache";
 export { UserRecentTopicItem } from "./ui/UserRecentTopicItem";
 export { FocusTopicItem } from "./ui/FocusTopicItem";
 export { RecommendedTopicItem } from "./ui/RecommendedTopicItem";

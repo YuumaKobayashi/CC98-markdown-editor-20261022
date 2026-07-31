@@ -8,7 +8,7 @@ import {
   currentUserReceived,
   sessionAuthenticated,
 } from "@modules/session";
-import { addUserInfo } from "@modules/user";
+import { writeUserInfoCache } from "@modules/user";
 import type { RootState } from "./legacy-types";
 import type { AppDispatch } from "./store";
 
@@ -28,7 +28,7 @@ export const startAppListening =
 startAppListening({
   actionCreator: currentUserReceived,
   effect: (action) => {
-    void addUserInfo(action.payload);
+    void writeUserInfoCache(action.payload);
   },
 });
 

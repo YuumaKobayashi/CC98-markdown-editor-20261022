@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { useAppDispatch, useAppSelector } from "@application/store";
-import { ConfigSignature } from "@modules/user";
+import { ConfigSignature, invalidateUserInfoCache } from "@modules/user";
 import { selectCurrentUser } from "@modules/session";
 import { refreshCurrentUserInfo } from "@legacy/AsyncActions/UserCenter";
 import type { ChangeUserInfo } from "@legacy/States/AppState";
@@ -110,8 +110,14 @@ export function UserCenterSettingsPage() {
         throw new Error(response.status.toString());
       }
 
-      // 修改成功后重新拉取当前用户信息，使 store 与服务器保持一致。
-      dispatch(refreshCurrentUserInfo());
+      // 先失效公共资料缓存，再重新拉取当前用户信息并写回最新结果。
+      void invalidateUserInfoCache(
+        currentUserInfo.id,
+        currentUserInfo.name
+      ).then(
+        () => dispatch(refreshCurrentUserInfo()),
+        () => dispatch(refreshCurrentUserInfo())
+      );
       setInfo("修改成功");
       setIsLoading(false);
       setTimeout(() => {
