@@ -1,0 +1,34 @@
+.user-avatar {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .user-avatar-img {
+    width: 10rem;
+    height: 10rem;
+    border-radius: 5rem;
+  }
+
+  .user-badge {
+    margin-top: 2rem;
+    width: 100%;
+    padding-left: 1rem;
+
+    p {
+      display: inline-flex;
+      width: 100%;
+      margin-bottom: 0;
+      margin-top: 0.5rem;
+    }
+
+    a {
+      color: rgb(53, 167, 255);
+      width: 60%;
+    }
+
+    span {
+      width: 40%;
+    }
+  }
+}
