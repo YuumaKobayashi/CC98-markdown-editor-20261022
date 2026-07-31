@@ -3,9 +3,7 @@
 // https://github.com/Microsoft/TypeScript/wiki/JSX
 
 import * as ActionTypes from "../ActionTypes";
-import * as Appstate from "../States/AppState";
 import { RootAction } from "../Store";
-import { getMyInfo } from "@modules/session";
 
 /**
  * 用户中心用Store
@@ -36,44 +34,9 @@ export class UserInfoStore {
    */
   errorMessage: string = "";
   /**
-   * 分页信息是否全部加载完
-   */
-  hasTotal: hasTotal = new hasTotal();
-  /**
-   * 分页信息总数
-   */
-  totalPage = new TotalPage();
-  /**
-   * 当前用户粉丝的用户信息数组
-   */
-  currentUserFansInfo: Appstate.UserInfo[] = [];
-  /**
-   * 当前用户所在的页面
-   */
-  currentUserCenterPage:
-    | "profile"
-    | "config"
-    | "mytopics"
-    | "myposts"
-    | "myfollowings"
-    | "myfans" = "profile";
-  /**
    * 转账成功的用户名数组
    */
   transferSuccessUsers: string[] = [];
-
-  constructor() {
-    const currentUserInfo = getMyInfo() || new Appstate.UserInfo();
-    this.totalPage.myfans = Math.ceil(currentUserInfo.fanCount / 10);
-  }
-}
-
-class hasTotal {
-  myfans: boolean = true;
-}
-
-class TotalPage {
-  myfans: number;
 }
 
 /**
@@ -104,40 +67,6 @@ export default (
       return { ...state, isLoading: false };
     case ActionTypes.USER_CENTER_FETCH_ERROR:
       return { ...state, isError: true, errorMessage: action.payload.message };
-    case ActionTypes.USER_CENTER_PAGE_LOAD_FINISH:
-      return {
-        ...state,
-        hasTotal: {
-          ...state.hasTotal,
-          [state.currentUserCenterPage]: true,
-        },
-        totalPage: {
-          ...state.totalPage,
-          [state.currentUserCenterPage]: action.payload.totalPage,
-        },
-      };
-    case ActionTypes.CHANGE_USER_FANS_INFO:
-      return { ...state, currentUserFansInfo: action.payload.fansInfo };
-    case ActionTypes.CHNAGE_USER_CENTER_PAGE:
-      return { ...state, currentUserCenterPage: action.payload.page };
-    case ActionTypes.USER_CENTER_FOLLOW_USER: {
-      let userFansInfo = state.currentUserFansInfo;
-      let currentUserFansInfo: Appstate.UserInfo[] = userFansInfo.map((item) =>
-        item.id === action.payload.userId
-          ? { ...item, isFollowing: true }
-          : item
-      );
-      return { ...state, currentUserFansInfo };
-    }
-    case ActionTypes.USER_CENTER_UNFOLLOW_USER: {
-      let userFansInfo = state.currentUserFansInfo;
-      let currentUserFansInfo: Appstate.UserInfo[] = userFansInfo.map((item) =>
-        item.id === action.payload.userId
-          ? { ...item, isFollowing: false }
-          : item
-      );
-      return { ...state, currentUserFansInfo };
-    }
     case ActionTypes.USER_CENTER_SOLVE_ERROR:
       return { ...state, errorMessage: "", isError: false };
     case ActionTypes.USER_CENTER_TRANSFER_WEALTH_SUCCESS:

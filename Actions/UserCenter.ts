@@ -1,5 +1,4 @@
 import * as ActionTypes from '../ActionTypes';
-import * as Appstate from '../States/AppState';
 import { createAction } from './ActionCreator';
 
 export const resetUserInfoAfterLogin = createAction(ActionTypes.RESET_USER_INFO_AFTER_LOGIN);
@@ -14,11 +13,6 @@ export const userCenterLoaded = createAction(ActionTypes.USER_CENTER_LOADED);
 
 export const userCenterSolveError = createAction(ActionTypes.USER_CENTER_SOLVE_ERROR);
 
-export const usercenterPageLoadFinish = createAction(ActionTypes.USER_CENTER_PAGE_LOAD_FINISH, (totalPage: number) => ({
-    type: ActionTypes.USER_CENTER_PAGE_LOAD_FINISH,
-    payload: { totalPage }
-}));
-
 export const changeCurrentVisitingUserPage = createAction(ActionTypes.CHANGE_VISITING_USER, (page: 'exact' | 'manage' = 'exact', id: number) => ({
     type: ActionTypes.CHANGE_VISITING_USER,
     payload: {
@@ -30,26 +24,6 @@ export const changeCurrentVisitingUserPage = createAction(ActionTypes.CHANGE_VIS
 export const userCenterError = createAction(ActionTypes.USER_CENTER_FETCH_ERROR, (message: string) => ({
     type: ActionTypes.USER_CENTER_FETCH_ERROR,
     payload: { message }
-}));
-
-export const changeUserFansInfo = createAction(ActionTypes.CHANGE_USER_FANS_INFO, (fansInfo: Appstate.UserInfo[]) => ({
-    type: ActionTypes.CHANGE_USER_FANS_INFO,
-    payload: { fansInfo }
-}));
-
-export const changeUserCenterPage = createAction(ActionTypes.CHNAGE_USER_CENTER_PAGE, (page: 'profile' | 'config' | 'mytopics' |'myposts' | 'myfollowings' | 'myfans') => ({
-    type: ActionTypes.CHNAGE_USER_CENTER_PAGE,
-    payload: { page }
-}));
-
-export const followUser = createAction(ActionTypes.USER_CENTER_FOLLOW_USER, (userId: number) => ({
-    type: ActionTypes.USER_CENTER_FOLLOW_USER,
-    payload: { userId }
-}));
-
-export const unfollowUser = createAction(ActionTypes.USER_CENTER_UNFOLLOW_USER, (userId: number) => ({
-    type: ActionTypes.USER_CENTER_UNFOLLOW_USER,
-    payload: { userId }
 }));
 
 export const userCenterTransferWealthSuccess = createAction(ActionTypes.USER_CENTER_TRANSFER_WEALTH_SUCCESS, (userNames: string[]) => ({

@@ -1,10 +1,9 @@
 import * as React from "react";
 import { useParams } from "react-router";
 
-import { useAppDispatch, useAppSelector } from "@application/store";
-import { UserFollowCard } from "@modules/follow";
-import * as Actions from "@legacy/Actions/UserCenter";
-import { getUserFansInfo } from "@legacy/AsyncActions/UserCenter";
+import { useAppSelector } from "@application/store";
+import { getCurrentUserFans, UserFollowCard } from "@modules/follow";
+import { selectCurrentUser } from "@modules/session";
 import type { UserInfo } from "@legacy/States/AppState";
 import { parseUserCenterPage } from "@application/routes/user-center/model/route-params";
 import { UserCenterPager as Pager } from "@application/routes/user-center/pagination";
@@ -15,30 +14,90 @@ type RouteParams = {
 
 //用户中心我的粉丝组件
 export function MyFans() {
-  const dispatch = useAppDispatch();
   const { page } = useParams<RouteParams>();
   const currentPage = parseUserCenterPage(page);
-  const userFans = useAppSelector((state) => state.userInfo.currentUserFansInfo);
-  const totalPage = useAppSelector((state) => state.userInfo.totalPage.myfans);
-  const isLoading = useAppSelector((state) => state.userInfo.isLoading);
+  const currentUser = useAppSelector(selectCurrentUser);
+  const [userFans, setUserFans] = React.useState<UserInfo[]>([]);
+  const userFansRef = React.useRef<UserInfo[]>([]);
+  const [totalPage, setTotalPage] = React.useState(() =>
+    Math.ceil(currentUser.fanCount / 10),
+  );
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [, setErrorMessage] = React.useState("");
+
+  const loadUserFans = async (nextPage: number) => {
+    setIsLoading(true);
+    setErrorMessage("");
+
+    // 没有粉丝
+    if (currentUser.fanCount === 0) {
+      setIsLoading(false);
+      return;
+    }
+
+    const currentFans = userFansRef.current;
+    // 如果未请求完所有帖子并且帖子总数小于请求的页数
+    // 换言之，当用户向后翻页，或直接通过url定位页数时
+    let shouldLoad = currentFans.length < (nextPage - 1) * 10 + 1;
+    // 当用户向前翻页，且之前的页数中存在未加载过的项
+    if (!shouldLoad) {
+      for (
+        let index = (nextPage - 1) * 10;
+        index < Math.min(nextPage * 10, currentFans.length);
+        index++
+      ) {
+        if (!currentFans[index]) {
+          shouldLoad = true;
+          break;
+        }
+      }
+    }
+
+    if (!shouldLoad) {
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      const fanData = await getCurrentUserFans(nextPage);
+      // 当请求到空数组时，必然是因为用户通过url访问到了越界的长度
+      if (fanData.length === 0) {
+        userFansRef.current = [];
+        setUserFans([]);
+        setTotalPage(0);
+        setIsLoading(false);
+        return;
+      }
+
+      const nextFans = currentFans.slice();
+      fanData.forEach((item, index) => {
+        nextFans[index + (nextPage - 1) * 10] = item;
+      });
+      userFansRef.current = nextFans;
+      setUserFans(nextFans);
+      setIsLoading(false);
+    } catch (error) {
+      setErrorMessage(
+        error instanceof Error ? error.message : String(error),
+      );
+    }
+  };
+
+  const changeFollowingState = (userId: number, isFollowing: boolean) => {
+    const nextFans = userFansRef.current.map((item) =>
+      item.id === userId ? { ...item, isFollowing } : item,
+    );
+    userFansRef.current = nextFans;
+    setUserFans(nextFans);
+  };
 
   React.useEffect(() => {
-    dispatch(Actions.changeUserCenterPage("myfans"));
-  }, [dispatch]);
-
-  React.useEffect(() => {
-    dispatch(getUserFansInfo(currentPage));
-  }, [currentPage, dispatch]);
+    void loadUserFans(currentPage);
+  }, [currentPage]);
 
   React.useEffect(() => {
     window.scroll(0, 0);
   }, [currentPage]);
-
-  const changeFollowingState = (userId: number, isFollowing: boolean) => {
-    dispatch(
-      isFollowing ? Actions.followUser(userId) : Actions.unfollowUser(userId),
-    );
-  };
 
   if (isLoading) {
     return (

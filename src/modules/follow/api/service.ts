@@ -7,6 +7,30 @@ import { getUsersInfo } from "@modules/user";
 import type { UserInfo } from "@legacy/States/AppState";
 
 /**
+ * 获取当前用户的粉丝信息。
+ * @param page 当前页数
+ * @author AsukaSong
+ */
+export async function getCurrentUserFans(
+  page: number,
+): Promise<UserInfo[]> {
+  const headers = await formAuthorizeHeader();
+  const url = `/me/follower?from=${(page - 1) * 10}&size=10`;
+  const response = await cc98Fetch(url, { headers });
+
+  if (response.status !== 200) {
+    throw new Error(response.statusText);
+  }
+
+  const userIds: number[] = await response.json();
+  if (userIds.length === 0) {
+    return [];
+  }
+
+  return await getUsersInfo(userIds);
+}
+
+/**
  * 获取当前用户关注的用户信息。
  * @param page 当前页数
  * @author AsukaSong

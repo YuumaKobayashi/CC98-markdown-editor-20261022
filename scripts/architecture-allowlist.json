@@ -186,7 +186,7 @@
       "from": "src/modules/follow/api/service.ts",
       "specifier": "@legacy/States/AppState",
       "rule": "legacy-dependency",
-      "reason": "S1.4 preserves the existing UserInfo response contract while localizing following request state.",
+      "reason": "S1.4 preserves the existing UserInfo response contract while localizing following and fan request state.",
       "removeWhen": "The User contract migration owns the public UserInfo type."
     },
     {

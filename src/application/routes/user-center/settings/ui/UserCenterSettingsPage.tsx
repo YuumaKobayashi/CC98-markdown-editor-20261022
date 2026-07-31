@@ -3,7 +3,6 @@ import * as React from "react";
 import { useAppDispatch, useAppSelector } from "@application/store";
 import { ConfigSignature } from "@modules/user";
 import { selectCurrentUser } from "@modules/session";
-import * as UserCenterActions from "@legacy/Actions/UserCenter";
 import { refreshCurrentUserInfo } from "@legacy/AsyncActions/UserCenter";
 import type { ChangeUserInfo } from "@legacy/States/AppState";
 import { getToken } from "@modules/session";
@@ -35,11 +34,6 @@ export function UserCenterSettingsPage() {
   const [info, setInfo] = React.useState("");
   // 提交期间禁用按钮，防止重复提交。
   const [isLoading, setIsLoading] = React.useState(false);
-
-  // 告知用户中心外层导航：当前显示的是个人资料设置页。
-  React.useEffect(() => {
-    dispatch(UserCenterActions.changeUserCenterPage("config"));
-  }, [dispatch]);
 
   /** 放弃当前表单修改，重新使用 store 中已保存的用户资料。 */
   const handleReset = () => {
