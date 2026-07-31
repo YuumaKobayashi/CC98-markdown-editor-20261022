@@ -1,6 +1,6 @@
 # CC98 前端目录重构执行计划
 
-> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3 与 S1.4 前五组的代码实施、机械检查和主代理人工代码审核均已完成，A、M 阶段完成，S1 已启动。S1.4 第三、第四、第五组已获用户审批；完整的浏览器、登录、真实 API、权限、SignalR、跨标签与 UBB 运行验收未执行，当前停在粉丝组实施授权前。
+> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3 与 S1.4 六组的代码实施、机械检查和主代理人工代码审核均已完成，A、M 阶段完成，S1 已启动。S1.4 第三至第六组已获用户审批；完整的浏览器、登录、真实 API、权限、SignalR、跨标签与 UBB 运行验收未执行，当前停在 S1.5 实施授权前。
 >
 > 架构依据：`docs/frontend-directory-architecture-inventory.md`。
 >
@@ -48,9 +48,10 @@ S1.4 第二组：收藏主题                       已完成（人工代码审�
 S1.4 第三组：收藏版面                       已完成（用户审批通过；运行验收未执行）
 S1.4 第四组：浏览历史                       已完成（用户审批通过；运行验收未执行）
 S1.4 第五组：关注                           已完成（用户审批通过；资料页缓存缺陷另记；完整运行验收未执行）
+S1.4 第六组：粉丝                           已完成（用户审批通过；完整运行验收未执行）
 ```
 
-### 当前停点：S1.4 第五组已获用户审批；不启动粉丝组
+### 当前停点：S1.4 第六组已获用户审批；不启动 S1.5
 
 ### M3.1–M3.6 实施记录（2026-07-30）
 
@@ -1663,7 +1664,7 @@ modules/notification/model
 
 ### S1.4 用户中心远端数据本地化
 
-状态：前五组“主题与回复”“收藏主题”“收藏版面”“浏览历史”“关注”的代码实施、机械检查和主代理人工代码审核已完成，第三、第四、第五组已获用户审批；完整的浏览器、登录与真实 API 运行验收未执行，当前停在粉丝组实施授权前。
+状态：六组“主题与回复”“收藏主题”“收藏版面”“浏览历史”“关注”“粉丝”的代码实施、机械检查和主代理人工代码审核已完成，第三至第六组已获用户审批；完整的浏览器、登录与真实 API 运行验收未执行，当前停在 S1.5 实施授权前。
 
 第一组实施结果：
 
@@ -1701,6 +1702,13 @@ modules/notification/model
 - UserFollowCard 已改为成功后通过回调通知列表 owner，不再依赖 Application Store 或 legacy User Center action；MyFans 仅增加兼容回调，继续由 legacy Redux 持有粉丝列表，粉丝组未实施；legacy GetUserFollowingsInfo thunk、barrel 导出、关注专用 action、ActionType、reducer 数据字段和 `totalPage.myfollowings` 已删除，粉丝组仍需的共享 loading/error、currentUserCenterPage、粉丝数据及 follow/unfollow action 保留；
 - 已登记既有缺陷：User Module 的 LocalStorage/IndexedDB 用户缓存会保存与当前登录者相关且可变的 `isFollowing`，UserFollowCard 与公开资料页关注/取关成功后均未失效该缓存，因而跨 Route 访问或刷新 `/user/id/:id` 时可能在最长 3600 秒内显示旧关注状态；该问题在第五组前已存在，本批不顺手修复，后续单独处理缓存失效与资料页强制刷新；
 - `npm run check:architecture` 通过（298 个源码文件、1206 个 import、28 条有条件 allowlist），modern/legacy typecheck、正式 build（3990 modules transformed）、`git diff --check`、BOM/换行/EOF、尾随空白与替换字符检查均通过；受限环境首次 build 因 `spawn EPERM` 失败，按原命令在允许子进程的环境重跑成功，构建只有既有 Sass、Lightning CSS 与 chunk-size 警告；用户已在知悉上述缺陷的前提下批准第五组。
+
+第六组实施结果：
+
+- Follow Module 根入口已公开 `getCurrentUserFans`，保持 `/me/follower?from=(page-1)*10&size=10`、授权头、仅接受 HTTP 200、非 200 `statusText` 错误，以及先取得用户 ID 再按原顺序通过 User Module 批量解析 `UserInfo` 的行为；粉丝列表沿用每页 10 条与 Session `fanCount` 总页数，不引入 11 条探测；
+- MyFans 已本地持有粉丝用户稀疏分页缓存、总页数和 loading/error；保持零粉丝不请求、前后翻页仅补取缺失页、重新进入 Route 后重新请求、深链越界空响应清空列表并将总页数置零、失败后 spinner、滚顶、DOM/CSS、文案与分页链接；关注/取关成功只更新本地匹配用户，不删除卡片或调整 Session 计数；
+- legacy GetUserFansInfo thunk、barrel 导出、粉丝专用 action、ActionType、reducer 数据与分页字段、follow/unfollow action 及 `currentUserCenterPage` 已删除；设置页不再写入已无消费者的旧 tab 状态，S1.5 转账和公开用户资料页仍使用的共享 loading/error、访问状态与转账状态均保留；第五组登记的 `isFollowing` 缓存失效缺陷继续保留，本组不修复缓存、不增加请求取消；
+- `npm run check:architecture` 通过（298 个源码文件、1204 个 import、28 条有条件 allowlist），modern/legacy typecheck、正式 build（3987 modules transformed）、`git diff --check`、BOM/换行/EOF、尾随空白与替换字符检查均通过；受限环境首次 build 因 `spawn EPERM` 失败，按原命令在允许子进程的环境重跑成功，构建只有既有 Sass、Lightning CSS 与 chunk-size 警告；主代理已完成整批代码审核，浏览器、登录、真实 API、深链、分页与关注/取关运行验收未执行；用户已在知悉上述边界的前提下批准第六组。
 
 用户中心各子页分别拥有自己的数据、分页、完成状态和 loading/error，不建立汇总所有子页状态的 `UserCenterLayout` Route Context；当前 tab 与页码从 URL 派生，不再由 Redux 记录 `currentUserCenterPage`。
 
@@ -1870,7 +1878,7 @@ User Center
 - Redux 终态采用 Session 与 Notification unread 两个业务 slice；Application Error 退出 Redux；
 - 采用严格保真迁移，已知缺陷单独登记；
 - AnnualReview、UBB、公开 URL、API wire shape、DOM/CSS、Storage 键/TTL 和 `.vscode/` 不进入 S1 修改范围；
-- S1.1–S1.3 与 S1.4 前五组已按单独授权完成代码与机械检查，第三、第四、第五组已获用户审批；未经授权不启动粉丝组。
+- S1.1–S1.3 与 S1.4 六组已按单独授权完成代码与机械检查，S1.4 第三至第六组已获用户审批；未经授权不启动 S1.5。
 
 ## 16. C1：样式与主题归位
 
@@ -2107,7 +2115,7 @@ R1  增加架构检查脚本                            已完成
 - 检查脚本结果；
 - 无业务行为变化证明。
 
-骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3 与 S1.4 前五组均已完成代码实施、机械检查和主代理人工代码审核，A、M 阶段完成，S1 已启动。S1.4 第三、第四、第五组已获用户审批；完整的浏览器、登录、真实 API、权限、SignalR、跨标签与 UBB 运行验收未执行，旧 `/list` 仍仅适用既有免检结论。当前停在粉丝组实施授权前。
+骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3 与 S1.4 六组均已完成代码实施、机械检查和主代理人工代码审核，A、M 阶段完成，S1 已启动。S1.4 第三至第六组已获用户审批；完整的浏览器、登录、真实 API、权限、SignalR、跨标签与 UBB 运行验收未执行，旧 `/list` 仍仅适用既有免检结论。当前停在 S1.5 实施授权前。
 
 ## 22. 已确认决策与后续边界
 
@@ -2124,7 +2132,7 @@ R1  增加架构检查脚本                            已完成
 
 后续仍需单独授权或审核：
 
-1. S1.1–S1.3 与 S1.4 前五组尚未执行的完整浏览器、登录与真实 API 运行验收，以及 S1.4 粉丝组至 S1.7 状态与缓存归位的代码实施授权和每批人工验收；
+1. S1.1–S1.3 与 S1.4 六组尚未执行的完整浏览器、登录与真实 API 运行验收，以及 S1.5–S1.7 状态与缓存归位的代码实施授权和每批人工验收；
 2. A2.3–A2.11 与 M3.1–M3.6 尚未执行的浏览器、登录、真实 API、权限、分页、SignalR、通知权限、上传、编辑器、缓存与 UBB 运行验收；
 3. 旧 `/list` 免检边界是否继续保留；
 4. AnnualReview 与 UBB 是否继续冻结。
