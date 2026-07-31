@@ -3,6 +3,7 @@ import { getMyInfo } from "@modules/session";
 import { setStorage, getStorage, setLocalStorage, getLocalStorage } from "@foundation/storage/web-storage";
 import { getToken, formAuthorizeHeader } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
+import type { UserFavoritesBoardInfo } from "@legacy/States/AppState";
 
 /*
  * 根据boardId返回boardName
@@ -76,6 +77,29 @@ export async function getBoards() {
   } else {
     return boards;
   }
+}
+
+/**
+ * 获取当前用户收藏的版面信息。
+ * @author AsukaSong
+ */
+export async function getCurrentUserFavoriteBoards(
+  boardIds: readonly number[],
+): Promise<UserFavoritesBoardInfo[]> {
+  if (boardIds.length === 0) {
+    return [];
+  }
+
+  const query = boardIds.join("&id=");
+  const url = `/board/?id=${query}`;
+  const headers = await formAuthorizeHeader();
+  const response = await cc98Fetch(url, { headers });
+
+  if (response.status !== 200) {
+    throw new Error(response.statusText);
+  }
+
+  return await response.json();
 }
 
 export async function getBoardId(boardName: string) {

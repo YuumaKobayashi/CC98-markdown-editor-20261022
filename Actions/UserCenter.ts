@@ -32,11 +32,6 @@ export const userCenterError = createAction(ActionTypes.USER_CENTER_FETCH_ERROR,
     payload: { message }
 }));
 
-export const changeUserFavoriteBoards = createAction(ActionTypes.CHANGE_USER_FAVORITE_BOARDS, (boardsInfo: Appstate.UserFavoritesBoardInfo[]) => ({
-    type: ActionTypes.CHANGE_USER_FAVORITE_BOARDS,
-    payload: { boardsInfo }
-}));
-
 export const changeUserHistoryPosts = createAction(ActionTypes.CHANGE_USER_HISTORY_POSTS, (posts: Appstate.UserRecentTopic[]) => ({
     type: ActionTypes.CHANGE_USER_HISTORY_POSTS,
     payload: { posts }
@@ -52,7 +47,7 @@ export const changeUserFollowingsInfo = createAction(ActionTypes.CHANGE_USER_FOL
     payload: { followingsInfo }
 }));
 
-export const changeUserCenterPage = createAction(ActionTypes.CHNAGE_USER_CENTER_PAGE, (page: 'profile' | 'config' | 'mytopics' |'myposts' | 'myfavoriteboards' | 'myfollowings' | 'myfans' | 'myhistory') => ({
+export const changeUserCenterPage = createAction(ActionTypes.CHNAGE_USER_CENTER_PAGE, (page: 'profile' | 'config' | 'mytopics' |'myposts' | 'myfollowings' | 'myfans' | 'myhistory') => ({
     type: ActionTypes.CHNAGE_USER_CENTER_PAGE,
     payload: { page }
 }));

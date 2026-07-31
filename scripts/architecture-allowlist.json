@@ -64,6 +64,13 @@
       "removeWhen": "The UBB module migration provides its public compatibility-mode contract."
     },
     {
+      "from": "src/modules/board/api/service.ts",
+      "specifier": "@legacy/States/AppState",
+      "rule": "legacy-dependency",
+      "reason": "S1.4 preserves the existing UserFavoritesBoardInfo response contract while localizing favorite-board request state.",
+      "removeWhen": "The Board contract migration owns UserFavoritesBoardInfo."
+    },
+    {
       "from": "src/modules/favorite-topic/api/service.ts",
       "specifier": "@legacy/States/AppState",
       "rule": "legacy-dependency",

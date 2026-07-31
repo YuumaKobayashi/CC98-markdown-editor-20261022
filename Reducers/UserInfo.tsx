@@ -44,10 +44,6 @@ export class UserInfoStore {
    */
   errorMessage: string = "";
   /**
-   * 当前用户收藏的版面
-   */
-  currentUserFavoriteBoards: Appstate.UserFavoritesBoardInfo[] = [];
-  /**
    * 分页信息是否全部加载完
    */
   hasTotal: hasTotal = new hasTotal();
@@ -71,7 +67,6 @@ export class UserInfoStore {
     | "config"
     | "mytopics"
     | "myposts"
-    | "myfavoriteboards"
     | "myfollowings"
     | "myhistory"
     | "myfans" = "profile";
@@ -129,8 +124,6 @@ export default (
       return { ...state, isLoading: false };
     case ActionTypes.USER_CENTER_FETCH_ERROR:
       return { ...state, isError: true, errorMessage: action.payload.message };
-    case ActionTypes.CHANGE_USER_FAVORITE_BOARDS:
-      return { ...state, currentUserFavoriteBoards: action.payload.boardsInfo };
     case ActionTypes.USER_CENTER_PAGE_LOAD_FINISH:
       return {
         ...state,

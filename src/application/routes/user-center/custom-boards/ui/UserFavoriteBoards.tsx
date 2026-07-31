@@ -1,8 +1,8 @@
 import * as React from "react";
 
-import { useAppDispatch, useAppSelector } from "@application/store";
-import * as Actions from "@legacy/Actions/UserCenter";
-import { getCurrentUserFavoriteBoards } from "@legacy/AsyncActions/UserCenter";
+import { useAppSelector } from "@application/store";
+import { getCurrentUserFavoriteBoards } from "@modules/board";
+import { selectCurrentUser } from "@modules/session";
 import type { UserFavoritesBoardInfo } from "@legacy/States/AppState";
 import { UserFavoriteBoardCard } from "./UserFavoriteBoardCard";
 
@@ -10,23 +10,36 @@ import { UserFavoriteBoardCard } from "./UserFavoriteBoardCard";
  * 用户关注的版面信息
  */
 export function UserFavoriteBoards() {
-  const dispatch = useAppDispatch();
-  const boards = useAppSelector(
-    (state) => state.userInfo.currentUserFavoriteBoards,
+  const currentBoardIds = useAppSelector(
+    (state) => selectCurrentUser(state).customBoards,
   );
-  const isLoading = useAppSelector((state) => state.userInfo.isLoading);
+  const [boards, setBoards] = React.useState<UserFavoritesBoardInfo[]>([]);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [, setErrorMessage] = React.useState("");
   const emptyStyle: React.CSSProperties = {
     marginTop: "2rem",
     textAlign: "center",
   };
 
   React.useEffect(() => {
-    dispatch(getCurrentUserFavoriteBoards());
-  }, [dispatch]);
+    const loadFavoriteBoards = async () => {
+      setIsLoading(true);
+      setErrorMessage("");
 
-  React.useEffect(() => {
-    dispatch(Actions.changeUserCenterPage("myfavoriteboards"));
-  }, [dispatch]);
+      try {
+        const boardsInfo =
+          await getCurrentUserFavoriteBoards(currentBoardIds);
+        setBoards(boardsInfo);
+        setIsLoading(false);
+      } catch (error) {
+        setErrorMessage(
+          error instanceof Error ? error.message : String(error),
+        );
+      }
+    };
+
+    void loadFavoriteBoards();
+  }, []);
 
   if (isLoading) {
     return (
