@@ -1,6 +1,6 @@
 # CC98 前端目录重构执行计划
 
-> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1 的代码实施、机械检查和主代理人工代码审核均已完成，A、M 阶段及 S1 代码实施完成。S1.4 第三至第六组、S1.5、S1.6 与 S1.7 已获用户审批并完成本地提交；完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账、缓存、草稿、UBB 与 C1.1 样式运行验收未执行，当前停在 C1.1 用户人工验收与提交授权前。
+> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1–C1.3 的代码实施、机械检查和主代理人工代码审核均已完成，A、M 阶段及 S1 代码实施完成。C1.3 已获用户审批并完成本地提交；跨 Route 兼容选择器及后续真实 CSS Modules/CSS 自定义属性改造已登记到后续批次。完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账、缓存、草稿、UBB 与 C1 样式运行验收未执行，当前停在 C1.3 提交后，不自动启动 C1.4。
 >
 > 架构依据：`docs/frontend-directory-architecture-inventory.md`。
 >
@@ -54,9 +54,12 @@ S1.6 缓存与草稿归位                         已完成（用户审批通�
 S1.7 Redux 闭包                            已完成（用户审批通过；完整运行验收未执行）
 C1.1 Foundation 样式                       已完成（主代理逐文件审核通过；浏览器运行验收未执行）
 C1.2 业务组件样式                           已完成（主代理逐文件审核通过；浏览器运行验收未执行）
+C1.3 页面样式                               已完成（用户审批通过；浏览器运行验收未执行）
+C1.4 主题                                   待单独授权
+C1.5 样式作用域与目录收口                    待单独授权
 ```
 
-### 当前停点：C1.2 已完成人工审核与本地提交；浏览器运行验收未执行，不自动启动 C1.3
+### 当前停点：C1.3 已完成人工审核与本地提交；浏览器运行验收未执行，不自动启动 C1.4
 
 ### M3.1–M3.6 实施记录（2026-07-30）
 
@@ -2023,8 +2026,58 @@ dev20260716  123437fc  docs(c1.1): record foundation style split
 
 ```text
 application/routes/home/*.module.scss
+application/routes/editor/*.module.scss
+application/routes/topic/*.module.scss
+application/routes/board/*.module.scss
+application/routes/board-list/*.module.scss
+application/routes/legacy-board-list/*.module.scss
+application/routes/message-center/*.module.scss
+application/routes/focus/*.module.scss
+application/routes/new-topics/*.module.scss
+application/routes/search/*.module.scss
+application/routes/login/*.module.scss
+application/routes/daily-signin/*.module.scss
 application/routes/user-center/*.module.scss
+application/routes/user-profile/*.module.scss
 ```
+
+#### C1.3 实施记录（2026-07-31）
+
+实施基线：
+
+```text
+dev20260716  f55447fb  docs(c1.2): record module style relocation
+```
+
+实施范围：
+
+- 将 `Site.scss`、`MainPage.scss` 与 `UserCenter.scss` 中具有明确 Route owner 的连续页面规则迁入 14 个 Route 目录下的 34 个 `.module.scss` partial；文件后缀只表达 owner，仍由主题入口通过 Sass `@import` 编译为原全局选择器；
+- Home 与 Site Management 共用的公告预览归 Home；Recommended Topics、Search 与 Topic Hot 复用的 Focus 页面骨架保持由 Focus owner 提供；User Center 与 User Profile 共用的页面壳保留在 User Center，公开资料管理规则单独归 User Profile；
+- 每个 partial 都在原级联位置替换为导入；`TopicAwardInfo`、`UserProfileAvatar`、`UserProfile`、`ConfigSignature` 等 C1.2 partial 仅修正相对路径，未改变嵌套位置、specificity 或编译次数；
+- 根 `Styles/UserCenter.scss` 已完全归位并删除；`Styles/MainPage.scss` 继续保留 Application Shell、PWA 与 UBB 共用规则。`Site.scss` 继续保留 Foundation 通用规则、跨 Route 工具类、Shell/Footer、UBB/React MDE/React Bootstrap 兼容样式和未进入 Application Router 的 Annual Review 规则；复核后已将被误放入 New Topics partial 的跨 Route `.displaynone` 放回 `Site.scss` 原级联位置；
+- Route owner 复核后，`#listRoot` 已从 Topic 归入 Legacy Board Root，`boardMessage`/`boardFollow`/`boardDescription`/`boardMasters`/`bigPaper` 等 Legacy Board Header 规则已从 Topic Management 归入 Legacy Board，`chooseTag`/`tagNumber` 已从 Legacy Board 归入当前 Board，`followTopic` 已从 Legacy Board 归入 Topic Header；新增 partial 仍由 `Site.scss` 在原规则位置交错导入，未改变展开后的选择器顺序；
+- 后续复核发现 `.board-head-information`、`.tagSize`、`.timeProp` 与 `#changeColor` 存在跨 Route 消费，`.listContentBottom`、`.boardRecordBtn`、`#disliked` 与 `.tagColumn` 存在错归属；这些规则已临时提升到 `foundation/styles/route-compatibility` 全局兼容区，由原 Route partial 在原级联位置导入，等待 DOM/className 语义改名后再归回真实 owner；
+- TSX、DOM、`className`、Router、组件接口、主题变量、静态 URL、29 个主题入口与 `.vscode/` 均未修改。
+
+保真与机械证据：
+
+- 将 34 个 Route partial 及 7 个全局兼容 partial 按导入点反向展开并还原必要的相对路径后，`Site.scss`、`MainPage.scss`、`UserCenter.scss` 与实施基线文本分别完全一致；
+- 基线与最终构建的 `dist/static/content` 共 35 个文件逐项同名、等长且 SHA-256 完全一致，29 个主题与 vendor CSS 生成输出零漂移；
+- owner 纠正前后再次比较 `dist/static/content` 全部 76 个文件的相对路径、长度和 SHA-256 清单，聚合 SHA-256 均为 `123DC97DE7395A3D825CDB5F811CF8683EBA2A6495832EE35DA2D1B9C68CB1F8`，正式产物零漂移；
+- 第一项复核纠正前后重新比较 `dist/static/content` 共 35 个文件的相对路径、长度和 SHA-256，逐项完全一致；全局兼容提升未改变任何生成 CSS；
+- `Site.scss` 与 `MainPage.scss` 保留原 UTF-8 BOM、行尾和 EOF 合同；`UserCenter.module.scss` 保留原 UTF-8 BOM、1 个既有 bare LF、其余 CRLF 和无 EOF 换行；`TopicManagement.module.scss` 保留从原位置带入的 2 个 bare LF，其余新 partial 使用无 BOM 的 CRLF 与 EOF 换行；
+- `npm run check:architecture`：通过，305 个源码文件、1193 个 import、28 个既有 allowlist 违规；
+- `npm run typecheck`：modern 与 legacy 均通过；
+- `npm run build`：通过，3986 modules transformed；沙箱内仍因既知 `spawn EPERM` 失败，在允许子进程的环境原样重跑成功；
+- 提交前重新运行 `npm run check:architecture` 与 modern/legacy typecheck 均通过；正式 build 首次在沙箱内因既知 `spawn EPERM` 失败，在允许子进程的环境原命令重跑成功，3986 modules transformed；
+- tracked `git diff --check` 通过；暂存全部新增 partial 后，`git diff --cached --check` 仅报告从原规则块保留的末尾空行和 `MessageCenter` 三处历史注释尾随空格，按反向展开文本保真要求保留并登记，不涉及活动 CSS；构建仍只有既有 Sass `@import`、Spectrum/Lightning CSS 和 chunk-size 警告。
+
+人工检查与停点：
+
+- 主代理已完成整批样式、导入闭包、Route/Module owner 与全局兼容边界复核；跨 Route/错归属选择器已提升到全局兼容区，级联位置和编译次数保持不变，休眠样式、语义命名和真实 CSS Modules 作用域转换明确延期，不阻塞本轮纯归位提交；
+- 后续语义改名清单：`.board-head-information` 拆为 Board 与 User Profile/User Center 名称；`.tagSize`、`.timeProp` 拆为 Topic Header/Topic Award 与 Legacy Board 元数据名称；`#changeColor` 拆为当前 Board moderation row 与 Legacy Board topic row class；`.listContentBottom`、`.boardRecordBtn`、`#disliked`、`.tagColumn` 改为 Legacy Board 专属语义名称。`.topicManageBTN`、`.findIP` 与 `.IPContent` 仍留待废弃样式审计；
+- 默认/暗色主题下的 Home、Topic、Board、Message、Focus/New Topics、Search、Editor、User Center/User Profile、Login 与 Signin 浏览器运行验收未执行；
+- 用户于 2026-08-01 在知悉后续语义改名、真实 CSS Modules/CSS 自定义属性改造和浏览器运行验收边界后批准本批；C1.3 代码已本地提交为 `22f7ed79`，未 push，不自动启动 C1.4。
 
 ### C1.4 主题
 
@@ -2036,6 +2089,56 @@ foundation/theme/themes
 ```
 
 29 个现有主题入口和生成文件名合同必须保持。
+
+### C1.5 样式作用域与目录收口
+
+C1.1–C1.4 先完成样式 owner 归位和主题合同整理；C1.5 再统一目录与作用域语义。当前“按 owner 分散存放、由主题入口统一编译”的结构可作为保真迁移的过渡态，但不是最终样式架构：Route 与 Module 下的 `*.module.scss` 仍由 `Site.scss` 通过 Sass `@import` 汇总为全局选择器，文件后缀只表达 owner，并不具备 CSS Modules 隔离；同一页面的样式仍可能分布在 owner partial、`Site.scss`、根 `Styles/`、兼容区与 TSX 内联 `style` 中。
+
+#### C1.5 终态目录
+
+```text
+src/foundation/styles/
+  reset/                  全局 reset 与 restore
+  base/                   document、body、root 与全局基础规则
+  vendors/                Ant Design、Spectrum 等第三方兼容
+  variables/ 或 tokens/   全局 Sass 变量与主题 token
+  compatibility/          经清单确认必须跨 owner 的临时兼容规则
+
+src/application/routes/<route>/
+  <Route>.tsx
+  <Route>.module.scss      仅由该 Route 拥有的页面样式
+
+src/modules/<module>/ui/<component>/
+  <Component>.tsx
+  <Component>.module.scss  仅由该业务组件拥有的样式
+```
+
+根 `Styles/` 不作为终态 owner；其 Application Shell、PWA、UBB、Vote 与其他遗留规则必须分别归入 `application`、对应业务 Module、UBB owner 或明确的 Foundation 全局边界。该目录的最终删除仍与 Z 阶段的根目录 legacy 源码闭包协调，不在 C1.5 未完成 owner/consumer 审计前机械删除。
+
+#### C1.5 归属与作用域规则
+
+- 仅由一个组件消费的规则与组件共置；仅由一个 Route 消费的页面骨架与 Route 共置；跨多个 Route 复用的业务样式归对应 Module，不因“共用”直接进入 Foundation；
+- 只有 reset、主题 token、文档根规则、第三方覆盖和经 consumer map 证明必须全局的兼容规则可以进入 `foundation/styles`；`Site.scss` 终态只承担这些全局入口和主题聚合，不继续吸收业务选择器；
+- `*.module.scss` 必须具有真实 CSS Modules 语义，由 TSX 显式导入并通过 `styles.<name>` 消费；尚未完成转换、仍依赖全局 className 或 Sass 聚合的文件使用普通 `.scss`/partial 命名，不以 `.module.scss` 冒充作用域隔离；
+- 随主题切换的颜色、背景、边框、阴影和图片 token 由每个主题入口从既有 Sass 变量输出为全局 `--cc98-*` CSS 自定义属性，真实 CSS Modules 通过 `var(--cc98-*)` 消费；断点、固定间距、z-index 与 mixin 等非主题编译期 token 可通过 Sass `@use` 显式引入。CSS Modules 只隔离类名，不复制 29 份组件样式，也不依赖主题入口的隐式 Sass 变量作用域；
+- TSX 内联 `style` 只保留运行时计算值、用户内容样式或无法静态表达的尺寸/位置/背景；固定颜色、间距、布局与排版规则迁回真实 owner 的样式文件；UBB 用户可控样式和 Annual Review 冻结边界须单独审计，不机械改写；
+- `foundation/styles/compatibility` 中每项必须记录 owner、consumer、存在原因和删除条件；完成 DOM/className 语义拆分后归回真实 owner，禁止成为新的长期杂物区；
+- 不新增第二套 CSS-in-JS、Tailwind 或其他样式体系；如确需引入，必须另立方案并证明对主题、SSR/首屏、构建产物和 CSP 的影响。
+
+#### C1.5 实施顺序
+
+1. 建立活动样式清单、owner map 与 consumer map，覆盖 Sass import、TS/TSX import、动态 className、UBB 输出、模板静态 CSS、第三方覆盖、图片/字体 URL 和内联 style；
+2. 收口根 `Styles/` 与 `Site.scss` 中仍有明确 owner 的规则，但保持 29 个主题入口、变量求值位置、导入次数、级联顺序和生成文件名不变；
+3. 先为新组件和低耦合叶子组件采用真实 CSS Modules，再按 Route/Module 小批转换旧的全局 className；不得一次性转换整个站点；
+4. 每批清理已失去 consumer 的兼容规则、重复选择器和可静态化的内联 style，并同步收紧架构检查，禁止新增根 `Styles/` 文件、伪 CSS Modules 和无登记的 Foundation 业务规则；
+5. 完成全仓零引用、目录闭包和浏览器视觉验收后，再删除空目录与过渡入口；不得仅凭 typecheck 或 build 判定样式迁移完成。
+
+#### C1.5 保真、验收与停点
+
+- 每个小批必须保持公开 URL、DOM 语义、交互、权限、Storage、UBB 输出和主题 key/id/顺序不变；确需修改 className 时，必须在同批完成生产者、全部消费者、测试/脚本和兼容选择器闭包；
+- 运行 `npm run check:architecture`、modern/legacy typecheck、正式 build 与 `git diff --check`，并比较全部主题及 vendor CSS 的文件清单、长度和 SHA-256；纯归位批要求生成 CSS 零漂移，作用域转换批必须逐项说明预期差异；
+- 至少人工验收默认/暗色主题下的 Shell、Home、Board、Topic、Message、Search、Editor、User Center/User Profile、Login、Signin、Ant Design、Spectrum、UBB 与 Annual Review；响应式断点、hover/focus/disabled、弹层 z-index 和打印/降级页面按实际 consumer 覆盖；
+- C1.5 不与组件迁址、业务逻辑重写或主题视觉重设计混做；每个小批经主代理逐文件审核后停止，等待用户人工验收和单独提交授权，不自动进入下一批或 Z。
 
 ## 17. Z：根目录 legacy 浏览器源码收口
 
@@ -2376,7 +2479,7 @@ R1  增加架构检查脚本                            已完成
 - 检查脚本结果；
 - 无业务行为变化证明。
 
-骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1 均已完成代码实施、机械检查和主代理人工代码审核，A、M 阶段及 S1 代码实施完成。S1.4 第三至第六组、S1.5、S1.6 与 S1.7 已获用户审批并完成本地提交；完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账、缓存、草稿、UBB 与 C1.1 样式运行验收未执行，旧 `/list` 仍仅适用既有免检结论。当前停在 C1.1 用户人工验收与提交授权前。
+骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1–C1.3 均已完成代码实施、机械检查和主代理人工代码审核，A、M 阶段及 S1 代码实施完成。C1.3 已获用户审批并完成本地提交，跨 Route 兼容选择器、后续语义改名与真实 CSS Modules/CSS 自定义属性改造已登记；完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账、缓存、草稿、UBB 与 C1 样式运行验收未执行，旧 `/list` 仍仅适用既有免检结论。当前停在 C1.3 提交后，不自动启动 C1.4。
 
 ## 22. 已确认决策与后续边界
 
@@ -2399,7 +2502,7 @@ R1  增加架构检查脚本                            已完成
 
 后续仍需单独授权或审核：
 
-1. S1.1–S1.3、S1.4 六组、S1.5、S1.6 与 S1.7 尚未执行的完整浏览器、登录、真实 API、SignalR、跨标签、缓存与草稿运行验收，C1.1 的浏览器样式验收与提交授权，以及 C1.2–C1.4 和后续每个 Z 子批的代码实施授权；
+1. S1.1–S1.3、S1.4 六组、S1.5、S1.6 与 S1.7 尚未执行的完整浏览器、登录、真实 API、SignalR、跨标签、缓存与草稿运行验收，C1.1–C1.3 的浏览器样式验收，以及 C1.4、C1.5 和后续每个 Z 子批的代码实施授权；
 2. 当前 `useUserProfileContext` 接口及 UserProfileLayout 集中取数边界是否随资料缓存归位或 Redux 闭包再次调整；
 3. A2.3–A2.11 与 M3.1–M3.6 尚未执行的浏览器、登录、真实 API、权限、分页、SignalR、通知权限、上传、编辑器、缓存与 UBB 运行验收；
 4. 旧 `/list` 免检边界是否继续保留；在另行确认前，Z 只删除根 facade，不删除该公开 Route；
