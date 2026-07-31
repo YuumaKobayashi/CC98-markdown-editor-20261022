@@ -16,10 +16,10 @@ import {
 } from "@modules/user-preference";
 import {
   logOut,
+  refreshCurrentUserInfo,
   selectCurrentUser,
   selectIsLogOn,
 } from "@modules/session";
-import { refreshCurrentUserInfo } from "@legacy/AsyncActions/UserCenter";
 import {
   getLocalStorage,
   setLocalStorage,
@@ -50,7 +50,7 @@ function UserMenu() {
     }
 
     if (isLoggedOn && !getLocalStorage("shouldNotRefreshUserInfo")) {
-      void dispatch(refreshCurrentUserInfo() as any);
+      void dispatch(refreshCurrentUserInfo());
       setLocalStorage("shouldNotRefreshUserInfo", true, 86400);
     }
   }, [dispatch]);

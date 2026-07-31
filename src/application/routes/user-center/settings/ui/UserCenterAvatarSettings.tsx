@@ -1,9 +1,12 @@
 import * as React from "react";
 
 import { useAppDispatch, useAppSelector } from "@application/store";
-import { getToken, selectCurrentUser } from "@modules/session";
+import {
+  getToken,
+  refreshCurrentUserInfo,
+  selectCurrentUser,
+} from "@modules/session";
 import { invalidateUserInfoCache } from "@modules/user";
-import { refreshCurrentUserInfo } from "@legacy/AsyncActions/UserCenter";
 import { cc98Fetch } from "@foundation/api/http";
 
 //TODO：逻辑独立与优化

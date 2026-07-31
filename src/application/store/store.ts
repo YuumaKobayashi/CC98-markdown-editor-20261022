@@ -1,40 +1,25 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { combineReducers } from "redux";
 
-import * as UserActions from "@legacy/Actions/UserCenter";
-import userInfo from "@legacy/Reducers/UserInfo";
+import { registerLegacyUtilityEffects } from "@application/compatibility/register-utility-effects";
 import { notificationReducer } from "@modules/notification";
 import { sessionReducer } from "@modules/session";
 
-import type { RootState } from "./legacy-types";
 import { listenerMiddleware } from "./listener-middleware";
 
-export const Actions = {
-  ...UserActions,
-};
-
-const rootReducer = combineReducers<RootState>({
-  userInfo,
-  notification: notificationReducer,
-  session: sessionReducer,
-});
-
 export const store = configureStore({
-  reducer: rootReducer,
+  reducer: {
+    notification: notificationReducer,
+    session: sessionReducer,
+  },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      // Legacy thunks mutate objects returned by getState(). P09 records but
-      // intentionally does not repair that behavior.
-      immutableCheck: false,
-      // Legacy state contains class instances and router state. Domain phases
-      // will establish serializable state contracts incrementally.
-      serializableCheck: false,
-    })
-      .prepend(listenerMiddleware.middleware),
+    getDefaultMiddleware().prepend(listenerMiddleware.middleware),
   devTools: true,
 });
 
-export type AppStore = typeof store;
+export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+
+// Utility 的命令式兼容端口由唯一 Store 装配点注入，不再自行导入 Store。
+registerLegacyUtilityEffects(store.dispatch, store.getState);
 
 export default store;

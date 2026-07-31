@@ -12,11 +12,11 @@ import {
   UserRecentTopicItem as Topic,
 } from "@modules/topic";
 import {
+  refreshCurrentUserInfo,
   selectCurrentUser,
   setBrowsingHistoryEnabled,
   updateCurrentUser,
 } from "@modules/session";
-import { refreshCurrentUserInfo } from "@legacy/AsyncActions/UserCenter";
 import type { UserRecentTopic } from "@legacy/States/AppState";
 import { UserCenterPager as Pager } from "@application/routes/user-center/pagination";
 

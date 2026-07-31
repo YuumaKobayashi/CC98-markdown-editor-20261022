@@ -1,7 +1,12 @@
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import type { AnyAction } from "redux";
+import type { ThunkDispatch } from "redux-thunk";
 
-import { selectIsLogOn } from "@modules/session";
+import {
+  selectIsLogOn,
+  type SessionState,
+} from "@modules/session";
 import { CC98SignalR } from "../signalr";
 import { setLocalStorage } from "@foundation/storage/web-storage";
 import {
@@ -21,13 +26,29 @@ const messageEvents = [
 const parseStoredMessageCount = (value: string): UnreadCount =>
   JSON.parse(value.slice(4)) as UnreadCount;
 
+interface NotificationControllerRootState {
+  notification: UnreadCount;
+  session: SessionState;
+}
+
+type NotificationControllerDispatch = ThunkDispatch<
+  NotificationControllerRootState,
+  void,
+  AnyAction
+>;
+
 export function NotificationController() {
-  const dispatch = useDispatch();
-  const isLoggedOn = useSelector(selectIsLogOn);
-  const messageCount = useSelector(selectUnreadCount);
+  const dispatch = useDispatch<NotificationControllerDispatch>();
+  const isLoggedOn = useSelector<NotificationControllerRootState, boolean>(
+    selectIsLogOn
+  );
+  const messageCount = useSelector<
+    NotificationControllerRootState,
+    UnreadCount
+  >(selectUnreadCount);
 
   const handleNotifyMessageReceive = React.useCallback(() => {
-    void dispatch(refreshUnreadCount() as any);
+    void dispatch(refreshUnreadCount());
 
     if (
       typeof Notification !== "undefined" &&
@@ -64,7 +85,7 @@ export function NotificationController() {
     }
 
     let isActive = true;
-    void dispatch(refreshUnreadCount() as any);
+    void dispatch(refreshUnreadCount());
 
     const startConnection = async () => {
       await CC98SignalR.start();

@@ -1,10 +1,12 @@
 import * as React from "react";
 
 import { useAppDispatch, useAppSelector } from "@application/store";
-import { selectCurrentUser } from "@modules/session";
+import {
+  refreshCurrentUserInfo,
+  selectCurrentUser,
+} from "@modules/session";
 import { UserProfile } from "@modules/user";
 import { UserProfileAvatar } from "@modules/user";
-import { refreshCurrentUserInfo } from "@legacy/AsyncActions/UserCenter";
 
 import { UserRecentActivities } from "./UserRecentActivities";
 

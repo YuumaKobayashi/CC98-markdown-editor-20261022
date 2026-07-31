@@ -8,7 +8,6 @@ import "blueimp-canvas-to-blob";
 import { initWatermark } from "spatial-watermark";
 
 import { createAppRoot } from "@application/providers/create-app-root";
-import { registerLegacyUtilityEffects } from "@application/compatibility/register-utility-effects";
 import { Constants } from "@foundation/config/runtime-config";
 import { IndexedDB } from "@foundation/storage/indexed-db";
 import { shouldUseIndexedDb } from "@foundation/config/platform";
@@ -49,7 +48,6 @@ export function addTimerCallback(callback: () => void) {
  * 项目初始化代码
  */
 async function initialize() {
-  registerLegacyUtilityEffects();
   await Constants.loadConfig();
   if (shouldUseIndexedDb) await IndexedDB.start();
 

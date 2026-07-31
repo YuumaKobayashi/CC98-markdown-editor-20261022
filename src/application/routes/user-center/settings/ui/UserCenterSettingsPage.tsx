@@ -2,8 +2,10 @@ import * as React from "react";
 
 import { useAppDispatch, useAppSelector } from "@application/store";
 import { ConfigSignature, invalidateUserInfoCache } from "@modules/user";
-import { selectCurrentUser } from "@modules/session";
-import { refreshCurrentUserInfo } from "@legacy/AsyncActions/UserCenter";
+import {
+  refreshCurrentUserInfo,
+  selectCurrentUser,
+} from "@modules/session";
 import type { ChangeUserInfo } from "@legacy/States/AppState";
 import { getToken } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";

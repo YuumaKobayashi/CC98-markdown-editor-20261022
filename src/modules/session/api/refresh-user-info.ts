@@ -43,3 +43,17 @@ export function refreshCurrentUser(
     return currentUser;
   };
 }
+
+/**
+ * 保留旧 refreshCurrentUserInfo 的页面调用合同。刷新失败时旧 thunk 只写入
+ * 已无人读取的 userInfo 错误状态；S1.7 删除该状态后继续静默结束。
+ */
+export function refreshCurrentUserInfo() {
+  return async (dispatch: Dispatch): Promise<CurrentUser | undefined> => {
+    try {
+      return (await dispatch(refreshCurrentUser() as any)) as CurrentUser;
+    } catch {
+      return undefined;
+    }
+  };
+}
