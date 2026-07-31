@@ -28,10 +28,6 @@ export class UserInfoStore {
    */
   currentVisitingUserIsExisted: boolean = true;
   /**
-   * 用户最近发过的主题
-   */
-  recentTopics: Appstate.UserRecentTopic[] = [];
-  /**
    *  用户我的足迹的主题
    */
   currentMyHistoryTopics: Appstate.UserRecentTopic[] = [];
@@ -39,14 +35,6 @@ export class UserInfoStore {
    * 用户是否启用我的足迹
    */
   browsingHistoryEnabled: boolean = false;
-  /**
-   * 用户最近发过的回复
-   */
-  recentPosts: Appstate.UserRecentPost[] = [];
-  /**
-   * 用户的热门回复
-   */
-  hotPosts: Appstate.UserRecentPost[] = [];
   /**
    * 用户中心是否加载出错
    */
@@ -107,19 +95,13 @@ export class UserInfoStore {
 }
 
 class hasTotal {
-  profile: boolean = false;
-  mytopics: boolean = false;
   myhistory: boolean = true;
-  myposts: boolean = true;
   myfavoriteposts: boolean = false;
   myfollowings: boolean = true;
   myfans: boolean = true;
 }
 
 class TotalPage {
-  profile: number = 1;
-  mytopics: number = 1;
-  myposts: number = 1;
   myhistory: number;
   myfavoriteposts: number = 1;
   myfollowings: number;
@@ -156,61 +138,18 @@ export default (
       return { ...state, isError: true, errorMessage: action.payload.message };
     case ActionTypes.CHANGE_USER_FAVORITE_BOARDS:
       return { ...state, currentUserFavoriteBoards: action.payload.boardsInfo };
-    case ActionTypes.CHANGE_USER_RECENT_TOPICS:
-      return { ...state, recentTopics: action.payload.posts };
-    case ActionTypes.CHANGE_USER_RECENT_POSTS:
-      const newTotalPage = JSON.parse(JSON.stringify(state.totalPage));
-      newTotalPage.myposts = action.payload.total;
+    case ActionTypes.USER_CENTER_PAGE_LOAD_FINISH:
       return {
         ...state,
-        recentPosts: action.payload.posts,
-        totalPage: newTotalPage,
+        hasTotal: {
+          ...state.hasTotal,
+          [state.currentUserCenterPage]: true,
+        },
+        totalPage: {
+          ...state.totalPage,
+          [state.currentUserCenterPage]: action.payload.totalPage,
+        },
       };
-    case ActionTypes.CHANGE_USER_HOT_POSTS:
-      return { ...state, hotPosts: action.payload.posts };
-    case ActionTypes.USER_CENTER_PAGE_LOAD_FINISH:
-      switch (state.currentUserCenterPage) {
-        case "profile":
-        case "myposts":
-          return {
-            ...state,
-            hasTotal: { ...state.hasTotal, profile: true, myposts: true },
-            totalPage: {
-              ...state.totalPage,
-              profile: action.payload.totalPage,
-              myposts: action.payload.totalPage,
-            },
-          };
-        default:
-          return {
-            ...state,
-            hasTotal: {
-              ...state.hasTotal,
-              [state.currentUserCenterPage]: true,
-            },
-            totalPage: {
-              ...state.totalPage,
-              [state.currentUserCenterPage]: action.payload.totalPage,
-            },
-          };
-      }
-    case ActionTypes.USER_CENTER_PAGE_LOAD_UNFINISH:
-      switch (state.currentUserCenterPage) {
-        case "profile":
-        case "myposts":
-          return {
-            ...state,
-            hasTotal: { ...state.hasTotal, profile: false, myposts: false },
-          };
-        default:
-          return {
-            ...state,
-            hasTotal: {
-              ...state.hasTotal,
-              [state.currentUserCenterPage]: false,
-            },
-          };
-      }
     case ActionTypes.CHANGE_USER_FANS_INFO:
       return { ...state, currentUserFansInfo: action.payload.fansInfo };
     case ActionTypes.CHANGE_USER_FOLLOWINGS_INFO:

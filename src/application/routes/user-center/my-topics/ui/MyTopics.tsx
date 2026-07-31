@@ -5,10 +5,10 @@
 import * as React from "react";
 import { useParams } from "react-router";
 
-import { useAppDispatch, useAppSelector } from "@application/store";
-import { UserRecentTopicItem as Topic } from "@modules/topic";
-import * as Actions from "@legacy/Actions/UserCenter";
-import { getRecentTopics } from "@legacy/AsyncActions/UserCenter";
+import {
+  getCurrentUserRecentTopics,
+  UserRecentTopicItem as Topic,
+} from "@modules/topic";
 import type { UserRecentTopic } from "@legacy/States/AppState";
 import { parseUserCenterPage } from "@application/routes/user-center/model/route-params";
 import { UserCenterPager as Pager } from "@application/routes/user-center/pagination";
@@ -21,27 +21,61 @@ type RouteParams = {
  * 用户中心我的主题组件
  */
 export function MyTopics() {
-  const dispatch = useAppDispatch();
   const { page } = useParams<RouteParams>();
   const currentPage = parseUserCenterPage(page);
-  const userRecentTopics = useAppSelector(
-    (state) => state.userInfo.recentTopics
-  );
-  const totalPage = useAppSelector(
-    (state) => state.userInfo.totalPage.mytopics
-  );
-  const hasTotal = useAppSelector(
-    (state) => state.userInfo.hasTotal.mytopics
-  );
-  const isLoading = useAppSelector((state) => state.userInfo.isLoading);
+  const [userRecentTopics, setUserRecentTopics] = React.useState<
+    UserRecentTopic[]
+  >([]);
+  const [totalPage, setTotalPage] = React.useState(1);
+  const [hasTotal, setHasTotal] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [, setErrorMessage] = React.useState("");
 
   React.useEffect(() => {
-    dispatch(Actions.changeUserCenterPage("mytopics"));
-  }, [dispatch]);
+    const pageStart = (currentPage - 1) * 10;
+    let shouldLoad =
+      userRecentTopics.length < pageStart + 1 && !hasTotal;
 
-  React.useEffect(() => {
-    dispatch(getRecentTopics(currentPage));
-  }, [currentPage, dispatch]);
+    for (
+      let index = pageStart;
+      index < Math.min(userRecentTopics.length, currentPage * 10);
+      index += 1
+    ) {
+      if (!userRecentTopics[index]) {
+        shouldLoad = true;
+        break;
+      }
+    }
+
+    if (!shouldLoad) {
+      return;
+    }
+
+    const loadPage = async () => {
+      setIsLoading(true);
+      setErrorMessage("");
+
+      try {
+        const result = await getCurrentUserRecentTopics(currentPage);
+        setUserRecentTopics((currentTopics) => {
+          const nextTopics = [...currentTopics];
+          result.topics.forEach((topic, index) => {
+            nextTopics[pageStart + index] = topic;
+          });
+          return nextTopics;
+        });
+        if (!result.hasMore) {
+          setHasTotal(true);
+          setTotalPage(currentPage);
+        }
+        setIsLoading(false);
+      } catch (error) {
+        setErrorMessage(error instanceof Error ? error.message : String(error));
+      }
+    };
+
+    void loadPage();
+  }, [currentPage]);
 
   React.useEffect(() => {
     window.scroll(0, 0);

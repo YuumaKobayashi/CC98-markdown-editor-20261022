@@ -1353,3 +1353,39 @@ export async function getRandomTopic(size: number) {
     //throwLegacyError('Disconnected');
   }
 }
+
+export interface CurrentUserRecentTopicPage {
+  topics: State.UserRecentTopic[];
+  hasMore: boolean;
+}
+
+/**
+ * 获取当前用户最近发表的主题。
+ * 接口通过多请求一条来探测是否还有下一页，页面仍只展示前 10 条。
+ * @param page 当前页数
+ * @author AsukaSong
+ */
+export async function getCurrentUserRecentTopics(
+  page: number,
+): Promise<CurrentUserRecentTopicPage> {
+  console.log("请求最近发过的主题");
+  const headers = await formAuthorizeHeader();
+  const response = await cc98Fetch(
+    `/me/recent-topic?from=${(page - 1) * 10}&size=11`,
+    { headers },
+  );
+
+  if (response.status !== 200) {
+    throw new Error(response.statusText);
+  }
+
+  const result: State.UserRecentTopic[] = await response.json();
+  const hasMore = result.length === 11;
+  const topics = hasMore ? result.slice(0, 10) : result;
+
+  for (let index = topics.length; index--;) {
+    topics[index].boardName = await getBoardName(topics[index].boardId);
+  }
+
+  return { topics, hasMore };
+}

@@ -6,10 +6,10 @@ import * as React from "react";
 import { Button } from "antd";
 import { useNavigate, useParams } from "react-router";
 
-import { useAppDispatch, useAppSelector } from "@application/store";
-import { UserRecentPostItem as Post } from "@modules/post";
-import * as Actions from "@legacy/Actions/UserCenter";
-import { getRecentPosts } from "@legacy/AsyncActions/UserCenter";
+import {
+  getCurrentUserRecentPosts,
+  UserRecentPostItem as Post,
+} from "@modules/post";
 import type { UserRecentPost } from "@legacy/States/AppState";
 import {
   parseUserCenterIsHot,
@@ -26,29 +26,45 @@ type RouteParams = {
  * 用户中心我的主题组件
  */
 export function MyPosts() {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { page, ishot } = useParams<RouteParams>();
   const currentPage = parseUserCenterPage(page);
   const isHot = parseUserCenterIsHot(ishot);
-  const userRecentPosts = useAppSelector(
-    (state) => state.userInfo.recentPosts
-  );
-  const totalPage = useAppSelector(
-    (state) => state.userInfo.totalPage.myposts
-  );
-  const hasTotal = useAppSelector(
-    (state) => state.userInfo.hasTotal.myposts
-  );
-  const isLoading = useAppSelector((state) => state.userInfo.isLoading);
+  const [userRecentPosts, setUserRecentPosts] = React.useState<
+    UserRecentPost[]
+  >([]);
+  const [totalPage, setTotalPage] = React.useState(1);
+  const [hasTotal, setHasTotal] = React.useState(true);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [, setErrorMessage] = React.useState("");
 
   React.useEffect(() => {
-    dispatch(Actions.changeUserCenterPage("myposts"));
-  }, [dispatch]);
+    const loadPage = async () => {
+      setIsLoading(true);
+      setErrorMessage("");
 
-  React.useEffect(() => {
-    dispatch(getRecentPosts(currentPage, isHot));
-  }, [currentPage, dispatch, isHot]);
+      try {
+        const result = await getCurrentUserRecentPosts(currentPage, isHot);
+        setUserRecentPosts((currentPosts) => {
+          const nextPosts = [...currentPosts];
+          const pageStart = (currentPage - 1) * 10;
+          result.posts.forEach((post, index) => {
+            nextPosts[pageStart + index] = post;
+          });
+          return nextPosts;
+        });
+        setTotalPage(result.totalPage);
+        if (!result.hasMore) {
+          setHasTotal(true);
+        }
+        setIsLoading(false);
+      } catch (error) {
+        setErrorMessage(error instanceof Error ? error.message : String(error));
+      }
+    };
+
+    void loadPage();
+  }, [currentPage, isHot]);
 
   React.useEffect(() => {
     window.scroll(0, 0);

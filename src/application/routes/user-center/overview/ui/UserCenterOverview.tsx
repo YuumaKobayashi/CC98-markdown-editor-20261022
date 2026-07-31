@@ -4,7 +4,6 @@ import { useAppDispatch, useAppSelector } from "@application/store";
 import { selectCurrentUser } from "@modules/session";
 import { UserProfile } from "@modules/user";
 import { UserProfileAvatar } from "@modules/user";
-import * as Actions from "@legacy/Actions/UserCenter";
 import { refreshCurrentUserInfo } from "@legacy/AsyncActions/UserCenter";
 
 import { UserRecentActivities } from "./UserRecentActivities";
@@ -15,11 +14,6 @@ import { UserRecentActivities } from "./UserRecentActivities";
 export function UserCenterOverview() {
   const dispatch = useAppDispatch();
   const userInfo = useAppSelector(selectCurrentUser);
-
-  //组件加载时更新store与缓存中的状态
-  React.useEffect(() => {
-    dispatch(Actions.changeUserCenterPage("profile"));
-  }, [dispatch]);
 
   React.useEffect(() => {
     dispatch(refreshCurrentUserInfo());

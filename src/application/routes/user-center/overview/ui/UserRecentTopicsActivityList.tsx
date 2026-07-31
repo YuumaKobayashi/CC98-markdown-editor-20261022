@@ -4,54 +4,63 @@
 
 import * as React from "react";
 
-import { useAppDispatch, useAppSelector } from "@application/store";
-import { UserRecentTopicItem as Topic } from "@modules/topic";
-import * as Actions from "@legacy/Actions/UserCenter";
-import { getRecentTopics } from "@legacy/AsyncActions/UserCenter";
+import {
+  getCurrentUserRecentTopics,
+  UserRecentTopicItem as Topic,
+} from "@modules/topic";
 import type { UserRecentTopic } from "@legacy/States/AppState";
 
 //用户中心主页帖子动态组件
 export function UserRecentTopicsActivityList() {
-  const dispatch = useAppDispatch();
-  const userRecentTopics = useAppSelector(
-    (state) => state.userInfo.recentTopics
-  );
-  const hasTotal = useAppSelector(
-    (state) => state.userInfo.hasTotal.mytopics
-  );
-  const isLoading = useAppSelector((state) => state.userInfo.isLoading);
+  const [userRecentTopics, setUserRecentTopics] = React.useState<
+    UserRecentTopic[]
+  >([]);
+  const [hasTotal, setHasTotal] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [, setErrorMessage] = React.useState("");
   /**
    * 滚动没有分页信息，用自定义页数替代
    */
   const nextPageRef = React.useRef(1);
   const isLoadingRef = React.useRef(isLoading);
   isLoadingRef.current = isLoading;
-  let hasInvalidTopic = false;
-  for (let i = 0; i < userRecentTopics.length; i++) {
-    if (!userRecentTopics[i]) {
-      hasInvalidTopic = true;
-      break;
-    }
-  }
-  const shouldLoad = !hasTotal || hasInvalidTopic;
+  const shouldLoad = !hasTotal;
 
-  React.useEffect(() => {
-    let shouldLoadInitialPage = !hasTotal;
-    for (let i = 0; i < userRecentTopics.length; i++) {
-      if (!userRecentTopics[i]) {
-        dispatch(Actions.changeUserRecentTopics([]));
-        dispatch(Actions.usercenterPageLoadUnfinish());
-        shouldLoadInitialPage = true;
-        break;
-      }
+  const loadPage = React.useCallback(async (page: number) => {
+    if (isLoadingRef.current) {
+      return;
     }
-    if (shouldLoadInitialPage) {
-      /**
-       * 每次读取页数时给page加一
-       */
-      dispatch(getRecentTopics(nextPageRef.current++));
+
+    isLoadingRef.current = true;
+    setIsLoading(true);
+    setErrorMessage("");
+
+    try {
+      const result = await getCurrentUserRecentTopics(page);
+      setUserRecentTopics((currentTopics) => {
+        const nextTopics = [...currentTopics];
+        const pageStart = (page - 1) * 10;
+        result.topics.forEach((topic, index) => {
+          nextTopics[pageStart + index] = topic;
+        });
+        return nextTopics;
+      });
+      if (!result.hasMore) {
+        setHasTotal(true);
+      }
+      isLoadingRef.current = false;
+      setIsLoading(false);
+    } catch (error) {
+      setErrorMessage(error instanceof Error ? error.message : String(error));
     }
   }, []);
+
+  React.useEffect(() => {
+    /**
+     * 每次读取页数时给page加一
+     */
+    void loadPage(nextPageRef.current++);
+  }, [loadPage]);
 
   React.useEffect(() => {
     if (!shouldLoad) return;
@@ -60,7 +69,7 @@ export function UserRecentTopicsActivityList() {
       const pageYLeft = document.body.scrollHeight - window.pageYOffset;
 
       if (pageYLeft < 1500 && isLoadingRef.current === false) {
-        dispatch(getRecentTopics(nextPageRef.current++));
+        void loadPage(nextPageRef.current++);
       }
     };
 
@@ -68,7 +77,7 @@ export function UserRecentTopicsActivityList() {
     return () => {
       window.removeEventListener("scroll", scrollHandler);
     };
-  }, [dispatch, shouldLoad]);
+  }, [loadPage, shouldLoad]);
 
   if (userRecentTopics.length === 0 && hasTotal) {
     return (

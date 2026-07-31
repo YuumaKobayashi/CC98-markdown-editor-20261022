@@ -3,115 +3,110 @@
 // https://github.com/Microsoft/TypeScript/wiki/JSX
 
 import * as React from "react";
-import { UserRecentPostItem as Post } from "@modules/post";
-import { UserRecentPost } from "../../States/AppState";
-import * as Utility from "../../Utility";
-import { connect } from "react-redux";
-import { getRecentPosts } from "../../AsyncActions/UserCenter";
-import * as Actions from "../../Actions/UserCenter";
-import { RootState } from "../../Store";
-
-interface Props {
-  userRecentPosts: UserRecentPost[];
-  isLoading: boolean;
-  hasTotal: boolean;
-  getInfo: (page: number) => void;
-  clearPosts: () => void;
-}
+import {
+  getCurrentUserRecentPosts,
+  UserRecentPostItem as Post,
+} from "@modules/post";
+import type { UserRecentPost } from "../../States/AppState";
 
 //用户中心主页帖子动态组件
-class Activities extends React.Component<Props> {
+function ExactActivitiesPosts() {
+  const [userRecentPosts, setUserRecentPosts] = React.useState<
+    UserRecentPost[]
+  >([]);
+  const [hasTotal, setHasTotal] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [, setErrorMessage] = React.useState("");
   /**
    * 滚动没有分页信息，用自定义页数替代
    */
-  _page = 1;
-  /**
-   * 每次读取页数时给page加一
-   */
-  get page() {
-    return this._page++;
-  }
+  const nextPageRef = React.useRef(1);
+  const isLoadingRef = React.useRef(isLoading);
+  isLoadingRef.current = isLoading;
 
-  scrollHandler = async (e) => {
-    let pageYLeft = document.body.scrollHeight - window.pageYOffset;
-
-    if (pageYLeft < 1500 && this.props.isLoading === false) {
-      this.props.getInfo(this.page);
+  const loadPage = React.useCallback(async (page: number) => {
+    if (isLoadingRef.current) {
+      return;
     }
-  };
 
-  componentWillMount() {
-    let shouldLoad = !this.props.hasTotal;
-    for (let i = 0; i < this.props.userRecentPosts.length; i++) {
-      if (!this.props.userRecentPosts[i]) {
-        this.props.clearPosts();
-        shouldLoad = true;
-        break;
+    isLoadingRef.current = true;
+    setIsLoading(true);
+    setErrorMessage("");
+
+    try {
+      // 原组件调用旧 thunk 时未传 ishot，实际请求 hot-post。
+      const result = await getCurrentUserRecentPosts(page, 1);
+      setUserRecentPosts((currentPosts) => {
+        const nextPosts = [...currentPosts];
+        const pageStart = (page - 1) * 10;
+        result.posts.forEach((post, index) => {
+          nextPosts[pageStart + index] = post;
+        });
+        return nextPosts;
+      });
+      if (!result.hasMore) {
+        setHasTotal(true);
       }
+      isLoadingRef.current = false;
+      setIsLoading(false);
+    } catch (error) {
+      setErrorMessage(error instanceof Error ? error.message : String(error));
     }
-    if (shouldLoad) {
-      this.props.getInfo(this.page);
-      window.addEventListener("scroll", this.scrollHandler);
-    }
-  }
-  componentWillUnmount() {
-    window.removeEventListener("scroll", this.scrollHandler);
-  }
+  }, []);
 
-  componentWillReceiveProps(newProps: Props) {
-    if (newProps.hasTotal) {
-      window.removeEventListener("scroll", this.scrollHandler);
-    }
-  }
+  React.useEffect(() => {
+    /**
+     * 每次读取页数时给page加一
+     */
+    void loadPage(nextPageRef.current++);
+  }, [loadPage]);
 
-  render() {
-    if (this.props.userRecentPosts.length === 0 && this.props.hasTotal) {
-      return (
-        <div className="user-posts" style={{ marginLeft: "2rem" }}>
-          没有回复
-        </div>
-      );
+  React.useEffect(() => {
+    if (hasTotal) {
+      return;
     }
 
-    //state转换为JSX
-    const userRecentPosts = this.props.userRecentPosts.map((item) => (
-      <Post key={item.id} userRecentPost={item} />
-    ));
-    //添加分隔线
-    for (let i = 1; i < userRecentPosts.length; i += 2) {
-      userRecentPosts.splice(i, 0, <hr key={i} />);
-    }
+    const scrollHandler = () => {
+      const pageYLeft = document.body.scrollHeight - window.pageYOffset;
+
+      if (pageYLeft < 1500 && isLoadingRef.current === false) {
+        void loadPage(nextPageRef.current++);
+      }
+    };
+
+    window.addEventListener("scroll", scrollHandler);
+    return () => {
+      window.removeEventListener("scroll", scrollHandler);
+    };
+  }, [hasTotal, loadPage]);
+
+  if (userRecentPosts.length === 0 && hasTotal) {
     return (
-      <div className="user-posts">
-        {userRecentPosts}
-        {this.props.isLoading ? (
-          <div className="user-center-loading">
-            <p className="fa fa-spinner fa-pulse fa-2x fa-fw"></p>
-          </div>
-        ) : null}
+      <div className="user-posts" style={{ marginLeft: "2rem" }}>
+        没有回复
       </div>
     );
   }
+
+  //state转换为JSX
+  const postItems = userRecentPosts.map((item) => (
+    <Post key={item.id} userRecentPost={item} />
+  ));
+  //添加分隔线
+  for (let i = 1; i < postItems.length; i += 2) {
+    postItems.splice(i, 0, <hr key={i} />);
+  }
+
+  return (
+    <div className="user-posts">
+      {postItems}
+      {isLoading ? (
+        <div className="user-center-loading">
+          <p className="fa fa-spinner fa-pulse fa-2x fa-fw"></p>
+        </div>
+      ) : null}
+    </div>
+  );
 }
 
-function mapState(store: RootState) {
-  return {
-    userRecentPosts: store.userInfo.recentPosts,
-    hasTotal: store.userInfo.hasTotal.myposts,
-    isLoading: store.userInfo.isLoading,
-  };
-}
-
-function mapDispatch(dispatch) {
-  return {
-    getInfo: (page: number) => {
-      dispatch(getRecentPosts(page));
-    },
-    clearPosts: () => {
-      dispatch(Actions.changeUserRecentPosts({ posts: [], total: 0 }));
-      dispatch(Actions.usercenterPageLoadUnfinish());
-    },
-  };
-}
-
-export default connect(mapState, mapDispatch)(Activities);
+export default ExactActivitiesPosts;

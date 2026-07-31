@@ -64,6 +64,13 @@
       "removeWhen": "The UBB module migration provides its public compatibility-mode contract."
     },
     {
+      "from": "src/modules/post/api/service.ts",
+      "specifier": "@legacy/States/AppState",
+      "rule": "legacy-dependency",
+      "reason": "S1.4 preserves the existing UserRecentPost response contract while localizing user-center request state.",
+      "removeWhen": "The Post or user-activity contract migration owns UserRecentPost."
+    },
+    {
       "from": "src/modules/post/ui/UserRecentPostItem.tsx",
       "specifier": "@legacy/States/AppState",
       "rule": "legacy-dependency",

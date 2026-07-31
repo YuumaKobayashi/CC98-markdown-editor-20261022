@@ -4,8 +4,6 @@ import { createAction } from './ActionCreator';
 
 export const resetUserInfoAfterLogin = createAction(ActionTypes.RESET_USER_INFO_AFTER_LOGIN);
 
-export const usercenterPageLoadUnfinish = createAction(ActionTypes.USER_CENTER_PAGE_LOAD_UNFINISH);
-
 export const userNotFound = createAction(ActionTypes.USER_NOT_FOUND);
 
 export const userLookupStarted = createAction(ActionTypes.USER_LOOKUP_STARTED);
@@ -39,28 +37,9 @@ export const changeUserFavoriteBoards = createAction(ActionTypes.CHANGE_USER_FAV
     payload: { boardsInfo }
 }));
 
-export const changeUserRecentTopics = createAction(ActionTypes.CHANGE_USER_RECENT_TOPICS, (posts: Appstate.UserRecentTopic[]) => ({
-    type: ActionTypes.CHANGE_USER_RECENT_TOPICS,
-    payload: { posts }
-}));
 export const changeUserHistoryPosts = createAction(ActionTypes.CHANGE_USER_HISTORY_POSTS, (posts: Appstate.UserRecentTopic[]) => ({
     type: ActionTypes.CHANGE_USER_HISTORY_POSTS,
     payload: { posts }
-}));
-
-interface PostsAndTotal {
-    posts: Appstate.UserRecentPost[]
-    total: number
-}
-
-export const changeUserRecentPosts = createAction(ActionTypes.CHANGE_USER_RECENT_POSTS, (postsAndTotal: PostsAndTotal) => ({
-    type: ActionTypes.CHANGE_USER_RECENT_POSTS,
-    payload:  postsAndTotal 
-}));
-
-export const changeUserHotPosts = createAction(ActionTypes.CHANGE_USER_HOT_POSTS, (postsAndTotal: PostsAndTotal) => ({
-    type: ActionTypes.CHANGE_USER_HOT_POSTS,
-    payload:  postsAndTotal 
 }));
 
 export const changeUserFavoritePosts = createAction(ActionTypes.CHANGE_USER_FAVORITE_POSTS, (posts: Appstate.UserRecentTopic[]) => ({
