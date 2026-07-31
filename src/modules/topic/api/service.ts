@@ -1389,3 +1389,57 @@ export async function getCurrentUserRecentTopics(
 
   return { topics, hasMore };
 }
+
+interface CurrentUserBrowsingHistoryResponse {
+  data?: State.UserRecentTopic[] | null;
+  count?: number;
+}
+
+export interface CurrentUserBrowsingHistoryPage {
+  topics: State.UserRecentTopic[];
+  totalPage?: number;
+}
+
+/**
+ * 获取当前用户的主题浏览历史。
+ * 接口请求 11 条记录，页面仍只展示前 10 条。
+ * @param page 当前页数
+ * @author XSYangtuo
+ */
+export async function getCurrentUserBrowsingHistory(
+  page: number,
+): Promise<CurrentUserBrowsingHistoryPage> {
+  console.log("getHistoryPosts", page, true);
+  const from = (page - 1) * 10;
+  const headers = await formAuthorizeHeader();
+  const response = await cc98Fetch(
+    `/me/browsing-record?from=${from}&size=11`,
+    { headers },
+  );
+
+  if (response.status === 403) {
+    alert("你刷新的太快啦！可以晚些刷新");
+  }
+  if (response.status !== 200) {
+    throw new Error(response.statusText);
+  }
+
+  const result =
+    (await response.json()) as CurrentUserBrowsingHistoryResponse | null;
+  const topics = result?.data;
+
+  if (!topics || topics.length === 0) {
+    console.log("no posts");
+    return { topics: [] };
+  }
+
+  if (topics.length !== 11) {
+    console.log("total loaded");
+    return { topics, totalPage: page };
+  }
+
+  return {
+    topics,
+    totalPage: Math.ceil((result?.count as number) / 10) || page + 1,
+  };
+}

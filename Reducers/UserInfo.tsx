@@ -28,14 +28,6 @@ export class UserInfoStore {
    */
   currentVisitingUserIsExisted: boolean = true;
   /**
-   *  用户我的足迹的主题
-   */
-  currentMyHistoryTopics: Appstate.UserRecentTopic[] = [];
-  /**
-   * 用户是否启用我的足迹
-   */
-  browsingHistoryEnabled: boolean = false;
-  /**
    * 用户中心是否加载出错
    */
   isError: boolean = false;
@@ -68,7 +60,6 @@ export class UserInfoStore {
     | "mytopics"
     | "myposts"
     | "myfollowings"
-    | "myhistory"
     | "myfans" = "profile";
   /**
    * 转账成功的用户名数组
@@ -85,13 +76,11 @@ export class UserInfoStore {
 }
 
 class hasTotal {
-  myhistory: boolean = true;
   myfollowings: boolean = true;
   myfans: boolean = true;
 }
 
 class TotalPage {
-  myhistory: number;
   myfollowings: number;
   myfans: number;
 }

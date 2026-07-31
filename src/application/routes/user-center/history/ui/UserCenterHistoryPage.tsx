@@ -7,13 +7,16 @@ import { Checkbox, Modal } from "antd";
 import { useParams } from "react-router";
 
 import { useAppDispatch, useAppSelector } from "@application/store";
-import { UserRecentTopicItem as Topic } from "@modules/topic";
-import * as Actions from "@legacy/Actions/UserCenter";
-import { refreshCurrentUserInfo } from "@legacy/AsyncActions/UserCenter";
 import {
-  getHistoryPosts,
+  getCurrentUserBrowsingHistory,
+  UserRecentTopicItem as Topic,
+} from "@modules/topic";
+import {
+  selectCurrentUser,
   setBrowsingHistoryEnabled,
-} from "@legacy/AsyncActions/UserCenter/GetMyHistoryPosts";
+  updateCurrentUser,
+} from "@modules/session";
+import { refreshCurrentUserInfo } from "@legacy/AsyncActions/UserCenter";
 import type { UserRecentTopic } from "@legacy/States/AppState";
 import { UserCenterPager as Pager } from "@application/routes/user-center/pagination";
 
@@ -28,28 +31,60 @@ export function UserCenterHistoryPage() {
   const dispatch = useAppDispatch();
   const { page } = useParams<RouteParams>();
   const currentPage = parseInt(page ?? "") || 1;
-  const currentMyHistoryTopics = useAppSelector(
-    (state) => state.userInfo.currentMyHistoryTopics
-  );
-  const browsingHistoryEnabled = useAppSelector(
-    (state) => state.userInfo.browsingHistoryEnabled
-  );
-  const isLoading = useAppSelector((state) => state.userInfo.isLoading);
-  const totalPage = useAppSelector(
-    (state) => state.userInfo.totalPage.myhistory
-  );
+  const currentUser = useAppSelector(selectCurrentUser);
+  const browsingHistoryEnabled = currentUser.browsingHistoryEnabled;
+  const [currentMyHistoryTopics, setCurrentMyHistoryTopics] = React.useState<
+    UserRecentTopic[]
+  >([]);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [totalPage, setTotalPage] = React.useState(1);
+  const [, setErrorMessage] = React.useState("");
   const [showEnableCheckBoxModal, setShowEnableCheckBoxModal] =
     React.useState(false);
 
+  const loadHistoryPosts = async (nextPage: number) => {
+    setIsLoading(true);
+    setErrorMessage("");
+
+    try {
+      const result = await getCurrentUserBrowsingHistory(nextPage);
+      setCurrentMyHistoryTopics(result.topics);
+      if (result.totalPage !== undefined) {
+        setTotalPage(result.totalPage);
+      }
+      setIsLoading(false);
+    } catch (error) {
+      setErrorMessage(
+        error instanceof Error ? error.message : String(error),
+      );
+    }
+  };
+
+  const changeBrowsingHistoryEnabled = async (enabled: boolean) => {
+    await setBrowsingHistoryEnabled(enabled);
+    dispatch(
+      updateCurrentUser({
+        ...currentUser,
+        browsingHistoryEnabled: enabled,
+      }),
+    );
+
+    if (enabled) {
+      await loadHistoryPosts(1);
+    } else {
+      setCurrentMyHistoryTopics([]);
+      setIsLoading(false);
+    }
+  };
+
   React.useEffect(() => {
     dispatch(refreshCurrentUserInfo());
-    dispatch(Actions.changeUserCenterPage("myhistory"));
   }, [dispatch]);
 
   React.useEffect(() => {
-    dispatch(getHistoryPosts(currentPage, true));
+    void loadHistoryPosts(currentPage);
     window.scroll(0, 0);
-  }, [currentPage, dispatch]);
+  }, [currentPage]);
 
   const emptyPage = (
     <div
@@ -73,7 +108,7 @@ export function UserCenterHistoryPage() {
       cancelText="取消"
       onOk={() => {
         setShowEnableCheckBoxModal(false);
-        dispatch(setBrowsingHistoryEnabled(!browsingHistoryEnabled));
+        void changeBrowsingHistoryEnabled(!browsingHistoryEnabled);
       }}
       onCancel={() => {
         setShowEnableCheckBoxModal(false);

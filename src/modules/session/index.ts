@@ -1,6 +1,7 @@
 export * from "./api/session";
 export * from "./api/refresh-user-info";
 export * from "./api/authentication";
+export * from "./api/browsing-history";
 export {
   currentUserReceived,
   sessionAuthenticated,
