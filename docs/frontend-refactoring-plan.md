@@ -1,6 +1,6 @@
 # CC98 前端目录重构执行计划
 
-> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6 与 S1.7 的代码实施、机械检查和主代理人工代码审核均已完成，A、M 阶段及 S1 代码实施完成。S1.4 第三至第六组、S1.5、S1.6 与 S1.7 已获用户审批并完成本地提交；完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账、缓存、草稿与 UBB 运行验收未执行，当前停在 C1 实施授权前。
+> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1 的代码实施、机械检查和主代理人工代码审核均已完成，A、M 阶段及 S1 代码实施完成。S1.4 第三至第六组、S1.5、S1.6 与 S1.7 已获用户审批并完成本地提交；完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账、缓存、草稿、UBB 与 C1.1 样式运行验收未执行，当前停在 C1.1 用户人工验收与提交授权前。
 >
 > 架构依据：`docs/frontend-directory-architecture-inventory.md`。
 >
@@ -52,9 +52,10 @@ S1.4 第六组：粉丝                           已完成（用户审批通过
 S1.5 页面与壳层状态                         已完成（用户审批通过；完整运行验收未执行）
 S1.6 缓存与草稿归位                         已完成（用户审批通过；完整运行验收未执行）
 S1.7 Redux 闭包                            已完成（用户审批通过；完整运行验收未执行）
+C1.1 Foundation 样式                       已完成（主代理逐文件审核通过；浏览器运行验收未执行）
 ```
 
-### 当前停点：S1.7 已获用户审批并完成本地提交；C1 未获实施授权，不自动启动
+### 当前停点：C1.1 代码、机械检查和主代理逐文件审核已完成；等待用户人工验收与提交授权，不自动启动 C1.2
 
 ### M3.1–M3.6 实施记录（2026-07-30）
 
@@ -1941,6 +1942,39 @@ foundation/styles/mixins
 foundation/styles/variables
 ```
 
+#### C1.1 实施记录（2026-07-31）
+
+实施基线：
+
+```text
+dev20260716  521713fa  docs(plan): add Z legacy source closure
+```
+
+实施范围：
+
+- 保留 `src/foundation/styles/Site.scss` 作为 29 个主题的共同入口，主题 SCSS、manifest、主题 key/id/顺序、静态 URL 和 Sass `@import` 机制均未修改；
+- 将原有 15 个非主题变量完整抽入 `foundation/styles/variables`，将 `blockquote`、`body` 与 `#root` 抽入 `foundation/styles/base`；
+- 将原 Reset 恢复块和后部全局 `margin/padding: 0` 块分别抽入 `foundation/styles/reset`，并在原位置导入以保持级联顺序；
+- 将 Spectrum 完整迁入 `foundation/styles/vendors`，原许可证、注释、BOM/行尾/EOF 状态和内容保持；Ant Design CSS 导入仅由同位置 vendor partial 封装；
+- 全仓 SCSS 未发现 `@mixin`、`@function` 或 placeholder，不创建空 mixins 占位文件；
+- 其余业务、Route、UBB 与 Application Shell 选择器仍保留在 `Site.scss`；根 `Styles/`、组件源码、className、DOM、主题变量和 `.vscode/` 均未修改。
+
+保真与机械证据：
+
+- 将所有新 partial 按导入位置重新展开并恢复两条 vendor 导入后，与 `HEAD` 的 `Site.scss` 文本完全一致；Spectrum 新旧 owner 内容完全一致；
+- 实施前后 29 个主题 CSS 的生成文件名、长度和 SHA-256 逐项完全一致，主题编译输出零漂移；
+- `Site.scss` 继续保持 UTF-8 BOM、原有 6 个 bare LF、其余 CRLF 和 EOF 换行；新抽取 partial 使用无 BOM 的 CRLF 与 EOF 换行；
+- `npm run check:architecture`：通过，305 个源码文件、1193 个 import、28 个既有 allowlist 违规；
+- `npm run typecheck`：modern 与 legacy 均通过；
+- `npm run build`：通过，3986 modules transformed；基线构建在沙箱内因既知 `spawn EPERM` 失败，在允许子进程的环境原样重跑成功；
+- `git diff --check`：通过；构建仍只有既有 Sass `@import`、Spectrum/Lightning CSS 和 chunk-size 警告。
+
+人工检查与停点：
+
+- 主代理已逐文件核对 `Site.scss`、variables/base/reset/vendors partial 和 Spectrum 搬移，未发现规则、注释、导入顺序或 owner 越界；
+- 默认/暗色主题、Header、Board、Topic、用户中心、编辑器、UBB、Spectrum 和 Ant Design 控件的浏览器运行验收未执行；
+- C1.1 未 commit、未 push；等待用户人工验收与提交授权，不自动启动 C1.2。
+
 ### C1.2 业务组件样式
 
 跟随 Module：
@@ -2309,7 +2343,7 @@ R1  增加架构检查脚本                            已完成
 - 检查脚本结果；
 - 无业务行为变化证明。
 
-骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6 与 S1.7 均已完成代码实施、机械检查和主代理人工代码审核，A、M 阶段及 S1 代码实施完成。S1.4 第三至第六组、S1.5、S1.6 与 S1.7 已获用户审批并完成本地提交；完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账、缓存、草稿与 UBB 运行验收未执行，旧 `/list` 仍仅适用既有免检结论。当前停在 C1 实施授权前。
+骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1 均已完成代码实施、机械检查和主代理人工代码审核，A、M 阶段及 S1 代码实施完成。S1.4 第三至第六组、S1.5、S1.6 与 S1.7 已获用户审批并完成本地提交；完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账、缓存、草稿、UBB 与 C1.1 样式运行验收未执行，旧 `/list` 仍仅适用既有免检结论。当前停在 C1.1 用户人工验收与提交授权前。
 
 ## 22. 已确认决策与后续边界
 
@@ -2332,7 +2366,7 @@ R1  增加架构检查脚本                            已完成
 
 后续仍需单独授权或审核：
 
-1. S1.1–S1.3、S1.4 六组、S1.5、S1.6 与 S1.7 尚未执行的完整浏览器、登录、真实 API、SignalR、跨标签、缓存与草稿运行验收，以及 C1 和后续每个 Z 子批的代码实施授权；
+1. S1.1–S1.3、S1.4 六组、S1.5、S1.6 与 S1.7 尚未执行的完整浏览器、登录、真实 API、SignalR、跨标签、缓存与草稿运行验收，C1.1 的浏览器样式验收与提交授权，以及 C1.2–C1.4 和后续每个 Z 子批的代码实施授权；
 2. 当前 `useUserProfileContext` 接口及 UserProfileLayout 集中取数边界是否随资料缓存归位或 Redux 闭包再次调整；
 3. A2.3–A2.11 与 M3.1–M3.6 尚未执行的浏览器、登录、真实 API、权限、分页、SignalR、通知权限、上传、编辑器、缓存与 UBB 运行验收；
 4. 旧 `/list` 免检边界是否继续保留；在另行确认前，Z 只删除根 facade，不删除该公开 Route；
