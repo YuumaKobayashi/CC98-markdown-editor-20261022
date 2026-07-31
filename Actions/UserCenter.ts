@@ -42,11 +42,6 @@ export const changeUserHistoryPosts = createAction(ActionTypes.CHANGE_USER_HISTO
     payload: { posts }
 }));
 
-export const changeUserFavoritePosts = createAction(ActionTypes.CHANGE_USER_FAVORITE_POSTS, (posts: Appstate.UserRecentTopic[]) => ({
-    type: ActionTypes.CHANGE_USER_FAVORITE_POSTS,
-    payload: { posts }
-}));
-
 export const changeUserFansInfo = createAction(ActionTypes.CHANGE_USER_FANS_INFO, (fansInfo: Appstate.UserInfo[]) => ({
     type: ActionTypes.CHANGE_USER_FANS_INFO,
     payload: { fansInfo }
@@ -57,7 +52,7 @@ export const changeUserFollowingsInfo = createAction(ActionTypes.CHANGE_USER_FOL
     payload: { followingsInfo }
 }));
 
-export const changeUserCenterPage = createAction(ActionTypes.CHNAGE_USER_CENTER_PAGE, (page: 'profile' | 'config' | 'mytopics' |'myposts' | 'myfavoriteposts' | 'myfavoriteboards' | 'myfollowings' | 'myfans' | 'myhistory') => ({
+export const changeUserCenterPage = createAction(ActionTypes.CHNAGE_USER_CENTER_PAGE, (page: 'profile' | 'config' | 'mytopics' |'myposts' | 'myfavoriteboards' | 'myfollowings' | 'myfans' | 'myhistory') => ({
     type: ActionTypes.CHNAGE_USER_CENTER_PAGE,
     payload: { page }
 }));
@@ -76,5 +71,3 @@ export const userCenterTransferWealthSuccess = createAction(ActionTypes.USER_CEN
     type: ActionTypes.USER_CENTER_TRANSFER_WEALTH_SUCCESS,
     payload: { userNames }
 }));
-
-export const changeUserFavoriteTopicGroup = createAction(ActionTypes.USER_CENTER_FAVORITE_GROUP_CHANGE);

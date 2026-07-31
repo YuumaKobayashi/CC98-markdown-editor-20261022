@@ -64,10 +64,6 @@ export class UserInfoStore {
    */
   currentUserFollowingInfo: Appstate.UserInfo[] = [];
   /**
-   * 当前用户收藏的主题信息数组
-   */
-  currentUserFavoriteTopics: Appstate.UserRecentTopic[] = [];
-  /**
    * 当前用户所在的页面
    */
   currentUserCenterPage:
@@ -75,7 +71,6 @@ export class UserInfoStore {
     | "config"
     | "mytopics"
     | "myposts"
-    | "myfavoriteposts"
     | "myfavoriteboards"
     | "myfollowings"
     | "myhistory"
@@ -96,14 +91,12 @@ export class UserInfoStore {
 
 class hasTotal {
   myhistory: boolean = true;
-  myfavoriteposts: boolean = false;
   myfollowings: boolean = true;
   myfans: boolean = true;
 }
 
 class TotalPage {
   myhistory: number;
-  myfavoriteposts: number = 1;
   myfollowings: number;
   myfans: number;
 }
@@ -157,8 +150,6 @@ export default (
         ...state,
         currentUserFollowingInfo: action.payload.followingsInfo,
       };
-    case ActionTypes.CHANGE_USER_FAVORITE_POSTS:
-      return { ...state, currentUserFavoriteTopics: action.payload.posts };
     case ActionTypes.CHNAGE_USER_CENTER_PAGE:
       return { ...state, currentUserCenterPage: action.payload.page };
     case ActionTypes.USER_CENTER_FOLLOW_USER: {
@@ -197,11 +188,6 @@ export default (
       return { ...state, errorMessage: "", isError: false };
     case ActionTypes.USER_CENTER_TRANSFER_WEALTH_SUCCESS:
       return { ...state, transferSuccessUsers: action.payload.userNames };
-    case ActionTypes.USER_CENTER_FAVORITE_GROUP_CHANGE:
-      return {
-        ...state,
-        hasTotal: { ...state.hasTotal, myfavoriteposts: false },
-      };
     default:
       return state;
   }

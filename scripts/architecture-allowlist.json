@@ -64,6 +64,13 @@
       "removeWhen": "The UBB module migration provides its public compatibility-mode contract."
     },
     {
+      "from": "src/modules/favorite-topic/api/service.ts",
+      "specifier": "@legacy/States/AppState",
+      "rule": "legacy-dependency",
+      "reason": "S1.4 preserves the existing UserRecentTopic response contract while localizing favorite-topic request state.",
+      "removeWhen": "The Favorite Topic or user-activity contract migration owns UserRecentTopic."
+    },
+    {
       "from": "src/modules/post/api/service.ts",
       "specifier": "@legacy/States/AppState",
       "rule": "legacy-dependency",

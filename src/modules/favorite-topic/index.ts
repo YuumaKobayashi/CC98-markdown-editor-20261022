@@ -1,7 +1,9 @@
 export {
   createFavGroup,
+  type CurrentUserFavoriteTopicPage,
   deleteFavoriteTopic,
   deleteFavGroup,
+  getCurrentUserFavoriteTopics,
   getFavoriteAllTopic,
   getFavState,
   setFavoriteTopic,

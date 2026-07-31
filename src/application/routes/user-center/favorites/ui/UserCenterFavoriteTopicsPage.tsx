@@ -6,14 +6,12 @@ import * as React from "react";
 import { Button, Input, Select } from "antd";
 import { useLocation, useNavigate, useParams } from "react-router";
 
-import { useAppDispatch, useAppSelector } from "@application/store";
 import {
   defaultFavoriteTopicGroups,
+  getCurrentUserFavoriteTopics,
   getFavoriteAllTopic,
   type FavoriteTopicGroup,
 } from "@modules/favorite-topic";
-import * as Actions from "@legacy/Actions/UserCenter";
-import { getFavoritePosts } from "@legacy/AsyncActions/UserCenter";
 import type { UserRecentTopic } from "@legacy/States/AppState";
 import { UserCenterPager as Pager } from "@application/routes/user-center/pagination";
 
@@ -58,7 +56,6 @@ const getKeyword = (search: string) => {
  * 用户中心我收藏的帖子组件
  */
 export function UserCenterFavoriteTopicsPage() {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const { page, order: orderParam, group: groupParam } =
@@ -71,19 +68,51 @@ export function UserCenterFavoriteTopicsPage() {
   const routeRef = React.useRef({ currentPage, group, order });
   routeRef.current = { currentPage, group, order };
 
-  const currentUserFavoriteTopics = useAppSelector(
-    (state) => state.userInfo.currentUserFavoriteTopics
-  );
-  const totalPage = useAppSelector(
-    (state) => state.userInfo.totalPage.myfavoriteposts
-  );
-  const hasTotal = useAppSelector(
-    (state) => state.userInfo.hasTotal.myfavoriteposts
-  );
-  const isLoading = useAppSelector((state) => state.userInfo.isLoading);
+  const [currentUserFavoriteTopics, setCurrentUserFavoriteTopics] =
+    React.useState<UserRecentTopic[]>([]);
+  const [totalPage, setTotalPage] = React.useState(1);
+  const [hasTotal, setHasTotal] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [, setErrorMessage] = React.useState("");
   const [favoriteTopicList, setFavoriteTopicList] = React.useState<
     FavoriteTopicGroup[]
   >(defaultFavoriteTopicGroups);
+
+  const loadFavoriteTopics = async (
+    nextPage: number,
+    nextOrder: number,
+    nextGroup: number,
+    keyword: string,
+  ) => {
+    console.log(
+      "getFavoritePosts",
+      nextPage,
+      nextOrder,
+      nextGroup,
+      true,
+      keyword,
+    );
+    setIsLoading(true);
+    setErrorMessage("");
+
+    try {
+      const result = await getCurrentUserFavoriteTopics(
+        nextPage,
+        nextOrder,
+        nextGroup,
+        keyword,
+      );
+      setCurrentUserFavoriteTopics(result.topics);
+      if (!result.hasMore) {
+        console.log("total loaded");
+        setHasTotal(true);
+        setTotalPage(nextPage);
+      }
+      setIsLoading(false);
+    } catch (error) {
+      setErrorMessage(error instanceof Error ? error.message : String(error));
+    }
+  };
 
   const updateFavoriteTopicList = async () => {
     try {
@@ -119,21 +148,17 @@ export function UserCenterFavoriteTopicsPage() {
     // favoriteTopicList.ok && this.setState({ favoriteTopicList: favoriteTopicList.body });
     // console.log(favoriteTopicList.json());
     console.log("componentDidMount");
-    dispatch(Actions.changeUserCenterPage("myfavoriteposts"));
   }, []);
 
   React.useEffect(() => {
-    dispatch(
-      getFavoritePosts(
-        requestPage,
-        order,
-        group,
-        true,
-        keywordRef.current
-      )
+    void loadFavoriteTopics(
+      requestPage,
+      order,
+      group,
+      keywordRef.current,
     );
     window.scroll(0, 0);
-  }, [dispatch, group, order, requestPage]);
+  }, [group, order, requestPage]);
 
   const changeGroupAndOrderAndKeyword = (
     nextGroup: number,
@@ -141,14 +166,14 @@ export function UserCenterFavoriteTopicsPage() {
     keyword = ""
   ) => {
     console.log("Change", nextGroup, nextOrder, keyword);
-    dispatch(Actions.changeUserFavoriteTopicGroup());
+    setHasTotal(false);
     if (keyword) {
-      dispatch(getFavoritePosts(1, 0, 0, true, keyword));
+      void loadFavoriteTopics(1, 0, 0, keyword);
       void navigate(
         `/usercenter/myfavorites/order/0/group/0/1?keyword=${keyword}`
       );
     } else {
-      dispatch(getFavoritePosts(1, nextOrder, nextGroup, true));
+      void loadFavoriteTopics(1, nextOrder, nextGroup, "");
       keywordRef.current = "";
       console.log("changeGroupAndOrderAndKeyword");
       void navigate(
@@ -164,14 +189,11 @@ export function UserCenterFavoriteTopicsPage() {
 
   const handleTopicUpdate = () => {
     void updateFavoriteTopicList();
-    dispatch(
-      getFavoritePosts(
-        currentPage,
-        order,
-        group,
-        true,
-        keywordRef.current
-      )
+    void loadFavoriteTopics(
+      currentPage,
+      order,
+      group,
+      keywordRef.current,
     );
   };
 

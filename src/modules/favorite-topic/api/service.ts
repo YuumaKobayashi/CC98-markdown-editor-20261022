@@ -1,5 +1,11 @@
 import { formAuthorizeHeader } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
+import type { UserRecentTopic } from "@legacy/States/AppState";
+
+export interface CurrentUserFavoriteTopicPage {
+  topics: UserRecentTopic[];
+  hasMore: boolean;
+}
 
 // export async function setFavoriteTopic(topicId) {
 //   const headers = await formAuthorizeHeader();
@@ -21,6 +27,36 @@ export async function getFavoriteAllTopic() {
   const response = await cc98Fetch(url, { headers });
   const data = await response.json();
   return data;
+}
+
+/**
+ * 获取当前用户收藏的主题。
+ * 接口通过多请求一条来探测是否还有下一页，页面仍只展示前 10 条。
+ * @param page 当前页数
+ * @author AsukaSong
+ */
+export async function getCurrentUserFavoriteTopics(
+  page: number,
+  order: number = 0,
+  group: number = 0,
+  keyword: string = "",
+): Promise<CurrentUserFavoriteTopicPage> {
+  const from = (page - 1) * 10;
+  const url = keyword
+    ? `/topic/me/search-favorite?from=${from}&size=11&keyword=${keyword}`
+    : `/topic/me/favorite?from=${from}&size=11&order=${order}&groupid=${group}`;
+  const headers = await formAuthorizeHeader();
+  const response = await cc98Fetch(url, { headers });
+
+  if (response.status !== 200) {
+    throw new Error(response.statusText);
+  }
+
+  const result: UserRecentTopic[] = await response.json();
+  const hasMore = result.length === 11;
+  const topics = hasMore ? result.slice(0, 10) : result;
+
+  return { topics, hasMore };
 }
 
 export async function deleteFavoriteTopic(topicId) {
