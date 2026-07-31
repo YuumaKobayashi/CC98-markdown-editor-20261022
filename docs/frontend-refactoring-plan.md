@@ -1,6 +1,6 @@
 # CC98 前端目录重构执行计划
 
-> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1–C1.3 的代码实施、机械检查和主代理人工代码审核均已完成，A、M 阶段及 S1 代码实施完成。C1.3 已获用户审批并完成本地提交；跨 Route 兼容选择器及后续真实 CSS Modules/CSS 自定义属性改造已登记到后续批次。完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账、缓存、草稿、UBB 与 C1 样式运行验收未执行，当前停在 C1.3 提交后，不自动启动 C1.4。
+> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1–C1.4 的代码实施、机械检查和主代理人工代码审核均已完成，A、M 阶段及 S1 代码实施完成。C1.3 与 C1.4 均已获用户审批并完成本地提交。跨 Route 兼容选择器及后续真实 CSS Modules/CSS 自定义属性改造已登记到后续批次。完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账、缓存、草稿、UBB 与 C1 样式运行验收未执行，当前停在 C1.4 提交后，不自动启动 C1.5。
 >
 > 架构依据：`docs/frontend-directory-architecture-inventory.md`。
 >
@@ -55,11 +55,11 @@ S1.7 Redux 闭包                            已完成（用户审批通过；�
 C1.1 Foundation 样式                       已完成（主代理逐文件审核通过；浏览器运行验收未执行）
 C1.2 业务组件样式                           已完成（主代理逐文件审核通过；浏览器运行验收未执行）
 C1.3 页面样式                               已完成（用户审批通过；浏览器运行验收未执行）
-C1.4 主题                                   待单独授权
+C1.4 主题                                   已完成（用户审批通过；浏览器运行验收未执行）
 C1.5 样式作用域与目录收口                    待单独授权
 ```
 
-### 当前停点：C1.3 已完成人工审核与本地提交；浏览器运行验收未执行，不自动启动 C1.4
+### 当前停点：C1.4 已完成人工审核与本地提交；浏览器运行验收未执行，不自动启动 C1.5
 
 ### M3.1–M3.6 实施记录（2026-07-30）
 
@@ -2090,6 +2090,38 @@ foundation/theme/themes
 
 29 个现有主题入口和生成文件名合同必须保持。
 
+#### C1.4 实施记录（2026-08-01）
+
+实施基线：
+
+```text
+dev20260716  762d5eda  docs(c1.3): record route style relocation
+```
+
+实施范围：
+
+- 将原 `registry.ts` 与 `runtime.ts` 分别归入 `foundation/theme/registry/index.ts` 和 `foundation/theme/runtime/index.ts`，新增 `foundation/theme/index.ts` 作为公开入口；原导出名称、参数、返回值、主题计算、Storage key、jQuery 样式表切换和定时检查逻辑均未修改；
+- Application Bootstrap、Session、Login、User Center Theme 与根 `Utility.ts` 兼容 facade 统一经主题根入口消费；runtime 内部继续直接依赖 registry，未建立反向依赖或循环；
+- 将 29 个主题入口各自原有的 8 个 Sass 变量完整抽入同名 `tokens/_<theme>.scss` partial，包括 `chongyang_light` 的历史备选值注释；每个 `themes/<theme>.scss` 仍按原求值顺序导入对应 token 和共同 `Site.scss`；
+- `build/theme-manifest.cjs`、`build/template-contract.cjs`、Vite 输入、Template 初始主题加载、主题 key/id/顺序、默认占位项、静态 URL、日夜配对及全部主题值均未修改；C1.5 的 CSS 自定义属性、真实 CSS Modules、视觉调整和兼容选择器清理未提前实施。
+
+保真与机械证据：
+
+- 将每个 token 的完整文本与原位置的 `Site.scss` 导入重新组合后，29 个结果均与实施基线中的对应主题入口文本完全一致；29 个 token 均按相同顺序保留 `theme_color_main`、`theme_color_sub`、`theme_color_topbar`、两个背景图片、页面背景、文本框背景和文字颜色共 8 个变量；
+- token partial 保留原变量块的 CRLF；`autumn_2022_dark`、`autumn_2022_light` 与 `autumn_orange` 原有 UTF-8 BOM 继续保留，另外 26 个 token 保持无 BOM；所有新主题 entry 与 TypeScript 公开入口使用无 BOM 的 CRLF 与 EOF 换行；
+- registry 顺序严格为 0–29，共 30 个显示项；manifest 保持 29 个连续的 1–29 构建项，9 组日夜名称均能解析到 registry，29 组 manifest entry、theme entry 与 token 一一对应；
+- 实施前后 `dist/static/content` 共 76 个文件的相对路径、长度和 SHA-256 逐项完全一致，29 个主题 CSS、vendor CSS、固定第三方资源及生成文件名零漂移；
+- `npm run check:architecture`：通过，306 个源码文件、1194 个 import、28 个既有 allowlist 违规；
+- modern 与 legacy typecheck 均通过；
+- `npm run build`：通过，3987 modules transformed；沙箱内基线构建因既知 `spawn EPERM` 失败，在允许子进程的环境原样重跑成功；构建仍只有既有 Sass `@import`、Spectrum/Lightning CSS 和 chunk-size 警告；
+- tracked `git diff --check` 通过。
+
+人工检查与停点：
+
+- 主代理已逐文件核对 29 组 token/entry、registry、runtime、根公开入口、manifest、模板初始加载和全部调用点，未发现主题值、注释、顺序、URL、运行逻辑或兼容导出漂移；
+- 默认/暗色主题切换、系统默认回退、定时/浏览器日夜切换、登录与跨标签同步、用户中心主题设置及各页面视觉效果的浏览器运行验收未执行；
+- 用户于 2026-08-01 批准本批；C1.4 代码与本文档已合并为一个本地提交，不自动启动 C1.5，不 push。
+
 ### C1.5 样式作用域与目录收口
 
 C1.1–C1.4 先完成样式 owner 归位和主题合同整理；C1.5 再统一目录与作用域语义。当前“按 owner 分散存放、由主题入口统一编译”的结构可作为保真迁移的过渡态，但不是最终样式架构：Route 与 Module 下的 `*.module.scss` 仍由 `Site.scss` 通过 Sass `@import` 汇总为全局选择器，文件后缀只表达 owner，并不具备 CSS Modules 隔离；同一页面的样式仍可能分布在 owner partial、`Site.scss`、根 `Styles/`、兼容区与 TSX 内联 `style` 中。
@@ -2479,7 +2511,7 @@ R1  增加架构检查脚本                            已完成
 - 检查脚本结果；
 - 无业务行为变化证明。
 
-骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1–C1.3 均已完成代码实施、机械检查和主代理人工代码审核，A、M 阶段及 S1 代码实施完成。C1.3 已获用户审批并完成本地提交，跨 Route 兼容选择器、后续语义改名与真实 CSS Modules/CSS 自定义属性改造已登记；完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账、缓存、草稿、UBB 与 C1 样式运行验收未执行，旧 `/list` 仍仅适用既有免检结论。当前停在 C1.3 提交后，不自动启动 C1.4。
+骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1–C1.4 均已完成代码实施、机械检查和主代理人工代码审核，A、M 阶段及 S1 代码实施完成。C1.3 与 C1.4 均已获用户审批并完成本地提交；跨 Route 兼容选择器、后续语义改名与真实 CSS Modules/CSS 自定义属性改造已登记。完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账、缓存、草稿、UBB 与 C1 样式运行验收未执行，旧 `/list` 仍仅适用既有免检结论。当前停在 C1.4 提交后，不自动启动 C1.5。
 
 ## 22. 已确认决策与后续边界
 
@@ -2502,7 +2534,7 @@ R1  增加架构检查脚本                            已完成
 
 后续仍需单独授权或审核：
 
-1. S1.1–S1.3、S1.4 六组、S1.5、S1.6 与 S1.7 尚未执行的完整浏览器、登录、真实 API、SignalR、跨标签、缓存与草稿运行验收，C1.1–C1.3 的浏览器样式验收，以及 C1.4、C1.5 和后续每个 Z 子批的代码实施授权；
+1. S1.1–S1.3、S1.4 六组、S1.5、S1.6 与 S1.7 尚未执行的完整浏览器、登录、真实 API、SignalR、跨标签、缓存与草稿运行验收，C1.1–C1.4 的浏览器样式验收，以及 C1.5 和后续每个 Z 子批的代码实施授权；
 2. 当前 `useUserProfileContext` 接口及 UserProfileLayout 集中取数边界是否随资料缓存归位或 Redux 闭包再次调整；
 3. A2.3–A2.11 与 M3.1–M3.6 尚未执行的浏览器、登录、真实 API、权限、分页、SignalR、通知权限、上传、编辑器、缓存与 UBB 运行验收；
 4. 旧 `/list` 免检边界是否继续保留；在另行确认前，Z 只删除根 facade，不删除该公开 Route；

@@ -8,8 +8,12 @@ import {
 } from "@modules/session";
 import type { ThemeSetting } from "@legacy/States/AppState";
 import { cc98Fetch } from "@foundation/api/http";
-import { themeList, type ThemeItem } from "@foundation/theme/registry";
-import { changeTheme, getRealThemeNumber } from "@foundation/theme/runtime";
+import {
+  changeTheme,
+  getRealThemeNumber,
+  themeList,
+  type ThemeItem,
+} from "@foundation/theme";
 
 import {
   ThemeSettingsForm,

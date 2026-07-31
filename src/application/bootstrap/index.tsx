@@ -11,7 +11,7 @@ import { createAppRoot } from "@application/providers/create-app-root";
 import { Constants } from "@foundation/config/runtime-config";
 import { IndexedDB } from "@foundation/storage/indexed-db";
 import { shouldUseIndexedDb } from "@foundation/config/platform";
-import { checkThemeToChange } from "@foundation/theme/runtime";
+import { checkThemeToChange } from "@foundation/theme";
 import moment from "moment";
 moment.locale("zh-cn");
 

@@ -1,6 +1,6 @@
 import type { Dispatch } from "redux";
 
-import { changeTheme } from "@foundation/theme/runtime";
+import { changeTheme } from "@foundation/theme";
 import {
   clearInteractiveSession,
   writeCurrentUser,

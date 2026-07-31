@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import type { ThemeSetting } from "@legacy/States/AppState";
-import { isBrowserDayNightModeSupported } from "@foundation/theme/runtime";
+import { isBrowserDayNightModeSupported } from "@foundation/theme";
 
 export interface ThemeSettingSuccessResult {
   ok: true;

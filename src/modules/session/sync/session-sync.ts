@@ -1,6 +1,6 @@
 import type { Dispatch } from "redux";
 
-import { changeTheme } from "@foundation/theme/runtime";
+import { changeTheme } from "@foundation/theme";
 import { logOut, restoreSession } from "../model/session-actions";
 import type { CurrentUser } from "../model/types";
 

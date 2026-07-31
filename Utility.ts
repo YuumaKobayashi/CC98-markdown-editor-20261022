@@ -24,7 +24,7 @@ export * from "@foundation/lib/page";
 export * from "@foundation/lib/dom";
 export * from "@foundation/lib/text";
 export * from "@foundation/lib/async";
-export * from "@foundation/theme/runtime";
+export * from "@foundation/theme";
 
 // 获取用户信息相关的代码均已重构
 export { getUserInfo as getUserInfoByName } from "@modules/user";

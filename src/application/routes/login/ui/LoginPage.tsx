@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { useAppDispatch } from "@application/store";
 import { logIn } from "@modules/session";
-import { changeTheme } from "@foundation/theme/runtime";
+import { changeTheme } from "@foundation/theme";
 import DocumentTitle from "@foundation/ui/document-title";
 
 const getLoginReturnUrl = (): string => {

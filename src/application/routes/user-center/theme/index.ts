@@ -8,8 +8,8 @@ export {
 export {
   themeDayNightGroups,
   themeList,
-} from "@foundation/theme/registry";
+} from "@foundation/theme";
 export type {
   ThemeDayNightGroup,
   ThemeItem,
-} from "@foundation/theme/registry";
+} from "@foundation/theme";
