@@ -53,9 +53,10 @@ S1.5 页面与壳层状态                         已完成（用户审批通�
 S1.6 缓存与草稿归位                         已完成（用户审批通过；完整运行验收未执行）
 S1.7 Redux 闭包                            已完成（用户审批通过；完整运行验收未执行）
 C1.1 Foundation 样式                       已完成（主代理逐文件审核通过；浏览器运行验收未执行）
+C1.2 业务组件样式                           已完成（主代理逐文件审核通过；浏览器运行验收未执行）
 ```
 
-### 当前停点：C1.1 代码、机械检查和主代理逐文件审核已完成；等待用户人工验收与提交授权，不自动启动 C1.2
+### 当前停点：C1.2 已完成人工审核与本地提交；浏览器运行验收未执行，不自动启动 C1.3
 
 ### M3.1–M3.6 实施记录（2026-07-30）
 
@@ -1973,7 +1974,7 @@ dev20260716  521713fa  docs(plan): add Z legacy source closure
 
 - 主代理已逐文件核对 `Site.scss`、variables/base/reset/vendors partial 和 Spectrum 搬移，未发现规则、注释、导入顺序或 owner 越界；
 - 默认/暗色主题、Header、Board、Topic、用户中心、编辑器、UBB、Spectrum 和 Ant Design 控件的浏览器运行验收未执行；
-- C1.1 未 commit、未 push；等待用户人工验收与提交授权，不自动启动 C1.2。
+- C1.1 代码与文档已分别提交为 `1bf366a6`、`123437fc`，未 push；浏览器运行验收仍未执行。
 
 ### C1.2 业务组件样式
 
@@ -1983,6 +1984,38 @@ dev20260716  521713fa  docs(plan): add Z legacy source closure
 modules/topic/ui/*.module.scss
 modules/user/ui/*.module.scss
 ```
+
+#### C1.2 实施记录（2026-07-31）
+
+实施基线：
+
+```text
+dev20260716  123437fc  docs(c1.1): record foundation style split
+```
+
+实施范围：
+
+- 将 Topic 组件直接拥有的奖项行、Focus/Search/Recommended 共用主题条目和 Topic Card 规则分别迁入 `TopicAwardInfo.module.scss`、`FocusTopicItem.module.scss` 与 `TopicCard.module.scss`；旧 Focus Topic 备选规则的整段注释一并归入 owner；
+- 将 User 组件直接拥有的头像/徽章、资料详情与签名配置规则分别迁入 `UserProfileAvatar.module.scss`、`UserProfile.module.scss` 与 `ConfigSignature.module.scss`；
+- 六个 partial 仍由主题共同入口在原级联位置导入。User partial 继续在 `UserCenter.scss` 的原嵌套位置展开，从而保留 `.user-center-body .user-center-router` 等既有父选择器与 specificity；Topic partial 继续在每个主题变量已经声明的 `Site.scss` 内展开；
+- `tagSize` 仍被 Topic Header 与 legacy board-list 共用；`focus-topic-area`、`card-topic-area` 和 `user-posts` 由 Application Route 容器直接使用。它们分别留待共享边界或 C1.3，不向 Module 错误归属；
+- 组件 TSX、className、DOM、主题变量、29 个主题入口、生成文件名、URL、交互逻辑、根 `Styles/` 的其余规则与 `.vscode/` 均未修改。
+
+保真与机械证据：
+
+- 六个 partial 的全部活动规则、顺序、数值和注释均从原 owner 原样搬移；将三个 User import 在原缩进处展开后，`UserCenter.scss` 与 `HEAD` 文本完全一致；Topic 活动规则在原位置展开后完全一致，旧 Focus Topic 注释仅移动到对应活动规则之后；
+- C1.1 构建基线与 C1.2 最终构建的 `dist/static/content` 共 35 个文件逐项同名且 SHA-256 完全一致，其中包括全部 29 个主题 CSS 与 vendor CSS，生成样式零漂移；
+- `Site.scss` 保持 UTF-8 BOM、6 个既有 bare LF、其余 CRLF 和 EOF 换行；`UserCenter.scss` 保持 UTF-8 BOM、CRLF 和无 EOF 换行；六个新 partial 使用无 BOM 的 CRLF 与 EOF 换行；
+- `npm run check:architecture`：通过，305 个源码文件、1193 个 import、28 个既有 allowlist 违规；
+- `npm run typecheck`：modern 与 legacy 均通过；
+- `npm run build`：通过，3986 modules transformed；沙箱内仍因既知 `spawn EPERM` 失败，在允许子进程的环境原样重跑成功；
+- `git diff --check`：通过；构建仍只有既有 Sass `@import`、Spectrum/Lightning CSS 和 chunk-size 警告。
+
+人工检查与停点：
+
+- 主代理已逐文件核对六个 partial、两个共同入口、组件 className 使用方和 Route/Module owner 边界，未发现活动规则、注释、级联顺序或 owner 越界；
+- 默认/暗色主题下的 Focus、Search、Recommended、Topic Card、主题奖项、用户中心/公开资料页头像与资料、签名配置浏览器运行验收未执行；
+- C1.2 代码已在用户人工审核通过后提交为 `576721f7`，本实施记录随紧随其后的本地文档 checkpoint 落盘；未 push，不自动启动 C1.3。
 
 ### C1.3 页面样式
 
