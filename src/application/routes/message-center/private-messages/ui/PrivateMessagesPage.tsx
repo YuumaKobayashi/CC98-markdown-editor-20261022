@@ -10,7 +10,7 @@ import {
 import type { MessagePersonInfo, MessageProps } from "@modules/message";
 import { DocumentTitle } from "@foundation/ui/document-title";
 
-import styles from "../../MessageCenter.module.scss";
+import styles from "./PrivateMessagesPage.module.scss";
 import { PrivateConversationWindow } from "./PrivateConversationWindow";
 import { parsePrivateMessageContactRoute } from "../model/contact-route";
 
@@ -133,11 +133,11 @@ export function PrivateMessagesPage() {
               <img
                 id="moreImg"
                 src="http://file.cc98.org/uploadfile/2017/11/19/2348481046.gif"
-                className={contactLoadStatus === "loading" ? "" : "displaynone"}
+                hidden={contactLoadStatus !== "loading"}
               />
-              <div id="moreDot" className={contactLoadStatus === "idle" ? "" : "displaynone"}>...</div>
-              <div id="moreShow" className={contactLoadStatus === "idle" ? "" : "displaynone"}>显示更多小伙伴~</div>
-              <div id="moreDone" className={contactLoadStatus === "done" ? "" : "displaynone"}>小伙伴们都出来了~</div>
+              <div id="moreDot" hidden={contactLoadStatus !== "idle"}>...</div>
+              <div id="moreShow" hidden={contactLoadStatus !== "idle"}>显示更多小伙伴~</div>
+              <div id="moreDone" hidden={contactLoadStatus !== "done"}>小伙伴们都出来了~</div>
             </div>
           ) : null}
         </div>

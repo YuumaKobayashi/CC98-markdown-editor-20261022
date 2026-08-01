@@ -1,0 +1,60 @@
+@use "../../../foundation/styles/variables/legacy" as *;
+
+.message-system-box {
+  /*一个系统消息的框框*/
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px dashed lightgray;
+  flex-shrink: 0;
+}
+
+.message-system-box-bar {
+  display: flex;
+  flex-direction: row;
+}
+
+.message-system-box-title {
+  /*一个系统消息标题*/
+  height: 50px;
+  font-size: 15px;
+  line-height: 50px;
+  color: black;
+  margin-left: 30px;
+}
+
+.message-system-box-date {
+  /*一个系统消息日期*/
+  height: 50px;
+  font-size: 13px;
+  line-height: 50px;
+  color: lightgray;
+  margin-left: 10px;
+}
+
+.message-system-box-content {
+  /*一个系统消息内容*/
+  font-size: 14px;
+  line-height: 24px;
+  margin: 0px 30px 20px 30px;
+
+  a {
+    &:link {
+      color: grey;
+    }
+
+    /* 已访问的链接 */
+    &:visited {
+      color: grey;
+    }
+
+    /* 鼠标移动到链接上 */
+    &:hover {
+      text-decoration: underline;
+    }
+
+    /* 选定的链接 */
+    &:active {
+      color: grey;
+    }
+  }
+}

@@ -351,24 +351,6 @@ a {
   display: none;
 }
 
-//-------------------------原头部的样式，现在只剩下消息中心导航器中未读消息数的样式保留 ----------------------------------------
-.message-counterNav {
-  position: absolute;
-  min-width: 10px;
-  height: 12px;
-  line-height: 12px;
-  margin-top: -11px;
-  padding: 1px 5px;
-  font-size: 10px;
-  font-weight: normal;
-  color: white;
-  text-align: center;
-  background-color: #fb6165;
-  border-radius: 8px;
-  top: 32px;
-  left: 110px;
-}
-
 //-------------------------以下是底部的样式~~~---------------------------------------------------
 .footer {
   display: flex;

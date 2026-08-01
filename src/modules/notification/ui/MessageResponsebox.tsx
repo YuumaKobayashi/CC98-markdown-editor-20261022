@@ -6,6 +6,7 @@ import moment from "moment";
 import { UbbContainer } from "@legacy/Components/UbbContainer";
 import { UbbCompatiblityMode } from "@legacy/Ubb/UbbCodeExtension";
 import { MessageResponseProps } from "../model/types";
+import styles from "./MessageResponseItem.module.scss";
 
 export function MessageResponsebox(
   props: MessageResponseProps,
@@ -54,17 +55,17 @@ export function MessageResponsebox(
   }
 
   return (
-    <div className="message-response-box">
-      <div className="message-response-box-middle">
-        <div className="message-response-box-middle1">
-          <div className="message-response-box-middle-title">
+    <div className={styles["message-response-box"]}>
+      <div className={styles["message-response-box-middle"]}>
+        <div className={styles["message-response-box-middle1"]}>
+          <div className={styles["message-response-box-middle-title"]}>
             <UbbContainer code={boardName} />
           </div>
-          <div className="message-response-box-middle-date">
+          <div className={styles["message-response-box-middle-date"]}>
             {moment(props.time).format("YYYY-MM-DD HH:mm:ss")}
           </div>
         </div>
-        <div className="message-response-box-middle-content">
+        <div className={styles["message-response-box-middle-content"]}>
           <UbbContainer
             code={content}
             options={{

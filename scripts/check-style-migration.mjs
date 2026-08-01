@@ -96,21 +96,23 @@ if (transitionalModules.size !== 0) {
   errors.push(`C1.5 已收口，过渡样式清单必须为空，实际为 ${transitionalModules.size} 项`);
 }
 
-if (moduleFiles.length !== 42) {
-  errors.push(`C1.5 应保留 42 个真实 CSS Module，实际为 ${moduleFiles.length} 个`);
+if (moduleFiles.length !== globalBaseline.totalCssModuleCount) {
+  errors.push(
+    `${globalBaseline.phase} 应保留 ${globalBaseline.totalCssModuleCount} 个真实 CSS Module，实际为 ${moduleFiles.length} 个`,
+  );
 }
 
 const expectedGlobalModules = new Map();
 for (const entry of globalBaseline.modules) {
   if (expectedGlobalModules.has(entry.path)) {
-    errors.push(`C1.6.0 global 基线包含重复文件: ${entry.path}`);
+    errors.push(`${globalBaseline.phase} global 基线包含重复文件: ${entry.path}`);
   }
   expectedGlobalModules.set(entry.path, entry);
 }
 
 if (expectedGlobalModules.size !== globalBaseline.moduleCount) {
   errors.push(
-    `C1.6.0 global 基线应登记 ${globalBaseline.moduleCount} 个文件，实际为 ${expectedGlobalModules.size} 个`,
+    `${globalBaseline.phase} global 基线应登记 ${globalBaseline.moduleCount} 个文件，实际为 ${expectedGlobalModules.size} 个`,
   );
 }
 
@@ -130,7 +132,7 @@ for (const moduleFile of moduleFiles) {
   actualGlobalOccurrenceCount += occurrences.length;
   const expected = expectedGlobalModules.get(relativePath);
   if (!expected) {
-    errors.push(`C1.6.0 禁止新增未登记业务 global: ${relativePath}`);
+    errors.push(`${globalBaseline.phase} 禁止新增未登记业务 global: ${relativePath}`);
     continue;
   }
   if (occurrences.length !== expected.occurrences) {
@@ -141,24 +143,24 @@ for (const moduleFile of moduleFiles) {
 
   const fingerprint = fingerprintGlobalOccurrences(occurrences);
   if (fingerprint !== expected.fingerprint) {
-    errors.push(`${relativePath} 的 :global(...) selector 集合偏离 C1.6.0 冻结基线`);
+    errors.push(`${relativePath} 的 :global(...) selector 集合偏离 ${globalBaseline.phase} 冻结基线`);
   }
 }
 
 for (const relativePath of expectedGlobalModules.keys()) {
   if (!modulePaths.has(relativePath)) {
-    errors.push(`C1.6.0 global 基线包含不存在的 CSS Module: ${relativePath}`);
+    errors.push(`${globalBaseline.phase} global 基线包含不存在的 CSS Module: ${relativePath}`);
   }
 }
 
 if (actualGlobalModuleCount !== globalBaseline.moduleCount) {
   errors.push(
-    `C1.6.0 应冻结 ${globalBaseline.moduleCount} 个含 global 的 CSS Module，实际为 ${actualGlobalModuleCount} 个`,
+    `${globalBaseline.phase} 应冻结 ${globalBaseline.moduleCount} 个含 global 的 CSS Module，实际为 ${actualGlobalModuleCount} 个`,
   );
 }
 if (actualGlobalOccurrenceCount !== globalBaseline.totalOccurrences) {
   errors.push(
-    `C1.6.0 应冻结 ${globalBaseline.totalOccurrences} 处 :global(...)，实际为 ${actualGlobalOccurrenceCount} 处`,
+    `${globalBaseline.phase} 应冻结 ${globalBaseline.totalOccurrences} 处 :global(...)，实际为 ${actualGlobalOccurrenceCount} 处`,
   );
 }
 

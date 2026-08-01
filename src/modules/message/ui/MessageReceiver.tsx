@@ -5,34 +5,28 @@ import * as React from "react";
 import moment from "moment";
 import { UbbContainer } from "@legacy/Components/UbbContainer";
 import { MessageSendReceiveProps } from "../model/types";
+import styles from "./MessageConversationItem.module.scss";
 
 export function MessageReceiver(
   props: MessageSendReceiveProps,
 ): React.ReactElement {
   //console.log(props);
   const userUrl = `/user/id/${props.senderId}`;
-  let timeClassName: string;
-  if (props.showTime) {
-    timeClassName = "message-message-wcTime";
-  } else {
-    timeClassName = "displaynone";
-  }
-
   return (
-    <div className="message-message-wc">
-      <div className={timeClassName}>
+    <div className={styles["message-message-wc"]}>
+      <div className={styles["message-message-wcTime"]} hidden={!props.showTime}>
         {moment(props.time).format("YYYY-MM-DD HH:mm:ss")}
       </div>
-      <div className="message-message-wcReceiver">
+      <div className={styles["message-message-wcReceiver"]}>
         <a href={userUrl} target="_blank">
           <img
-            className="message-message-wcPortraitUrl"
+            className={styles["message-message-wcPortraitUrl"]}
             src={props.senderPortraitUrl}
           />
         </a>
-        <div className="message-message-wcContent">
+        <div className={styles["message-message-wcContent"]}>
           <div
-            className="message-message-wcText"
+            className={styles["message-message-wcText"]}
             id={String(props.id)}
           >
             <UbbContainer code={props.content} />

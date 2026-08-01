@@ -11,6 +11,7 @@ import {
 } from "@foundation/storage/web-storage";
 import { noticeMessageShow } from "../api/service";
 import { NoticeSetting } from "../model/types";
+import styles from "./MessageSetting.module.scss";
 
 export function MessageSetting(): React.ReactElement {
   React.useLayoutEffect(() => {
@@ -84,11 +85,11 @@ export function MessageSetting(): React.ReactElement {
   };
 
   return (
-    <div className="message-right">
+    <div className={styles["message-right"]}>
       <DocumentTitle title={`消息设置-CC98论坛`} />
-      <div className="message-setting">
-        <div className="message-settingbox">
-          <div className="radioTitle">是否显示回复通知</div>
+      <div className={styles["message-setting"]}>
+        <div className={styles["message-settingbox"]}>
+          <div className={styles.radioTitle}>是否显示回复通知</div>
           <input
             type="radio"
             name="responseSetting"
@@ -105,8 +106,8 @@ export function MessageSetting(): React.ReactElement {
           />
           <div>否</div>
         </div>
-        <div className="message-settingbox">
-          <div className="radioTitle">是否显示@通知</div>
+        <div className={styles["message-settingbox"]}>
+          <div className={styles.radioTitle}>是否显示@通知</div>
           <input
             type="radio"
             name="attmeSetting"
@@ -123,8 +124,8 @@ export function MessageSetting(): React.ReactElement {
           />
           <div>否</div>
         </div>
-        <div className="message-settingbox">
-          <div className="radioTitle">是否显示系统通知</div>
+        <div className={styles["message-settingbox"]}>
+          <div className={styles.radioTitle}>是否显示系统通知</div>
           <input
             type="radio"
             name="systemSetting"
@@ -141,8 +142,8 @@ export function MessageSetting(): React.ReactElement {
           />
           <div>否</div>
         </div>
-        <div className="message-settingbox">
-          <div className="radioTitle">是否显示私信通知</div>
+        <div className={styles["message-settingbox"]}>
+          <div className={styles.radioTitle}>是否显示私信通知</div>
           <input
             type="radio"
             name="messageSetting"
@@ -159,8 +160,8 @@ export function MessageSetting(): React.ReactElement {
           />
           <div>否</div>
         </div>
-        <div className="message-settingbox">
-          <div className="radioTitle">回帖是否跳至最新回复</div>
+        <div className={styles["message-settingbox"]}>
+          <div className={styles.radioTitle}>回帖是否跳至最新回复</div>
           <input
             type="radio"
             name="postSetting"
@@ -178,7 +179,7 @@ export function MessageSetting(): React.ReactElement {
           <div>否</div>
         </div>
         <button
-          className="message-setting-btn"
+          className={styles["message-setting-btn"]}
           onClick={setMessageSetting}
         >
           保存消息设置

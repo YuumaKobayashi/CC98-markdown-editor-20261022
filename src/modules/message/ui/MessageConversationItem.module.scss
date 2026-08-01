@@ -1,0 +1,108 @@
+@use "../../../foundation/styles/variables/legacy" as *;
+
+.message-message-wc {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0px 10px 0px;
+}
+
+.message-message-wcTime {
+  height: 10px;
+  font-size: 10px;
+  color: $color-thinBlack;
+  text-align: center;
+  padding: 5px 0px 8px 0px;
+}
+
+.message-message-wcSender {
+  display: flex;
+  flex-direction: row-reverse;
+  position: relative;
+
+  .message-message-wcPortraitUrl {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    padding: 5px 20px;
+    margin-right: 10px;
+  }
+
+  .message-message-wcContent:before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    right: 85px;
+    top: 18px;
+    border: 8px solid;
+    border-color: transparent transparent transparent $color-border;
+  }
+
+  .message-message-wcContent:after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    right: 89px;
+    top: 20px;
+    border: 6px solid;
+    border-color: transparent transparent transparent $color-body;
+  }
+}
+
+.message-message-wcReceiver {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+
+  .message-message-wcPortraitUrl {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    padding: 5px 20px;
+    margin-left: 10px;
+  }
+
+  .message-message-wcContent:before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: 85px;
+    top: 18px;
+    border: 8px solid;
+    border-color: transparent $color-border transparent transparent;
+  }
+
+  .message-message-wcContent:after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: 89px;
+    top: 20px;
+    border: 6px solid;
+    border-color: transparent $color-body transparent transparent;
+  }
+}
+
+.message-message-wcContent {
+  background-color: $color-body;
+  border: 1px solid $color-border;
+  border-radius: 3px;
+  width: auto;
+  height: auto;
+  max-width: 500px;
+  margin-top: 8px;
+  margin-bottom: 10px;
+
+  .message-message-wcText {
+    font-size: 14px;
+    color: $color-thinBlack;
+    margin: 10px 10px 9px 10px;
+    line-height: 22px;
+    clear: both;
+    word-wrap: break-word;
+  }
+}

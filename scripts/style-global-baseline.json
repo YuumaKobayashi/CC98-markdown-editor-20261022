@@ -1,7 +1,8 @@
 {
-  "phase": "C1.6.0",
-  "totalOccurrences": 120,
-  "moduleCount": 16,
+  "phase": "C1.6.1",
+  "totalCssModuleCount": 48,
+  "totalOccurrences": 85,
+  "moduleCount": 14,
   "updatePolicy": "Only update this baseline in an explicitly authorized C1.6 batch after auditing selector, producer, consumer, and behavior-query changes.",
   "modules": [
     {
@@ -38,16 +39,6 @@
       "path": "src/application/routes/login/Login.module.scss",
       "occurrences": 1,
       "fingerprint": "e10f7fb30e7cde8fb303bf2232bb83f08f17839887fe2ac606b0c21c046c3334"
-    },
-    {
-      "path": "src/application/routes/message-center/MessageCenter.module.scss",
-      "occurrences": 31,
-      "fingerprint": "7e7b79dff3f51474c4068191458791008ada32386bc011e38e546deb0cebb642"
-    },
-    {
-      "path": "src/application/routes/message-center/MessageSettings.module.scss",
-      "occurrences": 4,
-      "fingerprint": "dc9ac74f01751d27748e95e6868339d66c37db0721fa023039813ae9eb7e6599"
     },
     {
       "path": "src/application/routes/new-topics/NewTopics.module.scss",

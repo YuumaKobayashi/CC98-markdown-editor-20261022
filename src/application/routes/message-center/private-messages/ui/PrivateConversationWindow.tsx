@@ -25,7 +25,7 @@ import { uploadFile } from "@modules/upload";
 import type { MessagePersonInfo, MessageProps } from "@modules/message";
 import { DocumentTitle } from "@foundation/ui/document-title";
 
-import styles from "../../MessageCenter.module.scss";
+import styles from "./PrivateConversationWindow.module.scss";
 
 type MessageLoadStatus = "more" | "loading" | "done";
 type ScrollAction = "bottom" | "prepend" | null;
@@ -291,7 +291,7 @@ export function PrivateConversationWindow({
         <div className={styles["message-message-wTitle"]}>
           {contact ? `与 ${contact.name} 的私信` : "无当前聊天对象"}
         </div>
-        <div className={`${styles["message-message-wReport"]} displaynone`}>
+        <div className={styles["message-message-wReport"]} hidden>
           <button onClick={report}>举报</button>
         </div>
       </div>
@@ -304,9 +304,8 @@ export function PrivateConversationWindow({
           {contact ? (
             <div
               id="wcGetMore"
-              className={`${styles["message-message-wcLoadingMore"]}${
-                loadStatus === "more" ? "" : " displaynone"
-              }`}
+              className={styles["message-message-wcLoadingMore"]}
+              hidden={loadStatus !== "more"}
               onClick={getMoreMessage}
             >
               点击加载更多...
@@ -315,13 +314,12 @@ export function PrivateConversationWindow({
           <img
             src="http://file.cc98.org/uploadfile/2017/11/19/2348481046.gif"
             id="wcLoadingImg"
-            className={loadStatus === "loading" ? "" : "displaynone"}
+            hidden={loadStatus !== "loading"}
           />
           <div
             id="wcLoadingText"
-            className={`${styles["message-message-wcLoadingText"]}${
-              contact && loadStatus === "done" ? "" : " displaynone"
-            }`}
+            className={styles["message-message-wcLoadingText"]}
+            hidden={!contact || loadStatus !== "done"}
           >
             没有更多消息了~
           </div>
@@ -384,18 +382,16 @@ export function PrivateConversationWindow({
         />
         <div
           id="wPostNotice"
-          className={`${styles["message-message-wPostNotice"]}${
-            showNotice ? "" : " displaynone"
-          }`}
+          className={styles["message-message-wPostNotice"]}
+          hidden={!showNotice}
           onClick={handleFocus}
         >
           请在这里填入您要发送的私信内容
         </div>
         <div
           id="wPostError"
-          className={`${styles["message-message-wPostError"]}${
-            showPostError ? "" : " displaynone"
-          }`}
+          className={styles["message-message-wPostError"]}
+          hidden={!showPostError}
           onClick={handleFocus}
         >
           发送失败，可能的原因有：发送太快；受到全站禁言或以上的处罚；服务器故障或者正在维护。

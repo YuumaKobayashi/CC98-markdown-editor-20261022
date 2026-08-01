@@ -6,6 +6,7 @@ import * as React from "react";
 
 import { UbbContainer } from "@legacy/Components/UbbContainer";
 import type { MessagePersonInfo } from "../model/MessagePersonInfo";
+import styles from "./MessagePerson.module.scss";
 
 interface MessagePersonProps {
   data: MessagePersonInfo;
@@ -17,21 +18,21 @@ interface UnreadDotProps {
 
 function UnreadDot({ isRead }: UnreadDotProps) {
   if (isRead) {
-    return <div className="message-counterPerson displaynone"></div>;
+    return <div className={styles["message-counterPerson"]} hidden></div>;
   }
 
-  return <div className="message-counterPerson"></div>;
+  return <div className={styles["message-counterPerson"]}></div>;
 }
 
 export function MessagePerson({ data }: MessagePersonProps) {
   const lastContent = data.lastContent || "";
 
   return (
-    <div className="message-message-person">
-      <img className="message-message-pPortraitUrl" src={data.portraitUrl} />
-      <div className="message-message-pInfo">
-        <div className="message-message-pName">{data.name}</div>
-        <div className="message-message-pMessage">
+    <div className={styles["message-message-person"]}>
+      <img className={styles["message-message-pPortraitUrl"]} src={data.portraitUrl} />
+      <div className={styles["message-message-pInfo"]}>
+        <div className={styles["message-message-pName"]}>{data.name}</div>
+        <div className={styles["message-message-pMessage"]}>
           <UbbContainer code={lastContent} />
         </div>
       </div>

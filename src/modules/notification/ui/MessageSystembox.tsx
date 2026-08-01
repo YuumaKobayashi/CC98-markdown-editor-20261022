@@ -6,6 +6,7 @@ import moment from "moment";
 import { UbbContainer } from "@legacy/Components/UbbContainer";
 import { UbbCompatiblityMode } from "@legacy/Ubb/UbbCodeExtension";
 import { MessageSystemProps } from "../model/types";
+import styles from "./MessageSystembox.module.scss";
 
 export function MessageSystembox(
   props: MessageSystemProps,
@@ -38,14 +39,14 @@ export function MessageSystembox(
   }
 
   return (
-    <div className="message-system-box">
-      <div className="message-system-box-bar">
-        <div className="message-system-box-title">{props.title}</div>
-        <div className="message-system-box-date">
+    <div className={styles["message-system-box"]}>
+      <div className={styles["message-system-box-bar"]}>
+        <div className={styles["message-system-box-title"]}>{props.title}</div>
+        <div className={styles["message-system-box-date"]}>
           {moment(props.time).format("YYYY-MM-DD HH:mm:ss")}
         </div>
       </div>
-      <div className="message-system-box-content">
+      <div className={styles["message-system-box-content"]}>
         <UbbContainer
           code={content}
           options={{
