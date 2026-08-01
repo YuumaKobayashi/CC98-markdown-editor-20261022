@@ -20,7 +20,7 @@
 
 ## Error Provider 边界
 
-- `ApplicationErrorProvider` 是 AppShell 业务错误的唯一状态 owner，仍按原 `ApplicationErrorKey` 映射 `Components/Status`；
+- `ApplicationErrorProvider` 是 AppShell 业务错误的唯一状态 owner，仍按原 `ApplicationErrorKey` 映射 `application/routes/status`；根 `Components/Status.tsx` 只保留旧入口兼容转导；
 - AppShell 在错误时只替换根 `Outlet`，Header、Footer 与路由切换清错继续保持挂载；
 - Editor 和 legacy Utility 通过 `reportApplicationError` 命令式上报，组件树外调用不再 dispatch Redux action；
 - HTTP 异常统一化、Router `errorElement` 和错误文案重构不属于 S1.5。

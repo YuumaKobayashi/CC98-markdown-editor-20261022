@@ -1,6 +1,6 @@
 # CC98 前端目录重构执行计划
 
-> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1–C1.5 的代码实施、机械检查和主代理人工代码审核均已完成；C1.5 已本地提交为 `733eb045`。C1.6.0 已提交为 `bee0dd05`，C1.6.1 代码与记录已提交为 `61b4d5db`/`ff9702be`，C1.6.2 代码已提交为 `ad1db0e7`，C1.6.3 代码已提交为 `788da9e7`，C1.6.4 已提交为 `fdbe3762`，C1.6.5 代码与记录已提交为 `0c6efc6e`/`b232c6ca`。C1.6.5 终态为 71 个真实 CSS Module、2 个文件中的 2 处第三方 `:global(...)`；C1.7 已按组件拆分、真实组件复用、样式共置和最终全局边界重新规划，仍未实施。浏览器连接器在 C1.6.5 没有可用运行实例，完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账、缓存、草稿、UBB 与 C1 样式运行验收仍未全部执行；不自动启动 C1.7 或 Z，不 commit、不 push。
+> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1–C1.5 的代码实施、机械检查和主代理人工代码审核均已完成；C1.5 已本地提交为 `733eb045`。C1.6.0 已提交为 `bee0dd05`，C1.6.1 代码与记录已提交为 `61b4d5db`/`ff9702be`，C1.6.2 代码已提交为 `ad1db0e7`，C1.6.3 代码已提交为 `788da9e7`，C1.6.4 已提交为 `fdbe3762`，C1.6.5 代码与记录已提交为 `0c6efc6e`/`b232c6ca`。C1.7.1 的首轮多组件文件拆分已完成；引用复核后用户另行授权直接删除 Legacy Board，旧 `/list` Route、owner、facade 和专属样式已从未提交工作树移除。C1.7.2 的 Status 子批已按用户确认归入 `application/routes/status`，共同页面骨架与样式 owner 已收口；architecture/style guard、modern/legacy typecheck、正式 build 与 diff 检查通过。浏览器运行验收未执行，C1.7.2 其余子批及 C1.7.3–C1.7.7 尚未实施；不自动启动后续阶段，不 commit、不 push。
 >
 > 架构依据：`docs/frontend-directory-architecture-inventory.md`。
 >
@@ -65,10 +65,12 @@ C1.6.2 Topic/Post 样式所有权收口                  已完成（主代理�
 C1.6.3 User 与共享卡片样式所有权收口              已完成（主代理整批审核；浏览器运行验收未执行；已有本地代码提交）
 C1.6.4 Editor/Login/Search/Legacy Board 收口         已完成（主代理整批审核；浏览器运行验收未执行；已有本地代码提交）
 C1.6.5 全仓样式与剩余业务 global 审计               已完成（主代理整批审核；浏览器运行验收未执行；已有本地代码/文档提交）
-C1.7 组件边界、样式所有权与全局边界最终收口          待实施（计划已重写；需单独授权）
+C1.7.1 单文件多组件拆分                              已完成（主代理整批审核；浏览器运行验收未执行；未提交）
+Legacy Board 不可达兼容链删除                        已完成（用户明确授权；机械检查通过；未提交）
+C1.7.2–C1.7.7 真实复用、样式与全局边界收口           待实施（需单独授权）
 ```
 
-### 当前停点：C1.6.5 已完成并本地提交；C1.7 已重写计划但尚未实施，浏览器运行验收未执行，不 commit、不 push、不自动实施后续阶段
+### 当前停点：C1.7.1 与 Legacy Board 删除已完成并停在未提交工作树；浏览器运行验收未执行，不 commit、不 push、不自动实施后续阶段
 
 ### M3.1–M3.6 实施记录（2026-07-30）
 
@@ -2447,10 +2449,12 @@ src/
 │  │  └─ footer/ui/Footer/
 │  │     ├─ Footer.tsx
 │  │     └─ Footer.module.scss
-│  ├─ ui/status-page/
-│  │  ├─ StatusPage.tsx
-│  │  └─ StatusPage.module.scss              # 旧命名状态导出只保留薄配置/适配
 │  └─ routes/
+│     ├─ status/
+│     │  ├─ index.ts                         # 旧命名状态导出只保留薄配置/适配
+│     │  └─ ui/
+│     │     ├─ StatusPage.tsx
+│     │     └─ StatusPage.module.scss
 │     └─ topic/
 │        ├─ page/
 │        │  ├─ TopicPage.tsx
@@ -2512,6 +2516,23 @@ C1.7.6  Ant Design、Spectrum、Router/Portal 等第三方边界限界与登记
 C1.7.7  删除休眠 compatibility、根 Styles 与反向 import；Site.scss 缩为纯入口并启用最终守卫
 ```
 
+#### C1.7.1 单文件多组件拆分实施记录（2026-08-01）
+
+- 以 `cfbfd83c` 干净工作树为基线审计首轮八个候选；`Status.tsx` 的 15 个公开状态组件拆为单独 owner，原文件变为兼容 facade；Home、Header、Board Footer、Board Topic Item 与 Topic Card 保留主组件文件并把独立公开组件或有独立状态/副作用的私有组件拆到相邻文件。Legacy Board 首轮拆分随后被用户授权的整链删除取代，不再保留拆分产物或 facade。
+- `EditorContentHeader`、`EditorTypeRadio` 与 `BoardTopicPreviewPost` 只服务直接父组件、没有独立状态/副作用且生命周期完全一致，按 C1.7 规则登记为共置例外；`generateListPager` 是父组件私有 JSX helper，不作为 React 组件边界。详细调用点、接口、样式 owner 与例外证据见 `docs/refactor-log/c1.7/component-split-audit.md`。
+- public barrel 已指向真实 owner；旧 `Status` 路径及 Home/Header/Board/Topic 原文件继续 re-export。15 个 Status 名称、`SearchBeforeConnent`/`Search` alias、legacy default facade 与 Home/Editor lazy Route 命名导出保持。
+- 除明确删除 Legacy Board 专属 Route、facade、SCSS 和 IIS 重定向目标外，其余请求、Redux/Storage、Router、URL、ID/ref、jQuery、播放器初始化/清理、计时器、文案、DOM 与原注释不变；拆分新增的 Module importer 边已登记，留待 C1.7.3 收口。
+- 删除后同时移除经仓库级复核确认只由 Legacy Board 消费的 10 个零调用 Board/Topic/Moderation API；Current Board 的同类 Route API 与共享活动能力保留。`npm run check:architecture` 通过：314 个现代源码文件、1320 条 import、29 条登记 allowlist；样式守卫通过：65 个真实 CSS Module、0 个过渡 partial、29 个主题、2 个文件中的 2 处 global。modern/legacy typecheck、正式 build 与 `git diff --check` 通过；构建转换 4072 个模块，只有既有 Sass、Spectrum/Lightning CSS 和大 chunk 警告。
+- 浏览器、真实登录/API/权限、默认/暗色主题、Header 搜索/用户菜单、Home/跨 Route 广告、Current Board、Status、Editor 与 Topic 音视频运行验收尚未执行；机械检查和代码审核不替代这些场景。本批不 commit、不 push，不自动进入 C1.7.2。
+
+#### C1.7.2 Status Route 共同骨架实施记录（2026-08-02）
+
+- 用户明确否决在 `application` 顶层新增泛化 `ui/` 层；15 个跨 Router、AppShell、Topic、User Center 与 User Profile 使用的状态展示归入 `src/application/routes/status`，Route 根入口统一公开原 15 个名称，`Components/Status.tsx` 缩为薄兼容转导，现代消费者不再反向依赖旧根目录。
+- 重复的图片、标题、正文与返回链接 DOM 收口到 `StatusPage`；15 个旧命名保持原文本、图片 URL、Link URL、DocumentTitle、导出名和 `Status[error]` 映射。`Disconnected` 与 `ContentNeeded` 继续通过 children 保持原无图片/标题结构，不引入领域状态、请求或 Router 行为改写。
+- 五条 Status 样式声明和值从 Topic Management Module 原样归入相邻 `StatusPage.module.scss`；Topic Management 不再充当跨 Route 样式仓库，CSS Module 冻结基线由 65 更新为 66，29 个主题与两处既有 `:global(...)` 指纹不变。
+- `npm run check:architecture` 通过：316 个现代源码文件、1325 条 import、29 条登记 allowlist；样式守卫通过：66 个真实 CSS Module、0 个过渡 partial、29 个主题、2 个文件中的 2 处 global。modern/legacy typecheck、正式 build（4058 modules transformed）和 `git diff --check` 通过；构建只有既有 Sass、Spectrum/Lightning CSS 与大 chunk 警告。
+- 浏览器、真实权限/API、默认/暗色主题及 15 个状态分支运行验收未执行；本子批不 commit、不 push，不自动实施 C1.7.2 其余候选或 C1.7.3。
+
 Annual Review 的最终删除仍属于 Z4；C1.7 不得借整理样式提前删除业务。若 Z4 尚未实施，C1.7 只把其样式放入明确的冻结 owner，并登记“随 Z4 整体删除”，不得继续留在 `Site.scss`。UBB 实现的完整迁址仍属于 Z2；C1.7 可以先建立最终样式 owner 并由 legacy 入口显式消费，但不得借此改写解析器、Handler 或扩展合同。根 `Components/` 等 legacy 源码目录的整体迁址和删除仍属于 Z；C1.7 只允许为组件边界、真实复用和样式共置所需的窄拆分，必要时让活动 legacy 组件暂时拥有相邻 Module，并登记随 Z 整体移动，不得把 C1.7 扩张为完整 legacy 逻辑迁移。
 
 #### C1.7 验收、守卫与停点
@@ -2567,7 +2588,7 @@ tsconfig.legacy.json
 - `@legacy/*` 使用数为 0，并从 TypeScript、Vite 和架构脚本中移除该 alias；
 - 现代 `tsconfig.json` 覆盖全部活动源码，不再维护根目录 legacy include 和双编译分支；
 - 根目录只保留构建、部署、文档、模板、公开静态资源和工程配置；
-- 旧 `/list` 继续由 `src/application/routes/legacy-board-list` 承接，URL 与现有免检边界不变；除非用户另行授权，不借 Z 删除该公开路由；
+- 用户已另行授权删除旧 `/list`；`src/application/routes/legacy-board-list`、lazy Route、根 facade 与专属样式不再进入 Z，旧 `list.asp` 入口由 IIS 重定向当前 `/board`；
 - `.vscode/` 始终不进入 Z。
 
 ### Z0：全量清单、可达性和合同冻结
@@ -2588,7 +2609,7 @@ CSS/SCSS、JSON、图片、字体和媒体资源引用
 
 Z0 同时冻结下列行为合同：
 
-- 公开 URL、Router 参数、lazy 边界和旧 `/list` 行为；
+- 公开 URL、Router 参数、lazy 边界，以及旧 `list.asp` 到当前 `/board` 的 IIS 重定向；
 - API URL、method、headers、body、response wire shape 和错误语义；
 - Storage/IndexedDB 键、TTL、序列化格式、失效与跨标签行为；
 - UBB 输出、权限标签、内容安全、DOM、CSS、播放器、数学公式和编辑器行为；
@@ -2689,7 +2710,7 @@ Module 根入口只导出业务需要的 `UbbContainer`、`UbbEditor`、解析/�
 
 按消费者闭包处理剩余根级源码：
 
-- `Pages/` 中非 AnnualReview facade 的调用方改到现有 Application Route 公共入口；旧 `/list` 实现只保留 `src/application/routes/legacy-board-list` 的真实 owner；
+- `Pages/` 中非 AnnualReview facade 的调用方改到现有 Application Route 公共入口；旧 `/list` 实现已按用户授权提前完成整链删除；
 - `Components/` 的短 facade 先切换全部调用方再删除；仍有实现的 UI 按复用范围进入业务 Module、Application layout/route 或 Foundation 通用能力，不建立新的泛化 `shared/components` 垃圾桶；
 - `Utility.ts` 逐导出迁到 Module/Foundation 公共入口，逐项证明零消费者后删除，不整文件猜测性删除；
 - `Utility/`、`IndexedDB/` 按数据和副作用 owner 进入 Foundation storage/lib 或对应 Module cache；Storage 键、TTL 和序列化保持不变；
@@ -2865,7 +2886,7 @@ R1  增加架构检查脚本                            已完成
 - 检查脚本结果；
 - 无业务行为变化证明。
 
-骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1–C1.5 均已完成代码实施、机械检查和主代理人工代码审核。C1.5 已提交为 `733eb045`；C1.6.0 已提交为 `bee0dd05`，C1.6.1 代码与记录已提交为 `61b4d5db`/`ff9702be`，C1.6.2 代码已提交为 `ad1db0e7`，C1.6.3 代码已提交为 `788da9e7`，C1.6.4 已提交为 `fdbe3762`，C1.6.5 代码与记录已提交为 `0c6efc6e`/`b232c6ca`。C1.6.5 终态为 71 个真实 CSS Module、2 个文件中的 2 处第三方 global，机械检查和主代理人工代码审核通过；C1.7 已按组件拆分、真实复用、样式共置、动态/第三方边界和根样式收口重新规划，但尚未实施。完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账、缓存、草稿、UBB 与 C1 样式运行验收未全部执行，旧 `/list` 仍仅适用既有免检结论。当前停在 C1.7 实施前，不自动启动 C1.7 或 Z。
+骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1–C1.5 均已完成代码实施、机械检查和主代理人工代码审核。C1.5 已提交为 `733eb045`；C1.6.0 已提交为 `bee0dd05`，C1.6.1 代码与记录已提交为 `61b4d5db`/`ff9702be`，C1.6.2 代码已提交为 `ad1db0e7`，C1.6.3 代码已提交为 `788da9e7`，C1.6.4 已提交为 `fdbe3762`，C1.6.5 代码与记录已提交为 `0c6efc6e`/`b232c6ca`。C1.7.1 首轮多组件文件拆分已完成；用户随后明确授权删除 Legacy Board，旧 `/list` Route、owner、facade 和专属样式已从未提交工作树移除，architecture/style guard、modern/legacy typecheck、正式 build 与 diff 检查通过。浏览器运行验收未执行，当前不自动启动 C1.7.2 或其余 Z 批次。
 
 ## 22. 已确认决策与后续边界
 
@@ -2885,11 +2906,11 @@ R1  增加架构检查脚本                            已完成
 12. `@types/@cc98` 业务声明按真实业务 owner 迁入各 Module，不把 ambient `@cc98/api` 聚合搬入 Foundation；
 13. 纯数据 class 优先改为 `interface`，联合/组合类型使用 `type`，只有存在真实运行时身份、继承、方法或生命周期的对象保留 `class`；
 14. 类型搬移必须保留全部原始注释；没有明确类型且缺少唯一证据的字段先显式写成 `any`、登记类型债务，后续通过独立类型查明批次收窄。
+15. 旧 `/list` Legacy Board 不再保留；删除 Route、owner、根 facade 和专属样式，旧 `list.asp` 链接重定向当前 `/board`。
 
 后续仍需单独授权或审核：
 
-1. S1.1–S1.3、S1.4 六组、S1.5、S1.6 与 S1.7 尚未执行的完整浏览器、登录、真实 API、SignalR、跨标签、缓存与草稿运行验收，C1.1–C1.6.5 的浏览器样式验收，C1.7 的逐批代码实施授权，以及后续每个 Z 子批的代码实施授权；
+1. S1.1–S1.3、S1.4 六组、S1.5、S1.6 与 S1.7 尚未执行的完整浏览器、登录、真实 API、SignalR、跨标签、缓存与草稿运行验收，C1.1–C1.7.1 的浏览器样式/行为验收，C1.7.2–C1.7.7 的逐批代码实施授权，以及后续每个 Z 子批的代码实施授权；
 2. 当前 `useUserProfileContext` 接口及 UserProfileLayout 集中取数边界是否随资料缓存归位或 Redux 闭包再次调整；
 3. A2.3–A2.11 与 M3.1–M3.6 尚未执行的浏览器、登录、真实 API、权限、分页、SignalR、通知权限、上传、编辑器、缓存与 UBB 运行验收；
-4. 旧 `/list` 免检边界是否继续保留；在另行确认前，Z 只删除根 facade，不删除该公开 Route；
-5. UBB 迁入 `modules/ubb` 后的浏览器、权限标签、编辑器、媒体、数学公式和扩展 API 人工验收。
+4. UBB 迁入 `modules/ubb` 后的浏览器、权限标签、编辑器、媒体、数学公式和扩展 API 人工验收。

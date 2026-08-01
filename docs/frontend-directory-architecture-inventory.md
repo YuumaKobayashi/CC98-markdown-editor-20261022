@@ -421,7 +421,6 @@ src/modules/
 
 - `/board/:id` 页面参数；
 - `/boardlist` 页面布局；
-- `/list/:boardId` 兼容路由。
 
 ### 6.2 `topic`
 
@@ -751,7 +750,6 @@ src/application/
 │  ├─ topic/
 │  ├─ board/
 │  ├─ board-list/
-│  ├─ legacy-board-list/
 │  ├─ user-center/
 │  ├─ message-center/
 │  ├─ focus/
@@ -764,8 +762,7 @@ src/application/
 │  ├─ site-management/
 │  ├─ editor/
 │  ├─ legacy-index/
-│  ├─ unauthorized/
-│  └─ not-found/
+│  └─ status/                         # Route 级错误与状态展示的共享 owner
 │
 ├─ compatibility/
 │  ├─ legacy-route-props/
@@ -824,8 +821,6 @@ src/application/routes/
 │
 ├─ board-list/                        # /boardlist
 │
-├─ legacy-board-list/                 # /list/:boardId/:type?/:page?/*
-│
 ├─ user-center/                       # /usercenter
 │  ├─ layout/
 │  ├─ overview/                       # index
@@ -877,9 +872,7 @@ src/application/routes/
 │
 ├─ legacy-index/                      # /index/*
 │
-├─ unauthorized/                      # /error/401/*
-│
-└─ not-found/                         # *
+└─ status/                            # /error/401/*、* 与跨 Route 状态展示
 ```
 
 ## 11. Topic 功能如何同时出现在 Modules 与 Application
