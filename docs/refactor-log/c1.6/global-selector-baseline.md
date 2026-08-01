@@ -12,7 +12,7 @@
 - jQuery、`querySelector`、`getElementById`、`getElementsByClassName`、`classList`、原生事件/ref、React Router 状态和通知显隐逻辑，区分视觉 selector 与行为查询合同；
 - C1.5 风险登记中的 Portal、UBB/Markdown、Ant Design、休眠 producer 与仓外合同边界。
 
-C1.6.0 结果为 42 个真实 CSS Module 中有 16 个文件包含合计 120 处 `:global(...)`。`global(fadeIn)`、`global(fadeOut)` 是 CSS Modules 动画值转义，不计入 selector 基线。下表保留 C1.6.0 历史快照；机器基线位于 `scripts/style-global-baseline.json`，已随 C1.6.2 更新为当前 53 个真实 CSS Module、13 个文件和 70 处 selector。`npm run check:styles` 会校验文件集合、逐文件出现次数和按源码顺序计算的 selector 指纹，禁止未登记新增或静默改写。
+C1.6.0 结果为 42 个真实 CSS Module 中有 16 个文件包含合计 120 处 `:global(...)`。`global(fadeIn)`、`global(fadeOut)` 是 CSS Modules 动画值转义，不计入 selector 基线。下表保留 C1.6.0 历史快照；机器基线位于 `scripts/style-global-baseline.json`，已随 C1.6.3 更新为当前 59 个真实 CSS Module、10 个文件和 47 处 selector。`npm run check:styles` 会校验文件集合、逐文件出现次数和按源码顺序计算的 selector 指纹，禁止未登记新增或静默改写。
 
 ## Selector / producer / consumer / 行为查询清单
 
@@ -75,9 +75,17 @@ Importer 数量按文件静态导入计数，表示样式加载入口，不表�
 - 当前基线从 C1.6.1 的 14 个文件/85 处降为 13 个文件/70 处，CSS Module 总数从 48 增至 53；活动 Topic/Post 目标范围没有新增 selector 级 `:global(...)`，机器基线同步记录 `TopicDetail.module.scss` 的 27 处及新指纹。
 - 浏览器运行时没有可用实例；默认/暗色主题、普通/追踪 Topic、FloorSize、投票、赞踩、签名、Markdown、通知、真实 API/权限、响应式和前进后退仍待执行，不能由机械检查替代。
 
+## C1.6.3 User/Post/Topic 共享卡片与 User Center/Profile 收口
+
+- `UserRecentPostItem`、`UserRecentTopicItem` 与 `UserCenterFavoriteTopicItem` 分别直接导入并消费自有 Module；卡片信息栏、版面、时间、赞踩计数和正文不再由 User Center Route 反向命中。Route 仍拥有列表、分隔线和操作栏编排，没有扩展组件 props 或模块公开导出。
+- `UserFollowCard`、`UserCenterAvatarSettings` 与 `UserCenterPager` 分别接管卡片、头像裁剪器和分页样式。头像 `cover`、`selector`、`resize` 的固定 ID、refs、原生监听及按 ID 区分拖动/缩放的行为保持，只增加局部视觉 class；纯视觉 `userCenterPageCount` ID 已删除。
+- `ConfigSignature`、`UserProfile` 与 `UserProfileDetails` 改为组件局部 class；无脚本、可访问性或锚点消费者的 `signature`、`userId`、`unfollow`、`userIntroducion`、`userGenderAndBirthday` 视觉 ID 已删除，既有 `userIntroducion` 拼写未改。三个 recent-item JSX 中的 Font Awesome 注释保持原样，仅删除没有活动 producer 的两条休眠样式。
+- User 范围 23 处 selector 级 `:global(...)` 全部清零，当前基线从 13 个文件/70 处降为 10 个文件/47 处，真实 CSS Module 从 53 增至 59；没有新增 global，机器基线保留其余 10 个文件的既有 selector 指纹。
+- 浏览器连接器没有可用实例；默认/暗色主题、用户中心概览/帖子/主题/历史/收藏/关注/粉丝/设置、公开用户主页、头像拖动/缩放/上传、分页前进后退、真实 API/权限和响应式仍待执行，不能由机械检查替代。
+
 ## 冻结与停点
 
 - C1.6.0 不删除任何休眠规则，也不为无 producer 规则制造节点或空锚点。
 - 后续每个 C1.6 子批必须同步更新机器基线与本清单，并解释数量减少、owner 改变及行为查询是否迁移；只减少数字不构成验收。
 - 本批没有执行浏览器视觉、主题切换、真实 API、权限、Portal、UBB/editor 或跨 Route 运行验收；机械检查不能替代这些场景。
-- C1.6.0 已提交为 `bee0dd05`，C1.6.1 已提交为 `61b4d5db`/`ff9702be`；C1.6.2 用户人工审核通过后，代码已提交为 `ad1db0e7`，本清单随单独文档 checkpoint 提交。未 push，不自动启动 C1.6.3、C1.7 或 Z。
+- C1.6.0 已提交为 `bee0dd05`，C1.6.1 已提交为 `61b4d5db`/`ff9702be`；C1.6.2 用户人工审核通过后，代码已提交为 `ad1db0e7`，本清单随单独文档 checkpoint 提交。C1.6.3 用户人工审核通过后，代码已提交为 `788da9e7`，本清单随单独文档 checkpoint 提交；未 push，不自动启动 C1.6.4、C1.7 或 Z。
