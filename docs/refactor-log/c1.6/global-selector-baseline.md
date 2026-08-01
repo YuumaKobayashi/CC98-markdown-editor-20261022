@@ -12,7 +12,7 @@
 - jQuery、`querySelector`、`getElementById`、`getElementsByClassName`、`classList`、原生事件/ref、React Router 状态和通知显隐逻辑，区分视觉 selector 与行为查询合同；
 - C1.5 风险登记中的 Portal、UBB/Markdown、Ant Design、休眠 producer 与仓外合同边界。
 
-C1.6.0 结果为 42 个真实 CSS Module 中有 16 个文件包含合计 120 处 `:global(...)`。`global(fadeIn)`、`global(fadeOut)` 是 CSS Modules 动画值转义，不计入 selector 基线。下表保留 C1.6.0 历史快照；机器基线位于 `scripts/style-global-baseline.json`，已随 C1.6.3 更新为当前 59 个真实 CSS Module、10 个文件和 47 处 selector。`npm run check:styles` 会校验文件集合、逐文件出现次数和按源码顺序计算的 selector 指纹，禁止未登记新增或静默改写。
+C1.6.0 结果为 42 个真实 CSS Module 中有 16 个文件包含合计 120 处 `:global(...)`。`global(fadeIn)`、`global(fadeOut)` 是 CSS Modules 动画值转义，不计入 selector 基线。下表保留 C1.6.0 历史快照；机器基线位于 `scripts/style-global-baseline.json`，已随 C1.6.4 更新为当前 58 个真实 CSS Module、3 个文件和 29 处 selector。`npm run check:styles` 会校验文件集合、逐文件出现次数和按源码顺序计算的 selector 指纹，禁止未登记新增或静默改写。
 
 ## Selector / producer / consumer / 行为查询清单
 
@@ -83,9 +83,17 @@ Importer 数量按文件静态导入计数，表示样式加载入口，不表�
 - User 范围 23 处 selector 级 `:global(...)` 全部清零，当前基线从 13 个文件/70 处降为 10 个文件/47 处，真实 CSS Module 从 53 增至 59；没有新增 global，机器基线保留其余 10 个文件的既有 selector 指纹。
 - 浏览器连接器没有可用实例；默认/暗色主题、用户中心概览/帖子/主题/历史/收藏/关注/粉丝/设置、公开用户主页、头像拖动/缩放/上传、分页前进后退、真实 API/权限和响应式仍待执行，不能由机械检查替代。
 
+## C1.6.4 Editor/Login/Search/Legacy Board 收口
+
+- Editor 的 11 处 global 全部删除：`.createTopicBoardName` 与 `EditorTopic.module.scss` 的固定 ID/class 在源码、根 `Components`、public、UBB/Markdown 依赖及生产 bundle 均无 producer；删除休眠规则及仅用于保活的 Module anchor，不制造替代 DOM，也不修改活动 Editor 行为。
+- Login 的 `#loginMessage` 改为页面直接消费的局部 class并删除纯视觉 ID；Search 的结果、加载、完成、空态和错误态改用原生 `hidden`，删除 `.noResult:global(.displaynone)` 与无 consumer 的错拼 `.rusultErr`，不改状态机、请求或历史 `resultErr` 字符串。
+- Legacy Board 的 5 处 global 全部删除：浏览/回复计数与普通/置顶行改由 `LegacyBoardTopicItem` 自有 class，版面事件奇偶行改由 `BoardModerationRecordItem` 自有 Module；纯视觉 ID、无 producer 的 `boardTopics`/`notice`/`essay` 与两份失效 compatibility partial 删除，动态标题/IP ID 和 jQuery 行为保持。
+- 当前基线从 C1.6.3 的 10 个文件/47 处降为 3 个文件/29 处，真实 CSS Module 从 59 降至 58；Editor、Login、Search、Legacy Board 范围没有新增 selector 级 global。剩余为 `Board.module.scss` 与 `NewTopics.module.scss` 各 1 处第三方 DOM，以及 `TopicDetail.module.scss` 冻结的 27 处固定/休眠 selector，留待 C1.6.5 复核和 C1.7 归界。
+- 浏览器运行时没有可用实例；Editor、Login、Search、Legacy Board、默认/暗色主题、真实 API/权限和响应式仍待执行，不能由机械检查或生产 build 替代。
+
 ## 冻结与停点
 
 - C1.6.0 不删除任何休眠规则，也不为无 producer 规则制造节点或空锚点。
 - 后续每个 C1.6 子批必须同步更新机器基线与本清单，并解释数量减少、owner 改变及行为查询是否迁移；只减少数字不构成验收。
-- 本批没有执行浏览器视觉、主题切换、真实 API、权限、Portal、UBB/editor 或跨 Route 运行验收；机械检查不能替代这些场景。
-- C1.6.0 已提交为 `bee0dd05`，C1.6.1 已提交为 `61b4d5db`/`ff9702be`；C1.6.2 用户人工审核通过后，代码已提交为 `ad1db0e7`，本清单随单独文档 checkpoint 提交。C1.6.3 用户人工审核通过后，代码已提交为 `788da9e7`，本清单随单独文档 checkpoint 提交；未 push，不自动启动 C1.6.4、C1.7 或 Z。
+- C1.6.4 没有执行浏览器视觉、主题切换、真实 API、权限、UBB/editor 或跨 Route 运行验收；机械检查不能替代这些场景。
+- C1.6.0 已提交为 `bee0dd05`，C1.6.1 已提交为 `61b4d5db`/`ff9702be`；C1.6.2 用户人工审核通过后，代码已提交为 `ad1db0e7`，本清单随单独文档 checkpoint 提交。C1.6.3 用户人工审核通过后，代码已提交为 `788da9e7`，本清单随单独文档 checkpoint 提交；C1.6.4 用户人工审核通过后，代码已提交为 `fdbe3762`，本清单随单独文档 checkpoint 提交；未 push，不自动启动 C1.6.5、C1.7 或 Z。
