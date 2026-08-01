@@ -19,7 +19,7 @@ import { TopicAwardList } from "./TopicAwardList";
 import { TopicReplier } from "./TopicReplier";
 import { TopicReplyContent } from "./TopicReplyContent";
 import { TopicReplySignature } from "./TopicReplySignature";
-import styles from "../../TopicDetail.module.scss";
+import styles from "./TopicReplyList.module.scss";
 
 export { FloorSize } from "@modules/post";
 

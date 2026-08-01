@@ -1,0 +1,74 @@
+.replierBtn {
+  background-color: var(--cc98-theme-color-main);
+  color: #fff;
+  border: #fff solid thin;
+  border-radius: 0.63rem;
+  width: 2.6rem;
+  height: 1.4rem;
+  cursor: pointer;
+  font-size: 0.6rem;
+  overflow: visible;
+}
+
+.userGender {
+  display: flex;
+  justify-content: flex-end;
+  width: 90%;
+  font-size: 1rem;
+  z-index: 200;
+}
+
+.userPortrait {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  box-shadow: 0 0 5px;
+}
+
+.userMessage {
+  align-items: flex-start;
+  background-color: var(--cc98-theme-color-main);
+  color: #fff;
+  width: 15.5rem;
+  display: flex;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  font-size: 0.75rem;
+}
+
+.userMessageAnonymous {
+  color: #fff;
+  border: thin solid #fff;
+  margin-top: 1.25rem;
+  border-radius: 1rem;
+  width: 6rem;
+  margin-left: 1rem;
+  text-align: center;
+}
+
+.userMessage-left {
+  padding-top: 1.5rem;
+  width: 8.3rem;
+}
+
+.userMessage-right {
+  width: 7.2rem;
+  padding-right: 0.5rem;
+}
+
+.userMessage-userName {
+  font-size: 1rem;
+  font-weight: bold;
+  font-family: 微软雅黑;
+  margin-left: 1.5rem;
+}
+
+.userMessageOpt {
+  white-space: nowrap;
+  line-height: 1.25rem;
+  font-family: 微软雅黑;
+}
+
+.userMessageBtn {
+  margin-top: 1.5rem;
+}

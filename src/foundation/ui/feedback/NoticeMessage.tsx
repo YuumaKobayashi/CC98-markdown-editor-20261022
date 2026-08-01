@@ -4,6 +4,8 @@
 
 import * as React from "react";
 
+import styles from "./NoticeMessage.module.scss";
+
 interface NoticeMessageProps {
   text: string;
   id: string;
@@ -50,7 +52,7 @@ export function SendTopicNoticeMessage({
   id,
 }: SendTopicNoticeMessageProps) {
   return (
-    <div className="send-topic-notice-success displaynone" id={id}>
+    <div className={`${styles.sendTopicNoticeSuccess} displaynone`} id={id}>
       {"操作失败。" + text}
     </div>
   );

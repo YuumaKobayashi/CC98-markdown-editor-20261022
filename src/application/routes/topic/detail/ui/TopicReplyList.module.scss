@@ -1,0 +1,9 @@
+.reply {
+  width: 100%;
+  margin-top: 1rem;
+  border: var(--cc98-theme-color-main) solid 2px;
+  background-color: var(--cc98-background-color-textarea);
+  flex-direction: row;
+  display: flex;
+  position: relative;
+}

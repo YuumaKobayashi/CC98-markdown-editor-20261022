@@ -14,7 +14,6 @@ import { noticeMessageShow } from "@modules/notification";
 import { HomeAdvertisementCarousel } from "@application/routes/home/advertisement";
 import { copyToClipboard } from "@foundation/lib/dom";
 import { NoticeMessage } from "@legacy/Components/NoticeMessage";
-import styles from "../../TopicDetail.module.scss";
 import actionStyles from "../../TopicHeaderActions.module.scss";
 import infoStyles from "../../TopicHeaderInfo.module.scss";
 
@@ -123,8 +122,8 @@ export function TopicHeader(props: TopicHeaderProps) {
   const boardUrl = `/board/${boardInfo.id}`;
   const tags =
     tag1 || tag2 ? (
-      <div id="tags">
-        <div className={`tagProp ${styles.tagSize}`}>
+      <div id="tags" className={infoStyles.tags}>
+        <div className={`tagProp ${infoStyles.tagSize}`}>
           标签： {tag1Name} {tag2Name}
         </div>
         <div className="tagProp"></div>
@@ -134,35 +133,38 @@ export function TopicHeader(props: TopicHeaderProps) {
   return (
     <div className={infoStyles["topicInfo-info"]}>
       <div className={infoStyles["topicInfo-title"]}>
-        <div className="column" id="topicTitleProp">
+        <div
+          className={`column ${infoStyles.topicTitleProp}`}
+          id="topicTitleProp"
+        >
           <div
             id="essay1"
-            className="row"
+            className={`row ${infoStyles.essay}`}
             title={title.length > overflowLen ? title : undefined}
           >
             {title.length <= overflowLen
               ? title
               : title.slice(0, overflowLen) + " ..."}
           </div>
-          <div className="row" id="essayProp">
+          <div className={`row ${infoStyles.essayProp}`} id="essayProp">
             {tags}
-            <div id="time">
+            <div id="time" className={infoStyles.time}>
               <div className="viewProp">
                 <i className="fa fa-clock-o fa-lg fa-fw"></i>
               </div>{" "}
-              <div className={`${styles.timeProp} ${styles.tagSize}`}>
+              <div className={`${infoStyles.timeProp} ${infoStyles.tagSize}`}>
                 {moment(topicInfo.time).format("YYYY-MM-DD HH:mm:ss")}
               </div>
             </div>
-            <div id="viewtimes">
+            <div id="viewtimes" className={infoStyles.viewtimes}>
               <div className="viewProp">
                 <i className="fa fa-eye fa-lg fa-fw"></i>{" "}
               </div>{" "}
-              <div className={`${styles.timeProp} ${styles.tagSize}`}>
+              <div className={`${infoStyles.timeProp} ${infoStyles.tagSize}`}>
                 {topicInfo.hitCount}
               </div>
             </div>
-            <div id="followCount">
+            <div id="followCount" className={infoStyles.followCount}>
               <div className="viewProp">
                 {isFollow ? (
                   <i className="fa fa-star fa-lg fa-fw"></i>
@@ -170,7 +172,7 @@ export function TopicHeader(props: TopicHeaderProps) {
                   <i className="fa fa-star-o fa-lg fa-fw"></i>
                 )}{" "}
               </div>{" "}
-              <div className={`${styles.timeProp} ${styles.tagSize}`}>
+              <div className={`${infoStyles.timeProp} ${infoStyles.tagSize}`}>
                 {followCount}
               </div>
             </div>

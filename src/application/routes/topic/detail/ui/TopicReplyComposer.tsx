@@ -11,7 +11,6 @@ import { NavigationPrompt } from "@application/router/navigation-prompt";
 import { Button, Modal } from "antd";
 import moment from "moment";
 import { MarkdownEditor } from "@foundation/integrations/markdown-editor";
-import styles from "../../TopicNotices.module.scss";
 import * as Showdown from "showdown";
 import { RightTagHandler } from "@legacy/Ubb/RightTagHandler";
 import { isMaster } from "@modules/board";
@@ -269,7 +268,7 @@ export const TopicReplyComposer = React.forwardRef(function TopicReplyComposer(
   const generateErrorNoticeMessage = (errorMessage: ErrorMessage, index: number) => {
     return (
       <SendTopicNoticeMessage
-        key={`${styles.postRoot}-${index}`}
+        key={`${errorMessage.errorMessageText}-${index}`}
         text={errorMessage.errorMessageDescription}
         id={errorMessage.errorMessageText}
       />
@@ -1012,12 +1011,12 @@ ${nextContent.content}[/quote]
           {/**错误提示 */}
           {errorMessageSet.map(generateErrorNoticeMessage)}
           <SendTopicNoticeMessage
-            key={`${styles.postRoot}-other`}
+            key="reply-error-other"
             text="other"
             id="出现了意料之外的错误，请稍后重试。如果依然出现该问题，请联系管理员。"
           />
           <SendTopicNoticeMessage
-            key={`${styles.postRoot}-unknown`}
+            key="reply-error-unknown"
             text="unknown_error"
             id="原因未知，请刷新重试。如果依然出现该问题，请联系管理员。"
           />

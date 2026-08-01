@@ -5,7 +5,7 @@ import { Link } from "react-router";
 import { updateUserInfo } from "@modules/user";
 import { getMyInfo } from "@modules/session";
 import { updateFollowedUser } from "../api/service";
-import styles from "../../TopicDetail.module.scss";
+import styles from "./TopicReplier.module.scss";
 
 export interface TopicReplierProps {
   userInfo: any;

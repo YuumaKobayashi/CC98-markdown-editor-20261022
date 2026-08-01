@@ -16,7 +16,7 @@ import { NoticeMessage } from "@legacy/Components/NoticeMessage";
 import { UbbContainer } from "@legacy/Components/UbbContainer";
 import { UbbCodeOptions } from "@legacy/Ubb/UbbCodeExtension";
 import { QuoteContext, QuoteTraceContext } from "../model/quote-context";
-import styles from "../../TopicDetail.module.scss";
+import styles from "./TopicReplySignature.module.scss";
 
 export interface TopicReplySignatureProps {
   postInfo: any;
@@ -247,7 +247,7 @@ export function TopicReplySignature(props: TopicReplySignatureProps) {
             ></i>
             <span className={styles.commentProp}> {dislikeNumber}</span>
           </div>
-          <div id="commentlike">
+          <div id="commentlike" className={styles.commentActions}>
             <div
               className={styles.operation1}
               onClick={() => changeJudgeVisible(true, postInfo)}

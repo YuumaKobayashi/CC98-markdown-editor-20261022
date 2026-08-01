@@ -1,5 +1,5 @@
 /**回帖失败提示 */
-:global(.send-topic-notice-success) {
+.sendTopicNoticeSuccess {
   display: flex;
   position: fixed;
   top: 40%;
@@ -20,21 +20,8 @@
   border-radius: 0.8rem;
 }
 
-:global(.send-topic-notice-success.noticeDisplaynone) {
+.sendTopicNoticeSuccess[class~="noticeDisplaynone"] {
   animation-name: global(fadeOut);
   animation-duration: 3s;
   animation-fill-mode: forwards;
 }
-
-.postRoot {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: #ffffff;
-  font-family: 微软雅黑;
-  width: 100%;
-  border: #eaeaea solid thin;
-  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2);
-}
-

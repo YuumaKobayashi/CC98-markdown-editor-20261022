@@ -9,7 +9,7 @@ import {
   selectCurrentUser,
 } from "@modules/session";
 import { submitTopicVote } from "../api/service";
-import styles from "../../TopicDetail.module.scss";
+import styles from "./TopicVote.module.scss";
 
 type VoteItem = {
   id: number;

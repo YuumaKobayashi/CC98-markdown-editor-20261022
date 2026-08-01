@@ -73,24 +73,6 @@
   border-right: legacy.$bgcolor solid thin;
 }
 
-:global(#topicTitleProp) {
-  width: 44.5rem;
-  height: 6rem;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-:global(#essay1) {
-  margin-left: 1.5rem;
-  margin-top: 0.5rem;
-  align-items: center;
-  height: 4rem;
-  font-size: 1.25rem;
-  padding-right: 1rem;
-  word-break: break-word;
-}
-
 .titleProp {
   color: #ff8838;
   font-size: 1rem;
@@ -102,30 +84,11 @@
   font-size: 16px;
 }
 
-:global(#essayProp) {
-  margin-left: 1.4rem;
-  display: flex;
-  font-size: 0.75rem;
-  color: var(--cc98-theme-color-main);
-}
-
 :global(#like) {
   flex-grow: 0;
   margin-bottom: 1rem;
   margin-left: auto;
   margin-right: 1rem;
-}
-
-:global(#tags) {
-  display: flex;
-  flex-wrap: nowrap;
-  word-break: keep-all;
-  margin-right: 0.6rem;
-}
-
-// TODO(C1 follow-up): Split this class into semantic Topic Header, Topic Award, and Legacy Board metadata names.
-.tagSize {
-  font-size: 0.75rem;
 }
 
 :global(#essayGrow) {
@@ -136,30 +99,6 @@
 :global(#onlike) {
   border: none;
   background-color: #ffffff;
-}
-
-:global(#time) {
-  display: flex;
-  flex-direction: row;
-}
-
-// TODO(C1 follow-up): Split this class into semantic Topic Header and Legacy Board metadata names.
-.timeProp {
-  margin-left: 0.1875rem;
-  font-size: 0.75rem;
-  word-break: keep-all;
-}
-
-:global(#time) img {
-  width: 0.625rem;
-  height: 0.625rem;
-}
-
-:global(#viewtimes),
-:global(#followCount) {
-  display: flex;
-  flex-direction: row;
-  margin-left: 0.5rem;
 }
 
 :global(#liked) img {
@@ -222,73 +161,6 @@
   border-top: #eaeaea thin solid;
 }
 
-.replierBtn {
-  background-color: var(--cc98-theme-color-main);
-  color: #fff;
-  border: #fff solid thin;
-  border-radius: 0.63rem;
-  width: 2.6rem;
-  height: 1.4rem;
-  cursor: pointer;
-  font-size: 0.6rem;
-  overflow: visible;
-}
-
-.userGender {
-  display: flex;
-  justify-content: flex-end;
-  width: 90%;
-  font-size: 1rem;
-  z-index: 200;
-}
-
-.userPortrait {
-  width: 5rem;
-  height: 5rem;
-  border-radius: 50%;
-  box-shadow: 0 0 5px;
-}
-
-.signature {
-  color: rgb(80, 80, 80);
-  margin-left: 1.25rem;
-  margin-bottom: 1.25rem;
-  padding-top: 1rem;
-  word-break: break-all;
-  border-top: var(--cc98-theme-color-main) solid thin;
-  width: 100%;
-  padding-left: 2rem;
-  padding-right: 2rem;
-  max-height: 300px;
-  overflow: hidden;
-}
-
-.signature img {
-  max-height: 12.5rem;
-  max-width: 32.5rem;
-  overflow: hidden;
-}
-
-.signature iframe {
-  width: 500px;
-  max-height: 300px;
-  overflow: hidden;
-}
-
-.upup {
-  cursor: pointer;
-  display: flex;
-}
-
-.downdown {
-  cursor: pointer;
-  display: flex;
-}
-
-.commentProp {
-  margin-left: 0.2rem;
-}
-
 .comment {
   display: flex;
   flex-direction: row;
@@ -298,22 +170,6 @@
   margin-left: 2rem;
   padding-bottom: 1rem;
   margin-right: 2rem;
-}
-
-.comment1 {
-  display: flex;
-  flex-direction: row;
-  font-size: 0.75rem;
-  align-items: flex-end;
-  padding-bottom: 0.3rem;
-  color: var(--cc98-theme-color-main);
-  align-items: center;
-  justify-content: space-between;
-}
-
-:global(#commentlike) {
-  display: flex;
-  align-items: flex-end;
 }
 
 :global(#commentliked) {
@@ -339,18 +195,6 @@
   background-color: #ffffff;
   margin-left: 0.625rem;
   outline: none;
-}
-
-.vote {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  border-left: #eaeaea solid thin;
-  border-bottom: #eaeaea solid thin;
-  border-right: #eaeaea solid thin;
-  font-size: 0.875rem;
-  box-sizing: border-box;
 }
 
 .buttonFont {
@@ -388,101 +232,6 @@
   flex-wrap: nowrap;
 }
 
-.reply {
-  width: 100%;
-  margin-top: 1rem;
-  border: var(--cc98-theme-color-main) solid 2px;
-  background-color: var(--cc98-background-color-textarea);
-  flex-direction: row;
-  display: flex;
-  position: relative;
-
-  :global(.reply-floor) {
-    flex-shrink: 0;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    right: -0.8rem;
-    background-color: var(--cc98-theme-color-main);
-    text-align: center;
-    line-height: 40px;
-    position: relative;
-    top: 70px;
-    color: #ffffff;
-    font-family: "微软雅黑";
-    font-size: 16px;
-  }
-
-  :global(.reply-floor-lz) {
-    flex-shrink: 0;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    right: -0.8rem;
-    background-color: var(--cc98-theme-color-main);
-    text-align: center;
-    line-height: 40px;
-    position: relative;
-    top: -15px;
-    color: #ffffff;
-    font-family: "微软雅黑";
-    font-size: 14px;
-  }
-
-  :global(.reply-floor-small) {
-    @extend :global(.reply-floor);
-    font-size: 10px;
-  }
-}
-
-.userMessage {
-  align-items: flex-start;
-  background-color: var(--cc98-theme-color-main);
-  color: #fff;
-  width: 15.5rem;
-  display: flex;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  font-size: 0.75rem;
-}
-
-.userMessageAnonymous {
-  color: #fff;
-  border: thin solid #fff;
-  margin-top: 1.25rem;
-  border-radius: 1rem;
-  width: 6rem;
-  margin-left: 1rem;
-  text-align: center;
-}
-
-.userMessage-left {
-  padding-top: 1.5rem;
-  width: 8.3rem;
-}
-
-.userMessage-right {
-  width: 7.2rem;
-  padding-right: 0.5rem;
-}
-
-.userMessage-userName {
-  font-size: 1rem;
-  font-weight: bold;
-  font-family: 微软雅黑;
-  margin-left: 1.5rem;
-}
-
-.userMessageOpt {
-  white-space: nowrap;
-  line-height: 1.25rem;
-  font-family: 微软雅黑;
-}
-
-.userMessageBtn {
-  margin-top: 1.5rem;
-}
-
 .rpyClr {
   font-size: 1.25rem;
   width: 8rem;
@@ -506,27 +255,6 @@
   height: 3rem;
   display: flex;
   justify-content: flex-end;
-}
-
-.operation1 {
-  word-break: keep-all;
-  font-size: 0.75rem;
-  font-family: 微软雅黑;
-  color: #000000;
-  outline: none;
-  cursor: pointer;
-  color: var(--cc98-theme-color-main);
-  border: var(--cc98-theme-color-main) solid thin;
-  border-radius: 1rem;
-  width: 2.25rem;
-  height: 1.25rem;
-  text-align: center;
-  margin-left: 0.5rem;
-  line-height: 1.25rem;
-
-  a {
-    color: var(--cc98-theme-color-main);
-  }
 }
 
 .operation {
