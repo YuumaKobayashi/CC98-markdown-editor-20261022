@@ -1,5 +1,6 @@
 import * as React from "react";
 import { UbbContainer } from "@legacy/Components/UbbContainer";
+import styles from "../Home.module.scss";
 
 interface AnnouncementComponentProps {
   data: any;
@@ -15,17 +16,17 @@ export function AnnouncementComponent(
   if (data == "") return <div></div>;
 
   return (
-    <div className="announcement">
-      <div className="mainPageTitle1">
-        <div className="mainPageTitleRow" style={{ width: "100%" }}>
+    <div className={styles.announcement}>
+      <div className={styles.mainPageTitle1}>
+        <div className={styles.mainPageTitleRow} style={{ width: "100%" }}>
           <i className="fa fa-volume-up"></i>
-          <div style={{ flexGrow: 1 }} className="mainPageTitleText">
+          <div style={{ flexGrow: 1 }} className={styles.mainPageTitleText}>
             全站公告
           </div>
           {/*<CountDown endDate={new Date('05/26/2018 05:30 PM')} />*/}
         </div>
       </div>
-      <div className="announcementContent">
+      <div className={styles.announcementContent}>
         <UbbContainer code={data} />
       </div>
     </div>

@@ -6,6 +6,7 @@ import { MessageSystembox, type MessageSystemProps } from "@modules/notification
 import { getMessageSystem } from "@modules/notification";
 import { getTotalPage } from "@modules/notification";
 import { DocumentTitle } from "@foundation/ui/document-title";
+import styles from "../../MessageCenter.module.scss";
 import { Pager } from "@foundation/ui/pagination";
 
 import {
@@ -56,9 +57,9 @@ export function MessageSystemPage() {
   }, [page]);
 
   return (
-    <div className="message-right">
+    <div className={styles["message-right"]}>
       <DocumentTitle title="系统通知-CC98论坛" />
-      <div className="message-system">
+      <div className={styles["message-system"]}>
         {state.data.map((item) => (
           <MessageSystembox
             key={item.id}
@@ -73,7 +74,7 @@ export function MessageSystemPage() {
           />
         ))}
       </div>
-      <div className="message-pager">
+      <div className={styles["message-pager"]}>
         <Pager
           url="/message/system/"
           page={state.page}

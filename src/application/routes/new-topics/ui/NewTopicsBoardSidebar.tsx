@@ -5,6 +5,8 @@ import { Link } from "react-router";
 
 import { getBoards } from "@modules/board";
 
+import styles from "../NewTopics.module.scss";
+
 const { Panel } = Collapse;
 
 //TODO: hard code here
@@ -45,7 +47,7 @@ const renderBoardPanelContent = (boards: any[]) => {
             paddingBottom: "4px",
             whiteSpace: "nowrap",
           }}
-          className="card-topic-area-left-content-collapse-item"
+          className={styles["card-topic-area-left-content-collapse-item"]}
         >
           <Link
             target="_blank"
@@ -64,7 +66,7 @@ const renderBoardPanel = (data: any) => (
   <Panel
     header={<div style={{ color: "black" }}>{data.name}</div>}
     key={data.order}
-    className="card-topic-area-left-content-collapse"
+    className={styles["card-topic-area-left-content-collapse"]}
   >
     <div
       style={{
@@ -87,7 +89,7 @@ const registerScrollListener = () => {
   let translateY = 0;
   let beforeScrollTop = 0;
   const side = document.querySelector<HTMLElement>(
-    ".card-topic-area-left-content"
+    `.${styles["card-topic-area-left-content"]}`
   );
 
   const handleScroll = () => {

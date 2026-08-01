@@ -1,3 +1,11 @@
+.reply-content {
+  width: 100%;
+  display: flex;
+  align-self: flex-start;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
 .replyRoot {
   display: flex;
   flex-direction: column;

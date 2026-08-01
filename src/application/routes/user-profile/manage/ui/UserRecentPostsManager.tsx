@@ -4,6 +4,8 @@ import { Link } from "react-router";
 import { getBoardName } from "@modules/board";
 import { getToken } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
+import userCenterStyles from "../../../user-center/UserCenter.module.scss";
+import styles from "../../UserProfileManagement.module.scss";
 
 interface UserRecentPostsManagerProps {
   /**
@@ -113,7 +115,7 @@ export function UserRecentPostsManager({
   return (
     <div>
       <h2>查看用户最近发言</h2>
-      <div className="user-manager">
+      <div className={styles["user-manager"]}>
         <p>天数：</p>
         <input
           type="number"
@@ -153,29 +155,29 @@ export function UserRecentPostsManager({
           跳转
         </button>
       </div>
-      <div className="user-manage-return">
+      <div className={styles["user-manage-return"]}>
         <p>{info}</p>
       </div>
       {!isLoading ? (
         <div>
           {posts.map((item) => (
             <div
-              className="user-manage-post"
+              className={styles["user-manage-post"]}
               key={`${item.topicId}-${item.floor}-${item.time}`}
             >
-              <p className="user-manage-post-date">
+              <p className={styles["user-manage-post-date"]}>
                 {item.time.slice(0, 19).replace("T", " ")}
               </p>
               {item.floor === -1 ? (
                 <p
-                  className="user-manage-post-content"
+                  className={styles["user-manage-post-content"]}
                   title={item.content.slice(0, 1000)}
                 >
                   {item.content}
                 </p>
               ) : (
                 <Link
-                  className="user-manage-post-content"
+                  className={styles["user-manage-post-content"]}
                   to={`/topic/${item.topicId}/${
                     Math.floor((item.floor - 1) / 10) + 1
                   }#${item.floor % 10 === 0 ? 10 : item.floor % 10}`}
@@ -186,16 +188,16 @@ export function UserRecentPostsManager({
                 </Link>
               )}
               <Link
-                className="user-manage-post-board"
+                className={styles["user-manage-post-board"]}
                 to={`/board/${item.boardId}`}
                 target="_blank"
               >
                 {item.boardName}
               </Link>
-              <p className="user-manage-post-floor">
+              <p className={styles["user-manage-post-floor"]}>
                 {item.floor === -1 ? "已删除" : item.floor}
               </p>
-              <p className="user-manage-post-ip">{item.ip}</p>
+              <p className={styles["user-manage-post-ip"]}>{item.ip}</p>
             </div>
           ))}
           {posts.length > 0 ? (
@@ -206,7 +208,7 @@ export function UserRecentPostsManager({
           ) : null}
         </div>
       ) : (
-        <div className="user-center-loading">
+        <div className={userCenterStyles["user-center-loading"]}>
           <p className="fa fa-spinner fa-pulse fa-2x fa-fw" />
         </div>
       )}

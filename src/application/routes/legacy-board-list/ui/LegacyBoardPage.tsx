@@ -18,6 +18,7 @@ import DocumentTitle from "@foundation/ui/document-title";
 
 import { BoardActionsAndAdvertisement } from "@application/routes/board";
 import { BoardBreadcrumb } from "@application/routes/board";
+import rootStyles from "../LegacyBoardRoot.module.scss";
 import { LegacyBoardHeader } from "./LegacyBoardHeader";
 import { LegacyBoardRecords } from "./LegacyBoardRecords";
 import {
@@ -89,7 +90,7 @@ export function LegacyBoardPage() {
 
   const recordTopicsUrl = `/board/${boardId}/record/`;
   return (
-    <div id="listRoot">
+    <div id="listRoot" className={rootStyles.listRoot}>
       <DocumentTitle title={`${boardInfo.name} - CC98论坛`} />
       <BoardBreadcrumb boardId={boardId as any} boardInfo={boardInfo} />
       <LegacyBoardHeader

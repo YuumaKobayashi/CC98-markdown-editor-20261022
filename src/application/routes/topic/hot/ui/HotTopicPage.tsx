@@ -5,6 +5,8 @@ import { getMonthlyHotTopic } from "@modules/topic";
 import type { FocusTopic } from "@legacy/Props/FocusTopic";
 import DocumentTitle from "@foundation/ui/document-title";
 
+import styles from "../../../focus/Focus.module.scss";
+
 export type HotTopicKind = "weekly" | "monthly" | "history";
 
 interface HotTopicPageProps {
@@ -61,12 +63,12 @@ export function HotTopicPage({ breadcrumb, kind, title }: HotTopicPageProps) {
   }, [kind]);
 
   return (
-    <div className="focus-root">
+    <div className={styles["focus-root"]}>
       <DocumentTitle title={`${title} - CC98论坛`} />
-      <div className="focus">
+      <div className={styles.focus}>
         {breadcrumb}
-        <div className="focus-topic-area">
-          <div className="focus-topic-topicArea">
+        <div className={styles["focus-topic-area"]}>
+          <div className={styles["focus-topic-topicArea"]}>
             {topics.map(renderFocusTopic)}
           </div>
         </div>

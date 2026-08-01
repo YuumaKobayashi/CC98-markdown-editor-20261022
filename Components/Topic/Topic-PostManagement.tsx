@@ -3,6 +3,8 @@ import * as Utility from '../../Utility';
 import $ from 'jquery';
 import { match } from "@application/router/legacy-route-props";
 import { BoardState } from '../../States/AppState';
+import styles from "../../src/application/routes/topic/TopicManagement.module.scss";
+import actionStyles from "../../src/application/routes/topic/TopicManagementActions.module.scss";
 interface Props {
     userId;
     postId;
@@ -281,26 +283,26 @@ export class PostManagement extends React.Component<Props, {wealth: number, pres
         let m_wealth:any = 0;
         if (!this.props.m_wealth) m_wealth = '不限';
         else m_wealth = this.props.m_wealth;
-        const awardUI = <div className="column manageInfo" id="award">
+        const awardUI = <div className={`column ${styles.manageInfo}`} id="award">
 
-            <div className="row manageOperation">
+            <div className={`row ${actionStyles.manageOperation}`}>
 
-                <div className="manageObject">财富值</div>
+                <div className={styles.manageObject}>财富值</div>
 
                 <input className="react-bootstrap-smalltext" type="text" value={this.state.wealth} onChange={this.wealthInput} />
 
             </div>
             <div className="row" style={{color:"white"}}>您今天在{this.props.boardName}已经发了{this.props.d_wealth}财富值，最多可发{m_wealth}</div>
 
-            <div className="row manageOperation managePrestige" >
+            <div className={`row ${actionStyles.manageOperation} managePrestige`} >
 
-                <div className="manageObject">威望</div>
+                <div className={styles.manageObject}>威望</div>
 
                 <input type="text" className="react-bootstrap-smalltext" value={this.state.prestige} onChange={this.prestigeInput} />
 
             </div>
 
-            <div className="column manageOperation">
+            <div className={`column ${actionStyles.manageOperation}`}>
 
 
 
@@ -321,31 +323,31 @@ export class PostManagement extends React.Component<Props, {wealth: number, pres
 
         </div>;
 
-        const punishUI = <div className="column manageInfo" id="punish" >
-            <div className="row manageOperation">
+        const punishUI = <div className={`column ${styles.manageInfo}`} id="punish" >
+            <div className={`row ${actionStyles.manageOperation}`}>
 
-                <div className="manageObject">扣财富值</div>
+                <div className={styles.manageObject}>扣财富值</div>
 
                 <input type="text" className="react-bootstrap-smalltext" value={this.state.wealth} onChange={this.wealthInput} />
 
             </div>
-            <div className="row manageOperation managePrestige">
+            <div className={`row ${actionStyles.manageOperation} managePrestige`}>
 
-                <div className="manageObject">扣威望</div>
+                <div className={styles.manageObject}>扣威望</div>
 
                 <input type="text" className="react-bootstrap-smalltext" value={this.state.prestige} onChange={this.prestigeInput} />
 
             </div>
 
-            <div className="row manageOperation" style={{ display:"" }}>
+            <div className={`row ${actionStyles.manageOperation}`} style={{ display:"" }}>
 
-                <div className="manageObject">禁止发言(天)</div>
+                <div className={styles.manageObject}>禁止发言(天)</div>
 
                 <input type="text" className="react-bootstrap-smalltext" value={this.state.tpdays} onChange={this.tpdaysInput} />
 
             </div>
 
-            <div className="column manageOperation">
+            <div className={`column ${actionStyles.manageOperation}`}>
 
 
                 <div className="row" style={{
@@ -366,20 +368,20 @@ export class PostManagement extends React.Component<Props, {wealth: number, pres
             </div>
 
         </div>;
-        let deleteAllow = <div className="row manageOperation">
+        let deleteAllow = <div className={`row ${actionStyles.manageOperation}`}>
 
-            <div className="manageObject">删除原因</div>
+            <div className={styles.manageObject}>删除原因</div>
 
             <input type="text" className="react-bootstrap-smalltext" value={this.state.reason} onChange={this.reasonInput} />
 
         </div>;
         if (this.props.floor === 1) deleteAllow = <div>删除主题帖请在底部进行操作</div>;
-        const deleteUI = <div className="column manageInfo" id="punish" >
+        const deleteUI = <div className={`column ${styles.manageInfo}`} id="punish" >
 
             {deleteAllow}
 
         </div>;
-        const otherUI = <div className="column manageInfo" id="other" >
+        const otherUI = <div className={`column ${styles.manageInfo}`} id="other" >
             
             <div>解除此用户版面tp</div>
         </div>;
@@ -426,26 +428,26 @@ export class PostManagement extends React.Component<Props, {wealth: number, pres
             $(deleteOptionJQId).css("background-color", "#fffacd");
             $(otherOptionJQId).css("background-color", "#b9d3ee");
         }
-        return <div style={{ display: "none" }} id={UIId} className="postManagement">
+        return <div style={{ display: "none" }} id={UIId} className={styles.postManagement}>
 
-            <div className="manageUI">
+            <div className={styles.manageUI}>
 
-                <div className="row manageOptions">
+                <div className={`row ${styles.manageOptions}`}>
 
-                    <div className="manageOptions-icon" id={awardOptionId} onClick={this.showAwardUI} style={{ color: "#FF7F00" }}>奖励</div>
+                    <div className={styles["manageOptions-icon"]} id={awardOptionId} onClick={this.showAwardUI} style={{ color: "#FF7F00" }}>奖励</div>
 
-                    <div className="manageOptions-icon" id={punishOptionId} onClick={this.showPunishUI} style={{ color: "red" }}>惩罚</div>
+                    <div className={styles["manageOptions-icon"]} id={punishOptionId} onClick={this.showPunishUI} style={{ color: "red" }}>惩罚</div>
 
-                    <div className="manageOptions-icon" id={deleteOptionId} onClick={this.showDeleteUI}>删除</div>
-                    <div className="manageOptions-icon" id={otherOptionId} onClick={this.showOtherUI}>其他</div>
+                    <div className={styles["manageOptions-icon"]} id={deleteOptionId} onClick={this.showDeleteUI}>删除</div>
+                    <div className={styles["manageOptions-icon"]} id={otherOptionId} onClick={this.showOtherUI}>其他</div>
                 </div>
 
             </div>
 
             {UI}
             <div className="row" style={{ justifyContent: "space-around" }}>
-                <button onClick={this.confirm} className="confirmManagement">确认</button>
-                <button onClick={this.close} className="confirmManagement">关闭</button>
+                <button onClick={this.confirm} className={styles.confirmManagement}>确认</button>
+                <button onClick={this.close} className={styles.confirmManagement}>关闭</button>
             </div>
         </div>;
 

@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import type { EditorTagInfo } from "../model/types";
+import styles from "../EditorLegacyForm.module.scss";
 
 interface EditorTagNoticeProps {
   tagsV2: EditorTagInfo;
@@ -15,7 +16,7 @@ export function EditorTagNotice({
   if (tagsV2.layers !== 2 || postInfo.floor >= 2) return null;
 
   return (
-    <div className="createTopicType">
+    <div className={styles.createTopicType}>
       <div style={{ color: "rgb(255,0,0)" }}>
         【提示】↓↓↓ 该版面有两层标签，请先选择第1个标签，再选择第2个标签 ↓↓↓
       </div>

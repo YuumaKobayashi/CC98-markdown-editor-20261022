@@ -5,6 +5,7 @@ import { Link } from "react-router";
 import { updateUserInfo } from "@modules/user";
 import { getMyInfo } from "@modules/session";
 import { updateFollowedUser } from "../api/service";
+import styles from "../../TopicDetail.module.scss";
 
 export interface TopicReplierProps {
   userInfo: any;
@@ -81,7 +82,7 @@ export function TopicReplier({
           >
             <div style={{ zIndex: 100 }}>
               <img
-                className="userPortrait"
+                className={styles.userPortrait}
                 src={userInfo.portraitUrl}
               ></img>
             </div>
@@ -115,7 +116,7 @@ export function TopicReplier({
                 style={{ display: "block", maxHeight: "5rem" }}
               >
                 <img
-                  className="userPortrait"
+                  className={styles.userPortrait}
                   src={userInfo.portraitUrl}
                   style={shadow}
                   onError={handleImageErrored}
@@ -145,7 +146,7 @@ export function TopicReplier({
               style={{ display: "block", maxHeight: "7.5rem" }}
             >
               <img
-                className="userPortrait"
+                className={styles.userPortrait}
                 src={userInfo.portraitUrl}
                 onError={handleImageErrored}
               />
@@ -197,7 +198,7 @@ export function TopicReplier({
   };
 
   let userName: ReactNode = (
-    <div style={{ color: "#fff" }} className="userMessage-userName">
+    <div style={{ color: "#fff" }} className={styles["userMessage-userName"]}>
       {userInfo.name}
     </div>
   );
@@ -205,7 +206,7 @@ export function TopicReplier({
     userName = (
       <Link
         style={{ color: "#fff" }}
-        className="userMessage-userName"
+        className={styles["userMessage-userName"]}
         to={encodeURI(`/user/id/${userInfo.id}`)}
       >
         {userInfo.name}
@@ -231,7 +232,7 @@ export function TopicReplier({
         >
           {userInfo.name}
         </div>
-        <div className="userMessageAnonymous">别问我是谁</div>
+        <div className={styles.userMessageAnonymous}>别问我是谁</div>
       </div>
     );
   }
@@ -240,10 +241,10 @@ export function TopicReplier({
   const myInfo = getMyInfo();
   if (myInfo && myInfo.name !== userInfo.name && !isAnonymous) {
     buttons = (
-      <div className="row userMessageBtn">
+      <div className={`row ${styles.userMessageBtn}`}>
         <div style={{ marginLeft: "0.85rem" }}>
           <button
-            className="replierBtn"
+            className={styles.replierBtn}
             id={isFollowing ? "" : "follow"}
             onClick={isFollowing ? unfollow : follow}
             disabled={buttonIsDisabled}
@@ -254,7 +255,7 @@ export function TopicReplier({
         <div style={{ marginLeft: "0.5rem" }}>
           {" "}
           <Link to={`/message/message?id=${userInfo.id}`}>
-            <button className="replierBtn">私信</button>
+            <button className={styles.replierBtn}>私信</button>
           </Link>
         </div>
       </div>
@@ -290,16 +291,16 @@ export function TopicReplier({
         marginTop: "1rem",
       }}
     >
-      <div className="userMessageOpt">帖数 {userInfo.postCount}</div>
-      <div className="userMessageOpt">粉丝 {fanCount}</div>
-      <div className="userMessageOpt">威望 {userInfo.prestige}</div>
-      <div className="userMessageOpt">最后登录 {lastLogOn}</div>
+      <div className={styles.userMessageOpt}>帖数 {userInfo.postCount}</div>
+      <div className={styles.userMessageOpt}>粉丝 {fanCount}</div>
+      <div className={styles.userMessageOpt}>威望 {userInfo.prestige}</div>
+      <div className={styles.userMessageOpt}>最后登录 {lastLogOn}</div>
     </div>
   ) : null;
 
   const gender =
     isAnonymous == true ? null : (
-      <div className="userGender">
+      <div className={styles.userGender}>
         {userInfo.gender === 0 ? (
           <i className="fa fa-venus" style={{ color: "#fff" }}></i>
         ) : (
@@ -309,12 +310,12 @@ export function TopicReplier({
     );
 
   return (
-    <div className="userMessage">
-      <div className="column userMessage-left">
+    <div className={styles.userMessage}>
+      <div className={`column ${styles["userMessage-left"]}`}>
         {userName}
         {userDetailMessage}
       </div>
-      <div className="column userMessage-right">
+      <div className={`column ${styles["userMessage-right"]}`}>
         {gender}
         {photoFrame}
         {buttons}

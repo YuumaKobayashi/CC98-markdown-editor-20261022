@@ -22,6 +22,9 @@ import { getListTotalPage, getTagLayer } from "@foundation/lib/page";
 import { Pager } from "@foundation/ui/pagination";
 
 import { BoardTagPagination } from "@application/routes/board";
+import listStyles from "../LegacyBoardList.module.scss";
+import rootStyles from "../LegacyBoardRoot.module.scss";
+import topBarStyles from "../LegacyBoardTopBar.module.scss";
 import { LegacyBoardTopicItem } from "./LegacyBoardTopicItem";
 
 type BoardRouteParams = {
@@ -64,7 +67,7 @@ function TopicCollectionLayout({
   const recordTopicsUrl = `/board/${boardId}/record/`;
 
   return (
-    <div className="listContent ">
+    <div className={rootStyles.listContent}>
       <BoardTagPagination
         page={currentPage}
         totalPage={totalPage}
@@ -72,16 +75,16 @@ function TopicCollectionLayout({
         url={url}
         tag={tags}
       />
-      <div className="column tagColumn">
-        <div className="row board-topBar">
+      <div className={`column ${listStyles.tagColumn}`}>
+        <div className={`row ${topBarStyles["board-topBar"]}`}>
           <div className="row" style={{ alignItems: "center" }}>
-            <div className="listContentTag">
+            <div className={listStyles.listContentTag}>
               <Link to={normalTopicsUrl}>全部</Link>
             </div>
-            <div className="listContentTag">
+            <div className={listStyles.listContentTag}>
               <Link to={bestTopicsUrl}>精华</Link>
             </div>
-            <div className="listContentTag">
+            <div className={listStyles.listContentTag}>
               <Link to={saveTopicsUrl}>保存</Link>
             </div>
           </div>

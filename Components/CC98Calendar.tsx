@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
+import styles from '../src/application/routes/daily-signin/Calendar.module.scss';
 
 /**
  * CC98Calendar Component
@@ -41,16 +42,16 @@ export default function CC98Calendar({ year, month, renderDateCell }) {
   }
 
   return (
-    <div className="cc98-calendar">
+    <div className={styles["cc98-calendar"]}>
       {/* Weekday labels */}
-      <div className="cc98-calendar-header" style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', textAlign: 'center', fontWeight: 'bold', marginBottom: 8 }}>
+      <div className={styles["cc98-calendar-header"]} style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', textAlign: 'center', fontWeight: 'bold', marginBottom: 8 }}>
         {weekdays.map((wd) => (
           <div key={wd}>{wd}</div>
         ))}
       </div>
 
       {/* Date cells grid */}
-      <div className="cc98-calendar-body" style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', textAlign: 'center', gap: '1px' }}>
+      <div className={styles["cc98-calendar-body"]} style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', textAlign: 'center', gap: '1px' }}>
         {cells.map((dateMoment, idx) => (
           <div key={idx}  style={{ padding: '2px', minHeight: '40px' }}>
             {dateMoment

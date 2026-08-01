@@ -1,6 +1,7 @@
 import * as React from "react";
 import type { ITopic } from "@cc98/api";
 
+import styles from "../Board.module.scss";
 import { BoardTopicListItem } from "./BoardTopicListItem";
 
 interface BoardTopicListProps {
@@ -9,7 +10,7 @@ interface BoardTopicListProps {
 
 export function BoardTopicList({ list }: BoardTopicListProps) {
   return (
-    <div className="board-list-body">
+    <div className={styles["board-list-body"]}>
       {list.map((item, index) => (
         <BoardTopicListItem key={index} order={index} data={item} />
       ))}

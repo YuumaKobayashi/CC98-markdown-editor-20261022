@@ -37,7 +37,7 @@
   border-radius: 0.5rem;
   -moz-border-radius: 0.5rem;
   -webkit-border-radius: 0.5rem;
-  background-color: $theme_color_main;
+  background-color: var(--cc98-theme-color-main);
 }
 
 .judgeManagement {
@@ -55,7 +55,7 @@
   border-radius: 0.5rem;
   -moz-border-radius: 0.5rem;
   -webkit-border-radius: 0.5rem;
-  background-color: $theme_color_main;
+  background-color: var(--cc98-theme-color-main);
 }
 
 .manageUI {
@@ -119,24 +119,6 @@
   cursor: pointer;
 }
 
-.confirmManagement {
-  margin-top: 1rem;
-  width: 5rem;
-  height: 2rem;
-  background-color: #fff;
-  border: gray solid thin;
-  border-radius: 0.3rem;
-  cursor: pointer;
-}
-
-@import "TopicDetailAward.module";
-
-.manageOperation {
-  justify-content: flex-start;
-  width: 100%;
-}
-
-.manageOperation input[type="radio"],
 .judgeOption input[type="radio"] {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -220,5 +202,13 @@
   text-decoration: underline;
 }
 
-@import "TopicHeaderInfo.module";
+.confirmManagement {
+  margin-top: 1rem;
+  width: 5rem;
+  height: 2rem;
+  background-color: #fff;
+  border: gray solid thin;
+  border-radius: 0.3rem;
+  cursor: pointer;
+}
 

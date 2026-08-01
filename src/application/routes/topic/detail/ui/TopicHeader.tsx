@@ -14,6 +14,9 @@ import { noticeMessageShow } from "@modules/notification";
 import { HomeAdvertisementCarousel } from "@application/routes/home/advertisement";
 import { copyToClipboard } from "@foundation/lib/dom";
 import { NoticeMessage } from "@legacy/Components/NoticeMessage";
+import styles from "../../TopicDetail.module.scss";
+import actionStyles from "../../TopicHeaderActions.module.scss";
+import infoStyles from "../../TopicHeaderInfo.module.scss";
 
 export interface TopicHeaderProps {
   topicInfo: any;
@@ -121,7 +124,7 @@ export function TopicHeader(props: TopicHeaderProps) {
   const tags =
     tag1 || tag2 ? (
       <div id="tags">
-        <div className="tagProp tagSize">
+        <div className={`tagProp ${styles.tagSize}`}>
           标签： {tag1Name} {tag2Name}
         </div>
         <div className="tagProp"></div>
@@ -129,8 +132,8 @@ export function TopicHeader(props: TopicHeaderProps) {
     ) : null;
 
   return (
-    <div className="topicInfo-info">
-      <div className="topicInfo-title">
+    <div className={infoStyles["topicInfo-info"]}>
+      <div className={infoStyles["topicInfo-title"]}>
         <div className="column" id="topicTitleProp">
           <div
             id="essay1"
@@ -147,7 +150,7 @@ export function TopicHeader(props: TopicHeaderProps) {
               <div className="viewProp">
                 <i className="fa fa-clock-o fa-lg fa-fw"></i>
               </div>{" "}
-              <div className="timeProp tagSize">
+              <div className={`${styles.timeProp} ${styles.tagSize}`}>
                 {moment(topicInfo.time).format("YYYY-MM-DD HH:mm:ss")}
               </div>
             </div>
@@ -155,7 +158,9 @@ export function TopicHeader(props: TopicHeaderProps) {
               <div className="viewProp">
                 <i className="fa fa-eye fa-lg fa-fw"></i>{" "}
               </div>{" "}
-              <div className="timeProp tagSize">{topicInfo.hitCount}</div>
+              <div className={`${styles.timeProp} ${styles.tagSize}`}>
+                {topicInfo.hitCount}
+              </div>
             </div>
             <div id="followCount">
               <div className="viewProp">
@@ -165,23 +170,25 @@ export function TopicHeader(props: TopicHeaderProps) {
                   <i className="fa fa-star-o fa-lg fa-fw"></i>
                 )}{" "}
               </div>{" "}
-              <div className="timeProp tagSize">{followCount}</div>
+              <div className={`${styles.timeProp} ${styles.tagSize}`}>
+                {followCount}
+              </div>
             </div>
             <div
-              className="followTopic"
+              className={actionStyles.followTopic}
               onClick={isFollow ? unFollow : follow}
             >
               {isFollow ? "已收藏" : "收藏"}
             </div>
             <div
-              className="followTopic"
+              className={actionStyles.followTopic}
               style={{ width: "5.5rem" }}
               onClick={showImageState ? hideAllImg : showAllImg}
             >
               {showImageState ? "收起所有图片" : "显示所有图片"}
             </div>
             <div
-              className="followTopic"
+              className={actionStyles.followTopic}
               style={{ width: "5.5rem" }}
               onClick={copyTopicUrl}
             >
@@ -190,7 +197,7 @@ export function TopicHeader(props: TopicHeaderProps) {
           </div>
         </div>
 
-        <div className="topicInfo-boardMessage">
+        <div className={infoStyles["topicInfo-boardMessage"]}>
           <Link to={boardUrl}>
             <div style={{ color: "#6b7178" }}>{boardInfo.name}</div>
           </Link>
@@ -199,7 +206,7 @@ export function TopicHeader(props: TopicHeaderProps) {
           </div>
         </div>
       </div>
-      <div className="topicInfo-ads">
+      <div className={infoStyles["topicInfo-ads"]}>
         <HomeAdvertisementCarousel />
       </div>
       <NoticeMessage

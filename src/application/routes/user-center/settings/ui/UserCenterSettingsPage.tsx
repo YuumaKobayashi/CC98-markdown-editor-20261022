@@ -16,6 +16,7 @@ import {
 } from "../model/editable-user-info";
 import { UserCenterAvatarSettings } from "./UserCenterAvatarSettings";
 import { UserCenterProfileSettings } from "./UserCenterProfileSettings";
+import styles from "../../UserCenter.module.scss";
 
 /**
  * 用户中心的个人资料设置页。
@@ -132,7 +133,7 @@ export function UserCenterSettingsPage() {
   };
 
   return (
-    <div className="user-center-config">
+    <div className={styles["user-center-config"]}>
       <UserCenterAvatarSettings />
       <hr />
       <ConfigSignature
@@ -145,11 +146,11 @@ export function UserCenterSettingsPage() {
         handleChange={handleChange}
       />
       <hr />
-      <div className="config-submit">
+      <div className={styles["config-submit"]}>
         <h2>提交修改</h2>
         <div className="config-buttons">
           <button
-            className="config-submit-button"
+            className={styles["config-submit-button"]}
             type="button"
             disabled={isLoading}
             onClick={handleSubmit}

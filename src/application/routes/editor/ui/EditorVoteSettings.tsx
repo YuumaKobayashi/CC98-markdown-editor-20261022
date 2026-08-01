@@ -4,6 +4,7 @@ import type {
   EditorVoteInfo,
   EditorVoteSettingsProps,
 } from "../model/types";
+import styles from "../EditorLegacyForm.module.scss";
 
 //TODO: 后续移除兼容层
 
@@ -70,8 +71,8 @@ export function EditorVoteSettings({
 
   return (
     <>
-      <div className="createTopicTitle">
-        <span className="createTopicListName">投票设置</span>
+      <div className={styles.createTopicTitle}>
+        <span className={styles.createTopicListName}>投票设置</span>
         <span style={{ paddingLeft: "1rem" }}>
           有效天数（至少1天，最多1000天）
         </span>
@@ -136,8 +137,8 @@ export function EditorVoteSettings({
         <label htmlFor="needVote">投票后结果可见</label>
       </div>
       {voteInfo.voteItems.map((item, index) => (
-        <div className="createTopicTitle">
-          <span className="createTopicListName">投票选项{index + 1}</span>
+        <div className={styles.createTopicTitle}>
+          <span className={styles.createTopicListName}>投票选项{index + 1}</span>
           <input
             name="voteItem"
             type="text"

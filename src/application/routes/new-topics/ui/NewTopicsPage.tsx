@@ -26,6 +26,8 @@ import { DocumentTitle } from "@foundation/ui/document-title";
 
 import { NewTopicsBoardSidebar } from "./NewTopicsBoardSidebar";
 import { RandomRecentTopics } from "./RandomRecentTopics";
+import newTopicsStyles from "../NewTopics.module.scss";
+import styles from "../../focus/Focus.module.scss";
 
 //TODO：逻辑重构优化，优先级中
 
@@ -232,28 +234,28 @@ export function NewTopicsPage() {
     setShowCardUser(visible);
   };
 
-  const classicButtonClassName = `focus-board new-topic${
-    viewMode === 0 ? " focus-hover" : ""
+  const classicButtonClassName = `${styles["focus-board"]} ${styles["new-topic"]}${
+    viewMode === 0 ? ` ${styles["focus-hover"]}` : ""
   }`;
-  const cardButtonClassName = `focus-board new-topic${
-    viewMode === 1 ? " focus-hover" : ""
+  const cardButtonClassName = `${styles["focus-board"]} ${styles["new-topic"]}${
+    viewMode === 1 ? ` ${styles["focus-hover"]}` : ""
   }`;
-  const mediaButtonClassName = `focus-board new-topic${
-    viewMode === 2 ? " focus-hover" : ""
+  const mediaButtonClassName = `${styles["focus-board"]} ${styles["new-topic"]}${
+    viewMode === 2 ? ` ${styles["focus-hover"]}` : ""
   }`;
   const scrollButtonClassName =
     scrollButtonState === "show"
-      ? "top-button btn-show"
+      ? `${styles["top-button"]} ${styles["btn-show"]}`
       : scrollButtonState === "hidden"
-        ? "top-button btn-disappear"
-        : "top-button";
+        ? `${styles["top-button"]} ${styles["btn-disappear"]}`
+        : styles["top-button"];
 
   return (
-    <div className="focus-root">
+    <div className={styles["focus-root"]}>
       <DocumentTitle title="查看新帖 - CC98论坛" />
-      <div className="focus">
+      <div className={styles.focus}>
         <NewTopicsBreadcrumb />
-        <div className="focus-board-area">
+        <div className={styles["focus-board-area"]}>
           <button
             className={classicButtonClassName}
             id="new-topic-classic-button"
@@ -276,7 +278,7 @@ export function NewTopicsPage() {
             只看媒体
           </button>
           <button
-            className="refresh-button"
+            className={styles["refresh-button"]}
             id="new-topic-refresh-button"
             onClick={() => {
               if (isLoadableRef.current) {
@@ -290,25 +292,25 @@ export function NewTopicsPage() {
         </div>
 
         <div
-          className="focus-topic-area"
+          className={styles["focus-topic-area"]}
           id="classic-mode-area"
           style={{ display: viewMode === 0 ? undefined : "none" }}
         >
-          <div className="focus-topic-topicArea">
+          <div className={styles["focus-topic-topicArea"]}>
             {data.map(renderClassicTopic)}
           </div>
         </div>
 
         <div
-          className="card-topic-area"
+          className={newTopicsStyles["card-topic-area"]}
           id="card-mode-area"
           style={{ display: viewMode === 0 ? "none" : undefined }}
         >
-          <div className="card-topic-area-left">
-            <div className="card-topic-area-left-content">
-              <div className="card-user">
-                <div className="card-user-background" />
-                <div className="card-user-portrait">
+          <div className={newTopicsStyles["card-topic-area-left"]}>
+            <div className={newTopicsStyles["card-topic-area-left-content"]}>
+              <div className={newTopicsStyles["card-user"]}>
+                <div className={newTopicsStyles["card-user-background"]} />
+                <div className={newTopicsStyles["card-user-portrait"]}>
                   <img
                     src={
                       myInfo
@@ -335,8 +337,8 @@ export function NewTopicsPage() {
                     />
                   )}
                 </div>
-                <div className="card-user-stats">
-                  <div className="card-user-stats-item">
+                <div className={newTopicsStyles["card-user-stats"]}>
+                  <div className={newTopicsStyles["card-user-stats-item"]}>
                     <a href="../usercenter" target="_blank">
                       {myInfo
                         ? showCardUser
@@ -346,7 +348,7 @@ export function NewTopicsPage() {
                     </a>
                     帖数
                   </div>
-                  <div className="card-user-stats-item">
+                  <div className={newTopicsStyles["card-user-stats-item"]}>
                     <a href="../usercenter/myfollowings" target="_blank">
                       {myInfo
                         ? showCardUser
@@ -356,7 +358,7 @@ export function NewTopicsPage() {
                     </a>
                     关注
                   </div>
-                  <div className="card-user-stats-item">
+                  <div className={newTopicsStyles["card-user-stats-item"]}>
                     <a href="../usercenter/myfans" target="_blank">
                       {myInfo
                         ? showCardUser
@@ -366,7 +368,7 @@ export function NewTopicsPage() {
                     </a>
                     粉丝
                   </div>
-                  <div className="card-user-stats-item">
+                  <div className={newTopicsStyles["card-user-stats-item"]}>
                     <a
                       href="../usercenter/myposts/ishot/1/1"
                       target="_blank"
@@ -382,26 +384,28 @@ export function NewTopicsPage() {
                 </div>
               </div>
 
-              <div className="card-board">
-                <div className="card-board-title">版面列表</div>
+              <div className={newTopicsStyles["card-board"]}>
+                <div className={newTopicsStyles["card-board-title"]}>
+                  版面列表
+                </div>
                 <NewTopicsBoardSidebar />
               </div>
             </div>
           </div>
-          <div className="card-topic-area-middle">
+          <div className={newTopicsStyles["card-topic-area-middle"]}>
             {viewMode === 2
               ? data.map(renderMediaOnlyTopic)
               : data.map(renderCardTopic)}
           </div>
-          <div className="card-topic-area-right">
-            <div className="card-user-may-mising">
+          <div className={newTopicsStyles["card-topic-area-right"]}>
+            <div className={newTopicsStyles["card-user-may-mising"]}>
               <RandomRecentTopics />
             </div>
           </div>
         </div>
 
         <div
-          className={`focus-topic-loading${
+          className={`${styles["focus-topic-loading"]}${
             isLoadDone ? " displaynone" : ""
           }`}
           id="focus-topic-loading"
@@ -409,7 +413,7 @@ export function NewTopicsPage() {
           <Spin size="large" />
         </div>
         <div
-          className={`focus-topic-loaddone${
+          className={`${styles["focus-topic-loaddone"]}${
             isLoadDone ? "" : " displaynone"
           }`}
           id="focus-topic-loaddone"
@@ -422,7 +426,7 @@ export function NewTopicsPage() {
           className={scrollButtonClassName}
           onClick={scrollToTop}
         >
-          <div className="top-button-text">回到顶部</div>
+          <div className={styles["top-button-text"]}>回到顶部</div>
         </button>
       </div>
     </div>

@@ -17,6 +17,7 @@ import { UserCenterPager as Pager } from "@application/routes/user-center/pagina
 
 import { FavoriteTopicGroupManager } from "./FavoriteTopicGroupManager";
 import { UserCenterFavoriteTopicItem as Topic } from "./UserCenterFavoriteTopicItem";
+import styles from "../../UserCenter.module.scss";
 
 const { Search } = Input;
 const { Option } = Select;
@@ -199,7 +200,7 @@ export function UserCenterFavoriteTopicsPage() {
 
   if (isLoading) {
     return (
-      <div className="user-center-loading">
+      <div className={styles["user-center-loading"]}>
         <p className="fa fa-spinner fa-pulse fa-2x fa-fw"></p>
       </div>
     );
@@ -207,7 +208,7 @@ export function UserCenterFavoriteTopicsPage() {
 
   const emptyPage = (
     <div
-      className="user-posts"
+      className={styles["user-posts"]}
       style={{
         textAlign: "center",
       }}
@@ -241,8 +242,8 @@ export function UserCenterFavoriteTopicsPage() {
   ));
 
   return (
-    <div className="user-posts">
-      <div className="user-post-operator">
+    <div className={styles["user-posts"]}>
+      <div className={styles["user-post-operator"]}>
         <Select
           value={group}
           style={{
@@ -282,7 +283,7 @@ export function UserCenterFavoriteTopicsPage() {
             </div>
           }
         />
-        <div className="user-post-operator-tips">
+        <div className={styles["user-post-operator-tips"]}>
           收藏搜索目前只能按照最后回复排序
         </div>
         <FavoriteTopicGroupManager

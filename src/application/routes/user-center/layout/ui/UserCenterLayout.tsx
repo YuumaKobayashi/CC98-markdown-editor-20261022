@@ -6,6 +6,7 @@ import { selectIsLogOn } from "@modules/session";
 import { LogOut } from "@legacy/Components/Status";
 import DocumentTitle from "@foundation/ui/document-title";
 import { UserCenterNavigation } from "./UserCenterNavigation";
+import styles from "../../UserCenter.module.scss";
 
 /**
  * 用户中心页面
@@ -18,15 +19,15 @@ export function UserCenterLayout() {
   }
 
   return (
-    <div className="user-center">
+    <div className={styles["user-center"]}>
       <DocumentTitle title="个人中心 - CC98论坛" />
-      <div className="user-center-content">
-        <div className="user-center-head">
+      <div className={styles["user-center-content"]}>
+        <div className={styles["user-center-head"]}>
           <p>个人中心</p>
         </div>
-        <div className="user-center-body">
+        <div className={styles["user-center-body"]}>
         <UserCenterNavigation />
-          <div className="user-center-router">
+          <div className={styles["user-center-router"]}>
             <Outlet />
           </div>
         </div>

@@ -3,6 +3,8 @@ import moment from "moment";
 
 import type { BoardEvent } from "@legacy/States/BoardEvent";
 
+import styles from "../BoardRecords.module.scss";
+
 export function BoardModerationRecordItem(props: BoardEvent) {
   const [showIp, setShowIp] = React.useState(false);
 
@@ -30,18 +32,18 @@ export function BoardModerationRecordItem(props: BoardEvent) {
   }
 
   return (
-    <div className="boardRecord" id="changeColor">
-      <div className="boardRecord-1">{targetUserName}</div>
-      <div className="boardRecord-2">
+    <div className={styles.boardRecord} id="changeColor">
+      <div className={styles["boardRecord-1"]}>{targetUserName}</div>
+      <div className={styles["boardRecord-2"]}>
         <a href={`/topic/${props.topicId}`} target="_blank">
           {props.content}
         </a>
       </div>
-      <div className="boardRecord-3">
+      <div className={styles["boardRecord-3"]}>
         {moment(props.time).format("YY-MM-DD HH:mm")}
       </div>
       <div
-        className="boardRecord-4"
+        className={styles["boardRecord-4"]}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
@@ -50,7 +52,7 @@ export function BoardModerationRecordItem(props: BoardEvent) {
         </a>
       </div>
       <div
-        className={`boardRecord-ip${showIp ? "" : " displaynone"}`}
+        className={`${styles["boardRecord-ip"]}${showIp ? "" : " displaynone"}`}
         id={`ip_${props.id}`}
       >
         {props.ip}

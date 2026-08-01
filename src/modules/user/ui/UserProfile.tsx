@@ -10,6 +10,7 @@ import { UbbContainer } from "@legacy/Components/UbbContainer";
 import type { UserInfo } from "@legacy/States/AppState";
 import { UbbCodeOptions } from "@legacy/Ubb/Core";
 import { isoTime2LocalTime } from "@foundation/lib/time-zone";
+import styles from "./UserProfile.module.scss";
 
 interface UserProfileProps {
   userInfo: UserInfo;
@@ -46,7 +47,7 @@ export function UserProfile({ userInfo }: UserProfileProps) {
   }
 
   return (
-    <div className="user-profile">
+    <div className={styles["user-profile"]}>
       <div id="userId">
         <p>
           {userInfo.name}
@@ -102,40 +103,40 @@ export function UserProfile({ userInfo }: UserProfileProps) {
       <div id="userIntroducion">{userInfo.introduction}</div>
       <div id="userGenderAndBirthday">
         <p>
-          <span className="user-profile-info">性别</span>
+          <span className={styles["user-profile-info"]}>性别</span>
           {userInfo.gender === 1 ? "男" : "女"}{" "}
         </p>
         <p>
-          <span className="user-profile-info">发帖数</span>
+          <span className={styles["user-profile-info"]}>发帖数</span>
           {userInfo.postCount}
         </p>
         <p>
-          <span className="user-profile-info">财富值</span>
+          <span className={styles["user-profile-info"]}>财富值</span>
           {userInfo.wealth}
         </p>
         <p>
-          <span className="user-profile-info">粉丝数</span>
+          <span className={styles["user-profile-info"]}>粉丝数</span>
           {userInfo.fanCount}
         </p>
         <p>
-          <span className="user-profile-info">威望</span>
+          <span className={styles["user-profile-info"]}>威望</span>
           {userInfo.prestige}
         </p>
         <p>
-          <span className="user-profile-info">风评</span>
+          <span className={styles["user-profile-info"]}>风评</span>
           {userInfo.popularity}
         </p>
         <p>
-          <span className="user-profile-info">注册时间</span>
+          <span className={styles["user-profile-info"]}>注册时间</span>
           {isoTime2LocalTime(userInfo.registerTime, 1).replace(/\//g, "-")}
         </p>
         <p>
-          <span className="user-profile-info">最后登录</span>
+          <span className={styles["user-profile-info"]}>最后登录</span>
           {isoTime2LocalTime(userInfo.lastLogOnTime, 1).replace(/\//g, "-")}
         </p>
         {userInfo.birthday ? (
           <p>
-            <span className="user-profile-info">生日</span>
+            <span className={styles["user-profile-info"]}>生日</span>
             {userInfo.birthday.replace("9999-", "")}
             {isBirthDay ? (
               <span
@@ -148,29 +149,29 @@ export function UserProfile({ userInfo }: UserProfileProps) {
         ) : null}
         {userInfo.displayTitle ? (
           <p>
-            <span className="user-profile-info">用户组</span>
+            <span className={styles["user-profile-info"]}>用户组</span>
             {userInfo.displayTitle}
           </p>
         ) : null}
         {userInfo.emailAddress ? (
           <p>
-            <span className="user-profile-info">邮箱</span>
+            <span className={styles["user-profile-info"]}>邮箱</span>
             {userInfo.emailAddress}
           </p>
         ) : null}
         {userInfo.qq ? (
           <p>
-            <span className="user-profile-info">QQ</span>
+            <span className={styles["user-profile-info"]}>QQ</span>
             {userInfo.qq}
           </p>
         ) : null}
         <p>
-          <span className="user-profile-info">被删帖数</span>
+          <span className={styles["user-profile-info"]}>被删帖数</span>
           {-userInfo.deleteCount}
         </p>
       </div>
       {userInfo.signatureCode ? (
-        <div className="user-description">
+        <div className={styles["user-description"]}>
           <p>个性签名</p>
           <UbbContainer
             code={userInfo.signatureCode}

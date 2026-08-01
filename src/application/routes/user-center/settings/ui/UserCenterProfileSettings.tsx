@@ -3,6 +3,7 @@ import * as React from "react";
 import { cc98Fetch } from "@foundation/api/http";
 
 import type { EditableUserInfo } from "../model/editable-user-info";
+import styles from "../../UserCenter.module.scss";
 
 interface DisplayTitle {
   id: number;
@@ -77,9 +78,9 @@ export function UserCenterProfileSettings({
   };
 
   return (
-    <div className="user-center-config-others">
+    <div className={styles["user-center-config-others"]}>
       <h2>其他设置</h2>
-      <div className="config-gender">
+      <div className={styles["config-gender"]}>
         <p>性别：</p>
         <select
           id="genderSelect"
@@ -91,7 +92,7 @@ export function UserCenterProfileSettings({
           <option value={0}>女</option>
         </select>
       </div>
-      <div className="config-birthday">
+      <div className={styles["config-birthday"]}>
         <p>生日：</p>
         <select
           id="birthdayYear"
@@ -124,7 +125,7 @@ export function UserCenterProfileSettings({
         <p>日</p>
       </div>
       {displayTitles.length > 0 ? (
-        <div className="config-gender">
+        <div className={styles["config-gender"]}>
           <p>头衔：</p>
           <select
             style={{ width: "auto", padding: "0 1rem" }}
@@ -149,7 +150,7 @@ export function UserCenterProfileSettings({
           </select>
         </div>
       ) : null}
-      <div className="config-text">
+      <div className={styles["config-text"]}>
         <p>QQ：</p>
         <input
           type="text"
@@ -159,7 +160,7 @@ export function UserCenterProfileSettings({
           onChange={handleTextChange}
         />
       </div>
-      <div className="config-text">
+      <div className={styles["config-text"]}>
         <p>邮箱：</p>
         <input
           type="email"
@@ -169,7 +170,7 @@ export function UserCenterProfileSettings({
           onChange={handleTextChange}
         />
       </div>
-      <div className="config-introduction">
+      <div className={styles["config-introduction"]}>
         <p>个人简介：</p>
         <div>
           <textarea

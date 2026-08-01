@@ -1,5 +1,7 @@
 ﻿import * as React from 'react';
 import * as Utility from '../../Utility';
+import styles from "../../src/application/routes/topic/TopicManagement.module.scss";
+import actionStyles from "../../src/application/routes/topic/TopicManagementActions.module.scss";
 import { readBoardsInfoCache, readLegacyRawBoardsInfoCache } from '@modules/board';
 declare global {
     interface JQuery { spectrum: any}
@@ -228,7 +230,7 @@ export class TopicManagement extends React.Component<Props, { state, reason, tip
         let selectChildBoard = <select  onChange={(e) => { console.log(e.target.value); this.setState({board:e.target.value}) }}>{this.state.childBoards.map(this.returnBoardOption)}</select>;
 
         const normalInfo = <div className="column">
-            <div className="row manageOperation" style={{ justifyContent: "space-around", marginTop: "1rem" }}>
+            <div className={`row ${actionStyles.manageOperation}`} style={{ justifyContent: "space-around", marginTop: "1rem" }}>
                 <div >原因</div>
                 <input className="react-bootstrap-smalltext" type="text" value={this.state.reason} onChange={this.reasonInput} />
 
@@ -237,11 +239,11 @@ export class TopicManagement extends React.Component<Props, { state, reason, tip
         </div>;
         const noReasonInfo = null;
         const daysInfo = <div className="column">
-            <div className="row manageOperation" style={{ justifyContent: "space-around", marginTop: "1rem" }}>
+            <div className={`row ${actionStyles.manageOperation}`} style={{ justifyContent: "space-around", marginTop: "1rem" }}>
                 <div >(下沉)天数</div>
                 <input className="react-bootstrap-smalltext" type="text" value={this.state.days} onChange={this.daysInput} />
             </div>
-            <div className="row manageOperation" style={{ justifyContent: "space-around", marginTop: "1rem" }}>
+            <div className={`row ${actionStyles.manageOperation}`} style={{ justifyContent: "space-around", marginTop: "1rem" }}>
                 <div >原因</div>
                 <input className="react-bootstrap-smalltext" type="text" value={this.state.reason} onChange={this.reasonInput} />
 
@@ -249,12 +251,12 @@ export class TopicManagement extends React.Component<Props, { state, reason, tip
             <div style={{ marginTop: "2rem" }}>{this.state.tips}</div>
         </div>;
         const boardInfo = <div className="column">
-            <div  className="row manageOperation" style={{ justifyContent: "flex-start", marginTop: "1rem" }}>
+            <div  className={`row ${actionStyles.manageOperation}`} style={{ justifyContent: "flex-start", marginTop: "1rem" }}>
                 <div style={{marginRight:"1.5rem",marginLeft:"3rem"}}>版面</div>
                 {selectBoard}
                 {selectChildBoard}
             </div>
-            <div className="row manageOperation" style={{ justifyContent: "flex-start", marginTop: "1rem" }}>
+            <div className={`row ${actionStyles.manageOperation}`} style={{ justifyContent: "flex-start", marginTop: "1rem" }}>
                 <div style={{marginRight:"1.5rem",marginLeft:"3rem"}}>原因</div>
                 <input className="react-bootstrap-smalltext" type="text" value={this.state.reason} onChange={this.reasonInput} />
 
@@ -262,23 +264,23 @@ export class TopicManagement extends React.Component<Props, { state, reason, tip
             <div style={{ marginTop: "2rem" }}>{this.state.tips}</div>
         </div>;
         const highlightInfo = <div className="column">
-            <div className="row manageOperation" style={{ justifyContent: "space-around", marginTop: "1rem" }}>
+            <div className={`row ${actionStyles.manageOperation}`} style={{ justifyContent: "space-around", marginTop: "1rem" }}>
                 <div >加粗</div>
                 <input type="checkbox" value='加粗' id='hlbold' />
             </div>
-            <div className="row manageOperation" style={{ justifyContent: "space-around", marginTop: "1rem" }}>
+            <div className={`row ${actionStyles.manageOperation}`} style={{ justifyContent: "space-around", marginTop: "1rem" }}>
                 <div >斜体</div>
                 <input type="checkbox" value='斜体' id='hlitalic' />
             </div>
-            <div className="row manageOperation" style={{ justifyContent: "space-around", marginTop: "1rem" }}>
+            <div className={`row ${actionStyles.manageOperation}`} style={{ justifyContent: "space-around", marginTop: "1rem" }}>
                 <div >颜色</div>
                 <input type='text' id="custom" />
             </div>
-            <div className="row manageOperation" style={{ justifyContent: "space-around", marginTop: "1rem" }}>
+            <div className={`row ${actionStyles.manageOperation}`} style={{ justifyContent: "space-around", marginTop: "1rem" }}>
             <div >天数</div>
                 <input className="react-bootstrap-smalltext" type="text" value={this.state.days} onChange={this.daysInput} />
             </div>
-            <div className="row manageOperation" style={{ justifyContent: "space-around", marginTop: "1rem" }}>
+            <div className={`row ${actionStyles.manageOperation}`} style={{ justifyContent: "space-around", marginTop: "1rem" }}>
                 <div >原因</div>
                 <input className="react-bootstrap-smalltext" type="text" value={this.state.reason} onChange={this.reasonInput} />
 
@@ -297,7 +299,7 @@ export class TopicManagement extends React.Component<Props, { state, reason, tip
             case 'highlight':
                 info = highlightInfo; break;
         }
-        const UI = <div className="column manageInfo" id="award">
+        const UI = <div className={`column ${styles.manageInfo}`} id="award">
 
             <div className="column" style={{ alignItems: 'center' }}>
 
@@ -365,11 +367,11 @@ export class TopicManagement extends React.Component<Props, { state, reason, tip
         </div>;
         const UIId = `manage${this.props.topicInfo.id}`;
         const highlightOptionId = `manage${this.props.topicInfo.id}`;
-        return <div style={{ display: "none" }} id={UIId} className="topicManagement" >
+        return <div style={{ display: "none" }} id={UIId} className={styles.topicManagement} >
             {UI}
             < div className="row" style={{ justifyContent: "space-around", marginTop:"4rem" }}>
-                <button onClick={this.confirm} className="confirmManagement">确认</button>
-                <button onClick={this.close} className="confirmManagement">关闭</button>
+                <button onClick={this.confirm} className={styles.confirmManagement}>确认</button>
+                <button onClick={this.close} className={styles.confirmManagement}>关闭</button>
             </div >
         </div >;
     }

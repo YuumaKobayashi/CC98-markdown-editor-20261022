@@ -1,4 +1,5 @@
 ﻿import * as React from 'react'
+import styles from "../src/application/routes/topic/TopicManagementIP.module.scss";
 export class FindIP extends React.Component<{ data }>{
     generateIPInfo(item) {
         return <table className="UBBTableTag" style={{ backgroundColor:"#66CCFF" }}>
@@ -28,7 +29,7 @@ export class FindIP extends React.Component<{ data }>{
     }
 
     render() {
-        return <div className="findIP">{this.props.data.map(this.generateIPInfo.bind(this))}</div>
+        return <div className={styles.findIP}>{this.props.data.map(this.generateIPInfo.bind(this))}</div>
 
     }
 }

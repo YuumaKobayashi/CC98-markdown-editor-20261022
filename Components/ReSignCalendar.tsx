@@ -13,6 +13,7 @@ import {
   getMyInfo,
   refreshUserInfo,
 } from "../Utility";
+import styles from "../src/application/routes/daily-signin/Calendar.module.scss";
 
 interface ResignCalendarProps {
   updateSigninInfo?: (number) => void;
@@ -115,9 +116,9 @@ const ResignCalendar: React.FC<ResignCalendarProps> = (props) => {
     // let color = "";
     if (!signinInfo) {
       return (
-        <div className="cc98-calendar-cell">
+        <div className={styles["cc98-calendar-cell"]}>
           {momentDate.date()}
-          <div className="cc98-signin-info">&nbsp;</div>
+          <div className={styles["cc98-signin-info"]}>&nbsp;</div>
         </div>
       );
     }
@@ -130,18 +131,26 @@ const ResignCalendar: React.FC<ResignCalendarProps> = (props) => {
     if (info) {
       if (info.useCard) {
         return (
-          <div className="cc98-calendar-cell cc98-calendar-cell-checked">
+          <div
+            className={`${styles["cc98-calendar-cell"]} ${styles["cc98-calendar-cell-checked"]}`}
+          >
             {momentDate.date()}
-            <div className="cc98-signin-info calendar-tag calendar-makeup-tag">
+            <div
+              className={`${styles["cc98-signin-info"]} ${styles["calendar-tag"]} ${styles["calendar-makeup-tag"]}`}
+            >
               补
             </div>
           </div>
         );
       } else {
         return (
-          <div className="cc98-calendar-cell cc98-calendar-cell-checked">
+          <div
+            className={`${styles["cc98-calendar-cell"]} ${styles["cc98-calendar-cell-checked"]}`}
+          >
             {momentDate.date()}
-            <div className="cc98-signin-info calendar-tag">
+            <div
+              className={`${styles["cc98-signin-info"]} ${styles["calendar-tag"]}`}
+            >
               {"+" + info.reward}
             </div>
           </div>
@@ -149,16 +158,22 @@ const ResignCalendar: React.FC<ResignCalendarProps> = (props) => {
       }
     } else if (momentDate.isAfter(dateNow)) {
       return (
-        <div className="cc98-calendar-cell">
+        <div className={styles["cc98-calendar-cell"]}>
           {momentDate.date()}
-          <div className="cc98-signin-info calendar-tag">&nbsp;</div>
+          <div
+            className={`${styles["cc98-signin-info"]} ${styles["calendar-tag"]}`}
+          >
+            &nbsp;
+          </div>
         </div>
       );
     } else {
       return (
-        <div className="cc98-calendar-cell">
+        <div className={styles["cc98-calendar-cell"]}>
           {momentDate.date()}
-          <div className="cc98-signin-info calendar-tag calendar-not-signin-tag">
+          <div
+            className={`${styles["cc98-signin-info"]} ${styles["calendar-tag"]} ${styles["calendar-not-signin-tag"]}`}
+          >
             未
           </div>
         </div>
@@ -182,7 +197,7 @@ const ResignCalendar: React.FC<ResignCalendarProps> = (props) => {
 
   return (
     <div style={{ minHeight: "700px", marginTop: "40px" }}>
-      <div className="cc98-calendar-header">
+      <div className={styles["cc98-calendar-header"]}>
         补签卡：{signInCardCount}张
         <div>
           <Popover content={ruleContent} title="补签规则">
@@ -211,7 +226,7 @@ const ResignCalendar: React.FC<ResignCalendarProps> = (props) => {
           ) : null}
         </div>
       </div>
-      <div className="cc98-calendar-picker">
+      <div className={styles["cc98-calendar-picker"]}>
         <DatePicker
           picker="month"
           style={{ marginRight: 8 }}
@@ -266,7 +281,7 @@ const ResignCalendar: React.FC<ResignCalendarProps> = (props) => {
             <RightOutlined />
           </Button>
         </Button.Group>
-        <div className="cc98-calendar-picker-info">
+        <div className={styles["cc98-calendar-picker-info"]}>
           可追溯范围：2016年06月 - {dateNow ? dateNow.format("YYYY年MM月") : ""}
         </div>
       </div>

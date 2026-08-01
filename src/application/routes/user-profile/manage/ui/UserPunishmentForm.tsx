@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { getToken } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
+import styles from "../../UserProfileManagement.module.scss";
 
 interface ForumUserOperation {
   /**
@@ -89,7 +90,7 @@ export function UserPunishmentForm({ id }: UserPunishmentFormProps) {
   return (
     <div>
       <h2>TP</h2>
-      <div className="user-manager">
+      <div className={styles["user-manager"]}>
         <p>OperationType: </p>
         <select
           value={operation.PunishmentType || 0}
@@ -133,7 +134,7 @@ export function UserPunishmentForm({ id }: UserPunishmentFormProps) {
           解除
         </button>
       </div>
-      <p className="user-manage-return">{info}</p>
+      <p className={styles["user-manage-return"]}>{info}</p>
     </div>
   );
 }

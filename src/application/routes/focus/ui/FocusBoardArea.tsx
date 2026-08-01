@@ -9,6 +9,7 @@ import {
 } from "@foundation/storage/web-storage";
 
 import { FocusTopicArea } from "./FocusTopicArea";
+import styles from "../Focus.module.scss";
 
 interface CurrentFocusBoard {
   boardId: number;
@@ -76,8 +77,8 @@ export function FocusBoardArea() {
   const renderBoard = (board: FocusBoard) => (
     <div
       key={board.id}
-      className={`focus-board${
-        selection.boardId === board.id ? " focus-hover" : ""
+      className={`${styles["focus-board"]}${
+        selection.boardId === board.id ? ` ${styles["focus-hover"]}` : ""
       }`}
       id={`focusBoard_${board.id}`}
       onClick={() => selectBoard(board.id, board.name)}
@@ -89,10 +90,10 @@ export function FocusBoardArea() {
 
   return (
     <div>
-      <div className="focus-board-area">
+      <div className={styles["focus-board-area"]}>
         <div
-          className={`focus-board${
-            selection.boardId === 0 ? " focus-hover" : ""
+          className={`${styles["focus-board"]}${
+            selection.boardId === 0 ? ` ${styles["focus-hover"]}` : ""
           }`}
           id="focusBoard_0"
           onClick={() => selectBoard(0, "全部帖子")}
@@ -101,7 +102,7 @@ export function FocusBoardArea() {
           全部帖子
         </div>
         {boards.map(renderBoard)}
-        <div className="focus-boardTip">
+        <div className={styles["focus-boardTip"]}>
           提示：单击版面标签可切换下方展示内容，双击可直接进入版面
         </div>
       </div>

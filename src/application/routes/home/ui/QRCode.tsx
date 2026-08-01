@@ -1,4 +1,5 @@
 import * as React from "react";
+import styles from "../Home.module.scss";
 
 interface QRCodeProps {
   title: string;
@@ -17,10 +18,10 @@ export function QRCode(props: QRCodeProps): React.ReactElement {
         marginBottom: "1rem",
       }}
     >
-      <div className="mainPageTitle2">
-        <div className="mainPageTitleRow">
+      <div className={styles.mainPageTitle2}>
+        <div className={styles.mainPageTitleRow}>
           <i className="fa fa-volume-up"></i>
-          <div className="mainPageTitleText">{props.title}</div>
+          <div className={styles.mainPageTitleText}>{props.title}</div>
         </div>
       </div>
       <div style={{ marginTop: "1rem" }}>

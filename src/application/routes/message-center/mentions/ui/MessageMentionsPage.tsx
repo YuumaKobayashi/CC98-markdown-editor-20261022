@@ -6,6 +6,7 @@ import { MessageAttmebox, type MessageResponseProps } from "@modules/notificatio
 import { getMessageAttme } from "@modules/notification";
 import { getTotalPage } from "@modules/notification";
 import { DocumentTitle } from "@foundation/ui/document-title";
+import styles from "../../MessageCenter.module.scss";
 import { Pager } from "@foundation/ui/pagination";
 
 import {
@@ -57,9 +58,9 @@ export function MessageMentionsPage() {
   }, [page]);
 
   return (
-    <div className="message-right">
+    <div className={styles["message-right"]}>
       <DocumentTitle title="@我的-CC98论坛" />
-      <div className="message-response">
+      <div className={styles["message-response"]}>
         {state.data.map((item) => (
           <MessageAttmebox
             key={item.id}
@@ -77,7 +78,7 @@ export function MessageMentionsPage() {
           />
         ))}
       </div>
-      <div className="message-pager">
+      <div className={styles["message-pager"]}>
         <Pager
           url="/message/attme/"
           page={state.page}

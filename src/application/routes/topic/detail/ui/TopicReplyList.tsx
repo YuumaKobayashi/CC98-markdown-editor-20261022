@@ -19,6 +19,7 @@ import { TopicAwardList } from "./TopicAwardList";
 import { TopicReplier } from "./TopicReplier";
 import { TopicReplyContent } from "./TopicReplyContent";
 import { TopicReplySignature } from "./TopicReplySignature";
+import styles from "../../TopicDetail.module.scss";
 
 export { FloorSize } from "@modules/post";
 
@@ -213,7 +214,7 @@ export function TopicReplyList(props: TopicReplyListProps) {
           key={replyId}
           style={{ display: "flex", flexDirection: "column", width: "100%" }}
         >
-          <div className="reply" id={id.toString()}>
+          <div className={styles.reply} id={id.toString()}>
             {replyBody}
             <FloorSize isHot={isHot} floor={item.floor} />
           </div>
@@ -235,7 +236,7 @@ export function TopicReplyList(props: TopicReplyListProps) {
       replyId = `hot_${id}`;
     }
     return (
-      <div className="reply" key={replyId} id={replyId}>
+      <div className={styles.reply} key={replyId} id={replyId}>
         {replyBody}
         <div style={{ display: "flex", flexDirection: "column" }}>
           <FloorSize isHot={isHot} floor={item.floor} />

@@ -1,3 +1,5 @@
+@use "../../../foundation/styles/variables/legacy" as *;
+
 /*****************************************以下为我的消息的样式*********************************/
 .message-root {
   display: flex;
@@ -57,12 +59,13 @@
     }
   }
 
-  a.active {
+  a:global(.active) {
     color: $color-red;
   }
 }
 
-.message-right {
+.message-right,
+:global(.message-right) {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -143,7 +146,7 @@
       padding-bottom: 10px;
     }
 
-    .message-message-person {
+    :global(.message-message-person) {
       flex-shrink: 0;
       display: flex;
       min-height: 80px;
@@ -157,7 +160,7 @@
         @extend .message-message-pFocus;
       }
 
-      .message-message-pPortraitUrl {
+      :global(.message-message-pPortraitUrl) {
         display: inline-block;
         width: 40px;
         height: 40px;
@@ -165,21 +168,21 @@
         border-radius: 50%;
       }
 
-      .message-message-pInfo {
+      :global(.message-message-pInfo) {
         flex-grow: 1;
         height: 40px;
         margin: 20px 0px;
         display: flex;
         flex-direction: column;
 
-        .message-message-pName {
+        :global(.message-message-pName) {
           height: 14px;
           font-size: 14px;
           color: $color-black;
           padding-bottom: 10px;
         }
 
-        .message-message-pMessage {
+        :global(.message-message-pMessage) {
           height: 10px;
           width: 110px;
           display: inline-block;
@@ -192,7 +195,7 @@
         }
       }
 
-      .message-counterPerson {
+      :global(.message-counterPerson) {
         position: absolute;
         width: 8px;
         height: 8px;
@@ -208,7 +211,7 @@
 .message-message-wPostBtn {
   width: 100px;
   height: 30px;
-  background-color: $theme_color_main;
+  background-color: var(--cc98-theme-color-main);
   color: $color-post;
   border: 0px;
   border-radius: 3px;
@@ -320,13 +323,13 @@
       }
     }
 
-    .message-message-wc {
+    :global(.message-message-wc) {
       flex-shrink: 0;
       display: flex;
       flex-direction: column;
       margin: 10px 0px 10px 0px;
 
-      .message-message-wcTime {
+      :global(.message-message-wcTime) {
         height: 10px;
         font-size: 10px;
         color: $color-thinBlack;
@@ -334,12 +337,12 @@
         padding: 5px 0px 8px 0px;
       }
 
-      .message-message-wcSender {
+      :global(.message-message-wcSender) {
         display: flex;
         flex-direction: row-reverse;
         position: relative;
 
-        .message-message-wcPortraitUrl {
+        :global(.message-message-wcPortraitUrl) {
           width: 50px;
           height: 50px;
           border-radius: 50%;
@@ -347,7 +350,7 @@
           margin-right: 10px;
         }
 
-        .message-message-wcContent:before {
+        :global(.message-message-wcContent):before {
           content: "";
           position: absolute;
           width: 0;
@@ -358,7 +361,7 @@
           border-color: transparent transparent transparent $color-border;
         }
 
-        .message-message-wcContent:after {
+        :global(.message-message-wcContent):after {
           content: "";
           position: absolute;
           width: 0;
@@ -370,12 +373,12 @@
         }
       }
 
-      .message-message-wcReceiver {
+      :global(.message-message-wcReceiver) {
         display: flex;
         flex-direction: row;
         position: relative;
 
-        .message-message-wcPortraitUrl {
+        :global(.message-message-wcPortraitUrl) {
           width: 50px;
           height: 50px;
           border-radius: 50%;
@@ -383,7 +386,7 @@
           margin-left: 10px;
         }
 
-        .message-message-wcContent:before {
+        :global(.message-message-wcContent):before {
           content: "";
           position: absolute;
           width: 0;
@@ -394,7 +397,7 @@
           border-color: transparent $color-border transparent transparent;
         }
 
-        .message-message-wcContent:after {
+        :global(.message-message-wcContent):after {
           content: "";
           position: absolute;
           width: 0;
@@ -406,7 +409,7 @@
         }
       }
 
-      .message-message-wcContent {
+      :global(.message-message-wcContent) {
         background-color: $color-body;
         border: 1px solid $color-border;
         border-radius: 3px;
@@ -416,7 +419,7 @@
         margin-top: 8px;
         margin-bottom: 10px;
 
-        .message-message-wcText {
+        :global(.message-message-wcText) {
           font-size: 14px;
           color: $color-thinBlack;
           margin: 10px 10px 9px 10px;
@@ -464,7 +467,7 @@
 
       &:focus {
         outline: none;
-        border: 1px solid $theme_color_main;
+        border: 1px solid var(--cc98-theme-color-main);
       }
     }
 
@@ -491,7 +494,7 @@
     .message-message-wPostBtn {
       width: 100px;
       height: 30px;
-      background-color: $theme_color_main;
+      background-color: var(--cc98-theme-color-main);
       color: $color-post;
       border: 0px;
       border-radius: 3px;
@@ -534,19 +537,19 @@
   overflow-y: auto;
   background-color: $color-post;
 
-  .message-system-box {
+  :global(.message-system-box) {
     /*一个系统消息的框框*/
     display: flex;
     flex-direction: column;
     border-bottom: 1px dashed lightgray;
     flex-shrink: 0;
 
-    .message-system-box-bar {
+    :global(.message-system-box-bar) {
       display: flex;
       flex-direction: row;
     }
 
-    .message-system-box-title {
+    :global(.message-system-box-title) {
       /*一个系统消息标题*/
       height: 50px;
       font-size: 15px;
@@ -555,7 +558,7 @@
       margin-left: 30px;
     }
 
-    .message-system-box-date {
+    :global(.message-system-box-date) {
       /*一个系统消息日期*/
       height: 50px;
       font-size: 13px;
@@ -564,7 +567,7 @@
       margin-left: 10px;
     }
 
-    .message-system-box-content {
+    :global(.message-system-box-content) {
       /*一个系统消息内容*/
       font-size: 14px;
       line-height: 24px;
@@ -605,7 +608,7 @@
   overflow-y: hidden;
   background-color: $color-post;
 
-  .message-response-box {
+  :global(.message-response-box) {
     /*一个消息的框框*/
     flex-shrink: 0;
     display: flex;
@@ -623,7 +626,7 @@
                 height: 60px;
             }
         }*/
-    .message-response-box-middle {
+    :global(.message-response-box-middle) {
       /*消息框的中间-文字*/
       display: flex;
       flex-direction: column;
@@ -632,11 +635,11 @@
       flex-shrink: 0;
       margin: 0px 30px 20px 30px;
 
-      .message-response-box-middle1 {
+      :global(.message-response-box-middle1) {
         display: flex;
         flex-direction: row;
 
-        .message-response-box-middle-title {
+        :global(.message-response-box-middle-title) {
           /*消息框文字第一行 版面信息*/
           height: 50px;
           flex-wrap: nowrap;
@@ -668,7 +671,7 @@
           }
         }
 
-        .message-response-box-middle-date {
+        :global(.message-response-box-middle-date) {
           /*消息框文字第一行日期*/
           height: 50px;
           flex-basis: 300px;
@@ -680,7 +683,7 @@
         }
       }
 
-      .message-response-box-middle-content {
+      :global(.message-response-box-middle-content) {
         /*消息框文字第二行-主体内容*/
         height: 24px;
         font-size: 14px;

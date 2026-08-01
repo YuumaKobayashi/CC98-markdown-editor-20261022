@@ -2,6 +2,8 @@
 import * as Utility from "../../Utility";
 import $ from "jquery";
 import { match } from "@application/router/legacy-route-props";
+import styles from "../../src/application/routes/topic/TopicManagement.module.scss";
+import actionStyles from "../../src/application/routes/topic/TopicManagementActions.module.scss";
 interface Props {
   topicId;
   userId;
@@ -117,9 +119,9 @@ export class Judge extends React.Component<Props, { reason; tips; UI }> {
     let id1 = `hideReason_${this.props.postId}`;
     const plus1UI = (
       <div className="column" id="award">
-        <div className="column manageOperation">
-          <div className="manageObject">
-            <div className="judgeName">原因</div>
+        <div className={`column ${actionStyles.manageOperation}`}>
+          <div className={styles.manageObject}>
+            <div className={styles.judgeName}>原因</div>
           </div>
 
           <div
@@ -173,9 +175,9 @@ export class Judge extends React.Component<Props, { reason; tips; UI }> {
     );
     const minus1UI = (
       <div className="column" id="award">
-        <div className="column manageOperation">
-          <div className="manageObject">
-            <div className="judgeName">原因</div>
+        <div className={`column ${actionStyles.manageOperation}`}>
+          <div className={styles.manageObject}>
+            <div className={styles.judgeName}>原因</div>
           </div>
 
           <div
@@ -232,14 +234,14 @@ export class Judge extends React.Component<Props, { reason; tips; UI }> {
     else UI = plus1UI;
     const UIId = `judge${this.props.postId}`;
     return (
-      <div style={{ display: "none" }} id={UIId} className="judgeManagement">
-        <div className="judgeUI column">
-          <div className="row judgeName">评分</div>
+      <div style={{ display: "none" }} id={UIId} className={styles.judgeManagement}>
+        <div className={`${styles.judgeUI} column`}>
+          <div className={`row ${styles.judgeName}`}>评分</div>
           <div className="row" style={{ fontSize: "0.75rem", color: "#fff" }}>
                 500贴以上的用户可以进行评分（每日一次），超过7天的发言内容无法评分。
           </div>
           <div
-            className="row judgeOptions"
+            className={`row ${styles.judgeOptions}`}
             style={{
               marginTop: "2rem",
               paddingLeft: "3rem",
@@ -249,7 +251,7 @@ export class Judge extends React.Component<Props, { reason; tips; UI }> {
               color: "#fff",
             }}
           >
-            <div className="judgeOption">
+            <div className={styles.judgeOption}>
               <input
                 type="radio"
                 name="option"
@@ -258,7 +260,7 @@ export class Judge extends React.Component<Props, { reason; tips; UI }> {
               />
               <div>风评+1</div>
             </div>
-            <div className="judgeOption">
+            <div className={styles.judgeOption}>
               <input
                 type="radio"
                 name="option"
@@ -283,7 +285,7 @@ export class Judge extends React.Component<Props, { reason; tips; UI }> {
               fontSize: "1.25rem",
             }}
             onClick={this.confirm}
-            className="confirmManagement"
+            className={styles.confirmManagement}
           >
             确认
           </button>
@@ -296,7 +298,7 @@ export class Judge extends React.Component<Props, { reason; tips; UI }> {
               textDecoration: "underline",
               fontSize: "1.25rem",
             }}
-            className="confirmManagement"
+            className={styles.confirmManagement}
           >
             关闭
           </button>

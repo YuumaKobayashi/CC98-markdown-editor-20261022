@@ -9,6 +9,7 @@ import { readRawTagInfoCache } from "@modules/topic";
 import { UbbContainer } from "@legacy/Components/UbbContainer";
 import { UbbCodeOptions } from "@legacy/Ubb/UbbCodeExtension";
 
+import styles from "../Board.module.scss";
 import { getShortTopic } from "../api/service";
 
 interface BoardTopicListItemProps {
@@ -85,9 +86,9 @@ export function BoardTopicListItem({
   let bodyClass = "";
   // 决定奇偶斑马纹
   if (order % 2 === 0) {
-    bodyClass = "board-postItem-body board-postItem-body-even";
+    bodyClass = `${styles["board-postItem-body"]} ${styles["board-postItem-body-even"]}`;
   } else {
-    bodyClass = "board-postItem-body board-postItem-body-odd";
+    bodyClass = `${styles["board-postItem-body"]} ${styles["board-postItem-body-odd"]}`;
   }
 
   // 气泡内容
@@ -137,11 +138,14 @@ export function BoardTopicListItem({
     >
       <div className={bodyClass}>
         <Tooltip title={iconText}>
-          <div className="board-postItem-icon">
+          <div className={styles["board-postItem-icon"]}>
             <img src={iconSrc} />
           </div>
         </Tooltip>
-        <div className="board-postItem-title" style={{ display: "flex" }}>
+        <div
+          className={styles["board-postItem-title"]}
+          style={{ display: "flex" }}
+        >
           <Link
             to={`/topic/${data.id}`}
             style={{
@@ -166,26 +170,26 @@ export function BoardTopicListItem({
           {pager.map((page) => generateListPager(page, data.id))}
         </div>
 
-        <div className="board-postItem-right">
+        <div className={styles["board-postItem-right"]}>
           {data.userName ? (
             <Link
-              className="board-postItem-userName"
+              className={styles["board-postItem-userName"]}
               to={`/user/id/${data.userId}`}
             >
               {data.userName}
             </Link>
           ) : (
-            <div className="board-postItem-userName">匿名</div>
+            <div className={styles["board-postItem-userName"]}>匿名</div>
           )}
-          <div className="board-postItem-tags">
-            <div className="board-postItem-tag">
+          <div className={styles["board-postItem-tags"]}>
+            <div className={styles["board-postItem-tag"]}>
               <Tag style={{ width: 60, textAlign: "center" }} color="blue">
                 {data.hitCount > 10000
                   ? `${(data.hitCount / 10000).toFixed(0)}万`
                   : data.hitCount}
               </Tag>
             </div>
-            <div className="board-postItem-tag">
+            <div className={styles["board-postItem-tag"]}>
               <Tag style={{ width: 60, textAlign: "center" }} color="cyan">
                 {data.replyCount}
               </Tag>
@@ -194,7 +198,7 @@ export function BoardTopicListItem({
           <Link
             to={`/topic/${data.id}/${Math.ceil((data.replyCount + 1) / 10)}`}
           >
-            <div className="board-postItem-lastReply">
+            <div className={styles["board-postItem-lastReply"]}>
               <span>{data.lastPostUser}</span>/
               <span>{moment(data.lastPostTime).format("YY-MM-DD HH:mm")}</span>
             </div>
@@ -222,7 +226,7 @@ export function BoardTopicPreviewCard({
   return posts.length === 0 ? (
     <Spin size="large" />
   ) : (
-    <div className="board-postItem-cards">
+    <div className={styles["board-postItem-cards"]}>
       {posts.map((item: IPost) => (
         <BoardTopicPreviewPost key={item.id} item={item} />
       ))}
@@ -232,14 +236,16 @@ export function BoardTopicPreviewCard({
 
 function BoardTopicPreviewPost({ item }: { item: IPost }) {
   return (
-    <div className="board-postItem-card-body">
-      <div className="board-postItem-card-information">
+    <div className={styles["board-postItem-card-body"]}>
+      <div className={styles["board-postItem-card-information"]}>
         <div>{item.floor}L</div>
         <Link to={`/user/id/${item.userId}`}>
-          <div className="board-postItem-card-username">{item.userName}</div>
+          <div className={styles["board-postItem-card-username"]}>
+            {item.userName}
+          </div>
         </Link>
       </div>
-      <div className="board-postItem-card-content">
+      <div className={styles["board-postItem-card-content"]}>
         <UbbContainer
           code={item.content}
           options={{ ...new UbbCodeOptions(), allowToolbox: false }}

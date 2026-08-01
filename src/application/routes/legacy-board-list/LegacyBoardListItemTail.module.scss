@@ -1,9 +1,29 @@
+.timeProp {
+  margin-left: 0.1875rem;
+  font-size: 0.75rem;
+  word-break: keep-all;
+}
+
+.tagSize {
+  font-size: 0.75rem;
+}
+
+:global(#disliked) {
+  margin-left: 0.625rem;
+  margin-right: 0.625rem;
+}
+
+:global(#disliked) img {
+  width: 0.625rem;
+  height: 0.625rem;
+}
+
 .reputation {
   font-size: 0.75rem;
   margin-left: 1rem;
 }
 
-#changeTopColor {
+:global(#changeTopColor) {
   background-color: #fffaf0;
 }
 

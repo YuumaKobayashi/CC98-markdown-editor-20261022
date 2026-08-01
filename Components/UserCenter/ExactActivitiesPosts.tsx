@@ -8,6 +8,7 @@ import {
   UserRecentPostItem as Post,
 } from "@modules/post";
 import type { UserRecentPost } from "../../States/AppState";
+import styles from "../../src/application/routes/user-center/UserCenter.module.scss";
 
 //用户中心主页帖子动态组件
 function ExactActivitiesPosts() {
@@ -82,7 +83,7 @@ function ExactActivitiesPosts() {
 
   if (userRecentPosts.length === 0 && hasTotal) {
     return (
-      <div className="user-posts" style={{ marginLeft: "2rem" }}>
+      <div className={styles["user-posts"]} style={{ marginLeft: "2rem" }}>
         没有回复
       </div>
     );
@@ -98,10 +99,10 @@ function ExactActivitiesPosts() {
   }
 
   return (
-    <div className="user-posts">
+    <div className={styles["user-posts"]}>
       {postItems}
       {isLoading ? (
-        <div className="user-center-loading">
+        <div className={styles["user-center-loading"]}>
           <p className="fa fa-spinner fa-pulse fa-2x fa-fw"></p>
         </div>
       ) : null}

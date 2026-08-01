@@ -6,6 +6,7 @@ import { Link } from "react-router";
 import { getMyInfo } from "@modules/session";
 import { HomeAdvertisementCarousel } from "@application/routes/home/advertisement";
 
+import styles from "../Board.module.scss";
 import { BoardAnnouncement } from "./BoardAnnouncement";
 import { BoardBreadcrumb } from "./BoardBreadcrumb";
 
@@ -52,7 +53,7 @@ export function BoardHeader({ data, page }: BoardHeaderProps) {
   }
 
   return (
-    <div className="board-head-body">
+    <div className={styles["board-head-body"]}>
       <BoardBreadcrumb boardId={data.id} boardInfo={data} />
 
       <BoardAnnouncement
@@ -61,16 +62,16 @@ export function BoardHeader({ data, page }: BoardHeaderProps) {
         isFirstPage={page === "1"}
       />
 
-      <div className="board-head-bar">
+      <div className={styles["board-head-bar"]}>
         {isLogOn && isVerified && !isLocked ? (
           <div className="row">
             <Link to={`/editor/postTopic/${data.id}`}>
-              <Button className="board-head-button">发主题</Button>
+              <Button className={styles["board-head-button"]}>发主题</Button>
             </Link>
             {data.canVote && (
               <Link to={`/editor/postVoteTopic/${data.id}`}>
                 <Button
-                  className="board-head-button"
+                  className={styles["board-head-button"]}
                   style={{ marginLeft: "1rem" }}
                 >
                   发投票

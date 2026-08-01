@@ -15,6 +15,7 @@ import {
 } from "@foundation/storage/web-storage";
 import { DocumentTitle } from "@foundation/ui/document-title";
 
+import styles from "../Home.module.scss";
 import {
   MainPageColumn,
   MainPageTopicMoreProps,
@@ -94,34 +95,34 @@ export function RecommendedReading({ data }: { data: MainPageColumn[] }) {
   const selected = data[selectedIndex];
 
   return (
-    <div className="recommendedReading">
-      <div className="mainPageTitle2">
-        <div className="mainPageTitleRow">
+    <div className={styles.recommendedReading}>
+      <div className={styles.mainPageTitle2}>
+        <div className={styles.mainPageTitleRow}>
           <i className="fa fa-volume-up"></i>
-          <div className="mainPageTitleText">推荐阅读</div>
+          <div className={styles.mainPageTitleText}>推荐阅读</div>
         </div>
       </div>
-      <div className="recommendedReadingContent">
-        <div className="recommendedReadingImage">
+      <div className={styles.recommendedReadingContent}>
+        <div className={styles.recommendedReadingImage}>
           <img src={selected?.imageUrl ?? ""} />
         </div>
         <div className="column" style={{ flexGrow: 1 }}>
-          <div className="recommendedReadingTitle">
+          <div className={styles.recommendedReadingTitle}>
             <a href={selected?.url ?? ""} target="_blank">
               {selected?.title ?? ""}
             </a>
           </div>
-          <div className="recommendedReadingAbstract">
+          <div className={styles.recommendedReadingAbstract}>
             {selected?.content ?? ""}
           </div>
-          <div className="recommendedReadingButtons">
+          <div className={styles.recommendedReadingButtons}>
             {data.map((_, buttonIndex) => (
               <div
                 key={buttonIndex}
                 className={
                   buttonIndex === selectedIndex
-                    ? "recommendedReadingButtonSelected"
-                    : "recommendedReadingButton"
+                    ? styles.recommendedReadingButtonSelected
+                    : styles.recommendedReadingButton
                 }
                 onMouseEnter={() => handleMouseEnter(buttonIndex)}
               ></div>
@@ -150,14 +151,14 @@ export function HomeHotTopics({ data }: { data: HotTopic[] }) {
   const convertMainPageTopic = (item: HotTopic) => {
     if (!item.id) return <div key="hot-topic-placeholder">{item.title}</div>;
     return (
-      <div key={item.id} className="mainPageListRow">
-        <div className="mainPageListBoardName">
+      <div key={item.id} className={styles.mainPageListRow}>
+        <div className={styles.mainPageListBoardName}>
           {" "}
           <a href={`/board/${item.boardId}`} target="_blank">
             [{item.boardName}]
           </a>
         </div>
-        <div className="mainPageListTitle">
+        <div className={styles.mainPageListTitle}>
           <a href={`/topic/${item.id}/1`} target="_blank">
             {item.title.trim() ? (
               item.title
@@ -174,25 +175,25 @@ export function HomeHotTopics({ data }: { data: HotTopic[] }) {
   const topics = resolveHotTopics(cachedTopics);
 
   return (
-    <div className="mainPageList">
-      <div className="mainPageTitle1">
-        <div className="mainPageTitleRow">
+    <div className={styles.mainPageList}>
+      <div className={styles.mainPageTitle1}>
+        <div className={styles.mainPageTitleRow}>
           <i className="fa fa-volume-up"></i>
-          <div className="mainPageTitleText">热门话题</div>
+          <div className={styles.mainPageTitleText}>热门话题</div>
         </div>
-        <div className="mainPageTitleRow">
-          <div className="mainPageTitleText">
+        <div className={styles.mainPageTitleRow}>
+          <div className={styles.mainPageTitleText}>
             <a href="/topic/hot-weekly" target="_blank">本周</a>
           </div>
-          <div className="mainPageTitleText">
+          <div className={styles.mainPageTitleText}>
             <a href="/topic/hot-monthly" target="_blank">本月</a>
           </div>
-          <div className="mainPageTitleText">
+          <div className={styles.mainPageTitleText}>
             <a href="/topic/hot-history" target="_blank">历史上的今天</a>
           </div>
         </div>
       </div>
-      <div className="mainPageListContent1">
+      <div className={styles.mainPageListContent1}>
         {topics.map(convertMainPageTopic)}
       </div>
     </div>
@@ -255,11 +256,11 @@ export function HomeAdvertisementCarousel() {
           <img src={selected?.imageUrl ?? ""} style={{ width: "18.75rem", height: "6.25rem" }} />
         </a>
       </div>
-      <div className="adButtons" style={{ position: "absolute", left: "50%", marginLeft: "-8rem", bottom: "0.25rem" }}>
+      <div className={styles.adButtons} style={{ position: "absolute", left: "50%", marginLeft: "-8rem", bottom: "0.25rem" }}>
         {ads.map((_, buttonIndex) => (
           <div
             key={buttonIndex}
-            className={buttonIndex === selectedIndex ? "adButtonSelected" : "adButton"}
+            className={buttonIndex === selectedIndex ? styles.adButtonSelected : styles.adButton}
             onMouseEnter={() => setIndex(buttonIndex)}
           ></div>
         ))}
@@ -271,14 +272,14 @@ export function HomeAdvertisementCarousel() {
 /** 论坛统计组件。 */
 export function HomeStatistics({ data }: { data: MainPageCount }) {
   return (
-    <div className="mainPageCount">
-      <div className="mainPageTitle1">
-        <div className="mainPageTitleRow">
+    <div className={styles.mainPageCount}>
+      <div className={styles.mainPageTitle1}>
+        <div className={styles.mainPageTitleRow}>
           <i className="fa fa-volume-up"></i>
-          <div className="mainPageTitleText">论坛统计</div>
+          <div className={styles.mainPageTitleText}>论坛统计</div>
         </div>
       </div>
-      <div className="mainPageCountContent">
+      <div className={styles.mainPageCountContent}>
         {[
           ["今日帖数", data.todayCount],
           ["今日主题数", data.todayTopicCount],
@@ -287,14 +288,14 @@ export function HomeStatistics({ data }: { data: MainPageCount }) {
           ["在线用户数", data.onlineUserCount],
           ["总用户数", data.userCount],
         ].map(([label, value]) => (
-          <div className="mainPageCountRow" key={label}>
-            <div className="mainPageCountTitle">{label}</div>
-            <div className="mainPageCountTitle">{value || 0}</div>
+          <div className={styles.mainPageCountRow} key={label}>
+            <div className={styles.mainPageCountTitle}>{label}</div>
+            <div className={styles.mainPageCountTitle}>{value || 0}</div>
           </div>
         ))}
-        <div className="mainPageCountRow">
-          <div className="mainPageCountTitle">欢迎新用户</div>
-          <div className="mainPageCountTitle">
+        <div className={styles.mainPageCountRow}>
+          <div className={styles.mainPageCountTitle}>欢迎新用户</div>
+          <div className={styles.mainPageCountTitle}>
             <Link to={`/user/name/${encodeURIComponent(data.lastUserName)}`}>
               {data.lastUserName}
             </Link>
@@ -358,9 +359,9 @@ export function HomePage() {
   };
 
   return (
-    <div className="mainPage">
+    <div className={styles.mainPage}>
       <DocumentTitle title="CC98论坛" />
-      <div className="leftPart">
+      <div className={styles.leftPart}>
         <AnnouncementComponent data={data.announcement} />
         <RecommendedReading data={data.recommendationReading} />
         <div className="row" style={{ justifyContent: "space-between" }}>
@@ -380,7 +381,7 @@ export function HomePage() {
           <MainPageTopicComponent data={data.partTimeJob} name="实习兼职" fetchUrl="/topic/part-time-job" style="black" mores={partTimeJob} />
         </div>
       </div>
-      <div className="rightPart">
+      <div className={styles.rightPart}>
         <RecommendedFunctionComponent data={data.recommendationFunction} />
         <HomeAdvertisementCarousel />
         <SchoolSuggestionBox />

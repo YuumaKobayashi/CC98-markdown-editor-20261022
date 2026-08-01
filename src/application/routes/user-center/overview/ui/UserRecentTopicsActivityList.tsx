@@ -9,6 +9,7 @@ import {
   UserRecentTopicItem as Topic,
 } from "@modules/topic";
 import type { UserRecentTopic } from "@legacy/States/AppState";
+import styles from "../../UserCenter.module.scss";
 
 //用户中心主页帖子动态组件
 export function UserRecentTopicsActivityList() {
@@ -81,7 +82,7 @@ export function UserRecentTopicsActivityList() {
 
   if (userRecentTopics.length === 0 && hasTotal) {
     return (
-      <div className="user-posts" style={{ marginLeft: "2rem" }}>
+      <div className={styles["user-posts"]} style={{ marginLeft: "2rem" }}>
         没有主题
       </div>
     );
@@ -97,10 +98,10 @@ export function UserRecentTopicsActivityList() {
   }
 
   return (
-    <div className="user-posts">
+    <div className={styles["user-posts"]}>
       {topicItems}
       {isLoading ? (
-        <div className="user-center-loading">
+        <div className={styles["user-center-loading"]}>
           <p className="fa fa-spinner fa-pulse fa-2x fa-fw"></p>
         </div>
       ) : null}

@@ -19,6 +19,7 @@ import {
   ThemeSettingsForm,
   type ThemeSettingResult,
 } from "./ThemeSettingsForm";
+import styles from "../../UserCenter.module.scss";
 
 export function UserCenterThemePage() {
   const dispatch = useAppDispatch();
@@ -103,7 +104,7 @@ export function UserCenterThemePage() {
         />
       </div>
       <hr />
-      <div className="user-theme-config">{themeList.map(generateButton)}</div>
+      <div className={styles["user-theme-config"]}>{themeList.map(generateButton)}</div>
     </div>
   );
 }

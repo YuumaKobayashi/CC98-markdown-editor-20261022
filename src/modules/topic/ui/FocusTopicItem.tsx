@@ -2,6 +2,8 @@ import * as React from "react";
 
 import type { FocusTopic } from "@legacy/Props/FocusTopic";
 
+import styles from "./FocusTopicItem.module.scss";
+
 // 每页 10 楼；将总楼层数转换为最后一条回复所在的页码和楼层锚点。
 const getLastPostPageAnchor = (floorCount: number) => {
   const page = Number.parseInt(String(floorCount / 10 + 1), 10);
@@ -26,25 +28,25 @@ export function FocusTopicItem(props: FocusTopic) {
     : "";
 
   return (
-    <div className="focus-topic">
+    <div className={styles["focus-topic"]}>
       <a
-        className="focus-topic-left"
+        className={styles["focus-topic-left"]}
         href={props.userId ? userUrl : undefined}
         target={props.userId ? "_blank" : undefined}
         id={`user_${props.id}`}
       >
-        <img className="focus-topic-portraitUrl" src={props.portraitUrl}></img>
-        <div className="focus-topic-userName">{props.userName}</div>
+        <img className={styles["focus-topic-portraitUrl"]} src={props.portraitUrl}></img>
+        <div className={styles["focus-topic-userName"]}>{props.userName}</div>
       </a>
-      <div className="focus-topic-middle">
-        <a className="focus-topic-title" href={topicUrl} target="_blank">
+      <div className={styles["focus-topic-middle"]}>
+        <a className={styles["focus-topic-title"]} href={topicUrl} target="_blank">
           {props.title.trim() ? (
             props.title
           ) : (
             <span style={{ display: "inline-block", width: "5rem" }}></span>
           )}
         </a>
-        <div className="focus-topic-info">
+        <div className={styles["focus-topic-info"]}>
           {tagInfo && <div>{tagInfo}</div>}
           <div>
             <i className="fa fa-clock-o fa-lg"></i>
@@ -70,9 +72,9 @@ export function FocusTopicItem(props: FocusTopic) {
           </div>
         </div>
       </div>
-      <div className="focus-topic-rightBar"></div>
-      <a className="focus-topic-right" href={boardUrl} target="_blank">
-        <div className="focus-topic-board">{props.boardName}</div>
+      <div className={styles["focus-topic-rightBar"]}></div>
+      <a className={styles["focus-topic-right"]} href={boardUrl} target="_blank">
+        <div className={styles["focus-topic-board"]}>{props.boardName}</div>
       </a>
     </div>
   );

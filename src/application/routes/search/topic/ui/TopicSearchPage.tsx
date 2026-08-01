@@ -8,6 +8,9 @@ import { SearchTopicItem } from "@modules/topic";
 import { FocusTopic } from "@legacy/Props/FocusTopic";
 import { DocumentTitle } from "@foundation/ui/document-title";
 
+import styles from "../../../focus/Focus.module.scss";
+import searchStyles from "../../Search.module.scss";
+
 interface SearchInfo {
   boardId: number;
   // boardName: string;
@@ -125,15 +128,15 @@ export function TopicSearchPage() {
   const showResults = status !== "empty" && status !== "error";
 
   return (
-    <div className="focus-root">
+    <div className={styles["focus-root"]}>
       <DocumentTitle title="搜索结果 - CC98论坛" />
-      <div className="focus">
+      <div className={styles.focus}>
         <TopicSearchBreadcrumb />
         <div
-          className={`focus-topic-area${showResults ? "" : " displaynone"}`}
+          className={`${styles["focus-topic-area"]}${showResults ? "" : " displaynone"}`}
           id="focus-topic-area"
         >
-          <div className="focus-topic-topicArea">
+          <div className={styles["focus-topic-topicArea"]}>
             {data.map((item) => (
               <SearchTopicItem
                 key={item.id}
@@ -160,7 +163,7 @@ export function TopicSearchPage() {
             ))}
           </div>
           <div
-            className="focus-topic-getMore"
+            className={styles["focus-topic-getMore"]}
             style={{ display: status === "ready" ? "flex" : "none" }}
             onClick={getMore}
             id="focus-topic-getMore"
@@ -169,7 +172,7 @@ export function TopicSearchPage() {
             <div>······</div>
           </div>
           <div
-            className={`focus-topic-loading${
+            className={`${styles["focus-topic-loading"]}${
               status === "loading" || status === "loading-more"
                 ? ""
                 : " displaynone"
@@ -179,7 +182,7 @@ export function TopicSearchPage() {
             <img src="http://file.cc98.org/uploadfile/2017/12/20/6514723843.gif" />
           </div>
           <div
-            className={`focus-topic-loaddone${status === "done" ? "" : " displaynone"}`}
+            className={`${styles["focus-topic-loaddone"]}${status === "done" ? "" : " displaynone"}`}
             id="focus-topic-loaddone"
           >
             没有更多帖子啦~
@@ -187,15 +190,17 @@ export function TopicSearchPage() {
           <button
             type="button"
             id="scroll-to-top-button"
-            className={`top-button ${showScrollToTop ? "btn-show" : "btn-disappear"}`}
+            className={`${styles["top-button"]} ${
+              showScrollToTop ? styles["btn-show"] : styles["btn-disappear"]
+            }`}
             onClick={scrollToTop}
           >
-            <div className="top-button-text">回到顶部</div>
+            <div className={styles["top-button-text"]}>回到顶部</div>
           </button>
         </div>
-        <div id="noResult" className={`noResult${status === "empty" ? "" : " displaynone"}`}>
-          <img src="/static/images/searchNone.png" className="noResultPic" />
-          <div className="noResultText">
+        <div id="noResult" className={`${searchStyles.noResult}${status === "empty" ? "" : " displaynone"}`}>
+          <img src="/static/images/searchNone.png" className={searchStyles.noResultPic} />
+          <div className={searchStyles.noResultText}>
             -----------------------抱歉呢前辈，没有找到你想要的帖子哦~----------------------
           </div>
         </div>

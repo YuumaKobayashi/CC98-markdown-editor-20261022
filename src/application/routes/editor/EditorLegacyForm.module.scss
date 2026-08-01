@@ -7,7 +7,7 @@
   font-size: 14px;
 }
 
-.createTopicBoardName {
+:global(.createTopicBoardName) {
   margin-bottom: 20px;
 }
 
@@ -162,3 +162,8 @@
   text-align: center;
 }
 
+.createTopicContent {
+  display: flex;
+  align-items: center;
+  height: 3rem;
+}

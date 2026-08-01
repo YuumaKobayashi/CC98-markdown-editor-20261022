@@ -3,6 +3,7 @@ import * as React from "react";
 import { useAppDispatch, useAppSelector } from "@application/store";
 import { selectCurrentUser, updateCurrentUser } from "@modules/session";
 import { transferWealth } from "@modules/wealth";
+import styles from "../../UserCenter.module.scss";
 
 export function TransferWealthPage() {
   const dispatch = useAppDispatch();
@@ -119,10 +120,10 @@ export function TransferWealthPage() {
   };
 
   return (
-    <div className="user-center-transfer-wealth">
+    <div className={styles["user-center-transfer-wealth"]}>
       <h2>转账</h2>
       <form onSubmit={handleSubmit}>
-        <div className="transfer-wealth-input">
+        <div className={styles["transfer-wealth-input"]}>
           <p>收款人</p>
           <input
             style={{ width: "30rem" }}
@@ -134,7 +135,7 @@ export function TransferWealthPage() {
             }
           />
         </div>
-        <div className="transfer-wealth-input">
+        <div className={styles["transfer-wealth-input"]}>
           <p>金额</p>
           <input
             type="text"
@@ -145,7 +146,7 @@ export function TransferWealthPage() {
             }
           />
         </div>
-        <div className="transfer-wealth-input">
+        <div className={styles["transfer-wealth-input"]}>
           <p>理由</p>
           <input
             style={{ width: "30rem" }}
@@ -155,7 +156,7 @@ export function TransferWealthPage() {
             onChange={(event) => setReason(event.target.value)}
           />
         </div>
-        <div className="transfer-wealth-input">
+        <div className={styles["transfer-wealth-input"]}>
           <p>说明</p>
           <ul style={{ marginLeft: "2.5rem" }}>
             <li>
@@ -178,7 +179,7 @@ export function TransferWealthPage() {
           转账
         </button>
       </form>
-      <p className="transfer-wealth-info">
+          <p className={styles["transfer-wealth-info"]}>
         {isError ? errorMessage : info}
       </p>
     </div>

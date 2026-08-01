@@ -25,6 +25,8 @@ import { uploadFile } from "@modules/upload";
 import type { MessagePersonInfo, MessageProps } from "@modules/message";
 import { DocumentTitle } from "@foundation/ui/document-title";
 
+import styles from "../../MessageCenter.module.scss";
+
 type MessageLoadStatus = "more" | "loading" | "done";
 type ScrollAction = "bottom" | "prepend" | null;
 
@@ -280,29 +282,29 @@ export function PrivateConversationWindow({
   const showNotice = !focused && draft === "";
 
   return (
-    <div className="message-message-window">
+    <div className={styles["message-message-window"]}>
       {contact ? (
         <DocumentTitle title={`与 ${contact.name} 的私信-CC98论坛`} />
       ) : null}
-      <div className="message-message-wHeader">
-        <div className="message-message-wReport"></div>
-        <div className="message-message-wTitle">
+      <div className={styles["message-message-wHeader"]}>
+        <div className={styles["message-message-wReport"]}></div>
+        <div className={styles["message-message-wTitle"]}>
           {contact ? `与 ${contact.name} 的私信` : "无当前聊天对象"}
         </div>
-        <div className="message-message-wReport displaynone">
+        <div className={`${styles["message-message-wReport"]} displaynone`}>
           <button onClick={report}>举报</button>
         </div>
       </div>
       <div
-        className="message-message-wContent"
+        className={styles["message-message-wContent"]}
         id="messageContent"
         ref={contentRef}
       >
-        <div className="message-message-wcLoading">
+        <div className={styles["message-message-wcLoading"]}>
           {contact ? (
             <div
               id="wcGetMore"
-              className={`message-message-wcLoadingMore${
+              className={`${styles["message-message-wcLoadingMore"]}${
                 loadStatus === "more" ? "" : " displaynone"
               }`}
               onClick={getMoreMessage}
@@ -317,7 +319,7 @@ export function PrivateConversationWindow({
           />
           <div
             id="wcLoadingText"
-            className={`message-message-wcLoadingText${
+            className={`${styles["message-message-wcLoadingText"]}${
               contact && loadStatus === "done" ? "" : " displaynone"
             }`}
           >
@@ -367,10 +369,10 @@ export function PrivateConversationWindow({
             })
           : null}
       </div>
-      <div className="message-message-wPost">
+      <div className={styles["message-message-wPost"]}>
         <textarea
           ref={textareaRef}
-          className="message-message-wPostArea"
+          className={styles["message-message-wPostArea"]}
           id="postContent"
           value={draft}
           onChange={(event) => setDraft(event.target.value)}
@@ -382,7 +384,7 @@ export function PrivateConversationWindow({
         />
         <div
           id="wPostNotice"
-          className={`message-message-wPostNotice${
+          className={`${styles["message-message-wPostNotice"]}${
             showNotice ? "" : " displaynone"
           }`}
           onClick={handleFocus}
@@ -391,7 +393,7 @@ export function PrivateConversationWindow({
         </div>
         <div
           id="wPostError"
-          className={`message-message-wPostError${
+          className={`${styles["message-message-wPostError"]}${
             showPostError ? "" : " displaynone"
           }`}
           onClick={handleFocus}
@@ -406,16 +408,16 @@ export function PrivateConversationWindow({
           style={{ display: "none" }}
           onChange={handleImageUpload}
         />
-        <div className="message-message-wPostBtn-wrapper">
+        <div className={styles["message-message-wPostBtn-wrapper"]}>
           <button
-            className="message-message-wPostBtn"
+            className={styles["message-message-wPostBtn"]}
             onClick={triggerImageUpload}
             type="button"
             style={{ marginRight: "10px" }}
           >
             上传图片
           </button>
-          <button className="message-message-wPostBtn" onClick={postMessage}>
+          <button className={styles["message-message-wPostBtn"]} onClick={postMessage}>
             发送
           </button>
         </div>

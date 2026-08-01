@@ -34,12 +34,12 @@
   font-size: 1.25rem;
   font-family: 微软雅黑;
   padding-left: 0.75rem;
-  color: $theme_color_main;
+  color: var(--cc98-theme-color-main);
 
   a {
     font-size: 1rem;
     font-family: 微软雅黑;
-    color: $theme_color_main;
+    color: var(--cc98-theme-color-main);
   }
 }
 
@@ -50,12 +50,12 @@
   font-size: 1.25rem;
   font-family: 微软雅黑;
   padding-left: 0.75rem;
-  color: $theme_color_sub;
+  color: var(--cc98-theme-color-sub);
 
   a {
     font-size: 1rem;
     font-family: 微软雅黑;
-    color: $theme_color_sub;
+    color: var(--cc98-theme-color-sub);
   }
 }
 
@@ -86,9 +86,9 @@
   padding: 1rem 1.25rem;
   border-width: 8px 1px 1px 1px;
   border-style: solid;
-  border-color: $theme_color_main;
+  border-color: var(--cc98-theme-color-main);
   box-sizing: border-box;
-  background-color: $background_color_textarea;
+  background-color: var(--cc98-background-color-textarea);
 }
 
 //推荐阅读~
@@ -107,9 +107,9 @@
   padding: 1.25rem 1.25rem 0 1.25rem;
   border-width: 8px 1px 1px 1px;
   border-style: solid;
-  border-color: $theme_color_sub;
+  border-color: var(--cc98-theme-color-sub);
   box-sizing: border-box;
-  background-color: $background_color_textarea;
+  background-color: var(--cc98-background-color-textarea);
 }
 
 .recommendedReadingImage {
@@ -119,7 +119,7 @@
 
   img {
     border-radius: 50%;
-    background-color: $theme_color_sub;
+    background-color: var(--cc98-theme-color-sub);
     width: 3.75rem;
     height: 3.75rem;
   }
@@ -195,9 +195,9 @@
   padding: 1rem 1.25rem;
   border-width: 8px 1px 1px 1px;
   border-style: solid;
-  border-color: $theme_color_main;
+  border-color: var(--cc98-theme-color-main);
   box-sizing: border-box;
-  background-color: $background_color_textarea;
+  background-color: var(--cc98-background-color-textarea);
 }
 
 .mainPageListContent2 {
@@ -208,9 +208,9 @@
   padding: 1rem 1.25rem;
   border-width: 8px 1px 1px 1px;
   border-style: solid;
-  border-color: $theme_color_sub;
+  border-color: var(--cc98-theme-color-sub);
   box-sizing: border-box;
-  background-color: $background_color_textarea;
+  background-color: var(--cc98-background-color-textarea);
 }
 
 .mainPageListRow {
@@ -227,12 +227,12 @@
   margin-right: 0.375rem;
   font-size: 0.75rem;
   font-family: 微软雅黑;
-  color: $theme_color_main;
+  color: var(--cc98-theme-color-main);
 
   a {
     font-size: 0.75rem;
     font-family: 微软雅黑;
-    color: $theme_color_main;
+    color: var(--cc98-theme-color-main);
   }
 }
 
@@ -268,7 +268,7 @@
   margin-top: 1rem;
   padding: 0.75rem 1.25rem;
   box-sizing: border-box;
-  background-color: $theme_color_main;
+  background-color: var(--cc98-theme-color-main);
 }
 
 .recommendedFunctionRow {
@@ -317,7 +317,7 @@
   margin-top: 1rem;
   padding: 1rem 1rem 0.75rem 1rem;
   box-sizing: border-box;
-  background-color: $theme_color_sub;
+  background-color: var(--cc98-theme-color-sub);
 }
 
 .specialOfferRow {
@@ -395,7 +395,7 @@
   margin-top: 1rem;
   padding: 1rem 1.25rem 0.75rem 1.25rem;
   box-sizing: border-box;
-  background-color: $theme_color_main;
+  background-color: var(--cc98-theme-color-main);
 }
 
 .mainPageCountRow {

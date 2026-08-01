@@ -8,6 +8,7 @@ import {
 } from "@modules/session";
 import { invalidateUserInfoCache } from "@modules/user";
 import { cc98Fetch } from "@foundation/api/http";
+import styles from "../../UserCenter.module.scss";
 
 //TODO：逻辑独立与优化
 
@@ -498,7 +499,7 @@ export function UserCenterAvatarSettings() {
   return (
     <div>
       <h2>修改头像</h2>
-      <div className="user-center-config-avatar">
+      <div className={styles["user-center-config-avatar"]}>
         <img src={state.avatarNow} />
         <div>
           <button
@@ -530,7 +531,7 @@ export function UserCenterAvatarSettings() {
             <p style={{ color: "red", margin: "0" }}>{state.info}</p>
             <button
               type="button"
-              className="config-submit-button"
+              className={styles["config-submit-button"]}
               style={state.isShown ? {} : hiddenStyle}
               onClick={handleSubmit}
               disabled={state.isLoading}
@@ -540,7 +541,7 @@ export function UserCenterAvatarSettings() {
           </div>
         </div>
         <div
-          className="user-center-config-avatar-preview"
+          className={styles["user-center-config-avatar-preview"]}
           style={
             state.isShown
               ? { opacity: 1, marginTop: "2rem" }
@@ -576,7 +577,7 @@ export function UserCenterAvatarSettings() {
               }}
             />
             <div
-              className="imgdata"
+              className={styles.imgdata}
               style={
                 state.isShown
                   ? {

@@ -4,6 +4,7 @@ import { Link } from "react-router";
 import { getToken } from "@modules/session";
 import type { UserFavoritesBoardInfo } from "@legacy/States/AppState";
 import { cc98Fetch } from "@foundation/api/http";
+import styles from "../../UserCenter.module.scss";
 
 interface UserFavoriteBoardCardProps {
   board: UserFavoritesBoardInfo;
@@ -82,11 +83,11 @@ export function UserFavoriteBoardCard({ board }: UserFavoriteBoardCardProps) {
   };
 
   return (
-    <div className="user-center-myfavorite-board">
+    <div className={styles["user-center-myfavorite-board"]}>
       <Link to={`/board/${board.id}`} title={board.name}>
         <img src={`/static/images/_${board.name}.png`} />
       </Link>
-      <div className="user-center-myfavorite-board-info">
+      <div className={styles["user-center-myfavorite-board-info"]}>
         <Link to={`/board/${board.id}`} title={board.name}>
           <h2>{board.name}</h2>
         </Link>
@@ -97,7 +98,7 @@ export function UserFavoriteBoardCard({ board }: UserFavoriteBoardCardProps) {
       </div>
       <button
         type="button"
-        className={followState.isFollowing ? "" : "user-follow-board"}
+        className={followState.isFollowing ? "" : styles["user-follow-board"]}
         onClick={followState.isFollowing ? unfollow : follow}
         disabled={followState.buttonIsDisabled}
       >

@@ -4,7 +4,7 @@
     font-size: 0.75rem;
   }
 
-  #signature {
+  :global(#signature) {
     margin: 0;
     padding: 1.25rem;
     width: 49.1875rem;

@@ -2,6 +2,7 @@ import * as React from "react";
 
 import type { ThemeSetting } from "@legacy/States/AppState";
 import { isBrowserDayNightModeSupported } from "@foundation/theme";
+import styles from "../../UserCenter.module.scss";
 
 export interface ThemeSettingSuccessResult {
   ok: true;
@@ -80,7 +81,7 @@ export function ThemeSettingsForm({
         />{" "}
         启用皮肤昼夜更换功能
       </label>
-      <p className="help-text">
+          <p className={styles["help-text"]}>
         只有同时提供亮色和暗色选项的皮肤才支持昼夜更换功能。如果你选择其它皮肤，这个选项将不会产生任何效果。
       </p>
 
@@ -96,7 +97,7 @@ export function ThemeSettingsForm({
           自动同步浏览器的昼夜模式 {supportTip}
         </label>
       </div>
-      <p className="help-text">
+          <p className={styles["help-text"]}>
         你的浏览器必须支持获取昼夜模式的接口，否则这个设置将不会生效。
       </p>
 
@@ -123,7 +124,7 @@ export function ThemeSettingsForm({
           style={{ margin: "0px 10px" }}
         />
       </div>
-      <p className="help-text">
+      <p className={styles["help-text"]}>
         当浏览器不支持获取昼夜模式的接口时，将会回退使用此设置所设定的昼夜开始时刻更换皮肤。
       </p>
 

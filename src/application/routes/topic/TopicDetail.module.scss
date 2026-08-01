@@ -1,23 +1,25 @@
-#authormes {
-  border-right: $bgcolor solid thin;
+@use "../../../foundation/styles/variables/legacy" as legacy;
+
+:global(#authormes) {
+  border-right: legacy.$bgcolor solid thin;
   width: 26rem;
 }
 
-#authorName {
+:global(#authorName) {
   margin-left: 1rem;
   justify-content: flex-start;
   font-size: 1rem;
   width: 8rem;
 }
 
-#authorName p {
+:global(#authorName) p {
   margin-top: 1.4375rem;
   font-size: 1rem;
   font-family: 微软雅黑;
   color: #9acd32;
 }
 
-#fans {
+:global(#fans) {
   margin-top: 1.4375rem;
   font-family: 微软雅黑;
   font-size: 1rem;
@@ -65,13 +67,13 @@
   margin-left: 1rem;
 }
 
-#title {
+:global(#title) {
   width: 45rem;
   display: flex;
-  border-right: $bgcolor solid thin;
+  border-right: legacy.$bgcolor solid thin;
 }
 
-#topicTitleProp {
+:global(#topicTitleProp) {
   width: 44.5rem;
   height: 6rem;
   display: flex;
@@ -79,7 +81,7 @@
   align-items: flex-start;
 }
 
-#essay1 {
+:global(#essay1) {
   margin-left: 1.5rem;
   margin-top: 0.5rem;
   align-items: center;
@@ -94,77 +96,83 @@
   font-size: 1rem;
 }
 
-#essayTitle {
+:global(#essayTitle) {
   max-width: 30rem;
   color: #000000;
   font-size: 16px;
 }
 
-#essayProp {
+:global(#essayProp) {
   margin-left: 1.4rem;
   display: flex;
   font-size: 0.75rem;
-  color: $theme_color_main;
+  color: var(--cc98-theme-color-main);
 }
 
-#like {
+:global(#like) {
   flex-grow: 0;
   margin-bottom: 1rem;
   margin-left: auto;
   margin-right: 1rem;
 }
 
-#tags {
+:global(#tags) {
   display: flex;
   flex-wrap: nowrap;
   word-break: keep-all;
   margin-right: 0.6rem;
 }
 
-@import "../../../foundation/styles/route-compatibility/TopicMetadataSizeCompatibility";
+// TODO(C1 follow-up): Split this class into semantic Topic Header, Topic Award, and Legacy Board metadata names.
+.tagSize {
+  font-size: 0.75rem;
+}
 
-#essayGrow {
+:global(#essayGrow) {
   display: flex;
   flex-direction: row;
 }
 
-#onlike {
+:global(#onlike) {
   border: none;
   background-color: #ffffff;
 }
 
-#time {
+:global(#time) {
   display: flex;
   flex-direction: row;
 }
 
-@import "../../../foundation/styles/route-compatibility/TopicMetadataTimeCompatibility";
+// TODO(C1 follow-up): Split this class into semantic Topic Header and Legacy Board metadata names.
+.timeProp {
+  margin-left: 0.1875rem;
+  font-size: 0.75rem;
+  word-break: keep-all;
+}
 
-#time img {
+:global(#time) img {
   width: 0.625rem;
   height: 0.625rem;
 }
 
-#viewtimes,
-#followCount {
+:global(#viewtimes),
+:global(#followCount) {
   display: flex;
   flex-direction: row;
   margin-left: 0.5rem;
 }
 
-#liked img {
+:global(#liked) img {
   width: 0.625rem;
   height: 0.625rem;
 }
 
-@import "../../../foundation/styles/route-compatibility/LegacyBoardTopicIndicatorCompatibility";
-
-#ads {
+:global(#ads) {
   width: 20rem;
   display: inline-flex;
 }
 
-#ads img {
+:global(#ads) img {
   display: flex;
 }
 
@@ -173,14 +181,6 @@
   align-self: flex-start;
   flex-direction: column;
   width: 100%;
-  box-sizing: border-box;
-}
-
-.reply-content {
-  width: 100%;
-  display: flex;
-  align-self: flex-start;
-  flex-direction: column;
   box-sizing: border-box;
 }
 
@@ -223,7 +223,7 @@
 }
 
 .replierBtn {
-  background-color: $theme_color_main;
+  background-color: var(--cc98-theme-color-main);
   color: #fff;
   border: #fff solid thin;
   border-radius: 0.63rem;
@@ -255,7 +255,7 @@
   margin-bottom: 1.25rem;
   padding-top: 1rem;
   word-break: break-all;
-  border-top: $theme_color_main solid thin;
+  border-top: var(--cc98-theme-color-main) solid thin;
   width: 100%;
   padding-left: 2rem;
   padding-right: 2rem;
@@ -263,11 +263,15 @@
   overflow: hidden;
 }
 
-@import "../../../foundation/styles/route-compatibility/LegacyBoardTagColumnCompatibility";
-
 .signature img {
   max-height: 12.5rem;
   max-width: 32.5rem;
+  overflow: hidden;
+}
+
+.signature iframe {
+  width: 500px;
+  max-height: 300px;
   overflow: hidden;
 }
 
@@ -302,30 +306,30 @@
   font-size: 0.75rem;
   align-items: flex-end;
   padding-bottom: 0.3rem;
-  color: $theme_color_main;
+  color: var(--cc98-theme-color-main);
   align-items: center;
   justify-content: space-between;
 }
 
-#commentlike {
+:global(#commentlike) {
   display: flex;
   align-items: flex-end;
 }
 
-#commentliked {
+:global(#commentliked) {
   margin-left: 1rem;
 }
 
-#commentunliked {
+:global(#commentunliked) {
   margin-left: 1.25rem;
 }
 
-#commentliked img {
+:global(#commentliked) img {
   width: 0.625rem;
   height: 0.625rem;
 }
 
-#commentunliked img {
+:global(#commentunliked) img {
   width: 0.625rem;
   height: 0.625rem;
 }
@@ -336,8 +340,6 @@
   margin-left: 0.625rem;
   outline: none;
 }
-
-@import "../../../modules/topic/ui/TopicAwardInfo.module";
 
 .vote {
   width: 100%;
@@ -355,11 +357,11 @@
   font-size: 0.75rem;
 }
 
-#checkbox {
+:global(#checkbox) {
   margin-left: 1.25rem;
 }
 
-#option1 {
+:global(#option1) {
   margin: 0.625rem;
 }
 
@@ -380,7 +382,7 @@
   box-sizing: inherit;
 }
 
-#replierMes {
+:global(#replierMes) {
   display: flex;
   align-items: flex-end;
   flex-wrap: nowrap;
@@ -389,19 +391,19 @@
 .reply {
   width: 100%;
   margin-top: 1rem;
-  border: $theme_color_main solid 2px;
-  background-color: $background_color_textarea;
+  border: var(--cc98-theme-color-main) solid 2px;
+  background-color: var(--cc98-background-color-textarea);
   flex-direction: row;
   display: flex;
   position: relative;
 
-  .reply-floor {
+  :global(.reply-floor) {
     flex-shrink: 0;
     width: 40px;
     height: 40px;
     border-radius: 50%;
     right: -0.8rem;
-    background-color: $theme_color_main;
+    background-color: var(--cc98-theme-color-main);
     text-align: center;
     line-height: 40px;
     position: relative;
@@ -411,13 +413,13 @@
     font-size: 16px;
   }
 
-  .reply-floor-lz {
+  :global(.reply-floor-lz) {
     flex-shrink: 0;
     width: 40px;
     height: 40px;
     border-radius: 50%;
     right: -0.8rem;
-    background-color: $theme_color_main;
+    background-color: var(--cc98-theme-color-main);
     text-align: center;
     line-height: 40px;
     position: relative;
@@ -427,15 +429,15 @@
     font-size: 14px;
   }
 
-  .reply-floor-small {
-    @extend .reply-floor;
+  :global(.reply-floor-small) {
+    @extend :global(.reply-floor);
     font-size: 10px;
   }
 }
 
 .userMessage {
   align-items: flex-start;
-  background-color: $theme_color_main;
+  background-color: var(--cc98-theme-color-main);
   color: #fff;
   width: 15.5rem;
   display: flex;
@@ -488,18 +490,18 @@
   font-family: 微软雅黑;
 }
 
-#replierMes {
+:global(#replierMes) {
   margin-top: 25px;
   margin-bottom: 10px;
 }
 
-#clockimg img {
+:global(#clockimg) img {
   margin-left: 10px;
   width: 10px;
   height: 10px;
 }
 
-#operation {
+:global(#operation) {
   margin-top: 1rem;
   height: 3rem;
   display: flex;
@@ -513,8 +515,8 @@
   color: #000000;
   outline: none;
   cursor: pointer;
-  color: $theme_color_main;
-  border: $theme_color_main solid thin;
+  color: var(--cc98-theme-color-main);
+  border: var(--cc98-theme-color-main) solid thin;
   border-radius: 1rem;
   width: 2.25rem;
   height: 1.25rem;
@@ -523,7 +525,7 @@
   line-height: 1.25rem;
 
   a {
-    color: $theme_color_main;
+    color: var(--cc98-theme-color-main);
   }
 }
 
@@ -546,25 +548,25 @@
   cursor: pointer;
 }
 
-#rpymes {
+:global(#rpymes) {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
   height: 6rem;
 }
 
-#ListImg img {
+:global(#ListImg) img {
   width: 290px;
   height: 100px;
 }
 
-#noticeName {
+:global(#noticeName) {
   display: flex;
   background-color: #3399fe;
   font-size: 1rem;
 }
 
-#topicsNumber {
+:global(#topicsNumber) {
   display: flex;
   flex-wrap: nowrap;
   word-break: keep-all;
@@ -589,7 +591,7 @@
   border-radius: 5px;
 }
 
-#pager {
+:global(#pager) {
   display: flex;
   flex-direction: row;
   align-items: flex-end;

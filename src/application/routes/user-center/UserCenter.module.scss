@@ -67,7 +67,7 @@
   .user-center-navigation {
     height: 40rem;
     padding: 0 0.625rem;
-    background-color: $background_color_textarea;
+    background-color: var(--cc98-background-color-textarea);
     border: 1px solid #e9e9e9;
 
     button {
@@ -99,14 +99,14 @@
     }
 
     .btn-show {
-      animation-name: fadeIn;
+      animation-name: global(fadeIn);
       animation-duration: 1s;
       display: inherit;
     }
 
     .btn-disappare {
       display: inherit;
-      animation-name: fadeOut;
+      animation-name: global(fadeOut);
       animation-duration: 500ms;
       animation-fill-mode: forwards;
     }
@@ -163,17 +163,13 @@
   .user-center-router {
     width: 52.75rem;
     padding: 2rem;
-    background-color: $background_color_textarea;
+    background-color: var(--cc98-background-color-textarea);
     border: 1px solid #e9e9e9;
     min-height: 40rem;
 
     .user-center-exact {
       display: flex;
       flex-wrap: wrap;
-
-      @import "../../../modules/user/ui/profile-avatar/UserProfileAvatar.module";
-
-      @import "../../../modules/user/ui/UserProfile.module";
 
       .user-activities {
         width: 100%;
@@ -200,7 +196,7 @@
         }
       }
 
-      .user-post-info {
+      :global(.user-post-info) {
         margin: 0 0 2rem 0;
       }
 
@@ -209,23 +205,23 @@
         border-top: 1px dashed #e9e9e9;
       }
 
-      .user-post-info a {
+      :global(.user-post-info) a {
         margin-right: 2rem;
       }
 
-      .user-post-board {
+      :global(.user-post-board) {
         color: rgb(53, 167, 255);
       }
 
-      .user-post-date {
+      :global(.user-post-date) {
         color: rgb(0, 0, 0);
       }
 
-      .user-post-like-count {
+      :global(.user-post-like-count) {
         color: rgb(0, 0, 0);
       }
 
-      .user-post-content {
+      :global(.user-post-content) {
         font-size: 0.88rem;
         display: flex;
 
@@ -237,13 +233,13 @@
           padding-right: 50px;
         }
 
-        .fa-thumbs-o-up {
+        :global(.fa-thumbs-o-up) {
           flex-grow: 0;
           font-family: FontAwesome;
           margin: 0 0.5rem;
         }
 
-        .fa-thumbs-o-down {
+        :global(.fa-thumbs-o-down) {
           flex-grow: 0;
           font-family: FontAwesome;
           margin: 0 0.5rem;
@@ -264,7 +260,7 @@
         min-height: 40rem;
       }
 
-      .user-center-myfollowings-user {
+      :global(.user-center-myfollowings-user) {
         display: flex;
         align-items: center;
         margin-bottom: 1.875rem;
@@ -302,9 +298,9 @@
           }
         }
 
-        .user-follow,
-        .user-message {
-          background-color: $theme_color_main;
+        :global(.user-follow),
+        :global(.user-message) {
+          background-color: var(--cc98-theme-color-main);
           color: #fff;
 
           &:hover {
@@ -316,18 +312,18 @@
           }
         }
 
-        .user-center-myfollowings-user-id {
+        :global(.user-center-myfollowings-user-id) {
           margin-right: 1.25rem;
           min-width: 7rem;
         }
 
-        .user-center-myfollowings-user-posts {
+        :global(.user-center-myfollowings-user-posts) {
           margin: 0 0.88rem 0 0.75rem;
           color: rgb(53, 167, 255);
           min-width: 2rem;
         }
 
-        .user-center-myfollowings-user-fans {
+        :global(.user-center-myfollowings-user-fans) {
           margin: 0 0.88rem 0 0.75rem;
           color: rgb(255, 54, 54);
         }
@@ -390,7 +386,7 @@
       -ms-user-select: none;
 
       .config-submit-button {
-        background-color: $theme_color_main;
+        background-color: var(--cc98-theme-color-main);
         color: #fff;
 
         &:hover {
@@ -427,7 +423,7 @@
         overflow: hidden;
       }
 
-      #selector {
+      :global(#selector) {
         z-index: 4;
         position: absolute;
         width: 160px;
@@ -439,7 +435,7 @@
         cursor: move;
       }
 
-      #resize {
+      :global(#resize) {
         z-index: 4;
         position: absolute;
         cursor: se-resize;
@@ -450,7 +446,7 @@
         opacity: 0.5;
       }
 
-      #cover {
+      :global(#cover) {
         z-index: 2;
         position: absolute;
         left: 0px;
@@ -501,8 +497,6 @@
       }
     }
 
-    @import "../../../modules/user/ui/ConfigSignature.module";
-
     .config-submit {
       display: flex;
       flex-direction: column;
@@ -520,7 +514,7 @@
       }
 
       .config-submit-button {
-        background-color: $theme_color_main;
+        background-color: var(--cc98-theme-color-main);
         color: #fff;
 
         &:hover {
@@ -619,7 +613,7 @@
       }
     }
 
-    #userCenterPageCount {
+    :global(#userCenterPageCount) {
       display: flex;
       flex-direction: row;
       justify-content: flex-end;
@@ -663,8 +657,6 @@
         }
       }
     }
-
-    @import "../user-profile/UserProfileManagement.module";
 
     .user-center-transfer-wealth {
 
@@ -718,7 +710,7 @@
   }
 
   &>a {
-    background-color: $theme_color_main;
+    background-color: var(--cc98-theme-color-main);
     width: 7rem;
     height: 7rem;
     border-radius: 50%;
@@ -750,7 +742,7 @@
   }
 
   .user-follow-board {
-    background-color: $theme_color_main;
+    background-color: var(--cc98-theme-color-main);
     color: #ffffff;
 
     &:hover {

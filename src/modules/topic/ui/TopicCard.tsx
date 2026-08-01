@@ -3,6 +3,8 @@ import { useLayoutEffect, useRef, useState } from "react";
 
 import type { FocusTopic } from "@legacy/Props/FocusTopic";
 
+import styles from "./TopicCard.module.scss";
+
 const APlayer = require("aplayer");
 const DPlayer = require("dplayer");
 
@@ -188,16 +190,16 @@ export function TopicCard(props: FocusTopic) {
     let className = "";
     switch (imageCount) {
       case 1:
-        className = "card-topic-thumbnail-1";
+        className = styles["card-topic-thumbnail-1"];
         break;
       case 2:
       case 4:
-        className = "card-topic-thumbnail-2";
+        className = styles["card-topic-thumbnail-2"];
         break;
       case 3:
       case 5:
       case 6:
-        className = "card-topic-thumbnail-3";
+        className = styles["card-topic-thumbnail-3"];
         break;
       default:
         return null;
@@ -217,34 +219,34 @@ export function TopicCard(props: FocusTopic) {
   };
 
   return (
-    <div className="card-topic">
+    <div className={styles["card-topic"]}>
       <a
-        className="card-topic-left"
+        className={styles["card-topic-left"]}
         href={isAnonymous ? undefined : userUrl}
         target={isAnonymous ? undefined : "_blank"}
         id={`card_portrait_${props.id}`}
       >
         <img
-          className={`card-topic-portraitUrl${
-            isAnonymous ? " card-topic-anonymous" : ""
+          className={`${styles["card-topic-portraitUrl"]}${
+            isAnonymous ? ` ${styles["card-topic-anonymous"]}` : ""
           }`}
           id={`card_portrait_image_${props.id}`}
           src={props.portraitUrl}
         />
       </a>
-      <div className="card-topic-middle">
+      <div className={styles["card-topic-middle"]}>
         <a
-          className="card-topic-userName"
+          className={styles["card-topic-userName"]}
           href={isAnonymous ? undefined : userUrl}
           target={isAnonymous ? undefined : "_blank"}
           id={`card_username_${props.id}`}
         >
           {props.userName}
         </a>
-        <a className="card-topic-time" href={topicUrl} target="_blank">
+        <a className={styles["card-topic-time"]} href={topicUrl} target="_blank">
           {props.time}
         </a>
-        <a className="card-topic-title" href={topicUrl} target="_blank">
+        <a className={styles["card-topic-title"]} href={topicUrl} target="_blank">
           {props.title.trim() ? (
             props.title
           ) : (
@@ -252,7 +254,7 @@ export function TopicCard(props: FocusTopic) {
           )}
         </a>
         <div
-          className="card-topic-thumbnail-mini"
+          className={styles["card-topic-thumbnail-mini"]}
           id={`card_thumbnail_mini_area_${props.id}`}
           style={{
             display:
@@ -265,7 +267,7 @@ export function TopicCard(props: FocusTopic) {
                   key={`thumbnail_mini_${props.id}_${index}`}
                   className={
                     selectedImageIndex === index
-                      ? "card-topic-thumbnail-mini-clicked"
+                      ? styles["card-topic-thumbnail-mini-clicked"]
                       : undefined
                   }
                   id={`card_thumbnail_mini_image_${props.id}_${index}`}
@@ -276,7 +278,7 @@ export function TopicCard(props: FocusTopic) {
             : null}
         </div>
         <div
-          className="card-topic-original-image"
+          className={styles["card-topic-original-image"]}
           id={`card_original_image_area_${props.id}`}
           style={{ display: isOriginalImageVisible ? "block" : "none" }}
         >
@@ -287,7 +289,7 @@ export function TopicCard(props: FocusTopic) {
           />
         </div>
         <div
-          className="card-topic-thumbnail"
+          className={styles["card-topic-thumbnail"]}
           id={`card_thumbnail_area_${props.id}`}
           style={{ display: isOriginalImageVisible ? "none" : "flex" }}
         >
@@ -312,16 +314,20 @@ export function TopicCard(props: FocusTopic) {
             }
           />
         ) : null}
-        <div className="card-topic-board">
-          <div className="card-topic-boardName">
+        <div className={styles["card-topic-board"]}>
+          <div className={styles["card-topic-boardName"]}>
             <a href={boardUrl} target="_blank">
               {props.boardName}
             </a>
           </div>
-          {props.tag1 ? <div className="card-topic-tag">{props.tag1}</div> : null}
-          {props.tag2 ? <div className="card-topic-tag">{props.tag2}</div> : null}
+          {props.tag1 ? (
+            <div className={styles["card-topic-tag"]}>{props.tag1}</div>
+          ) : null}
+          {props.tag2 ? (
+            <div className={styles["card-topic-tag"]}>{props.tag2}</div>
+          ) : null}
         </div>
-        <div className="card-topic-info">
+        <div className={styles["card-topic-info"]}>
           <div>
             <a href={topicUrl} target="_blank">
               <i className="fa fa-eye fa-lg" />

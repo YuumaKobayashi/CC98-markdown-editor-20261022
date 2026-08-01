@@ -16,6 +16,7 @@ import { NoticeMessage } from "@legacy/Components/NoticeMessage";
 import { UbbContainer } from "@legacy/Components/UbbContainer";
 import { UbbCodeOptions } from "@legacy/Ubb/UbbCodeExtension";
 import { QuoteContext, QuoteTraceContext } from "../model/quote-context";
+import styles from "../../TopicDetail.module.scss";
 
 export interface TopicReplySignatureProps {
   postInfo: any;
@@ -112,7 +113,7 @@ export function TopicReplySignature(props: TopicReplySignatureProps) {
   const idLike = `like${postInfo.id}`;
   const idDislike = `dislike${postInfo.id}`;
   const signature = userInfo.signatureCode ? (
-    <div className="signature">
+    <div className={styles.signature}>
       <UbbContainer
         isSignature
         code={userInfo.signatureCode}
@@ -134,7 +135,7 @@ export function TopicReplySignature(props: TopicReplySignatureProps) {
   ) {
     editIcon = (
       <Link to={`/editor/edit/${postInfo.id}`}>
-        <div className="operation1"> 编辑</div>
+        <div className={styles.operation1}> 编辑</div>
       </Link>
     );
   }
@@ -154,7 +155,7 @@ export function TopicReplySignature(props: TopicReplySignatureProps) {
   const returnUrl = `/topic/${topicInfo.id}/${page}#${pageFloor}`;
   const traceUrl = `/topic/${topicInfo.id}/postid/${postInfo.id}`;
   const traceIcon = (
-    <div className="operation1">
+    <div className={styles.operation1}>
       <Link to={traceMode ? returnUrl : traceUrl}>
         {traceMode ? "返回" : "追踪"}
       </Link>
@@ -170,7 +171,7 @@ export function TopicReplySignature(props: TopicReplySignatureProps) {
   ) {
     manageButton = (
       <div
-        className="operation1"
+        className={styles.operation1}
         id={manageIcon}
         style={{ cursor: "pointer" }}
         onClick={() => changePmVisible(true, postInfo)}
@@ -199,7 +200,7 @@ export function TopicReplySignature(props: TopicReplySignatureProps) {
       className="column"
       style={{ marginTop: "1rem", width: "52rem", marginBottom: "0.5rem" }}
     >
-      <div className="comment1">
+      <div className={styles.comment1}>
         <div
           style={{ width: "40rem", marginLeft: "1.2rem", fontSize: "0.8rem" }}
         >
@@ -211,7 +212,9 @@ export function TopicReplySignature(props: TopicReplySignatureProps) {
         <div className="row" style={{ alignItems: "center" }}>
           <div
             id={idLike}
-            className={likeState === 1 ? "upup red-color" : "upup"}
+            className={
+              likeState === 1 ? `${styles.upup} red-color` : styles.upup
+            }
             style={{ marginRight: "0.7rem" }}
             onClick={likePost}
           >
@@ -223,11 +226,15 @@ export function TopicReplySignature(props: TopicReplySignatureProps) {
                   : "fa fa-thumbs-o-up fa-lg"
               }
             ></i>
-            <span className="commentProp"> {likeNumber}</span>
+            <span className={styles.commentProp}> {likeNumber}</span>
           </div>
           <div
             id={idDislike}
-            className={likeState === 2 ? "downdown red-color" : "downdown"}
+            className={
+              likeState === 2
+                ? `${styles.downdown} red-color`
+                : styles.downdown
+            }
             onClick={dislikePost}
           >
             <i
@@ -238,16 +245,16 @@ export function TopicReplySignature(props: TopicReplySignatureProps) {
                   : "fa fa-thumbs-o-down fa-lg"
               }
             ></i>
-            <span className="commentProp"> {dislikeNumber}</span>
+            <span className={styles.commentProp}> {dislikeNumber}</span>
           </div>
           <div id="commentlike">
             <div
-              className="operation1"
+              className={styles.operation1}
               onClick={() => changeJudgeVisible(true, postInfo)}
             >
               评分
             </div>
-            <div className="operation1" onClick={handleQuote}>
+            <div className={styles.operation1} onClick={handleQuote}>
               引用
             </div>
             {traceIcon}

@@ -7,6 +7,9 @@ import { getTagNamebyId } from "@modules/topic";
 import { getMyInfo } from "@modules/session";
 import type { TopicTitleAndContentState } from "@legacy/States/AppState";
 
+import listStyles from "../LegacyBoardList.module.scss";
+import itemStyles from "../LegacyBoardListItemTail.module.scss";
+
 const createPager = (replyCount: number) => {
   const count = replyCount + 1;
   const totalPage =
@@ -181,12 +184,12 @@ export function LegacyBoardTopicItem(
     <div style={{ display: "flex" }} id={colorId}>
       {checkbox}
       <Link to={url}>
-        <div className="rofw topicInList" id={topicId}>
-          <div className="listTitleAndPager">
-            <div className="row listTitleAndIcon">
+        <div className={`rofw ${listStyles.topicInList}`} id={topicId}>
+          <div className={itemStyles.listTitleAndPager}>
+            <div className={`row ${itemStyles.listTitleAndIcon}`}>
               {icon}
               <div
-                className="listTitle"
+                className={itemStyles.listTitle}
                 id={titleId}
                 style={{
                   marginLeft: "1rem",
@@ -225,20 +228,24 @@ export function LegacyBoardTopicItem(
               {" "}
               <span>{props.userName || "匿名"}</span>
             </div>
-            <div className="row topicIcon">
+            <div className={`row ${itemStyles.topicIcon}`}>
               <div id="disliked" style={{ display: "flex", width: "4.5rem" }}>
                 <i className="fa fa-eye fa-lg" />
-                <span className="timeProp tagSize">{hitCount}</span>
+                <span className={`${itemStyles.timeProp} ${itemStyles.tagSize}`}>
+                  {hitCount}
+                </span>
               </div>
               <div
                 id="commentsAmount"
                 style={{ display: "flex", width: "3.5rem" }}
               >
                 <i className="fa fa-commenting-o fa-lg" />
-                <span className="timeProp tagSize">{props.replyCount}</span>
+                <span className={`${itemStyles.timeProp} ${itemStyles.tagSize}`}>
+                  {props.replyCount}
+                </span>
               </div>
             </div>
-            <div className="lastReply">
+            <div className={itemStyles.lastReply}>
               <span>
                 {props.lastPostUser}/
                 {moment(props.lastPostTime).format("YY-MM-DD HH:mm")}

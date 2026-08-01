@@ -11,6 +11,8 @@ import {
   setStorage,
 } from "@foundation/storage/web-storage";
 
+import styles from "../Focus.module.scss";
+
 export interface FocusTopicAreaProps {
   id: number;
   name: string;
@@ -214,20 +216,20 @@ export function FocusTopicArea({ id, name }: FocusTopicAreaProps) {
 
   const scrollButtonClassName =
     scrollButtonState === null
-      ? "top-button"
-      : `top-button ${
-          scrollButtonState === "show" ? "btn-show" : "btn-disappear"
+      ? styles["top-button"]
+      : `${styles["top-button"]} ${
+          scrollButtonState === "show" ? styles["btn-show"] : styles["btn-disappear"]
         }`;
 
   // 将主题排列好。
   return (
     <div>
-      <div className="focus-topic-area">
-        <div className="focus-topic-topicArea">
+      <div className={styles["focus-topic-area"]}>
+        <div className={styles["focus-topic-topicArea"]}>
           {topics.map(renderFocusTopic)}
         </div>
         <div
-          className={`focus-topic-loading${
+          className={`${styles["focus-topic-loading"]}${
             isStopped ? " displaynone" : ""
           }`}
           id="focus-topic-loading"
@@ -235,7 +237,7 @@ export function FocusTopicArea({ id, name }: FocusTopicAreaProps) {
           <Spin size="large" />
         </div>
         <div
-          className={`focus-topic-loaddone${
+          className={`${styles["focus-topic-loaddone"]}${
             isStopped ? "" : " displaynone"
           }`}
           id="focus-topic-loaddone"

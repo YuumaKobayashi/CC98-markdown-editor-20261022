@@ -6,6 +6,7 @@ import { getUserInfo } from "@modules/user";
 import type { UserInfo } from "@legacy/States/AppState";
 import { UserProfileProvider } from "../model/user-profile-context";
 import { UserProfileNavigation } from "./UserProfileNavigation";
+import styles from "../../../user-center/UserCenter.module.scss";
 
 type LoadedUser = {
   requestKey: string;
@@ -108,15 +109,15 @@ export function UserProfileLayout() {
   }
 
   return (
-    <div className="user-center">
-      <div className="user-center-content">
-        <div className="user-center-head">
+    <div className={styles["user-center"]}>
+      <div className={styles["user-center-content"]}>
+        <div className={styles["user-center-head"]}>
           <p>用户详情</p>
         </div>
-        <div className="user-center-body">
+        <div className={styles["user-center-body"]}>
           {!loadedUserMatchesRequest ? (
-            <div className="user-center-router">
-              <div className="user-center-loading">
+            <div className={styles["user-center-router"]}>
+              <div className={styles["user-center-loading"]}>
                 <p className="fa fa-spinner fa-pulse fa-2x fa-fw" />
               </div>
             </div>
@@ -125,7 +126,7 @@ export function UserProfileLayout() {
               value={{ page, userInfo: loadState.userInfo }}
             >
               <UserProfileNavigation />
-              <div className="user-center-router">
+              <div className={styles["user-center-router"]}>
                 <Outlet />
               </div>
             </UserProfileProvider>

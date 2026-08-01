@@ -36,6 +36,8 @@ import {
   updateEditorPost,
 } from "../api/service";
 import type { EditorTagInfo, EditorVoteInfo } from "../model/types";
+import styles from "../EditorLegacyForm.module.scss";
+import topicStyles from "../EditorTopic.module.scss";
 import { EditorBreadcrumb } from "./EditorBreadcrumb";
 import { EditorTagNotice } from "./EditorTagNotice";
 import { EditorTitleInput } from "./EditorTitleInput";
@@ -754,8 +756,8 @@ export function EditorPage(): React.ReactElement {
 
   console.log("默认type:" + state.type);
   let topicType: React.ReactNode = (
-    <div className="createTopicType">
-      <div className="createTopicListName">发帖类型</div>
+    <div className={styles.createTopicType}>
+      <div className={styles.createTopicListName}>发帖类型</div>
       <EditorTypeRadio
         value={0}
         currentType={state.type}
@@ -781,8 +783,8 @@ export function EditorPage(): React.ReactElement {
       (myInfo.userTitleIds || []).indexOf(91) !== -1)
   ) {
     topicType = (
-      <div className="createTopicType">
-        <div className="createTopicListName">发帖类型</div>
+      <div className={styles.createTopicType}>
+        <div className={styles.createTopicListName}>发帖类型</div>
         <EditorTypeRadio
           value={0}
           currentType={state.type}
@@ -809,8 +811,8 @@ export function EditorPage(): React.ReactElement {
   }
 
   let noticeOption: React.ReactNode = (
-    <div className="createTopicType">
-      <div className="createTopicListName">高级选项</div>
+    <div className={styles.createTopicType}>
+      <div className={styles.createTopicListName}>高级选项</div>
       <input
         style={{ marginLeft: "5px" }}
         type="checkbox"
@@ -851,7 +853,7 @@ export function EditorPage(): React.ReactElement {
     ) : null;
 
   return (
-    <div className="createTopic">
+    <div className={`${styles.createTopic} ${topicStyles.editorTopicStyles}`}>
       <Modal
         title="错误提示"
         open={state.contentTooLongModalVisible}
@@ -896,8 +898,8 @@ function EditorContentHeader({
   changeEditor,
 }: EditorContentHeaderProps): React.ReactElement {
   return (
-    <div className="createTopicContent">
-      <div className="createTopicListName">主题内容</div>
+    <div className={styles.createTopicContent}>
+      <div className={styles.createTopicListName}>主题内容</div>
       <div style={{ color: "darkgray" }}>
         提示：CC98微信小程序现已支持上传时长不超过6分钟的视频。
       </div>

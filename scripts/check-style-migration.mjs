@@ -58,6 +58,14 @@ const sassConsumers = new Map();
 const typescriptConsumers = new Map();
 const errors = [];
 
+if (transitionalModules.size !== 0) {
+  errors.push(`C1.5 已收口，过渡样式清单必须为空，实际为 ${transitionalModules.size} 项`);
+}
+
+if (moduleFiles.length !== 42) {
+  errors.push(`C1.5 应保留 42 个真实 CSS Module，实际为 ${moduleFiles.length} 个`);
+}
+
 for (const relativePath of transitionalModules) {
   if (!modulePaths.has(relativePath)) {
     errors.push(`过渡样式清单包含不存在的文件: ${relativePath}`);
@@ -82,20 +90,42 @@ for (const styleFile of styleFiles) {
   }
 }
 
-const sourceFiles = collectFiles(sourceRoot, (name) => /\.tsx?$/.test(name));
+const typescriptRoots = ["src", "Components"]
+  .map((directory) => path.join(projectRoot, directory))
+  .filter((directory) => fs.existsSync(directory));
+const sourceFiles = typescriptRoots.flatMap((directory) =>
+  collectFiles(directory, (name) => /\.tsx?$/.test(name)),
+);
 for (const sourceFile of sourceFiles) {
   const source = fs.readFileSync(sourceFile, "utf8");
-  const importPattern = /(?:import|export)\s+(?:[^"']*?\s+from\s+)?["']([^"']+\.module\.scss)["']/g;
+  const importPattern = /import\s+([A-Za-z_$][\w$]*)\s+from\s+["']([^"']+\.module\.scss)["']/g;
+  const matchedSpecifiers = new Set();
   for (const match of source.matchAll(importPattern)) {
-    if (!match[1].startsWith(".")) {
-      errors.push(`CSS Module 必须由 owner 使用相对路径导入: ${toProjectPath(sourceFile)} -> ${match[1]}`);
+    const binding = match[1];
+    const specifier = match[2];
+    matchedSpecifiers.add(specifier);
+    if (!specifier.startsWith(".")) {
+      errors.push(`CSS Module 必须由 owner 使用相对路径导入: ${toProjectPath(sourceFile)} -> ${specifier}`);
       continue;
+    }
+    const sourceWithoutImport =
+      source.slice(0, match.index) + source.slice(match.index + match[0].length);
+    const bindingUsePattern = new RegExp(`\\b${binding}\\s*(?:\\.|\\[)`);
+    if (!bindingUsePattern.test(sourceWithoutImport)) {
+      errors.push(`CSS Module 导入必须实际消费映射: ${toProjectPath(sourceFile)} -> ${binding}`);
     }
     addConsumer(
       typescriptConsumers,
-      path.resolve(path.dirname(sourceFile), match[1]),
+      path.resolve(path.dirname(sourceFile), specifier),
       sourceFile,
     );
+  }
+
+  const anyModuleImportPattern = /(?:import|export)\s+(?:[^"']*?\s+from\s+)?["']([^"']+\.module\.scss)["']/g;
+  for (const match of source.matchAll(anyModuleImportPattern)) {
+    if (!matchedSpecifiers.has(match[1])) {
+      errors.push(`CSS Module 必须使用默认绑定并实际消费: ${toProjectPath(sourceFile)} -> ${match[1]}`);
+    }
   }
 }
 

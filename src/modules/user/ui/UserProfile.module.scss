@@ -9,7 +9,7 @@
     margin-bottom: 1rem;
   }
 
-  #userId {
+  :global(#userId) {
     font-size: 1.125rem;
     margin-top: 0.5rem;
     display: flex;
@@ -24,7 +24,7 @@
 
   button {
     transition-duration: 0.4s;
-    background-color: $theme_color_main;
+    background-color: var(--cc98-theme-color-main);
     color: #fff;
     width: 5rem;
     height: 2rem;
@@ -43,7 +43,7 @@
     }
   }
 
-  #unfollow {
+  :global(#unfollow) {
     background-color: rgb(230, 230, 230);
     color: rgb(160, 160, 160);
 
@@ -60,7 +60,7 @@
     }
   }
 
-  #userIntroducion {
+  :global(#userIntroducion) {
     margin-left: 2rem;
     font-size: 0.75rem;
   }
@@ -71,7 +71,7 @@
     color: black;
   }
 
-  #userGenderAndBirthday {
+  :global(#userGenderAndBirthday) {
     display: flex;
     flex-wrap: wrap;
 

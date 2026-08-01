@@ -1,4 +1,4 @@
-#listRoot {
+.listRoot {
   display: flex;
   width: 1140px;
   flex-direction: column;
@@ -11,7 +11,7 @@
   min-width: 71.2px;
 }
 
-#boardTopics {
+:global(#boardTopics) {
   border: #eaeaea thin solid;
 }
 

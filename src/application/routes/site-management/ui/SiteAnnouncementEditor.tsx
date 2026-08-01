@@ -8,6 +8,7 @@ import {
   getPublicGlobalConfig,
 } from "@modules/site-content";
 import { UbbContainer } from "@legacy/Components/UbbContainer";
+import homeStyles from "../../home/Home.module.scss";
 
 const { TextArea } = Input;
 
@@ -71,14 +72,14 @@ export function SiteAnnouncementEditor() {
           </div>
         </div>
         <TextArea spellCheck={false} rows={8} onChange={handleAnnouncementChange} value={announcement} />
-        <div className="announcement">
-          <div className="mainPageTitle1">
-            <div className="mainPageTitleRow" style={{ width: "100%" }}>
+        <div className={homeStyles.announcement}>
+          <div className={homeStyles.mainPageTitle1}>
+            <div className={homeStyles.mainPageTitleRow} style={{ width: "100%" }}>
               <i className="fa fa-volume-up"></i>
-              <div style={{ flexGrow: 1 }} className="mainPageTitleText">全站公告</div>
+              <div style={{ flexGrow: 1 }} className={homeStyles.mainPageTitleText}>全站公告</div>
             </div>
           </div>
-          <div className="announcementContent"><UbbContainer code={announcement} /></div>
+          <div className={homeStyles.announcementContent}><UbbContainer code={announcement} /></div>
         </div>
       </div>
     </div>

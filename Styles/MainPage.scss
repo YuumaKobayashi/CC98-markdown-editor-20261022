@@ -4,7 +4,6 @@
 *可能还有其他一些杂项的样式
 */
 
-@import "../src/application/routes/editor/EditorLegacyForm.module";
 //ubb解析图片默认不显示的样式
 //类似bootstrap4的"btn btn-outline-primary"
 .hiddenImage {
@@ -132,8 +131,6 @@ td {
   top: 50%;
   pointer-events: none;
 }
-
-@import "../src/application/routes/home/Home.module";
 
 //------------------------- 以下是新头部的样式 ---------------------
 .headerShell {

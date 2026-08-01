@@ -3,6 +3,7 @@
 // https://github.com/Microsoft/TypeScript/wiki/JSX
 
 import * as React from "react";
+import styles from "./ConfigSignature.module.scss";
 
 interface ConfigSignatureProps {
   signature: string;
@@ -20,7 +21,7 @@ export function ConfigSignature({
   return (
     <div>
       <h2>修改签名档</h2>
-      <div className="user-center-config-signature">
+      <div className={styles["user-center-config-signature"]}>
         <textarea
           id="signature"
           onChange={handleChange}

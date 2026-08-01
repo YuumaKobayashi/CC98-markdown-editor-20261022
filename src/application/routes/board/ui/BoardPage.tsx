@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router";
 
 import * as Utility from "@legacy/Utility";
 
+import styles from "../Board.module.scss";
 import { getBoardInfo } from "../api/service";
 import { BoardContent } from "./BoardContent";
 import { BoardHeader } from "./BoardHeader";
@@ -32,7 +33,7 @@ export function BoardPage() {
   }, []);
 
   return data ? (
-    <div className="board-body">
+    <div className={styles["board-body"]}>
       <BoardHeader data={data} page={page || "1"} />
       <BoardContent data={data} page={page || "1"} />
     </div>

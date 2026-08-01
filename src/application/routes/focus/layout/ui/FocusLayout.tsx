@@ -7,6 +7,8 @@ import { Link, Outlet, useLocation } from "react-router";
 
 import DocumentTitle from "@foundation/ui/document-title";
 
+import styles from "../../Focus.module.scss";
+
 type FocusSection = "board" | "user" | "favorite" | null;
 
 const getFocusSection = (pathname: string): FocusSection => {
@@ -38,14 +40,14 @@ export function FocusLayout() {
    * 从上往下分别为：页面标题(关注版面或者关注用户)、关注版面列表区域、主题列表区域，分别用三个组件表示
    */
   return (
-    <div className="focus-root">
+    <div className={styles["focus-root"]}>
       <DocumentTitle title="我的关注 - CC98论坛" />
-      <div className="focus">
-        <div className="focus-nav">
+      <div className={styles.focus}>
+        <div className={styles["focus-nav"]}>
           <Link style={{ textDecoration: "none" }} to="/focus/board">
             <div
-              className={`focus-title${
-                activeSection === "board" ? " focus-title-hover" : ""
+              className={`${styles["focus-title"]}${
+                activeSection === "board" ? ` ${styles["focus-title-hover"]}` : ""
               }`}
               id="myFocusBoard"
             >
@@ -54,8 +56,8 @@ export function FocusLayout() {
           </Link>
           <Link style={{ textDecoration: "none" }} to="/focus/user">
             <div
-              className={`focus-title${
-                activeSection === "user" ? " focus-title-hover" : ""
+              className={`${styles["focus-title"]}${
+                activeSection === "user" ? ` ${styles["focus-title-hover"]}` : ""
               }`}
               id="myFocusUser"
             >
@@ -64,8 +66,8 @@ export function FocusLayout() {
           </Link>
           <Link style={{ textDecoration: "none" }} to="/focus/favorite">
             <div
-              className={`focus-title${
-                activeSection === "favorite" ? " focus-title-hover" : ""
+              className={`${styles["focus-title"]}${
+                activeSection === "favorite" ? ` ${styles["focus-title-hover"]}` : ""
               }`}
               id="myFocusFavorite"
             >

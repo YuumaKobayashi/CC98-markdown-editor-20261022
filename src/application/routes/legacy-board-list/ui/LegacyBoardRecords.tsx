@@ -6,6 +6,9 @@ import type { BoardEvent } from "@legacy/States/BoardEvent";
 import { Pager } from "@foundation/ui/pagination";
 
 import { BoardModerationRecordItem } from "@application/routes/board";
+import listStyles from "../LegacyBoardList.module.scss";
+import rootStyles from "../LegacyBoardRoot.module.scss";
+import topBarStyles from "../LegacyBoardTopBar.module.scss";
 
 type BoardRecordRouteParams = {
   boardId?: string;
@@ -55,7 +58,7 @@ export function LegacyBoardRecords() {
   ));
 
   return (
-    <div className="listContent ">
+    <div className={rootStyles.listContent}>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <Pager
           page={currentPage}
@@ -63,17 +66,17 @@ export function LegacyBoardRecords() {
           url={boardRecordUrl}
         />
       </div>
-      <div className="column tagColumn">
-        <div className="row board-topBar">
+      <div className={`column ${listStyles.tagColumn}`}>
+        <div className={`row ${topBarStyles["board-topBar"]}`}>
           <div className="row" style={{ alignItems: "center" }}>
             <div
-              className="listContentTag"
+              className={listStyles.listContentTag}
               style={{ alignItems: "center", width: "5rem", textAlign: "center" }}
             >
               <span>对象</span>
             </div>
             <div
-              className="listContentTag"
+              className={listStyles.listContentTag}
               style={{
                 alignItems: "center",
                 width: "46rem",
@@ -83,13 +86,13 @@ export function LegacyBoardRecords() {
               <span>内容</span>
             </div>
             <div
-              className="listContentTag"
+              className={listStyles.listContentTag}
               style={{ alignItems: "center", width: "6rem", textAlign: "center" }}
             >
               <span>时间</span>
             </div>
             <div
-              className="listContentTag"
+              className={listStyles.listContentTag}
               style={{
                 alignItems: "center",
                 width: "11rem",

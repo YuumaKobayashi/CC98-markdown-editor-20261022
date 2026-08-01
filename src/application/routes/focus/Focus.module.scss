@@ -51,14 +51,14 @@
   }
 
   .top-button.btn-show {
-    animation-name: fadeIn;
+    animation-name: global(fadeIn);
     animation-duration: 1s;
     display: inherit;
   }
 
   .top-button.btn-disappear {
     display: inherit;
-    animation-name: fadeOut;
+    animation-name: global(fadeOut);
     animation-duration: 500ms;
     animation-fill-mode: forwards;
   }
@@ -77,7 +77,7 @@
     margin-top: 20px;
     text-align: center;
     font-size: 16px;
-    color: $color-black;
+    color: rgb(32, 32, 32);
   }
 }
 
@@ -113,11 +113,11 @@
 
   .recommendation-button {
     display: block;
-    background-color: $theme_color_main;
+    background-color: var(--cc98-theme-color-main);
     color: #ffffff;
     text-align: center;
     vertical-align: middle; //设置元素的垂直对齐方式
-    border: 1px solid $theme_color_main;
+    border: 1px solid var(--cc98-theme-color-main);
     padding: 0.375rem 0.75rem;
     font-size: 1rem;
     border-radius: 0.25rem;
@@ -131,13 +131,13 @@
   }
 
   .recommendation-button:hover {
-    color: $theme_color_main;
+    color: var(--cc98-theme-color-main);
     background-color: transparent;
   }
 
   .recommendation-button:active {
     color: #ffffff;
-    background-color: $theme_color_main;
+    background-color: var(--cc98-theme-color-main);
   }
 
   i {
@@ -154,11 +154,11 @@
     position: absolute;
     right: 0;
     display: block;
-    background-color: $theme_color_main;
+    background-color: var(--cc98-theme-color-main);
     color: #ffffff;
     text-align: center;
     vertical-align: middle; //设置元素的垂直对齐方式
-    border: 1px solid $theme_color_main;
+    border: 1px solid var(--cc98-theme-color-main);
     padding: 0.375rem 0.75rem;
     font-size: 1rem;
     border-radius: 0.25rem;
@@ -170,13 +170,13 @@
   }
 
   .refresh-button:hover {
-    color: $theme_color_main;
+    color: var(--cc98-theme-color-main);
     background-color: transparent;
   }
 
   .refresh-button:active {
     color: #ffffff;
-    background-color: $theme_color_main;
+    background-color: var(--cc98-theme-color-main);
   }
 
   i {
@@ -185,11 +185,11 @@
 
   .focus-board {
     display: block;
-    color: $theme_color_main;
+    color: var(--cc98-theme-color-main);
     background-color: transparent;
     text-align: center;
     vertical-align: middle; //设置元素的垂直对齐方式
-    border: 1px solid $theme_color_main;
+    border: 1px solid var(--cc98-theme-color-main);
     padding: 0.375rem 0.75rem;
     font-size: 1rem;
     border-radius: 0.25rem;
@@ -207,7 +207,7 @@
   }
 
   .focus-hover {
-    background-color: $theme_color_main;
+    background-color: var(--cc98-theme-color-main);
     color: #ffffff;
   }
 
@@ -233,7 +233,7 @@
     flex-direction: column;
     text-align: center;
     cursor: pointer;
-    color: $theme_color_main;
+    color: var(--cc98-theme-color-main);
     justify-content: center;
 
     div {

@@ -9,6 +9,7 @@ import {
   selectCurrentUser,
 } from "@modules/session";
 import { submitTopicVote } from "../api/service";
+import styles from "../../TopicDetail.module.scss";
 
 type VoteItem = {
   id: number;
@@ -139,7 +140,7 @@ export function TopicVote({
   if (currentUserId === topicInfo.userId) shouldNotShowInfo = false;
 
   return (
-    <div className="vote">
+    <div className={styles.vote}>
       <p
         className="vote-message"
         style={{ opacity: messageOpacity }}

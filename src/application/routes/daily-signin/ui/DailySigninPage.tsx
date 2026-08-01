@@ -11,6 +11,7 @@ import {
 } from "@modules/daily-signin";
 import { getGlobalConfig } from "@modules/site-content";
 import { getMyInfo } from "@modules/session";
+import styles from "../DailySignin.module.scss";
 
 interface SigninInfo {
   hasSignedInToday?: boolean;
@@ -107,7 +108,7 @@ export function DailySigninPage(): React.ReactElement {
   }
 
   return (
-    <div className="sign-in">
+    <div className={styles["sign-in"]}>
       <div
         className="row"
         style={{ width: "100%", justifyContent: "center" }}

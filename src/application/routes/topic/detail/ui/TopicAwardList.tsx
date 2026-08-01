@@ -5,6 +5,7 @@ import $ from "jquery";
 import { TopicAwardInfo } from "@modules/topic";
 import { getThisUserInfobyName } from "@modules/user";
 import { getUsersInfo } from "@modules/user";
+import styles from "../../TopicDetailAward.module.scss";
 
 export interface TopicAwardListProps {
   postId: any;
@@ -79,7 +80,7 @@ export function TopicAwardList({
   });
 
   return (
-    <div className="column awardInfo" id={awardInfoId}>
+    <div className={`column ${styles.awardInfo}`} id={awardInfoId}>
       <div
         className="row"
         style={{ width: "25rem", fontSize: "0.8rem", marginBottom: "0.2rem" }}

@@ -6,6 +6,9 @@ import { getSearchBoard } from "@modules/board";
 import { FocusBoard } from "@legacy/Props/FocusBoard";
 import { DocumentTitle } from "@foundation/ui/document-title";
 
+import styles from "../../../focus/Focus.module.scss";
+import searchStyles from "../../Search.module.scss";
+
 const parseBoardSearch = (search: string) => {
   const match = search.match(/^\?keyword=(.*)$/);
   if (!match) return null;
@@ -40,21 +43,21 @@ export function BoardSearchPage() {
   }, [location.search]);
 
   return (
-    <div className="focus-root">
+    <div className={styles["focus-root"]}>
       <DocumentTitle title="搜索结果 - CC98论坛" />
-      <div className="focus">
+      <div className={styles.focus}>
         <BoardSearchBreadcrumb />
-        <div className="focus-board-area">
+        <div className={styles["focus-board-area"]}>
           {data.map((item) => (
             <a key={item.id} href={`/board/${item.id}`} target="_blank">
-              <div className="focus-board">{item.name}</div>
+              <div className={styles["focus-board"]}>{item.name}</div>
             </a>
           ))}
         </div>
       </div>
-      <div id="noResultBoard" className={`noResult${showNoResult ? "" : " displaynone"}`}>
-        <img src="/static/images/searchNone.png" className="noResultPic" />
-        <div className="noResultText">
+      <div id="noResultBoard" className={`${searchStyles.noResult}${showNoResult ? "" : " displaynone"}`}>
+        <img src="/static/images/searchNone.png" className={searchStyles.noResultPic} />
+        <div className={searchStyles.noResultText}>
           -----------------------抱歉呢前辈，没有找到你想要的版面哦~----------------------
         </div>
       </div>

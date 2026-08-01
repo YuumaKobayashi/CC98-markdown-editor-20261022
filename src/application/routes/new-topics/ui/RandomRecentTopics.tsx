@@ -9,21 +9,24 @@ import {
   setStorage,
 } from "@foundation/storage/web-storage";
 
+import newTopicsStyles from "../NewTopics.module.scss";
+import styles from "../RandomRecentTopics.module.scss";
+
 const cutOffTitle = (title: string) =>
   title.length > 30 ? `${title.slice(0, 28)}...` : title;
 
 const renderTopics = (data: any) =>
   data.map((item: any) => (
-    <div className="card-recommendation-topic-container">
-      <div className="card-recommendation-topic-container-item">
-        <div className="card-recommendation-topic">
+    <div className={styles["card-recommendation-topic-container"]}>
+      <div className={styles["card-recommendation-topic-container-item"]}>
+        <div className={styles["card-recommendation-topic"]}>
           <i className="fa fa-commenting-o" aria-hidden="true" />
-          <div className="card-recommendation-topic-title">
+          <div className={styles["card-recommendation-topic-title"]}>
             <Link to={`/topic/${item.id}`} target="_blank">
               {cutOffTitle(item.title)}
             </Link>
           </div>
-          <div className="card-recommendation-topic-detail">
+          <div className={styles["card-recommendation-topic-detail"]}>
             <Link target="_blank" to={`/board/${item.boardId}`}>
               {item.boardName}&nbsp;
             </Link>{" "}
@@ -108,10 +111,12 @@ export function RandomRecentTopics() {
 
   return (
     <>
-      <div className="card-recommendation-button-area">
-        <div className="card-user-may-mising-title">可能错过</div>
+      <div className={styles["card-recommendation-button-area"]}>
+        <div className={newTopicsStyles["card-user-may-mising-title"]}>
+          可能错过
+        </div>
         <button
-          className="card-recommendation-button"
+          className={styles["card-recommendation-button"]}
           id="card-recommendation-last"
           style={{
             height: "fit-content",
@@ -126,7 +131,7 @@ export function RandomRecentTopics() {
           上一批
         </button>
         <button
-          className="card-recommendation-button"
+          className={styles["card-recommendation-button"]}
           id="card-recommendation-refresh"
           style={{ height: "fit-content", marginRight: "12px" }}
           onClick={getNewRandomTopics}

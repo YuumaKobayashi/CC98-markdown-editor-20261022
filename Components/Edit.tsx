@@ -1,4 +1,5 @@
 import * as React from "react";
+import styles from "../src/application/routes/editor/EditorLegacyForm.module.scss";
 
 export {
   EditorBreadcrumb as Category,
@@ -35,8 +36,8 @@ export class Options extends React.Component<{}, {}> {
 
   render() {
     return (
-      <div className="createTopicOption">
-        <div className="createTopicListName">选项</div>
+      <div className={styles.createTopicOption}>
+        <div className={styles.createTopicListName}>选项</div>
         <input type="radio" checked={true} name="option" value="all" />
         回复所有人可见
         <input type="radio" name="option" value="host" />

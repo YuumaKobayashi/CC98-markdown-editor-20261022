@@ -1,12 +1,14 @@
+@use "../../../foundation/styles/variables/legacy" as *;
+
 /***********************消息设置的样式*****************************/
-.message-setting {
+:global(.message-setting) {
   display: flex;
   flex-direction: column;
   background-color: $color-post;
   border: 1px solid $color-border;
   height: 400px;
 
-  .message-settingbox {
+  :global(.message-settingbox) {
     display: flex;
     flex-direction: row;
     height: 2.5rem;
@@ -17,7 +19,7 @@
     flex-shrink: 0;
     margin: 1.5rem 0 0 5rem;
 
-    .radioTitle {
+    :global(.radioTitle) {
       width: 12rem;
     }
 
@@ -26,11 +28,15 @@
     }
   }
 
-  .message-setting-btn {
+  :global(.message-setting-btn) {
     width: 7rem;
     height: 2rem;
     line-height: 1.8rem;
     margin: 2rem 0rem 0rem 9rem;
   }
+}
+
+.messageSettingsModuleAnchor {
+  --message-settings-module-anchor: 1;
 }
 

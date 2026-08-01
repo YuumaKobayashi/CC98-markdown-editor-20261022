@@ -1,5 +1,5 @@
 /**回帖失败提示 */
-.send-topic-notice-success {
+:global(.send-topic-notice-success) {
   display: flex;
   position: fixed;
   top: 40%;
@@ -20,8 +20,8 @@
   border-radius: 0.8rem;
 }
 
-.send-topic-notice-success.noticeDisplaynone {
-  animation-name: fadeOut;
+:global(.send-topic-notice-success.noticeDisplaynone) {
+  animation-name: global(fadeOut);
   animation-duration: 3s;
   animation-fill-mode: forwards;
 }

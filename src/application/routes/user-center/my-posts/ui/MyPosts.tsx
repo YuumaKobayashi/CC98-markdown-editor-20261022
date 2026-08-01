@@ -16,6 +16,7 @@ import {
   parseUserCenterPage,
 } from "@application/routes/user-center/model/route-params";
 import { UserCenterPager as Pager } from "@application/routes/user-center/pagination";
+import styles from "../../UserCenter.module.scss";
 
 type RouteParams = {
   page?: string;
@@ -76,13 +77,13 @@ export function MyPosts() {
 
   if (isLoading) {
     return (
-      <div className="user-center-loading">
+      <div className={styles["user-center-loading"]}>
         <p className="fa fa-spinner fa-pulse fa-2x fa-fw"></p>
       </div>
     );
   } else if (userRecentPosts.length === 0) {
     return (
-      <div className="user-posts" style={{ textAlign: "center" }}>
+      <div className={styles["user-posts"]} style={{ textAlign: "center" }}>
         没有回复
       </div>
     );
@@ -101,7 +102,7 @@ export function MyPosts() {
   }
 
   return (
-    <div className="user-posts">
+    <div className={styles["user-posts"]}>
       {isHot === 0 ? (
         <Button
           style={{ width: "8rem", marginTop: "-1rem", marginBottom: "2rem" }}

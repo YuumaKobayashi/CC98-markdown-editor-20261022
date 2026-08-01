@@ -19,6 +19,7 @@ import {
 } from "@modules/session";
 import type { UserRecentTopic } from "@legacy/States/AppState";
 import { UserCenterPager as Pager } from "@application/routes/user-center/pagination";
+import styles from "../../UserCenter.module.scss";
 
 type RouteParams = {
   page?: string;
@@ -88,7 +89,7 @@ export function UserCenterHistoryPage() {
 
   const emptyPage = (
     <div
-      className="user-posts"
+      className={styles["user-posts"]}
       style={{
         textAlign: "center",
       }}
@@ -139,7 +140,7 @@ export function UserCenterHistoryPage() {
 
   if (isLoading) {
     return (
-      <div className="user-center-loading">
+      <div className={styles["user-center-loading"]}>
         {enableCheckbox}
         <p className="fa fa-spinner fa-pulse fa-2x fa-fw"></p>
       </div>
@@ -158,7 +159,7 @@ export function UserCenterHistoryPage() {
   }
 
   return (
-    <div className="user-posts">
+    <div className={styles["user-posts"]}>
       {enableCheckBoxModal}
       {enableCheckbox}
       {/* <Button

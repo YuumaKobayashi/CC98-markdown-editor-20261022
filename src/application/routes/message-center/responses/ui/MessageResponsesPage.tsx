@@ -9,6 +9,7 @@ import {
 import { getMessageResponse } from "@modules/notification";
 import { getTotalPage } from "@modules/notification";
 import { DocumentTitle } from "@foundation/ui/document-title";
+import styles from "../../MessageCenter.module.scss";
 import { Pager } from "@foundation/ui/pagination";
 
 import {
@@ -59,9 +60,9 @@ export function MessageResponsesPage() {
   }, [page]);
 
   return (
-    <div className="message-right">
+    <div className={styles["message-right"]}>
       <DocumentTitle title="回复我的-CC98论坛" />
-      <div className="message-response">
+      <div className={styles["message-response"]}>
         {state.data.map((item) => (
           <MessageResponsebox
             key={item.id}
@@ -79,7 +80,7 @@ export function MessageResponsesPage() {
           />
         ))}
       </div>
-      <div className="message-pager">
+      <div className={styles["message-pager"]}>
         <Pager
           url="/message/response/"
           page={state.page}

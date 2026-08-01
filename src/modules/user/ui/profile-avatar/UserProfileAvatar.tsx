@@ -3,6 +3,7 @@ import { Link } from "react-router";
 
 import type { UserInfo } from "@legacy/States/AppState";
 import { cc98Fetch } from "@foundation/api/http";
+import styles from "./UserProfileAvatar.module.scss";
 
 interface DisplayTitle {
   id: number;
@@ -146,11 +147,11 @@ export function UserProfileAvatar({ userInfo }: UserProfileAvatarProps) {
   }, [userInfo.displayTitleId]);
 
   return (
-    <div style={{ position: "relative" }} className="user-avatar">
-      <img className="user-avatar-img" src={userInfo.portraitUrl} />
+    <div style={{ position: "relative" }} className={styles["user-avatar"]}>
+      <img className={styles["user-avatar-img"]} src={userInfo.portraitUrl} />
       {/*是否有头像框*/}
       {portraitUrl ? <img style={portraitStyle} src={portraitUrl} /> : null}
-      <div className="user-badge">
+      <div className={styles["user-badge"]}>
         {displayTitles && userInfo.userTitleIds
           ? displayTitles
               .filter(

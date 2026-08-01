@@ -14,6 +14,8 @@ import {
 } from "@foundation/storage/web-storage";
 import { DocumentTitle } from "@foundation/ui/document-title";
 
+import styles from "../../focus/Focus.module.scss";
+
 const renderRecommendedTopic = (item: RecommendedTopic) => (
   <RecommendedTopicItem
     key={item.topic.id}
@@ -86,13 +88,13 @@ export function RecommendedTopicsPage() {
   };
 
   return (
-    <div className="focus-root">
+    <div className={styles["focus-root"]}>
       <DocumentTitle title="随机精选 - CC98论坛" />
-      <div className="focus">
+      <div className={styles.focus}>
         <RecommendedTopicsBreadcrumb />
-        <div className="recommendation-button-area">
+        <div className={styles["recommendation-button-area"]}>
           <button
-            className="recommendation-button"
+            className={styles["recommendation-button"]}
             id="recommendation-refresh"
             onClick={getNewRandomRecommendedTopics}
           >
@@ -100,7 +102,7 @@ export function RecommendedTopicsPage() {
             换一换
           </button>
           <button
-            className="recommendation-button"
+            className={styles["recommendation-button"]}
             id="recommendation-last"
             hidden={!isPreviousVisible}
             onClick={getLastRecommendedTopics}
@@ -109,8 +111,8 @@ export function RecommendedTopicsPage() {
             上一批
           </button>
         </div>
-        <div className="focus-topic-area">
-          <div className="focus-topic-topicArea">
+        <div className={styles["focus-topic-area"]}>
+          <div className={styles["focus-topic-topicArea"]}>
             {data.map(renderRecommendedTopic)}
           </div>
         </div>

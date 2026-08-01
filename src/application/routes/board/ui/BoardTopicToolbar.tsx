@@ -2,6 +2,8 @@ import * as React from "react";
 import type { ITagGroup } from "@cc98/api";
 import { Select } from "antd";
 
+import styles from "../Board.module.scss";
+
 const Option = Select.Option;
 
 interface BoardTopicToolbarProps {
@@ -18,20 +20,29 @@ export function BoardTopicToolbar({
   handleTag2Change,
 }: BoardTopicToolbarProps) {
   return (
-    <div className="board-postItem-head">
-      <div className="board-postItem-head-left">
-        <div className="board-postItem-head-left-part">
-          <div className="board-postItem-head-option" onClick={() => onChange(0)}>
+    <div className={styles["board-postItem-head"]}>
+      <div className={styles["board-postItem-head-left"]}>
+        <div className={styles["board-postItem-head-left-part"]}>
+          <div
+            className={styles["board-postItem-head-option"]}
+            onClick={() => onChange(0)}
+          >
             全部
           </div>
-          <div className="board-postItem-head-option" onClick={() => onChange(1)}>
+          <div
+            className={styles["board-postItem-head-option"]}
+            onClick={() => onChange(1)}
+          >
             精华
           </div>
-          <div className="board-postItem-head-option" onClick={() => onChange(2)}>
+          <div
+            className={styles["board-postItem-head-option"]}
+            onClick={() => onChange(2)}
+          >
             保存
           </div>
         </div>
-        <div className="board-postItem-head-left-part">
+        <div className={styles["board-postItem-head-left-part"]}>
           {tags.length > 0 ? (
             <Select
               defaultValue={-1}
@@ -59,11 +70,13 @@ export function BoardTopicToolbar({
         </div>
       </div>
 
-      <div className="board-postItem-head-right">
-        <div className="board-postItem-head-userName">作者</div>
-        <div className="board-postItem-head-hitcount">点击</div>
-        <div className="board-postItem-head-reply">回复</div>
-        <div className="board-postItem-head-lastReply">最后回复</div>
+      <div className={styles["board-postItem-head-right"]}>
+        <div className={styles["board-postItem-head-userName"]}>作者</div>
+        <div className={styles["board-postItem-head-hitcount"]}>点击</div>
+        <div className={styles["board-postItem-head-reply"]}>回复</div>
+        <div className={styles["board-postItem-head-lastReply"]}>
+          最后回复
+        </div>
       </div>
     </div>
   );

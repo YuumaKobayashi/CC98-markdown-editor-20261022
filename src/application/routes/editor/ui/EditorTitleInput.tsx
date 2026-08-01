@@ -3,6 +3,7 @@ import $ from "jquery";
 
 import { getTagNamebyId } from "@modules/topic";
 import type { EditorTagInfo } from "../model/types";
+import styles from "../EditorLegacyForm.module.scss";
 
 interface EditorTitleInputProps {
   boardId;
@@ -63,15 +64,15 @@ export function EditorTitleInput({
   }, [tag1, tag2]);
 
   React.useEffect(() => {
-    const tagBoxSelect = $(".tagBoxSelect");
+    const tagBoxSelect = $(`.${styles.tagBoxSelect}`);
     if (tagBoxSelect.length === 0) return;
 
     const eventNamespace = ".p15EditorTitle";
-    const downArrow = $(".downArrow");
-    const tagBoxSub = $(".tagBoxSub");
-    const tagBoxSelect1 = $(".tagBoxSelect1");
-    const downArrow1 = $(".downArrow1");
-    const tagBoxSub1 = $(".tagBoxSub1");
+    const downArrow = $(`.${styles.downArrow}`);
+    const tagBoxSub = $(`.${styles.tagBoxSub}`);
+    const tagBoxSelect1 = $(`.${styles.tagBoxSelect1}`);
+    const downArrow1 = $(`.${styles.downArrow1}`);
+    const tagBoxSub1 = $(`.${styles.tagBoxSub1}`);
 
     $(document).on(`click${eventNamespace}`, () => {
       tagBoxSub.css("display", "none");
@@ -116,8 +117,8 @@ export function EditorTitleInput({
   }, [current.tagsV2]);
 
   const handleTagChange = () => {
-    const selectedTag1 = $(".tagBoxSelect").text();
-    const selectedTag2 = $(".tagBoxSelect1").text();
+    const selectedTag1 = $(`.${styles.tagBoxSelect}`).text();
+    const selectedTag2 = $(`.${styles.tagBoxSelect1}`).text();
     onChange("", selectedTag1, selectedTag2);
   };
 
@@ -125,11 +126,11 @@ export function EditorTitleInput({
     return (
       <li
         onClick={() => {
-          const tagBoxSelect = $(".tagBoxSelect");
+          const tagBoxSelect = $(`.${styles.tagBoxSelect}`);
           if (layers === 1) {
             tagBoxSelect.text(item.name);
           } else {
-            const tagBoxSelect1 = $(".tagBoxSelect1");
+            const tagBoxSelect1 = $(`.${styles.tagBoxSelect1}`);
             if (isTag2) {
               tagBoxSelect1.text(item.name);
             } else {
@@ -145,8 +146,8 @@ export function EditorTitleInput({
     );
   };
 
-  const tagBoxSelect = $(".tagBoxSelect");
-  const tagBoxSelect1 = $(".tagBoxSelect1");
+  const tagBoxSelect = $(`.${styles.tagBoxSelect}`);
+  const tagBoxSelect1 = $(`.${styles.tagBoxSelect1}`);
   console.log("render begin:");
   console.log(`tagBoxSelect: ${tagBoxSelect.text()}`);
   console.log(`tagBoxSelect1: ${tagBoxSelect1.text()}`);
@@ -156,7 +157,7 @@ export function EditorTitleInput({
   let drop2: React.ReactNode = null;
   if (current.tagsV2.layers > 0) {
     drop1 = (
-      <ul className="tagBoxSub">
+      <ul className={styles.tagBoxSub}>
         {current.tagsV2.tags.map((item) =>
           generateTagOption(item, current.tagsV2.layers, false)
         )}
@@ -166,7 +167,7 @@ export function EditorTitleInput({
   if (current.tagsV2.layers === 2) {
     if (tagBoxSelect.text()) {
       drop2 = (
-        <ul className="tagBoxSub1">
+        <ul className={styles.tagBoxSub1}>
           {current.tagsV2.tags
             .find((item) => item.name === tagBoxSelect.text())
             .subTags.map((item) =>
@@ -176,7 +177,7 @@ export function EditorTitleInput({
       );
     } else if (current.tag1) {
       drop2 = (
-        <ul className="tagBoxSub1">
+        <ul className={styles.tagBoxSub1}>
           {current.tagsV2.tags
             .find((item) => item.name === current.tag1)
             .subTags.map((item) =>
@@ -185,7 +186,7 @@ export function EditorTitleInput({
         </ul>
       );
     } else {
-      drop2 = <ul className="tagBoxSub1" />;
+      drop2 = <ul className={styles.tagBoxSub1} />;
     }
   }
 
@@ -194,15 +195,15 @@ export function EditorTitleInput({
     tagInfo = (
       <div className="row">
         <div className="row">
-          <div className="tagBoxSelect">{current.tag1 || ""}</div>
-          <div className="downArrow">
+          <div className={styles.tagBoxSelect}>{current.tag1 || ""}</div>
+          <div className={styles.downArrow}>
             <img src="/static/images/downArrow.png" width="12" height="12" />
           </div>
           {drop1}
         </div>
         <div className="row">
-          <div className="tagBoxSelect1">{current.tag2 || ""}</div>
-          <div className="downArrow1">
+          <div className={styles.tagBoxSelect1}>{current.tag2 || ""}</div>
+          <div className={styles.downArrow1}>
             <img src="/static/images/downArrow.png" width="12" height="12" />
           </div>
           {drop2}
@@ -212,8 +213,8 @@ export function EditorTitleInput({
   } else if (current.tagsV2.layers == 1) {
     tagInfo = (
       <div className="row">
-        <div className="tagBoxSelect">{current.tag1 || ""}</div>
-        <div className="downArrow">
+        <div className={styles.tagBoxSelect}>{current.tag1 || ""}</div>
+        <div className={styles.downArrow}>
           <img src="/static/images/downArrow.png" width="12" height="12" />
         </div>
         {drop1}
@@ -222,8 +223,8 @@ export function EditorTitleInput({
   }
 
   return (
-    <div className="createTopicTitle">
-      <div className="createTopicListName">主题标题</div>
+    <div className={styles.createTopicTitle}>
+      <div className={styles.createTopicListName}>主题标题</div>
       {tagInfo}
       <input
         value={current.title}
@@ -234,11 +235,11 @@ export function EditorTitleInput({
           if (current.tagsV2.layers === 0) {
             onChange(event.target.value, "", "");
           } else if (current.tagsV2.layers === 1) {
-            selectedTag1 = $(".tagBoxSelect").text();
+            selectedTag1 = $(`.${styles.tagBoxSelect}`).text();
             onChange(event.target.value, selectedTag1, "");
           } else {
-            selectedTag1 = $(".tagBoxSelect").text();
-            selectedTag2 = $(".tagBoxSelect1").text();
+            selectedTag1 = $(`.${styles.tagBoxSelect}`).text();
+            selectedTag2 = $(`.${styles.tagBoxSelect1}`).text();
             onChange(event.target.value, selectedTag1, selectedTag2);
           }
           setCurrent((state) => ({

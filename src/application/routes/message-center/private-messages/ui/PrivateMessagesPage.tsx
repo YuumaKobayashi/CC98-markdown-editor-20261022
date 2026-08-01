@@ -10,6 +10,7 @@ import {
 import type { MessagePersonInfo, MessageProps } from "@modules/message";
 import { DocumentTitle } from "@foundation/ui/document-title";
 
+import styles from "../../MessageCenter.module.scss";
 import { PrivateConversationWindow } from "./PrivateConversationWindow";
 import { parsePrivateMessageContactRoute } from "../model/contact-route";
 
@@ -108,18 +109,18 @@ export function PrivateMessagesPage() {
 
   //TODO: 这里存在hardcode，应该使用常量或者配置值替代
   return (
-    <div className="message-message">
+    <div className={styles["message-message"]}>
       <DocumentTitle title="我的私信-CC98论坛" />
-      <div className="message-message-people">
-        <div className="message-message-pTitle">近期私信</div>
-        <div className="message-message-pList">
+      <div className={styles["message-message-people"]}>
+        <div className={styles["message-message-pTitle"]}>近期私信</div>
+        <div className={styles["message-message-pList"]}>
           {contacts?.map((contact) => (
             <div
               key={contact.id}
               id={`contact_${contact.id}`}
               className={
                 selectedContactId === contact.id
-                  ? "message-message-pFocus"
+                  ? styles["message-message-pFocus"]
                   : undefined
               }
               onClick={() => handleContactChange(contact)}
@@ -128,7 +129,7 @@ export function PrivateMessagesPage() {
             </div>
           ))}
           {contacts && contacts.length > 6 ? (
-            <div className="message-message-plMore" onClick={getMoreContact}>
+            <div className={styles["message-message-plMore"]} onClick={getMoreContact}>
               <img
                 id="moreImg"
                 src="http://file.cc98.org/uploadfile/2017/11/19/2348481046.gif"

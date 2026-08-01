@@ -1,1 +1,1 @@
-export { MessageSetting } from "@modules/notification";
+export { MessageSettingsPage as MessageSetting } from "./ui/MessageSettingsPage";

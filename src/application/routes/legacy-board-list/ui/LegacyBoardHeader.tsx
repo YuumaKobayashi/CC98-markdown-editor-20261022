@@ -10,6 +10,8 @@ import {
 import { UbbContainer } from "@legacy/Components/UbbContainer";
 
 import { editBigPaper } from "@application/routes/board/api/service";
+import detailsStyles from "../LegacyBoardHeaderDetails.module.scss";
+import summaryStyles from "../LegacyBoardHeaderSummary.module.scss";
 
 interface LegacyBoardHeaderProps {
   boardId: any;
@@ -102,14 +104,14 @@ export function LegacyBoardHeader({
         }}
       >
         <Link to={boardUrl}>
-          <div className="boardMessage">
+          <div className={summaryStyles.boardMessage}>
             <div className="row" style={{ height: "4rem", marginTop: "1.25rem" }}>
               <img
                 style={{ marginLeft: "1.25rem" }}
                 onError={handleImageError}
                 src={imageUrl}
               />
-              <div className="boardMessageDetails">
+              <div className={summaryStyles.boardMessageDetails}>
                 {boardName}
                 <div
                   className="row"
@@ -119,7 +121,7 @@ export function LegacyBoardHeader({
                     {boardInfo.todayCount}/{boardInfo.topicCount}
                   </div>
                   <div
-                    className="boardFollow"
+                    className={summaryStyles.boardFollow}
                     onClick={isFollow ? unfollow : follow}
                   >
                     {isFollow ? "取关" : "关注"}{" "}
@@ -129,7 +131,7 @@ export function LegacyBoardHeader({
             </div>
           </div>
         </Link>
-        <div className="bigPaper" style={{ display: "block" }}>
+        <div className={detailsStyles.bigPaper} style={{ display: "block" }}>
           {boardInfo.bigPaper ? (
             <button
               className="fa fa-angle-double-down"
@@ -185,14 +187,14 @@ export function LegacyBoardHeader({
         transition: "max-height 1.5s",
       }}
     >
-      <div className="boardMessage">
+      <div className={summaryStyles.boardMessage}>
         <div className="row" style={{ height: "4rem", marginTop: "1.25rem" }}>
           <img
             style={{ marginLeft: "1.25rem" }}
             onError={handleImageError}
             src={imageUrl}
           />
-          <div className="boardMessageDetails">
+          <div className={summaryStyles.boardMessageDetails}>
             <div className="row" style={{ width: "100%" }}>
               {boardInfo.name}
             </div>
@@ -204,7 +206,7 @@ export function LegacyBoardHeader({
                 {boardInfo.todayCount}/{boardInfo.topicCount}
               </div>
               <div
-                className="boardFollow"
+                className={summaryStyles.boardFollow}
                 onClick={isFollow ? unfollow : follow}
               >
                 {isFollow ? "取关" : "关注"}{" "}
@@ -212,15 +214,15 @@ export function LegacyBoardHeader({
             </div>
           </div>
         </div>
-        <div className="boardDescription">
+        <div className={detailsStyles.boardDescription}>
           <div>{boardInfo.description}</div>
         </div>
-        <div className="boardMasters">
+        <div className={detailsStyles.boardMasters}>
           <div>版主</div>
           <div>{boardInfo.boardMasters.map(renderMaster)}</div>
         </div>
       </div>
-      <div className="bigPaper" style={{ display: "block" }}>
+      <div className={detailsStyles.bigPaper} style={{ display: "block" }}>
         <button
           className="fa fa-angle-double-up"
           style={{
@@ -234,7 +236,7 @@ export function LegacyBoardHeader({
         >
           收起
         </button>
-        <div className="bigPaperTitle">
+        <div className={detailsStyles.bigPaperTitle}>
           {canManage ? (
             <button type="button" onClick={() => setIsEditing(true)}>
               编辑

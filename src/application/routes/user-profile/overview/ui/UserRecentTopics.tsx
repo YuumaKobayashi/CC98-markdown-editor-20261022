@@ -4,6 +4,7 @@ import { UserRecentTopicItem as Topic } from "@modules/topic";
 import { getToken } from "@modules/session";
 import type { UserRecentTopic } from "@legacy/States/AppState";
 import { cc98Fetch } from "@foundation/api/http";
+import styles from "../../../user-center/UserCenter.module.scss";
 
 interface UserRecentTopicsProps {
   id: number;
@@ -104,9 +105,9 @@ export function UserRecentTopics({ id }: UserRecentTopicsProps) {
     };
 
     return (
-      <div className="user-activities">
+      <div className={styles["user-activities"]}>
         <p>发表的主题</p>
-        <div className="user-posts" style={style}>
+        <div className={styles["user-posts"]} style={style}>
           没有主题
         </div>
       </div>
@@ -114,9 +115,9 @@ export function UserRecentTopics({ id }: UserRecentTopicsProps) {
   }
 
   return (
-    <div className="user-activities">
+    <div className={styles["user-activities"]}>
       <p>发表的主题</p>
-      <div className="user-posts">
+      <div className={styles["user-posts"]}>
         {topics.map((item, index) => (
           <React.Fragment key={item.id}>
             {index > 0 ? <hr /> : null}

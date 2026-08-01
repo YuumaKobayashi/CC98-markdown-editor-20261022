@@ -3,6 +3,7 @@ import {
   MainPageTopicMoreProps,
   MainPageTopicState,
 } from "../model/types";
+import styles from "../Home.module.scss";
 
 interface MainPageTopicComponentProps {
   data: MainPageTopicState[];
@@ -15,8 +16,8 @@ interface MainPageTopicComponentProps {
 function convertMainPageTopic(item: MainPageTopicState): React.ReactElement {
   const topicUrl = `/topic/${item.id}/1`;
   return (
-    <div key={item.id} className="mainPageListRow">
-      <div className="mainPageListTitle">
+    <div key={item.id} className={styles.mainPageListRow}>
+      <div className={styles.mainPageListTitle}>
         <a href={topicUrl} target="_blank">
           {item.title.trim() ? (
             item.title
@@ -38,7 +39,7 @@ export function MainPageTopicComponent(
 ): React.ReactElement {
   const moresHTML = props.mores.map((item, index) => {
     return (
-      <div key={index} className="mainPageTitleText">
+      <div key={index} className={styles.mainPageTitleText}>
         <a href={item.url} target="_blank">
           {item.name}
         </a>
@@ -48,30 +49,30 @@ export function MainPageTopicComponent(
 
   if (props.style === "black") {
     return (
-      <div className="mainPageList">
-        <div className="mainPageTitle2">
-          <div className="mainPageTitleRow">
+      <div className={styles.mainPageList}>
+        <div className={styles.mainPageTitle2}>
+          <div className={styles.mainPageTitleRow}>
             <i className="fa fa-volume-up"></i>
-            <div className="mainPageTitleText">{props.name}</div>
+            <div className={styles.mainPageTitleText}>{props.name}</div>
           </div>
-          <div className="mainPageTitleRow">{moresHTML}</div>
+          <div className={styles.mainPageTitleRow}>{moresHTML}</div>
         </div>
-        <div className="mainPageListContent2">
+        <div className={styles.mainPageListContent2}>
           {props.data.map(convertMainPageTopic)}
         </div>
       </div>
     );
   } else if (props.style === "blue") {
     return (
-      <div className="mainPageList">
-        <div className="mainPageTitle1">
-          <div className="mainPageTitleRow">
+      <div className={styles.mainPageList}>
+        <div className={styles.mainPageTitle1}>
+          <div className={styles.mainPageTitleRow}>
             <i className="fa fa-volume-up"></i>
-            <div className="mainPageTitleText">{props.name}</div>
+            <div className={styles.mainPageTitleText}>{props.name}</div>
           </div>
-          <div className="mainPageTitleRow">{moresHTML}</div>
+          <div className={styles.mainPageTitleRow}>{moresHTML}</div>
         </div>
-        <div className="mainPageListContent1">
+        <div className={styles.mainPageListContent1}>
           {props.data.map(convertMainPageTopic)}
         </div>
       </div>

@@ -1,5 +1,4 @@
 ﻿@import "base/animations";
-@import "../../application/routes/user-center/UserCenter.module";
 @import "../../../Styles/MainPage.scss";
 @import "../../../Components/UbbEditor/stylesheet.scss";
 @import "vendors/spectrum";
@@ -88,7 +87,6 @@
   animation-fill-mode: forwards;
 }
 
-@import "../../application/routes/topic/TopicNotices.module";
 .mde-text {
   background-color: #fff;
 }
@@ -102,8 +100,6 @@
   height: 20px;
 }
 
-@import "../../application/routes/topic/TopicReplyLayout.module";
-@import "../../application/routes/legacy-board-list/LegacyBoardRoot.module";
 .row {
   display: flex;
   align-items: center;
@@ -114,11 +110,7 @@
   flex-direction: column;
 }
 
-@import "../../application/routes/topic/TopicDetail.module";
-@import "../../application/routes/board/BoardTagPagination.module";
-@import "../../application/routes/legacy-board-list/LegacyBoardList.module";
-@import "../../application/routes/topic/TopicHeaderActions.module";
-@import "../../application/routes/legacy-board-list/LegacyBoardListItemTail.module";
+@import "route-compatibility/BoardRowColorCompatibility";
 a {
   text-decoration: none;
   /*超链接无下划线*/
@@ -189,7 +181,6 @@ a {
   line-height: 4rem;
 }
 
-@import "../../application/routes/legacy-board-list/LegacyBoardTopBar.module";
 .bgcolor {
   color: #fff;
   background-color: $theme_color_main;
@@ -356,14 +347,6 @@ a {
 
 /* --- pagination end --- */
 
-@import "../../application/routes/message-center/MessageCenter.module";
-@import "../../application/routes/focus/Focus.module";
-@import "../../modules/topic/ui/FocusTopicItem.module";
-
-
-@import "../../modules/topic/ui/TopicCard.module";
-
-@import "../../application/routes/new-topics/NewTopics.module";
 .displaynone {
   display: none;
 }
@@ -496,16 +479,7 @@ a {
   /* 以上两个属性目前并未支持，写在这里为了减少风险 */
 }
 
-@import "../../application/routes/login/Login.module";
 //------------------------topic页到此结束----------------------------------
-@import "../../application/routes/editor/EditorTopic.module";
-@import "../../application/routes/search/Search.module";
-@import "../../application/routes/topic/TopicManagement.module";
-@import "../../application/routes/legacy-board-list/LegacyBoardHeaderSummary.module";
-@import "../../application/routes/topic/TopicManagementActions.module";
-@import "../../application/routes/legacy-board-list/LegacyBoardHeaderDetails.module";
-@import "../../application/routes/topic/TopicManagementIP.module";
-@import "../../application/routes/message-center/MessageSettings.module";
 //配色方案
 variable {
   --wuteng-blue: #79b8ca;
@@ -523,7 +497,7 @@ variable {
   --oldman-black: black;
 }
 
-@import "../../application/routes/board/BoardRecords.module";
+@import "route-compatibility/LegacyBoardRecordCompatibility";
 .markdown-body {
   font-size: 1rem;
   color: #505050;
@@ -691,7 +665,6 @@ variable {
   overflow: hidden;
 }
 
-@import "../../application/routes/login/LoginMessages.module";
 .antd-table table tr td {
   height: 100px;
 }
@@ -1079,12 +1052,6 @@ variable {
   }
 }
 
-.createTopicContent {
-  display: flex;
-  align-items: center;
-  height: 3rem;
-}
-
 ol {
   padding-left: 20px;
 }
@@ -1099,9 +1066,7 @@ ol {
   }
 }
 
-@import "../../application/routes/user-center/UserCenterNavigationLabel.module";
-@import "../../application/routes/board/Board.module";
-@import "../../application/routes/daily-signin/DailySignin.module";
+@import "route-compatibility/BoardInformationCompatibility";
 // 年度报告
 .annual-review-body {
   display: flex;
@@ -1203,6 +1168,3 @@ ol {
 .red-color {
   color: red;
 }
-
-@import "../../application/routes/new-topics/RandomRecentTopics.module";
-@import "../../application/routes/daily-signin/Calendar.module";

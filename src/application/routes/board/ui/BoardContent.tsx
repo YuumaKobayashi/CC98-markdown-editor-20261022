@@ -3,6 +3,7 @@ import type { IBoard, ITagGroup, ITopic } from "@cc98/api";
 import { Pagination, Spin } from "antd";
 import { useNavigate } from "react-router";
 
+import styles from "../Board.module.scss";
 import {
   getBestTopics,
   getNormalTopics,
@@ -130,9 +131,9 @@ export function BoardContent({ data, page }: BoardContentProps) {
     <Spin size="large" />
   ) : (
     <>
-      <div className="board-list-bar">
+      <div className={styles["board-list-bar"]}>
         <Pagination
-          className="board-pagination"
+          className={styles["board-pagination"]}
           showQuickJumper
           current={currentPage}
           total={topicCount}
@@ -147,9 +148,9 @@ export function BoardContent({ data, page }: BoardContentProps) {
         handleTag2Change={handleTag2Change}
       />
       <BoardTopicList list={boardList} />
-      <div className="board-list-bar">
+      <div className={styles["board-list-bar"]}>
         <Pagination
-          className="board-pagination"
+          className={styles["board-pagination"]}
           showQuickJumper
           current={currentPage}
           pageSize={20}

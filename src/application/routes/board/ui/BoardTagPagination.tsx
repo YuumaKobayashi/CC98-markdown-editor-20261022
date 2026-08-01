@@ -3,6 +3,8 @@ import { Link } from "react-router";
 
 import { Pager } from "@foundation/ui/pagination";
 
+import styles from "../BoardTagPagination.module.scss";
+
 interface BoardTag {
   id: number;
   name: string;
@@ -33,9 +35,9 @@ export function BoardTagPagination({
   const renderTagButton = (item: BoardTag, level: 1 | 2) => (
     <div key={item.id}>
       <Link to={`/board/${boardid}/tag/tag${level}/${item.id}`}>
-        <button className="chooseTag">
+        <button className={styles.chooseTag}>
           {item.name}
-          <span className="tagNumber" />
+          <span className={styles.tagNumber} />
         </button>
       </Link>
     </div>
@@ -61,7 +63,7 @@ export function BoardTagPagination({
         style={{ display: "flex", flexWrap: "wrap", maxWidth: "35rem" }}
       >
         <div>
-          <button className="chooseTag">
+          <button className={styles.chooseTag}>
             <Link to={`/board/${boardid}`}>全部</Link>
           </button>
         </div>

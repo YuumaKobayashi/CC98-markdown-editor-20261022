@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { getToken } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
+import styles from "../../UserProfileManagement.module.scss";
 
 interface DeleteRecentUserContentProps {
   /**
@@ -51,7 +52,7 @@ export function DeleteRecentUserContent({
   return (
     <div>
       <h2>删除用户最近主题与回帖</h2>
-      <div className="user-manager">
+      <div className={styles["user-manager"]}>
         <p>天数：</p>
         <input
           type="number"
@@ -67,7 +68,7 @@ export function DeleteRecentUserContent({
           删回复
         </button>
       </div>
-      <p className="user-manage-return">{info}</p>
+      <p className={styles["user-manage-return"]}>{info}</p>
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { NavLink, Outlet, useLocation } from "react-router";
 import { useAppSelector } from "@application/store";
 import { readAll, selectUnreadCount } from "@modules/notification";
 import { DocumentTitle } from "@foundation/ui/document-title";
+import styles from "../../MessageCenter.module.scss";
 import { parseReadAllNotificationSection } from "../../notifications/model/route";
 
 type MessageSection = "response" | "attme" | "system" | "message" | "setting";
@@ -24,7 +25,7 @@ export function MessageLayout() {
   const activeSection = getActiveSection(pathname);
 
   const getNavClassName = (section: MessageSection) =>
-    `nav-div${activeSection === section ? " message-nav-focus" : ""}`;
+    `${styles["nav-div"]}${activeSection === section ? " message-nav-focus" : ""}`;
   const getCounterClassName = (count: number | undefined) =>
     `message-counterNav${count ? "" : " displaynone"}`;
   const handleReadAll = () => {
@@ -32,17 +33,17 @@ export function MessageLayout() {
   };
 
   return (
-    <div className="message-root">
+    <div className={styles["message-root"]}>
       <DocumentTitle title="CC98论坛-我的消息" />
-      <div className="message">
-        <div className="readAllMessage">
-          <button className="message-message-wPostBtn" onClick={handleReadAll}>
+      <div className={styles.message}>
+        <div className={styles.readAllMessage}>
+          <button className={styles["message-message-wPostBtn"]} onClick={handleReadAll}>
             全部标为已读
           </button>
         </div>
-        <div className="message-title">我的消息</div>
-        <div className="message-content">
-          <div className="message-nav">
+        <div className={styles["message-title"]}>我的消息</div>
+        <div className={styles["message-content"]}>
+          <div className={styles["message-nav"]}>
             <NavLink to="/message/response">
               <div id="response" className={getNavClassName("response")}>
                 回复我的

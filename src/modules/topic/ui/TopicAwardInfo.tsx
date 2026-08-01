@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useNavigate } from "react-router";
+import styles from "./TopicAwardInfo.module.scss";
 
 export type TopicAwardInfoProps = {
   postId: unknown;
@@ -24,8 +25,8 @@ export function TopicAwardInfo({
   };
 
   return (
-    <div className="good tagSize">
-      <div className="userImage">
+    <div className={styles.good}>
+      <div className={styles.userImage}>
         <img
           style={{ cursor: "pointer" }}
           onClick={navigateToUser}
@@ -33,14 +34,14 @@ export function TopicAwardInfo({
         ></img>
       </div>
       <div
-        className="userName"
+        className={styles.userName}
         style={{ cursor: "pointer" }}
         onClick={navigateToUser}
       >
         {userName}
       </div>
-      <div className="grades">{content}</div>
-      <div className="credit">
+      <div className={styles.grades}>{content}</div>
+      <div className={styles.credit}>
         <span>{reason}</span>
       </div>
     </div>

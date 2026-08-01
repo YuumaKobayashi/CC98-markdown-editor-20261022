@@ -10,6 +10,7 @@ import {
 } from "@modules/follow";
 import { UbbContainer } from "@legacy/Components/UbbContainer";
 import { UbbCodeOptions } from "@legacy/Ubb/UbbCodeExtension";
+import styles from "../Board.module.scss";
 import { editBigPaper } from "../api/service";
 
 const Panel = Collapse.Panel;
@@ -84,10 +85,10 @@ export function BoardAnnouncement(
   const shortHand = (
     <div className="row" style={{ height: "4rem" }}>
       <div>
-        <img className="board-avatar" onError={onError} src={url} />
+        <img className={styles["board-avatar"]} onError={onError} src={url} />
       </div>
 
-      <div className="board-head-name">{data.name}</div>
+      <div className={styles["board-head-name"]}>{data.name}</div>
 
       <Divider type="vertical" />
 
@@ -213,7 +214,7 @@ export function BoardAnnouncement(
         />
       </Modal>
       <Collapse
-        className="board-bigpaper"
+        className={styles["board-bigpaper"]}
         bordered={false}
         defaultActiveKey={isFirstPage ? ["1"] : []}
       >

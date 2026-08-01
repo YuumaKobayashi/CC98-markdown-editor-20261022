@@ -4,6 +4,8 @@ import { useAppDispatch } from "@application/store";
 import { logIn } from "@modules/session";
 import { changeTheme } from "@foundation/theme";
 import DocumentTitle from "@foundation/ui/document-title";
+import styles from "../Login.module.scss";
+import messageStyles from "../LoginMessages.module.scss";
 
 const getLoginReturnUrl = (): string => {
   if (window.history.length === 1) return "/";
@@ -40,9 +42,9 @@ export function LoginPage() {
   const shake = (element: HTMLInputElement | null) => {
     if (!element) return;
 
-    element.classList.add("shake");
+    element.classList.add(styles.shake);
     const timer = window.setTimeout(() => {
-      element.classList.remove("shake");
+      element.classList.remove(styles.shake);
       timersRef.current.delete(timer);
     }, 500);
     timersRef.current.add(timer);
@@ -100,8 +102,8 @@ export function LoginPage() {
 
   return (
     <div>
-      <div className="login-announcement">
-        <p className="login-message">
+      <div className={messageStyles["login-announcement"]}>
+        <p className={messageStyles["login-message"]}>
           <span>
             温馨提示：
             <br />
@@ -109,14 +111,14 @@ export function LoginPage() {
           </span>
         </p>
       </div>
-      <div className="login">
+      <div className={styles.login}>
         <DocumentTitle title="登录 - CC98论坛" />
         <div>
           <img src="/static/images/login.png" />
           <div>
             <img src="/static/images/login_welcome.png" />
             <form onSubmit={handleLogin} autoComplete="on">
-              <div className="login-form">
+              <div className={styles["login-form"]}>
                 <p>用户名</p>
                 <input
                   ref={loginNameRef}
@@ -128,7 +130,7 @@ export function LoginPage() {
                   autoComplete="username"
                 />
               </div>
-              <div className="login-form">
+              <div className={styles["login-form"]}>
                 <p>密码</p>
                 <input
                   ref={loginPasswordRef}
@@ -140,14 +142,14 @@ export function LoginPage() {
                   autoComplete="current-password"
                 />
               </div>
-              <p className="login-message" id="loginMessage">
+              <p className={messageStyles["login-message"]} id="loginMessage">
                 {loginMessage}
               </p>
               <button type="submit" disabled={isLoggingIn}>
                 登录账号
               </button>
             </form>
-            <p className="login-message">
+            <p className={messageStyles["login-message"]}>
               <span>
                 还没账号？我要{" "}
                 <a href="//account.cc98.org/" target="_blank">
@@ -155,7 +157,7 @@ export function LoginPage() {
                 </a>
               </span>
             </p>
-            <p className="login-message">
+            <p className={messageStyles["login-message"]}>
               <span>
                 密码错误？我要{" "}
                 <a href="//account.cc98.org/" target="_blank">

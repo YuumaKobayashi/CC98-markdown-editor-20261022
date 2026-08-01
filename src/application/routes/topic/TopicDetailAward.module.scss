@@ -1,7 +1,9 @@
+@use "../../../foundation/styles/variables/legacy" as legacy;
+
 .awardPage {
   width: 5rem;
   height: 1.2rem;
-  background-color: $bgcolor2;
+  background-color: legacy.$bgcolor2;
   border: #eaeaea solid thin;
   border-radius: 0.2rem;
   cursor: pointer;

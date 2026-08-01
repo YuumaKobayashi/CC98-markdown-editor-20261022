@@ -1,6 +1,6 @@
 # CC98 前端目录重构执行计划
 
-> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1–C1.4 的代码实施、机械检查和主代理人工代码审核均已完成，A、M 阶段及 S1 代码实施完成。C1.3 与 C1.4 均已获用户审批并完成本地提交。C1.5.1 已建立 29 主题 CSS 自定义属性桥并完成首个真实 CSS Module 试点，用户已确认完成验收并已有本地提交。C1.5.2 已将 Board List 剩余 Route 样式转换为第二个真实 CSS Module，代码实施、机械检查、产物审计和主代理人工代码审核已完成；当前运行环境未提供可用浏览器实例，浏览器运行验收与用户审批未执行。完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账、缓存、草稿、UBB 与 C1 样式运行验收仍未全部执行，当前停在 C1.5.2 人工验收前，不自动启动下一小批。
+> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1–C1.5 的代码实施、机械检查和主代理人工代码审核均已完成，A、M、S1 与 C1 代码实施完成。C1.5.1 与 C1.5.2 已有既有本地提交；本轮 C1.5 收口按授权将剩余 40 个过渡 partial 分 15 批全部转换，终态为 42 个真实 CSS Module、0 个过渡 partial、29 个主题。完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账、缓存、草稿、UBB 与 C1 样式运行验收仍未全部执行；本轮未 commit、未 push，不自动启动 Z。
 >
 > 架构依据：`docs/frontend-directory-architecture-inventory.md`。
 >
@@ -58,10 +58,10 @@ C1.3 页面样式                               已完成（用户审批通过�
 C1.4 主题                                   已完成（用户审批通过；浏览器运行验收未执行）
 C1.5.1 主题变量桥与 CSS Modules 试点         已完成（用户确认验收通过；已有本地提交）
 C1.5.2 Board List 剩余样式作用域转换         已完成（人工代码审核通过；浏览器运行验收未执行）
-C1.5 后续样式作用域与目录收口                待逐批单独授权
+C1.5 剩余 40 个样式作用域与目录收口          已完成（15 批主代理逐批审核；浏览器运行验收未全部执行）
 ```
 
-### 当前停点：C1.5.2 已完成代码实施、机械检查、产物审计与人工代码审核；浏览器运行验收未执行，未 commit，不自动启动下一小批
+### 当前停点：C1.5 已完成代码实施、机械检查、逐批构建、产物审计与主代理人工代码审核；浏览器运行验收未全部执行，未 commit、不 push、不自动启动 Z
 
 ### M3.1–M3.6 实施记录（2026-07-30）
 
@@ -2231,6 +2231,35 @@ dev20260716  2d1bbfc5  refactor(c1.5.1): establish theme variable bridge
 - 本地 Vite 根入口 `http://127.0.0.1:25174/` 可返回 200；当前运行环境的浏览器控制运行时未提供可用浏览器实例，无法执行默认/暗色主题、普通/无图片分区、图片回退、展开/收起、导航滚动及前进/后退视觉交互验收，因此不记为通过；直接请求 Vite 开发服务器的 `/boardlist` 返回 404，浏览器应由根入口进入后通过客户端 Router 导航；
 - 本批未 commit、未 push、未修改 `.vscode/`，当前停止并等待用户人工验收与提交授权，不自动转换其余 40 个过渡 partial。
 
+#### C1.5 剩余 40 个真实 CSS Modules 收口记录（2026-08-01）
+
+实施基线：
+
+```text
+dev20260716  0dc33a29  C1.5.2 完成后的工作树基线
+```
+
+实施范围与批次：
+
+- 按 Current Board、Daily Signin、Editor、Focus、Home、Legacy Board Shell/List、Login、Message Center、New Topics、Search、Topic Detail/Header/Management、User Center/Profile 共 15 个串行批次处理剩余 40 个过渡 partial；每批只启用一个独立代理，主代理逐批复核全部 SCSS 与 TS/TSX consumer，并在通过样式守卫、modern/legacy typecheck、`git diff --check` 后亲自执行生产构建；
+- 每个 `*.module.scss` 均由业务 TS/TSX 相对导入并实际消费映射；Sass 聚合边与 allowlist 条目全部移除，终态保持 42 个真实 CSS Module、0 个 transitional partial、29 个主题，40 个目标文件均保留，没有通过删除文件降低分母；
+- 主题相关 Sass 值只改读 C1.5.1 已建立的八个 `--cc98-*` 自定义属性；非主题 legacy 常量改为显式 `@use`。主题 manifest、29 主题 key/id/顺序、默认主题、URL、日夜配对和模板入口未改；
+- 固定 ID、jQuery、UBB/Markdown 动态 HTML、Ant Design/Router/Font Awesome、全局 keyframe 与无 consumer 规则均按最小兼容面处理；每个 selector 级或值级 `:global`、跨 lazy Route 规则、休眠 producer 与浏览器验收项均记录在 `docs/refactor-log/c1.5/css-modules-risk-register.md`；
+- 业务 API、Router、Redux、Storage、权限、事件、动态 ID、资源 URL、DOM 层级、注释、BOM/EOL/EOF 合同保持；`.vscode/` 仍为用户自有未跟踪内容，未触碰。
+
+守卫、机械与产物证据：
+
+- `scripts/check-style-migration.mjs` 已收紧为终态守卫：过渡清单必须为空、模块总数必须为 42，CSS Module 必须使用相对默认绑定并在 import 之外实际以属性或索引方式消费；29 主题仍逐项校验 token -> custom-properties -> Site.scss 导入顺序及八个自定义属性声明；
+- 15 批生产构建均通过；批次 15 构建为 4027 modules transformed，最终依赖方向收口后构建为 4028 modules transformed。构建仍只报告既有 Sass `@import`、Spectrum/Lightning CSS 与 chunk-size 警告，没有新增构建错误；
+- 最终 `npm run check:architecture` 通过：308 个源码文件、1307 个 import、28 条既有 allowlist；Foundation/Modules 不再直接导入 Application Route 样式，禁止新增 props 的跨层固定 class 由 Route Module 逐项精确 global 并登记删除条件；modern/legacy typecheck、样式守卫与 `git diff --check` 均通过；
+- 29 份主题 CSS 只移出原先重复编译的业务规则，真实 Module 规则进入对应 route/module 懒加载 CSS；vendor、APlayer、DPlayer、字体与其他静态内容资产保持稳定。完整 SHA-256 清单与每批差分保存在本轮临时审计目录，不进入仓库；
+- 主代理已完成全批注释删除审计、Sass 聚合闭包、allowlist JSON、`:global` 风险登记、消费者映射、主题变量、固定 ID/jQuery/Portal/UBB 边界和生成 CSS 抽查；浏览器、真实登录/API/权限、主题视觉、SignalR、跨标签、转账、头像裁剪与复杂 UBB 仍按运行验收边界单独报告，不以 build/typecheck 代替。
+
+停点：
+
+- 本轮按用户授权完成全部 15 批后统一报告；不 commit、不 push、不创建 PR，不启动 Z 或其他后续重构；
+- C1.5 代码实施已收口，仍需按最终报告列出的浏览器/真实后端场景执行人工运行验收。
+
 ## 17. Z：根目录 legacy 浏览器源码收口
 
 Z 是 C1 之后的最终源码归位阶段。目标不是把根目录旧文件机械搬进 `src`，而是让每个仍保留的运行能力都落到真实 owner，并删除已经失去职责的 facade、ambient 业务声明和双编译配置。
@@ -2570,7 +2599,7 @@ R1  增加架构检查脚本                            已完成
 - 检查脚本结果；
 - 无业务行为变化证明。
 
-骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1–C1.4 均已完成代码实施、机械检查和主代理人工代码审核，A、M 阶段及 S1 代码实施完成。C1.3 与 C1.4 均已获用户审批并完成本地提交；跨 Route 兼容选择器、后续语义改名与真实 CSS Modules/CSS 自定义属性改造已登记。完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账、缓存、草稿、UBB 与 C1 样式运行验收未执行，旧 `/list` 仍仅适用既有免检结论。当前停在 C1.4 提交后，不自动启动 C1.5。
+骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1–C1.5 均已完成代码实施、机械检查和主代理人工代码审核，A、M、S1 与 C1 代码实施完成。C1.5 已收口为 42 个真实 CSS Module、0 个过渡 partial、29 个主题；兼容选择器、后续语义改名与浏览器验收项已登记。完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账、缓存、草稿、UBB 与 C1 样式运行验收未全部执行，旧 `/list` 仍仅适用既有免检结论。当前停在 C1.5 收口后，不自动启动 Z。
 
 ## 22. 已确认决策与后续边界
 
@@ -2593,7 +2622,7 @@ R1  增加架构检查脚本                            已完成
 
 后续仍需单独授权或审核：
 
-1. S1.1–S1.3、S1.4 六组、S1.5、S1.6 与 S1.7 尚未执行的完整浏览器、登录、真实 API、SignalR、跨标签、缓存与草稿运行验收，C1.1–C1.4 的浏览器样式验收，以及 C1.5 和后续每个 Z 子批的代码实施授权；
+1. S1.1–S1.3、S1.4 六组、S1.5、S1.6 与 S1.7 尚未执行的完整浏览器、登录、真实 API、SignalR、跨标签、缓存与草稿运行验收，C1.1–C1.5 的浏览器样式验收，以及后续每个 Z 子批的代码实施授权；
 2. 当前 `useUserProfileContext` 接口及 UserProfileLayout 集中取数边界是否随资料缓存归位或 Redux 闭包再次调整；
 3. A2.3–A2.11 与 M3.1–M3.6 尚未执行的浏览器、登录、真实 API、权限、分页、SignalR、通知权限、上传、编辑器、缓存与 UBB 运行验收；
 4. 旧 `/list` 免检边界是否继续保留；在另行确认前，Z 只删除根 facade，不删除该公开 Route；

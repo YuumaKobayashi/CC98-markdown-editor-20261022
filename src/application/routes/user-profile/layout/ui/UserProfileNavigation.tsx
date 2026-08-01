@@ -4,6 +4,7 @@ import { Link } from "react-router";
 import { useAppSelector } from "@application/store";
 import { selectCurrentUser } from "@modules/session";
 import { useUserProfileContext } from "../model/user-profile-context";
+import styles from "../../../user-center/UserCenter.module.scss";
 
 export function UserProfileNavigation() {
   const currentUser = useAppSelector(selectCurrentUser);
@@ -12,14 +13,14 @@ export function UserProfileNavigation() {
   const currentUserId = currentUser.id;
 
   return (
-    <div className="user-center-navigation" id="userCenterNavigation">
+    <div className={styles["user-center-navigation"]} id="userCenterNavigation">
       <ul>
         <li>
           <Link
             to={`/user/id/${visitingUserId}`}
             className={
               page === "exact"
-                ? "user-center-navigation-active fa-home"
+                ? `${styles["user-center-navigation-active"]} fa-home`
                 : "fa-home"
             }
           >
@@ -43,7 +44,7 @@ export function UserProfileNavigation() {
               to={`/user/id/${visitingUserId}/manage`}
               className={
                 page === "manage"
-                  ? "user-center-navigation-active fa-cog"
+                  ? `${styles["user-center-navigation-active"]} fa-cog`
                   : "fa-cog"
               }
             >
