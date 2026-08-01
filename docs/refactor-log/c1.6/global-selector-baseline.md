@@ -12,7 +12,7 @@
 - jQuery、`querySelector`、`getElementById`、`getElementsByClassName`、`classList`、原生事件/ref、React Router 状态和通知显隐逻辑，区分视觉 selector 与行为查询合同；
 - C1.5 风险登记中的 Portal、UBB/Markdown、Ant Design、休眠 producer 与仓外合同边界。
 
-结果为 42 个真实 CSS Module 中有 16 个文件包含合计 120 处 `:global(...)`。`global(fadeIn)`、`global(fadeOut)` 是 CSS Modules 动画值转义，不计入 selector 基线。机器基线位于 `scripts/style-global-baseline.json`；`npm run check:styles` 会校验文件集合、逐文件出现次数和按源码顺序计算的 selector 指纹，禁止未登记新增或静默改写。
+C1.6.0 结果为 42 个真实 CSS Module 中有 16 个文件包含合计 120 处 `:global(...)`。`global(fadeIn)`、`global(fadeOut)` 是 CSS Modules 动画值转义，不计入 selector 基线。下表保留 C1.6.0 历史快照；机器基线位于 `scripts/style-global-baseline.json`，已随 C1.6.1 更新为当前 48 个真实 CSS Module、14 个文件和 85 处 selector。`npm run check:styles` 会校验文件集合、逐文件出现次数和按源码顺序计算的 selector 指纹，禁止未登记新增或静默改写。
 
 ## Selector / producer / consumer / 行为查询清单
 
@@ -59,9 +59,17 @@
 
 Importer 数量按文件静态导入计数，表示样式加载入口，不表示每条 global selector 都有活动 producer。无 producer 或第三方 producer 的项已在上表单独标记，后续必须先复核运行边界，不能用 importer 存在替代 selector consumer 证明。
 
+## C1.6.1 Message/Notification 收口
+
+- 删除 `MessageCenter.module.scss` 的 31 处和 `MessageSettings.module.scss` 的 4 处 global；当前基线从 16 个文件/120 处降为 14 个文件/85 处，Message/Notification 范围没有新增 `:global(...)`。
+- Route 样式拆到 Message Layout、私信列表和私信窗口；Message producer 样式归入联系人与共享收发气泡 Module；Notification producer 样式归入系统通知、共享回复/@通知及消息设置 Module。原两份总样式由 8 个真实 owner Module 替代，CSS Module 总数从 42 增至 48。
+- NavLink 当前态和未读计数改由 Message Layout 局部映射；私信加载、完成、错误、提示和消息时间/未读点使用原生 `hidden`，不再依赖消息范围内的全局 `displaynone`。`message-nav-focus`、React Router `.active` 和 Foundation `.message-counterNav` 不再作为业务全局样式合同。
+- radio 固定 ID/name/checked 与 jQuery 查询、通知提示 ID、`displaynone`/`noticeDisplaynone` class 切换及定时器、消息动态 ID、URL、UBB options、API、Redux、Storage、Router 和 DOM 层级均未改；`TopicNotices.module.scss` 留待 C1.6.2/C1.7 既定边界。
+- 未确认仓外 producer 的 `.message-message-wcRead1`/`.message-message-wcRead2` 及原注释规则保留在私信窗口 Module，没有制造 DOM 或空锚点；浏览器、真实 API/权限、主题和响应式验收仍待执行。
+
 ## 冻结与停点
 
 - C1.6.0 不删除任何休眠规则，也不为无 producer 规则制造节点或空锚点。
 - 后续每个 C1.6 子批必须同步更新机器基线与本清单，并解释数量减少、owner 改变及行为查询是否迁移；只减少数字不构成验收。
 - 本批没有执行浏览器视觉、主题切换、真实 API、权限、Portal、UBB/editor 或跨 Route 运行验收；机械检查不能替代这些场景。
-- C1.6.0 完成后停止，等待人工验收和单独提交授权；不自动启动 C1.6.1、C1.7 或 Z。
+- C1.6.0 已提交为 `bee0dd05`；C1.6.1 完成后停止，等待人工验收和单独提交授权，不自动启动 C1.6.2、C1.7 或 Z。
