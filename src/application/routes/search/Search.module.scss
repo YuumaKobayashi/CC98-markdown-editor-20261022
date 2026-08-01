@@ -1,13 +1,6 @@
 @use "../../../foundation/styles/variables/legacy" as *;
 
 /**********************************搜索页的样式*********************************/
-.rusultErr {
-  font-size: 16px;
-  color: $color-thinBlack;
-  margin-top: 100px;
-  text-align: center;
-}
-
 .noResult {
   display: flex;
   flex-direction: column;
@@ -23,9 +16,5 @@
     margin-top: 20px;
     align-self: center;
   }
-}
-
-.noResult:global(.displaynone) {
-  display: none;
 }
 

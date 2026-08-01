@@ -142,7 +142,9 @@ export function LoginPage() {
                   autoComplete="current-password"
                 />
               </div>
-              <p className={messageStyles["login-message"]} id="loginMessage">
+              <p
+                className={`${messageStyles["login-message"]} ${styles.loginMessage}`}
+              >
                 {loginMessage}
               </p>
               <button type="submit" disabled={isLoggingIn}>

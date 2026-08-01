@@ -32,7 +32,7 @@ export function BoardModerationRecordItem(props: BoardEvent) {
   }
 
   return (
-    <div className={styles.boardRecord} id="changeColor">
+    <div className={styles.boardRecord}>
       <div className={styles["boardRecord-1"]}>{targetUserName}</div>
       <div className={styles["boardRecord-2"]}>
         <a href={`/topic/${props.topicId}`} target="_blank">

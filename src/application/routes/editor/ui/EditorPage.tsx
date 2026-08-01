@@ -37,7 +37,6 @@ import {
 } from "../api/service";
 import type { EditorTagInfo, EditorVoteInfo } from "../model/types";
 import styles from "../EditorLegacyForm.module.scss";
-import topicStyles from "../EditorTopic.module.scss";
 import { EditorBreadcrumb } from "./EditorBreadcrumb";
 import { EditorTagNotice } from "./EditorTagNotice";
 import { EditorTitleInput } from "./EditorTitleInput";
@@ -853,7 +852,7 @@ export function EditorPage(): React.ReactElement {
     ) : null;
 
   return (
-    <div className={`${styles.createTopic} ${topicStyles.editorTopicStyles}`}>
+    <div className={styles.createTopic}>
       <Modal
         title="错误提示"
         open={state.contentTooLongModalVisible}

@@ -78,7 +78,10 @@ export function LegacyBoardTopicItem(
     return null;
   }
 
-  const colorId = props.topState === 0 ? "changeColor" : "changeTopColor";
+  const rowClassName =
+    props.topState === 0
+      ? itemStyles.standardTopicRow
+      : itemStyles.topTopicRow;
   const topicId = `topic${props.id}`;
   const url = `/topic/${props.id}`;
   const titleId = `title${props.id}`;
@@ -181,7 +184,7 @@ export function LegacyBoardTopicItem(
   if (props.isVote) title = `[投票]${title}`;
 
   return (
-    <div style={{ display: "flex" }} id={colorId}>
+    <div className={rowClassName} style={{ display: "flex" }}>
       {checkbox}
       <Link to={url}>
         <div className={`rofw ${listStyles.topicInList}`} id={topicId}>
@@ -229,14 +232,17 @@ export function LegacyBoardTopicItem(
               <span>{props.userName || "匿名"}</span>
             </div>
             <div className={`row ${itemStyles.topicIcon}`}>
-              <div id="disliked" style={{ display: "flex", width: "4.5rem" }}>
+              <div
+                className={itemStyles.viewCount}
+                style={{ display: "flex", width: "4.5rem" }}
+              >
                 <i className="fa fa-eye fa-lg" />
                 <span className={`${itemStyles.timeProp} ${itemStyles.tagSize}`}>
                   {hitCount}
                 </span>
               </div>
               <div
-                id="commentsAmount"
+                className={itemStyles.replyCount}
                 style={{ display: "flex", width: "3.5rem" }}
               >
                 <i className="fa fa-commenting-o fa-lg" />

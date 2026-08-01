@@ -133,7 +133,8 @@ export function TopicSearchPage() {
       <div className={styles.focus}>
         <TopicSearchBreadcrumb />
         <div
-          className={`${styles["focus-topic-area"]}${showResults ? "" : " displaynone"}`}
+          className={styles["focus-topic-area"]}
+          hidden={!showResults}
           id="focus-topic-area"
         >
           <div className={styles["focus-topic-topicArea"]}>
@@ -172,17 +173,15 @@ export function TopicSearchPage() {
             <div>······</div>
           </div>
           <div
-            className={`${styles["focus-topic-loading"]}${
-              status === "loading" || status === "loading-more"
-                ? ""
-                : " displaynone"
-            }`}
+            className={styles["focus-topic-loading"]}
+            hidden={status !== "loading" && status !== "loading-more"}
             id="focus-topic-loading"
           >
             <img src="http://file.cc98.org/uploadfile/2017/12/20/6514723843.gif" />
           </div>
           <div
-            className={`${styles["focus-topic-loaddone"]}${status === "done" ? "" : " displaynone"}`}
+            className={styles["focus-topic-loaddone"]}
+            hidden={status !== "done"}
             id="focus-topic-loaddone"
           >
             没有更多帖子啦~
@@ -198,13 +197,17 @@ export function TopicSearchPage() {
             <div className={styles["top-button-text"]}>回到顶部</div>
           </button>
         </div>
-        <div id="noResult" className={`${searchStyles.noResult}${status === "empty" ? "" : " displaynone"}`}>
+        <div
+          id="noResult"
+          className={searchStyles.noResult}
+          hidden={status !== "empty"}
+        >
           <img src="/static/images/searchNone.png" className={searchStyles.noResultPic} />
           <div className={searchStyles.noResultText}>
             -----------------------抱歉呢前辈，没有找到你想要的帖子哦~----------------------
           </div>
         </div>
-        <div id="showError" className={`resultErr${status === "error" ? "" : " displaynone"}`}>
+        <div id="showError" className="resultErr" hidden={status !== "error"}>
           查询出错了，请刷新重试
         </div>
       </div>

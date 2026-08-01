@@ -8,6 +8,7 @@
   align-items: center;
   margin-right: 0.625rem;
   position: relative;
+  background-color: #ebf5f8;
 
   div {
     flex-shrink: 0;
@@ -17,6 +18,10 @@
       text-decoration: underline;
     }
   }
+}
+
+.boardRecord:nth-child(odd) {
+  background-color: #fcfcfc;
 }
 
 .boardRecord-1 {

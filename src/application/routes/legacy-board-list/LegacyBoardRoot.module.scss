@@ -11,10 +11,6 @@
   min-width: 71.2px;
 }
 
-:global(#boardTopics) {
-  border: #eaeaea thin solid;
-}
-
 .listContent {
   display: flex;
   margin-bottom: 1rem;
@@ -23,23 +19,5 @@
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
-}
-
-.notice {
-  display: flex;
-  width: 100%;
-  border: #eaeaea solid thin;
-  border-radius: 5px;
-  background-color: #ffffff;
-  display: flex;
-  flex-direction: column;
-}
-
-.essay {
-  height: 6rem;
-  width: 100%;
-  display: flex;
-  border-bottom: #eaeaea solid thin;
-  box-sizing: border-box;
 }
 

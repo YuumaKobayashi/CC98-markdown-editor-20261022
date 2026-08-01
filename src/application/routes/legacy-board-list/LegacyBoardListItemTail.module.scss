@@ -8,14 +8,19 @@
   font-size: 0.75rem;
 }
 
-:global(#disliked) {
+.viewCount {
   margin-left: 0.625rem;
   margin-right: 0.625rem;
 }
 
-:global(#disliked) img {
+.viewCount img {
   width: 0.625rem;
   height: 0.625rem;
+}
+
+.replyCount img {
+  width: 10px;
+  height: 10px;
 }
 
 .reputation {
@@ -23,7 +28,15 @@
   margin-left: 1rem;
 }
 
-:global(#changeTopColor) {
+.standardTopicRow:nth-child(odd) {
+  background-color: #fcfcfc;
+}
+
+.standardTopicRow {
+  background-color: #ebf5f8;
+}
+
+.topTopicRow {
   background-color: #fffaf0;
 }
 

@@ -55,7 +55,11 @@ export function BoardSearchPage() {
           ))}
         </div>
       </div>
-      <div id="noResultBoard" className={`${searchStyles.noResult}${showNoResult ? "" : " displaynone"}`}>
+      <div
+        id="noResultBoard"
+        className={searchStyles.noResult}
+        hidden={!showNoResult}
+      >
         <img src="/static/images/searchNone.png" className={searchStyles.noResultPic} />
         <div className={searchStyles.noResultText}>
           -----------------------抱歉呢前辈，没有找到你想要的版面哦~----------------------
