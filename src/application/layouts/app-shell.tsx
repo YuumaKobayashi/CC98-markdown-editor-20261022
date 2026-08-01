@@ -5,7 +5,7 @@ import { Footer } from "@application/layouts/footer";
 import { Header } from "@application/layouts/header";
 import { useApplicationError } from "@application/providers/application-error";
 import { NavigationErrorReset } from "@application/providers/navigation-error-reset";
-import * as Status from "@legacy/Components/Status";
+import * as Status from "@application/routes/status";
 
 export function AppShell() {
   const error = useApplicationError();

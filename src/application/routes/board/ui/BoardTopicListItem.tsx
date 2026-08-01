@@ -1,24 +1,20 @@
 import * as React from "react";
-import type { IPost, ITopic } from "@cc98/api";
-import { Popover, Spin, Tag, Tooltip } from "antd";
+import type { ITopic } from "@cc98/api";
+import { Popover, Tag, Tooltip } from "antd";
 import moment from "moment";
 import { Link } from "react-router";
 
 import { getMyInfo } from "@modules/session";
 import { readRawTagInfoCache } from "@modules/topic";
-import { UbbContainer } from "@legacy/Components/UbbContainer";
-import { UbbCodeOptions } from "@legacy/Ubb/UbbCodeExtension";
 
 import styles from "../Board.module.scss";
-import { getShortTopic } from "../api/service";
+import { BoardTopicPreviewCard } from "./BoardTopicPreviewCard";
+
+export { BoardTopicPreviewCard } from "./BoardTopicPreviewCard";
 
 interface BoardTopicListItemProps {
   data: ITopic;
   order: number;
-}
-
-interface BoardTopicPreviewCardProps {
-  data: ITopic;
 }
 
 const generateListPager = (item: number, id: number) => {
@@ -206,51 +202,5 @@ export function BoardTopicListItem({
         </div>
       </div>
     </Popover>
-  );
-}
-
-export function BoardTopicPreviewCard({
-  data,
-}: BoardTopicPreviewCardProps) {
-  const [posts, setPosts] = React.useState<any>([]);
-
-  React.useEffect(() => {
-    const loadPosts = async () => {
-      const nextPosts = await getShortTopic(data.id);
-      setPosts(nextPosts);
-    };
-
-    void loadPosts();
-  }, []);
-
-  return posts.length === 0 ? (
-    <Spin size="large" />
-  ) : (
-    <div className={styles["board-postItem-cards"]}>
-      {posts.map((item: IPost) => (
-        <BoardTopicPreviewPost key={item.id} item={item} />
-      ))}
-    </div>
-  );
-}
-
-function BoardTopicPreviewPost({ item }: { item: IPost }) {
-  return (
-    <div className={styles["board-postItem-card-body"]}>
-      <div className={styles["board-postItem-card-information"]}>
-        <div>{item.floor}L</div>
-        <Link to={`/user/id/${item.userId}`}>
-          <div className={styles["board-postItem-card-username"]}>
-            {item.userName}
-          </div>
-        </Link>
-      </div>
-      <div className={styles["board-postItem-card-content"]}>
-        <UbbContainer
-          code={item.content}
-          options={{ ...new UbbCodeOptions(), allowToolbox: false }}
-        />
-      </div>
-    </div>
   );
 }

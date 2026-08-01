@@ -19,7 +19,7 @@ import {
   NotFoundTopic,
   ServerError,
   UnauthorizedTopic,
-} from "@legacy/Components/Status";
+} from "@application/routes/status";
 import { QuoteContext, type TopicQuote } from "../model/quote-context";
 import { TopicHeader } from "./TopicHeader";
 import {

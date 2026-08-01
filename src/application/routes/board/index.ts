@@ -1,10 +1,8 @@
 export * from "./api/service";
 export { BoardAnnouncement } from "./ui/BoardAnnouncement";
-export {
-  BoardBatchManager,
-  BoardFooterActions,
-  BoardModerationRecordList,
-} from "./ui/BoardFooterActions";
+export { BoardBatchManager } from "./ui/BoardBatchManager";
+export { BoardFooterActions } from "./ui/BoardFooterActions";
+export { BoardModerationRecordList } from "./ui/BoardModerationRecordList";
 export { BoardBreadcrumb } from "./ui/BoardBreadcrumb";
 export { BoardContent } from "./ui/BoardContent";
 export { BoardHeader } from "./ui/BoardHeader";
@@ -13,8 +11,6 @@ export { BoardTagPagination } from "./ui/BoardTagPagination";
 export { BoardActionsAndAdvertisement } from "./ui/BoardActionsAndAdvertisement";
 export { BoardModerationRecordItem } from "./ui/BoardModerationRecordItem";
 export { BoardTopicList } from "./ui/BoardTopicList";
-export {
-  BoardTopicListItem,
-  BoardTopicPreviewCard,
-} from "./ui/BoardTopicListItem";
+export { BoardTopicListItem } from "./ui/BoardTopicListItem";
+export { BoardTopicPreviewCard } from "./ui/BoardTopicPreviewCard";
 export { BoardTopicToolbar } from "./ui/BoardTopicToolbar";

@@ -3,7 +3,7 @@ import { Outlet } from "react-router";
 
 import { useAppSelector } from "@application/store";
 import { selectIsLogOn } from "@modules/session";
-import { LogOut } from "@legacy/Components/Status";
+import { LogOut } from "@application/routes/status";
 import DocumentTitle from "@foundation/ui/document-title";
 import { UserCenterNavigation } from "./UserCenterNavigation";
 import styles from "../../../../layouts/user-area/UserArea.module.scss";

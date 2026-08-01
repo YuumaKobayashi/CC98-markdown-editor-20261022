@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Outlet, useMatch, useNavigate, useParams } from "react-router";
 
-import { NotFoundUser } from "@legacy/Components/Status";
+import { NotFoundUser } from "@application/routes/status";
 import { getUserInfo } from "@modules/user";
 import type { UserInfo } from "@legacy/States/AppState";
 import { UserProfileProvider } from "../model/user-profile-context";

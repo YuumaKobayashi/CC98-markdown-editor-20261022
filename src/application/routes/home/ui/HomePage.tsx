@@ -1,64 +1,34 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { Link } from "react-router";
 
 import { getMyInfo } from "@modules/session";
-import {
-  getAdvertisements,
-  getMainPageData,
-} from "@modules/site-content";
+import { getMainPageData } from "@modules/site-content";
 import {
   getLocalStorage,
-  getStorage,
   setLocalStorage,
-  setStorage,
 } from "@foundation/storage/web-storage";
 import { DocumentTitle } from "@foundation/ui/document-title";
 
-import styles from "../Home.module.scss";
-import advertisementStyles from "./HomeAdvertisementCarousel.module.scss";
 import pageStyles from "./HomePage.module.scss";
-import statisticsStyles from "./HomeStatistics.module.scss";
-import topicStyles from "./MainPageTopic.module.scss";
-import readingStyles from "./RecommendedReading.module.scss";
-import {
-  MainPageColumn,
-  MainPageTopicMoreProps,
-} from "../model/types";
+import { MainPageTopicMoreProps } from "../model/types";
 import { AnnouncementComponent } from "./AnnouncementComponent";
+import { HomeAdvertisementCarousel } from "./HomeAdvertisementCarousel";
+import { HomeHotTopics } from "./HomeHotTopics";
+import { HomeStatistics } from "./HomeStatistics";
+import type { MainPageCount } from "./HomeStatistics";
 import { MainPageTopicComponent } from "./MainPageTopicComponent";
 import { QRCode } from "./QRCode";
 import { RecommendedFunctionComponent } from "./RecommendedFunctionComponent";
+import { RecommendedReading } from "./RecommendedReading";
 import { SchoolSuggestionBox } from "./SchoolSuggestionBox";
 import { SpecialOfferComponent } from "./SpecialOfferComponent";
 
+export { HomeAdvertisementCarousel } from "./HomeAdvertisementCarousel";
+export { HomeHotTopics } from "./HomeHotTopics";
+export { HomeStatistics } from "./HomeStatistics";
+export { RecommendedReading } from "./RecommendedReading";
+
 //TODO：拆分这个文件里面的多个组件
-
-interface HotTopic {
-  title: string;
-  id: number;
-  boardName: string;
-  boardId: number;
-}
-
-const hotTopicPlaceholder: HotTopic[] = [
-  {
-    title: "数据库正在计算新的十大数据，请前辈等会再来~",
-    id: 0,
-    boardName: "错误提示",
-    boardId: 0,
-  },
-];
-
-interface MainPageCount {
-  todayCount: number;
-  todayTopicCount: number;
-  topicCount: number;
-  postCount: number;
-  onlineUserCount: number;
-  userCount: number;
-  lastUserName: string;
-}
 
 const emptyMainPageData = {
   academics: [],
@@ -81,235 +51,6 @@ const emptyMainPageData = {
   onlineUserCount: 0,
   userCount: 0,
 };
-
-/**
- * 推荐阅读组件
- **/
-export function RecommendedReading({ data }: { data: MainPageColumn[] }) {
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    setIndex(data.length ? Math.floor(Math.random() * data.length) : 0);
-  }, [data]);
-
-  const handleMouseEnter = (nextIndex: number) => {
-    setIndex(nextIndex);
-  };
-
-  const selectedIndex = index < data.length ? index : 0;
-  const selected = data[selectedIndex];
-
-  return (
-    <div className={readingStyles.recommendedReading}>
-      <div className={styles.mainPageTitle2}>
-        <div className={styles.mainPageTitleRow}>
-          <i className="fa fa-volume-up"></i>
-          <div className={styles.mainPageTitleText}>推荐阅读</div>
-        </div>
-      </div>
-      <div className={readingStyles.recommendedReadingContent}>
-        <div className={readingStyles.recommendedReadingImage}>
-          <img src={selected?.imageUrl ?? ""} />
-        </div>
-        <div className="column" style={{ flexGrow: 1 }}>
-          <div className={readingStyles.recommendedReadingTitle}>
-            <a href={selected?.url ?? ""} target="_blank">
-              {selected?.title ?? ""}
-            </a>
-          </div>
-          <div className={readingStyles.recommendedReadingAbstract}>
-            {selected?.content ?? ""}
-          </div>
-          <div className={readingStyles.recommendedReadingButtons}>
-            {data.map((_, buttonIndex) => (
-              <div
-                key={buttonIndex}
-                className={
-                  buttonIndex === selectedIndex
-                    ? readingStyles.recommendedReadingButtonSelected
-                    : readingStyles.recommendedReadingButton
-                }
-                onMouseEnter={() => handleMouseEnter(buttonIndex)}
-              ></div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/**
- * 热门话题组件
- **/
-export function HomeHotTopics({ data }: { data: HotTopic[] }) {
-
-  //TODO: 后端已升级，不会再返回空数组了，暂时保留这个逻辑，等前端升级完成后可以删除。
-  const resolveHotTopics = (cachedTopics: HotTopic[] | undefined) => {
-    // 接口暂时返回空数组时，优先展示上一次成功获取的十大。
-    if (data.length > 0) return data;
-    if (cachedTopics) return cachedTopics;
-    // 首次访问且没有缓存时，给用户一个明确的等待提示。
-    return hotTopicPlaceholder;
-  };
-
-  const convertMainPageTopic = (item: HotTopic) => {
-    if (!item.id) return <div key="hot-topic-placeholder">{item.title}</div>;
-    return (
-      <div key={item.id} className={topicStyles.mainPageListRow}>
-        <div className={topicStyles.mainPageListBoardName}>
-          {" "}
-          <a href={`/board/${item.boardId}`} target="_blank">
-            [{item.boardName}]
-          </a>
-        </div>
-        <div className={topicStyles.mainPageListTitle}>
-          <a href={`/topic/${item.id}/1`} target="_blank">
-            {item.title.trim() ? (
-              item.title
-            ) : (
-              <span style={{ display: "inline-block", width: "5rem" }}></span>
-            )}
-          </a>
-        </div>
-      </div>
-    );
-  };
-
-  const cachedTopics = getLocalStorage<HotTopic[]>("mainPageHotTopic");
-  const topics = resolveHotTopics(cachedTopics);
-
-  return (
-    <div className={topicStyles.mainPageList}>
-      <div className={styles.mainPageTitle1}>
-        <div className={styles.mainPageTitleRow}>
-          <i className="fa fa-volume-up"></i>
-          <div className={styles.mainPageTitleText}>热门话题</div>
-        </div>
-        <div className={styles.mainPageTitleRow}>
-          <div className={styles.mainPageTitleText}>
-            <a href="/topic/hot-weekly" target="_blank">本周</a>
-          </div>
-          <div className={styles.mainPageTitleText}>
-            <a href="/topic/hot-monthly" target="_blank">本月</a>
-          </div>
-          <div className={styles.mainPageTitleText}>
-            <a href="/topic/hot-history" target="_blank">历史上的今天</a>
-          </div>
-        </div>
-      </div>
-      <div className={topicStyles.mainPageListContent1}>
-        {topics.map(convertMainPageTopic)}
-      </div>
-    </div>
-  );
-}
-//TODO：函数位置考虑迁移？
-const loadAdvertisements = async () => {
-  const cached = getStorage("mainAds-v2") as MainPageColumn[] | undefined;
-  if (cached) return cached;
-
-  const data = await getAdvertisements();
-  const ads = data.map(
-    (item) =>
-      new MainPageColumn(item.imageUrl, item.title, item.url, item.content)
-  );
-  setStorage("mainAds-v2", ads);
-  return ads;
-};
-
-/**
- * 首页广告组件
- * 每20s切换一条
- */
-export function HomeAdvertisementCarousel() {
-  const [ads, setAds] = useState<MainPageColumn[]>(
-    () => (getStorage("mainAds-v2") as MainPageColumn[] | undefined) ?? []
-  );
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    // 仅用于在组件卸载后忽略异步结果，不会阻止请求重复发出。
-    let active = true;
-    const load = async () => {
-      const nextAds = await loadAdvertisements();
-      if (!active) return;
-      setAds(nextAds);
-      setIndex(nextAds.length ? Math.floor(Math.random() * nextAds.length) : 0);
-    };
-    void load();
-    return () => {
-      active = false;
-    };
-  }, []);
-
-  // 设定定时器，每20s切换一条。
-  useEffect(() => {
-    const timer = window.setInterval(() => {
-      setIndex((current) => (ads.length ? (current + 1) % ads.length : 0));
-    }, 20000);
-    return () => window.clearInterval(timer);
-  }, [ads.length]);
-
-  const selectedIndex = index < ads.length ? index : 0;
-  const selected = ads[selectedIndex];
-
-  return (
-    <div style={{ position: "relative", width: "18.75rem", height: "6.25rem", marginBottom: "1rem" }}>
-      <div>
-        <a href={selected?.url ?? ""} target="_blank">
-          <img src={selected?.imageUrl ?? ""} style={{ width: "18.75rem", height: "6.25rem" }} />
-        </a>
-      </div>
-      <div className={advertisementStyles.adButtons} style={{ position: "absolute", left: "50%", marginLeft: "-8rem", bottom: "0.25rem" }}>
-        {ads.map((_, buttonIndex) => (
-          <div
-            key={buttonIndex}
-            className={buttonIndex === selectedIndex ? advertisementStyles.adButtonSelected : advertisementStyles.adButton}
-            onMouseEnter={() => setIndex(buttonIndex)}
-          ></div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-/** 论坛统计组件。 */
-export function HomeStatistics({ data }: { data: MainPageCount }) {
-  return (
-    <div className={statisticsStyles.mainPageCount}>
-      <div className={styles.mainPageTitle1}>
-        <div className={styles.mainPageTitleRow}>
-          <i className="fa fa-volume-up"></i>
-          <div className={styles.mainPageTitleText}>论坛统计</div>
-        </div>
-      </div>
-      <div className={statisticsStyles.mainPageCountContent}>
-        {[
-          ["今日帖数", data.todayCount],
-          ["今日主题数", data.todayTopicCount],
-          ["论坛总主题数", data.topicCount],
-          ["论坛总回复数", data.postCount],
-          ["在线用户数", data.onlineUserCount],
-          ["总用户数", data.userCount],
-        ].map(([label, value]) => (
-          <div className={statisticsStyles.mainPageCountRow} key={label}>
-            <div className={statisticsStyles.mainPageCountTitle}>{label}</div>
-            <div className={statisticsStyles.mainPageCountTitle}>{value || 0}</div>
-          </div>
-        ))}
-        <div className={statisticsStyles.mainPageCountRow}>
-          <div className={statisticsStyles.mainPageCountTitle}>欢迎新用户</div>
-          <div className={statisticsStyles.mainPageCountTitle}>
-            <Link to={`/user/name/${encodeURIComponent(data.lastUserName)}`}>
-              {data.lastUserName}
-            </Link>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 const loadMainPageData = async () => {
   const cached = getLocalStorage<any>("mainPageData");

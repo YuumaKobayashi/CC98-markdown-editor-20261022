@@ -1,1 +1,1 @@
-export { HomeAdvertisementCarousel } from "../ui/HomePage";
+export { HomeAdvertisementCarousel } from "../ui/HomeAdvertisementCarousel";

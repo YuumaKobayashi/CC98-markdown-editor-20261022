@@ -13,7 +13,7 @@ import { bindAppNavigate } from "@application/router/navigation";
 import {
   bindMessageNotificationNavigation,
 } from "@application/routes/message-center/notifications/model/route";
-import * as Status from "@legacy/Components/Status";
+import * as Status from "@application/routes/status";
 
 type RouteModule = Record<string, unknown>;
 type ModuleLoader = () => Promise<RouteModule>;
@@ -88,13 +88,6 @@ const routes: RouteObject[] = [
         lazy: lazyNamed(
           () => import("@application/routes/topic/detail"),
           "TrackedTopicPage"
-        ),
-      },
-      {
-        path: "list/:boardId/:type?/:page?/*",
-        lazy: lazyNamed(
-          () => import("@application/routes/legacy-board-list"),
-          "LegacyBoardPage"
         ),
       },
       {

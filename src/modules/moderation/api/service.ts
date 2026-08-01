@@ -1,4 +1,3 @@
-import $ from "jquery";
 import { formAuthorizeHeader } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
 
@@ -300,45 +299,6 @@ export async function moveTopic(topicId, boardId, reason) {
   });
   if (response.status === 200) return "ok";
   else return "error";
-}
-
-export async function mutliLock(day, reason, target) {
-  const url = `/topic/multi-lock?${target}`;
-  const headers = await formAuthorizeHeader();
-  headers.append("Content-Type", "application/json");
-  const body = JSON.stringify({
-    reason: reason,
-    value: day,
-  });
-  $("#mutlilock-btn").attr("disabled", "disabled");
-  const response = await cc98Fetch(url, { method: "PUT", headers, body });
-  if (response.status == 200) {
-    $("#mutlilock-btn").removeAttr("disabled");
-    $("#mutlioptip").text("操作成功");
-  } else {
-    $("#mutlilock-btn").removeAttr("disabled");
-    $("#mutlioptip").text("操作失败");
-  }
-  return response.status;
-}
-
-export async function mutliDelete(reason, target) {
-  const url = `/topic/multi-delete?${target}`;
-  const headers = await formAuthorizeHeader();
-  headers.append("Content-Type", "application/json");
-  const body = JSON.stringify({
-    reason: reason,
-  });
-  $("#mutlidelete-btn").attr("disabled", "disabled");
-  const response = await cc98Fetch(url, { method: "PUT", headers, body });
-  if (response.status == 200) {
-    $("#mutlidelete-btn").removeAttr("disabled");
-    $("#mutliopdtip").text("操作成功");
-  } else {
-    $("#mutlidelete-btn").removeAttr("disabled");
-    $("#mutliopdtip").text("操作失败");
-  }
-  return response.status;
 }
 
 export async function getManageHistory(topicId, from) {

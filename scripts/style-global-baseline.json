@@ -1,9 +1,9 @@
 {
-  "phase": "C1.6.5",
-  "totalCssModuleCount": 71,
+  "phase": "C1.7 Status route ownership",
+  "totalCssModuleCount": 66,
   "totalOccurrences": 2,
   "moduleCount": 2,
-  "updatePolicy": "Only update this baseline in an explicitly authorized C1.6 batch after auditing selector, producer, consumer, and behavior-query changes.",
+  "updatePolicy": "Only update this baseline in an explicitly authorized style-owner closure after auditing selector, producer, consumer, and behavior-query changes.",
   "modules": [
     {
       "path": "src/application/routes/board/Board.module.scss",

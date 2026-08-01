@@ -141,44 +141,6 @@
   color: #fff;
 }
 
-.errorState {
-  display: flex;
-  flex-direction: column;
-  font-size: 1.5rem;
-  letter-spacing: 2px;
-  align-items: center;
-  font-family: 黑体;
-}
-
-.errorIcon {
-  width: 48rem;
-  height: 27rem;
-  margin-top: -5rem;
-}
-
-.errorText {
-  text-align: center;
-  font-size: 0.88rem;
-  margin-top: 0.6rem;
-}
-
-.errorTitle {
-  width: 18rem;
-  justify-content: center;
-  margin-top: -7.5rem;
-  text-align: center;
-  font-size: 1.5rem;
-  border-bottom: black solid thin;
-  padding-bottom: 0.6rem;
-}
-
-.returnIndexBtn {
-  justify-content: center;
-  font-size: 0.75rem;
-  margin-top: 2.5rem;
-  text-decoration: underline;
-}
-
 .confirmManagement {
   margin-top: 1rem;
   width: 5rem;

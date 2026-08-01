@@ -1,1 +1,2 @@
-export { Header, Search, SearchBeforeConnent } from "./ui/Header";
+export { Header } from "./ui/Header";
+export { Search, SearchBeforeConnent } from "./ui/Search";

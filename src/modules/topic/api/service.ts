@@ -10,46 +10,6 @@ import { getBasicUsersInfo, getThisUserInfo } from "@modules/user";
 import { replaceHttpToHttps } from "@foundation/lib/text";
 import { transerRecentTime, transerTimeToYearMonthDay } from "@foundation/lib/time";
 
-export async function getBoardTopicAsync(curPage, boardId, totalTopicCount) {
-  try {
-    const startPage = (curPage - 1) * 20;
-    const endPage = curPage * 20 - 1;
-    const headers = await formAuthorizeHeader();
-    let topicNumberInPage;
-    if (curPage * 20 <= totalTopicCount) {
-      topicNumberInPage = 20;
-    } else if (curPage === 1 && totalTopicCount < 19) {
-      topicNumberInPage = totalTopicCount;
-    } else {
-      topicNumberInPage = totalTopicCount - (curPage - 1) * 20;
-    }
-
-    const boardtopics: State.TopicTitleAndContentState[] = [];
-    const url = `/Board/${boardId}/topic?from=${startPage}&size=${topicNumberInPage}`;
-
-    const response = await cc98Fetch(url, { headers });
-    //无权限进版面
-    switch (response.status) {
-      case 401:
-        return "unauthorized";
-      case 404:
-        return "not found";
-    }
-    const data: State.TopicTitleAndContentState[] = await response.json();
-    for (let i = 0; i < data.length; i++) {
-      boardtopics[i] = {
-        ...data[i],
-        replyCount: data[i].replyCount || 0,
-      };
-    }
-
-    return boardtopics;
-  } catch (e) {
-    console.error(e);
-    //throwLegacyError('Disconnected');
-  }
-}
-
 export async function getTopic(topicid: number) {
   try {
     const headers = await formAuthorizeHeader();
@@ -747,71 +707,6 @@ export async function getAnonymousTraceTopics(topicId, postId, page) {
   }
 }
 
-export async function GetTopTopics(boardId) {
-  const headers = await formAuthorizeHeader();
-  const url = `/topic/toptopics?boardid=${boardId}`;
-  const response = await cc98Fetch(url, { headers });
-  const data: State.TopicTitleAndContentState[] = await response.json();
-  let topics: State.TopicTitleAndContentState[] = [];
-  for (let i = 0; i < data.length; i++) {
-    topics[i] = { ...data[i], replyCount: data[i].replyCount || 0 };
-  }
-  for (let i = 0; i < topics.length - 1; i++) {
-    for (let j = 0; j < topics.length - 1 - i; j++) {
-      if (topics[j].topState <= topics[j + 1].topState) {
-        let temp = topics[j];
-        topics[j] = topics[j + 1];
-        topics[j + 1] = temp;
-      }
-    }
-  }
-  return topics;
-}
-
-export async function getBestTopics(curPage, boardId) {
-  const start = (curPage - 1) * 20;
-  const url = `/topic/best/board/${boardId}?from=${start}&size=20`;
-  const headers = await formAuthorizeHeader();
-  const response = await cc98Fetch(url, { headers });
-  const data = await response.json();
-  let boardtopics: State.TopicTitleAndContentState[] = [];
-  for (let i = 0; i < data.topics.length; i++) {
-    boardtopics[i] = {
-      ...data.topics[i],
-      replyCount: data.topics[i].replyCount || 0,
-    };
-  }
-  const totalPage =
-    data.count % 20 === 0
-      ? data.count / 20
-      : (data.count - (data.count % 20)) / 20 + 1;
-  const obj = { boardtopics: boardtopics, totalPage: totalPage };
-  return obj;
-}
-
-export async function getSaveTopics(curPage, boardId) {
-  const start = (curPage - 1) * 20;
-  const url = `/topic/save/board/${boardId}?from=${start}&size=20`;
-  const token = await getToken();
-  const headers = new Headers();
-  headers.append("Authorization", token);
-  const response = await cc98Fetch(url, { headers });
-  const data = await response.json();
-  let boardtopics: State.TopicTitleAndContentState[] = [];
-  for (let i = 0; i < data.topics.length; i++) {
-    boardtopics[i] = {
-      ...data.topics[i],
-      replyCount: data.topics[i].replyCount || 0,
-    };
-  }
-  const totalPage =
-    data.count % 20 === 0
-      ? data.count / 20
-      : (data.count - (data.count % 20)) / 20 + 1;
-  const obj = { boardtopics: boardtopics, totalPage: totalPage };
-  return obj;
-}
-
 /**
  * 搜索指定关键词主题
  * @param boardId
@@ -1053,22 +948,6 @@ export async function getTagNamebyId(id) {
     if (item.id === id) return item.name;
   }
   return false;
-}
-
-export async function getTopicByOneTag(tagId, boardId, layer, page) {
-  const start = (page - 1) * 20;
-  const url = `/topic/search/board/${boardId}/tag?tag${layer}=${tagId}&from=${start}&size=20`;
-  const headers = await formAuthorizeHeader();
-  const response = await cc98Fetch(url, { headers });
-  return await response.json();
-}
-
-export async function getTopicByTwoTags(tag1Id, tag2Id, boardId, page) {
-  const start = (page - 1) * 20;
-  const url = `/topic/search/board/${boardId}/tag?tag1=${tag1Id}&tag2=${tag2Id}&from=${start}&size=20`;
-  const headers = await formAuthorizeHeader();
-  const response = await cc98Fetch(url, { headers });
-  return await response.json();
 }
 
 //批量查询post的基础信息

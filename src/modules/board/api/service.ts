@@ -162,39 +162,12 @@ export function isMaster(masters) {
   return false;
 }
 
-export async function getBoardTag(boardId) {
-  const headers = await formAuthorizeHeader();
-  const url = `/board/${boardId}/tag`;
-  const response = await cc98Fetch(url, { headers });
-  const data = await response.json();
-  return data;
-}
-
 export async function getBoardTagV2(boardId) {
   const headers = await formAuthorizeHeader();
   const url = `/board/${boardId}/tag-v2`;
   const response = await cc98Fetch(url, { headers });
   const data = await response.json();
   return data;
-}
-
-/**
- * @mingyigg
- * @param boardId
- * @param from
- * @param size
- */
-export async function getBoardRecord(
-  boardId: number,
-  from: number,
-  size: number
-) {
-  const headers = await formAuthorizeHeader();
-  const url = `/board/${boardId}/events?from=${from}&size=${size}`;
-  const response = await cc98Fetch(url, { headers });
-  const json = await response.json();
-  console.log("版面事件记录", json);
-  return json;
 }
 
 export async function getTpUsers(boardId, from, size) {
