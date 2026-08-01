@@ -1,6 +1,6 @@
 # CC98 前端目录重构执行计划
 
-> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1–C1.5 的代码实施、机械检查和主代理人工代码审核均已完成，A、M、S1 与 C1 代码实施完成。C1.5.1 与 C1.5.2 已有既有本地提交；本轮 C1.5 收口按授权将剩余 40 个过渡 partial 分 15 批全部转换，终态为 42 个真实 CSS Module、0 个过渡 partial、29 个主题。完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账、缓存、草稿、UBB 与 C1 样式运行验收仍未全部执行；本轮未 commit、未 push，不自动启动 Z。
+> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1–C1.5 的代码实施、机械检查和主代理人工代码审核均已完成；C1.5 已本地提交为 `733eb045`，终态为 42 个真实 CSS Module、0 个过渡 partial、29 个主题。C1.6“组件样式所有权收口”和 C1.7“全局边界与最终目录收口”仅完成计划设计，尚未授权实施。完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账、缓存、草稿、UBB 与 C1 样式运行验收仍未全部执行；不自动启动 C1.6、C1.7 或 Z，不 push。
 >
 > 架构依据：`docs/frontend-directory-architecture-inventory.md`。
 >
@@ -59,9 +59,11 @@ C1.4 主题                                   已完成（用户审批通过；�
 C1.5.1 主题变量桥与 CSS Modules 试点         已完成（用户确认验收通过；已有本地提交）
 C1.5.2 Board List 剩余样式作用域转换         已完成（人工代码审核通过；浏览器运行验收未执行）
 C1.5 剩余 40 个样式作用域与目录收口          已完成（15 批主代理逐批审核；浏览器运行验收未全部执行）
+C1.6 组件样式所有权与业务 global 收口          待实施（仅计划；需单独授权）
+C1.7 Foundation 全局边界与最终目录收口        待实施（仅计划；需单独授权）
 ```
 
-### 当前停点：C1.5 已完成代码实施、机械检查、逐批构建、产物审计与主代理人工代码审核；浏览器运行验收未全部执行，未 commit、不 push、不自动启动 Z
+### 当前停点：C1.5 已提交为 `733eb045`；C1.6、C1.7 仅新增计划，浏览器运行验收未全部执行，不 push、不自动实施后续阶段
 
 ### M3.1–M3.6 实施记录（2026-07-30）
 
@@ -2257,14 +2259,164 @@ dev20260716  0dc33a29  C1.5.2 完成后的工作树基线
 
 停点：
 
-- 本轮按用户授权完成全部 15 批后统一报告；不 commit、不 push、不创建 PR，不启动 Z 或其他后续重构；
+- 本轮按用户授权完成全部 15 批后统一报告；随后经用户批准已本地提交为 `733eb045 refactor(styles): complete C1.5 CSS Modules migration`，未 push、未创建 PR；
 - C1.5 代码实施已收口，仍需按最终报告列出的浏览器/真实后端场景执行人工运行验收。
+
+### C1.6 组件样式所有权与业务 global 收口
+
+C1.5 解决了“业务样式由主题入口重复编译”和“伪 CSS Modules”问题，但还没有完成组件级所有权。当前基线有 42 个真实 CSS Module，其中 16 个文件仍包含合计 120 处 `:global(...)`；主要集中在 `TopicDetail.module.scss`（40 处）、`MessageCenter.module.scss`（31 处）、`UserCenter.module.scss`（18 处）和 `EditorTopic.module.scss`（10 处）。同时 `UserCenter.module.scss`、`MessageCenter.module.scss`、`TopicDetail.module.scss` 分别约 806、725、601 行，仍带有“Route 总样式表”特征。
+
+C1.6 的目标不是机械减少文件行数，而是让每条业务规则跟随真实 DOM producer：组件生产 DOM，也直接导入并消费自己的 CSS Module；Route 样式只保留 Route 根布局、Route 间编排和确实由该 Route 自身生产的状态。父 Route 不再依靠固定字符串 class、固定 ID 或 `:global` 反向命中 `modules`、`foundation/ui` 或子 Route 组件。
+
+#### C1.6 目标与完成定义
+
+- `src/application` 与 `src/modules` 中，父 owner 命中子组件业务 class/ID 的 `:global` 数量为 0；跨层样式依赖必须通过子组件自有 Module、已有可控 `className`/slot 接口或组件内部状态映射解决；
+- 每个活动业务 selector 都有唯一 owner、明确 producer 和至少一个可追踪 consumer；无 consumer 规则不得为了维持 CSS Module 输出而制造空锚点、无意义 DOM、未读取自定义属性或 React `key`；
+- 固定 ID 仅保留给脚本、可访问性、锚点或外部合同，视觉规则改由本地 Module class 承担；必须保留的 jQuery/DOM 查询同步使用既有 ID、`ref`、稳定 `data-*` 或同批迁移后的 Module 映射，不以视觉选择器兼任行为协议；
+- React Router `active`、加载/隐藏、选中、错误、楼层类型等本仓状态由 Module class 映射、条件渲染、`hidden`、ARIA 或局部 `data-state` 表达，不继续依赖全局 `active`、`displaynone` 等工具 class；
+- Route 级大文件按真实子组件边界拆分。文件大小只作为审计信号而非硬指标：超过 300 行、覆盖三个以上独立组件或含多个无关 BEM 根时，必须解释为何仍由同一 owner 持有；
+- C1.6 结束时，剩余 `:global` 只能属于 C1.7 已登记的第三方生成 DOM、Portal、动态 HTML 或 Foundation 全局入口边界；守卫禁止新增未登记项。
+
+#### C1.6 selector 分类与处理规则
+
+1. **本仓子组件固定 class**：例如 Message/Notification 的 `message-*`、Post/Topic 的 `user-post-*` 与 `reply-floor*`。将规则移入生产这些节点的组件 Module，由组件直接消费 `styles.*`；父 Route 删除对应 `:global` 后代规则。
+2. **本仓固定 ID**：例如 Topic Header、Login、User Profile、Legacy Board 的视觉 ID。保留确有行为合同的 `id`，同时增加或复用局部 Module class；SCSS 只选择局部 class，不使用 `:global(#...)`。无行为/可访问性/外部合同的纯视觉 ID 另批删除。
+3. **跨 Route 共享业务组件**：样式归入 `src/modules/<owner>/ui/<component>/`，不得复制到多个 Route，也不得让 Module 反向导入 Application 样式。确有 Route 差异时由组件提供语义化 variant，而不是暴露内部 DOM class。
+4. **Route 自身状态**：`NavLink`、空结果、加载、错误和选中态由 Route Module 映射直接消费；不得以全局工具 class 拼接保持旧 specificity。
+5. **休眠或无 producer 规则**：先查 TS/TSX、模板、动态 HTML、脚本、public 静态入口和仓外合同；确认无 consumer 后在独立小批删除，不继续用精确 global“保存历史”。无法确认的项目进入有 owner、原因、证据和删除条件的冻结清单，不算作 C1.6 完成。
+6. **第三方、Portal、UBB/Markdown 动态 DOM**：不在 C1.6 猜测性改写，完整移交 C1.7；但必须先由本地根节点或稳定 `data-cc98-owner` 限定影响范围，禁止裸全站命中。
+
+#### C1.6 建议实施批次
+
+```text
+C1.6.0  重新生成 selector/producer/consumer/行为查询清单；冻结 120 处基线
+C1.6.1  Message 与 Notification 子组件样式下沉；拆分 MessageCenter/Settings
+C1.6.2  Post、Topic、FloorSize、Topic Header/Reply 子组件样式下沉
+C1.6.3  User、Post、Topic 共享卡片及 User Center/Profile 样式下沉
+C1.6.4  Editor、Login、Search、Legacy Board 的固定 ID、状态和休眠规则收口
+C1.6.5  全仓反向依赖、重复规则、大文件 owner 与剩余 global 人工审计
+```
+
+每批只处理一个可独立验收的 owner 集合；不得顺手修改 API、权限、Redux、Storage、Router URL、jQuery 行为、UBB 输出、DOM 文案或主题视觉。需要新增组件 variant/slot 时，先证明它是跨 Route 的真实语义差异，不为搬 CSS 扩大公共 API。
+
+#### C1.6 验收与停点
+
+- 每批运行 `npm run check:architecture`、modern/legacy typecheck、正式 build、`git diff --check`，并比较受影响 Route 的 CSS chunk、29 主题、vendor 与静态内容产物；
+- 主代理逐组件核对 SCSS 声明、伪类、后代关系、specificity、DOM producer、条件 class、脚本查询、Portal 和懒加载边界，不能以构建通过代替人工审核；
+- 浏览器至少覆盖对应 owner 的默认/暗色主题、直接进入、前进后退、hover/focus/disabled、加载/空/错状态、弹层和响应式边界；涉及真实后端或权限的场景继续明确报告未验收项；
+- C1.6 完成后停止，等待用户验收与单独提交授权；不自动启动 C1.7 或 Z。
+
+### C1.7 Foundation 全局边界与最终样式目录收口
+
+C1.7 在 C1.6 已完成组件所有权的基础上处理真正的全局入口、根 `Styles/`、`Site.scss`、第三方 DOM 和动态内容。严格意义上的 Web 应用不可能完全没有全局 CSS：reset、`html`/`body`/`#root`、`:root` 主题变量、字体、第三方生成 DOM及用户生成 HTML 均需要跨组件合同。因此本计划把“没有 global 样式”定义为：**没有无 owner 的业务全局规则、没有业务 `:global(...)`、没有父组件通过全局选择器侵入子组件；所有不可避免的基础全局规则均集中、限界、登记且可审计。**
+
+#### C1.7 最终完成定义
+
+- `rg ':global\(' src` 结果为 0；CSS Module 内不再使用 selector 级或值级 `:global`；
+- `src/application`、`src/modules` 中不存在普通全局业务 `.scss`，业务样式全部是由相邻 TSX 显式默认导入并实际消费的 `*.module.scss`；
+- 根 `Styles/` 删除，根 `Components/UbbEditor/stylesheet.scss` 不再作为样式 owner，`Site.scss` 不再反向导入根 legacy 目录；删除前完成全仓、模板、构建输入和 public URL 零引用审计；
+- `Site.scss` 只作为 29 主题共同依赖的 Foundation 全局入口，内容原则上仅为有序导入；不得直接包含 Home、Topic、Message、User Center、Annual Review、UBB 等业务 selector；
+- Foundation 普通全局 SCSS 只允许 reset、document/root、共享字体或 keyframe、主题自定义属性和登记后的第三方兼容。每个非 reset selector 必须记录 owner、consumer、作用域锚点、引入顺序、存在原因和删除条件；
+- 所有第三方覆盖必须由组件可控根或稳定 `data-cc98-owner` 限界。优先使用第三方公开 `className`、`rootClassName`、slot、popup container 或 token API；确无接口时才进入 `foundation/styles/vendors`，禁止裸 `.ant-*`、`.spectrum-*` 或标签选择器影响全站；
+- UBB、Markdown、emoji、编辑器预览等动态内容样式归对应 integration/业务 owner，并由组件本地根约束。原生元素可在本地 Module 根下选择；需要固定生成 class 时优先让 renderer 消费显式样式映射或稳定 `data-*` 合同，无法做到的项目作为动态内容边界单独登记，不混入通用 `Site.scss`；
+- `public/static/images/emoji/emojify.css` 等固定 URL 静态样式先审计模板、服务端、仓外引用和图片相对 URL 合同：仍是公开静态合同的文件可继续作为 `public/` 分发产物，但必须登记生成/维护 owner，不能冒充组件源码；确认零引用后才能随同资源删除，不能为目录统一机械搬动；
+- `scripts/check-style-migration.mjs` 从“固定 42 个 Module”升级为所有权守卫：自动发现 Module、验证相对默认导入与真实消费、禁止 Sass 聚合业务 Module、禁止根 `Styles/`、禁止 `:global`、禁止未登记 Foundation selector和跨层样式依赖。文件数量可随真实组件拆分增长，不能再把 42 当成终态常量。
+
+#### C1.7 最终目录示例
+
+```text
+src/
+├─ foundation/
+│  ├─ styles/
+│  │  ├─ Site.scss                       # 唯一全局入口；原则上只保留有序 @use/@forward 或兼容导入
+│  │  ├─ reset/
+│  │  │  ├─ _normalize.scss
+│  │  │  └─ _restore.scss
+│  │  ├─ base/
+│  │  │  ├─ _document.scss               # html/body/#root 等应用根合同
+│  │  │  ├─ _fonts.scss
+│  │  │  └─ _shared-keyframes.scss       # 仅真正跨组件复用的动画
+│  │  ├─ vendors/
+│  │  │  ├─ _antd.scss                   # 受 data-cc98-owner 或组件根限定
+│  │  │  ├─ _spectrum.scss
+│  │  │  └─ contracts.md                 # owner/consumer/范围/删除条件
+│  │  └─ mixins/                          # 仅编译期工具，不生成 selector
+│  └─ theme/
+│     ├─ registry/
+│     ├─ runtime/
+│     ├─ tokens/
+│     └─ themes/                          # 29 个主题入口及顺序合同保持
+│
+├─ application/
+│  ├─ layouts/
+│  │  ├─ application-shell/
+│  │  │  ├─ ApplicationShell.tsx
+│  │  │  └─ ApplicationShell.module.scss
+│  │  ├─ header/ui/Header/
+│  │  │  ├─ Header.tsx
+│  │  │  └─ Header.module.scss
+│  │  └─ footer/ui/Footer/
+│  │     ├─ Footer.tsx
+│  │     └─ Footer.module.scss
+│  └─ routes/
+│     └─ topic/
+│        ├─ page/
+│        │  ├─ TopicPage.tsx
+│        │  └─ TopicPage.module.scss      # 仅 Route 根布局
+│        └─ ui/
+│           ├─ TopicHeader/
+│           │  ├─ TopicHeader.tsx
+│           │  └─ TopicHeader.module.scss
+│           └─ TopicReplyList/
+│              ├─ TopicReplyList.tsx
+│              └─ TopicReplyList.module.scss
+│
+└─ modules/
+   ├─ message/ui/MessageSender/
+   │  ├─ MessageSender.tsx
+   │  └─ MessageSender.module.scss
+   ├─ notification/ui/MessageSystemBox/
+   │  ├─ MessageSystemBox.tsx
+   │  └─ MessageSystemBox.module.scss
+   ├─ post/ui/FloorSize/
+   │  ├─ FloorSize.tsx
+   │  └─ FloorSize.module.scss
+   └─ ubb/
+      ├─ editor/ui/UbbEditor/
+      │  ├─ UbbEditor.tsx
+      │  └─ UbbEditor.module.scss
+      └─ renderer/ui/UbbContent/
+         ├─ UbbContent.tsx
+         └─ UbbContent.module.scss
+```
+
+目录示例表达所有权规则而非要求一次性重命名全部 TSX：默认一个可独立复用/验收的组件一个目录、一份同名 Module；仅有几行且生命周期完全一致的私有子组件可以与父组件共用 Module。禁止建立新的 `styles/` 业务杂物目录、按“颜色/布局/按钮”横向集中业务规则，或让多个无组件关系的 TSX 共同依赖一个巨型 Route Module。
+
+#### C1.7 建议实施批次
+
+```text
+C1.7.0  冻结 Site.scss、根 Styles、vendor、动态 HTML、主题产物与级联顺序基线
+C1.7.1  Application Shell、Footer、Home/PWA、Vote、Annual Review 规则归真实 owner
+C1.7.2  UBB Editor、UBB renderer、Markdown/emoji 动态内容样式归 owner
+C1.7.3  Ant Design、Spectrum、Router/Portal 等第三方边界限界与登记
+C1.7.4  删除休眠 compatibility、根 Styles 与反向 import；Site.scss 缩为纯入口
+C1.7.5  启用零 :global、零根样式、Foundation selector manifest 与目录守卫
+```
+
+Annual Review 的最终删除仍属于 Z4；C1.7 不得借整理样式提前删除业务。若 Z4 尚未实施，C1.7 只把其样式放入明确的冻结 owner，并登记“随 Z4 整体删除”，不得继续留在 `Site.scss`。UBB 实现的完整迁址仍属于 Z2；C1.7 可以先建立最终样式 owner 并由 legacy 入口显式消费，但不得借此改写解析器、Handler 或扩展合同。
+
+#### C1.7 验收、守卫与停点
+
+- 除 C1.6 的机械检查外，必须比较 `Site.scss` 编译顺序、29 主题 key/id/名称/日夜配对、主题变量、静态 URL、各 CSS chunk 和 vendor 产物；纯归位批要求声明级和级联顺序可证明等价，删除/作用域调整批逐项说明预期差分；
+- 浏览器全量覆盖 Shell、Home、Board、Topic、Message、Search、Editor、User Center/Profile、Login、Signin、Ant Design、Spectrum、UBB、Markdown/emoji、默认/暗色主题、Portal、hover/focus/disabled、打印/降级和前进后退；未实际执行的场景明确保留为未验收，不以截图抽查或 build 代替；
+- 最终人工审核必须逐项确认 `rg ':global\(' src` 为 0、根 `Styles/` 不存在、`Site.scss` 无业务 selector、Foundation manifest 与实际 selector 一致、组件和 Module 共置、跨层 import 闭包、BOM/EOL/EOF 与静态 URL 合同；
+- C1.7 完成后停止，等待用户验收和单独提交授权；不自动启动 Z。Z2/Z3/Z4 后再次运行同一守卫，确保 legacy 源码删除不会把样式重新拉回全局入口。
 
 ## 17. Z：根目录 legacy 浏览器源码收口
 
-Z 是 C1 之后的最终源码归位阶段。目标不是把根目录旧文件机械搬进 `src`，而是让每个仍保留的运行能力都落到真实 owner，并删除已经失去职责的 facade、ambient 业务声明和双编译配置。
+Z 是 C1.6、C1.7 之后的最终源码归位阶段。目标不是把根目录旧文件机械搬进 `src`，而是让每个仍保留的运行能力都落到真实 owner，并删除已经失去职责的 facade、ambient 业务声明和双编译配置。
 
-新增本计划不等于授权实施 Z。C1 仍先单独实施和验收；Z0–Z5 每批完成机械检查和主代理逐文件审核后停止，等待用户人工验收及单独提交授权，不自动进入下一批。
+新增本计划不等于授权实施 Z。C1.6、C1.7 仍先单独实施和验收；Z0–Z5 每批完成机械检查和主代理逐文件审核后停止，等待用户人工验收及单独提交授权，不自动进入下一批。
 
 ### Z 终态
 
@@ -2599,7 +2751,7 @@ R1  增加架构检查脚本                            已完成
 - 检查脚本结果；
 - 无业务行为变化证明。
 
-骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1–C1.5 均已完成代码实施、机械检查和主代理人工代码审核，A、M、S1 与 C1 代码实施完成。C1.5 已收口为 42 个真实 CSS Module、0 个过渡 partial、29 个主题；兼容选择器、后续语义改名与浏览器验收项已登记。完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账、缓存、草稿、UBB 与 C1 样式运行验收未全部执行，旧 `/list` 仍仅适用既有免检结论。当前停在 C1.5 收口后，不自动启动 Z。
+骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1–C1.5 均已完成代码实施、机械检查和主代理人工代码审核。C1.5 已提交为 `733eb045`，收口为 42 个真实 CSS Module、0 个过渡 partial、29 个主题；C1.6、C1.7 仅完成组件样式所有权、业务 global 清零、Foundation 全局边界和最终目录计划，尚未实施。完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账、缓存、草稿、UBB 与 C1 样式运行验收未全部执行，旧 `/list` 仍仅适用既有免检结论。当前停在 C1.5 提交后，不自动启动 C1.6、C1.7 或 Z。
 
 ## 22. 已确认决策与后续边界
 
@@ -2613,7 +2765,7 @@ R1  增加架构检查脚本                            已完成
 6. S1 Redux 终态只保留 Session 与 Notification unread 两个业务 slice，Application Error 退出 Redux；
 7. S1 采用严格保真迁移，已知缺陷只登记，不顺手修复；
 8. 未经用户要求，不 commit、不 push；
-9. C1 后新增 Z0–Z5 根目录源码收口阶段，浏览器业务源码终态只位于 `src/application`、`src/modules` 和 `src/foundation`；
+9. C1.5 后先新增 C1.6、C1.7：业务组件样式必须与 producer 共置，`src/application`/`src/modules` 的业务 global 清零，`src` 中不再使用 `:global(...)`；reset、应用根、主题变量、第三方和动态内容等不可避免的全局边界集中到 Foundation 并显式登记。完成后再进入 Z0–Z5，浏览器业务源码终态只位于 `src/application`、`src/modules` 和 `src/foundation`；
 10. AnnualReview 完整移除，不恢复 Route、不建立新 Application 或空兼容 Module；
 11. UBB 功能保留并完整迁入 `src/modules/ubb`，迁址阶段不改写解析器、Handler 体系或扩展合同；
 12. `@types/@cc98` 业务声明按真实业务 owner 迁入各 Module，不把 ambient `@cc98/api` 聚合搬入 Foundation；
@@ -2622,7 +2774,7 @@ R1  增加架构检查脚本                            已完成
 
 后续仍需单独授权或审核：
 
-1. S1.1–S1.3、S1.4 六组、S1.5、S1.6 与 S1.7 尚未执行的完整浏览器、登录、真实 API、SignalR、跨标签、缓存与草稿运行验收，C1.1–C1.5 的浏览器样式验收，以及后续每个 Z 子批的代码实施授权；
+1. S1.1–S1.3、S1.4 六组、S1.5、S1.6 与 S1.7 尚未执行的完整浏览器、登录、真实 API、SignalR、跨标签、缓存与草稿运行验收，C1.1–C1.5 的浏览器样式验收，C1.6、C1.7 的逐批代码实施授权，以及后续每个 Z 子批的代码实施授权；
 2. 当前 `useUserProfileContext` 接口及 UserProfileLayout 集中取数边界是否随资料缓存归位或 Redux 闭包再次调整；
 3. A2.3–A2.11 与 M3.1–M3.6 尚未执行的浏览器、登录、真实 API、权限、分页、SignalR、通知权限、上传、编辑器、缓存与 UBB 运行验收；
 4. 旧 `/list` 免检边界是否继续保留；在另行确认前，Z 只删除根 facade，不删除该公开 Route；
