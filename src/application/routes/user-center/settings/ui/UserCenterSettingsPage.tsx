@@ -16,7 +16,7 @@ import {
 } from "../model/editable-user-info";
 import { UserCenterAvatarSettings } from "./UserCenterAvatarSettings";
 import { UserCenterProfileSettings } from "./UserCenterProfileSettings";
-import styles from "../../UserCenter.module.scss";
+import styles from "./UserCenterSettings.module.scss";
 
 /**
  * 用户中心的个人资料设置页。

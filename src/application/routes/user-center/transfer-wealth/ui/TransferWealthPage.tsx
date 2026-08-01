@@ -3,7 +3,7 @@ import * as React from "react";
 import { useAppDispatch, useAppSelector } from "@application/store";
 import { selectCurrentUser, updateCurrentUser } from "@modules/session";
 import { transferWealth } from "@modules/wealth";
-import styles from "../../UserCenter.module.scss";
+import styles from "./TransferWealthPage.module.scss";
 
 export function TransferWealthPage() {
   const dispatch = useAppDispatch();

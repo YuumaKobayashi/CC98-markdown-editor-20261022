@@ -4,7 +4,7 @@ import { UserRecentTopicItem as Topic } from "@modules/topic";
 import { getToken } from "@modules/session";
 import type { UserRecentTopic } from "@legacy/States/AppState";
 import { cc98Fetch } from "@foundation/api/http";
-import styles from "../../../user-center/UserCenter.module.scss";
+import styles from "../../../../layouts/user-area/UserActivityLayout.module.scss";
 
 interface UserRecentTopicsProps {
   id: number;

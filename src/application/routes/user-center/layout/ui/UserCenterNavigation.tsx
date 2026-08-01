@@ -1,8 +1,7 @@
 import * as React from "react";
 import $ from "jquery";
 import { NavLink } from "react-router";
-import styles from "../../UserCenter.module.scss";
-import labelStyles from "../../UserCenterNavigationLabel.module.scss";
+import styles from "../../../../layouts/user-area/UserArea.module.scss";
 
 const navigationClassName = (baseClassName: string) =>
   ({ isActive }: { isActive: boolean }) =>
@@ -44,13 +43,13 @@ export function UserCenterNavigation() {
       <ul>
         <li>
           <NavLink to="/usercenter" end className={navigationClassName("fa-home")}>
-            <div className={`${styles["center-nav-item"]} ${labelStyles["center-nav-item"]}`}>个人主页</div>
+            <div className={styles["center-nav-item"]}>个人主页</div>
           </NavLink>
         </li>
         <hr />
         <li>
           <NavLink to="/usercenter/config" className={navigationClassName("fa-cog")}>
-            <div className={`${styles["center-nav-item"]} ${labelStyles["center-nav-item"]}`}>修改资料</div>
+            <div className={styles["center-nav-item"]}>修改资料</div>
           </NavLink>
         </li>
         <hr />
@@ -59,7 +58,7 @@ export function UserCenterNavigation() {
             to="/usercenter/mytopics"
             className={navigationClassName("fa-pencil-square-o")}
           >
-            <div className={`${styles["center-nav-item"]} ${labelStyles["center-nav-item"]}`}>我的主题</div>
+            <div className={styles["center-nav-item"]}>我的主题</div>
           </NavLink>
         </li>
         <hr />
@@ -68,7 +67,7 @@ export function UserCenterNavigation() {
             to="/usercenter/myposts"
             className={navigationClassName("fa-mail-reply")}
           >
-            <div className={`${styles["center-nav-item"]} ${labelStyles["center-nav-item"]}`}>我的回复</div>
+            <div className={styles["center-nav-item"]}>我的回复</div>
           </NavLink>
         </li>
         <hr />
@@ -77,7 +76,7 @@ export function UserCenterNavigation() {
             to="/usercenter/myhistory"
             className={navigationClassName("fa-history")}
           >
-            <div className={`${styles["center-nav-item"]} ${labelStyles["center-nav-item"]}`}>我的足迹</div>
+            <div className={styles["center-nav-item"]}>我的足迹</div>
           </NavLink>
         </li>
         <hr />
@@ -86,7 +85,7 @@ export function UserCenterNavigation() {
             to="/usercenter/myfavorites"
             className={navigationClassName("fa-star")}
           >
-            <div className={`${styles["center-nav-item"]} ${labelStyles["center-nav-item"]}`}>我的收藏</div>
+            <div className={styles["center-nav-item"]}>我的收藏</div>
           </NavLink>
         </li>
         <hr />
@@ -95,7 +94,7 @@ export function UserCenterNavigation() {
             to="/usercenter/mycustomboards"
             className={navigationClassName("fa-rss")}
           >
-            <div className={`${styles["center-nav-item"]} ${labelStyles["center-nav-item"]}`}>关注版面</div>
+            <div className={styles["center-nav-item"]}>关注版面</div>
           </NavLink>
         </li>
         <hr />
@@ -104,7 +103,7 @@ export function UserCenterNavigation() {
             to="/usercenter/myfollowings"
             className={navigationClassName("fa-heart")}
           >
-            <div className={`${styles["center-nav-item"]} ${labelStyles["center-nav-item"]}`}>关注用户</div>
+            <div className={styles["center-nav-item"]}>关注用户</div>
           </NavLink>
         </li>
         <hr />
@@ -113,7 +112,7 @@ export function UserCenterNavigation() {
             to="/usercenter/myfans"
             className={navigationClassName("fa-users")}
           >
-            <div className={`${styles["center-nav-item"]} ${labelStyles["center-nav-item"]}`}>我的粉丝</div>
+            <div className={styles["center-nav-item"]}>我的粉丝</div>
           </NavLink>
         </li>
         <hr />
@@ -122,7 +121,7 @@ export function UserCenterNavigation() {
             to="/usercenter/transferwealth"
             className={navigationClassName("fa-credit-card")}
           >
-            <div className={`${styles["center-nav-item"]} ${labelStyles["center-nav-item"]}`}>转账系统</div>
+            <div className={styles["center-nav-item"]}>转账系统</div>
           </NavLink>
         </li>
         <hr />
@@ -131,7 +130,7 @@ export function UserCenterNavigation() {
             to="/usercenter/theme"
             className={navigationClassName("fa-magic")}
           >
-            <div className={`${styles["center-nav-item"]} ${labelStyles["center-nav-item"]}`}>切换皮肤</div>
+            <div className={styles["center-nav-item"]}>切换皮肤</div>
           </NavLink>
         </li>
       </ul>

@@ -16,6 +16,17 @@ function toProjectPath(filePath) {
   return path.relative(projectRoot, filePath).split(path.sep).join("/");
 }
 
+function applicationRouteName(filePath) {
+  const relativePath = path.relative(
+    path.join(sourceRoot, "application", "routes"),
+    filePath,
+  );
+  if (relativePath.startsWith("..") || path.isAbsolute(relativePath)) {
+    return null;
+  }
+  return relativePath.split(path.sep)[0] || null;
+}
+
 function collectFiles(directory, predicate) {
   const files = [];
 
@@ -206,6 +217,14 @@ for (const sourceFile of sourceFiles) {
       errors.push(`CSS Module 必须由 owner 使用相对路径导入: ${toProjectPath(sourceFile)} -> ${specifier}`);
       continue;
     }
+    const targetPath = path.resolve(path.dirname(sourceFile), specifier);
+    const importerRoute = applicationRouteName(sourceFile);
+    const targetRoute = applicationRouteName(targetPath);
+    if (importerRoute && targetRoute && importerRoute !== targetRoute) {
+      errors.push(
+        `Application Route 不得反向导入其他 Route 的 CSS Module: ${toProjectPath(sourceFile)} -> ${specifier}`,
+      );
+    }
     const sourceWithoutImport =
       source.slice(0, match.index) + source.slice(match.index + match[0].length);
     const bindingUsePattern = new RegExp(`\\b${binding}\\s*(?:\\.|\\[)`);
@@ -214,7 +233,7 @@ for (const sourceFile of sourceFiles) {
     }
     addConsumer(
       typescriptConsumers,
-      path.resolve(path.dirname(sourceFile), specifier),
+      targetPath,
       sourceFile,
     );
   }

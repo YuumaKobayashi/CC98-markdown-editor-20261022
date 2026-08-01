@@ -6,7 +6,7 @@ import { getSearchBoard } from "@modules/board";
 import { FocusBoard } from "@legacy/Props/FocusBoard";
 import { DocumentTitle } from "@foundation/ui/document-title";
 
-import styles from "../../../focus/Focus.module.scss";
+import styles from "../../../../layouts/collection/CollectionLayout.module.scss";
 import searchStyles from "../../Search.module.scss";
 
 const parseBoardSearch = (search: string) => {

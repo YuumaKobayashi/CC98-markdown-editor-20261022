@@ -2,7 +2,7 @@ import * as React from "react";
 
 import type { ThemeSetting } from "@legacy/States/AppState";
 import { isBrowserDayNightModeSupported } from "@foundation/theme";
-import styles from "../../UserCenter.module.scss";
+import styles from "./UserCenterTheme.module.scss";
 
 export interface ThemeSettingSuccessResult {
   ok: true;

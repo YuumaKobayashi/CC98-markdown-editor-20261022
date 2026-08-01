@@ -6,7 +6,7 @@ import { selectIsLogOn } from "@modules/session";
 import { LogOut } from "@legacy/Components/Status";
 import DocumentTitle from "@foundation/ui/document-title";
 import { UserCenterNavigation } from "./UserCenterNavigation";
-import styles from "../../UserCenter.module.scss";
+import styles from "../../../../layouts/user-area/UserArea.module.scss";
 
 /**
  * 用户中心页面

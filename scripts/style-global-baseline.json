@@ -1,8 +1,8 @@
 {
-  "phase": "C1.6.4",
-  "totalCssModuleCount": 58,
-  "totalOccurrences": 29,
-  "moduleCount": 3,
+  "phase": "C1.6.5",
+  "totalCssModuleCount": 71,
+  "totalOccurrences": 2,
+  "moduleCount": 2,
   "updatePolicy": "Only update this baseline in an explicitly authorized C1.6 batch after auditing selector, producer, consumer, and behavior-query changes.",
   "modules": [
     {
@@ -14,11 +14,6 @@
       "path": "src/application/routes/new-topics/NewTopics.module.scss",
       "occurrences": 1,
       "fingerprint": "9b97c52162bfa3c3a348af9b5952b7f12ad8f5efc0837e7e3b3f7919d57c4bce"
-    },
-    {
-      "path": "src/application/routes/topic/TopicDetail.module.scss",
-      "occurrences": 27,
-      "fingerprint": "5022ae8bed7b4103053cb5915f41b23cc94ed4ebce50056ee74de0da3b0da8d8"
     }
   ]
 }

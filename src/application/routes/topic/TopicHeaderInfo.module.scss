@@ -8,20 +8,6 @@
   box-sizing: border-box;
 }
 
-.topicInfo-boardInfo {
-  width: 10.6rem;
-  height: 6.4rem;
-  display: flex;
-  background-color: rgb(106, 113, 119);
-  align-items: center;
-}
-
-.topicInfo-boardImage {
-  width: 4rem;
-  height: 4rem;
-  margin-left: 0.5rem;
-}
-
 .topicInfo-boardMessage {
   display: flex;
   flex-direction: column;

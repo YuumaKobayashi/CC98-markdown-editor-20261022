@@ -14,7 +14,7 @@ import {
 } from "@foundation/storage/web-storage";
 import { DocumentTitle } from "@foundation/ui/document-title";
 
-import styles from "../../focus/Focus.module.scss";
+import styles from "../../../layouts/collection/CollectionLayout.module.scss";
 
 const renderRecommendedTopic = (item: RecommendedTopic) => (
   <RecommendedTopicItem

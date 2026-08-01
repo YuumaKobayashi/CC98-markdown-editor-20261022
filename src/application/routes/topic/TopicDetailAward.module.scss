@@ -1,23 +1,6 @@
-@use "../../../foundation/styles/variables/legacy" as legacy;
-
-.awardPage {
-  width: 5rem;
-  height: 1.2rem;
-  background-color: legacy.$bgcolor2;
-  border: #eaeaea solid thin;
-  border-radius: 0.2rem;
-  cursor: pointer;
-  margin-left: 2rem;
-}
-
 .awardInfo {
   margin-left: 2rem;
   margin-right: 2rem;
   margin-top: 2rem;
   width: 35rem;
-}
-
-.awardPager {
-  margin-bottom: 0.5rem;
-  margin-top: 0.5rem;
 }

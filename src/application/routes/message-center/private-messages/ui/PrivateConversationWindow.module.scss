@@ -89,20 +89,6 @@
       }
     }
 
-    .message-message-wcRead1 {
-      flex-basis: 50px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-
-      .message-message-wcRead2 {
-        font-size: 12px;
-        color: $color-thinBlack;
-        flex-basis: 12px;
-        flex-grow: 0;
-        text-align: center;
-      }
-    }
   }
 
   .message-message-wPost {

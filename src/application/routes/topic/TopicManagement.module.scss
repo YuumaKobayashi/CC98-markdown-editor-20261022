@@ -109,16 +109,6 @@
   cursor: pointer;
 }
 
-.judgeOptions-icon {
-  text-align: center;
-  width: 15rem;
-  height: 3rem;
-  line-height: 3rem;
-  border-right: #eaeaea solid thin;
-  border-bottom: #eaeaea solid thin;
-  cursor: pointer;
-}
-
 .judgeOption input[type="radio"] {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -149,19 +139,6 @@
   display: flex;
   justify-content: center;
   color: #fff;
-}
-
-.followBoard {
-  width: 5rem;
-  height: 1.5rem;
-  background-color: #e6e6fa;
-  border: gray solid thin;
-  border-radius: 0.3rem;
-  cursor: pointer;
-}
-
-.followBoard :hover {
-  background-color: #eea9b8;
 }
 
 .errorState {

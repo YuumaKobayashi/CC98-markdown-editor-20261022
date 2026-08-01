@@ -5,7 +5,7 @@ import { getCurrentUserFavoriteBoards } from "@modules/board";
 import { selectCurrentUser } from "@modules/session";
 import type { UserFavoritesBoardInfo } from "@legacy/States/AppState";
 import { UserFavoriteBoardCard } from "./UserFavoriteBoardCard";
-import styles from "../../UserCenter.module.scss";
+import styles from "../../../../layouts/user-area/UserArea.module.scss";
 
 /**
  * 用户关注的版面信息

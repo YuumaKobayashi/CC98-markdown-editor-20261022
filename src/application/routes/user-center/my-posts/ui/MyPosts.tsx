@@ -16,7 +16,8 @@ import {
   parseUserCenterPage,
 } from "@application/routes/user-center/model/route-params";
 import { UserCenterPager as Pager } from "@application/routes/user-center/pagination";
-import styles from "../../UserCenter.module.scss";
+import activityStyles from "../../../../layouts/user-area/UserActivityLayout.module.scss";
+import areaStyles from "../../../../layouts/user-area/UserArea.module.scss";
 
 type RouteParams = {
   page?: string;
@@ -77,13 +78,13 @@ export function MyPosts() {
 
   if (isLoading) {
     return (
-      <div className={styles["user-center-loading"]}>
+      <div className={areaStyles["user-center-loading"]}>
         <p className="fa fa-spinner fa-pulse fa-2x fa-fw"></p>
       </div>
     );
   } else if (userRecentPosts.length === 0) {
     return (
-      <div className={styles["user-posts"]} style={{ textAlign: "center" }}>
+      <div className={activityStyles["user-posts"]} style={{ textAlign: "center" }}>
         没有回复
       </div>
     );
@@ -102,7 +103,7 @@ export function MyPosts() {
   }
 
   return (
-    <div className={styles["user-posts"]}>
+    <div className={activityStyles["user-posts"]}>
       {isHot === 0 ? (
         <Button
           style={{ width: "8rem", marginTop: "-1rem", marginBottom: "2rem" }}

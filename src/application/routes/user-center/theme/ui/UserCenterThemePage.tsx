@@ -19,7 +19,7 @@ import {
   ThemeSettingsForm,
   type ThemeSettingResult,
 } from "./ThemeSettingsForm";
-import styles from "../../UserCenter.module.scss";
+import styles from "./UserCenterTheme.module.scss";
 
 export function UserCenterThemePage() {
   const dispatch = useAppDispatch();

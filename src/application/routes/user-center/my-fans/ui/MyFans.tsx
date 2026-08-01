@@ -7,7 +7,8 @@ import { selectCurrentUser } from "@modules/session";
 import type { UserInfo } from "@legacy/States/AppState";
 import { parseUserCenterPage } from "@application/routes/user-center/model/route-params";
 import { UserCenterPager as Pager } from "@application/routes/user-center/pagination";
-import styles from "../../UserCenter.module.scss";
+import activityStyles from "../../../../layouts/user-area/UserActivityLayout.module.scss";
+import areaStyles from "../../../../layouts/user-area/UserArea.module.scss";
 
 type RouteParams = {
   page?: string;
@@ -102,13 +103,13 @@ export function MyFans() {
 
   if (isLoading) {
     return (
-      <div className={styles["user-center-loading"]}>
+      <div className={areaStyles["user-center-loading"]}>
         <p className="fa fa-spinner fa-pulse fa-2x fa-fw"></p>
       </div>
     );
   } else if (userFans.length === 0) {
     return (
-      <div className={styles["user-center-myfans"]} style={{ textAlign: "center" }}>
+      <div className={activityStyles["user-center-myfans"]} style={{ textAlign: "center" }}>
         没有粉丝
       </div>
     );
@@ -130,8 +131,8 @@ export function MyFans() {
   }
 
   return (
-    <div className={styles["user-center-myfans"]}>
-      <div className={styles["user-center-myfans-exact"]}>{fanItems}</div>
+    <div className={activityStyles["user-center-myfans"]}>
+      <div className={activityStyles["user-center-myfans-exact"]}>{fanItems}</div>
       <Pager
         currentPage={currentPage}
         totalPage={totalPage}

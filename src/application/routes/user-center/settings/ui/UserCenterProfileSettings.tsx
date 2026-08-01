@@ -3,7 +3,7 @@ import * as React from "react";
 import { cc98Fetch } from "@foundation/api/http";
 
 import type { EditableUserInfo } from "../model/editable-user-info";
-import styles from "../../UserCenter.module.scss";
+import styles from "./UserCenterSettings.module.scss";
 
 interface DisplayTitle {
   id: number;

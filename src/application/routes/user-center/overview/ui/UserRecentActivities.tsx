@@ -5,7 +5,7 @@
 import * as React from "react";
 
 import { UserRecentTopicsActivityList } from "./UserRecentTopicsActivityList";
-import styles from "../../UserCenter.module.scss";
+import styles from "../../../../layouts/user-area/UserActivityLayout.module.scss";
 
 /**
  * 用户中心主页近期动态组件

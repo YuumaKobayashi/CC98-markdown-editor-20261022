@@ -4,6 +4,7 @@ import {
   MainPageTopicState,
 } from "../model/types";
 import styles from "../Home.module.scss";
+import topicStyles from "./MainPageTopic.module.scss";
 
 interface MainPageTopicComponentProps {
   data: MainPageTopicState[];
@@ -16,8 +17,8 @@ interface MainPageTopicComponentProps {
 function convertMainPageTopic(item: MainPageTopicState): React.ReactElement {
   const topicUrl = `/topic/${item.id}/1`;
   return (
-    <div key={item.id} className={styles.mainPageListRow}>
-      <div className={styles.mainPageListTitle}>
+    <div key={item.id} className={topicStyles.mainPageListRow}>
+      <div className={topicStyles.mainPageListTitle}>
         <a href={topicUrl} target="_blank">
           {item.title.trim() ? (
             item.title
@@ -49,7 +50,7 @@ export function MainPageTopicComponent(
 
   if (props.style === "black") {
     return (
-      <div className={styles.mainPageList}>
+      <div className={topicStyles.mainPageList}>
         <div className={styles.mainPageTitle2}>
           <div className={styles.mainPageTitleRow}>
             <i className="fa fa-volume-up"></i>
@@ -57,14 +58,14 @@ export function MainPageTopicComponent(
           </div>
           <div className={styles.mainPageTitleRow}>{moresHTML}</div>
         </div>
-        <div className={styles.mainPageListContent2}>
+        <div className={topicStyles.mainPageListContent2}>
           {props.data.map(convertMainPageTopic)}
         </div>
       </div>
     );
   } else if (props.style === "blue") {
     return (
-      <div className={styles.mainPageList}>
+      <div className={topicStyles.mainPageList}>
         <div className={styles.mainPageTitle1}>
           <div className={styles.mainPageTitleRow}>
             <i className="fa fa-volume-up"></i>
@@ -72,7 +73,7 @@ export function MainPageTopicComponent(
           </div>
           <div className={styles.mainPageTitleRow}>{moresHTML}</div>
         </div>
-        <div className={styles.mainPageListContent1}>
+        <div className={topicStyles.mainPageListContent1}>
           {props.data.map(convertMainPageTopic)}
         </div>
       </div>

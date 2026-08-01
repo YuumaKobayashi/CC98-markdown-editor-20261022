@@ -19,7 +19,8 @@ import {
 } from "@modules/session";
 import type { UserRecentTopic } from "@legacy/States/AppState";
 import { UserCenterPager as Pager } from "@application/routes/user-center/pagination";
-import styles from "../../UserCenter.module.scss";
+import activityStyles from "../../../../layouts/user-area/UserActivityLayout.module.scss";
+import areaStyles from "../../../../layouts/user-area/UserArea.module.scss";
 
 type RouteParams = {
   page?: string;
@@ -89,7 +90,7 @@ export function UserCenterHistoryPage() {
 
   const emptyPage = (
     <div
-      className={styles["user-posts"]}
+      className={activityStyles["user-posts"]}
       style={{
         textAlign: "center",
       }}
@@ -140,7 +141,7 @@ export function UserCenterHistoryPage() {
 
   if (isLoading) {
     return (
-      <div className={styles["user-center-loading"]}>
+      <div className={areaStyles["user-center-loading"]}>
         {enableCheckbox}
         <p className="fa fa-spinner fa-pulse fa-2x fa-fw"></p>
       </div>
@@ -159,7 +160,7 @@ export function UserCenterHistoryPage() {
   }
 
   return (
-    <div className={styles["user-posts"]}>
+    <div className={activityStyles["user-posts"]}>
       {enableCheckBoxModal}
       {enableCheckbox}
       {/* <Button

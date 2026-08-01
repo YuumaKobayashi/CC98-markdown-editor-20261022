@@ -5,7 +5,7 @@ import { UserProfileAvatar } from "@modules/user";
 import DocumentTitle from "@foundation/ui/document-title";
 import { UserProfileDetails } from "./UserProfileDetails";
 import { UserRecentTopics } from "./UserRecentTopics";
-import styles from "../../../user-center/UserCenter.module.scss";
+import styles from "../../../../layouts/user-area/UserActivityLayout.module.scss";
 
 export function UserProfileOverview() {
   const { userInfo } = useUserProfileContext();

@@ -195,6 +195,13 @@
       "rule": "legacy-dependency",
       "reason": "M2 preserves the existing UserFollowCard props contract without moving legacy user state types.",
       "removeWhen": "The User contract migration owns the public UserInfo type."
+    },
+    {
+      "from": "src/modules/site-content/ui/SiteAnnouncementPreview.tsx",
+      "specifier": "@legacy/Components/UbbContainer",
+      "rule": "legacy-dependency",
+      "reason": "C1.6.5 gives the shared announcement preview one style owner while preserving the frozen UBB renderer.",
+      "removeWhen": "The Z2 UBB module migration provides its public rendering entry."
     }
   ]
 }

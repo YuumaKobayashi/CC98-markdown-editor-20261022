@@ -5,7 +5,7 @@ import { getMonthlyHotTopic } from "@modules/topic";
 import type { FocusTopic } from "@legacy/Props/FocusTopic";
 import DocumentTitle from "@foundation/ui/document-title";
 
-import styles from "../../../focus/Focus.module.scss";
+import styles from "../../../../layouts/collection/CollectionLayout.module.scss";
 
 export type HotTopicKind = "weekly" | "monthly" | "history";
 

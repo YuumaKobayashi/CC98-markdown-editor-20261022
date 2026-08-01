@@ -4,7 +4,7 @@ import { Link } from "react-router";
 import { getBoardName } from "@modules/board";
 import { getToken } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
-import userCenterStyles from "../../../user-center/UserCenter.module.scss";
+import userCenterStyles from "../../../../layouts/user-area/UserArea.module.scss";
 import styles from "../../UserProfileManagement.module.scss";
 
 interface UserRecentPostsManagerProps {

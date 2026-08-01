@@ -9,7 +9,7 @@ import { UserProfile } from "@modules/user";
 import { UserProfileAvatar } from "@modules/user";
 
 import { UserRecentActivities } from "./UserRecentActivities";
-import styles from "../../UserCenter.module.scss";
+import styles from "../../../../layouts/user-area/UserActivityLayout.module.scss";
 
 /**
  * 用户中心主页

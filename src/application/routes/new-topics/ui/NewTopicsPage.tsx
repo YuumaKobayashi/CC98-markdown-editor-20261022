@@ -27,7 +27,7 @@ import { DocumentTitle } from "@foundation/ui/document-title";
 import { NewTopicsBoardSidebar } from "./NewTopicsBoardSidebar";
 import { RandomRecentTopics } from "./RandomRecentTopics";
 import newTopicsStyles from "../NewTopics.module.scss";
-import styles from "../../focus/Focus.module.scss";
+import styles from "../../../layouts/collection/CollectionLayout.module.scss";
 
 //TODO：逻辑重构优化，优先级中
 

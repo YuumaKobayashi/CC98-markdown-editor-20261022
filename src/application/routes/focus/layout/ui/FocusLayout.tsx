@@ -7,7 +7,8 @@ import { Link, Outlet, useLocation } from "react-router";
 
 import DocumentTitle from "@foundation/ui/document-title";
 
-import styles from "../../Focus.module.scss";
+import styles from "../../../../layouts/collection/CollectionLayout.module.scss";
+import focusStyles from "../../Focus.module.scss";
 
 type FocusSection = "board" | "user" | "favorite" | null;
 
@@ -43,11 +44,11 @@ export function FocusLayout() {
     <div className={styles["focus-root"]}>
       <DocumentTitle title="我的关注 - CC98论坛" />
       <div className={styles.focus}>
-        <div className={styles["focus-nav"]}>
+        <div className={focusStyles["focus-nav"]}>
           <Link style={{ textDecoration: "none" }} to="/focus/board">
             <div
-              className={`${styles["focus-title"]}${
-                activeSection === "board" ? ` ${styles["focus-title-hover"]}` : ""
+              className={`${focusStyles["focus-title"]}${
+                activeSection === "board" ? ` ${focusStyles["focus-title-hover"]}` : ""
               }`}
               id="myFocusBoard"
             >
@@ -56,8 +57,8 @@ export function FocusLayout() {
           </Link>
           <Link style={{ textDecoration: "none" }} to="/focus/user">
             <div
-              className={`${styles["focus-title"]}${
-                activeSection === "user" ? ` ${styles["focus-title-hover"]}` : ""
+              className={`${focusStyles["focus-title"]}${
+                activeSection === "user" ? ` ${focusStyles["focus-title-hover"]}` : ""
               }`}
               id="myFocusUser"
             >
@@ -66,8 +67,8 @@ export function FocusLayout() {
           </Link>
           <Link style={{ textDecoration: "none" }} to="/focus/favorite">
             <div
-              className={`${styles["focus-title"]}${
-                activeSection === "favorite" ? ` ${styles["focus-title-hover"]}` : ""
+              className={`${focusStyles["focus-title"]}${
+                activeSection === "favorite" ? ` ${focusStyles["focus-title-hover"]}` : ""
               }`}
               id="myFocusFavorite"
             >

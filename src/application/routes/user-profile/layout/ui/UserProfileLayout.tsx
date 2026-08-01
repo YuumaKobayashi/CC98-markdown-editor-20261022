@@ -6,7 +6,7 @@ import { getUserInfo } from "@modules/user";
 import type { UserInfo } from "@legacy/States/AppState";
 import { UserProfileProvider } from "../model/user-profile-context";
 import { UserProfileNavigation } from "./UserProfileNavigation";
-import styles from "../../../user-center/UserCenter.module.scss";
+import styles from "../../../../layouts/user-area/UserArea.module.scss";
 
 type LoadedUser = {
   requestKey: string;

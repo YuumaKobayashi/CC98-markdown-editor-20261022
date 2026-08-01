@@ -8,7 +8,7 @@ import { SearchTopicItem } from "@modules/topic";
 import { FocusTopic } from "@legacy/Props/FocusTopic";
 import { DocumentTitle } from "@foundation/ui/document-title";
 
-import styles from "../../../focus/Focus.module.scss";
+import styles from "../../../../layouts/collection/CollectionLayout.module.scss";
 import searchStyles from "../../Search.module.scss";
 
 interface SearchInfo {
