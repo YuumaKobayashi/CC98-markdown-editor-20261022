@@ -1,6 +1,6 @@
 # CC98 前端目录重构执行计划
 
-> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1–C1.5 的代码实施、机械检查和主代理人工代码审核均已完成；C1.5 已本地提交为 `733eb045`。C1.6.0 已提交为 `bee0dd05`，C1.6.1 代码与记录已提交为 `61b4d5db`/`ff9702be`，C1.6.2 代码已提交为 `ad1db0e7`，C1.6.3 代码已提交为 `788da9e7`，C1.6.4 已提交为 `fdbe3762`。C1.6.5 已完成全仓样式所有权收口、机械检查和主代理人工代码审核，终态为 71 个真实 CSS Module、2 个文件中的 2 处第三方 `:global(...)`，停在未提交工作树；C1.7 仍仅有计划。浏览器连接器在本批没有可用运行实例，完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账、缓存、草稿、UBB 与 C1 样式运行验收仍未全部执行；不自动启动 C1.7 或 Z，不 commit、不 push。
+> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1–C1.5 的代码实施、机械检查和主代理人工代码审核均已完成；C1.5 已本地提交为 `733eb045`。C1.6.0 已提交为 `bee0dd05`，C1.6.1 代码与记录已提交为 `61b4d5db`/`ff9702be`，C1.6.2 代码已提交为 `ad1db0e7`，C1.6.3 代码已提交为 `788da9e7`，C1.6.4 已提交为 `fdbe3762`，C1.6.5 代码与记录已提交为 `0c6efc6e`/`b232c6ca`。C1.6.5 终态为 71 个真实 CSS Module、2 个文件中的 2 处第三方 `:global(...)`；C1.7 已按组件拆分、真实组件复用、样式共置和最终全局边界重新规划，仍未实施。浏览器连接器在 C1.6.5 没有可用运行实例，完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账、缓存、草稿、UBB 与 C1 样式运行验收仍未全部执行；不自动启动 C1.7 或 Z，不 commit、不 push。
 >
 > 架构依据：`docs/frontend-directory-architecture-inventory.md`。
 >
@@ -64,11 +64,11 @@ C1.6.1 Message/Notification 样式所有权收口       已完成（主代理整
 C1.6.2 Topic/Post 样式所有权收口                  已完成（主代理整批审核；浏览器运行验收未执行；已有本地代码提交）
 C1.6.3 User 与共享卡片样式所有权收口              已完成（主代理整批审核；浏览器运行验收未执行；已有本地代码提交）
 C1.6.4 Editor/Login/Search/Legacy Board 收口         已完成（主代理整批审核；浏览器运行验收未执行；已有本地代码提交）
-C1.6.5 全仓样式与剩余业务 global 审计               已完成（主代理整批审核；浏览器运行验收未执行；未提交）
-C1.7 Foundation 全局边界与最终目录收口        待实施（仅计划；需单独授权）
+C1.6.5 全仓样式与剩余业务 global 审计               已完成（主代理整批审核；浏览器运行验收未执行；已有本地代码/文档提交）
+C1.7 组件边界、样式所有权与全局边界最终收口          待实施（计划已重写；需单独授权）
 ```
 
-### 当前停点：C1.6.5 已完成并停在未提交工作树；C1.7 仅有计划，浏览器运行验收未执行，不 commit、不 push、不自动实施后续阶段
+### 当前停点：C1.6.5 已完成并本地提交；C1.7 已重写计划但尚未实施，浏览器运行验收未执行，不 commit、不 push、不自动实施后续阶段
 
 ### M3.1–M3.6 实施记录（2026-07-30）
 
@@ -2356,7 +2356,7 @@ C1.6.5  全仓反向依赖、重复规则、大文件 owner 与剩余 global 人
 - 公告展示抽为 `@modules/site-content` 的 `SiteAnnouncementPreview({ content: string })`，由 Home 两个既有导出和站点管理复用；各自空值返回、JSX 注释、UBB options、DOM 层级和文本保持。样式守卫新增跨 Route CSS Module import 禁令，并把两处 Ant Design 动态 DOM selector 精确冻结到 C1.7；
 - `npm run check:architecture` 通过：309 个源码文件、1331 个 import、29 条登记 allowlist。样式守卫通过：71 个真实 CSS Module、0 个过渡 partial、29 个主题、2 个文件中的 2 处 global；modern/legacy typecheck、正式 build 与 `git diff --check` 通过；
 - 正式 build 首次在受限环境因 Vite 子进程 `spawn EPERM` 失败，同一命令在允许子进程的环境重跑通过，转换 4058 个模块，仍只有既有 Sass `@import`、Spectrum/Lightning CSS 与大 chunk 警告。29 个主题 CSS、APlayer 与 vendor CSS 的文件名、长度和 SHA-256 全部逐字节不变，`dist` 没有工作树污染；
-- 主代理逐项复核 selector、producer、映射 consumer、声明、后代关系、specificity、Route 可达性、固定/动态行为查询、注释、公共接口和生成 CSS。浏览器连接器没有可用运行实例；Home/公告预览、Focus、New Topics、Search、Recommended/Hot Topic、User Center/Profile、Topic 正文、Board quick-jumper、默认/暗色主题、真实 API/权限、响应式及 Collapse/分页交互明确为未运行验收。本批停在未提交工作树，不 push，不自动进入 C1.7 或 Z。
+- 主代理逐项复核 selector、producer、映射 consumer、声明、后代关系、specificity、Route 可达性、固定/动态行为查询、注释、公共接口和生成 CSS。浏览器连接器没有可用运行实例；Home/公告预览、Focus、New Topics、Search、Recommended/Hot Topic、User Center/Profile、Topic 正文、Board quick-jumper、默认/暗色主题、真实 API/权限、响应式及 Collapse/分页交互明确为未运行验收。随后按用户授权将代码与记录分别本地提交为 `0c6efc6e refactor(c1.6.5): close repository-wide style ownership` 与 `b232c6ca docs(c1.6.5): record repository-wide style ownership closure`，未 push，不自动进入 C1.7 或 Z。
 
 每批只处理一个可独立验收的 owner 集合；不得顺手修改 API、权限、Redux、Storage、Router URL、jQuery 行为、UBB 输出、DOM 文案或主题视觉。需要新增组件 variant/slot 时，先证明它是跨 Route 的真实语义差异，不为搬 CSS 扩大公共 API。
 
@@ -2367,12 +2367,31 @@ C1.6.5  全仓反向依赖、重复规则、大文件 owner 与剩余 global 人
 - 浏览器至少覆盖对应 owner 的默认/暗色主题、直接进入、前进后退、hover/focus/disabled、加载/空/错状态、弹层和响应式边界；涉及真实后端或权限的场景继续明确报告未验收项；
 - C1.6 完成后停止，等待用户验收与单独提交授权；不自动启动 C1.7 或 Z。
 
-### C1.7 Foundation 全局边界与最终样式目录收口
+### C1.7 组件边界、样式所有权与 Foundation 全局边界最终收口
 
-C1.7 在 C1.6 已完成组件所有权的基础上处理真正的全局入口、根 `Styles/`、`Site.scss`、第三方 DOM 和动态内容。严格意义上的 Web 应用不可能完全没有全局 CSS：reset、`html`/`body`/`#root`、`:root` 主题变量、字体、第三方生成 DOM及用户生成 HTML 均需要跨组件合同。因此本计划把“没有 global 样式”定义为：**没有无 owner 的业务全局规则、没有业务 `:global(...)`、没有父组件通过全局选择器侵入子组件；所有不可避免的基础全局规则均集中、限界、登记且可审计。**
+C1.6 已完成活动 selector 的 producer/consumer 收口，但“selector 有 owner”不等于“组件边界已经干净”。2026-08-01 的只读拓扑复核确认，当前仍存在单文件承载多个独立组件、多个页面直接导入同一共享样式表、业务 TSX 跨多层目录引用远端 Module，以及相同 DOM/行为只复用样式却没有复用组件等问题。若先处理 `Site.scss`、根 `Styles/` 和第三方 global，再拆组件，样式还会随着 owner 变化重复搬迁；因此 C1.7 改为先完成组件拆分与真实复用，再完成 Foundation 全局边界和最终样式目录收口。
+
+本阶段所称“组件状态清理”是组件文件、公开接口、DOM owner、样式 owner、活动调用点和目录边界的终态收口，不授权顺手改写请求、缓存、Redux/Storage、Router、SignalR、计时器、表单、UBB、权限或其他业务状态机。拆分和复用批必须保持现有逻辑、注释、URL、API、DOM 行为合同和导出兼容；确需改变行为的事项另立阶段，不混入 C1.7。
+
+严格意义上的 Web 应用不可能完全没有全局 CSS：reset、`html`/`body`/`#root`、`:root` 主题变量、字体、第三方生成 DOM 及用户生成 HTML 均需要跨组件合同。因此本计划把“没有 global 样式”定义为：**没有无 owner 的业务全局规则、没有业务 `:global(...)`、没有父组件通过全局选择器侵入子组件；所有不可避免的基础全局规则均集中、限界、登记且可审计。**
+
+#### C1.7.0 只读拓扑基线（2026-08-01）
+
+- `src/` 与根 `Components/` 共扫描到 281 个 TSX；当前共有 145 条 `*.module.scss` 导入边，其中 55 条路径至少包含两个 `../`，33 条至少包含三个 `../`；从现代入口解析的活动依赖图中仍有 48 条远距离 Module 导入。该数字用于定位 owner，不作为鼓励机械移动或复制样式的 KPI；
+- 24 个 CSS Module 被多个 TSX 直接导入，合计形成 97 条消费边。`UserArea.module.scss` 有 13 个 importer、`UserActivityLayout.module.scss` 有 11 个、`CollectionLayout.module.scss` 有 8 个；这些 importer 中既有真实共享壳层，也有 loading/list wrapper、导航、按钮和 Route 专属规则，必须逐 class/DOM 判定，不能把“多人导入同一 Module”直接视为组件复用；
+- AST 初扫发现 21 个文件包含多个顶层 React 组件。`Components/Status.tsx` 有 15 个、`LegacyBoardTopicLists.tsx` 有 10 个、`HomePage.tsx` 有 5 个；`EditorPage.tsx`、`Header.tsx`、`BoardFooterActions.tsx`、`TopicCard.tsx` 与 `BoardTopicListItem.tsx` 各有 3 个。文件大小和组件数量只作为审计信号，是否拆分由独立调用点、生命周期、公开导出、DOM owner 和验收边界决定；
+- `scripts/check-style-migration.mjs` 当前只验证相对导入、跨 Route 禁令、默认绑定消费和 Module 至少有 importer；`../../../../layouts/...` 只要不跨另一个 Route 就会通过，也没有限制一份 Module 的直接 TSX owner 数量。C1.7 必须把守卫从“映射被使用”升级为“组件与样式真实共置”；
+- 已发现休眠/孤儿候选，例如无活动调用点但仍引用已不存在样式路径的 `ExactActivitiesPosts.tsx`，以及当前未找到调用点的 `FindIP.tsx`。此类项目必须复核 barrel、动态导入、模板、脚本、public 和仓外合同后单独处理；未完成证明前不得仅凭文本搜索删除。
 
 #### C1.7 最终完成定义
 
+- 默认一个可独立调用、复用或验收的 React 组件一个 TSX；同一文件不得继续承载多个独立导出组件。仅有几行、只服务父组件、没有独立状态/副作用/调用点且生命周期完全一致的私有子组件可以保留在父文件，并由人工审核说明例外理由；
+- 组件拆分必须保持既有命名导出、default export、barrel、legacy facade 和 lazy Route 合同。需要兼容旧入口时使用薄 re-export，不复制实现；不得借拆文件改写请求时序、状态结构、错误处理、DOM 层级、固定 ID、jQuery/ref 查询或注释；
+- 每份活动业务 `*.module.scss` 原则上只有一个直接 TS/TSX owner；其他消费者必须导入该 owner 组件，而不是越过组件接口直接导入其 Module。若多个 TSX 必须共享同一 Module，必须证明它们是同一不可分割组件族并进入有删除条件的例外清单，不能以“样式相同”作为理由；
+- 业务组件与 Module 共目录并原则上同名，活动业务 TS/TSX 中跨两级以上目录的 CSS Module 相对导入为 0；Route 子组件、共享 layout 和根 legacy 组件都不得通过 `../../..` 获取样式。仍等待 Z 迁址的活动 legacy 组件可暂时拥有相邻同名 Module，但组件与样式必须在 Z 中整体移动，禁止继续反向引用 `src/application` 样式；
+- 一份共享 React 组件只在 DOM 骨架、交互语义、状态转换和未来变化方向一致时建立，并至少有两个活动消费者。差异通过窄的语义 prop、children 或 slot 表达；若为了统一需要大量布尔开关、暴露内部 class 或复制调用方业务状态，则维持独立组件；
+- 只有颜色、间距、边框或排版声明相同但业务语义不同的项目不抽 React 组件：优先使用现有主题 token，确为编译期重复时使用不生成 selector 的 Sass mixin；禁止为了降低重复率制造 `Box`、`Wrapper`、万能 variant 或新的横向业务样式库；
+- 无活动调用点的 TSX、barrel、facade 和 Module 必须完成可达性、动态导入、模板/public 及仓外合同审计；确认无 consumer 后在独立小批删除，无法确认的项目登记 owner、冻结原因和删除条件。最终不得保留断裂样式路径、只靠通配声明逃过 typecheck 的孤儿组件或为保活样式制造的空 DOM；
 - `rg ':global\(' src` 结果为 0；CSS Module 内不再使用 selector 级或值级 `:global`；
 - `src/application`、`src/modules` 中不存在普通全局业务 `.scss`，业务样式全部是由相邻 TSX 显式默认导入并实际消费的 `*.module.scss`；
 - 根 `Styles/` 删除，根 `Components/UbbEditor/stylesheet.scss` 不再作为样式 owner，`Site.scss` 不再反向导入根 legacy 目录；删除前完成全仓、模板、构建输入和 public URL 零引用审计；
@@ -2381,7 +2400,7 @@ C1.7 在 C1.6 已完成组件所有权的基础上处理真正的全局入口、
 - 所有第三方覆盖必须由组件可控根或稳定 `data-cc98-owner` 限界。优先使用第三方公开 `className`、`rootClassName`、slot、popup container 或 token API；确无接口时才进入 `foundation/styles/vendors`，禁止裸 `.ant-*`、`.spectrum-*` 或标签选择器影响全站；
 - UBB、Markdown、emoji、编辑器预览等动态内容样式归对应 integration/业务 owner，并由组件本地根约束。原生元素可在本地 Module 根下选择；需要固定生成 class 时优先让 renderer 消费显式样式映射或稳定 `data-*` 合同，无法做到的项目作为动态内容边界单独登记，不混入通用 `Site.scss`；
 - `public/static/images/emoji/emojify.css` 等固定 URL 静态样式先审计模板、服务端、仓外引用和图片相对 URL 合同：仍是公开静态合同的文件可继续作为 `public/` 分发产物，但必须登记生成/维护 owner，不能冒充组件源码；确认零引用后才能随同资源删除，不能为目录统一机械搬动；
-- `scripts/check-style-migration.mjs` 从“固定 42 个 Module”升级为所有权守卫：自动发现 Module、验证相对默认导入与真实消费、禁止 Sass 聚合业务 Module、禁止根 `Styles/`、禁止 `:global`、禁止未登记 Foundation selector和跨层样式依赖。文件数量可随真实组件拆分增长，不能再把 42 当成终态常量。
+- `scripts/check-style-migration.mjs` 从“固定数量与 importer 存在”升级为 AST 所有权守卫：自动发现 Module 和 React owner，验证相邻默认导入、映射真实消费、单一直接 owner、组件/Module 共置、跨层与远距离样式闭包、多组件文件例外、断裂路径和孤儿源码；同时禁止 Sass 聚合业务 Module、根 `Styles/`、`:global`、未登记 Foundation selector 和跨层样式依赖。文件数量可随真实组件拆分增长，不能把任何阶段性数量当成终态常量。
 
 #### C1.7 最终目录示例
 
@@ -2413,12 +2432,24 @@ src/
 │  │  ├─ application-shell/
 │  │  │  ├─ ApplicationShell.tsx
 │  │  │  └─ ApplicationShell.module.scss
+│  │  ├─ collection/ui/CollectionPageShell/
+│  │  │  ├─ CollectionPageShell.tsx
+│  │  │  └─ CollectionPageShell.module.scss  # 页面直接消费组件，不再导入远端布局 Module
+│  │  ├─ user-area/ui/UserAreaShell/
+│  │  │  ├─ UserAreaShell.tsx
+│  │  │  └─ UserAreaShell.module.scss
+│  │  ├─ user-area/ui/UserActivityList/
+│  │  │  ├─ UserActivityList.tsx
+│  │  │  └─ UserActivityList.module.scss
 │  │  ├─ header/ui/Header/
 │  │  │  ├─ Header.tsx
 │  │  │  └─ Header.module.scss
 │  │  └─ footer/ui/Footer/
 │  │     ├─ Footer.tsx
 │  │     └─ Footer.module.scss
+│  ├─ ui/status-page/
+│  │  ├─ StatusPage.tsx
+│  │  └─ StatusPage.module.scss              # 旧命名状态导出只保留薄配置/适配
 │  └─ routes/
 │     └─ topic/
 │        ├─ page/
@@ -2433,15 +2464,21 @@ src/
 │              └─ TopicReplyList.module.scss
 │
 └─ modules/
-   ├─ message/ui/MessageSender/
-   │  ├─ MessageSender.tsx
-   │  └─ MessageSender.module.scss
-   ├─ notification/ui/MessageSystemBox/
-   │  ├─ MessageSystemBox.tsx
-   │  └─ MessageSystemBox.module.scss
+   ├─ message/ui/MessageConversationItem/
+   │  ├─ MessageConversationItem.tsx
+   │  └─ MessageConversationItem.module.scss # Sender/Receiver 由语义方向参数适配
+   ├─ notification/ui/MessageResponseItem/
+   │  ├─ MessageResponseItem.tsx
+   │  └─ MessageResponseItem.module.scss     # 回复/@ 通知共享骨架，差异显式传入
    ├─ post/ui/FloorSize/
    │  ├─ FloorSize.tsx
    │  └─ FloorSize.module.scss
+   ├─ topic/ui/TopicCollectionItem/
+   │  ├─ TopicCollectionItem.tsx
+   │  └─ TopicCollectionItem.module.scss     # Focus/Search/Recommended 共享语义壳层
+   ├─ user/ui/UserProfileSummary/
+   │  ├─ UserProfileSummary.tsx
+   │  └─ UserProfileSummary.module.scss
    └─ ubb/
       ├─ editor/ui/UbbEditor/
       │  ├─ UbbEditor.tsx
@@ -2451,26 +2488,42 @@ src/
          └─ UbbContent.module.scss
 ```
 
-目录示例表达所有权规则而非要求一次性重命名全部 TSX：默认一个可独立复用/验收的组件一个目录、一份同名 Module；仅有几行且生命周期完全一致的私有子组件可以与父组件共用 Module。禁止建立新的 `styles/` 业务杂物目录、按“颜色/布局/按钮”横向集中业务规则，或让多个无组件关系的 TSX 共同依赖一个巨型 Route Module。
+目录示例表达所有权规则而非预先批准这些名称或要求一次性重命名全部 TSX：必须先比较真实 DOM、状态和调用点，再确定组件 API。默认一个可独立复用/验收的组件一个目录、一份同名 Module；仅有几行且生命周期完全一致的私有子组件可以与父组件共用 Module。共享布局也必须通过 React 组件提供 DOM 与样式，页面不得只导入 `CollectionLayout.module.scss`、`UserArea.module.scss` 等远端样式表。禁止建立新的 `styles/` 业务杂物目录、按“颜色/布局/按钮”横向集中业务规则，或让多个无组件关系的 TSX 共同依赖一个巨型 Route Module。
+
+#### C1.7 拆分与复用判定
+
+1. **应优先拆分的多组件文件**：`Status.tsx`、`LegacyBoardTopicLists.tsx`、`HomePage.tsx`、`EditorPage.tsx`、`Header.tsx`、`BoardFooterActions.tsx`、`BoardTopicListItem.tsx` 与 `TopicCard.tsx` 已存在多个独立导出、跨文件调用点、不同 DOM owner 或不同样式 owner，进入 C1.7.1 首轮审计。拆分后保留现有 public barrel/facade；组件名、props、default/named export 和 lazy chunk 合同不变；
+2. **大文件不自动等于多组件**：`TopicReplyComposer.tsx`、`UserCenterAvatarSettings.tsx` 等即使行数很高，也必须先证明内部区块拥有独立职责、状态/副作用闭包和可单独验收边界。只把 JSX 搬到另一个文件但继续共享父级状态、远端 Module 和大量内部参数，不算完成拆分；
+3. **真实组件复用候选**：Collection 页面共同壳层、User Center/Profile 共同壳层与活动列表、Status 页面骨架、`MessageSender`/`MessageReceiver`、`MessageResponsebox`/`MessageAttmebox`、Focus/Search/Recommended 主题项骨架、UserProfile/UserProfileDetails 的资料展示区和 Home 重复标题行，均须比较 DOM、状态、文案、UBB options、URL 与行为差异后决定最小公共组件；
+4. **样式仓库不是复用**：`Board.module.scss`、`EditorLegacyForm.module.scss`、`Home.module.scss`、`MessageLayout.module.scss`、`UserProfileManagement.module.scss`、`TopicManagement.module.scss` 等由多个无父子 owner 的 TSX 直接导入时，应按 producer 拆到相邻组件。若多个调用方使用完全不同 class 根，直接拆 Module；若共同生产相同 DOM 骨架，先抽组件再让该组件独占 Module；
+5. **不为了复用而复用**：仅 CSS 声明相似、业务含义不同，或需要把调用方请求/状态塞进通用组件的项目继续独立。禁止通过公开内部 `className`、任意 `render*`、大量 boolean variant 或复制状态机来伪造复用；
+6. **休眠与孤儿源码**：零调用候选必须先证明 import/export、动态加载、模板/public、jQuery/DOM 字符串与仓外合同闭包，再在独立批删除；活动 legacy facade 若仍需等待 Z，可保留为薄 re-export，但不得继续拥有重复实现或远距离样式依赖。
 
 #### C1.7 建议实施批次
 
 ```text
-C1.7.0  冻结 Site.scss、根 Styles、vendor、动态 HTML、主题产物与级联顺序基线
-C1.7.1  Application Shell、Footer、Home/PWA、Vote、Annual Review 规则归真实 owner
-C1.7.2  UBB Editor、UBB renderer、Markdown/emoji 动态内容样式归 owner
-C1.7.3  Ant Design、Spectrum、Router/Portal 等第三方边界限界与登记
-C1.7.4  删除休眠 compatibility、根 Styles 与反向 import；Site.scss 缩为纯入口
-C1.7.5  启用零 :global、零根样式、Foundation selector manifest 与目录守卫
+C1.7.0  冻结组件/导出/调用点/CSS importer/DOM owner、Site/root/vendor/动态内容和产物基线
+C1.7.1  拆分单文件多组件；保留 barrel、facade、lazy Route、DOM 与行为合同
+C1.7.2  提取有真实共同语义的 Collection、User Area、Status、Profile、Message 与 Topic item 组件
+C1.7.3  拆除 Route 样式仓库；组件与同名 Module 共置，活动业务远距离 Module 导入清零
+C1.7.4  审计孤儿/休眠源码；Application Shell、Footer、Home/PWA、Vote、Annual Review 规则归 owner
+C1.7.5  UBB Editor/renderer、Markdown/emoji 动态内容样式归 owner
+C1.7.6  Ant Design、Spectrum、Router/Portal 等第三方边界限界与登记
+C1.7.7  删除休眠 compatibility、根 Styles 与反向 import；Site.scss 缩为纯入口并启用最终守卫
 ```
 
-Annual Review 的最终删除仍属于 Z4；C1.7 不得借整理样式提前删除业务。若 Z4 尚未实施，C1.7 只把其样式放入明确的冻结 owner，并登记“随 Z4 整体删除”，不得继续留在 `Site.scss`。UBB 实现的完整迁址仍属于 Z2；C1.7 可以先建立最终样式 owner 并由 legacy 入口显式消费，但不得借此改写解析器、Handler 或扩展合同。
+Annual Review 的最终删除仍属于 Z4；C1.7 不得借整理样式提前删除业务。若 Z4 尚未实施，C1.7 只把其样式放入明确的冻结 owner，并登记“随 Z4 整体删除”，不得继续留在 `Site.scss`。UBB 实现的完整迁址仍属于 Z2；C1.7 可以先建立最终样式 owner 并由 legacy 入口显式消费，但不得借此改写解析器、Handler 或扩展合同。根 `Components/` 等 legacy 源码目录的整体迁址和删除仍属于 Z；C1.7 只允许为组件边界、真实复用和样式共置所需的窄拆分，必要时让活动 legacy 组件暂时拥有相邻 Module，并登记随 Z 整体移动，不得把 C1.7 扩张为完整 legacy 逻辑迁移。
 
 #### C1.7 验收、守卫与停点
 
+- 每个拆分批先记录源文件中的顶层组件、props、公开导出、调用点、状态/副作用、DOM producer、样式映射和注释范围；实施后逐项证明 re-export 与调用闭包。不能用“文件变短”代替边界审核，也不能删除或改写原注释来适配拆分；
+- 每个复用批必须提交调用方对照：共同 DOM/行为、保留差异、组件 API、为什么不是 coincidental similarity，以及复用前后 URL、文案、条件渲染、UBB options、事件、ID/ref 和请求状态是否一致。主代理必须逐调用方审核，不能以减少行数或 importer 数量代替；
+- 每个样式 owner 批必须生成 TSX→Module→class/DOM 映射，确认活动业务 Module 只有一个直接 owner、组件与 Module 共置、其他调用方只消费组件；最终活动业务 TS/TSX 中跨两级以上目录的 Module 导入为 0，多 importer 例外清单为空或每项都有不可分割证据与删除条件；
+- 休眠/孤儿删除批必须给出全仓、barrel、动态 import/require、模板、public、构建入口、行为字符串与仓外合同证据；通配 `*.module.scss` 类型声明、typecheck/build 未报错或当前 Route 未加载均不能单独证明可删除；
 - 除 C1.6 的机械检查外，必须比较 `Site.scss` 编译顺序、29 主题 key/id/名称/日夜配对、主题变量、静态 URL、各 CSS chunk 和 vendor 产物；纯归位批要求声明级和级联顺序可证明等价，删除/作用域调整批逐项说明预期差分；
+- 每批运行 `npm run check:architecture`、modern/legacy typecheck、正式 build、`git diff --check`，并检查新增/迁移文件的 BOM、CRLF/LF、EOF、注释和生成产物；`git diff --check` 不覆盖未跟踪文件，必须单独审计；
 - 浏览器全量覆盖 Shell、Home、Board、Topic、Message、Search、Editor、User Center/Profile、Login、Signin、Ant Design、Spectrum、UBB、Markdown/emoji、默认/暗色主题、Portal、hover/focus/disabled、打印/降级和前进后退；未实际执行的场景明确保留为未验收，不以截图抽查或 build 代替；
-- 最终人工审核必须逐项确认 `rg ':global\(' src` 为 0、根 `Styles/` 不存在、`Site.scss` 无业务 selector、Foundation manifest 与实际 selector 一致、组件和 Module 共置、跨层 import 闭包、BOM/EOL/EOF 与静态 URL 合同；
+- 最终人工审核必须逐项确认：独立导出组件一文件一个或例外已登记；活动业务 Module 单一直接 owner；远距离 Module 导入为 0；无断裂路径和未登记孤儿组件；`rg ':global\(' src` 为 0；根 `Styles/` 不存在；`Site.scss` 无业务 selector；Foundation manifest 与实际 selector 一致；组件和 Module 共置；跨层 import 闭包、BOM/EOL/EOF、29 主题和静态 URL 合同保持；
 - C1.7 完成后停止，等待用户验收和单独提交授权；不自动启动 Z。Z2/Z3/Z4 后再次运行同一守卫，确保 legacy 源码删除不会把样式重新拉回全局入口。
 
 ## 17. Z：根目录 legacy 浏览器源码收口
@@ -2812,7 +2865,7 @@ R1  增加架构检查脚本                            已完成
 - 检查脚本结果；
 - 无业务行为变化证明。
 
-骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1–C1.5 均已完成代码实施、机械检查和主代理人工代码审核。C1.5 已提交为 `733eb045`；C1.6.0 已提交为 `bee0dd05`，C1.6.1 代码与记录已提交为 `61b4d5db`/`ff9702be`，C1.6.2 代码已提交为 `ad1db0e7`，C1.6.3 代码已提交为 `788da9e7`，C1.6.4 已提交为 `fdbe3762`。C1.6.5 已完成全仓样式 owner 收口，终态为 71 个真实 CSS Module、2 个文件中的 2 处第三方 global，机械检查和主代理人工代码审核通过，停在未提交工作树；C1.7 尚未实施。完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账、缓存、草稿、UBB 与 C1 样式运行验收未全部执行，旧 `/list` 仍仅适用既有免检结论。当前停在 C1.6.5 审核后，不自动启动 C1.7 或 Z。
+骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1–C1.5 均已完成代码实施、机械检查和主代理人工代码审核。C1.5 已提交为 `733eb045`；C1.6.0 已提交为 `bee0dd05`，C1.6.1 代码与记录已提交为 `61b4d5db`/`ff9702be`，C1.6.2 代码已提交为 `ad1db0e7`，C1.6.3 代码已提交为 `788da9e7`，C1.6.4 已提交为 `fdbe3762`，C1.6.5 代码与记录已提交为 `0c6efc6e`/`b232c6ca`。C1.6.5 终态为 71 个真实 CSS Module、2 个文件中的 2 处第三方 global，机械检查和主代理人工代码审核通过；C1.7 已按组件拆分、真实复用、样式共置、动态/第三方边界和根样式收口重新规划，但尚未实施。完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账、缓存、草稿、UBB 与 C1 样式运行验收未全部执行，旧 `/list` 仍仅适用既有免检结论。当前停在 C1.7 实施前，不自动启动 C1.7 或 Z。
 
 ## 22. 已确认决策与后续边界
 
