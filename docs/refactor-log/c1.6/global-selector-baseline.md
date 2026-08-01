@@ -12,7 +12,7 @@
 - jQuery、`querySelector`、`getElementById`、`getElementsByClassName`、`classList`、原生事件/ref、React Router 状态和通知显隐逻辑，区分视觉 selector 与行为查询合同；
 - C1.5 风险登记中的 Portal、UBB/Markdown、Ant Design、休眠 producer 与仓外合同边界。
 
-C1.6.0 结果为 42 个真实 CSS Module 中有 16 个文件包含合计 120 处 `:global(...)`。`global(fadeIn)`、`global(fadeOut)` 是 CSS Modules 动画值转义，不计入 selector 基线。下表保留 C1.6.0 历史快照；机器基线位于 `scripts/style-global-baseline.json`，已随 C1.6.4 更新为当前 58 个真实 CSS Module、3 个文件和 29 处 selector。`npm run check:styles` 会校验文件集合、逐文件出现次数和按源码顺序计算的 selector 指纹，禁止未登记新增或静默改写。
+C1.6.0 结果为 42 个真实 CSS Module 中有 16 个文件包含合计 120 处 `:global(...)`。`global(fadeIn)`、`global(fadeOut)` 是 CSS Modules 动画值转义，不计入 selector 基线。下表保留 C1.6.0 历史快照；机器基线位于 `scripts/style-global-baseline.json`，已随 C1.6.5 更新为当前 71 个真实 CSS Module、2 个文件和 2 处 selector。`npm run check:styles` 会校验文件集合、逐文件出现次数和按源码顺序计算的 selector SHA-256 指纹，并禁止 Application Route 导入另一 Route 的 CSS Module。
 
 ## Selector / producer / consumer / 行为查询清单
 
@@ -91,9 +91,18 @@ Importer 数量按文件静态导入计数，表示样式加载入口，不表�
 - 当前基线从 C1.6.3 的 10 个文件/47 处降为 3 个文件/29 处，真实 CSS Module 从 59 降至 58；Editor、Login、Search、Legacy Board 范围没有新增 selector 级 global。剩余为 `Board.module.scss` 与 `NewTopics.module.scss` 各 1 处第三方 DOM，以及 `TopicDetail.module.scss` 冻结的 27 处固定/休眠 selector，留待 C1.6.5 复核和 C1.7 归界。
 - 浏览器运行时没有可用实例；Editor、Login、Search、Legacy Board、默认/暗色主题、真实 API/权限和响应式仍待执行，不能由机械检查或生产 build 替代。
 
+## C1.6.5 全仓样式所有权收口
+
+- 删除 `TopicDetail.module.scss` 冻结的 27 处无活动 producer 业务 global 及其未消费局部规则；连同全仓映射审计共删除 16 个 Module 中 37 个无 consumer 的局部 class。最终静态扫描没有活动无 consumer 规则。
+- Home 拆为相邻组件 owner；Focus/Search/推荐/热门/新帖的真实共享框架归入 `CollectionLayout`；User Center/Profile 的共享壳层和活动列表归入 `UserArea`/`UserActivityLayout`，其余 Route 专属规则归相邻 Module。最终没有超过 300 行的 Module，也没有跨 Route CSS Module import。
+- 公告展示抽为 `@modules/site-content` 的 `SiteAnnouncementPreview({ content: string })`，Home 与站点管理复用；原 `Announcement`、`AnnouncementComponent` 导出、空值返回、UBB 输出、DOM 文案和注释保持。
+- 当前基线从 C1.6.4 的 58 个真实 CSS Module、3 个文件/29 处 global 收口为 71 个真实 CSS Module、2 个文件/2 处 global。两处均为局部根限界的 Ant Design 动态 DOM：Board Pagination quick-jumper 与 New Topics Collapse content box；selector、specificity 和声明冻结并登记到 C1.7。
+- `npm run check:architecture` 通过：309 个源码文件、1331 个 import、29 条登记 allowlist；modern/legacy typecheck、正式 build 与 `git diff --check` 通过。正式 build 转换 4058 个模块；29 个主题 CSS、APlayer 与 vendor CSS 的文件名、长度和 SHA-256 逐字节不变，`dist` 无工作树污染。
+- 浏览器连接器没有可用运行实例；Home/公告预览、Focus、New Topics、Search、Recommended/Hot Topic、User Center/Profile、Topic 正文、Board quick-jumper、默认/暗色主题、真实 API/权限、响应式和第三方交互均明确为未运行验收。
+
 ## 冻结与停点
 
 - C1.6.0 不删除任何休眠规则，也不为无 producer 规则制造节点或空锚点。
 - 后续每个 C1.6 子批必须同步更新机器基线与本清单，并解释数量减少、owner 改变及行为查询是否迁移；只减少数字不构成验收。
-- C1.6.4 没有执行浏览器视觉、主题切换、真实 API、权限、UBB/editor 或跨 Route 运行验收；机械检查不能替代这些场景。
-- C1.6.0 已提交为 `bee0dd05`，C1.6.1 已提交为 `61b4d5db`/`ff9702be`；C1.6.2 用户人工审核通过后，代码已提交为 `ad1db0e7`，本清单随单独文档 checkpoint 提交。C1.6.3 用户人工审核通过后，代码已提交为 `788da9e7`，本清单随单独文档 checkpoint 提交；C1.6.4 用户人工审核通过后，代码已提交为 `fdbe3762`，本清单随单独文档 checkpoint 提交；未 push，不自动启动 C1.6.5、C1.7 或 Z。
+- C1.6.5 没有执行浏览器视觉、主题切换、真实 API、权限、UBB/Markdown 或跨 Route 运行验收；机械检查不能替代这些场景。
+- C1.6.0 已提交为 `bee0dd05`，C1.6.1 已提交为 `61b4d5db`/`ff9702be`；C1.6.2 用户人工审核通过后，代码已提交为 `ad1db0e7`，C1.6.3 已提交为 `788da9e7`，C1.6.4 已提交为 `fdbe3762`。C1.6.5 停在未提交工作树，未 push，不自动启动 C1.7 或 Z。
