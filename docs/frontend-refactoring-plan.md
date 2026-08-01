@@ -1,6 +1,6 @@
 # CC98 前端目录重构执行计划
 
-> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1–C1.4 的代码实施、机械检查和主代理人工代码审核均已完成，A、M 阶段及 S1 代码实施完成。C1.3 与 C1.4 均已获用户审批并完成本地提交。C1.5.1 已建立 29 主题 CSS 自定义属性桥并完成首个真实 CSS Module 试点，代码实施、机械检查和主代理人工代码审核已完成，浏览器运行验收与用户审批未执行。完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账、缓存、草稿、UBB 与 C1 样式运行验收未执行，当前停在 C1.5.1 人工验收前，不自动启动下一小批。
+> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1–C1.4 的代码实施、机械检查和主代理人工代码审核均已完成，A、M 阶段及 S1 代码实施完成。C1.3 与 C1.4 均已获用户审批并完成本地提交。C1.5.1 已建立 29 主题 CSS 自定义属性桥并完成首个真实 CSS Module 试点，用户已确认完成验收并已有本地提交。C1.5.2 已将 Board List 剩余 Route 样式转换为第二个真实 CSS Module，代码实施、机械检查、产物审计和主代理人工代码审核已完成；当前运行环境未提供可用浏览器实例，浏览器运行验收与用户审批未执行。完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账、缓存、草稿、UBB 与 C1 样式运行验收仍未全部执行，当前停在 C1.5.2 人工验收前，不自动启动下一小批。
 >
 > 架构依据：`docs/frontend-directory-architecture-inventory.md`。
 >
@@ -56,11 +56,12 @@ C1.1 Foundation 样式                       已完成（主代理逐文件审�
 C1.2 业务组件样式                           已完成（主代理逐文件审核通过；浏览器运行验收未执行）
 C1.3 页面样式                               已完成（用户审批通过；浏览器运行验收未执行）
 C1.4 主题                                   已完成（用户审批通过；浏览器运行验收未执行）
-C1.5.1 主题变量桥与 CSS Modules 试点         已完成（人工代码审核通过；浏览器运行验收未执行）
+C1.5.1 主题变量桥与 CSS Modules 试点         已完成（用户确认验收通过；已有本地提交）
+C1.5.2 Board List 剩余样式作用域转换         已完成（人工代码审核通过；浏览器运行验收未执行）
 C1.5 后续样式作用域与目录收口                待逐批单独授权
 ```
 
-### 当前停点：C1.5.1 已完成代码实施、机械检查与人工代码审核；浏览器运行验收未执行，未 commit，不自动启动下一小批
+### 当前停点：C1.5.2 已完成代码实施、机械检查、产物审计与人工代码审核；浏览器运行验收未执行，未 commit，不自动启动下一小批
 
 ### M3.1–M3.6 实施记录（2026-07-30）
 
@@ -2200,8 +2201,35 @@ dev20260716  ef728864  refactor(c1.4): organize theme contracts
 人工检查与停点：
 
 - 主代理已核对共享变量映射、29 个入口导入顺序、主题 manifest/registry/runtime/模板未改边界、BoardList 单一 consumer、CSS Module 类型覆盖和样式守卫闭包，未发现未说明的主题、路由、业务或 Storage 漂移；
-- `/boardlist` 的冷启动默认主题、登录用户主题、亮暗切换、定时/浏览器日夜切换、跨标签更新、登出回退及刷新/懒加载继承浏览器验收未执行，不记为通过；
-- 本批未 commit、未 push、未修改 `.vscode/`，当前停止并等待用户人工验收与提交授权，不自动转换其余 41 个过渡 partial。
+- 用户于 2026-08-01 确认 C1.5.1 已完成验收，无需重复执行；本地提交为 `2d1bbfc5 refactor(c1.5.1): establish theme variable bridge`，未 push；
+- C1.5.1 作为 C1.5.2 的实施基线，不自动授权其余过渡 partial。
+
+#### C1.5.2 实施记录（2026-08-01）
+
+实施基线：
+
+```text
+dev20260716  2d1bbfc5  refactor(c1.5.1): establish theme variable bridge
+```
+
+实施范围：
+
+- `BoardList.module.scss` 已从 `Site.scss` Sass 聚合移除，由 BoardListPage、BoardListSection 与 ChildBoardList 直接导入；Board List 独占类均通过 CSS Module 映射消费，既有全局 `row`、`column` 与 `hiddenContent` 继续保留；
+- `$background_color_textarea` 与 `$theme_color_main` 分别改为既有 `--cc98-background-color-textarea` 与 `--cc98-theme-color-main`；其余选择器、注释、空 `.listTitle`、无调用 `.hideBoard`、DOM、动态区域 ID、内联 style、展开/收起、右侧导航、图片回退、公开 URL、API 与主题运行合同均未修改；
+- 样式过渡清单删除 Board List 条目，收紧为 40 个仍由 Sass 聚合的过渡 partial、2 个真实 CSS Module 和 3 个既有根 `Styles/` 文件；其余 Route、Module、根样式、兼容选择器、内联 style、UBB 与 Annual Review 未进入本批。
+
+机械与产物证据：
+
+- `npm run check:architecture` 通过：307 个源码文件、1198 个 import、28 条既有 allowlist；样式守卫通过：2 个真实 CSS Module、40 个过渡 partial、29 个主题；modern 与 legacy typecheck、`git diff --check` 均通过；
+- 正式 build 通过，3989 modules transformed；基线构建首次在受限环境因既知 `spawn EPERM` 失败，随后在允许子进程的环境按原命令重跑成功；最终构建仍只有既有 Sass `@import`、Spectrum/Lightning CSS 与 chunk-size 警告；
+- 基线与最终 `dist/static/content` 顶层产物均为 36 项；Board List 懒加载 CSS 由 147 bytes 增至 1977 bytes，包含局部化后的剩余规则及两个既有主题变量；29 个主题 CSS 仍各含恰好八个自定义属性，并合计移出 47067 bytes 的旧全局 Board List 规则；
+- 其余 6 个 vendor/player 顶层产物逐项同名、等长且 SHA-256 完全一致；29 个主题 CSS 未再包含旧 Board List 选择器，源码也未保留旧 Board List `className` consumer。
+
+人工检查与停点：
+
+- 主代理已逐文件核对三个 TSX consumer、两个 Board List CSS Module、主题变量、Sass 聚合入口、样式守卫与生成产物，未发现未说明的 DOM、业务、路由、主题或兼容边界漂移；
+- 本地 Vite 根入口 `http://127.0.0.1:25174/` 可返回 200；当前运行环境的浏览器控制运行时未提供可用浏览器实例，无法执行默认/暗色主题、普通/无图片分区、图片回退、展开/收起、导航滚动及前进/后退视觉交互验收，因此不记为通过；直接请求 Vite 开发服务器的 `/boardlist` 返回 404，浏览器应由根入口进入后通过客户端 Router 导航；
+- 本批未 commit、未 push、未修改 `.vscode/`，当前停止并等待用户人工验收与提交授权，不自动转换其余 40 个过渡 partial。
 
 ## 17. Z：根目录 legacy 浏览器源码收口
 

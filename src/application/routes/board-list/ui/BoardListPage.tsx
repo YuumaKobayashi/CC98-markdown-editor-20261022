@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { cc98Fetch } from "@foundation/api/http";
 import DocumentTitle from "@foundation/ui/document-title";
+import styles from "../BoardList.module.scss";
 import type { RootBoardState } from "../model/board-list";
 import { BoardListSection } from "./BoardListSection";
 
@@ -26,17 +27,17 @@ export function BoardListPage() {
   return (
     <div className="row" style={{ width: "1140px" }}>
       <DocumentTitle title="版面列表 - CC98论坛" />
-      <div className="boardList">
+      <div className={styles.boardList}>
         {data.map((item) => (
           <BoardListSection key={item.id} data={item} />
         ))}
       </div>
-      <div className="boardGuide">
+      <div className={styles.boardGuide}>
         {data.map((item) => (
           <div
             key={item.id}
             onClick={() => scrollToBoard(item.name)}
-            className="row boardOption"
+            className={`row ${styles.boardOption}`}
           >
             {item.name}
           </div>

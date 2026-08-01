@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Link } from "react-router";
 
+import styles from "../BoardList.module.scss";
 import type { ChildBoardState } from "../model/board-list";
 
 interface ChildBoardListProps {
@@ -21,11 +22,11 @@ export function ChildBoardList({ id, boards }: ChildBoardListProps) {
 
   if (noImageAreaIds.has(id)) {
     return (
-      <div className="areaContent">
+      <div className={styles.areaContent}>
         {boards.map((item) => (
-          <div key={item.id} className="noImgBoardContent">
+          <div key={item.id} className={styles.noImgBoardContent}>
             <Link to={`/board/${item.id}`}>
-              <div className="boardName2">{item.name}</div>
+              <div className={styles.boardName2}>{item.name}</div>
             </Link>
           </div>
         ))}
@@ -34,11 +35,11 @@ export function ChildBoardList({ id, boards }: ChildBoardListProps) {
   }
 
   return (
-    <div className="areaContent">
+    <div className={styles.areaContent}>
       {boards.map((item) => (
-        <div key={item.id} className="boardContent">
+        <div key={item.id} className={styles.boardContent}>
           <Link to={`/board/${item.id}`}>
-            <div className="greenBackdrop">
+            <div className={styles.greenBackdrop}>
               <img
                 style={{ width: "6rem", height: "6rem" }}
                 src={`/static/images/_${item.name}.png`}
@@ -46,16 +47,16 @@ export function ChildBoardList({ id, boards }: ChildBoardListProps) {
               />
             </div>
           </Link>
-          <div className="column boardBlock">
+          <div className={`column ${styles.boardBlock}`}>
             <Link to={`/board/${item.id}`}>
               <div
-                className="boardName2"
+                className={styles.boardName2}
                 style={{ fontSize: "1.2rem", fontWeight: "bold" }}
               >
                 {item.name}
               </div>
             </Link>
-            <div className="boardInfo">
+            <div className={styles.boardInfo}>
               <div className="row">今日 {item.todayCount} </div>
               <div className="row">总数 {item.postCount}</div>
             </div>

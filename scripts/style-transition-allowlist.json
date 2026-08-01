@@ -1,6 +1,5 @@
 {
   "transitionalModulePartials": [
-    "src/application/routes/board-list/BoardList.module.scss",
     "src/application/routes/board/Board.module.scss",
     "src/application/routes/board/BoardRecords.module.scss",
     "src/application/routes/board/BoardTagPagination.module.scss",
