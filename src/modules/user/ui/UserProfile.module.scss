@@ -9,7 +9,7 @@
     margin-bottom: 1rem;
   }
 
-  :global(#userId) {
+  .userId {
     font-size: 1.125rem;
     margin-top: 0.5rem;
     display: flex;
@@ -43,7 +43,7 @@
     }
   }
 
-  :global(#unfollow) {
+  .unfollow {
     background-color: rgb(230, 230, 230);
     color: rgb(160, 160, 160);
 
@@ -60,7 +60,7 @@
     }
   }
 
-  :global(#userIntroducion) {
+  .userIntroducion {
     margin-left: 2rem;
     font-size: 0.75rem;
   }
@@ -71,7 +71,7 @@
     color: black;
   }
 
-  :global(#userGenderAndBirthday) {
+  .userGenderAndBirthday {
     display: flex;
     flex-wrap: wrap;
 

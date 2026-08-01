@@ -6,6 +6,7 @@ import * as React from "react";
 import { Link } from "react-router";
 
 import type { UserRecentPost } from "@legacy/States/AppState";
+import styles from "./UserRecentPostItem.module.scss";
 
 interface UserRecentPostItemProps {
   userRecentPost: UserRecentPost;
@@ -18,25 +19,25 @@ export function UserRecentPostItem({
   userRecentPost,
 }: UserRecentPostItemProps) {
   return (
-    <div className="user-post">
-      <div className="user-post-info">
-        <a className="user-post-date">
+    <div className={styles["user-post"]}>
+      <div className={styles["user-post-info"]}>
+        <a className={styles["user-post-date"]}>
           {userRecentPost.time.slice(0, 19).replace("T", " ")}
         </a>
-        <a className="user-post-like-count">
+        <a className={styles["user-post-like-count"]}>
           赞：{userRecentPost.likeCount}
         </a>
-        <a className="user-post-like-count">
+        <a className={styles["user-post-like-count"]}>
           踩：{userRecentPost.dislikeCount}
         </a>
         <Link
-          className="user-post-board"
+          className={styles["user-post-board"]}
           to={`/board/${userRecentPost.boardId}`}
         >
           {userRecentPost.boardName}
         </Link>
       </div>
-      <div className="user-post-content">
+      <div className={styles["user-post-content"]}>
         <p>
           <Link
             to={`/topic/${userRecentPost.topicId}/${Math.floor((userRecentPost.floor - 1) / 10) + 1}#${userRecentPost.floor % 10}`}

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router";
+import styles from "./UserCenterPager.module.scss";
 
 export type UserCenterPagerProps = {
   currentPage: number;
@@ -110,7 +111,7 @@ export function UserCenterPager({
   }
 
   return (
-    <div id="userCenterPageCount">
+    <div className={styles["user-center-page-count"]}>
       <ul>{elements}</ul>
     </div>
   );

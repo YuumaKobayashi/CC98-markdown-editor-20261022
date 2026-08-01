@@ -8,7 +8,7 @@ import {
 } from "@modules/session";
 import { invalidateUserInfoCache } from "@modules/user";
 import { cc98Fetch } from "@foundation/api/http";
-import styles from "../../UserCenter.module.scss";
+import styles from "./UserCenterAvatarSettings.module.scss";
 
 //TODO：逻辑独立与优化
 
@@ -569,6 +569,7 @@ export function UserCenterAvatarSettings() {
             />
             <div
               id="cover"
+              className={styles.cover}
               ref={coverRef}
               style={{
                 width: `${state.divWidth}px`,
@@ -603,6 +604,7 @@ export function UserCenterAvatarSettings() {
             </div>
             <div
               id="selector"
+              className={styles.selector}
               ref={selectorRef}
               style={
                 state.isShown
@@ -618,6 +620,7 @@ export function UserCenterAvatarSettings() {
             />
             <span
               id="resize"
+              className={styles.resize}
               ref={resizeRef}
               style={{
                 top: `${state.selectorWidth + state.selectorTop}px`,

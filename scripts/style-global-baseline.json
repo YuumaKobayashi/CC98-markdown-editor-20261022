@@ -1,8 +1,8 @@
 {
-  "phase": "C1.6.2",
-  "totalCssModuleCount": 53,
-  "totalOccurrences": 70,
-  "moduleCount": 13,
+  "phase": "C1.6.3",
+  "totalCssModuleCount": 59,
+  "totalOccurrences": 47,
+  "moduleCount": 10,
   "updatePolicy": "Only update this baseline in an explicitly authorized C1.6 batch after auditing selector, producer, consumer, and behavior-query changes.",
   "modules": [
     {
@@ -54,21 +54,6 @@
       "path": "src/application/routes/topic/TopicDetail.module.scss",
       "occurrences": 27,
       "fingerprint": "5022ae8bed7b4103053cb5915f41b23cc94ed4ebce50056ee74de0da3b0da8d8"
-    },
-    {
-      "path": "src/application/routes/user-center/UserCenter.module.scss",
-      "occurrences": 18,
-      "fingerprint": "a2d8faf2bd685feb178dcb1f4b39c313a37bb0e4ded572f78a8fa89b0d8900a3"
-    },
-    {
-      "path": "src/modules/user/ui/ConfigSignature.module.scss",
-      "occurrences": 1,
-      "fingerprint": "80d099f0202f7e20b44298e432f6e32c1cba6d0acf6b77e1426c479de1bc7218"
-    },
-    {
-      "path": "src/modules/user/ui/UserProfile.module.scss",
-      "occurrences": 4,
-      "fingerprint": "2c78ef91c56bf697fd224af5c2cc65b10ef4297a53df43d89a46b927162100c5"
     }
   ]
 }

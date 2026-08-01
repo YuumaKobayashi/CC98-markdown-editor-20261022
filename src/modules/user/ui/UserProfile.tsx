@@ -48,7 +48,7 @@ export function UserProfile({ userInfo }: UserProfileProps) {
 
   return (
     <div className={styles["user-profile"]}>
-      <div id="userId">
+      <div className={styles.userId}>
         <p>
           {userInfo.name}
           <span
@@ -100,8 +100,8 @@ export function UserProfile({ userInfo }: UserProfileProps) {
           <button type="button">私信</button>
         </Link>
       </div>
-      <div id="userIntroducion">{userInfo.introduction}</div>
-      <div id="userGenderAndBirthday">
+      <div className={styles.userIntroducion}>{userInfo.introduction}</div>
+      <div className={styles.userGenderAndBirthday}>
         <p>
           <span className={styles["user-profile-info"]}>性别</span>
           {userInfo.gender === 1 ? "男" : "女"}{" "}

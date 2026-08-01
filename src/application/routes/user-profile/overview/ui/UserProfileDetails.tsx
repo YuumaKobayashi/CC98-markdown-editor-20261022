@@ -103,8 +103,8 @@ export function UserProfileDetails({ userInfo }: UserProfileDetailsProps) {
 
   return (
     <div className={styles["user-profile"]}>
-      <div id="userId">
-        <div id="userId">
+      <div className={styles.userId}>
+        <div className={styles.userId}>
           <p>
             {userInfo.name}
             <span
@@ -157,7 +157,7 @@ export function UserProfileDetails({ userInfo }: UserProfileDetailsProps) {
           </Link>
           <button
             type="button"
-            id={isFollowing ? "unfollow" : ""}
+            className={isFollowing ? styles.unfollow : ""}
             onClick={isFollowing ? unfollow : follow}
             disabled={buttonIsDisabled}
             onMouseOver={handleMouseOver}
@@ -168,26 +168,26 @@ export function UserProfileDetails({ userInfo }: UserProfileDetailsProps) {
         </div>
       </div>
       {userInfo.lockState === 1 || userInfo.lockState === 2 ? (
-        <div id="userGenderAndBirthday">
+        <div className={styles.userGenderAndBirthday}>
           <span style={{ fontSize: "12px", color: "red" }}>
             该账号处于锁定状态
           </span>
         </div>
       ) : userInfo.lockState === 3 ? (
-        <div id="userGenderAndBirthday">
+        <div className={styles.userGenderAndBirthday}>
           <span style={{ fontSize: "12px", color: "red" }}>
             该账号处于全站禁言状态
           </span>
         </div>
       ) : userInfo.stopPostBoardCount > 0 ? (
-        <div id="userGenderAndBirthday">
+        <div className={styles.userGenderAndBirthday}>
           <span style={{ fontSize: "12px", color: "red" }}>
             该账号被{userInfo.stopPostBoardCount}个版面禁言中
           </span>
         </div>
       ) : null}
-      <div id="userIntroducion">{userInfo.introduction}</div>
-      <div id="userGenderAndBirthday">
+      <div className={styles.userIntroducion}>{userInfo.introduction}</div>
+      <div className={styles.userGenderAndBirthday}>
         <p>
           <span className={styles["user-profile-info"]}>性别</span>
           {userInfo.gender === 1 ? "男" : "女"}{" "}

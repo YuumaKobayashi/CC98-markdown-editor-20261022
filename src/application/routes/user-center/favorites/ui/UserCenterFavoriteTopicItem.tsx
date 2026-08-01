@@ -14,6 +14,8 @@ import {
 } from "@modules/favorite-topic";
 import type { UserRecentTopic } from "@legacy/States/AppState";
 
+import styles from "./UserCenterFavoriteTopicItem.module.scss";
+
 type UserCenterFavoriteTopicItemProps = {
   updateinfo: () => void;
   userRecentTopic: UserRecentTopic;
@@ -53,19 +55,19 @@ export function UserCenterFavoriteTopicItem({
   };
 
   return (
-    <div className="user-post">
-      <div className="user-post-info">
+    <div className={styles["user-post"]}>
+      <div className={styles["user-post-info"]}>
         <Link
-          className="user-post-board"
+          className={styles["user-post-board"]}
           to={`/board/${userRecentTopic.boardId}`}
         >
           {userRecentTopic.boardName}
         </Link>
-        <a className="user-post-date">
+        <a className={styles["user-post-date"]}>
           {userRecentTopic.time.slice(0, 19).replace("T", " ")}
         </a>
       </div>
-      <div className="user-post-content">
+      <div className={styles["user-post-content"]}>
         <p>
           <Link to={`/topic/${userRecentTopic.id}`}>
             {userRecentTopic.title}

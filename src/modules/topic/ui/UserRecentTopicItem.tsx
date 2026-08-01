@@ -6,6 +6,7 @@ import * as React from "react";
 import { Link } from "react-router";
 
 import type { UserRecentTopic } from "@legacy/States/AppState";
+import styles from "./UserRecentTopicItem.module.scss";
 
 interface UserRecentTopicItemProps {
   userRecentTopic: UserRecentTopic;
@@ -18,19 +19,19 @@ export function UserRecentTopicItem({
   userRecentTopic,
 }: UserRecentTopicItemProps) {
   return (
-    <div className="user-post">
-      <div className="user-post-info">
+    <div className={styles["user-post"]}>
+      <div className={styles["user-post-info"]}>
         <Link
-          className="user-post-board"
+          className={styles["user-post-board"]}
           to={`/board/${userRecentTopic.boardId}`}
         >
           {userRecentTopic.boardName}
         </Link>
-        <a className="user-post-date">
+        <a className={styles["user-post-date"]}>
           {userRecentTopic.time.slice(0, 19).replace("T", " ")}
         </a>
       </div>
-      <div className="user-post-content">
+      <div className={styles["user-post-content"]}>
         <p>
           <Link to={`/topic/${userRecentTopic.id}`}>
             {userRecentTopic.title.trim() ? (

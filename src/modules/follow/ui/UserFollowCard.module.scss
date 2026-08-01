@@ -1,0 +1,68 @@
+.user-center-myfollowings-user.user-center-myfollowings-user {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.875rem;
+
+  p {
+    flex-grow: 1;
+    display: inline-flex;
+  }
+
+  img {
+    width: 3.75rem;
+    height: 3.75rem;
+    border-radius: 1.875rem;
+    margin-right: 1.25rem;
+  }
+
+  button {
+    transition-duration: 0.4s;
+    width: 4.375rem;
+    height: 1.625rem;
+    font-size: 0.75rem;
+    border-radius: 3px;
+    background-color: rgb(230, 230, 230);
+    color: rgb(160, 160, 160);
+    cursor: pointer;
+    margin-left: 1rem;
+    margin-right: 1rem;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    &:active {
+      opacity: 0.6;
+    }
+  }
+
+  .user-follow,
+  .user-message {
+    background-color: var(--cc98-theme-color-main);
+    color: #fff;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    &:active {
+      opacity: 0.6;
+    }
+  }
+
+  .user-center-myfollowings-user-id {
+    margin-right: 1.25rem;
+    min-width: 7rem;
+  }
+
+  .user-center-myfollowings-user-posts {
+    margin: 0 0.88rem 0 0.75rem;
+    color: rgb(53, 167, 255);
+    min-width: 2rem;
+  }
+
+  .user-center-myfollowings-user-fans {
+    margin: 0 0.88rem 0 0.75rem;
+    color: rgb(255, 54, 54);
+  }
+}

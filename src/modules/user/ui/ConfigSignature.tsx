@@ -23,7 +23,7 @@ export function ConfigSignature({
       <h2>修改签名档</h2>
       <div className={styles["user-center-config-signature"]}>
         <textarea
-          id="signature"
+          className={styles.signature}
           onChange={handleChange}
           value={signature}
           spellCheck={false}

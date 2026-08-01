@@ -3,6 +3,7 @@ import { Link } from "react-router";
 
 import type { UserInfo } from "@legacy/States/AppState";
 import { followUser, unfollowUser } from "../api/service";
+import styles from "./UserFollowCard.module.scss";
 
 interface UserFollowCardProps {
   user: UserInfo;
@@ -103,20 +104,24 @@ export function UserFollowCard({
   };
 
   return (
-    <div className="user-center-myfollowings-user">
+    <div className={styles["user-center-myfollowings-user"]}>
       <img src={user.portraitUrl} />
       <p>
-        <span className="user-center-myfollowings-user-id">
+        <span className={styles["user-center-myfollowings-user-id"]}>
           <Link to={`/user/id/${user.id}`}>{user.name}</Link>
         </span>
         帖数
-        <span className="user-center-myfollowings-user-posts">{user.postCount}</span>
+        <span className={styles["user-center-myfollowings-user-posts"]}>
+          {user.postCount}
+        </span>
         粉丝
-        <span className="user-center-myfollowings-user-fans">{user.fanCount}</span>
+        <span className={styles["user-center-myfollowings-user-fans"]}>
+          {user.fanCount}
+        </span>
       </p>
       <button
         type="button"
-        className={followState.isFollowing ? "" : "user-follow"}
+        className={followState.isFollowing ? "" : styles["user-follow"]}
         onMouseOver={showUnfollowLabel}
         onMouseLeave={showFollowingLabel}
         onClick={followState.isFollowing ? unfollow : follow}
@@ -125,7 +130,7 @@ export function UserFollowCard({
         {followState.buttonInfo}
       </button>
       <Link to={`/message/message?id=${user.id}`}>
-        <button className="user-message" type="button">
+        <button className={styles["user-message"]} type="button">
           私信
         </button>
       </Link>
