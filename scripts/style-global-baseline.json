@@ -1,0 +1,88 @@
+{
+  "phase": "C1.6.0",
+  "totalOccurrences": 120,
+  "moduleCount": 16,
+  "updatePolicy": "Only update this baseline in an explicitly authorized C1.6 batch after auditing selector, producer, consumer, and behavior-query changes.",
+  "modules": [
+    {
+      "path": "src/application/routes/board/Board.module.scss",
+      "occurrences": 1,
+      "fingerprint": "565a48e817ab4ce818466035f79813d5a73cd9b3a9b4301e047bfa6cb1d196ca"
+    },
+    {
+      "path": "src/application/routes/editor/EditorLegacyForm.module.scss",
+      "occurrences": 1,
+      "fingerprint": "d64d636c3cc6c8e8894280536a3e8594cceb19c6f1a8d91a86e9021cd7d64ab7"
+    },
+    {
+      "path": "src/application/routes/editor/EditorTopic.module.scss",
+      "occurrences": 10,
+      "fingerprint": "484ffb78cb6d3bc9104d26c4305a830535a4092c4968c142bf9ba6b97bd78722"
+    },
+    {
+      "path": "src/application/routes/legacy-board-list/LegacyBoardList.module.scss",
+      "occurrences": 1,
+      "fingerprint": "ae4df3b92a5177f052034170b0052c65987e877722d171a23079fb0899935ec9"
+    },
+    {
+      "path": "src/application/routes/legacy-board-list/LegacyBoardListItemTail.module.scss",
+      "occurrences": 3,
+      "fingerprint": "f5f05bf2dbea5b9cd07e78e7ae86eee4199285875e0bd3aa5c6d67c4c6aa2d17"
+    },
+    {
+      "path": "src/application/routes/legacy-board-list/LegacyBoardRoot.module.scss",
+      "occurrences": 1,
+      "fingerprint": "177abcee4b39ac2760d5ab1891d6dcdae03e603d9c34b26662b0f7fb98dcf51f"
+    },
+    {
+      "path": "src/application/routes/login/Login.module.scss",
+      "occurrences": 1,
+      "fingerprint": "e10f7fb30e7cde8fb303bf2232bb83f08f17839887fe2ac606b0c21c046c3334"
+    },
+    {
+      "path": "src/application/routes/message-center/MessageCenter.module.scss",
+      "occurrences": 31,
+      "fingerprint": "7e7b79dff3f51474c4068191458791008ada32386bc011e38e546deb0cebb642"
+    },
+    {
+      "path": "src/application/routes/message-center/MessageSettings.module.scss",
+      "occurrences": 4,
+      "fingerprint": "dc9ac74f01751d27748e95e6868339d66c37db0721fa023039813ae9eb7e6599"
+    },
+    {
+      "path": "src/application/routes/new-topics/NewTopics.module.scss",
+      "occurrences": 1,
+      "fingerprint": "9b97c52162bfa3c3a348af9b5952b7f12ad8f5efc0837e7e3b3f7919d57c4bce"
+    },
+    {
+      "path": "src/application/routes/search/Search.module.scss",
+      "occurrences": 1,
+      "fingerprint": "ca2a28baf0a789bfa10298092a68af1ece057c3ebdff248a8547f1d7db16dc4f"
+    },
+    {
+      "path": "src/application/routes/topic/TopicDetail.module.scss",
+      "occurrences": 40,
+      "fingerprint": "661149e239c22beffa36b7ec47be84eebee78be4321d4d6903761e52309d3a46"
+    },
+    {
+      "path": "src/application/routes/topic/TopicNotices.module.scss",
+      "occurrences": 2,
+      "fingerprint": "69ca97e07e9ad2e09f27ea4735c8d65ee1f75f7d3dc9d00e6c6f917dcbb5740a"
+    },
+    {
+      "path": "src/application/routes/user-center/UserCenter.module.scss",
+      "occurrences": 18,
+      "fingerprint": "a2d8faf2bd685feb178dcb1f4b39c313a37bb0e4ded572f78a8fa89b0d8900a3"
+    },
+    {
+      "path": "src/modules/user/ui/ConfigSignature.module.scss",
+      "occurrences": 1,
+      "fingerprint": "80d099f0202f7e20b44298e432f6e32c1cba6d0acf6b77e1426c479de1bc7218"
+    },
+    {
+      "path": "src/modules/user/ui/UserProfile.module.scss",
+      "occurrences": 4,
+      "fingerprint": "2c78ef91c56bf697fd224af5c2cc65b10ef4297a53df43d89a46b927162100c5"
+    }
+  ]
+}

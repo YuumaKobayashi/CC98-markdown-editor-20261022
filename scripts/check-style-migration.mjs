@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import crypto from "node:crypto";
 import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
 
@@ -7,6 +8,7 @@ const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(scriptDirectory, "..");
 const sourceRoot = path.join(projectRoot, "src");
 const allowlistPath = path.join(scriptDirectory, "style-transition-allowlist.json");
+const globalBaselinePath = path.join(scriptDirectory, "style-global-baseline.json");
 const require = createRequire(import.meta.url);
 const { themes } = require("../build/theme-manifest.cjs");
 
@@ -49,7 +51,39 @@ function resolveSassImport(importerPath, specifier) {
   return candidates.find((candidate) => fs.existsSync(candidate)) ?? null;
 }
 
+function collectGlobalOccurrences(source) {
+  const occurrences = [];
+  let cursor = 0;
+
+  while (cursor < source.length) {
+    const start = source.indexOf(":global(", cursor);
+    if (start === -1) break;
+
+    let depth = 1;
+    let end = start + ":global(".length;
+    while (end < source.length && depth > 0) {
+      if (source[end] === "(") depth += 1;
+      if (source[end] === ")") depth -= 1;
+      end += 1;
+    }
+
+    if (depth !== 0) {
+      return { occurrences, unterminatedAt: start };
+    }
+
+    occurrences.push(source.slice(start, end));
+    cursor = end;
+  }
+
+  return { occurrences, unterminatedAt: null };
+}
+
+function fingerprintGlobalOccurrences(occurrences) {
+  return crypto.createHash("sha256").update(occurrences.join("\n")).digest("hex");
+}
+
 const allowlist = JSON.parse(fs.readFileSync(allowlistPath, "utf8"));
+const globalBaseline = JSON.parse(fs.readFileSync(globalBaselinePath, "utf8"));
 const transitionalModules = new Set(allowlist.transitionalModulePartials);
 const legacyRootStyles = new Set(allowlist.legacyRootStyles);
 const moduleFiles = collectFiles(sourceRoot, (name) => name.endsWith(".module.scss"));
@@ -64,6 +98,68 @@ if (transitionalModules.size !== 0) {
 
 if (moduleFiles.length !== 42) {
   errors.push(`C1.5 应保留 42 个真实 CSS Module，实际为 ${moduleFiles.length} 个`);
+}
+
+const expectedGlobalModules = new Map();
+for (const entry of globalBaseline.modules) {
+  if (expectedGlobalModules.has(entry.path)) {
+    errors.push(`C1.6.0 global 基线包含重复文件: ${entry.path}`);
+  }
+  expectedGlobalModules.set(entry.path, entry);
+}
+
+if (expectedGlobalModules.size !== globalBaseline.moduleCount) {
+  errors.push(
+    `C1.6.0 global 基线应登记 ${globalBaseline.moduleCount} 个文件，实际为 ${expectedGlobalModules.size} 个`,
+  );
+}
+
+let actualGlobalOccurrenceCount = 0;
+let actualGlobalModuleCount = 0;
+for (const moduleFile of moduleFiles) {
+  const relativePath = toProjectPath(moduleFile);
+  const source = fs.readFileSync(moduleFile, "utf8");
+  const { occurrences, unterminatedAt } = collectGlobalOccurrences(source);
+
+  if (unterminatedAt !== null) {
+    errors.push(`${relativePath} 存在未闭合的 :global(...)，偏移 ${unterminatedAt}`);
+  }
+  if (occurrences.length === 0) continue;
+
+  actualGlobalModuleCount += 1;
+  actualGlobalOccurrenceCount += occurrences.length;
+  const expected = expectedGlobalModules.get(relativePath);
+  if (!expected) {
+    errors.push(`C1.6.0 禁止新增未登记业务 global: ${relativePath}`);
+    continue;
+  }
+  if (occurrences.length !== expected.occurrences) {
+    errors.push(
+      `${relativePath} 的 :global(...) 数量应为 ${expected.occurrences}，实际为 ${occurrences.length}`,
+    );
+  }
+
+  const fingerprint = fingerprintGlobalOccurrences(occurrences);
+  if (fingerprint !== expected.fingerprint) {
+    errors.push(`${relativePath} 的 :global(...) selector 集合偏离 C1.6.0 冻结基线`);
+  }
+}
+
+for (const relativePath of expectedGlobalModules.keys()) {
+  if (!modulePaths.has(relativePath)) {
+    errors.push(`C1.6.0 global 基线包含不存在的 CSS Module: ${relativePath}`);
+  }
+}
+
+if (actualGlobalModuleCount !== globalBaseline.moduleCount) {
+  errors.push(
+    `C1.6.0 应冻结 ${globalBaseline.moduleCount} 个含 global 的 CSS Module，实际为 ${actualGlobalModuleCount} 个`,
+  );
+}
+if (actualGlobalOccurrenceCount !== globalBaseline.totalOccurrences) {
+  errors.push(
+    `C1.6.0 应冻结 ${globalBaseline.totalOccurrences} 处 :global(...)，实际为 ${actualGlobalOccurrenceCount} 处`,
+  );
 }
 
 for (const relativePath of transitionalModules) {
@@ -217,6 +313,7 @@ if (errors.length) {
 } else {
   console.log(
     `Style migration check passed: ${moduleFiles.length - transitionalModules.size} real CSS Module, ` +
-      `${transitionalModules.size} transitional partials, ${themes.length} themes.`,
+      `${transitionalModules.size} transitional partials, ${themes.length} themes, ` +
+      `${actualGlobalOccurrenceCount} C1.6 global occurrences in ${actualGlobalModuleCount} modules.`,
   );
 }
