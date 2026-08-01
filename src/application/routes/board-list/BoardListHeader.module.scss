@@ -1,7 +1,7 @@
 .boardListHead {
   height: 3rem;
   align-items: center;
-  background-color: $theme_color_main;
+  background-color: var(--cc98-theme-color-main);
   justify-content: space-between;
   cursor: pointer;
 }

@@ -1,6 +1,6 @@
 # CC98 前端目录重构执行计划
 
-> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1–C1.4 的代码实施、机械检查和主代理人工代码审核均已完成，A、M 阶段及 S1 代码实施完成。C1.3 与 C1.4 均已获用户审批并完成本地提交。跨 Route 兼容选择器及后续真实 CSS Modules/CSS 自定义属性改造已登记到后续批次。完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账、缓存、草稿、UBB 与 C1 样式运行验收未执行，当前停在 C1.4 提交后，不自动启动 C1.5。
+> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1–C1.4 的代码实施、机械检查和主代理人工代码审核均已完成，A、M 阶段及 S1 代码实施完成。C1.3 与 C1.4 均已获用户审批并完成本地提交。C1.5.1 已建立 29 主题 CSS 自定义属性桥并完成首个真实 CSS Module 试点，代码实施、机械检查和主代理人工代码审核已完成，浏览器运行验收与用户审批未执行。完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账、缓存、草稿、UBB 与 C1 样式运行验收未执行，当前停在 C1.5.1 人工验收前，不自动启动下一小批。
 >
 > 架构依据：`docs/frontend-directory-architecture-inventory.md`。
 >
@@ -56,10 +56,11 @@ C1.1 Foundation 样式                       已完成（主代理逐文件审�
 C1.2 业务组件样式                           已完成（主代理逐文件审核通过；浏览器运行验收未执行）
 C1.3 页面样式                               已完成（用户审批通过；浏览器运行验收未执行）
 C1.4 主题                                   已完成（用户审批通过；浏览器运行验收未执行）
-C1.5 样式作用域与目录收口                    待单独授权
+C1.5.1 主题变量桥与 CSS Modules 试点         已完成（人工代码审核通过；浏览器运行验收未执行）
+C1.5 后续样式作用域与目录收口                待逐批单独授权
 ```
 
-### 当前停点：C1.4 已完成人工审核与本地提交；浏览器运行验收未执行，不自动启动 C1.5
+### 当前停点：C1.5.1 已完成代码实施、机械检查与人工代码审核；浏览器运行验收未执行，未 commit，不自动启动下一小批
 
 ### M3.1–M3.6 实施记录（2026-07-30）
 
@@ -2171,6 +2172,36 @@ src/modules/<module>/ui/<component>/
 - 运行 `npm run check:architecture`、modern/legacy typecheck、正式 build 与 `git diff --check`，并比较全部主题及 vendor CSS 的文件清单、长度和 SHA-256；纯归位批要求生成 CSS 零漂移，作用域转换批必须逐项说明预期差异；
 - 至少人工验收默认/暗色主题下的 Shell、Home、Board、Topic、Message、Search、Editor、User Center/User Profile、Login、Signin、Ant Design、Spectrum、UBB 与 Annual Review；响应式断点、hover/focus/disabled、弹层 z-index 和打印/降级页面按实际 consumer 覆盖；
 - C1.5 不与组件迁址、业务逻辑重写或主题视觉重设计混做；每个小批经主代理逐文件审核后停止，等待用户人工验收和单独提交授权，不自动进入下一批或 Z。
+
+#### C1.5.1 实施记录（2026-08-01）
+
+实施基线：
+
+```text
+dev20260716  ef728864  refactor(c1.4): organize theme contracts
+```
+
+实施范围：
+
+- 新增主题自定义属性共享 partial，29 个主题入口均在各自 token 后、`Site.scss` 前输出 `:root`；八个属性逐项映射原 `$theme_color_main`、`$theme_color_sub`、`$theme_color_topbar`、两个背景图片、页面背景、文本框背景和文字颜色，使用 Sass 插值保留原值；
+- `Template.ejs`、`themeNames`、`#mainStylesheet`、runtime 切换、日夜定时检查、登录/登出、跨标签同步、Storage key、主题 key/id/顺序及默认回退均未修改；运行时替换主题 stylesheet 后，已挂载及后续懒加载样式均从 `:root` 继承当前值；
+- `BoardListHeader.module.scss` 已由 `Site.scss` Sass 聚合移除，改由 `BoardListSection.tsx` 直接导入并通过 `styles.boardListHead` 消费；原 `.row` 全局工具类继续组合使用，布局、点击展开逻辑及空 hover 规则保持；主题主色改为 `var(--cc98-theme-color-main)`；
+- 新增 `*.module.scss` 类型声明并纳入 modern/legacy TypeScript；新增样式迁移守卫和清单，当前登记 41 个仍由 Sass 聚合的过渡 partial、1 个真实 CSS Module 和 3 个既有根 `Styles/` 文件，禁止新增未登记伪模块、真实模块重新进入 Sass 聚合或新增根样式文件；
+- 其余 41 个过渡 partial、根 `Styles/`、兼容选择器、内联 style、UBB、Annual Review、业务逻辑与 DOM 未进入本批。
+
+机械与产物证据：
+
+- `npm run check:architecture` 通过：307 个源码文件、1195 个 import、28 条既有 allowlist；样式守卫通过：1 个真实 CSS Module、41 个过渡 partial、29 个主题；
+- modern 与 legacy typecheck 均通过；正式 build 通过，3988 modules transformed；受限环境首次基线 build 因既知 `spawn EPERM` 失败，在允许子进程的环境按原命令重跑成功；构建仍只有 Sass `@import`、Spectrum/Lightning CSS 和 chunk-size 警告；
+- 构建仍生成 29 个主题 CSS 与 30 项 `themeNames`，顺序与 manifest 一致；每份主题 CSS 均恰好包含八个自定义属性，`css_blue` 的编译值与原冬季 token 逐项一致；
+- `BoardListHeader` 生成独立的 147-byte `board-list-*.css`，类名已局部化并引用 `var(--cc98-theme-color-main)`；29 个主题 CSS 均不再包含旧 `boardListHead` 选择器；
+- 基线与最终 `dist/static/content` 顶层产物分别为 35 与 36 个文件，唯一新增项为预期的 Board List CSS；29 个主题因新增变量和移出试点规则产生预期 hash 变化，其余 6 个 vendor/player 顶层产物的文件名、长度和 SHA-256 均未变化；`git diff --check` 通过。
+
+人工检查与停点：
+
+- 主代理已核对共享变量映射、29 个入口导入顺序、主题 manifest/registry/runtime/模板未改边界、BoardList 单一 consumer、CSS Module 类型覆盖和样式守卫闭包，未发现未说明的主题、路由、业务或 Storage 漂移；
+- `/boardlist` 的冷启动默认主题、登录用户主题、亮暗切换、定时/浏览器日夜切换、跨标签更新、登出回退及刷新/懒加载继承浏览器验收未执行，不记为通过；
+- 本批未 commit、未 push、未修改 `.vscode/`，当前停止并等待用户人工验收与提交授权，不自动转换其余 41 个过渡 partial。
 
 ## 17. Z：根目录 legacy 浏览器源码收口
 

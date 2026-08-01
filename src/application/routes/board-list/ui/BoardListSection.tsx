@@ -2,6 +2,7 @@ import * as React from "react";
 import { Link } from "react-router";
 
 import type { RootBoardState } from "../model/board-list";
+import styles from "../BoardListHeader.module.scss";
 import { ChildBoardList } from "./ChildBoardList";
 
 interface BoardListSectionProps {
@@ -40,7 +41,7 @@ export function BoardListSection({ data }: BoardListSectionProps) {
   return (
     <div className="anArea" id={data.name}>
       <div className="column" style={{ border: "2px solid #e9e9e9" }}>
-        <div className="row boardListHead" onClick={toggleIsExpanded}>
+        <div className={`row ${styles.boardListHead}`} onClick={toggleIsExpanded}>
           <div
             className="row"
             style={{ marginRight: "1rem", alignItems: "center" }}
