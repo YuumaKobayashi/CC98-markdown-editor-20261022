@@ -12,7 +12,7 @@
 - jQuery、`querySelector`、`getElementById`、`getElementsByClassName`、`classList`、原生事件/ref、React Router 状态和通知显隐逻辑，区分视觉 selector 与行为查询合同；
 - C1.5 风险登记中的 Portal、UBB/Markdown、Ant Design、休眠 producer 与仓外合同边界。
 
-C1.6.0 结果为 42 个真实 CSS Module 中有 16 个文件包含合计 120 处 `:global(...)`。`global(fadeIn)`、`global(fadeOut)` 是 CSS Modules 动画值转义，不计入 selector 基线。下表保留 C1.6.0 历史快照；机器基线位于 `scripts/style-global-baseline.json`，已随 C1.6.1 更新为当前 48 个真实 CSS Module、14 个文件和 85 处 selector。`npm run check:styles` 会校验文件集合、逐文件出现次数和按源码顺序计算的 selector 指纹，禁止未登记新增或静默改写。
+C1.6.0 结果为 42 个真实 CSS Module 中有 16 个文件包含合计 120 处 `:global(...)`。`global(fadeIn)`、`global(fadeOut)` 是 CSS Modules 动画值转义，不计入 selector 基线。下表保留 C1.6.0 历史快照；机器基线位于 `scripts/style-global-baseline.json`，已随 C1.6.2 更新为当前 53 个真实 CSS Module、13 个文件和 70 处 selector。`npm run check:styles` 会校验文件集合、逐文件出现次数和按源码顺序计算的 selector 指纹，禁止未登记新增或静默改写。
 
 ## Selector / producer / consumer / 行为查询清单
 
@@ -67,9 +67,17 @@ Importer 数量按文件静态导入计数，表示样式加载入口，不表�
 - radio 固定 ID/name/checked 与 jQuery 查询、通知提示 ID、`displaynone`/`noticeDisplaynone` class 切换及定时器、消息动态 ID、URL、UBB options、API、Redux、Storage、Router 和 DOM 层级均未改；`TopicNotices.module.scss` 留待 C1.6.2/C1.7 既定边界。
 - 未确认仓外 producer 的 `.message-message-wcRead1`/`.message-message-wcRead2` 及原注释规则保留在私信窗口 Module，没有制造 DOM 或空锚点；浏览器、真实 API/权限、主题和响应式验收仍待执行。
 
+## C1.6.2 Topic/Post 收口
+
+- `TopicDetail.module.scss` 删除活动 Topic Header 8 处、Reply Signature `#commentlike` 1 处和 FloorSize 4 处 global；Header、Replier、Reply Signature、Reply List、Vote 与 FloorSize 各自由 producer 直接消费局部映射，固定 Header/`commentlike`/动态楼层 ID 及公开接口保持。
+- 当前 `TopicDetail.module.scss` 冻结 27 处：`#authormes`、`#authorName`×2、`#fans`、`#title`、`#essayTitle`、`#like`、`#essayGrow`、`#onlike`、`#liked`、`#ads`×2、`#commentliked`×2、`#commentunliked`×2、`#checkbox`、`#option1`、`#replierMes`×2、`#clockimg`、`#operation`、`#rpymes`、`#ListImg`、`#noticeName`、`#topicsNumber`、`#pager`。`Components/Topic/Post` 仍生产 `checkbox`/`option1` 但没有活动调用点，其余未找到活动 producer；这些规则继续随 Reply Content 的真实 Module 消费加载，留待 C1.6.5 的仓外/休眠审计，不制造 producer、不猜测删除。
+- 删除 `TopicNotices.module.scss` 的 2 处 global；`SendTopicNoticeMessage` 由 Foundation 自有 Module 生产局部根，并以局部根的 `[class~="noticeDisplaynone"]` 匹配原 Notification service 状态。固定/动态 ID、全局 `displaynone`、1ms class 切换、3 秒 `fadeOut` 及 `animation-fill-mode` 不变，值级 `global(fadeOut)` 留待 C1.7 动画边界收口。
+- 当前基线从 C1.6.1 的 14 个文件/85 处降为 13 个文件/70 处，CSS Module 总数从 48 增至 53；活动 Topic/Post 目标范围没有新增 selector 级 `:global(...)`，机器基线同步记录 `TopicDetail.module.scss` 的 27 处及新指纹。
+- 浏览器运行时没有可用实例；默认/暗色主题、普通/追踪 Topic、FloorSize、投票、赞踩、签名、Markdown、通知、真实 API/权限、响应式和前进后退仍待执行，不能由机械检查替代。
+
 ## 冻结与停点
 
 - C1.6.0 不删除任何休眠规则，也不为无 producer 规则制造节点或空锚点。
 - 后续每个 C1.6 子批必须同步更新机器基线与本清单，并解释数量减少、owner 改变及行为查询是否迁移；只减少数字不构成验收。
 - 本批没有执行浏览器视觉、主题切换、真实 API、权限、Portal、UBB/editor 或跨 Route 运行验收；机械检查不能替代这些场景。
-- C1.6.0 已提交为 `bee0dd05`；C1.6.1 完成后停止，等待人工验收和单独提交授权，不自动启动 C1.6.2、C1.7 或 Z。
+- C1.6.0 已提交为 `bee0dd05`，C1.6.1 已提交为 `61b4d5db`/`ff9702be`；C1.6.2 用户人工审核通过后，代码已提交为 `ad1db0e7`，本清单随单独文档 checkpoint 提交。未 push，不自动启动 C1.6.3、C1.7 或 Z。

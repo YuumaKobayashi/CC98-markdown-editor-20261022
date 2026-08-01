@@ -1,6 +1,6 @@
 # CC98 前端目录重构执行计划
 
-> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1–C1.5 的代码实施、机械检查和主代理人工代码审核均已完成；C1.5 已本地提交为 `733eb045`。C1.6.0 已提交为 `bee0dd05`；C1.6.1 已完成 Message/Notification 样式 owner 拆分、机械检查和主代理人工代码审核，终态为 48 个真实 CSS Module、14 个文件中的 85 处业务 `:global(...)`，尚未提交。C1.6.2–C1.6.5 与 C1.7 仍仅有计划。完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账、缓存、草稿、UBB 与 C1 样式运行验收仍未全部执行；不自动启动 C1.6.2、C1.7 或 Z，不 push。
+> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1–C1.5 的代码实施、机械检查和主代理人工代码审核均已完成；C1.5 已本地提交为 `733eb045`。C1.6.0 已提交为 `bee0dd05`，C1.6.1 代码与记录已提交为 `61b4d5db`/`ff9702be`。C1.6.2 已完成 Topic/Post 样式 owner 拆分、机械检查和主代理人工代码审核，终态为 53 个真实 CSS Module、13 个文件中的 70 处业务 `:global(...)`，代码已本地提交为 `ad1db0e7`；C1.6.3–C1.6.5 与 C1.7 仍仅有计划。完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账、缓存、草稿、UBB 与 C1 样式运行验收仍未全部执行；不自动启动 C1.6.3、C1.7 或 Z，不 push。
 >
 > 架构依据：`docs/frontend-directory-architecture-inventory.md`。
 >
@@ -60,12 +60,13 @@ C1.5.1 主题变量桥与 CSS Modules 试点         已完成（用户确认验
 C1.5.2 Board List 剩余样式作用域转换         已完成（人工代码审核通过；浏览器运行验收未执行）
 C1.5 剩余 40 个样式作用域与目录收口          已完成（15 批主代理逐批审核；浏览器运行验收未全部执行）
 C1.6.0 业务 global 基线与行为查询清单           已完成（主代理逐项审计；已有本地提交）
-C1.6.1 Message/Notification 样式所有权收口       已完成（主代理整批审核；浏览器运行验收未执行；尚未提交）
-C1.6.2–C1.6.5 其余组件样式与业务 global 收口    待实施（仅计划；需逐批单独授权）
+C1.6.1 Message/Notification 样式所有权收口       已完成（主代理整批审核；浏览器运行验收未执行；已有本地提交）
+C1.6.2 Topic/Post 样式所有权收口                  已完成（主代理整批审核；浏览器运行验收未执行；已有本地代码提交）
+C1.6.3–C1.6.5 其余组件样式与业务 global 收口     待实施（仅计划；需逐批单独授权）
 C1.7 Foundation 全局边界与最终目录收口        待实施（仅计划；需单独授权）
 ```
 
-### 当前停点：C1.6.1 已完成但尚未提交；C1.6.2–C1.6.5、C1.7 仅有计划，浏览器运行验收未全部执行，不 push、不自动实施后续阶段
+### 当前停点：C1.6.2 已完成并已有本地代码提交；C1.6.3–C1.6.5、C1.7 仅有计划，浏览器运行验收未全部执行，不 push、不自动实施后续阶段
 
 ### M3.1–M3.6 实施记录（2026-07-30）
 
@@ -2266,7 +2267,7 @@ dev20260716  0dc33a29  C1.5.2 完成后的工作树基线
 
 ### C1.6 组件样式所有权与业务 global 收口
 
-C1.5 解决了“业务样式由主题入口重复编译”和“伪 CSS Modules”问题，但还没有完成组件级所有权。C1.6.0 基线有 42 个真实 CSS Module，其中 16 个文件包含合计 120 处 `:global(...)`；主要集中在 `TopicDetail.module.scss`（40 处）、`MessageCenter.module.scss`（31 处）、`UserCenter.module.scss`（18 处）和 `EditorTopic.module.scss`（10 处）。C1.6.1 完成后为 48 个真实 CSS Module、14 个文件中的 85 处 `:global(...)`；Message/Notification 目标范围已清零，后续集中在 Topic、User、Editor 等既定批次。
+C1.5 解决了“业务样式由主题入口重复编译”和“伪 CSS Modules”问题，但还没有完成组件级所有权。C1.6.0 基线有 42 个真实 CSS Module，其中 16 个文件包含合计 120 处 `:global(...)`；主要集中在 `TopicDetail.module.scss`（40 处）、`MessageCenter.module.scss`（31 处）、`UserCenter.module.scss`（18 处）和 `EditorTopic.module.scss`（10 处）。C1.6.1 完成后为 48 个真实 CSS Module、14 个文件中的 85 处 `:global(...)`；C1.6.2 完成后为 53 个真实 CSS Module、13 个文件中的 70 处 `:global(...)`，Message/Notification 和活动 Topic/Post 子组件范围已清零，后续集中在 User、Editor、固定 ID 与审计批次。
 
 C1.6 的目标不是机械减少文件行数，而是让每条业务规则跟随真实 DOM producer：组件生产 DOM，也直接导入并消费自己的 CSS Module；Route 样式只保留 Route 根布局、Route 间编排和确实由该 Route 自身生产的状态。父 Route 不再依靠固定字符串 class、固定 ID 或 `:global` 反向命中 `modules`、`foundation/ui` 或子 Route 组件。
 
@@ -2319,6 +2320,15 @@ C1.6.5  全仓反向依赖、重复规则、大文件 owner 与剩余 global 人
 - `npm run check:architecture` 通过：308 个源码文件、1312 个 import、28 条既有 allowlist；modern/legacy typecheck、生产 build 与 `git diff --check` 通过。生产 build 转换 4034 个模块，仍只有既有 Sass `@import`、Spectrum/Lightning CSS 与大 chunk 警告；
 - 29 个主题入口、顺序和八个自定义属性保持；每份主题 CSS 只因移出 `.message-counterNav` 同步减少 238 bytes。22 个非主题顶层产物的文件名、长度与 SHA-256 完全不变；原 MessageCenter/Settings CSS 拆为 MessageLayout、private-messages、notification 与 bundler 归属的 upload owner chunks，均已抽查包含对应局部 selector；
 - 主代理逐组件复核样式声明、后代关系、specificity、hover/focus/active、气泡伪元素、UBB 链接四态、条件状态、固定/动态 ID、jQuery 查询、lazy Route 和注释闭包，未发现范围外逻辑或未登记全局依赖。浏览器、真实登录/API/权限、默认/暗色主题、响应式及五个 `/message/*` 场景未执行，不以机械检查代替；本批停止等待用户验收和单独提交授权，不自动进入 C1.6.2、C1.7 或 Z。
+
+#### C1.6.2 Topic/Post 样式所有权收口记录（2026-08-01）
+
+- 以 `ff9702be` 干净工作树为唯一基线；Topic Header 的标题、标签、时间、浏览与收藏规则并入既有 Header Info Module，Replier、Reply Signature、Reply List、Vote 和 `modules/post/ui/FloorSize` 分别直接导入并消费自有 Module。Header、`commentlike` 与动态楼层 ID 均保留，`FloorSizeProps`、公开导出和三个调用点未改；
+- `TopicDetail.module.scss` 删除 13 处已有活动 producer 的 global：Header 8 处、Reply Signature 1 处、FloorSize 4 处；仍由 Reply Content 消费正文布局并冻结 27 处无活动 producer、legacy Post 或仓外合同未排除的固定 selector，不删除休眠规则、不制造 DOM、空属性或样式锚点；
+- 回帖失败提示样式由 Foundation `NoticeMessage` 自有 Module 直接消费，Route 的 `TopicNotices.module.scss` 删除。提示根局部化后以 `[class~="noticeDisplaynone"]` 响应原 Notification service；固定/动态错误 ID、`displaynone`、`noticeDisplaynone`、1ms class 切换和 3 秒全局 `fadeOut` 时序均未改，伪造 CSS 消费的 React key 改为现有错误身份；
+- `scripts/style-global-baseline.json` 更新为 C1.6.2 精确基线；`npm run check:architecture` 通过：308 个源码文件、1312 个 import、28 条既有 allowlist。样式守卫通过：53 个真实 CSS Module、0 个过渡 partial、29 个主题、13 个文件中的 70 处 C1.6 global；modern/legacy typecheck 与 `git diff --check` 通过；
+- 基线与最终生产 build 分别转换 4034/4039 个模块并通过，仍只有既有 Sass `@import`、Spectrum/Lightning CSS 与大 chunk 警告。29 个主题及另外 25 个无关顶层产物同名、等长且 SHA-256 完全一致；旧 `detail` CSS 仅按 owner 重组为新的 `detail`、`post` 和共享反馈样式 chunk；
+- 主代理逐组件复核声明、后代关系、specificity、`@extend`、主题变量、UBB/Markdown 后代、固定/动态 ID、hash 楼层、jQuery 通知状态、组件接口、注释和生成 CSS，未发现范围外业务或未登记 global。Vite 根入口返回 200，但当前浏览器运行时没有可用实例；默认/暗色主题、普通/追踪 Topic、FloorSize 四种状态、投票、赞踩、签名、Markdown、通知、真实 API/权限、响应式和前进后退仍明确为未验收。用户人工审核通过后，代码已本地提交为 `ad1db0e7 refactor(c1.6.2): localize topic and post styles`；本记录随单独文档 checkpoint 提交，未 push，不自动进入 C1.6.3、C1.7 或 Z。
 
 每批只处理一个可独立验收的 owner 集合；不得顺手修改 API、权限、Redux、Storage、Router URL、jQuery 行为、UBB 输出、DOM 文案或主题视觉。需要新增组件 variant/slot 时，先证明它是跨 Route 的真实语义差异，不为搬 CSS 扩大公共 API。
 
@@ -2774,7 +2784,7 @@ R1  增加架构检查脚本                            已完成
 - 检查脚本结果；
 - 无业务行为变化证明。
 
-骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1–C1.5 均已完成代码实施、机械检查和主代理人工代码审核。C1.5 已提交为 `733eb045`；C1.6.0 已提交为 `bee0dd05`，C1.6.1 已完成 Message/Notification owner 收口但尚未提交，当前为 48 个真实 CSS Module、14 个文件中的 85 处业务 global。C1.6.2–C1.6.5 与 C1.7 尚未实施。完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账、缓存、草稿、UBB 与 C1 样式运行验收未全部执行，旧 `/list` 仍仅适用既有免检结论。当前停在 C1.6.1 审核后，不自动启动 C1.6.2、C1.7 或 Z。
+骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1–C1.5 均已完成代码实施、机械检查和主代理人工代码审核。C1.5 已提交为 `733eb045`；C1.6.0 已提交为 `bee0dd05`，C1.6.1 代码与记录已提交为 `61b4d5db`/`ff9702be`。C1.6.2 已完成 Topic/Post owner 收口，代码已提交为 `ad1db0e7`，当前为 53 个真实 CSS Module、13 个文件中的 70 处业务 global；C1.6.3–C1.6.5 与 C1.7 尚未实施。完整的浏览器、登录、真实 API、权限、SignalR、跨标签、转账、缓存、草稿、UBB 与 C1 样式运行验收未全部执行，旧 `/list` 仍仅适用既有免检结论。当前停在 C1.6.2 审核后，不自动启动 C1.6.3、C1.7 或 Z。
 
 ## 22. 已确认决策与后续边界
 
@@ -2797,7 +2807,7 @@ R1  增加架构检查脚本                            已完成
 
 后续仍需单独授权或审核：
 
-1. S1.1–S1.3、S1.4 六组、S1.5、S1.6 与 S1.7 尚未执行的完整浏览器、登录、真实 API、SignalR、跨标签、缓存与草稿运行验收，C1.1–C1.6.1 的浏览器样式验收，C1.6.2–C1.6.5、C1.7 的逐批代码实施授权，以及后续每个 Z 子批的代码实施授权；
+1. S1.1–S1.3、S1.4 六组、S1.5、S1.6 与 S1.7 尚未执行的完整浏览器、登录、真实 API、SignalR、跨标签、缓存与草稿运行验收，C1.1–C1.6.2 的浏览器样式验收，C1.6.3–C1.6.5、C1.7 的逐批代码实施授权，以及后续每个 Z 子批的代码实施授权；
 2. 当前 `useUserProfileContext` 接口及 UserProfileLayout 集中取数边界是否随资料缓存归位或 Redux 闭包再次调整；
 3. A2.3–A2.11 与 M3.1–M3.6 尚未执行的浏览器、登录、真实 API、权限、分页、SignalR、通知权限、上传、编辑器、缓存与 UBB 运行验收；
 4. 旧 `/list` 免检边界是否继续保留；在另行确认前，Z 只删除根 facade，不删除该公开 Route；
