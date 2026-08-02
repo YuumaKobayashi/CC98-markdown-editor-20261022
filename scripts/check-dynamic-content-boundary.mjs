@@ -167,8 +167,7 @@ for (const [filePath, sourceFile] of parsedSources) {
   }
 }
 
-const styleScanRoots = [...sourceRoots, path.join(projectRoot, "Styles")];
-const sassFiles = styleScanRoots.flatMap((root) =>
+const sassFiles = sourceRoots.flatMap((root) =>
   collectFiles(root, (name) => /\.(?:s?css)$/.test(name)),
 );
 for (const filePath of sassFiles) {

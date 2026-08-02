@@ -6,8 +6,23 @@ import ts from "typescript";
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(scriptDirectory, "..");
 const sourceRoot = path.join(projectRoot, "src");
-const allowlistPath = path.join(scriptDirectory, "architecture-allowlist.json");
 const sourceExtensions = new Set([".ts", ".tsx", ".js", ".jsx", ".mjs", ".cjs"]);
+const forbiddenRootSourcePaths = [
+  "@types/@cc98",
+  "Components",
+  "IndexedDB",
+  "Match",
+  "Pages",
+  "Props",
+  "States",
+  "Styles",
+  "Ubb",
+  "Utility",
+  "config",
+  "Store.tsx",
+  "Utility.ts",
+  "SignalR.ts",
+];
 
 const aliasRoots = new Map([
   ["@application", "src/application"],
@@ -97,10 +112,6 @@ function pathLayer(absolutePath) {
   ) {
     return "application";
   }
-  if (relativePath === "src" || relativePath.startsWith("src/")) {
-    return "legacy";
-  }
-
   return null;
 }
 
@@ -135,10 +146,6 @@ function moduleName(absolutePath) {
 }
 
 function resolveTarget(importerPath, specifier) {
-  if (specifier === "@legacy" || specifier.startsWith("@legacy/")) {
-    return { absolutePath: projectRoot, layer: "legacy" };
-  }
-
   for (const [alias, relativeRoot] of aliasRoots) {
     if (specifier === alias || specifier.startsWith(`${alias}/`)) {
       const remainder = specifier === alias ? "" : specifier.slice(alias.length + 1);
@@ -155,32 +162,8 @@ function resolveTarget(importerPath, specifier) {
   return { absolutePath: null, layer: null };
 }
 
-function loadAllowlist() {
-  const parsed = JSON.parse(fs.readFileSync(allowlistPath, "utf8"));
-
-  if (!parsed || !Array.isArray(parsed.violations)) {
-    throw new Error(`${toProjectPath(allowlistPath)} must contain a violations array`);
-  }
-
-  for (const entry of parsed.violations) {
-    for (const field of ["from", "specifier", "rule", "reason", "removeWhen"]) {
-      if (typeof entry[field] !== "string" || entry[field].trim() === "") {
-        throw new Error(`Each allowlist entry must provide a non-empty ${field}`);
-      }
-    }
-  }
-
-  return parsed.violations;
-}
-
-function violationKey(violation) {
-  return `${violation.from}\u0000${violation.specifier}\u0000${violation.rule}`;
-}
-
 function inspectImport(importerPath, specifier) {
   const from = toProjectPath(importerPath);
-  // 旧目录在迁移前只作为依赖目标分类，不追溯既有违规。
-  // 文件迁入三个新目录后，才正式受方向规则约束。
   const sourceLayer = managedSourceLayer(importerPath);
   const target = resolveTarget(importerPath, specifier);
   const violations = [];
@@ -200,15 +183,6 @@ function inspectImport(importerPath, specifier) {
       specifier,
       rule: "layer-direction",
       message: "modules cannot depend on application",
-    });
-  }
-
-  if (["foundation", "modules"].includes(sourceLayer) && target.layer === "legacy") {
-    violations.push({
-      from,
-      specifier,
-      rule: "legacy-dependency",
-      message: `${sourceLayer} cannot depend on legacy code without an allowlist entry`,
     });
   }
 
@@ -240,35 +214,42 @@ function inspectImport(importerPath, specifier) {
   return violations;
 }
 
-const allowlist = loadAllowlist();
-const allowlistByKey = new Map(allowlist.map((entry) => [violationKey(entry), entry]));
-const usedAllowlistKeys = new Set();
 const sourceFiles = collectSourceFiles(sourceRoot);
 const violations = [];
 let importCount = 0;
 
+for (const relativePath of forbiddenRootSourcePaths) {
+  if (fs.existsSync(path.join(projectRoot, relativePath))) {
+    violations.push({
+      from: relativePath,
+      specifier: "(filesystem)",
+      rule: "root-source-closure",
+      message: "legacy root browser source path must not exist",
+    });
+  }
+}
+
 for (const filePath of sourceFiles) {
+  if (managedSourceLayer(filePath) === null) {
+    violations.push({
+      from: toProjectPath(filePath),
+      specifier: "(filesystem)",
+      rule: "source-layout",
+      message: "browser source must belong to application, modules, or foundation",
+    });
+  }
+
   const specifiers = getImports(filePath);
   importCount += specifiers.length;
 
   for (const specifier of specifiers) {
     for (const violation of inspectImport(filePath, specifier)) {
-      const key = violationKey(violation);
-
-      if (allowlistByKey.has(key)) {
-        usedAllowlistKeys.add(key);
-      } else {
-        violations.push(violation);
-      }
+      violations.push(violation);
     }
   }
 }
 
-const staleAllowlistEntries = allowlist.filter(
-  (entry) => !usedAllowlistKeys.has(violationKey(entry)),
-);
-
-if (violations.length > 0 || staleAllowlistEntries.length > 0) {
+if (violations.length > 0) {
   if (violations.length > 0) {
     console.error("Architecture violations:");
     for (const violation of violations) {
@@ -278,16 +259,9 @@ if (violations.length > 0 || staleAllowlistEntries.length > 0) {
     }
   }
 
-  if (staleAllowlistEntries.length > 0) {
-    console.error("Stale architecture allowlist entries:");
-    for (const entry of staleAllowlistEntries) {
-      console.error(`- [${entry.rule}] ${entry.from} -> ${entry.specifier}`);
-    }
-  }
-
   process.exitCode = 1;
 } else {
   console.log(
-    `Architecture check passed: ${sourceFiles.length} source files, ${importCount} imports, ${usedAllowlistKeys.size} allowed violations.`,
+    `Architecture check passed: ${sourceFiles.length} source files, ${importCount} imports, 0 violations.`,
   );
 }

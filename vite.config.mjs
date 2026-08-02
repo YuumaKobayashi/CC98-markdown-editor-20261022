@@ -10,18 +10,10 @@ const require = createRequire(import.meta.url);
 const { themes, themeEntries } = require("./build/theme-manifest.cjs");
 const { createThemeNames, renderTemplate } = require("./build/template-contract.cjs");
 const root = path.dirname(fileURLToPath(import.meta.url));
-const modernSourcePrefix = normalizeFsPath(path.join(root, "src")) + "/";
 const browserProcessDefines = {
   // vfile@3 expects the browser process shim that Webpack supplied implicitly.
   "process.cwd": "(() => '/')",
 };
-
-function normalizeFsPath(fileName) {
-  return fileName
-    .replace(/\\/g, "/")
-    .replace(/^\/([A-Za-z]:\/)/, "$1")
-    .toLowerCase();
-}
 
 function loadTypeScriptCompilerOptions(configName) {
   const configFile = path.join(root, configName);
@@ -99,12 +91,11 @@ function convertStaticRequires(code) {
   return `${importStatements.join("\n")}\n${rewritten}`;
 }
 
-function transitionalTypeScriptPlugin({ convertRequires }) {
-  const modernCompilerOptions = loadTypeScriptCompilerOptions("tsconfig.json");
-  const legacyCompilerOptions = loadTypeScriptCompilerOptions("tsconfig.legacy.json");
+function typeScriptPlugin({ convertRequires }) {
+  const compilerOptions = loadTypeScriptCompilerOptions("tsconfig.json");
 
   return {
-    name: "cc98-transitional-typescript",
+    name: "cc98-typescript",
     enforce: "pre",
     transform(code, id) {
       const fileName = id.split("?", 1)[0];
@@ -113,9 +104,7 @@ function transitionalTypeScriptPlugin({ convertRequires }) {
       }
       const result = ts.transpileModule(code, {
         fileName,
-        compilerOptions: normalizeFsPath(fileName).startsWith(modernSourcePrefix)
-          ? modernCompilerOptions
-          : legacyCompilerOptions,
+        compilerOptions,
         reportDiagnostics: false,
       });
       return {
@@ -256,7 +245,7 @@ export default defineConfig(({ command }) => ({
   root,
   publicDir: "public",
   plugins: [
-    transitionalTypeScriptPlugin({ convertRequires: command === "serve" }),
+    typeScriptPlugin({ convertRequires: command === "serve" }),
     jqueryGlobalPlugin(),
     forumHtmlPlugin(),
   ],
@@ -265,7 +254,6 @@ export default defineConfig(({ command }) => ({
       { find: "@application", replacement: path.join(root, "src/application") },
       { find: "@modules", replacement: path.join(root, "src/modules") },
       { find: "@foundation", replacement: path.join(root, "src/foundation") },
-      { find: "@legacy", replacement: root },
       { find: "path", replacement: path.join(root, "node_modules/path-browserify/index.js") },
       { find: /^~antd/, replacement: path.join(root, "node_modules/antd") },
     ],

@@ -99,10 +99,7 @@ const allowlist = JSON.parse(fs.readFileSync(allowlistPath, "utf8"));
 const globalBaseline = JSON.parse(fs.readFileSync(globalBaselinePath, "utf8"));
 const ownerFreeze = JSON.parse(fs.readFileSync(ownerFreezePath, "utf8"));
 const transitionalModules = new Set(allowlist.transitionalModulePartials);
-const legacyRootStyles = new Set(allowlist.legacyRootStyles);
-const moduleRoots = ["src", "Components"]
-  .map((directory) => path.join(projectRoot, directory))
-  .filter((directory) => fs.existsSync(directory));
+const moduleRoots = [sourceRoot];
 const moduleFiles = moduleRoots.flatMap((directory) =>
   collectFiles(directory, (name) => name.endsWith(".module.scss")),
 );
@@ -214,9 +211,7 @@ for (const relativePath of transitionalModules) {
   }
 }
 
-const styleRoots = ["src", "Styles", "Components"]
-  .map((directory) => path.join(projectRoot, directory))
-  .filter((directory) => fs.existsSync(directory));
+const styleRoots = [sourceRoot];
 const styleFiles = styleRoots.flatMap((directory) =>
   collectFiles(directory, (name) => name.endsWith(".scss")),
 );
@@ -232,9 +227,7 @@ for (const styleFile of styleFiles) {
   }
 }
 
-const typescriptRoots = ["src", "Components"]
-  .map((directory) => path.join(projectRoot, directory))
-  .filter((directory) => fs.existsSync(directory));
+const typescriptRoots = [sourceRoot];
 const sourceFiles = typescriptRoots.flatMap((directory) =>
   collectFiles(directory, (name) => /\.tsx?$/.test(name)),
 );
@@ -324,9 +317,7 @@ for (const freezeKey of frozenOwnerEdges.keys()) {
   }
 }
 
-const legacyStyleTypeScriptRoots = ["src", "Components", "Pages"]
-  .map((directory) => path.join(projectRoot, directory))
-  .filter((directory) => fs.existsSync(directory));
+const legacyStyleTypeScriptRoots = [sourceRoot];
 const legacyStyleSourceFiles = legacyStyleTypeScriptRoots.flatMap((directory) =>
   collectFiles(directory, (name) => /\.tsx?$/.test(name)),
 );
@@ -384,22 +375,6 @@ for (const moduleFile of moduleFiles) {
     if (typescriptCount === 0) {
       errors.push(`未登记的伪 CSS Module 或无消费者样式: ${relativePath}`);
     }
-  }
-}
-
-const stylesDirectory = path.join(projectRoot, "Styles");
-const actualLegacyRootStyles = new Set(
-  collectFiles(stylesDirectory, (name) => name.endsWith(".scss")).map(toProjectPath),
-);
-
-for (const relativePath of actualLegacyRootStyles) {
-  if (!legacyRootStyles.has(relativePath)) {
-    errors.push(`禁止新增根 Styles 文件: ${relativePath}`);
-  }
-}
-for (const relativePath of legacyRootStyles) {
-  if (!actualLegacyRootStyles.has(relativePath)) {
-    errors.push(`根 Styles 清单包含不存在的文件: ${relativePath}`);
   }
 }
 

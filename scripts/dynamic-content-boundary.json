@@ -1,6 +1,6 @@
 {
-  "phase": "UBB and UBB Editor module dynamic content boundary closure",
-  "sourceRoots": ["src", "Components", "Pages"],
+  "phase": "Z5 UBB and UBB Editor module dynamic content boundary closure",
+  "sourceRoots": ["src"],
   "importContracts": [
     {
       "symbol": "UbbContainer",

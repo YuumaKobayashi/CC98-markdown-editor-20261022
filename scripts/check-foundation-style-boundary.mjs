@@ -93,9 +93,7 @@ const expectedFoundationFiles = new Map(
   manifest.foundationFiles.map((contract) => [contract.path, contract]),
 );
 const sassImporters = new Map();
-const sassFiles = ["src", "Components", "Pages", "Ubb", "Utility"]
-  .map((root) => path.join(projectRoot, root))
-  .flatMap((root) => collectFiles(root, (name) => name.endsWith(".scss")));
+const sassFiles = collectFiles(path.join(projectRoot, "src"), (name) => name.endsWith(".scss"));
 for (const sassFile of sassFiles) {
   const source = fs.readFileSync(sassFile, "utf8");
   for (const match of source.matchAll(/@use\s+["']([^"']+)["'][^;]*;/g)) {
@@ -169,9 +167,7 @@ for (const forbiddenPath of manifest.forbiddenPaths) {
   if (entries.length) errors.push(`Forbidden final style path still exists: ${forbiddenPath}`);
 }
 
-const sourceRoots = ["src", "Components", "Pages", "Ubb", "Utility"]
-  .map((root) => path.join(projectRoot, root))
-  .filter((root) => fs.existsSync(root));
+const sourceRoots = [path.join(projectRoot, "src")];
 const sourceFiles = sourceRoots.flatMap((root) =>
   collectFiles(root, (name) => /\.tsx?$/.test(name)),
 );
@@ -265,9 +261,10 @@ for (const contract of manifest.legacyGlobalStyles) {
 }
 
 const allowedLegacyStyles = new Set(manifest.legacyGlobalStyles.map((entry) => entry.path));
-const ordinaryStyles = ["src", "Components", "Pages", "Ubb", "Utility"]
-  .map((root) => path.join(projectRoot, root))
-  .flatMap((root) => collectFiles(root, (name) => name.endsWith(".scss") && !name.endsWith(".module.scss")))
+const ordinaryStyles = collectFiles(
+  path.join(projectRoot, "src"),
+  (name) => name.endsWith(".scss") && !name.endsWith(".module.scss"),
+)
   .map(toProjectPath)
   .filter(
     (relativePath) =>
@@ -280,9 +277,10 @@ for (const relativePath of ordinaryStyles) {
   }
 }
 
-const moduleFiles = ["src", "Components", "Pages", "Ubb", "Utility"]
-  .map((root) => path.join(projectRoot, root))
-  .flatMap((root) => collectFiles(root, (name) => name.endsWith(".module.scss")));
+const moduleFiles = collectFiles(
+  path.join(projectRoot, "src"),
+  (name) => name.endsWith(".module.scss"),
+);
 for (const moduleFile of moduleFiles) {
   const source = fs.readFileSync(moduleFile, "utf8");
   if (source.includes(":global(") || source.includes("global(")) {

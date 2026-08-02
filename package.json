@@ -12,9 +12,8 @@
     "build": "node scripts/build-vite.mjs",
     "check:architecture": "node scripts/check-architecture.mjs && node scripts/check-style-migration.mjs && node scripts/check-dynamic-content-boundary.mjs && node scripts/check-third-party-boundary.mjs && node scripts/check-foundation-style-boundary.mjs",
     "check:styles": "node scripts/check-style-migration.mjs",
-    "typecheck": "npm run typecheck:modern && npm run typecheck:legacy",
-    "typecheck:modern": "tsc --noEmit -p tsconfig.json",
-    "typecheck:legacy": "tsc --noEmit -p tsconfig.legacy.json"
+    "typecheck": "npm run typecheck:modern",
+    "typecheck:modern": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
     "@ant-design/icons": "4.8.3",

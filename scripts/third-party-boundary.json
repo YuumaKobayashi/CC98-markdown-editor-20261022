@@ -1,7 +1,7 @@
 {
-  "phase": "Z3 root adapter closure with final third-party boundary",
-  "sourceRoots": ["src", "Pages"],
-  "styleRoots": ["src", "Pages", "Styles"],
+  "phase": "Z5 final source closure with final third-party boundary",
+  "sourceRoots": ["src"],
+  "styleRoots": ["src"],
   "importContracts": [
     {
       "package": "antd",
