@@ -45,7 +45,7 @@ export class Buttons extends React.PureComponent<Props> {
                                 }}
                             >{item.fontSize.map(item => <option key={item} value={item.toString()} disabled={item === 0}>{item}</option>)}</select>
                         </div>
-                        case 'color': return <div className="ubb-button ubb-button-color" key={tagName + tagIcon} >
+                        case 'color': return <div className="ubb-button ubb-button-color cc98-vendor-spectrum-color-picker" key={tagName + tagIcon} >
                             <div className={`fa ${tagIcon} ubb-button-icon`}></div>
                             <input id="color" />
                         </div>

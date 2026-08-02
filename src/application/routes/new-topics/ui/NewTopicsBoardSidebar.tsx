@@ -158,7 +158,7 @@ export function NewTopicsBoardSidebar() {
   }, []);
 
   return (
-    <div className="">
+    <div className="cc98-vendor-antd-new-topics-collapse">
       <Collapse defaultActiveKey={["1"]} bordered={false}>
         {data.map((item: any) => renderBoardPanel(item))}
       </Collapse>

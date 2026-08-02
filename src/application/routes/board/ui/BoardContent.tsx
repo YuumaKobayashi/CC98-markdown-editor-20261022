@@ -133,7 +133,7 @@ export function BoardContent({ data, page }: BoardContentProps) {
     <>
       <div className={styles["board-list-bar"]}>
         <Pagination
-          className={styles["board-pagination"]}
+          className={`${styles["board-pagination"]} cc98-vendor-antd-board-pagination`}
           showQuickJumper
           current={currentPage}
           total={topicCount}
@@ -150,7 +150,7 @@ export function BoardContent({ data, page }: BoardContentProps) {
       <BoardTopicList list={boardList} />
       <div className={styles["board-list-bar"]}>
         <Pagination
-          className={styles["board-pagination"]}
+          className={`${styles["board-pagination"]} cc98-vendor-antd-board-pagination`}
           showQuickJumper
           current={currentPage}
           pageSize={20}

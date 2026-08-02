@@ -82,6 +82,9 @@ export function createColorPicker(handler: (color) => void) {
             ["#600", "#783f04", "#7f6000", "#274e13", "#0c343d", "#073763", "#20124d", "#4c1130"],
             ["#000", "#444", "#666", "#999", "#ccc", "#eee", "#f3f3f3", "#fff"]
         ],
+        // 将插件 Portal 限定在颜色按钮 owner 内，避免 Spectrum 全局样式命中仓外 DOM
+        appendTo: 'parent',
+        containerClassName: 'cc98-vendor-spectrum-container',
         //替换掉默认的类名，便于写css
         replacerClassName: 'ubb-color-picker',
         //点击后隐藏
