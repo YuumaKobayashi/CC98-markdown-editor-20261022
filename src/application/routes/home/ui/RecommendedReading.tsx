@@ -29,7 +29,7 @@ export function RecommendedReading({ data }: { data: MainPageColumn[] }) {
         <div className={readingStyles.recommendedReadingImage}>
           <img src={selected?.imageUrl ?? ""} />
         </div>
-        <div className="column" style={{ flexGrow: 1 }}>
+        <div className="cc98-column" style={{ flexGrow: 1 }}>
           <div className={readingStyles.recommendedReadingTitle}>
             <a href={selected?.url ?? ""} target="_blank">
               {selected?.title ?? ""}

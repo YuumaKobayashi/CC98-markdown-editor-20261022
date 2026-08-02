@@ -13,6 +13,7 @@ import moment from "moment";
 import { MarkdownEditor } from "@foundation/integrations/markdown-editor";
 import * as Showdown from "showdown";
 import { RightTagHandler } from "@legacy/Ubb/RightTagHandler";
+import styles from "./TopicReplyComposer.module.scss";
 import { isMaster } from "@modules/board";
 import { getMyInfo } from "@modules/session";
 import { getUserWealth } from "@modules/wealth";
@@ -624,7 +625,7 @@ ${nextContent.content}[/quote]
       let ft = null;
       if (Number(f) > 365) {
         ft = (
-          <div className="row" style={{ color: "red" }}>
+          <div className="cc98-row" style={{ color: "red" }}>
             提示：该贴发布于{f}天前，如无必要请勿回复。
           </div>
         );
@@ -635,7 +636,7 @@ ${nextContent.content}[/quote]
       if (props.topicInfo.canNotifyAllReplier || isManager) {
         notifyAllReplier = (
           <div>
-            <div className="row" style={{ color: "#808080" }}>
+            <div className="cc98-row" style={{ color: "#808080" }}>
               <input type="checkbox" id="notifyAllReplierCheckBox" style={{ marginRight: "5px" }}
                 onChange={e => {
                   console.log(e.target.checked);
@@ -644,7 +645,7 @@ ${nextContent.content}[/quote]
               <label htmlFor="notifyAllReplierCheckBox">通知本主题所有回复用户</label><br />
             </div>
             {isManager ?
-              <div className="row" style={{ color: "#808080" }}>注意：你因拥有本版面的管理权限，可以在本版面无条件使用本功能，请谨慎使用。</div>
+              <div className="cc98-row" style={{ color: "#808080" }}>注意：你因拥有本版面的管理权限，可以在本版面无条件使用本功能，请谨慎使用。</div>
               : null}
           </div>
         )
@@ -663,7 +664,7 @@ ${nextContent.content}[/quote]
             id="post-topic-button"
             onClick={postUbbContent}
             disabled={stateRef.current.buttonDisabled}
-            className="button blue"
+            className={`${styles.button} ${styles.blue} ${styles.postTopicButton}`}
           >
             {stateRef.current.buttonInfo}
           </button>
@@ -673,7 +674,7 @@ ${nextContent.content}[/quote]
             id="post-topic-button-md"
             onClick={postMdContent}
             disabled={stateRef.current.buttonDisabled}
-            className="button blue"
+            className={`${styles.button} ${styles.blue} ${styles.postTopicButton}`}
           >
             {stateRef.current.buttonInfo}
           </button>
@@ -692,7 +693,7 @@ ${nextContent.content}[/quote]
               id="post-topic-button-anonymous"
               onClick={postAnonymousUbbContent}
               disabled={stateRef.current.buttonDisabled}
-              className="button grey"
+              className={`${styles.button} ${styles.grey} ${styles.postTopicButton}`}
             >
               {stateRef.current.anonymouslyPostButtonInfo}
             </button>
@@ -711,7 +712,7 @@ ${nextContent.content}[/quote]
               id="post-topic-button-md-anonymous"
               onClick={postAnonymousMdContent}
               disabled={stateRef.current.buttonDisabled}
-              className="button grey"
+              className={`${styles.button} ${styles.grey} ${styles.postTopicButton}`}
             >
               {stateRef.current.anonymouslyPostButtonInfo}
             </button>
@@ -732,7 +733,7 @@ ${nextContent.content}[/quote]
                 id="post-topic-button-anonymous"
                 onClick={postAnonymousUbbContent}
                 disabled={stateRef.current.buttonDisabled}
-                className="button grey"
+                className={`${styles.button} ${styles.grey} ${styles.postTopicButton}`}
               >
                 {stateRef.current.anonymouslyPostButtonInfo}
               </button>
@@ -751,7 +752,7 @@ ${nextContent.content}[/quote]
                 id="post-topic-button-md-anonymous"
                 onClick={postAnonymousMdContent}
                 disabled={stateRef.current.buttonDisabled}
-                className="button grey"
+                className={`${styles.button} ${styles.grey} ${styles.postTopicButton}`}
               >
                 {stateRef.current.anonymouslyPostButtonInfo}
               </button>
@@ -772,7 +773,7 @@ ${nextContent.content}[/quote]
                   id="post-topic-button"
                   onClick={postUbbContent}
                   disabled={stateRef.current.buttonDisabled}
-                  className="button blue"
+                  className={`${styles.button} ${styles.blue} ${styles.postTopicButton}`}
                 >
                   {stateRef.current.buttonInfo}
                 </button>
@@ -780,7 +781,7 @@ ${nextContent.content}[/quote]
                   id="post-topic-button-anonymous"
                   onClick={postAnonymousUbbContent}
                   disabled={stateRef.current.buttonDisabled}
-                  className="button grey"
+                  className={`${styles.button} ${styles.grey} ${styles.postTopicButton}`}
                 >
                   {stateRef.current.anonymouslyPostButtonInfo}
                 </button>
@@ -804,7 +805,7 @@ ${nextContent.content}[/quote]
                   id="post-topic-button-md"
                   onClick={postMdContent}
                   disabled={stateRef.current.buttonDisabled}
-                  className="button blue"
+                  className={`${styles.button} ${styles.blue} ${styles.postTopicButton}`}
                 >
                   {stateRef.current.buttonInfo}
                 </button>
@@ -812,7 +813,7 @@ ${nextContent.content}[/quote]
                   id="post-topic-button-md-anonymous"
                   onClick={postAnonymousMdContent}
                   disabled={stateRef.current.buttonDisabled}
-                  className="button grey"
+                  className={`${styles.button} ${styles.grey} ${styles.postTopicButton}`}
                 >
                   {stateRef.current.anonymouslyPostButtonInfo}
                 </button>
@@ -838,7 +839,7 @@ ${nextContent.content}[/quote]
               option={{ height: 20, submit: postUbbContent }}
             />
             <div
-              className="row"
+              className="cc98-row"
               style={{ justifyContent: "center", marginBottom: "1.25rem " }}
             >
               {ubbButtons}
@@ -867,7 +868,7 @@ ${nextContent.content}[/quote]
               />
             </div>
             <div
-              className="row"
+              className="cc98-row"
               style={{ justifyContent: "center", marginTop: "5rem " }}
             >
               {markdownButtons}
@@ -926,7 +927,7 @@ ${nextContent.content}[/quote]
               <button
                 id="post-topic-cache-button"
                 onClick={cleancache}
-                className="button blue"
+                className={`${styles.button} ${styles.blue}`}
                 style={{
                   width: "100%",
                   height: "2rem",
@@ -941,7 +942,7 @@ ${nextContent.content}[/quote]
               <button
                 id="post-topic-cache-button-clean"
                 onClick={cleancache}
-                className="button blue"
+                className={`${styles.button} ${styles.blue}`}
                 style={{
                   width: "12rem",
                   height: "2rem",
@@ -970,10 +971,10 @@ ${nextContent.content}[/quote]
           id="sendTopicInfo"
           style={{ width: "100%", display: "flex", flexDirection: "column" }}
         >
-          <div className="row" style={{ justifyContent: "flex-end" }}>
+          <div className="cc98-row" style={{ justifyContent: "flex-end" }}>
             <div
               id="post-topic-changeMode"
-              className="changeEditor"
+              className={styles.changeEditor}
               onClick={changeEditor}
               style={{ width: "14rem", marginBottom: "0.5rem" }}
             >

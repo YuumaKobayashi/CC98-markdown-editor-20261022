@@ -1,4 +1,5 @@
 import $ from "jquery";
+export { noticeMessageShow } from "@foundation/ui/feedback";
 import { getToken, formAuthorizeHeader, isLogOn } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
 import { clearLegacyMessageCounts, getLegacyMessageCounts, throwLegacyError } from "@foundation/lib/legacy-utility-effects";
@@ -243,15 +244,4 @@ export async function readAll(section: ReadAllNotificationSection | null) {
   const response = await cc98Fetch(url, { method: "PUT", headers, body: "" });
   clearLegacyMessageCounts();
   return null;
-}
-
-/**
- * 控制提示消息出现和消失
- */
-export function noticeMessageShow(id: string) {
-  $(`#${id}`).removeClass("displaynone");
-  $(`#${id}`).removeClass("noticeDisplaynone");
-  setTimeout(function () {
-    $(`#${id}`).addClass("noticeDisplaynone");
-  }, 1);
 }

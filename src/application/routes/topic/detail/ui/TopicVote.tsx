@@ -203,7 +203,7 @@ export function TopicVote({
       {!voteInfo.canVote ? null : (
         <div className={styles.voteButtons}>
           <button
-            className="button blue"
+            className={`${styles.button} ${styles.blue}`}
             type="button"
             onClick={submit}
             disabled={!items.length || isVoting}
@@ -211,7 +211,7 @@ export function TopicVote({
             投票
           </button>
           <button
-            className="button blue"
+            className={`${styles.button} ${styles.blue}`}
             type="button"
             onClick={() => setItems([])}
           >

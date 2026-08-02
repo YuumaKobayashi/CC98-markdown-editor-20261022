@@ -65,7 +65,7 @@ export function BoardFooterActions({
   return (
     <>
       <div
-        className="row"
+        className="cc98-row"
         style={{ width: "100%", justifyContent: "flex-end" }}
       >
         <Button onClick={openRecord}>查看版面事件</Button>

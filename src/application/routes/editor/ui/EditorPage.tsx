@@ -550,22 +550,22 @@ export function EditorPage(): React.ReactElement {
     let markdownButtons: React.ReactNode;
     if (state.anonymousState === 0 || mode === "postVoteTopic") {
       ubbButtons = (
-        <div className="row" style={{ justifyContent: "center" }}>
+        <div className="cc98-row" style={{ justifyContent: "center" }}>
           <button
             id="post-topic-button"
             onClick={() => void sendUbbTopic(false)}
-            className="button blue"
+            className={`${styles.button} ${styles.blue} ${styles.postTopicButton}`}
           >
             发帖
           </button>
         </div>
       );
       markdownButtons = (
-        <div className="row" style={{ justifyContent: "center" }}>
+        <div className="cc98-row" style={{ justifyContent: "center" }}>
           <button
             id="post-topic-button"
             onClick={() => void sendMarkdownTopic(false)}
-            className="button blue"
+            className={`${styles.button} ${styles.blue} ${styles.postTopicButton}`}
           >
             发帖
           </button>
@@ -573,22 +573,22 @@ export function EditorPage(): React.ReactElement {
       );
     } else if (state.anonymousState === 1) {
       ubbButtons = (
-        <div className="row" style={{ justifyContent: "center" }}>
+        <div className="cc98-row" style={{ justifyContent: "center" }}>
           <button
             id="post-topic-button-anonymous"
             onClick={() => void sendUbbTopic(true)}
-            className="button grey"
+            className={`${styles.button} ${styles.grey} ${styles.postTopicButton}`}
           >
             匿名发帖
           </button>
         </div>
       );
       markdownButtons = (
-        <div className="row" style={{ justifyContent: "center" }}>
+        <div className="cc98-row" style={{ justifyContent: "center" }}>
           <button
             id="post-topic-button-anonymous"
             onClick={() => void sendMarkdownTopic(true)}
-            className="button grey"
+            className={`${styles.button} ${styles.grey} ${styles.postTopicButton}`}
           >
             匿名发帖
           </button>
@@ -616,14 +616,14 @@ export function EditorPage(): React.ReactElement {
             <button
               id="post-topic-button"
               onClick={() => void sendUbbTopic(false)}
-              className="button blue"
+              className={`${styles.button} ${styles.blue} ${styles.postTopicButton}`}
             >
               发帖
             </button>
             <button
               id="post-topic-button-anonymous"
               onClick={() => void sendUbbTopic(true)}
-              className="button grey"
+              className={`${styles.button} ${styles.grey} ${styles.postTopicButton}`}
             >
               匿名发帖
             </button>
@@ -643,14 +643,14 @@ export function EditorPage(): React.ReactElement {
             <button
               id="post-topic-button"
               onClick={() => void sendMarkdownTopic(false)}
-              className="button blue"
+              className={`${styles.button} ${styles.blue} ${styles.postTopicButton}`}
             >
               发帖
             </button>
             <button
               id="post-topic-button-anonymous"
               onClick={() => void sendMarkdownTopic(true)}
-              className="button grey"
+              className={`${styles.button} ${styles.grey} ${styles.postTopicButton}`}
             >
               匿名发帖
             </button>
@@ -706,11 +706,11 @@ export function EditorPage(): React.ReactElement {
             value={state.content}
             option={{ submit: () => void editUbb() }}
           />
-          <div className="row" style={{ justifyContent: "center" }}>
+          <div className="cc98-row" style={{ justifyContent: "center" }}>
             <button
               id="post-topic-button"
               onClick={() => void editUbb()}
-              className="button blue"
+              className={`${styles.button} ${styles.blue} ${styles.postTopicButton}`}
             >
               编辑
             </button>
@@ -732,7 +732,7 @@ export function EditorPage(): React.ReactElement {
           <button
             id="post-topic-button"
             onClick={() => void editMarkdown()}
-            className="button blue"
+            className={`${styles.button} ${styles.blue} ${styles.postTopicButton}`}
           >
             编辑
           </button>
@@ -905,7 +905,7 @@ function EditorContentHeader({
       <div
         id="post-topic-changeMode"
         onClick={changeEditor}
-        className="hiddenImage"
+        className={styles.hiddenImage}
         style={{ width: "12rem", marginTop: "0rem" }}
       >
         切换到{target}编辑器

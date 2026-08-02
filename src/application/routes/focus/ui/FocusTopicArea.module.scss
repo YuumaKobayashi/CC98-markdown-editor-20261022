@@ -27,13 +27,13 @@
     outline: none;}}
 
 .top-button.top-button.btn-show {
-  animation-name: global(fadeIn);
+  animation-name: fadeIn;
   animation-duration: 1s;
   display: inherit;}
 
 .top-button.top-button.btn-disappear {
   display: inherit;
-  animation-name: global(fadeOut);
+  animation-name: fadeOut;
   animation-duration: 500ms;
   animation-fill-mode: forwards;}
 
@@ -76,4 +76,35 @@
   //   font-size: 16px;
   //   color: $color-black;
   // }
+}
+
+.displayNone {
+  display: none;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 0.5;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 0.5;
+    visibility: visible;
+  }
+
+  80% {
+    opacity: 0.5;
+    visibility: visible;
+  }
+
+  100% {
+    visibility: hidden;
+    opacity: 0;
+  }
 }

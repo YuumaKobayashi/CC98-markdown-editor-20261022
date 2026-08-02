@@ -80,9 +80,9 @@ export function TopicAwardList({
   });
 
   return (
-    <div className={`column ${styles.awardInfo}`} id={awardInfoId}>
+    <div className={`cc98-column ${styles.awardInfo}`} id={awardInfoId}>
       <div
-        className="row"
+        className="cc98-row"
         style={{ width: "25rem", fontSize: "0.8rem", marginBottom: "0.2rem" }}
       >
         <div style={{ marginLeft: "3.1rem" }}>用户</div>

@@ -230,7 +230,7 @@ export function FocusTopicArea({ id, name }: FocusTopicAreaProps) {
         </div>
         <div
           className={`${styles["focus-topic-loading"]}${
-            isStopped ? " displaynone" : ""
+            isStopped ? ` ${styles.displayNone}` : ""
           }`}
           id="focus-topic-loading"
         >
@@ -238,7 +238,7 @@ export function FocusTopicArea({ id, name }: FocusTopicAreaProps) {
         </div>
         <div
           className={`${styles["focus-topic-loaddone"]}${
-            isStopped ? "" : " displaynone"
+            isStopped ? "" : ` ${styles.displayNone}`
           }`}
           id="focus-topic-loaddone"
         >

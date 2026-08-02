@@ -1,4 +1,5 @@
-@use "../../../foundation/styles/variables/legacy" as *;
+
+@use "../../../foundation/styles/tokens/semantic-colors" as semanticColors;
 
 .message-message-wc {
   flex-shrink: 0;
@@ -10,7 +11,7 @@
 .message-message-wcTime {
   height: 10px;
   font-size: 10px;
-  color: $color-thinBlack;
+  color: semanticColors.$color-thinBlack;
   text-align: center;
   padding: 5px 0px 8px 0px;
 }
@@ -36,7 +37,7 @@
     right: 85px;
     top: 18px;
     border: 8px solid;
-    border-color: transparent transparent transparent $color-border;
+    border-color: transparent transparent transparent semanticColors.$color-border;
   }
 
   .message-message-wcContent:after {
@@ -47,7 +48,7 @@
     right: 89px;
     top: 20px;
     border: 6px solid;
-    border-color: transparent transparent transparent $color-body;
+    border-color: transparent transparent transparent semanticColors.$color-body;
   }
 }
 
@@ -72,7 +73,7 @@
     left: 85px;
     top: 18px;
     border: 8px solid;
-    border-color: transparent $color-border transparent transparent;
+    border-color: transparent semanticColors.$color-border transparent transparent;
   }
 
   .message-message-wcContent:after {
@@ -83,13 +84,13 @@
     left: 89px;
     top: 20px;
     border: 6px solid;
-    border-color: transparent $color-body transparent transparent;
+    border-color: transparent semanticColors.$color-body transparent transparent;
   }
 }
 
 .message-message-wcContent {
-  background-color: $color-body;
-  border: 1px solid $color-border;
+  background-color: semanticColors.$color-body;
+  border: 1px solid semanticColors.$color-border;
   border-radius: 3px;
   width: auto;
   height: auto;
@@ -99,7 +100,7 @@
 
   .message-message-wcText {
     font-size: 14px;
-    color: $color-thinBlack;
+    color: semanticColors.$color-thinBlack;
     margin: 10px 10px 9px 10px;
     line-height: 22px;
     clear: both;

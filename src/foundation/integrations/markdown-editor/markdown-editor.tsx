@@ -125,6 +125,7 @@ export function MarkdownEditor({
 }: MarkdownEditorProps) {
   return (
     <MarkdownEditorLite
+      className="cc98-vendor-markdown-editor"
       config={{
         canView: {
           both: false,

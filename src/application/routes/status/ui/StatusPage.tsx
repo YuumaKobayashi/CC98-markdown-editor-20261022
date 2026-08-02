@@ -38,7 +38,7 @@ export function StatusPage({
       {heading && <div className={styles.errorTitle}>{heading}</div>}
       {children}
       {actions.map(({ label, to }) => (
-        <div className={`row ${styles.returnIndexBtn}`} key={`${to}-${label}`}>
+        <div className={`cc98-row ${styles.returnIndexBtn}`} key={`${to}-${label}`}>
           <Link to={to}>{label}</Link>
         </div>
       ))}

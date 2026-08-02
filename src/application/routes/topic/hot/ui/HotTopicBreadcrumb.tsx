@@ -11,7 +11,7 @@ interface HotTopicBreadcrumbProps {
 export function HotTopicBreadcrumb({ label }: HotTopicBreadcrumbProps) {
   return (
     <div
-      className="row"
+      className="cc98-row"
       style={{
         alignItems: "baseline",
         justifyContent: "flex-start",

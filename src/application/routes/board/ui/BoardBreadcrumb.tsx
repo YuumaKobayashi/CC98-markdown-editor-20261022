@@ -17,7 +17,7 @@ export function BoardBreadcrumb({
 }: BoardBreadcrumbProps) {
   return (
     <div
-      className="row"
+      className="cc98-row"
       style={{
         alignItems: "baseline",
         width: "100% ",

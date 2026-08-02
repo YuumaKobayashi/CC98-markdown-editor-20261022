@@ -1,3 +1,5 @@
+@use "../src/foundation/styles/tokens/semantic-colors" as semanticColors;
+
 /**
 *主要是首页和顶部条的样式
 *也有发帖页的样式（因为发帖根本没有设计，当时做的时候临时糊的）
@@ -8,12 +10,12 @@
 //类似bootstrap4的"btn btn-outline-primary"
 .hiddenImage {
   display: block;
-  color: $theme_color_main;
+  color: var(--cc98-theme-color-main);
   width: 7rem;
   background-color: transparent;
   text-align: center;
   //vertical-align: middle; //设置元素的垂直对齐方式
-  border: 1px solid $theme_color_main;
+  border: 1px solid var(--cc98-theme-color-main);
   padding: .375rem .75rem;
   font-size: 1rem;
   border-radius: .25rem;
@@ -24,7 +26,7 @@
 }
 
 .hiddenImage:hover {
-  background-color: $theme_color_main;
+  background-color: var(--cc98-theme-color-main);
   color: rgb(255, 255, 255);
   cursor: pointer;
 }
@@ -38,12 +40,12 @@
 //ubb点击下载文件按钮
 .download-file {
   display: block;
-  color: $theme_color_main;
+  color: var(--cc98-theme-color-main);
   width: 7rem;
   background-color: transparent;
   text-align: center;
   //vertical-align: middle; //设置元素的垂直对齐方式
-  border: 1px solid $theme_color_main;
+  border: 1px solid var(--cc98-theme-color-main);
   padding: .375rem .75rem;
   font-size: 1rem;
   border-radius: .25rem;
@@ -54,31 +56,7 @@
 }
 
 .download-file:hover {
-  background-color: $theme_color_main;
-  color: rgb(255, 255, 255);
-  cursor: pointer;
-}
-
-//切换编辑器按钮
-.changeEditor {
-  display: block;
-  color: $theme_color_main;
-  background-color: transparent;
-  text-align: center;
-  //vertical-align: middle; //设置元素的垂直对齐方式
-  border: 1px solid $theme_color_main;
-  padding: .375rem .75rem;
-  font-size: 1rem;
-  border-radius: .25rem;
-  line-height: normal;
-  white-space: nowrap;
-  margin-top: 1rem;
-  font-family: 微软雅黑;
-  cursor: pointer;
-}
-
-.changeEditor:hover {
-  background-color: $theme_color_main;
+  background-color: var(--cc98-theme-color-main);
   color: rgb(255, 255, 255);
   cursor: pointer;
 }
@@ -130,4 +108,54 @@ td {
   left: 50%;
   top: 50%;
   pointer-events: none;
+}
+
+.urlStyle {
+
+  /* 未访问的链接 */
+  &:link {
+    color: semanticColors.$color-url;
+  }
+
+  /* 已访问的链接 */
+  &:visited {
+    color: semanticColors.$color-urlVisited;
+  }
+
+  /* 鼠标移动到链接上 */
+  &:hover {
+    text-decoration: underline;
+  }
+
+  /* 选定的链接 */
+  &:active {
+    color: red;
+  }
+}
+
+/*
+* UBB用
+*/
+.ubb-code {
+  ol {
+    list-style: none;
+    counter-reset: li;
+    padding: 0;
+    font-family: Consolas, Monaco;
+    overflow-x: auto;
+    white-space: pre;
+  }
+
+  li {
+    counter-increment: li;
+  }
+
+  li::before {
+    content: counter(li);
+    display: inline-flex;
+    width: 50px;
+    margin: 0 10px;
+    justify-content: center;
+    background-color: #ebebeb;
+  }
 }

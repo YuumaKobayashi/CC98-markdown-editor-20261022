@@ -31,7 +31,7 @@ export class Breadcrumb extends React.Component<props> {
 
         return (
             <div
-                className="row"     
+                className="cc98-row"
                 style={{ alignItems: "baseline", width: "100% ", justifyContent: "flex-start", color: "grey", fontSize: "0.75rem", marginBottom: "1rem" }}
             >
                 {elements}

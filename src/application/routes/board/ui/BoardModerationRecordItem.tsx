@@ -52,7 +52,9 @@ export function BoardModerationRecordItem(props: BoardEvent) {
         </a>
       </div>
       <div
-        className={`${styles["boardRecord-ip"]}${showIp ? "" : " displaynone"}`}
+        className={`${styles["boardRecord-ip"]}${
+          showIp ? "" : ` ${styles.displayNone}`
+        }`}
         id={`ip_${props.id}`}
       >
         {props.ip}

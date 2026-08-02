@@ -403,7 +403,7 @@ export function NewTopicsPage() {
 
         <div
           className={`${styles["focus-topic-loading"]}${
-            isLoadDone ? " displaynone" : ""
+            isLoadDone ? ` ${styles.displayNone}` : ""
           }`}
           id="focus-topic-loading"
         >
@@ -411,7 +411,7 @@ export function NewTopicsPage() {
         </div>
         <div
           className={`${styles["focus-topic-loaddone"]}${
-            isLoadDone ? "" : " displaynone"
+            isLoadDone ? "" : ` ${styles.displayNone}`
           }`}
           id="focus-topic-loaddone"
         >

@@ -1,2 +1,6 @@
-export { NoticeMessage, SendTopicNoticeMessage } from "./NoticeMessage";
+export {
+  NoticeMessage,
+  SendTopicNoticeMessage,
+  noticeMessageShow,
+} from "./NoticeMessage";
 export { MessageBar, MessageType } from "./MessageBar";

@@ -170,7 +170,7 @@ export function TopicReplyList(props: TopicReplyListProps) {
           isHot={isHot ? true : false}
         />
         <div
-          className="column"
+          className="cc98-column"
           style={{
             justifyContent: "space-between",
             width: "55.5rem",
@@ -259,7 +259,7 @@ export function TopicReplyList(props: TopicReplyListProps) {
   }
 
   return (
-    <div className="center" style={{ width: "71rem", marginRight: "1px" }}>
+    <div className={styles.center} style={{ width: "71rem", marginRight: "1px" }}>
       {contents.map(renderReply)}
       {postManagementVisible && (
         <PostManagementDialog

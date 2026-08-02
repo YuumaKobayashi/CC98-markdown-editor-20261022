@@ -64,7 +64,7 @@ export function BoardHeader({ data, page }: BoardHeaderProps) {
 
       <div className={styles["board-head-bar"]}>
         {isLogOn && isVerified && !isLocked ? (
-          <div className="row">
+          <div className="cc98-row">
             <Link to={`/editor/postTopic/${data.id}`}>
               <Button className={styles["board-head-button"]}>发主题</Button>
             </Link>

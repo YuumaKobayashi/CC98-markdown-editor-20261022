@@ -34,3 +34,26 @@
   color: rgb(80, 80, 80);
   outline: none;
   padding-left: 1rem;}
+
+.hiddenImage {
+  display: block;
+  color: var(--cc98-theme-color-main);
+  width: 7rem;
+  background-color: transparent;
+  text-align: center;
+  //vertical-align: middle; //设置元素的垂直对齐方式
+  border: 1px solid var(--cc98-theme-color-main);
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  border-radius: .25rem;
+  line-height: normal;
+  white-space: nowrap;
+  margin-top: 1rem;
+  font-family: 微软雅黑;
+
+  &:hover {
+    background-color: var(--cc98-theme-color-main);
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+  }
+}

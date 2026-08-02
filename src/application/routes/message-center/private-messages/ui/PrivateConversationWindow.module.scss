@@ -1,20 +1,21 @@
-@use "../../../../../foundation/styles/variables/legacy" as *;
+
+@use "../../../../../foundation/styles/tokens/semantic-colors" as semanticColors;
 
 .message-message-window {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  background-color: $color-post;
+  background-color: semanticColors.$color-post;
 
   .message-message-wHeader {
     flex-basis: 39px;
-    border-top: 1px solid $color-border;
-    border-right: 1px solid $color-border;
+    border-top: 1px solid semanticColors.$color-border;
+    border-right: 1px solid semanticColors.$color-border;
     display: flex;
 
     .message-message-wReport {
       flex-basis: 62px;
-      color: $color-thinBlack;
+      color: semanticColors.$color-thinBlack;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -27,17 +28,17 @@
         text-align: center;
         border: 0px;
         border-radius: 2px;
-        background-color: $color-post;
+        background-color: semanticColors.$color-post;
         padding: 0px;
 
         &:hover {
           border: 0px;
-          background-color: $color-body;
+          background-color: semanticColors.$color-body;
         }
 
         &:active {
           border: 0px;
-          background-color: $color-post;
+          background-color: semanticColors.$color-post;
           position: relative;
           top: 1px;
           left: 1px;
@@ -51,7 +52,7 @@
 
     .message-message-wTitle {
       flex-grow: 1;
-      color: $color-black;
+      color: semanticColors.$color-black;
       font-size: 14px;
       text-align: center;
       height: 14px;
@@ -61,8 +62,8 @@
 
   .message-message-wContent {
     flex-basis: 479px;
-    border-top: 1px solid $color-border;
-    border-right: 1px solid $color-border;
+    border-top: 1px solid semanticColors.$color-border;
+    border-right: 1px solid semanticColors.$color-border;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
@@ -78,7 +79,7 @@
       .message-message-wcLoadingText {
         height: 10px;
         font-size: 10px;
-        color: $color-thinBlack;
+        color: semanticColors.$color-thinBlack;
         text-align: center;
         padding: 10px 0px 21px 0px;
       }
@@ -93,9 +94,9 @@
 
   .message-message-wPost {
     flex-basis: 160px;
-    border-top: 1px solid $color-border;
-    border-right: 1px solid $color-border;
-    border-bottom: 1px solid $color-border;
+    border-top: 1px solid semanticColors.$color-border;
+    border-right: 1px solid semanticColors.$color-border;
+    border-bottom: 1px solid semanticColors.$color-border;
     display: flex;
     flex-direction: column;
     background-color: rgb(245, 245, 245);
@@ -106,9 +107,9 @@
       height: 78px;
       line-height: 22px;
       font-size: 12px;
-      border: 1px solid $color-border;
+      border: 1px solid semanticColors.$color-border;
       margin: 19px 29px 10px 29px;
-      background-color: $color-post;
+      background-color: semanticColors.$color-post;
 
       &:focus {
         outline: none;
@@ -140,7 +141,7 @@
       width: 100px;
       height: 30px;
       background-color: var(--cc98-theme-color-main);
-      color: $color-post;
+      color: semanticColors.$color-post;
       border: 0px;
       border-radius: 3px;
       font-size: 12px;

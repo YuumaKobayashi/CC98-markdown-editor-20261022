@@ -162,7 +162,7 @@ export function EditorVoteSettings({
       <button
         type="button"
         onClick={addVoteItem}
-        className="hiddenImage"
+        className={styles.hiddenImage}
         style={{
           width: "16rem",
           margin: "0 auto 1rem",

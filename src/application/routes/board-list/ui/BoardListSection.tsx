@@ -40,13 +40,13 @@ export function BoardListSection({ data }: BoardListSectionProps) {
 
   return (
     <div className={layoutStyles.anArea} id={data.name}>
-      <div className="column" style={{ border: "2px solid #e9e9e9" }}>
+      <div className="cc98-column" style={{ border: "2px solid #e9e9e9" }}>
         <div
-          className={`row ${layoutStyles.boardListHead}`}
+          className={`cc98-row ${layoutStyles.boardListHead}`}
           onClick={toggleIsExpanded}
         >
           <div
-            className="row"
+            className="cc98-row"
             style={{ marginRight: "1rem", alignItems: "center" }}
           >
             <div className={layoutStyles.areaName}>{data.name}</div>

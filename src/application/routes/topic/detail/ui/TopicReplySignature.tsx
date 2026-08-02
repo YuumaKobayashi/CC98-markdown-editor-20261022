@@ -197,7 +197,7 @@ export function TopicReplySignature(props: TopicReplySignatureProps) {
 
   return (
     <div
-      className="column"
+      className="cc98-column"
       style={{ marginTop: "1rem", width: "52rem", marginBottom: "0.5rem" }}
     >
       <div className={styles.comment1}>
@@ -209,7 +209,7 @@ export function TopicReplySignature(props: TopicReplySignatureProps) {
           </span>
           <span style={{ marginLeft: "1rem" }}>{lastUpdate}</span>
         </div>
-        <div className="row" style={{ alignItems: "center" }}>
+        <div className="cc98-row" style={{ alignItems: "center" }}>
           <div
             id={idLike}
             className={
@@ -266,7 +266,7 @@ export function TopicReplySignature(props: TopicReplySignatureProps) {
         </div>
       </div>
       <div
-        className="row"
+        className="cc98-row"
         style={{ width: "100%", justifyContent: "center" }}
       >
         {signature}

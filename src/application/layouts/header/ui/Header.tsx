@@ -23,7 +23,7 @@ export function Header() {
       <div className={isMainPage ? styles.topBarMainPage : styles.topBar}>
         <div className={styles.topBarRow}>
           <div
-            className="row"
+            className="cc98-row"
             style={{
               display: "flex",
               flexDirection: "row",

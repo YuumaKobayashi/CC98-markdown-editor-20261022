@@ -1,4 +1,5 @@
-@use "../../../../../foundation/styles/variables/legacy" as *;
+
+@use "../../../../../foundation/styles/tokens/semantic-colors" as semanticColors;
 
 .message-right {
   display: flex;
@@ -20,8 +21,8 @@
   flex-direction: column;
   flex-grow: 1;
   font-family: 微软雅黑;
-  border: 1px solid $color-border;
+  border: 1px solid semanticColors.$color-border;
   flex-shrink: 0;
   overflow-y: auto;
-  background-color: $color-post;
+  background-color: semanticColors.$color-post;
 }

@@ -7,7 +7,7 @@ import { Link } from "react-router";
 export function RecommendedTopicsBreadcrumb() {
   return (
     <div
-      className="row"
+      className="cc98-row"
       style={{
         alignItems: "baseline",
         justifyContent: "flex-start",

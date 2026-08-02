@@ -84,8 +84,8 @@ export function TopicReplyContent({
   );
   void atUserMdUrl(content);
   const mdMode = (
-    <div className="markdown-container mde-preview">
-      <div id={domId} className="mde-preview-content"></div>
+    <div className={detailStyles.markdownContainer}>
+      <div id={domId} className={detailStyles.markdownPreviewContent}></div>
     </div>
   );
   const renderedContent = contentType === 1 ? mdMode : ubbMode;

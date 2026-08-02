@@ -133,19 +133,19 @@ export function TopicHeader(props: TopicHeaderProps) {
     <div className={actionStyles["topicInfo-info"]}>
       <div className={actionStyles["topicInfo-title"]}>
         <div
-          className={`column ${actionStyles.topicTitleProp}`}
+          className={`cc98-column ${actionStyles.topicTitleProp}`}
           id="topicTitleProp"
         >
           <div
             id="essay1"
-            className={`row ${actionStyles.essay}`}
+            className={`cc98-row ${actionStyles.essay}`}
             title={title.length > overflowLen ? title : undefined}
           >
             {title.length <= overflowLen
               ? title
               : title.slice(0, overflowLen) + " ..."}
           </div>
-          <div className={`row ${actionStyles.essayProp}`} id="essayProp">
+          <div className={`cc98-row ${actionStyles.essayProp}`} id="essayProp">
             {tags}
             <div id="time" className={actionStyles.time}>
               <div className="viewProp">

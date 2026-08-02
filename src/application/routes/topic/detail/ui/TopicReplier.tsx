@@ -241,7 +241,7 @@ export function TopicReplier({
   const myInfo = getMyInfo();
   if (myInfo && myInfo.name !== userInfo.name && !isAnonymous) {
     buttons = (
-      <div className={`row ${styles.userMessageBtn}`}>
+      <div className={`cc98-row ${styles.userMessageBtn}`}>
         <div style={{ marginLeft: "0.85rem" }}>
           <button
             className={styles.replierBtn}
@@ -283,7 +283,7 @@ export function TopicReplier({
 
   const userDetailMessage = !isAnonymous ? (
     <div
-      className="column"
+      className="cc98-column"
       style={{
         width: "60%",
         alignItems: "flex-start",
@@ -311,11 +311,11 @@ export function TopicReplier({
 
   return (
     <div className={styles.userMessage}>
-      <div className={`column ${styles["userMessage-left"]}`}>
+      <div className={`cc98-column ${styles["userMessage-left"]}`}>
         {userName}
         {userDetailMessage}
       </div>
-      <div className={`column ${styles["userMessage-right"]}`}>
+      <div className={`cc98-column ${styles["userMessage-right"]}`}>
         {gender}
         {photoFrame}
         {buttons}

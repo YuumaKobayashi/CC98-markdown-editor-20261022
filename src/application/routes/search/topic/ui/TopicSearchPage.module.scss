@@ -1,4 +1,5 @@
-@use "../../../../../foundation/styles/variables/legacy" as *;
+
+@use "../../../../../foundation/styles/tokens/semantic-colors" as semanticColors;
 
 .top-button.top-button {
   width: 6rem;
@@ -34,13 +35,13 @@
     outline: none;}}
 
 .top-button.top-button.btn-show {
-  animation-name: global(fadeIn);
+  animation-name: fadeIn;
   animation-duration: 1s;
   display: inherit;}
 
 .top-button.top-button.btn-disappear {
   display: inherit;
-  animation-name: global(fadeOut);
+  animation-name: fadeOut;
   animation-duration: 500ms;
   animation-fill-mode: forwards;}
 
@@ -108,6 +109,33 @@
 
   .noResultText {
     font-size: 16px;
-    color: $color-thinBlack;
+    color: semanticColors.$color-thinBlack;
     margin-top: 20px;
     align-self: center;}}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 0.5;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 0.5;
+    visibility: visible;
+  }
+
+  80% {
+    opacity: 0.5;
+    visibility: visible;
+  }
+
+  100% {
+    visibility: hidden;
+    opacity: 0;
+  }
+}

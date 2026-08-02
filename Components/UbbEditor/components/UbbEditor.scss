@@ -163,7 +163,7 @@
 .ubb-editor-info {
     display: flex;
     position: absolute;
-    background: $theme_color_main;
+    background: var(--cc98-theme-color-main);
     z-index: 2;
     transition-duration: .5s;
     pointer-events: none;

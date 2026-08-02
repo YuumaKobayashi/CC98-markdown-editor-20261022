@@ -6,7 +6,7 @@ import styles from "./footer.module.scss";
 export function Footer() {
   return (
     <div className={styles.footer}>
-      <div className="column">
+      <div className="cc98-column">
         <div className={styles.footerRow}>
           <div style={{ marginRight: "15px", color: "#000" }}>
             CC98运营管理团队

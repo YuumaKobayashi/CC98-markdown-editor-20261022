@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router";
+import styles from "./Pager.module.scss";
 
 type PaginationLinkProps = {
   text: string;
@@ -15,8 +16,11 @@ export type PagerProps = {
 
 function PaginationLink({ text, url, active }: PaginationLinkProps) {
   return (
-    <li className="page-item">
-      <Link className={`page-link${active ? " active" : ""}`} to={url}>
+    <li className={styles.pageItem}>
+      <Link
+        className={`${styles.pageLink}${active ? ` ${styles.active}` : ""}`}
+        to={url}
+      >
         {text}
       </Link>
     </li>
@@ -66,8 +70,8 @@ export function Pager({ page: currentPage, url, totalPage }: PagerProps) {
   const showGoto = totalPage > 20;
 
   return (
-    <div className="pagination">
-      <ul className="page-nav">
+    <div className={styles.pagination}>
+      <ul className={styles.pageNav}>
         {showFirst && <PaginationLink text="1" url={`${url}1#1`} />}
 
         {showPrevious && (
@@ -93,7 +97,7 @@ export function Pager({ page: currentPage, url, totalPage }: PagerProps) {
       </ul>
 
       {showGoto && (
-        <div className="page-goto">
+        <div className={styles.pageGoto}>
           <div>
             <input onChange={handleInput} placeholder="跳转到" />
           </div>

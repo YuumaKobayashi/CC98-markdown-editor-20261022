@@ -110,19 +110,19 @@ export function HomePage() {
       <div className={pageStyles.leftPart}>
         <AnnouncementComponent data={data.announcement} />
         <RecommendedReading data={data.recommendationReading} />
-        <div className="row" style={{ justifyContent: "space-between" }}>
+        <div className="cc98-row" style={{ justifyContent: "space-between" }}>
           <HomeHotTopics data={data.hotTopic} />
           <MainPageTopicComponent data={data.schoolEvent} name="校园活动" fetchUrl="/topic/school-event" style="blue" mores={[]} />
         </div>
-        <div className="row" style={{ justifyContent: "space-between" }}>
+        <div className="cc98-row" style={{ justifyContent: "space-between" }}>
           <MainPageTopicComponent data={data.academics} name="学术通知" fetchUrl="/topic/academics" style="black" mores={[]} />
           <MainPageTopicComponent data={data.study} name="学习园地" fetchUrl="/topic/study" style="black" mores={study} />
         </div>
-        <div className="row" style={{ justifyContent: "space-between" }}>
+        <div className="cc98-row" style={{ justifyContent: "space-between" }}>
           <MainPageTopicComponent data={data.emotion} name="感性·情感" fetchUrl="/topic/emotion" style="blue" mores={emotion} />
           <MainPageTopicComponent data={data.fleaMarket} name="跳蚤市场" fetchUrl="/topic/flea-market" style="blue" mores={fleaMarket} />
         </div>
-        <div className="row" style={{ justifyContent: "space-between" }}>
+        <div className="cc98-row" style={{ justifyContent: "space-between" }}>
           <MainPageTopicComponent data={data.fullTimeJob} name="求职广场" fetchUrl="/topic/full-time-job" style="black" mores={fullTimeJob} />
           <MainPageTopicComponent data={data.partTimeJob} name="实习兼职" fetchUrl="/topic/part-time-job" style="black" mores={partTimeJob} />
         </div>

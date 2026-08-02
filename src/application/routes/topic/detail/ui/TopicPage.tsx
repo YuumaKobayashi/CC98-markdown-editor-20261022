@@ -27,6 +27,7 @@ import {
   type TopicReplyComposerHandle,
 } from "./TopicReplyComposer";
 import { TopicReplyList } from "./TopicReplyList";
+import styles from "./TopicPage.module.scss";
 
 type TopicRouteParams = {
   topicid?: string;
@@ -281,11 +282,11 @@ export function TopicPage() {
   const pagerUrl = `/topic/${state.topicid}/`;
 
   return (
-    <div className="center">
+    <div className={styles.center}>
       <DocumentTitle title={`${state.topicInfo.title || "帖子"} - CC98论坛`} />
-      <div className="column" style={{ width: "100%" }}>
+      <div className="cc98-column" style={{ width: "100%" }}>
         <div
-          className="row"
+          className="cc98-row"
           style={{
             width: "100%",
             justifyContent: "space-between",
@@ -324,9 +325,9 @@ export function TopicPage() {
           topicId={params.topicid}
         />
       </QuoteContext.Provider>
-      <div className="column" style={{ width: "100%" }}>
+      <div className="cc98-column" style={{ width: "100%" }}>
         <div
-          className="row"
+          className="cc98-row"
           style={{
             width: "100%",
             justifyContent: "space-between",

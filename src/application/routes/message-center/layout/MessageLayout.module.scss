@@ -1,4 +1,5 @@
-@use "../../../../foundation/styles/variables/legacy" as *;
+
+@use "../../../../foundation/styles/tokens/semantic-colors" as semanticColors;
 
 /*****************************************以下为我的消息的样式*********************************/
 .message-root {
@@ -15,7 +16,7 @@
 
 .message-title {
   font-size: 16px;
-  color: $color-thinBlack;
+  color: semanticColors.$color-thinBlack;
 }
 
 .message-content {
@@ -31,10 +32,10 @@
   width: 198px;
   height: 400px;
   margin-right: 30px;
-  border: 1px solid $color-border;
+  border: 1px solid semanticColors.$color-border;
   display: flex;
   flex-direction: column;
-  background-color: $color-post;
+  background-color: semanticColors.$color-post;
 
   hr {
     margin: 0;
@@ -55,12 +56,12 @@
     text-decoration: none;
 
     &:hover {
-      color: $color-red;
+      color: semanticColors.$color-red;
     }
   }
 
   a.navActive {
-    color: $color-red;
+    color: semanticColors.$color-red;
   }
 }
 
@@ -76,7 +77,7 @@
   width: 100px;
   height: 30px;
   background-color: var(--cc98-theme-color-main);
-  color: $color-post;
+  color: semanticColors.$color-post;
   border: 0px;
   border-radius: 3px;
   font-size: 12px;

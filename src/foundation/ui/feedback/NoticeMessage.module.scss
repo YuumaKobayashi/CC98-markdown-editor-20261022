@@ -1,4 +1,25 @@
 /**回帖失败提示 */
+.noticeSuccess {
+  font-size: 1rem;
+  padding: 0 1rem;
+  min-height: 2rem;
+  line-height: 2rem;
+  text-align: center;
+  background-color: darkgrey;
+  opacity: 0.6;
+  border-radius: 0.8rem;
+}
+
+.displayNone {
+  display: none;
+}
+
+.noticeDisplayNone {
+  animation-name: fadeOut;
+  animation-duration: 3s;
+  animation-fill-mode: forwards;
+}
+
 .sendTopicNoticeSuccess {
   display: flex;
   position: fixed;
@@ -20,8 +41,25 @@
   border-radius: 0.8rem;
 }
 
-.sendTopicNoticeSuccess[class~="noticeDisplaynone"] {
-  animation-name: global(fadeOut);
+.sendTopicNoticeSuccess.noticeDisplayNone {
+  animation-name: fadeOut;
   animation-duration: 3s;
   animation-fill-mode: forwards;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 0.5;
+    visibility: visible;
+  }
+
+  80% {
+    opacity: 0.5;
+    visibility: visible;
+  }
+
+  100% {
+    visibility: hidden;
+    opacity: 0;
+  }
 }

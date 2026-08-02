@@ -62,7 +62,7 @@ export function UserProfile({ userInfo }: UserProfileProps) {
           </span>
         </p>
 
-        <div className="row" style={{ marginRight: "2rem" }}>
+        <div className="cc98-row" style={{ marginRight: "2rem" }}>
           <Tag
             color="grey"
             style={{
@@ -79,7 +79,7 @@ export function UserProfile({ userInfo }: UserProfileProps) {
             收到的赞
           </Tag>
           <Tag
-            className="board-head-information"
+            className={styles.boardHeadInformation}
             style={{
               width: "5rem",
               height: "2rem",

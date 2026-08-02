@@ -83,7 +83,7 @@ export function BoardAnnouncement(
   const url = `/static/images/_${data.name}.png`;
   const boardMaster = isMaster(data.boardMasters);
   const shortHand = (
-    <div className="row" style={{ height: "4rem" }}>
+    <div className="cc98-row" style={{ height: "4rem" }}>
       <div>
         <img className={styles["board-avatar"]} onError={onError} src={url} />
       </div>
@@ -93,17 +93,17 @@ export function BoardAnnouncement(
       <Divider type="vertical" />
 
       <div
-        className="column"
+        className="cc98-column"
         style={{ marginLeft: "1rem", marginRight: "1rem" }}
       >
         <div>版面简介：{data.description}</div>
-        <div className="row" style={{ flexWrap: "wrap" }}>
+        <div className="cc98-row" style={{ flexWrap: "wrap" }}>
           版主：{data.boardMasters.map(generateMasters)}
         </div>
       </div>
 
       <div
-        className="row"
+        className="cc98-row"
         style={{
           marginRight: "1rem",
           flexGrow: 2,
@@ -112,7 +112,7 @@ export function BoardAnnouncement(
         }}
       >
         <div
-          className="column"
+          className="cc98-column"
           style={{
             marginLeft: "1rem",
             marginRight: "1rem",
@@ -120,7 +120,7 @@ export function BoardAnnouncement(
             justifyContent: "space-around",
           }}
         >
-          <div className="row">
+          <div className="cc98-row">
             <Tag
               color="grey"
               style={{
@@ -134,7 +134,7 @@ export function BoardAnnouncement(
               今日贴数
             </Tag>
             <Tag
-              className="board-head-information"
+              className={styles.boardHeadInformation}
               style={{
                 width: "5rem",
                 textAlign: "center",
@@ -147,7 +147,7 @@ export function BoardAnnouncement(
               {data.todayCount}
             </Tag>
           </div>
-          <div className="row">
+          <div className="cc98-row">
             <Tag
               color="grey"
               style={{
@@ -161,7 +161,7 @@ export function BoardAnnouncement(
               总主题数
             </Tag>
             <Tag
-              className="board-head-information"
+              className={styles.boardHeadInformation}
               style={{
                 width: "5rem",
                 textAlign: "center",

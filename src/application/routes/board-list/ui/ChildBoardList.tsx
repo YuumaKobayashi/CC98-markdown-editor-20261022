@@ -47,7 +47,7 @@ export function ChildBoardList({ id, boards }: ChildBoardListProps) {
               />
             </div>
           </Link>
-          <div className={`column ${styles.boardBlock}`}>
+          <div className={`cc98-column ${styles.boardBlock}`}>
             <Link to={`/board/${item.id}`}>
               <div
                 className={styles.boardName2}
@@ -57,8 +57,8 @@ export function ChildBoardList({ id, boards }: ChildBoardListProps) {
               </div>
             </Link>
             <div className={styles.boardInfo}>
-              <div className="row">今日 {item.todayCount} </div>
-              <div className="row">总数 {item.postCount}</div>
+              <div className="cc98-row">今日 {item.todayCount} </div>
+              <div className="cc98-row">总数 {item.postCount}</div>
             </div>
           </div>
         </div>

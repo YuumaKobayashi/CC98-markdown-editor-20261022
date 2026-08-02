@@ -3,6 +3,7 @@ import { Link } from "react-router";
 
 import { getMyInfo } from "@modules/session";
 import { HomeAdvertisementCarousel } from "@application/routes/home/advertisement";
+import styles from "./BoardActionsAndAdvertisement.module.scss";
 
 interface BoardActionsAndAdvertisementProps {
   boardInfo: {
@@ -43,19 +44,19 @@ export function BoardActionsAndAdvertisement({
   const createTopicUrl = `/editor/postTopic/${boardInfo.id}`;
   let sendInfo = boardInfo.canVote ? (
     <div>
-      <Link className="button bgcolor" to={createTopicUrl}>
+      <Link className={`${styles.button} ${styles.bgcolor}`} to={createTopicUrl}>
         发主题
       </Link>
       <Link
         style={{ marginLeft: "2rem" }}
-        className="button bgcolor"
+        className={`${styles.button} ${styles.bgcolor}`}
         to={`/editor/postVoteTopic/${boardInfo.id}`}
       >
         发投票
       </Link>
     </div>
   ) : (
-    <Link className="button bgcolor" to={createTopicUrl}>
+    <Link className={`${styles.button} ${styles.bgcolor}`} to={createTopicUrl}>
       发主题
     </Link>
   );
@@ -68,7 +69,7 @@ export function BoardActionsAndAdvertisement({
 
   return (
     <div
-      className="row"
+      className="cc98-row"
       style={{
         width: "100%",
         height: "6.25rem",

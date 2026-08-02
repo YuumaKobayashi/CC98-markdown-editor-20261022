@@ -22,7 +22,7 @@ export function TopicBreadcrumb({
 
   return (
     <div
-      className="row"
+      className="cc98-row"
       style={{
         alignItems: "baseline",
         justifyContent: "flex-start",

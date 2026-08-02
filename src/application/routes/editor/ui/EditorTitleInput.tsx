@@ -193,15 +193,15 @@ export function EditorTitleInput({
   let tagInfo: React.ReactNode = null;
   if (current.tagsV2.layers === 2) {
     tagInfo = (
-      <div className="row">
-        <div className="row">
+      <div className="cc98-row">
+        <div className="cc98-row">
           <div className={styles.tagBoxSelect}>{current.tag1 || ""}</div>
           <div className={styles.downArrow}>
             <img src="/static/images/downArrow.png" width="12" height="12" />
           </div>
           {drop1}
         </div>
-        <div className="row">
+        <div className="cc98-row">
           <div className={styles.tagBoxSelect1}>{current.tag2 || ""}</div>
           <div className={styles.downArrow1}>
             <img src="/static/images/downArrow.png" width="12" height="12" />
@@ -212,7 +212,7 @@ export function EditorTitleInput({
     );
   } else if (current.tagsV2.layers == 1) {
     tagInfo = (
-      <div className="row">
+      <div className="cc98-row">
         <div className={styles.tagBoxSelect}>{current.tag1 || ""}</div>
         <div className={styles.downArrow}>
           <img src="/static/images/downArrow.png" width="12" height="12" />

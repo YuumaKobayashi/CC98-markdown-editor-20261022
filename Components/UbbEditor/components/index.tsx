@@ -12,6 +12,7 @@ import { UbbContainer } from '../../UbbContainer'
 
 // storage for default emoji
 import { setLocalStorage, getLocalStorage } from '../../../Utility'
+import './UbbEditor.scss'
 
 interface Props {
     value: string

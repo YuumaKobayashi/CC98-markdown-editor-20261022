@@ -115,19 +115,14 @@
   },
   "styleBoundaries": [
     {
-      "path": "Styles/MainPage.scss",
-      "importers": ["src/foundation/styles/Site.scss"],
+      "path": "Components/UbbContainer.scss",
+      "importers": ["Components/UbbContainer.tsx"],
       "moveWhen": "Z2 assigns the UBB renderer selectors to their final module owners."
     },
     {
-      "path": "Components/UbbEditor/stylesheet.scss",
-      "importers": ["src/foundation/styles/Site.scss"],
+      "path": "Components/UbbEditor/components/UbbEditor.scss",
+      "importers": ["Components/UbbEditor/components/index.tsx"],
       "moveWhen": "Z2 assigns the UBB editor selectors to its final module owner."
-    },
-    {
-      "path": "Styles/UbbEditor.scss",
-      "importers": [],
-      "moveWhen": "C1.7.7 removes the dormant compatibility stylesheet."
     }
   ],
   "storageContracts": [
@@ -180,7 +175,7 @@
       ]
     },
     {
-      "path": "Styles/MainPage.scss",
+      "path": "Components/UbbContainer.scss",
       "contains": [
         ".hiddenImage",
         ".visibleImage",
@@ -192,7 +187,7 @@
       ]
     },
     {
-      "path": "Components/UbbEditor/stylesheet.scss",
+      "path": "Components/UbbEditor/components/UbbEditor.scss",
       "contains": [
         ".ubb-editor",
         ".ubb-buttons",

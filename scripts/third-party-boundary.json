@@ -1,5 +1,5 @@
 {
-  "phase": "C1.7.6 third-party global boundary closure",
+  "phase": "C1.7.7 final Foundation global boundary closure",
   "sourceRoots": ["src", "Components", "Pages", "Ubb", "Utility"],
   "styleRoots": ["src", "Components", "Pages", "Ubb", "Utility", "Styles"],
   "importContracts": [
@@ -26,6 +26,12 @@
       "edgeCount": 3,
       "consumerCount": 3,
       "fingerprint": "a1a8203560f2ba151b754e5dd7bf54d31bac7d08c3beb04a1b021a8cebd17bb8"
+    },
+    {
+      "package": "react-markdown-editor-lite",
+      "edgeCount": 1,
+      "consumerCount": 1,
+      "fingerprint": "d504cd59ce30ca776a99a0733bc2557e8cec3433af60ecb34be3db1cc6e98142"
     }
   ],
   "symbolContracts": [
@@ -92,7 +98,8 @@
   ],
   "vendorStyleFiles": [
     "src/foundation/styles/vendors/_antd.scss",
-    "src/foundation/styles/vendors/_spectrum.scss"
+    "src/foundation/styles/vendors/_spectrum.scss",
+    "src/foundation/styles/vendors/_markdown-editor.scss"
   ],
   "fileContracts": [
     {
@@ -128,6 +135,22 @@
         ".cc98-vendor-spectrum-color-picker {",
         ".sp-container",
         ".sp-replacer"
+      ]
+    },
+    {
+      "path": "src/foundation/styles/vendors/_markdown-editor.scss",
+      "contains": [
+        ".cc98-vendor-markdown-editor .button",
+        "width: 7rem",
+        "height: 4rem"
+      ]
+    },
+    {
+      "path": "src/foundation/integrations/markdown-editor/markdown-editor.tsx",
+      "contains": [
+        "className=\"cc98-vendor-markdown-editor\"",
+        "className=\"button button-type-task-list\"",
+        "className=\"button button-type-image\""
       ]
     },
     {

@@ -3,6 +3,7 @@
 // https://github.com/Microsoft/TypeScript/wiki/JSX
 
 import * as React from "react";
+import $ from "jquery";
 
 import styles from "./NoticeMessage.module.scss";
 
@@ -19,6 +20,17 @@ interface SendTopicNoticeMessageProps {
 }
 
 /**
+ * 控制提示消息出现和消失
+ */
+export function noticeMessageShow(id: string) {
+  $(`#${id}`).removeClass(styles.displayNone);
+  $(`#${id}`).removeClass(styles.noticeDisplayNone);
+  setTimeout(function () {
+    $(`#${id}`).addClass(styles.noticeDisplayNone);
+  }, 1);
+}
+
+/**
  * text:显示的文字
  * id:给这个消息提示框一个id
  * top: 消息提示距顶部的距离
@@ -32,7 +44,7 @@ export function NoticeMessage({
 }: NoticeMessageProps) {
   return (
     <div
-      className="noticeSuccess displaynone"
+      className={`${styles.noticeSuccess} ${styles.displayNone}`}
       id={id}
       style={{
         position: "fixed",
@@ -52,7 +64,10 @@ export function SendTopicNoticeMessage({
   id,
 }: SendTopicNoticeMessageProps) {
   return (
-    <div className={`${styles.sendTopicNoticeSuccess} displaynone`} id={id}>
+    <div
+      className={`${styles.sendTopicNoticeSuccess} ${styles.displayNone}`}
+      id={id}
+    >
       {"操作失败。" + text}
     </div>
   );

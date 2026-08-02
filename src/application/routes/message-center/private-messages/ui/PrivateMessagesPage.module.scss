@@ -1,4 +1,5 @@
-@use "../../../../../foundation/styles/variables/legacy" as *;
+
+@use "../../../../../foundation/styles/tokens/semantic-colors" as semanticColors;
 
 /******以下为私信部分的样式***/
 .message-message {
@@ -12,31 +13,31 @@
   display: flex;
   flex-direction: column;
   width: 198px;
-  border: 1px solid $color-border;
+  border: 1px solid semanticColors.$color-border;
   font-size: 14px;
 
   .message-message-pTitle {
-    color: $color-thinBlack;
-    background-color: $color-body;
+    color: semanticColors.$color-thinBlack;
+    background-color: semanticColors.$color-body;
     height: 14px;
     padding: 11px 71px 13px 71px;
-    border-bottom: 1px solid $color-border;
+    border-bottom: 1px solid semanticColors.$color-border;
   }
 
   .message-message-pList {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    background-color: $color-post;
+    background-color: semanticColors.$color-post;
     overflow-y: auto;
 
     a {
       text-decoration: none;
-      color: $color-black;
+      color: semanticColors.$color-black;
     }
 
     .message-message-pFocus {
-      background-color: $color-focus;
+      background-color: semanticColors.$color-focus;
     }
 
     .message-message-plMore {
@@ -52,7 +53,7 @@
 
       div {
         font-size: 12px;
-        color: $color-thinBlack;
+        color: semanticColors.$color-thinBlack;
         text-align: center;
         padding-top: 10px;
       }

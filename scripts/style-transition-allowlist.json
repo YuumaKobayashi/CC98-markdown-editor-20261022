@@ -1,7 +1,4 @@
 {
   "transitionalModulePartials": [],
-  "legacyRootStyles": [
-    "Styles/MainPage.scss",
-    "Styles/UbbEditor.scss"
-  ]
+  "legacyRootStyles": []
 }

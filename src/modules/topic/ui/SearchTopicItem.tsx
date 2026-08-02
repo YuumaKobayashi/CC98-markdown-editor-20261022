@@ -3,6 +3,7 @@ import * as React from "react";
 import type { FocusTopic } from "@legacy/Props/FocusTopic";
 
 import { TopicCollectionItem } from "./TopicCollectionItem";
+import styles from "./SearchTopicItem.module.scss";
 
 /**
  * 我关注的某个版面的单个主题
@@ -18,7 +19,7 @@ export function SearchTopicItem(props: FocusTopic) {
     <TopicCollectionItem topic={props} topicUrl={topicUrl}>
       <div
         id={`tag_${props.id}`}
-        className={props.tag1 ? undefined : "displaynone"}
+        className={props.tag1 ? undefined : styles.displayNone}
       >
         {tagInfo}
       </div>

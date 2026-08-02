@@ -19,6 +19,7 @@ import {
   type TopicReplyComposerHandle,
 } from "./TopicReplyComposer";
 import { TopicReplyList } from "./TopicReplyList";
+import styles from "./TrackedTopicPage.module.scss";
 
 type TrackedTopicRouteParams = {
   topicId?: string;
@@ -182,9 +183,9 @@ export function TrackedTopicPage() {
   const pageUrl = `/topic/${params.topicId}/postId/${params.postId}/`;
 
   return (
-    <div className="center" style={{ width: "1140px" }}>
+    <div className={styles.center} style={{ width: "1140px" }}>
       <div
-        className="row"
+        className="cc98-row"
         style={{
           width: "100%",
           justifyContent: "space-between",
@@ -222,7 +223,7 @@ export function TrackedTopicPage() {
         />
       </QuoteTraceContext.Provider>
       <div
-        className="row"
+        className="cc98-row"
         style={{
           width: "100%",
           justifyContent: "space-between",

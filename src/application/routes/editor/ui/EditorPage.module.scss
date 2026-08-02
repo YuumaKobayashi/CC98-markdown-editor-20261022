@@ -35,3 +35,92 @@
   display: flex;
   align-items: center;
   height: 3rem;}
+
+.button {
+  display: inline-block;
+  outline: none;
+  cursor: pointer;
+  width: 7rem;
+  height: 4rem;
+  text-align: center;
+  text-decoration: none;
+  font-size: 1.25rem;
+  font-family: 微软雅黑;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+  border-radius: 1rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  line-height: 4rem;
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  &:active {
+    position: relative;
+    top: 1px;
+  }
+}
+
+.blue {
+  color: #fff;
+  border: solid 1px var(--cc98-theme-color-main);
+  background-color: var(--cc98-theme-color-main);
+  opacity: 0.8;
+
+  &:hover {
+    background-color: var(--cc98-theme-color-main);
+    opacity: 0.9;
+  }
+
+  &:active {
+    background-color: var(--cc98-theme-color-main);
+  }
+}
+
+.grey {
+  color: white;
+  border: solid 1px grey;
+  background-color: grey;
+  opacity: 0.8;
+
+  &:hover {
+    background-color: grey;
+    opacity: 0.9;
+  }
+
+  &:active {
+    background-color: grey;
+  }
+}
+
+.postTopicButton {
+  width: 6rem;
+  height: 2rem;
+  line-height: 0.8rem;
+  margin-top: 1rem;
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+}
+
+.hiddenImage {
+  display: block;
+  color: var(--cc98-theme-color-main);
+  width: 7rem;
+  background-color: transparent;
+  text-align: center;
+  //vertical-align: middle; //设置元素的垂直对齐方式
+  border: 1px solid var(--cc98-theme-color-main);
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  border-radius: .25rem;
+  line-height: normal;
+  white-space: nowrap;
+  margin-top: 1rem;
+  font-family: 微软雅黑;
+
+  &:hover {
+    background-color: var(--cc98-theme-color-main);
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+  }
+}

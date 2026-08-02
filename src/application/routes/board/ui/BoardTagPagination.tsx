@@ -59,7 +59,7 @@ export function BoardTagPagination({
       }}
     >
       <div
-        className="row"
+        className="cc98-row"
         style={{ display: "flex", flexWrap: "wrap", maxWidth: "35rem" }}
       >
         <div>
@@ -79,7 +79,7 @@ export function BoardTagPagination({
 
   return (
     <div
-      className="row"
+      className="cc98-row"
       style={{
         width: "100%",
         marginLeft: "0.3125rem",

@@ -118,7 +118,7 @@ export function UserProfileDetails({ userInfo }: UserProfileDetailsProps) {
             </span>
           </p>
 
-          <div className="row">
+          <div className="cc98-row">
             <Tag
               color="grey"
               style={{
@@ -135,7 +135,7 @@ export function UserProfileDetails({ userInfo }: UserProfileDetailsProps) {
               收到的赞
             </Tag>
             <Tag
-              className="board-head-information"
+              className={styles.boardHeadInformation}
               style={{
                 width: "5rem",
                 height: "2rem",

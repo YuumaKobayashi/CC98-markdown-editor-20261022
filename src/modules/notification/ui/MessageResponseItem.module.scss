@@ -1,4 +1,5 @@
-@use "../../../foundation/styles/variables/legacy" as *;
+
+@use "../../../foundation/styles/tokens/semantic-colors" as semanticColors;
 
 .message-response-box {
   /*一个消息的框框*/
@@ -87,12 +88,12 @@
 
   a {
     &:link {
-      color: $color-url;
+      color: semanticColors.$color-url;
     }
 
     /* 已访问的链接 */
     &:visited {
-      color: $color-url;
+      color: semanticColors.$color-url;
     }
 
     /* 鼠标移动到链接上 */
@@ -102,7 +103,7 @@
 
     /* 选定的链接 */
     &:active {
-      color: $color-url;
+      color: semanticColors.$color-url;
     }
   }
 }

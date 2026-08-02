@@ -29,6 +29,7 @@ function applicationRouteName(filePath) {
 }
 
 function collectFiles(directory, predicate) {
+  if (!fs.existsSync(directory)) return [];
   const files = [];
 
   for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
