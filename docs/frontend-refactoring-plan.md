@@ -1,6 +1,6 @@
 # CC98 前端目录重构执行计划
 
-> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1–C1.5 的代码实施、机械检查和主代理人工代码审核均已完成；C1.5 已本地提交为 `733eb045`。C1.6.0 已提交为 `bee0dd05`，C1.6.1 代码与记录已提交为 `61b4d5db`/`ff9702be`，C1.6.2 代码已提交为 `ad1db0e7`，C1.6.3 代码已提交为 `788da9e7`，C1.6.4 已提交为 `fdbe3762`，C1.6.5 代码与记录已提交为 `0c6efc6e`/`b232c6ca`。C1.7.1、Legacy Board 删除和 C1.7.2 Status 子批已随代码/记录提交 `f11fe1e7`/`99a8679e`，C1.7.2 其余真实复用候选已提交为 `52b4bc77`/`fe0e02fa`，C1.7.3 已提交为 `b361a4c1`/`489dff9d`，C1.7.4 已提交为 `4f5f28ba`，C1.7.5 代码与记录已提交为 `0cc9d51f`/`3db6030e`。浏览器运行时无可连接实例，C1.7.5 运行验收未执行；当前工作树干净，不自动启动 C1.7.6、C1.7.7 或 Z，不 push。
+> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1–C1.5 的代码实施、机械检查和主代理人工代码审核均已完成；C1.5 已本地提交为 `733eb045`。C1.6.0 已提交为 `bee0dd05`，C1.6.1 代码与记录已提交为 `61b4d5db`/`ff9702be`，C1.6.2 代码已提交为 `ad1db0e7`，C1.6.3 代码已提交为 `788da9e7`，C1.6.4 已提交为 `fdbe3762`，C1.6.5 代码与记录已提交为 `0c6efc6e`/`b232c6ca`。C1.7.1、Legacy Board 删除和 C1.7.2 Status 子批已随代码/记录提交 `f11fe1e7`/`99a8679e`，C1.7.2 其余真实复用候选已提交为 `52b4bc77`/`fe0e02fa`，C1.7.3 已提交为 `b361a4c1`/`489dff9d`，C1.7.4 已提交为 `4f5f28ba`，C1.7.5 代码与记录已提交为 `0cc9d51f`/`3db6030e`。C1.7.6 代码、守卫、记录和主代理整批审核已完成，浏览器运行时无可用实例，运行验收未执行；当前停在未提交工作树，不 commit、不 push，不自动启动 C1.7.7 或 Z。
 >
 > 架构依据：`docs/frontend-directory-architecture-inventory.md`。
 >
@@ -71,10 +71,11 @@ C1.7.2 真实共同语义组件复用                          已完成（主�
 C1.7.3 Route 样式仓库与组件 Module 共置              已完成（主代理整批审核；浏览器运行验收未执行；已有本地提交）
 C1.7.4 孤儿源码与样式 owner 收口                     已完成（主代理整批审核；浏览器运行验收未执行；已有本地提交）
 C1.7.5 动态内容全局边界盘点与冻结                    已完成（主代理整批审核；浏览器运行验收未执行；已有本地代码/文档提交）
-C1.7.6–C1.7.7 第三方与 Foundation 全局边界收口       待实施（需单独授权）
+C1.7.6 Ant Design、Spectrum、Router/Portal 第三方边界  已完成（主代理整批审核；浏览器运行验收未执行；未提交）
+C1.7.7 Foundation 全局边界最终收口                    待实施（需单独授权）
 ```
 
-### 当前停点：C1.7.5 动态内容全局边界盘点与冻结已完成并本地提交；浏览器运行验收未执行，不 push、不自动实施 C1.7.6、C1.7.7 或 Z
+### 当前停点：C1.7.6 第三方边界限界与登记已完成，停在未提交工作树；浏览器运行验收未执行，不 commit、不 push、不自动实施 C1.7.7 或 Z
 
 ### M3.1–M3.6 实施记录（2026-07-30）
 
@@ -2573,6 +2574,15 @@ C1.7.7  Foundation 布局工具命名空间化；删除休眠 compatibility、�
 - 修改前后正式产物均为 9561 个文件、95 个 CSS；全产物与 CSS 聚合 SHA-256 分别保持 `ad00794f52f5482f4390c459d9db1e269e3d86a0a2b3bd3d73332f0a89b100c5`、`296f2c3c35ec94c04847422bf83eee6cab589cb382b5d42bba5595c1d3998465`，主题、静态 URL、CSS chunk、vendor 和脚本产物零漂移。
 - 本地 Vite 根入口返回 HTTP 200，但浏览器连接器没有可用实例；UBB/Markdown 切换与预览、emoji、上传、草稿、动态图片、播放器、登录和真实 API 均未执行运行验收。本批不修复 New Topics 查询缺陷，不进入 C1.7.6/C1.7.7/Z2/Markdown 替换；用户审核授权后，代码与记录已分别提交为 `0cc9d51f`、`3db6030e`，未 push。
 
+#### C1.7.6 第三方全局边界限界与登记实施记录（2026-08-02）
+
+- 以干净的 `dev20260716@257f1b27` 为基线，将 Board Pagination quick-jumper 与 New Topics Collapse content 的两处 AntD 内部 DOM override 从业务 Module 迁入 `foundation/styles/vendors/_antd.scss`，分别由稳定 `cc98-vendor-*` 根限界；110 个真实 CSS Module 中 selector 级 `:global(...)` 收口为 0。
+- New Topics Panel 自有背景/边框两条原声明解除对另一份 Module 父哈希的错误依赖，改由 Panel 直接消费的本地 class 生产；滚动监听仍保留 C1.7.3 登记的哈希查询缺陷，不在本批改逻辑。`Site.scss` 中零 producer 的 AntD Carousel/Slick 与 `antd-table` 两组休眠 override 删除。
+- Spectrum 固定脚本 URL、加载顺序、palette、change/reset、replacer class 与隐藏行为不变；使用插件公开 `appendTo: 'parent'` 把动态容器限界到颜色按钮 owner，原 507 行上游样式整体置于该根，不删除或改写声明、注释、data URL 与 IE hack。AntD ConfigProvider 仍只提供 locale，Modal/Select/DatePicker/Dropdown/Popover/Tooltip/message/notification 保持默认 Portal 语义。
+- React Router 保持 66 条 core import、1 条 DOM RouterProvider import 和冻结 UBB 的 3 条 DOM import；两个 NavLink consumer 均本地计算 Module class，活动源码没有 `activeClassName`/`activeStyle`，仓库没有自写 `createPortal`。完整矩阵见 `docs/refactor-log/c1.7/third-party-boundary-audit.md`。
+- 新增第三方清单和守卫并接入 `npm run check:architecture`。检查通过：327 个现代源码文件、1348 条 import、27 条既有 allowlist；110 个真实 CSS Module、29 个主题、0 处业务 global；动态内容守卫保持通过；第三方守卫冻结 114 条 import 边、35 条 AntD Portal/配置 consumer 边和 2 份 vendor 样式 owner。modern/legacy typecheck 与正式 build 通过，构建仍为 4116 modules transformed，只保留既有 Sass、Spectrum/Lightning CSS 和大 chunk 警告。
+- 正式产物仍为 9561 个文件、95 个 CSS；主题 CSS、Board/New Topics lazy CSS 与 UBB Editor JS 的预期 hash 变化均来自限界、休眠规则删除与 Spectrum 挂载参数，主题 key/id/顺序、静态 URL 和部署文件未改。浏览器运行时列表为空，AntD/Spectrum/Portal/默认与暗色主题/键盘/z-index/真实 API 场景均未执行运行验收；本批停在未提交工作树，不 commit、不 push，不自动进入 C1.7.7 或 Z。
+
 Annual Review 的最终删除仍属于 Z4；C1.7 不得借整理样式提前删除业务。若 Z4 尚未实施，C1.7 只把其样式放入明确的冻结 owner，并登记“随 Z4 整体删除”，不得继续留在 `Site.scss`。UBB 实现和样式的完整迁址统一属于 Z2；C1.7.5 只登记 renderer/editor、动态 HTML、播放器、数学公式和 emoji 的当前 producer/consumer/selector 边界，不提前建立过渡 Module、全局兼容 facade 或旧 class 双写。Markdown 现有编辑/预览组件及其样式不在 C1.7 做兼容性迁移，只冻结调用点、内容格式、Storage/草稿、上传和安全边界，留待 Z 后独立整组件替换。根 `Components/` 等 legacy 源码目录的整体迁址和删除仍属于 Z；C1.7 只允许为组件边界、真实复用和样式共置所需的窄拆分，必要时让活动 legacy 组件暂时拥有相邻 Module，并登记随 Z 整体移动，不得把 C1.7 扩张为完整 legacy 逻辑迁移。
 
 #### C1.7 验收、守卫与停点
@@ -2934,7 +2944,7 @@ R1  增加架构检查脚本                            已完成
 - 检查脚本结果；
 - 无业务行为变化证明。
 
-骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7、C1.1–C1.6 与 C1.7.1 均已完成代码实施、机械检查和主代理人工代码审核；C1.7.1、Legacy Board 删除和 Status 子批已提交为 `f11fe1e7`/`99a8679e`，C1.7.2 其余真实组件复用已提交为 `52b4bc77`/`fe0e02fa`，C1.7.3 样式 owner 共置已提交为 `b361a4c1`/`489dff9d`，C1.7.4 已提交为 `4f5f28ba`，C1.7.5 代码与记录已提交为 `0cc9d51f`/`3db6030e`。浏览器运行验收未执行，New Topics 跨 Module DOM 查询/祖先哈希问题仍登记为后续修复；当前不自动启动 C1.7.6、C1.7.7 或 Z。
+骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7、C1.1–C1.6 与 C1.7.1 均已完成代码实施、机械检查和主代理人工代码审核；C1.7.1、Legacy Board 删除和 Status 子批已提交为 `f11fe1e7`/`99a8679e`，C1.7.2 其余真实组件复用已提交为 `52b4bc77`/`fe0e02fa`，C1.7.3 样式 owner 共置已提交为 `b361a4c1`/`489dff9d`，C1.7.4 已提交为 `4f5f28ba`，C1.7.5 代码与记录已提交为 `0cc9d51f`/`3db6030e`；C1.7.6 已完成代码、守卫、记录和主代理人工代码审核，尚未提交。浏览器运行验收未执行，New Topics 跨 Module DOM 查询/祖先哈希问题仍登记为后续修复；当前不自动启动 C1.7.7 或 Z。
 
 ## 22. 已确认决策与后续边界
 
@@ -2959,7 +2969,7 @@ R1  增加架构检查脚本                            已完成
 
 后续仍需单独授权或审核：
 
-1. S1.1–S1.3、S1.4 六组、S1.5、S1.6 与 S1.7 尚未执行的完整浏览器、登录、真实 API、SignalR、跨标签、缓存与草稿运行验收，C1.1–C1.7.5 的浏览器样式/行为验收，C1.7.6–C1.7.7 的逐批代码实施授权，以及后续每个 Z 子批的代码实施授权；
+1. S1.1–S1.3、S1.4 六组、S1.5、S1.6 与 S1.7 尚未执行的完整浏览器、登录、真实 API、SignalR、跨标签、缓存与草稿运行验收，C1.1–C1.7.6 的浏览器样式/行为验收，C1.7.7 的代码实施授权，以及后续每个 Z 子批的代码实施授权；
 2. 当前 `useUserProfileContext` 接口及 UserProfileLayout 集中取数边界是否随资料缓存归位或 Redux 闭包再次调整；
 3. A2.3–A2.11 与 M3.1–M3.6 尚未执行的浏览器、登录、真实 API、权限、分页、SignalR、通知权限、上传、编辑器、缓存与 UBB 运行验收；
 4. UBB 迁入 `modules/ubb` 后的浏览器、权限标签、编辑器、媒体、数学公式和扩展 API 人工验收；

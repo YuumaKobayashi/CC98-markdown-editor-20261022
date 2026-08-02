@@ -16,7 +16,7 @@ application → modules → foundation
 - `@types/@cc98` 和 `Styles/{MainPage,UbbEditor}.scss` 仍由后续业务阶段处理；
 - Foundation 不得依赖 Modules 或 Application，Modules 不得依赖 Application；
 - `@legacy/*` 是迁移期兼容桥，只允许已迁入模块连接尚未归位的旧实现，不得作为新业务代码的默认依赖入口；
-- `Ubb/` 与 `Components/UbbEditor/` 继续原地冻结。
+- `Ubb/` 与 `Components/UbbEditor/` 继续原地冻结；C1.7.6 仅为 Spectrum 颜色面板增加受控 owner 根和父节点挂载参数，UBB 内容、palette、回调与公开接口不变。
 
 ## 路径别名
 

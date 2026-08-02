@@ -233,6 +233,8 @@ src/foundation/
 
 只放应用级基础样式、第三方修正、通用变量和 mixin。页面样式与业务组件样式跟随其 owner。
 
+C1.7.6 后，Ant Design 上游 CSS 与 Spectrum 上游样式只从 `foundation/styles/vendors` 加载；CC98 对第三方内部 DOM 的覆盖必须带组件可控的 `cc98-vendor-*` 根。业务 CSS Module 中不允许 `.ant-*`、`.sp-*` 或 selector 级 `:global(...)`，新增 Portal、第三方 import 或内部 DOM override 必须同步更新第三方边界清单。AntD 默认 body Portal 与 Router 生成锚点是已登记运行合同，不通过无范围的 Foundation selector 反向命中。
+
 #### `theme`
 
 提供主题注册、加载、切换和 token 解析机制。用户选择了哪个主题属于用户偏好；主题系统怎样加载属于 Foundation。

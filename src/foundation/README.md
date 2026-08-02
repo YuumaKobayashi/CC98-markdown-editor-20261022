@@ -14,4 +14,6 @@
 - 不得依赖 `modules`、`application` 或旧版业务实现；
 - 不承载 Topic、User、Favorite 等具体业务语义。
 
+第三方样式边界：Ant Design 与 Spectrum 的上游样式只由 `styles/vendors` 加载；CC98 override 必须由 `cc98-vendor-*` 可控根限界，业务 CSS Module 不得直接命中 `.ant-*`/`.sp-*`。当前 import、Portal、Router 与 Spectrum 挂载合同由 `scripts/third-party-boundary.json` 和架构检查冻结。
+
 迁移期例外：`styles/Site.scss` 只为保持现有 CSS 编译顺序，继续导入尚未归位的业务样式和冻结的 UBB 编辑器样式；不得在此新增业务规则，后续随各 owner 的样式迁移收口。
