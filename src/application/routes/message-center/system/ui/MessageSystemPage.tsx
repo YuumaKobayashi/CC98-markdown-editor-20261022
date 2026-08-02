@@ -2,7 +2,7 @@ import * as React from "react";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router";
 
-import { MessageSystembox, type MessageSystemProps } from "@modules/notification";
+import { MessageSystembox, type SystemNotificationViewModel } from "@modules/notification";
 import { getMessageSystem } from "@modules/notification";
 import { getTotalPage } from "@modules/notification";
 import { DocumentTitle } from "@foundation/ui/document-title";
@@ -17,7 +17,7 @@ import {
 } from "../../notifications/model/page";
 
 interface MessageSystemState {
-  data: MessageSystemProps[];
+  data: SystemNotificationViewModel[];
   page: number;
   totalPage: number;
 }

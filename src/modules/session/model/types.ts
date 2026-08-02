@@ -1,76 +1,25 @@
 import type {
-  UserGender,
-  UserState,
-  UserTopicViewMode,
+  UserBoardMasterInfo,
+  UserInfo,
 } from "@modules/user";
+import type { ThemeSetting } from "@modules/user-preference";
 
-export interface CurrentUserThemeSetting {
-  enableDayNightSwitch: boolean;
-  syncWithBrowserDayNightMode: boolean;
-  dayStartTime: string;
-  nightStartTime: string;
-}
+/** 旧 Session 导出名；实际合同由 User owner 维护。 */
+export type CurrentUserThemeSetting = ThemeSetting;
 
-export interface CurrentUserBoardMasterTitle {
-  userId: number;
-  userName: string;
-  boardId: number;
-  boardName: string;
-  title: string;
-  boardMasterLevel: number;
-}
+/** 旧 Session 导出名；实际合同由 User owner 维护。 */
+export type CurrentUserBoardMasterTitle = UserBoardMasterInfo;
 
 /**
  * 当前登录用户的 `/me` 合同。
  *
- * 字段保持与现有 MyInfo 完全一致；Session 在 S1.1 起拥有该合同，
- * 不再通过 legacy AppState 间接声明当前用户类型。
+ * 主后端 `/me` 返回完整的 `UserInfo`。Session 只拥有登录状态、
+ * 持久化和跨标签同步，不重复声明 User wire 字段。
  */
 /**
  * 当前用户的信息。
  */
-export interface CurrentUser {
-  name: string;
-  gender: UserGender;
-  birthday: string;
-  photourl: string;
-  introduction: string;
-  signatureCode: string;
-  id: number;
-  isFollowing: boolean;
-  emailAddress: string;
-  qq: string;
-  postCount: number;
-  prestige: number;
-  displayTitle: string;
-  privilege: string;
-  registerTime: string;
-  lastLogOnTime: string;
-  customTitle: string;
-  lockState: UserState;
-  popularity: number;
-  userTitleIds: number[];
-  displayTitleId: number;
-  fanCount: number;
-  wealth: number;
-  portraitUrl: string;
-  customBoards: number[];
-  followCount: number;
-  theme: number;
-  levelTitle: string;
-  boardMasterTitles: CurrentUserBoardMasterTitle[];
-  deleteCount: number;
-  receivedLikeCount: number;
-  themeSetting: CurrentUserThemeSetting;
-  topicViewMode: UserTopicViewMode;
-  stopPostBoardCount: number;
-  signInCardCount: number;
-  browsingHistoryEnabled: boolean;
-  /**
-   * 用户是否已经通过验证。
-   */
-  isVerified: boolean;
-}
+export type CurrentUser = UserInfo;
 
 export interface SessionState {
   /**

@@ -5,6 +5,7 @@ export {
 } from "./model/enums";
 export type {
   ForumIndexColumnInfo,
+  ForumIndexColumn,
   IConfig,
   IIndex,
   IIndexHotTopic,
@@ -12,6 +13,8 @@ export type {
   IMainpageEditableContent,
   IRecommendationReading,
   ISite,
+  PostForumIndexColumnInfo,
+  SiteIndexColumnEditorItem,
 } from "./model/types";
 export {
   SiteAnnouncementPreview,

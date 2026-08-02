@@ -2,7 +2,7 @@ import * as React from "react";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router";
 
-import { MessageAttmebox, type MessageResponseProps } from "@modules/notification";
+import { MessageAttmebox, type ReplyAtNotificationViewModel } from "@modules/notification";
 import { getMessageAttme } from "@modules/notification";
 import { getTotalPage } from "@modules/notification";
 import { DocumentTitle } from "@foundation/ui/document-title";
@@ -17,7 +17,7 @@ import {
 } from "../../notifications/model/page";
 
 interface MessageMentionsState {
-  data: MessageResponseProps[];
+  data: ReplyAtNotificationViewModel[];
   page: number;
   totalPage: number;
 }

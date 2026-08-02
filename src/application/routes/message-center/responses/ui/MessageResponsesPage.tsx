@@ -4,7 +4,7 @@ import { useParams } from "react-router";
 
 import {
   MessageResponsebox,
-  type MessageResponseProps,
+  type ReplyAtNotificationViewModel,
 } from "@modules/notification";
 import { getMessageResponse } from "@modules/notification";
 import { getTotalPage } from "@modules/notification";
@@ -20,7 +20,7 @@ import {
 } from "../../notifications/model/page";
 
 interface MessageResponsesState {
-  data: MessageResponseProps[];
+  data: ReplyAtNotificationViewModel[];
   page: number;
   totalPage: number;
 }

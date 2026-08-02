@@ -9,7 +9,7 @@ import {
   getIndexColumnInfo,
   putIndexColumnInfo,
 } from "@modules/site-content";
-import type { ForumIndexColumnInfo } from "@modules/site-content";
+import type { SiteIndexColumnEditorItem } from "@modules/site-content";
 
 const columnTypeNames = ["推荐阅读", "推荐功能", "校园新闻", "Banner", "", "", "福利优惠"];
 const urls = [
@@ -24,7 +24,7 @@ const urls = [
 
 export function SiteAdvertisementEditor() {
   const [info, setInfo] = useState("");
-  const [data, setData] = useState<ForumIndexColumnInfo[]>([]);
+  const [data, setData] = useState<SiteIndexColumnEditorItem[]>([]);
   const [type, setType] = useState<ForumIndexColumnType | 0>(0);
   const [current, setCurrent] = useState(1);
   const requestId = useRef(0);
@@ -85,7 +85,7 @@ export function SiteAdvertisementEditor() {
         type === ForumIndexColumnType.Advertisement
           ? ForumIndexColumnVisibility.OnlyLogOn
           : ForumIndexColumnVisibility.Always,
-    } as ForumIndexColumnInfo;
+    } as SiteIndexColumnEditorItem;
     setData((currentData) => [newData, ...currentData]);
   };
 

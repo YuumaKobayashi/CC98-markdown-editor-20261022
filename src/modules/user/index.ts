@@ -19,6 +19,8 @@ export { UserProfileAvatar } from "./ui/profile-avatar";
 export {
   ForumUserOperationType,
   TargetWindow,
+  UserAllowWechatNotifyState,
+  UserBirthdayPrivacyMode,
   UserGender,
   UserRateState,
   UserState,
@@ -28,5 +30,9 @@ export type {
   ChangeUserInfo,
   IBasicUser,
   IUser,
+  UserActivityPointInfo,
+  UserBoardMasterInfo,
   UserInfo,
+  UserPrivacySetting,
+  UserViewModel,
 } from "./model/types";

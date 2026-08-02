@@ -8,6 +8,10 @@ export type {
   MessageResponseProps,
   MessageSystemProps,
   NoticeSetting,
+  ReplyAtNotificationInfo,
+  ReplyAtNotificationViewModel,
+  SystemNotificationInfo,
+  SystemNotificationViewModel,
 } from "./model/types";
 export type { UnreadCount } from "./model/types";
 export {

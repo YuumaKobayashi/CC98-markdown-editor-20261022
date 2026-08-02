@@ -5,6 +5,12 @@ import { cc98Fetch } from "@foundation/api/http";
 import { clearLegacyMessageCounts, getLegacyMessageCounts, throwLegacyError } from "@foundation/lib/legacy-utility-effects";
 import { getBoardName } from "@modules/board";
 import { getBasicTopicsInfo, getThisTopicInfo } from "@modules/topic";
+import type {
+  ReplyAtNotificationInfo,
+  ReplyAtNotificationViewModel,
+  SystemNotificationInfo,
+  SystemNotificationViewModel,
+} from "../model/types";
 
 //获取特定类型的消息的总数，1为回复消息，2为@消息，3为系统消息
 
@@ -34,7 +40,10 @@ export async function getTotalPage(type: number) {
  * @param from 获取消息起点
  * @param size 一次性获取消息数量
  */
-export async function getMessageSystem(from: number, size: number) {
+export async function getMessageSystem(
+  from: number,
+  size: number
+): Promise<SystemNotificationViewModel[] | null> {
   const myHeaders = await formAuthorizeHeader();
   try {
     let response = await cc98Fetch(
@@ -61,7 +70,7 @@ export async function getMessageSystem(from: number, size: number) {
         throwLegacyError("ServerError");
         return null;
     }
-    var newTopic = await response.json(); //先从api得到原始的系统消息数据
+    var newTopic = (await response.json()) as SystemNotificationInfo[]; //先从api得到原始的系统消息数据
   } catch {
     return [];
   }
@@ -69,19 +78,23 @@ export async function getMessageSystem(from: number, size: number) {
   //补充楼层信息
   for (let i in newTopic) {
     if (newTopic[i].postId) {
-      newTopic[i].floor = newTopic[i].postBasicInfo.floor;
+      (newTopic[i] as SystemNotificationViewModel).floor =
+        newTopic[i].postBasicInfo!.floor;
     } else {
-      newTopic[i].floor = 0;
+      (newTopic[i] as SystemNotificationViewModel).floor = 0;
     }
   }
   //console.log("返回前数据", newTopic);
-  return newTopic;
+  return newTopic as SystemNotificationViewModel[];
 }
 
 //获取回复我的通知
-export async function getMessageResponse(from: number, size: number) {
+export async function getMessageResponse(
+  from: number,
+  size: number
+): Promise<ReplyAtNotificationViewModel[] | undefined> {
   try {
-    let result = [];
+    let result: ReplyAtNotificationViewModel[] = [];
     const myHeaders = await formAuthorizeHeader();
 
     let response = await cc98Fetch(
@@ -108,7 +121,7 @@ export async function getMessageResponse(from: number, size: number) {
         throwLegacyError("ServerError");
         return [];
     }
-    let newTopic = await response.json();
+    let newTopic = (await response.json()) as ReplyAtNotificationInfo[];
     //把postId、topicId分别统计存到一个数组里，然后批量查询一下
     let topicsId = [];
     for (let item of newTopic) {
@@ -120,23 +133,24 @@ export async function getMessageResponse(from: number, size: number) {
     //补充帖子标题，版面id和版面名称信息
     if (newTopic) {
       for (let i in newTopic) {
+        const viewTopic = newTopic[i] as ReplyAtNotificationViewModel;
         if (newTopic[i].topicId) {
           let topicInfo = getThisTopicInfo(newTopic[i].topicId, topicsInfo);
-          newTopic[i].topicTitle = topicInfo.title;
+          viewTopic.topicTitle = topicInfo.title;
           newTopic[i].boardId = topicInfo.boardId;
-          newTopic[i].boardName = await getBoardName(newTopic[i].boardId);
+          viewTopic.boardName = await getBoardName(newTopic[i].boardId);
         }
         //获取楼层信息和回复者信息
         if (newTopic[i].postId) {
-          newTopic[i].floor = newTopic[i].postBasicInfo.floor;
-          newTopic[i].userId = newTopic[i].postBasicInfo.userId;
-          newTopic[i].userName = newTopic[i].postBasicInfo.userName;
+          viewTopic.floor = newTopic[i].postBasicInfo!.floor;
+          viewTopic.userId = newTopic[i].postBasicInfo!.userId;
+          viewTopic.userName = newTopic[i].postBasicInfo!.userName;
         } else {
-          newTopic[i].floor = 1;
-          newTopic[i].userId = -1;
-          newTopic[i].userName = "有人";
+          viewTopic.floor = 1;
+          viewTopic.userId = -1;
+          viewTopic.userName = "有人";
         }
-        result.push(newTopic[i]);
+        result.push(viewTopic);
       }
     }
     return result;
@@ -146,9 +160,12 @@ export async function getMessageResponse(from: number, size: number) {
 }
 
 //获取@我的通知
-export async function getMessageAttme(from: number, size: number) {
+export async function getMessageAttme(
+  from: number,
+  size: number
+): Promise<ReplyAtNotificationViewModel[] | undefined> {
   try {
-    let result = [];
+    let result: ReplyAtNotificationViewModel[] = [];
     let token = await getToken();
     let myHeaders = new Headers();
     myHeaders.append("Authorization", token);
@@ -176,7 +193,7 @@ export async function getMessageAttme(from: number, size: number) {
         throwLegacyError("ServerError");
         return [];
     }
-    let newTopic = await response.json();
+    let newTopic = (await response.json()) as ReplyAtNotificationInfo[];
     //console.log("获取到的新@数据", newTopic);
     //把postId、topicId分别统计存到一个数组里，然后批量查询一下
     let topicsId = [];
@@ -189,23 +206,24 @@ export async function getMessageAttme(from: number, size: number) {
     //补充帖子标题，版面id和版面名称信息
     if (newTopic) {
       for (let i in newTopic) {
+        const viewTopic = newTopic[i] as ReplyAtNotificationViewModel;
         if (newTopic[i].topicId) {
           let topicInfo = getThisTopicInfo(newTopic[i].topicId, topicsInfo);
-          newTopic[i].topicTitle = topicInfo.title;
+          viewTopic.topicTitle = topicInfo.title;
           newTopic[i].boardId = topicInfo.boardId;
-          newTopic[i].boardName = await getBoardName(newTopic[i].boardId);
+          viewTopic.boardName = await getBoardName(newTopic[i].boardId);
         }
         //获取楼层信息和回复者信息
         if (newTopic[i].postId) {
-          newTopic[i].floor = newTopic[i].postBasicInfo.floor;
-          newTopic[i].userId = newTopic[i].postBasicInfo.userId;
-          newTopic[i].userName = newTopic[i].postBasicInfo.userName;
+          viewTopic.floor = newTopic[i].postBasicInfo!.floor;
+          viewTopic.userId = newTopic[i].postBasicInfo!.userId;
+          viewTopic.userName = newTopic[i].postBasicInfo!.userName;
         } else {
-          newTopic[i].floor = 1;
-          newTopic[i].userId = -1;
-          newTopic[i].userName = "有人";
+          viewTopic.floor = 1;
+          viewTopic.userId = -1;
+          viewTopic.userName = "有人";
         }
-        result.push(newTopic[i]);
+        result.push(viewTopic);
       }
     }
     return result;

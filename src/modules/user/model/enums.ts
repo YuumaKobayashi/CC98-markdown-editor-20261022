@@ -28,6 +28,20 @@ export enum UserRateState {
   StopPermanent = 3,
 }
 
+export enum UserAllowWechatNotifyState {
+  Reject = 0,
+  Allow = 1,
+  Unknown = 2,
+}
+
+export enum UserBirthdayPrivacyMode {
+  HideAll = 0,
+  ShowAll = 1,
+  Year = 2,
+  YearAndMonth = 3,
+  MonthAndDay = 4,
+}
+
 export enum ForumUserOperationType {
   Cancel = 0,
   Do = 1,

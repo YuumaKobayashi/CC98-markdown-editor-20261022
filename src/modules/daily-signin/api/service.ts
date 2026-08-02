@@ -1,5 +1,6 @@
 import { formAuthorizeHeader } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
+import type { UserSignInStateInfo } from "../model/types";
 
 export async function signin(content) {
   const headers = await formAuthorizeHeader();
@@ -12,10 +13,10 @@ export async function signin(content) {
   });
 }
 
-export async function getSigninInfo() {
+export async function getSigninInfo(): Promise<UserSignInStateInfo> {
   const headers = await formAuthorizeHeader();
   const url = `/me/signin`;
   const response = await cc98Fetch(url, { headers });
-  const data = await response.json();
+  const data = (await response.json()) as UserSignInStateInfo;
   return data;
 }

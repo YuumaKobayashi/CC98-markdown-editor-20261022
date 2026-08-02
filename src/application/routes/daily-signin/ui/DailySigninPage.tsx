@@ -8,22 +8,19 @@ import {
   getSigninInfo,
   markSignedInToday,
   signin,
+  type UserSignInStateInfo,
 } from "@modules/daily-signin";
 import { getGlobalConfig } from "@modules/site-content";
 import { getMyInfo } from "@modules/session";
 import styles from "./DailySigninPage.module.scss";
 
-interface SigninInfo {
-  hasSignedInToday?: boolean;
-  lastReward?: number;
-  lastSignInCount: number;
-  lastSignInTime: number;
-}
-
 export function DailySigninPage(): React.ReactElement {
-  const [signinInfo, setSigninInfo] = React.useState<SigninInfo>({
+  const [signinInfo, setSigninInfo] = React.useState<UserSignInStateInfo>({
+    hasSignedInToday: false,
+    lastReward: 0,
     lastSignInCount: 0,
-    lastSignInTime: 0,
+    // 后端在没有签到记录时返回 1970-01-01 哨兵时间。
+    lastSignInTime: "1970-01-01T00:00:00",
   });
   const [content, setContent] = React.useState("");
 

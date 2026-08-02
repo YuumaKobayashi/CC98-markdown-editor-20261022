@@ -4,6 +4,7 @@ import {
 } from "../cache/public-user-cache";
 import { getUserInfo } from "./get-user-info";
 import { UserGender } from "../model/enums";
+import type { UserViewModel } from "../model/types";
 import { cc98Fetch } from "@foundation/api/http";
 
 export function getThisUserInfo(userId, usersInfo) {
@@ -83,11 +84,12 @@ export function getThisUserInfobyName(userName, usersName) {
 export async function getUserDetails(userId) {
   try {
     const data = await getUserInfo(userId);
+    const viewData: UserViewModel = data;
     const body = {
       portraitUrl: data.portraitUrl,
       userName: data.name,
       fanCount: data.fanCount,
-      displayTitle: data.displayTitle,
+      displayTitle: viewData.displayTitle,
       birthday: data.birthday,
       prestige: data.prestige,
       gender: data.gender,

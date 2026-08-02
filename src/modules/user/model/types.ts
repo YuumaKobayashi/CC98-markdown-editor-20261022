@@ -1,6 +1,10 @@
-import type { IBoardMasterTitle } from "@modules/board";
+import type { ThemeSetting } from "@modules/user-preference";
 import type {
+  TargetWindow,
+  UserAllowWechatNotifyState,
+  UserBirthdayPrivacyMode,
   UserGender,
+  UserRateState,
   UserState,
   UserTopicViewMode,
 } from "./enums";
@@ -20,7 +24,60 @@ export interface IBasicUser {
   portraitUrl: string;
 }
 
-export interface IUser {
+export interface UserViewModel extends UserInfo {
+  /**
+   * 显示的用户组。
+   * 旧页面读取但当前后端 `UserInfo` 不返回该字段。
+   */
+  displayTitle?: string;
+  /**
+   * 用户个人简介图片。
+   * 旧页面字段；当前后端头像字段为 `portraitUrl`。
+   */
+  photourl?: string;
+  /**
+   * 自定义头衔。
+   * 旧页面读取但当前后端 `UserInfo` 不返回该字段。
+   */
+  customTitle?: string;
+}
+
+/** 旧名兼容别名；实际 wire DTO 为 {@link UserInfo}。 */
+export type IUser = UserViewModel;
+
+export interface UserBoardMasterInfo {
+  userId: number;
+  userName: string;
+  boardId: number;
+  boardName: string;
+  title: string;
+  boardMasterLevel: number;
+}
+
+export interface UserActivityPointInfo {
+  userId: number;
+  month: number;
+  like: number;
+  topic: number;
+  post: number;
+  rate: number;
+  bonus: number;
+  rawPoint: number;
+  historyPoint: number;
+  coefficient: number;
+  point: number;
+}
+
+export interface UserPrivacySetting {
+  birthdayPrivacyMode: UserBirthdayPrivacyMode;
+  qqIsProtected: boolean;
+  emailAddressIsProtected: boolean;
+}
+
+/**
+ * 用户信息
+ */
+export interface UserInfo {
   /**
    * 用户名
    */
@@ -36,17 +93,13 @@ export interface IUser {
    */
   birthday: string | null;
   /**
-   * 用户个人简介图片
-   */
-  photourl: string;
-  /**
    * 用户个人简介
    */
-  introduction: string;
+  introduction: string | null;
   /**
-   * 用户签名档
+   * 用户签名档 / 个性签名
    */
-  signatureCode: string;
+  signatureCode: string | null;
   /**
    * 用户 ID
    */
@@ -58,11 +111,11 @@ export interface IUser {
   /**
    * 邮箱地址
    */
-  emailAddress: string;
+  emailAddress: string | null;
   /**
-   * QQ
+   * qq
    */
-  qq: string;
+  qq: string | null;
   /**
    * 发帖数
    */
@@ -74,11 +127,11 @@ export interface IUser {
   /**
    * 显示的用户组
    */
-  displayTitle: string;
+  groupName: string | null;
   /**
    * 全站权限等级
    */
-  privilege: string;
+  privilege: string | null;
   /**
    * 注册时间
    */
@@ -88,11 +141,7 @@ export interface IUser {
    */
   lastLogOnTime: string;
   /**
-   * 自定义头衔
-   */
-  customTitle: string;
-  /**
-   * 用户锁定状态：0正常  1锁定  2屏蔽  3全站TP
+   * 用户锁定状态，0正常  1锁定  2屏蔽  3全站TP
    */
   lockState: UserState;
   /**
@@ -106,7 +155,7 @@ export interface IUser {
   /**
    * 当前显示的头衔 ID
    */
-  displayTitleId: number;
+  displayTitleId: number | null;
   /**
    * 粉丝数
    */
@@ -118,7 +167,7 @@ export interface IUser {
   /**
    * 用户头像地址
    */
-  portraitUrl: string;
+  portraitUrl: string | null;
   /**
    * 用户关注的版面 ID 数组
    */
@@ -134,150 +183,83 @@ export interface IUser {
   /**
    * 等级（已经废弃）
    */
-  levelTitle: string;
+  levelTitle: string | null;
   /**
    * 用户版主头衔信息
    */
-  boardMasterTitles: IBoardMasterTitle[];
+  boardMasterTitles: UserBoardMasterInfo[];
   /**
    * 被删除的数量
    */
   deleteCount: number;
-}
-
-/**
- * 用户信息
- */
-export interface UserInfo {
   /**
-   * 用户名
+   * 用户是否已经通过验证。
    */
-  name: string;
-  /**
-   * 用户性别
-   */
-  gender: UserGender;
-  /**
-   * 用户生日
-   */
-  birthday: string;
-  /**
-   * 用户个人简介图片
-   */
-  photourl: string;
-  /**
-   * 用户个人简介
-   */
-  introduction: string;
-  /**
-   * 用户个性签名
-   */
-  signatureCode: string;
-  /**
-   * id
-   */
-  id: number;
-  /**
-   * 当前用户是否关注了该用户
-   */
-  isFollowing: boolean;
-  /**
-   * 邮箱地址
-   */
-  emailAddress: string;
-  /**
-   * qq
-   */
-  qq: string;
-  /**
-   * 发帖数
-   */
-  postCount: number;
-  /**
-   * 威望
-   */
-  prestige: number;
-  /**
-   * 显示的用户组
-   */
-  displayTitle: string;
-  /**
-   * 全站权限等级
-   */
-  privilege: string;
-  /**
-   * 注册时间
-   */
-  registerTime: string;
-  /**
-   * 最后登录时间
-   */
-  lastLogOnTime: string;
-  /**
-   * 自定义头衔
-   */
-  customTitle: string;
-  /**
-   * 用户锁定状态，0正常  1锁定  2屏蔽  3全站TP
-   */
-  lockState: UserState;
-  /**
-   * 风评
-   */
-  popularity: number;
-  /**
-   * 用户拥有的头衔ID们
-   */
-  userTitleIds: number[];
-  /**
-   * 当前显示的头衔ID
-   */
-  displayTitleId: number;
-  /**
-   * 粉丝数
-   */
-  fanCount: number;
-  /**
-   * 财富值
-   */
-  wealth: number;
-  /**
-   * 用户头像地址
-   */
-  portraitUrl: string;
-  /**
-   * 用户关注的版面id数组
-   */
-  customBoards: number[];
-  /**
-   * 用户关注数
-   */
-  followCount: number;
-  /**
-   * 用户选择的主题
-   */
-  theme: number;
-  /**
-   * 等级（已经废弃
-   */
-  levelTitle: string;
-  /**
-   * 用户版主头衔信息
-   */
-  boardMasterTitles: IBoardMasterTitle[];
-  /**
-   * 被删除的数量
-   */
-  deleteCount: number;
+  isVerified: boolean;
   /**
    * 获得的赞
    */
   receivedLikeCount: number;
 
   /**
+   * 用户最后登录的 IP 地址。
+   */
+  lastIpAddress: string | null;
+
+  /**
+   * 用户绑定的手机号。
+   */
+  phoneNumber: string | null;
+
+  /**
+   * 用户是否绑定手机。
+   */
+  hasPhoneNumber: boolean;
+
+  /**
+   * 当前小程序状态。
+   */
+  isSUser: number;
+
+  /**
+   * 网页版新页面打开方式。
+   */
+  targetWindow: TargetWindow;
+
+  /**
+   * 用户月活跃度积分。
+   */
+  activityPoint: UserActivityPointInfo | null;
+
+  /**
+   * 用户评分权限。
+   */
+  rateState: UserRateState;
+
+  /**
+   * 是否为 2020 新生。
+   */
+  isFreshMan: boolean;
+
+  /**
+   * 用户的数字水印 ID。
+   */
+  watermarkId: string | null;
+
+  /**
+   * 用户是否允许微信通知。
+   */
+  allowWechatNotify: UserAllowWechatNotifyState;
+
+  /**
    * 用户的主题设置。
    */
-  themeSetting: import("@modules/user-preference").ThemeSetting;
+  themeSetting: ThemeSetting;
+
+  /**
+   * 用户的隐私设置。
+   */
+  privacySetting: UserPrivacySetting;
 
   /**
    * 用户的主题列表浏览模式设置。
