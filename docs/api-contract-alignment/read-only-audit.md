@@ -143,6 +143,8 @@
 | user | `UserTopicViewMode` | Classic=0, Card=1, CardMediaOnly=2 | `Data/UserTopicViewMode.cs:6` | `/me` 与 query `mode` |
 | user | `TargetWindow` | CurrentWindow=0, NewWindow=1 | `Data/TargetWindow.cs:6` | `UserInfo` wire 字段 |
 | user | `UserRateState` | None=0, Warning=1, Stop30Days=2, StopPermanent=3 | `Data/UserRateState.cs:6` | `UserInfo` wire 字段 |
+| user | `UserAllowWechatNotifyState` | Reject=0, Allow=1, Unknown=2 | `Data/UserAllowWechatNotifyState.cs:3` | `UserInfo.allowWechatNotify`；Phase 3 补记 |
+| user | `UserBirthdayPrivacyMode` | HideAll=0, ShowAll=1, Year=2, YearAndMonth=3, MonthAndDay=4 | `Data/UserBirthdayPrivacyMode.cs:6` | `UserInfo.privacySetting.birthdayPrivacyMode`；Phase 3 补记 |
 | user | `ForumUserOperationType` | Cancel=0, Do=1 | `Models/Manage/ForumUserOperationType.cs:3` | `/user/{id}/operation` body |
 | board | `AnonymousState` | NotAllowed=0, Force=1, Allowed=2, OnlyPosterAllowed=3 | `Data/AnonymousState.cs:6` | BoardInfo、editor/reply UI |
 | board | `BoardInternalState` | None=0, InternalOnly=1, NeedReview=2 | `Data/BoardInternalState.cs:3` | BoardInfo |
@@ -175,9 +177,9 @@
 - `ITopic.isVote/isPosterOnly` 错为字面量 `false`；`userId/userName/userInfo/lastPostUser/lastPostContent/highlightInfo` 可空性漂移，且缺少完整 `TopicInfo` 字段。
 - `IPost.allowedViewers/lastUpdateAuthor/lastUpdateTime` 是 `any`，后端分别为 `string[] | null`、`string | null`、wire `string | null`；前端还含后端 `PostInfo` 不存在的 `awardInfo/isBest/length`，需要区分 wire DTO 与 service 加工 ViewModel。
 - `IBoard.isLock` 与 wire `isLocked` 名称不一致；现有消费者读取 `isLock`，需要在 Phase 2 查清 service 是否归一化（当前未见归一化），不能仅改类型名后假装行为等价。
-- `IUser`、`UserInfo`、`CurrentUser` 三份重复且字段漂移；后端 `/me` 返回 `UserInfo`，不是轻量 `MyInfo` record。
-- `UserSignInStateInfo.lastSignInTime` 后端是 nullable `DateTimeOffset?`，当前前端页面以数字 `0` 初始化。
-- `ReplyAtNotificationInfo` / `SystemNotificationInfo` 的 nullable 字段与前端 `Date` 类型均有漂移；service 还追加 `topicTitle/boardName/floor/user`，应区分 wire DTO 与 ViewModel。
+- `IUser`、`UserInfo`、`CurrentUser` 三份重复且字段漂移；后端 `/me` 返回 `UserInfo`，不是轻量 `MyInfo` record。Phase 3 已以 User wire DTO 为唯一基础，Session 与旧名只保留兼容别名/投影。
+- 原审计误记 `UserSignInStateInfo.lastSignInTime` 为 nullable `DateTimeOffset?`；固定后端实际为非空 `DateTime`，无记录时由 `MeController` 返回 `1970-01-01` 哨兵值。Phase 3 已按 wire 字符串建模并移除页面的数字 `0` 类型漂移。
+- `ReplyAtNotificationInfo` / `SystemNotificationInfo` 的 nullable 字段与前端 `Date` 类型均有漂移；service 还追加 `topicTitle/boardName/floor/user`，应区分 wire DTO 与 ViewModel。Phase 3 已完成 raw DTO / ViewModel 分离。
 - `response.json()` 未约束集中在 topic、notification、message、board legacy service；Phase 4 在 service 边界约束，不向 UI 传播 `any`。
 
 ## 6. 分批方案与门禁
@@ -202,6 +204,8 @@
 - 建立 User 领域唯一可复用 wire 基础，Session `/me` 复用并只保留 session 特有语义。
 - 对齐 `UserInfo` 全字段、`UserSignInStateInfo.lastSignInTime`、ForumIndexColumn、两类通知 raw DTO；为通知 service 加工结果命名 ViewModel。
 - Phase 2 人审前不开始。
+
+实际结果见 [`phase-3-report.md`](./phase-3-report.md)：六个核心 DTO 字段名闭包均为 `missing=[]`、`extra=[]`；`CurrentUser` 与 `IUser` 已收口为 User owner 的兼容出口；ForumIndexColumn 的管理返回、广告投影、提交体和编辑器本地状态已分离。`UserInfo` 相关补记了两个原审计遗漏的 enum，并纠正签到时间 nullable 的旧结论。代码、机械检查和主代理整批审核已完成；真实 API、登录态、权限、通知、签到、站点管理、主题和浏览器交互未执行。当前停在人审点，不开始 Phase 4。
 
 ### Phase 4：service 签名、重复类型与剩余 any
 
