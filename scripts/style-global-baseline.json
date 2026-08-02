@@ -1,7 +1,0 @@
-{
-  "phase": "C1.7.6 third-party boundary closure",
-  "totalOccurrences": 0,
-  "moduleCount": 0,
-  "updatePolicy": "Only update this baseline in an explicitly authorized style-owner closure after auditing selector, producer, consumer, and behavior-query changes.",
-  "modules": []
-}

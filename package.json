@@ -10,7 +10,6 @@
   "scripts": {
     "dev": "vite --config vite.config.mjs",
     "build": "node scripts/build-vite.mjs",
-    "check:styles": "node scripts/check-style-migration.mjs",
     "typecheck": "npm run typecheck:modern",
     "typecheck:modern": "tsc --noEmit -p tsconfig.json"
   },
