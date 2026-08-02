@@ -1,6 +1,6 @@
 # Application
 
-应用级启动、Provider、Router、Store、持久布局和页面入口编排的 owner。P06 迁入 `bootstrap` 与最小 Provider 树，P09 迁入唯一根 Store，P14 迁入单一 Router 与持久 `AppShell`，A1 将这些 Application Shell 文件归入本目录，S1.5 将壳层错误退出 Redux，S1.6 将领域缓存和 Posting 草稿归还 Module，S1.7 完成 legacy Redux 闭包。
+应用级启动、Provider、Router、Store、持久布局和页面入口编排的 owner。P06 迁入 `bootstrap` 与最小 Provider 树，P09 迁入唯一根 Store，P14 迁入单一 Router 与持久 `AppShell`，A1 将这些 Application Shell 文件归入本目录，S1.5 将壳层错误退出 Redux，S1.6 将领域缓存和 Posting 草稿归还 Module，S1.7 完成 legacy Redux 闭包，C1.7.2 为内容集合页与 User Center/Profile 建立有真实共同语义的布局组件。
 
 依赖边界：
 

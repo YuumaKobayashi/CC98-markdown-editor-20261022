@@ -1,6 +1,6 @@
 # CC98 前端目录重构执行计划
 
-> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1–C1.5 的代码实施、机械检查和主代理人工代码审核均已完成；C1.5 已本地提交为 `733eb045`。C1.6.0 已提交为 `bee0dd05`，C1.6.1 代码与记录已提交为 `61b4d5db`/`ff9702be`，C1.6.2 代码已提交为 `ad1db0e7`，C1.6.3 代码已提交为 `788da9e7`，C1.6.4 已提交为 `fdbe3762`，C1.6.5 代码与记录已提交为 `0c6efc6e`/`b232c6ca`。C1.7.1 的首轮多组件文件拆分已完成；引用复核后用户另行授权直接删除 Legacy Board，旧 `/list` Route、owner、facade 和专属样式已从未提交工作树移除。C1.7.2 的 Status 子批已按用户确认归入 `application/routes/status`，共同页面骨架与样式 owner 已收口；architecture/style guard、modern/legacy typecheck、正式 build 与 diff 检查通过。浏览器运行验收未执行，C1.7.2 其余子批及 C1.7.3–C1.7.7 尚未实施；不自动启动后续阶段，不 commit、不 push。
+> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1–C1.5 的代码实施、机械检查和主代理人工代码审核均已完成；C1.5 已本地提交为 `733eb045`。C1.6.0 已提交为 `bee0dd05`，C1.6.1 代码与记录已提交为 `61b4d5db`/`ff9702be`，C1.6.2 代码已提交为 `ad1db0e7`，C1.6.3 代码已提交为 `788da9e7`，C1.6.4 已提交为 `fdbe3762`，C1.6.5 代码与记录已提交为 `0c6efc6e`/`b232c6ca`。C1.7.1、Legacy Board 删除和 C1.7.2 Status 子批已随代码/记录提交 `f11fe1e7`/`99a8679e`。C1.7.2 其余真实复用候选已完成代码实施、机械检查与主代理整批审核；只抽取共同语义明确的 Collection、User Area、Message、Topic item 与 Home 标题组件，明确拒绝合并差异较大的 Profile 实现。浏览器运行验收未执行，当前停在未提交工作树；C1.7.3–C1.7.7 尚未实施，不自动启动后续阶段，不 commit、不 push。
 >
 > 架构依据：`docs/frontend-directory-architecture-inventory.md`。
 >
@@ -65,12 +65,13 @@ C1.6.2 Topic/Post 样式所有权收口                  已完成（主代理�
 C1.6.3 User 与共享卡片样式所有权收口              已完成（主代理整批审核；浏览器运行验收未执行；已有本地代码提交）
 C1.6.4 Editor/Login/Search/Legacy Board 收口         已完成（主代理整批审核；浏览器运行验收未执行；已有本地代码提交）
 C1.6.5 全仓样式与剩余业务 global 审计               已完成（主代理整批审核；浏览器运行验收未执行；已有本地代码/文档提交）
-C1.7.1 单文件多组件拆分                              已完成（主代理整批审核；浏览器运行验收未执行；未提交）
-Legacy Board 不可达兼容链删除                        已完成（用户明确授权；机械检查通过；未提交）
-C1.7.2–C1.7.7 真实复用、样式与全局边界收口           待实施（需单独授权）
+C1.7.1 单文件多组件拆分                              已完成（主代理整批审核；浏览器运行验收未执行；已有本地提交）
+Legacy Board 不可达兼容链删除                        已完成（用户明确授权；机械检查通过；已有本地提交）
+C1.7.2 真实共同语义组件复用                          已完成（主代理整批审核；浏览器运行验收未执行；未提交）
+C1.7.3–C1.7.7 样式与全局边界收口                    待实施（需单独授权）
 ```
 
-### 当前停点：C1.7.1 与 Legacy Board 删除已完成并停在未提交工作树；浏览器运行验收未执行，不 commit、不 push、不自动实施后续阶段
+### 当前停点：C1.7.2 真实组件复用已完成并停在未提交工作树；浏览器运行验收未执行，不 commit、不 push、不自动实施 C1.7.3 或 Z
 
 ### M3.1–M3.6 实施记录（2026-07-30）
 
@@ -2533,6 +2534,16 @@ C1.7.7  删除休眠 compatibility、根 Styles 与反向 import；Site.scss 缩
 - `npm run check:architecture` 通过：316 个现代源码文件、1325 条 import、29 条登记 allowlist；样式守卫通过：66 个真实 CSS Module、0 个过渡 partial、29 个主题、2 个文件中的 2 处 global。modern/legacy typecheck、正式 build（4058 modules transformed）和 `git diff --check` 通过；构建只有既有 Sass、Spectrum/Lightning CSS 与大 chunk 警告。
 - 浏览器、真实权限/API、默认/暗色主题及 15 个状态分支运行验收未执行；本子批不 commit、不 push，不自动实施 C1.7.2 其余候选或 C1.7.3。
 
+#### C1.7.2 真实组件复用整批实施记录（2026-08-02）
+
+- Collection 六类页面以 `CollectionPageShell` 复用原根节点、DocumentTitle 与内容骨架；User Center/Profile 以 `UserAreaShell` 复用页面壳层，并只在 DOM 完全一致处使用共同 loading、活动分区和默认列表 wrapper。各 Route 的请求、provider、导航、空态、分页、回顶和搜索状态机保持独立。
+- Message Sender/Receiver 由共同会话条目按语义方向适配；Response/Attme wrapper 继续独立计算楼层、URL、已读文案和各自 UBB options，只复用通知 DOM。Focus/Search/Recommended 继续保留各自 URL、tag、最后回复和摘要差异，共用主题条目骨架；Home 七类栏目只复用原 main/sub 标题行。
+- `UserProfile` 与 `UserProfileDetails` 因私信 URL、关注状态机、锁定提示、字段和时间格式存在真实差异而明确不合并；两套 Navigation、Collection 控制逻辑和列表请求状态机同样不为降低重复率强行统一。详细接受/否决证据见 `docs/refactor-log/c1.7/component-reuse-audit.md`。
+- 首轮实施未修改 SCSS/CSS 声明；用户复核后要求新组件及 Message Center 子页面各自拥有独立 Module，属性、值和注释按真实 DOM owner 归位，CSS Module 冻结数由 66 更新为 78。29 个主题与两处 global 指纹不变。四条旧 UBB renderer allowlist 随真实 owner 合并为两条，架构登记由 29 降为 27；没有新增 legacy 能力或公开模块接口。
+- Route 私有布局保留 `layout/` 目录，但不再机械嵌套 `ui/`：Focus、Message Center、User Center 与 User Profile 的 Layout、Navigation、既有 Layout Module 和 barrel 直接并列。Focus 专属导航 Module 与 `FocusLayout` 共置。用户复核后进一步要求组件样式独立：Collection/User Area/Home/Topic/Message/Notification 新组件、User Center/Profile Layout/Navigation，以及 Message Responses/Mentions/System 页面均直接导入同目录同名 Module；Message Layout 只保留自身 producer 规则，不再作为子页面样式仓库。旧页面之间尚存的 Collection/User Activity 多 importer 仍留待 C1.7.3 全量处理。
+- `npm run check:architecture` 通过：327 个现代源码文件、1351 条 import、27 条登记 allowlist；style guard、modern/legacy typecheck、正式 build（4081 modules transformed）与 diff 检查通过。build 仍只有既有 Sass、Spectrum/Lightning CSS 与大 chunk 警告。
+- 本地 Vite 根入口返回 200，但当前没有可连接的浏览器实例；Collection、User Center/Profile、Message、Topic item、Home 及默认/暗色主题运行验收未执行。本批不 commit、不 push，不自动进入 C1.7.3 或 Z。
+
 Annual Review 的最终删除仍属于 Z4；C1.7 不得借整理样式提前删除业务。若 Z4 尚未实施，C1.7 只把其样式放入明确的冻结 owner，并登记“随 Z4 整体删除”，不得继续留在 `Site.scss`。UBB 实现的完整迁址仍属于 Z2；C1.7 可以先建立最终样式 owner 并由 legacy 入口显式消费，但不得借此改写解析器、Handler 或扩展合同。根 `Components/` 等 legacy 源码目录的整体迁址和删除仍属于 Z；C1.7 只允许为组件边界、真实复用和样式共置所需的窄拆分，必要时让活动 legacy 组件暂时拥有相邻 Module，并登记随 Z 整体移动，不得把 C1.7 扩张为完整 legacy 逻辑迁移。
 
 #### C1.7 验收、守卫与停点
@@ -2886,7 +2897,7 @@ R1  增加架构检查脚本                            已完成
 - 检查脚本结果；
 - 无业务行为变化证明。
 
-骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1–C1.5 均已完成代码实施、机械检查和主代理人工代码审核。C1.5 已提交为 `733eb045`；C1.6.0 已提交为 `bee0dd05`，C1.6.1 代码与记录已提交为 `61b4d5db`/`ff9702be`，C1.6.2 代码已提交为 `ad1db0e7`，C1.6.3 代码已提交为 `788da9e7`，C1.6.4 已提交为 `fdbe3762`，C1.6.5 代码与记录已提交为 `0c6efc6e`/`b232c6ca`。C1.7.1 首轮多组件文件拆分已完成；用户随后明确授权删除 Legacy Board，旧 `/list` Route、owner、facade 和专属样式已从未提交工作树移除，architecture/style guard、modern/legacy typecheck、正式 build 与 diff 检查通过。浏览器运行验收未执行，当前不自动启动 C1.7.2 或其余 Z 批次。
+骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7、C1.1–C1.6 与 C1.7.1 均已完成代码实施、机械检查和主代理人工代码审核；C1.7.1、Legacy Board 删除和 Status 子批已提交为 `f11fe1e7`/`99a8679e`。C1.7.2 其余真实组件复用已经完成代码实施、机械检查与整批审核，浏览器运行验收未执行，当前停在未提交工作树，不自动启动 C1.7.3 或 Z。
 
 ## 22. 已确认决策与后续边界
 
@@ -2910,7 +2921,7 @@ R1  增加架构检查脚本                            已完成
 
 后续仍需单独授权或审核：
 
-1. S1.1–S1.3、S1.4 六组、S1.5、S1.6 与 S1.7 尚未执行的完整浏览器、登录、真实 API、SignalR、跨标签、缓存与草稿运行验收，C1.1–C1.7.1 的浏览器样式/行为验收，C1.7.2–C1.7.7 的逐批代码实施授权，以及后续每个 Z 子批的代码实施授权；
+1. S1.1–S1.3、S1.4 六组、S1.5、S1.6 与 S1.7 尚未执行的完整浏览器、登录、真实 API、SignalR、跨标签、缓存与草稿运行验收，C1.1–C1.7.2 的浏览器样式/行为验收，C1.7.3–C1.7.7 的逐批代码实施授权，以及后续每个 Z 子批的代码实施授权；
 2. 当前 `useUserProfileContext` 接口及 UserProfileLayout 集中取数边界是否随资料缓存归位或 Redux 闭包再次调整；
 3. A2.3–A2.11 与 M3.1–M3.6 尚未执行的浏览器、登录、真实 API、权限、分页、SignalR、通知权限、上传、编辑器、缓存与 UBB 运行验收；
 4. UBB 迁入 `modules/ubb` 后的浏览器、权限标签、编辑器、媒体、数学公式和扩展 API 人工验收。

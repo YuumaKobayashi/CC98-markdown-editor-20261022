@@ -555,7 +555,7 @@ Focus 页面是这些能力的页面入口，不等于 Follow 模块本身。
 - 私信联系人；
 - 私信会话和发送消息；
 - Message 类型；
-- 可复用的发送者、接收者和会话展示组件。
+- 由发送者、接收者旧入口适配的共同会话条目组件。
 
 不拥有回复通知、@ 通知、系统通知。
 
@@ -568,7 +568,8 @@ Focus 页面是这些能力的页面入口，不等于 Follow 模块本身。
 - 一键已读；
 - SignalR 实时通知；
 - 标题闪烁；
-- 通知设置。
+- 通知设置；
+- 保留回复/@ 文案差异的共同通知展示条目。
 
 SignalR 库的通用连接适配可以进入 Foundation，但 CC98 通知频道、事件和重连规则属于本模块。
 
@@ -743,7 +744,9 @@ src/application/
 ├─ layouts/
 │  ├─ application-shell/
 │  ├─ header/
-│  └─ footer/
+│  ├─ footer/
+│  ├─ collection/                     # 内容集合页面共同壳层
+│  └─ user-area/                      # User Center/Profile 共同壳层与活动列表
 │
 ├─ routes/
 │  ├─ home/
@@ -772,6 +775,8 @@ src/application/
 └─ index.ts
 ```
 
+`application/layouts/` 只存放跨 Route 共享或持续挂载的应用壳层；单个 Route 自己的父路由布局放在该 Route 的 `layout/` 目录。`layout/` 已经表达 UI 角色，内部不再嵌套无信息增量的 `ui/` 目录；Layout 组件、其直接拥有的 CSS Module、导航等布局私有组件和 barrel 在 `layout/` 下并列。
+
 `compatibility/` 是兼容边界，不是长期业务 owner。它存在时也不能被 Foundation 或 Modules 依赖。
 
 ## 9. Route 内部结构
@@ -782,7 +787,12 @@ src/application/
 routes/<route>/
 ├─ route.tsx              # 路由声明和 lazy 入口
 ├─ page.tsx               # 页面根组件
-├─ layout.tsx             # 仅该路由树使用的布局
+├─ layout/                # 仅该路由树使用的布局；内部不再套 ui/
+│  ├─ <Route>Layout.tsx
+│  ├─ <Route>Layout.module.scss  # 仅在该布局确实拥有样式时存在
+│  ├─ <Route>Navigation.tsx      # 可选；仅由该布局拥有
+│  ├─ model/                     # 可选；仅由该布局拥有的上下文/状态
+│  └─ index.ts
 ├─ model/
 │  ├─ route-params.ts
 │  ├─ page-state.ts
