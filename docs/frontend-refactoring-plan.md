@@ -2494,7 +2494,7 @@ src/
          └─ UbbContent.module.scss
 ```
 
-目录示例表达所有权规则而非预先批准这些名称或要求一次性重命名全部 TSX：必须先比较真实 DOM、状态和调用点，再确定组件 API。默认一个可独立复用/验收的组件一个目录、一份同名 Module；仅有几行且生命周期完全一致的私有子组件可以与父组件共用 Module。共享布局也必须通过 React 组件提供 DOM 与样式，页面不得只导入 `CollectionLayout.module.scss`、`UserArea.module.scss` 等远端样式表。禁止建立新的 `styles/` 业务杂物目录、按“颜色/布局/按钮”横向集中业务规则，或让多个无组件关系的 TSX 共同依赖一个巨型 Route Module。
+目录示例表达所有权规则而非预先批准这些名称或要求一次性重命名全部 TSX：必须先比较真实 DOM、状态和调用点，再确定组件 API。默认一个可独立复用/验收的组件一个目录、一份同名 Module；仅有几行且生命周期完全一致的私有子组件可以与父组件共用 Module。共享布局也必须通过 React 组件提供 DOM 与样式，页面不得只导入 `CollectionLayout.module.scss`、`UserArea.module.scss` 等远端样式表。禁止建立新的 `styles/` 业务杂物目录、按“颜色/布局/按钮”横向集中业务规则，或让多个无组件关系的 TSX 共同依赖一个巨型 Route Module。`row`、`column` 这类只有稳定 flex 声明、跨业务使用的布局原语不复制进各业务 Module，也不包装为无语义 React 组件；它们归 Foundation 单次全局加载，并在独立机械批统一命名空间化为 `cc98-row`、`cc98-column`，旧宽泛名称在全仓消费者切换后直接删除，不长期保留双别名。
 
 #### C1.7 拆分与复用判定
 
@@ -2513,9 +2513,9 @@ C1.7.1  拆分单文件多组件；保留 barrel、facade、lazy Route、DOM 与
 C1.7.2  提取有真实共同语义的 Collection、User Area、Status、Profile、Message 与 Topic item 组件
 C1.7.3  拆除 Route 样式仓库；组件与同名 Module 共置，活动业务远距离 Module 导入清零
 C1.7.4  审计孤儿/休眠源码；Application Shell、Footer、Home/PWA、Vote、Annual Review 规则归 owner
-C1.7.5  UBB Editor/renderer、Markdown/emoji 动态内容样式归 owner
+C1.7.5  盘点并冻结 UBB、Markdown/emoji 动态内容全局边界；UBB 样式随 Z2 模块化，Markdown 留待整体替换
 C1.7.6  Ant Design、Spectrum、Router/Portal 等第三方边界限界与登记
-C1.7.7  删除休眠 compatibility、根 Styles 与反向 import；Site.scss 缩为纯入口并启用最终守卫
+C1.7.7  Foundation 布局工具命名空间化；删除休眠 compatibility、根 Styles 与反向 import，Site.scss 缩为纯入口并启用最终守卫
 ```
 
 #### C1.7.1 单文件多组件拆分实施记录（2026-08-01）
@@ -2552,9 +2552,9 @@ C1.7.7  删除休眠 compatibility、根 Styles 与反向 import；Site.scss 缩
 - Board Pagination 与 New Topics Collapse 的两处 global 仅随 producer 移动，内容和指纹不变。仓库级 1383 项声明集合前后一致，已删除样式仓库中的 98 条原注释全部保留；29 个主题入口、顺序、自定义属性和静态 URL 未改。
 - 样式守卫扩展到 `src`/`Components`，自动校验同目录同名、单一直接 owner、实际默认绑定、目标存在、无 Sass 聚合与无孤儿 Module；取消固定 Module 总数，新增精确冻结边清单及失效检测。守卫通过：109 个真实 Module、0 个过渡 partial、29 个主题、2 个文件中的 2 处 global、9 条冻结边。
 - `npm run check:architecture` 通过：327 个现代源码文件、1343 条 import、27 条既有 allowlist；modern/legacy typecheck 通过。正式 build 在受限环境先因 `spawn EPERM` 失败，放行后修正 Search Module 的 `@use` 顺序/相对路径并重跑通过，转换 4111 个模块，仅有既有 Sass、Spectrum/Lightning CSS 与大 chunk 警告。完整证据见 `docs/refactor-log/c1.7/style-owner-audit.md`。
-- 本地 Vite 根入口 `http://127.0.0.1:5173/` 返回 HTTP 200，但当前浏览器运行时没有可连接实例；Board/Board List、Collection 六类页面、User Center/Profile、New Topics、Search、Editor、Login、Daily Signin、Home、Topic、默认/暗色主题、分页/空态/加载/回顶/hover/focus、Ant Design 控件及真实登录/API/权限均未执行浏览器验收，不记为通过，也不以 build 代替。当前停止在未提交工作树，不 commit、不 push，不自动进入 C1.7.4 或 Z。
+- 本地 Vite 根入口 `http://127.0.0.1:5173/` 返回 HTTP 200，但当前浏览器运行时没有可连接实例；Board/Board List、Collection 六类页面、User Center/Profile、New Topics、Search、Editor、Login、Daily Signin、Home、Topic、默认/暗色主题、分页/空态/加载/回顶/hover/focus、Ant Design 控件及真实登录/API/权限均未执行浏览器验收，不记为通过，也不以 build 代替。`NewTopicsBoardSidebar` 仍以自身 Module 映射查询由父页面 Module 生产的容器 class，两个哈希不会相同；后续行为修复改用父 owner 持有的 `ref` 或稳定 `id`，并同步解除子 Module 对错误祖先哈希的依赖。C1.7.3 代码与记录已提交为 `b361a4c1`、`489dff9d`，不自动进入 C1.7.4 或 Z。
 
-Annual Review 的最终删除仍属于 Z4；C1.7 不得借整理样式提前删除业务。若 Z4 尚未实施，C1.7 只把其样式放入明确的冻结 owner，并登记“随 Z4 整体删除”，不得继续留在 `Site.scss`。UBB 实现的完整迁址仍属于 Z2；C1.7 可以先建立最终样式 owner 并由 legacy 入口显式消费，但不得借此改写解析器、Handler 或扩展合同。根 `Components/` 等 legacy 源码目录的整体迁址和删除仍属于 Z；C1.7 只允许为组件边界、真实复用和样式共置所需的窄拆分，必要时让活动 legacy 组件暂时拥有相邻 Module，并登记随 Z 整体移动，不得把 C1.7 扩张为完整 legacy 逻辑迁移。
+Annual Review 的最终删除仍属于 Z4；C1.7 不得借整理样式提前删除业务。若 Z4 尚未实施，C1.7 只把其样式放入明确的冻结 owner，并登记“随 Z4 整体删除”，不得继续留在 `Site.scss`。UBB 实现和样式的完整迁址统一属于 Z2；C1.7.5 只登记 renderer/editor、动态 HTML、播放器、数学公式和 emoji 的当前 producer/consumer/selector 边界，不提前建立过渡 Module、全局兼容 facade 或旧 class 双写。Markdown 现有编辑/预览组件及其样式不在 C1.7 做兼容性迁移，只冻结调用点、内容格式、Storage/草稿、上传和安全边界，留待 Z 后独立整组件替换。根 `Components/` 等 legacy 源码目录的整体迁址和删除仍属于 Z；C1.7 只允许为组件边界、真实复用和样式共置所需的窄拆分，必要时让活动 legacy 组件暂时拥有相邻 Module，并登记随 Z 整体移动，不得把 C1.7 扩张为完整 legacy 逻辑迁移。
 
 #### C1.7 验收、守卫与停点
 
@@ -2565,7 +2565,7 @@ Annual Review 的最终删除仍属于 Z4；C1.7 不得借整理样式提前删�
 - 除 C1.6 的机械检查外，必须比较 `Site.scss` 编译顺序、29 主题 key/id/名称/日夜配对、主题变量、静态 URL、各 CSS chunk 和 vendor 产物；纯归位批要求声明级和级联顺序可证明等价，删除/作用域调整批逐项说明预期差分；
 - 每批运行 `npm run check:architecture`、modern/legacy typecheck、正式 build、`git diff --check`，并检查新增/迁移文件的 BOM、CRLF/LF、EOF、注释和生成产物；`git diff --check` 不覆盖未跟踪文件，必须单独审计；
 - 浏览器全量覆盖 Shell、Home、Board、Topic、Message、Search、Editor、User Center/Profile、Login、Signin、Ant Design、Spectrum、UBB、Markdown/emoji、默认/暗色主题、Portal、hover/focus/disabled、打印/降级和前进后退；未实际执行的场景明确保留为未验收，不以截图抽查或 build 代替；
-- 最终人工审核必须逐项确认：独立导出组件一文件一个或例外已登记；活动业务 Module 单一直接 owner；远距离 Module 导入为 0；无断裂路径和未登记孤儿组件；`rg ':global\(' src` 为 0；根 `Styles/` 不存在；`Site.scss` 无业务 selector；Foundation manifest 与实际 selector 一致；组件和 Module 共置；跨层 import 闭包、BOM/EOL/EOF、29 主题和静态 URL 合同保持；
+- 最终人工审核必须逐项确认：独立导出组件一文件一个或例外已登记；活动业务 Module 单一直接 owner；远距离 Module 导入为 0；无断裂路径和未登记孤儿组件；仅登记的第三方/动态内容边界允许 `:global(...)`；根 `Styles/` 不存在；`Site.scss` 无业务 selector；Foundation manifest 与实际 selector 一致；`row`/`column` 旧名字和活动消费者为 0，布局工具只以 `cc98-row`/`cc98-column` 从 Foundation 单次全局加载；组件和 Module 共置；跨层 import 闭包、BOM/EOL/EOF、29 主题和静态 URL 合同保持；
 - C1.7 完成后停止，等待用户验收和单独提交授权；不自动启动 Z。Z2/Z3/Z4 后再次运行同一守卫，确保 legacy 源码删除不会把样式重新拉回全局入口。
 
 ## 17. Z：根目录 legacy 浏览器源码收口
@@ -2633,7 +2633,7 @@ Z0 同时冻结下列行为合同：
 - 公开 URL、Router 参数、lazy 边界，以及旧 `list.asp` 到当前 `/board` 的 IIS 重定向；
 - API URL、method、headers、body、response wire shape 和错误语义；
 - Storage/IndexedDB 键、TTL、序列化格式、失效与跨标签行为；
-- UBB 输出、权限标签、内容安全、DOM、CSS、播放器、数学公式和编辑器行为；
+- UBB 解析/输出语义、权限标签、内容安全、播放器、数学公式和编辑器行为；旧 DOM className 与独立全局 CSS 不作为冻结兼容合同，Z2 必须在同一批同步迁移 producer、selector 与样式 owner；
 - SignalR、通知、Session、主题和缓存行为。
 
 16 个零调用/P21 候选仍逐项做上述证明；禁止因类名陈旧、文件短或当前无静态调用而批量删除混合文件。
@@ -2711,7 +2711,7 @@ Ubb/**
 Components/UbbContainer.tsx
 Components/UbbEditor/**
 States/UbbEditorState.tsx
-C1 已归位的 UBB 样式入口
+现有 UBB editor/renderer 全局样式与动态 selector
 ```
 
 Module 根入口只导出业务需要的 `UbbContainer`、`UbbEditor`、解析/渲染公共合同和必要扩展点；Application、其他 Module 不得深层导入 handler 或实现文件。原 `@legacy/Ubb/*`、`@legacy/Components/Ubb*` 消费者一次性切换为 `@modules/ubb`。
@@ -2719,11 +2719,13 @@ Module 根入口只导出业务需要的 `UbbContainer`、`UbbEditor`、解析/�
 本批采用完整文件迁址加必要路径修正，保留：
 
 - Handler 名称、注册顺序、动态构造和扩展能力；
-- UBB/Markdown 解析结果、嵌套/空标签、quote 和 URL 文本处理；
+- UBB 解析结果、嵌套/空标签、quote 和 URL 文本处理；
 - 权限、仅楼主、回复可见、指定用户可见等访问控制；
 - 图片、上传、音频、视频、Bilibili、数学公式和 sandbox 行为；
 - 编辑器按钮 JSON、emoji 资源、光标/选区、预览、上传压缩和草稿交互；
-- DOM 结构、className、CSS、错误降级与内容安全边界。
+- 用户内容语义、必要 DOM 关系、错误降级与内容安全边界；旧 className 字面量、独立全局 UBB CSS 文件名和 selector 名不要求兼容。
+
+UBB 样式随实现一次性收口：Editor、Container、renderer 及具备独立 DOM 的 Handler 各自直接导入相邻同名 Module；只共享值时使用 CSS 自定义属性，不建立新的独立全局 UBB 业务样式表。动态插入 HTML、DPlayer/APlayer、数学公式等无法由 React producer 映射的 selector 必须由最近的局部根限界并逐项登记。迁移时同步修改 JSX、动态模板、DOM 查询和 `classList`；不保留旧全局 class 双写或兼容 facade。
 
 不在本批现代化 Handler class、改写解析算法、修改公开扩展 API 或顺手修复已知 UBB 缺陷。机械检查通过后仍必须单独记录浏览器 UBB/editor/media/permission 验收；未执行不得记为通过。
 
@@ -2778,6 +2780,12 @@ git diff --check
 ```
 
 并做全仓活动代码搜索和主代理逐文件审核，确认公开 URL、API wire shape、Storage/IndexedDB、DOM/CSS、Session、Notification、SignalR、主题、缓存和 UBB 合同未漂移。完整浏览器、登录、真实 API、权限、SignalR、跨标签、通知、缓存、编辑器、媒体和 UBB 验收仍分别记录为“未执行”或实际结果。
+
+### Z 后续独立批：Markdown 组件整体替换
+
+现有 Markdown 编辑器、预览 renderer 及其全局 class/CSS 不做逐条 Module 化或旧 selector 兼容迁移；C1 与 Z 只保证它们在整体替换前仍可构建，并冻结真实调用点、输入输出内容格式、草稿/Storage、上传、emoji、数学公式、内容安全和与 UBB 编辑模式切换的边界。
+
+整体替换必须另行选型、设计和授权，可以替换组件库、DOM、className、CSS 和交互实现，不保留旧 Markdown 样式 facade 或双写 class。验收以内容往返不丢失、编辑/预览、粘贴与上传、草稿恢复、模式切换、主题、快捷键、滚动和安全过滤为准；未经该独立批授权，C1.7、Z2 或 Z3 均不得顺手重构现有 Markdown 实现。
 
 ## 18. 每批必做检查
 
@@ -2907,7 +2915,7 @@ R1  增加架构检查脚本                            已完成
 - 检查脚本结果；
 - 无业务行为变化证明。
 
-骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7、C1.1–C1.6 与 C1.7.1 均已完成代码实施、机械检查和主代理人工代码审核；C1.7.1、Legacy Board 删除和 Status 子批已提交为 `f11fe1e7`/`99a8679e`，C1.7.2 其余真实组件复用已提交为 `52b4bc77`/`fe0e02fa`。C1.7.3 已完成样式 owner 共置、机械检查与整批审核，浏览器运行验收未执行，当前停在未提交工作树，不自动启动 C1.7.4 或 Z。
+骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7、C1.1–C1.6 与 C1.7.1 均已完成代码实施、机械检查和主代理人工代码审核；C1.7.1、Legacy Board 删除和 Status 子批已提交为 `f11fe1e7`/`99a8679e`，C1.7.2 其余真实组件复用已提交为 `52b4bc77`/`fe0e02fa`，C1.7.3 样式 owner 共置已提交为 `b361a4c1`/`489dff9d`。C1.7.3 浏览器运行验收未执行，New Topics 跨 Module DOM 查询/祖先哈希问题登记为后续修复；当前不自动启动 C1.7.4 或 Z。
 
 ## 22. 已确认决策与后续边界
 
@@ -2921,17 +2929,19 @@ R1  增加架构检查脚本                            已完成
 6. S1 Redux 终态只保留 Session 与 Notification unread 两个业务 slice，Application Error 退出 Redux；
 7. S1 采用严格保真迁移，已知缺陷只登记，不顺手修复；
 8. 未经用户要求，不 commit、不 push；
-9. C1.5 后先新增 C1.6、C1.7：业务组件样式必须与 producer 共置，`src/application`/`src/modules` 的业务 global 清零，`src` 中不再使用 `:global(...)`；reset、应用根、主题变量、第三方和动态内容等不可避免的全局边界集中到 Foundation 并显式登记。完成后再进入 Z0–Z5，浏览器业务源码终态只位于 `src/application`、`src/modules` 和 `src/foundation`；
+9. C1.5 后先新增 C1.6、C1.7：业务组件样式必须与 producer 共置，`src/application`/`src/modules` 的业务 global 清零；仅第三方和动态内容的精确限界允许登记后的 `:global(...)`。reset、应用根、主题变量及跨业务布局工具等真正全局能力集中到 Foundation；`row`/`column` 不复制进业务 Module，统一命名空间化为 `cc98-row`/`cc98-column` 并单次全局加载。完成后再进入 Z0–Z5，浏览器业务源码终态只位于 `src/application`、`src/modules` 和 `src/foundation`；
 10. AnnualReview 完整移除，不恢复 Route、不建立新 Application 或空兼容 Module；
-11. UBB 功能保留并完整迁入 `src/modules/ubb`，迁址阶段不改写解析器、Handler 体系或扩展合同；
+11. UBB 功能保留并完整迁入 `src/modules/ubb`，迁址阶段不改写解析器、Handler 体系或扩展合同；Editor、Container、renderer 与独立 DOM Handler 各自携带相邻 Module，不建立长期全局 UBB 业务样式表，也不兼容旧 className/CSS selector；
 12. `@types/@cc98` 业务声明按真实业务 owner 迁入各 Module，不把 ambient `@cc98/api` 聚合搬入 Foundation；
 13. 纯数据 class 优先改为 `interface`，联合/组合类型使用 `type`，只有存在真实运行时身份、继承、方法或生命周期的对象保留 `class`；
 14. 类型搬移必须保留全部原始注释；没有明确类型且缺少唯一证据的字段先显式写成 `any`、登记类型债务，后续通过独立类型查明批次收窄。
-15. 旧 `/list` Legacy Board 不再保留；删除 Route、owner、根 facade 和专属样式，旧 `list.asp` 链接重定向当前 `/board`。
+15. 旧 `/list` Legacy Board 不再保留；删除 Route、owner、根 facade 和专属样式，旧 `list.asp` 链接重定向当前 `/board`；
+16. 现有 Markdown 编辑/预览组件后续整体替换；当前 C1/Z 不做逐条样式模块化或旧 class 兼容，替换批可改变组件库、DOM 和 CSS，但必须单独验证内容格式、草稿/Storage、上传、emoji/数学公式、模式切换和内容安全。
 
 后续仍需单独授权或审核：
 
 1. S1.1–S1.3、S1.4 六组、S1.5、S1.6 与 S1.7 尚未执行的完整浏览器、登录、真实 API、SignalR、跨标签、缓存与草稿运行验收，C1.1–C1.7.3 的浏览器样式/行为验收，C1.7.4–C1.7.7 的逐批代码实施授权，以及后续每个 Z 子批的代码实施授权；
 2. 当前 `useUserProfileContext` 接口及 UserProfileLayout 集中取数边界是否随资料缓存归位或 Redux 闭包再次调整；
 3. A2.3–A2.11 与 M3.1–M3.6 尚未执行的浏览器、登录、真实 API、权限、分页、SignalR、通知权限、上传、编辑器、缓存与 UBB 运行验收；
-4. UBB 迁入 `modules/ubb` 后的浏览器、权限标签、编辑器、媒体、数学公式和扩展 API 人工验收。
+4. UBB 迁入 `modules/ubb` 后的浏览器、权限标签、编辑器、媒体、数学公式和扩展 API 人工验收；
+5. Z 后 Markdown 组件整体替换的选型、实施授权及内容往返、草稿、上传、主题、快捷键和安全验收。
