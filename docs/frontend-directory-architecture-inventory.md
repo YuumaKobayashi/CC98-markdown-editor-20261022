@@ -777,6 +777,8 @@ src/application/
 
 `application/layouts/` 只存放跨 Route 共享或持续挂载的应用壳层；单个 Route 自己的父路由布局放在该 Route 的 `layout/` 目录。`layout/` 已经表达 UI 角色，内部不再嵌套无信息增量的 `ui/` 目录；Layout 组件、其直接拥有的 CSS Module、导航等布局私有组件和 barrel 在 `layout/` 下并列。
 
+C1.7.3 后，活动业务 TS/TSX 只直接导入同目录同名 CSS Module；共享布局通过 React 组件提供 DOM 与样式，Route 不再越过组件接口导入 `CollectionLayout`、`UserActivityLayout` 或其他远端样式仓库。样式守卫同时扫描 `src` 与根 `Components`，活动 Module 必须只有一个直接 owner；六个待 C1.7.4 完成可达性证明的休眠 legacy 文件只允许使用精确冻结清单中的 9 条旧边。
+
 `compatibility/` 是兼容边界，不是长期业务 owner。它存在时也不能被 Foundation 或 Modules 依赖。
 
 ## 9. Route 内部结构
