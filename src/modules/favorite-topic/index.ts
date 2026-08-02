@@ -11,6 +11,7 @@ export {
 } from "./api/service";
 export {
   defaultFavoriteTopicGroups,
+  FavoriteTopicOrder,
   type FavoriteTopicGroup,
 } from "./model/favorite-topic-group";
 export {

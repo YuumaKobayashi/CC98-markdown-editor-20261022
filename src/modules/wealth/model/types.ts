@@ -15,3 +15,14 @@ export interface TransferWealthInfo {
    */
   reason: string;
 }
+
+export enum RewardType {
+  Wealth = 0,
+  Prestige = 1,
+}
+
+export interface RewardDailyRecordInfo {
+  rewardType: RewardType;
+  rewardTotalValue: number;
+  rewardMaxValue: number | null;
+}

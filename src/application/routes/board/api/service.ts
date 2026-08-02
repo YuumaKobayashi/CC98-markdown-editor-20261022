@@ -2,16 +2,19 @@ import {
   cc98Fetch,
 } from "@foundation/api/http";
 import { formAuthorizeHeader } from "@modules/session";
-import type { BoardInfo, BoardTagInfo } from "@modules/board";
+import type { BoardEventInfo, BoardInfo, BoardTagInfo } from "@modules/board";
 import type {
   BoardBestSaveTopicsInfo,
   TagTopicsInfo,
   TopicInfo,
 } from "@modules/topic";
 import type { PostInfo } from "@modules/post";
-import type { BoardEventInfo } from "../model/types";
 
-export const getBoardInfo = async (boardId: string) => {
+export type BoardServiceError = "not found" | "server error" | "unauthorized";
+
+export const getBoardInfo = async (
+  boardId: string,
+): Promise<BoardInfo | BoardServiceError> => {
   const headers = await formAuthorizeHeader();
   const url = `/board/${boardId}`;
   const response = await cc98Fetch(url, { headers });
@@ -28,22 +31,31 @@ export const getBoardInfo = async (boardId: string) => {
   return data;
 };
 
-export const getNormalTopics = async (boardId: number, page: string) => {
+export const getNormalTopics = async (
+  boardId: number,
+  page: string,
+): Promise<TopicInfo[] | Exclude<BoardServiceError, "unauthorized">> => {
   const from = (parseInt(page) - 1) * 20;
   const url = `/board/${boardId}/topic?from=${from}&size=20`;
-  return (await getTopics(url)) as TopicInfo[];
+  return getTopics<TopicInfo[]>(url);
 };
 
-export const getBestTopics = async (boardId: number, page: string) => {
+export const getBestTopics = async (
+  boardId: number,
+  page: string,
+): Promise<BoardBestSaveTopicsInfo | Exclude<BoardServiceError, "unauthorized">> => {
   const from = (parseInt(page) - 1) * 20;
   const url = `/topic/best/board/${boardId}?from=${from}&size=20`;
-  return (await getTopics(url)) as BoardBestSaveTopicsInfo;
+  return getTopics<BoardBestSaveTopicsInfo>(url);
 };
 
-export const getSaveTopics = async (boardId: number, page: string) => {
+export const getSaveTopics = async (
+  boardId: number,
+  page: string,
+): Promise<BoardBestSaveTopicsInfo | Exclude<BoardServiceError, "unauthorized">> => {
   const from = (parseInt(page) - 1) * 20;
   const url = `/topic/save/board/${boardId}?from=${from}&size=20`;
-  return (await getTopics(url)) as BoardBestSaveTopicsInfo;
+  return getTopics<BoardBestSaveTopicsInfo>(url);
 };
 
 export const getTagTopics = async (
@@ -51,7 +63,7 @@ export const getTagTopics = async (
   page: string,
   tag1: number,
   tag2: number,
-) => {
+): Promise<TagTopicsInfo | Exclude<BoardServiceError, "unauthorized">> => {
   const from = (parseInt(page) - 1) * 20;
   let query = "";
   if (tag1 !== -1) {
@@ -61,10 +73,12 @@ export const getTagTopics = async (
     query += `tag2=${tag2}&`;
   }
   const url = `/topic/search/board/${boardId}/tag?${query}from=${from}&size=20`;
-  return (await getTopics(url)) as TagTopicsInfo;
+  return getTopics<TagTopicsInfo>(url);
 };
 
-export const getTopTopics = async (boardId: number) => {
+export const getTopTopics = async (
+  boardId: number,
+): Promise<TopicInfo[] | Exclude<BoardServiceError, "unauthorized">> => {
   const headers = await formAuthorizeHeader();
   const url = `/topic/toptopics?boardid=${boardId}`;
   const response = await cc98Fetch(url, { headers });
@@ -77,7 +91,9 @@ export const getTopTopics = async (boardId: number) => {
   return (await response.json()) as TopicInfo[];
 };
 
-export const getShortTopic = async (topicId: number) => {
+export const getShortTopic = async (
+  topicId: number,
+): Promise<PostInfo[] | Exclude<BoardServiceError, "unauthorized">> => {
   const headers = await formAuthorizeHeader();
   const url = `/topic/${topicId}/post?from=0&size=10`;
   const response = await cc98Fetch(url, { headers });
@@ -91,7 +107,9 @@ export const getShortTopic = async (topicId: number) => {
 };
 
 //TODO：把这个抽象函数拆咯 三个地方都有调用
-export const getTopics = async (url: string) => {
+export const getTopics = async <T>(
+  url: string,
+): Promise<T | Exclude<BoardServiceError, "unauthorized">> => {
   const headers = await formAuthorizeHeader();
   const response = await cc98Fetch(url, { headers });
   switch (response.status) {
@@ -100,17 +118,20 @@ export const getTopics = async (url: string) => {
     case 500:
       return "server error";
   }
-  return (await response.json()) as unknown;
+  return (await response.json()) as T;
 };
 
-export const getTags = async (boardId: number) => {
+export const getTags = async (boardId: number): Promise<BoardTagInfo[]> => {
   const headers = await formAuthorizeHeader();
   const url = `/board/${boardId}/tag`;
   const response = await cc98Fetch(url, { headers });
   return (await response.json()) as BoardTagInfo[];
 };
 
-export const multiDelete = async (topicIds: number[], reason: string) => {
+export const multiDelete = async (
+  topicIds: number[],
+  reason: string,
+): Promise<Response> => {
   const headers = await formAuthorizeHeader();
   headers.append("Content-Type", "application/json");
   let query = "id=";
@@ -124,7 +145,7 @@ export const multiLock = async (
   topicIds: number[],
   reason: string,
   value: number,
-) => {
+): Promise<Response> => {
   const headers = await formAuthorizeHeader();
   let query = "id=";
   query += topicIds.join("&id=");
@@ -134,14 +155,20 @@ export const multiLock = async (
   return await cc98Fetch(url, { method: "PUT", headers, body });
 };
 
-export const getBoardRecords = async (boardId: string, from: number) => {
+export const getBoardRecords = async (
+  boardId: string,
+  from: number,
+): Promise<BoardEventInfo> => {
   const url = `/board/${boardId}/events?from=${from}&size=7`;
   const headers = await formAuthorizeHeader();
   const response = await cc98Fetch(url, { headers });
   return (await response.json()) as BoardEventInfo;
 };
 
-export const editBigPaper = async (boardId: string, content: string) => {
+export const editBigPaper = async (
+  boardId: string,
+  content: string,
+): Promise<Response> => {
   const url = `/board/${boardId}/big-paper`;
   const headers = await formAuthorizeHeader();
   headers.append("Content-Type", "application/json");

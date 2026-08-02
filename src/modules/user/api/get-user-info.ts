@@ -14,15 +14,15 @@ import { cc98Fetch } from "@foundation/api/http";
  * @returns {Promise<UserInfo>} 用户信息
  * @author AsukaSong
  */
-export async function getUserInfo(userId: number): Promise<UserInfo>;
+export async function getUserInfo(userId: number): Promise<UserInfo | undefined>;
 /**
  * 使用用户名查询用户信息
  * @param {string} userName 用户名
  * @returns {Promise<UserInfo>} 用户信息
  * @author AsukaSong
  */
-export async function getUserInfo(userName: string): Promise<UserInfo>;
-export async function getUserInfo(key: number | string): Promise<UserInfo> {
+export async function getUserInfo(userName: string): Promise<UserInfo | undefined>;
+export async function getUserInfo(key: number | string): Promise<UserInfo | undefined> {
     let userInfo: UserInfo;
     try {
         // 在缓存中查询
@@ -33,7 +33,7 @@ export async function getUserInfo(key: number | string): Promise<UserInfo> {
         const url = typeof key === 'number' ? `/user/${key}` : `/user/name/${encodeURIComponent(key)}`;
         let headers = await formAuthorizeHeader();
         let res = await cc98Fetch(url, { headers });
-        userInfo = await res.json();
+        userInfo = (await res.json()) as UserInfo;
 
         //缓存
         void writeUserInfoCache(userInfo);

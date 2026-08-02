@@ -1,7 +1,7 @@
 ﻿// A '.tsx' file enables JSX support in the TypeScript compiler, 
 // for more information see the following page on the TypeScript wiki:
 // https://github.com/Microsoft/TypeScript/wiki/JSX
-import type { MessageProps } from './MessageProps';
+import type { MessageViewModel } from "./types";
 /**
 *私信聊天时显示的单个用户信息
 */
@@ -17,11 +17,11 @@ export interface MessagePersonInfo {
     /**
     *当前私信用户头像地址
     */
-    portraitUrl: string;
+    portraitUrl: string | null;
     /**
     *最近消息列表
     */
-    message: MessageProps[];
+    message: MessageViewModel[];
     /**
     *最近一条消息
     */

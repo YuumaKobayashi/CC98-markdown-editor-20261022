@@ -8,11 +8,16 @@ import {
 import type { CurrentUser } from "../model/types";
 import { logOffAndNavigate } from "@foundation/lib/legacy-utility-effects";
 
+interface RefreshTokenResponse {
+  access_token?: string;
+  expires_in?: number;
+}
+
 /**
  * 获取当前的用户信息。
  * @returns {CurrentUser} 当前的用户信息。
  */
-export function getMyInfo(): CurrentUser {
+export function getMyInfo(): CurrentUser | undefined {
   return getLocalStorage<CurrentUser>("userInfo");
 }
 
@@ -20,7 +25,7 @@ export function getMyInfo(): CurrentUser {
  * 获取当前的用户登录令牌。
  * @returns {string} 用户当前有效的登录令牌。
  */
-export async function getToken(): Promise<string> {
+export async function getToken(): Promise<string | null | undefined> {
   const refreshToken = getLocalStorage<string>("refresh_token");
   if (!refreshToken) return null;
 
@@ -42,7 +47,7 @@ export async function getToken(): Promise<string> {
       .map((key) => `${key}=${requestBody[key]}`)
       .join("&"),
   });
-  const data = await response.json();
+  const data = (await response.json()) as RefreshTokenResponse;
 
   if (data.access_token) {
     token = "Bearer " + encodeURIComponent(data.access_token);

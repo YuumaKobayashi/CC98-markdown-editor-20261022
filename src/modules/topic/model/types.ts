@@ -20,6 +20,10 @@ export interface TopicBasicInfo {
    */
   id: number;
   /**
+   * 主题标题
+   */
+  title: string;
+  /**
    * 版面id
    */
   boardId: number;
@@ -41,6 +45,12 @@ export interface TopicBasicInfo {
   type: TopicType;
 
   contentType: TopicContentType;
+}
+
+export interface TopicBasicLookupFallback {
+  id: number;
+  title: string;
+  boardId: number;
 }
 
 export type IBasicTopic = TopicBasicInfo;
@@ -112,6 +122,33 @@ export interface LotteryTopicDetail {
   drawingCount: number;
   drawingTime: string;
   mode: LotteryMode;
+}
+
+export interface VoteItem {
+  id: number;
+  description: string;
+  count: number;
+}
+
+export interface VoteRecord {
+  userId: number;
+  userName: string;
+  items: number[];
+  ip: string;
+  time: string;
+}
+
+export interface VoteInfo {
+  topicId: number;
+  voteItems: VoteItem[];
+  voteRecords: VoteRecord[] | null;
+  expiredTime: string;
+  isAvailable: boolean;
+  maxVoteCount: number;
+  canVote: boolean;
+  myRecord: VoteRecord | null;
+  needVote: boolean;
+  voteUserCount: number;
 }
 
 export interface TopicInfo {
@@ -389,85 +426,6 @@ export interface FocusTopic {
 /**
  * 可能错过帖子的信息
  */
-export interface RandomTopic {
-  /**
-  *主题的标题
-  */
-  title: string;
-  /**
-  *主题被点击的次数（阅读数）,由于太多，所以显示字符串k
-  */
-  hitCount: number | string;
-  /**
-  *主题的ID值
-  */
-  id: number;
-  /**
-  *主题所在的版面的编号
-  */
-  boardId: number;
-  /**
- *主题所在的版面的名称
- */
-  boardName: string;
-  /**
-  *主题的回复数（不包括第一次发言），由于太多，所以显示字符串k
-  */
-  replyCount: number | string;
-  /**
- *主题的楼层数
- */
-  floorCount: number;
-  /**
-  *主题作者的id。如果主题为匿名主题，则该参数为 null
-  */
-  userId: number | null;
-  /**
-  *主题作者的用户名。如果主题为匿名主题，则该参数为 null
-  */
-  userName: string;
-  /**
-  *主题作者的头像的图片url地址
-  */
-  portraitUrl: string;
-  /**
-  *主题的创建时间
-  */
-  time: string;
-  /**
-  *主题被赞的次数
-  */
-  likeCount: number;
-  /**
-  *主题被踩的次数
-  */
-  dislikeCount: number;
-  /**
-  *最后回复用户
-  */
-  lastPostUser: string | null;
-  /**
-  *最后回复时间
-  */
-  lastPostTime: string;
-  /**
-  *标签1
-  */
-  tag1: number | string | false;
-  /**
-  *标签2
-  */
-  tag2: number | string | false;
-  /**
-   * 媒体主题的摘要信息
-   */
-  mediaContent: MediaTopicContent | null;
-  /**
-   * 主题内容的类型
-   */
-  contentType: TopicContentType;
-}
-
 /**
  * 表示推荐主题帖
  */

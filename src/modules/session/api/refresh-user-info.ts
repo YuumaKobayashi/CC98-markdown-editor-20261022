@@ -1,4 +1,4 @@
-import type { Dispatch } from "redux";
+import type { Action } from "redux";
 
 import { setLocalStorage, getLocalStorage } from "@foundation/storage/web-storage";
 import { formAuthorizeHeader } from "./session";
@@ -6,6 +6,13 @@ import { cc98Fetch } from "@foundation/api/http";
 import { changeLegacyCurrentUser } from "@foundation/lib/legacy-utility-effects";
 import { updateCurrentUser } from "../model/session-actions";
 import type { CurrentUser } from "../model/types";
+
+interface SessionDispatch {
+  <T>(thunk: (dispatch: SessionDispatch) => T): T;
+  <A extends Action>(action: A): A;
+}
+
+type SessionThunk<T> = (dispatch: SessionDispatch) => Promise<T>;
 
 /**
  * 刷新当前用户信息
@@ -30,8 +37,8 @@ export async function refreshUserInfo(): Promise<CurrentUser | undefined> {
  */
 export function refreshCurrentUser(
   beforeUpdate?: (currentUser: CurrentUser) => void
-) {
-  return async (dispatch: Dispatch): Promise<CurrentUser> => {
+): SessionThunk<CurrentUser> {
+  return async (dispatch: SessionDispatch): Promise<CurrentUser> => {
     const headers = await formAuthorizeHeader();
     const response = await cc98Fetch(`/me`, { headers });
     if (response.status !== 200) {
@@ -39,7 +46,7 @@ export function refreshCurrentUser(
     }
     const currentUser = (await response.json()) as CurrentUser;
     beforeUpdate?.(currentUser);
-    dispatch(updateCurrentUser(currentUser) as any);
+    dispatch(updateCurrentUser(currentUser));
     return currentUser;
   };
 }
@@ -48,10 +55,10 @@ export function refreshCurrentUser(
  * 保留旧 refreshCurrentUserInfo 的页面调用合同。刷新失败时旧 thunk 只写入
  * 已无人读取的 userInfo 错误状态；S1.7 删除该状态后继续静默结束。
  */
-export function refreshCurrentUserInfo() {
-  return async (dispatch: Dispatch): Promise<CurrentUser | undefined> => {
+export function refreshCurrentUserInfo(): SessionThunk<CurrentUser | undefined> {
+  return async (dispatch: SessionDispatch): Promise<CurrentUser | undefined> => {
     try {
-      return (await dispatch(refreshCurrentUser() as any)) as CurrentUser;
+      return await dispatch(refreshCurrentUser());
     } catch {
       return undefined;
     }

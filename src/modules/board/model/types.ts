@@ -146,7 +146,26 @@ export interface BoardStopPostUserInfo {
   operatorUserName: string;
 }
 
-export type IBoardGroup = BoardCategoryInfo;
+export interface BoardEvent {
+  id: number;
+  topicId: number;
+  boardId: number;
+  targetUserName: string | null;
+  operatorUserName: string | null;
+  content: string;
+  time: string;
+  ip: string;
+  isDeleted: boolean;
+  isAnonymous: boolean;
+}
+
+export interface BoardEventInfo {
+  boardId: number;
+  count: number;
+  from: number;
+  size: number;
+  boardEvents: BoardEvent[];
+}
 
 export interface IBoardMasterTitle {
   /**

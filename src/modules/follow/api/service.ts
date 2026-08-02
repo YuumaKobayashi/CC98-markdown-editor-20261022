@@ -22,7 +22,7 @@ export async function getCurrentUserFans(
     throw new Error(response.statusText);
   }
 
-  const userIds: number[] = await response.json();
+  const userIds = (await response.json()) as number[];
   if (userIds.length === 0) {
     return [];
   }
@@ -46,7 +46,7 @@ export async function getCurrentUserFollowings(
     throw new Error(response.statusText);
   }
 
-  const userIds: number[] = await response.json();
+  const userIds = (await response.json()) as number[];
   if (userIds.length === 0) {
     return [];
   }
@@ -58,7 +58,9 @@ export async function getCurrentUserFollowings(
  * 关注指定id的用户
  * @param userId
  */
-export async function followUser(userId: number) {
+export async function followUser(
+  userId: number,
+): Promise<true | string | undefined> {
   try {
     const headers = await formAuthorizeHeader();
     const url = `/me/followee/${userId}`;
@@ -81,7 +83,7 @@ export async function followUser(userId: number) {
  * 取关指定id的用户
  * @param userId
  */
-export async function unfollowUser(userId: number) {
+export async function unfollowUser(userId: number): Promise<boolean> {
   try {
     const headers = await formAuthorizeHeader();
     const url = `/me/followee/${userId}`;
@@ -100,7 +102,7 @@ export async function unfollowUser(userId: number) {
   }
 }
 
-export function isFollowThisBoard(boardId) {
+export function isFollowThisBoard(boardId: number): boolean {
   if (!getMyInfo()) return false;
   const customBoards = getMyInfo().customBoards;
   if (customBoards) {
@@ -113,7 +115,7 @@ export function isFollowThisBoard(boardId) {
   return false;
 }
 
-export async function followBoard(boardId) {
+export async function followBoard(boardId: number): Promise<void> {
   const headers = await formAuthorizeHeader();
   const url = `/me/custom-board/${boardId}`;
   const response = await cc98Fetch(url, { method: "PUT", headers });
@@ -121,7 +123,7 @@ export async function followBoard(boardId) {
   removeStorage("focusBoardList");
 }
 
-export async function unfollowBoard(boardId) {
+export async function unfollowBoard(boardId: number): Promise<void> {
   const headers = await formAuthorizeHeader();
   const url = `/me/custom-board/${boardId}`;
   const response = await cc98Fetch(url, { method: "DELETE", headers });

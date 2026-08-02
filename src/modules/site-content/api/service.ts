@@ -14,17 +14,19 @@ export async function getGlobalConfig(): Promise<ISite> {
   const headers = await formAuthorizeHeader();
   const url = `/config/global`;
   const response = await cc98Fetch(url, { headers });
-  const data = await response.json();
+  const data = (await response.json()) as ISite;
   return data;
 }
 
 export async function getPublicGlobalConfig(): Promise<ISite> {
   const response = await cc98Fetch("/config/global");
-  const data = await response.json();
+  const data = (await response.json()) as ISite;
   return data;
 }
 
-export async function changeSiteAnnouncement(announcement: string) {
+export async function changeSiteAnnouncement(
+  announcement: string,
+): Promise<void> {
   const token = await getToken();
   const headers = new Headers();
   headers.append("Authorization", token);
@@ -37,7 +39,7 @@ export async function changeSiteAnnouncement(announcement: string) {
   if (response.status !== 200) throw new Error(response.status.toString());
 }
 
-export async function clearMainPageCache() {
+export async function clearMainPageCache(): Promise<void> {
   const headers = await formAuthorizeHeader();
   const response = await cc98Fetch("/config/index/update", {
     method: "PUT",
@@ -61,7 +63,7 @@ export async function getAdvertisements(): Promise<ForumIndexColumnInfo[]> {
 
 export async function getMainPageData(): Promise<IIndex> {
   const response = await cc98Fetch("/config/index");
-  const data = await response.json();
+  const data = (await response.json()) as IIndex;
   return data;
 }
 
@@ -76,7 +78,9 @@ export async function getIndexColumnInfo(
   return data;
 }
 
-export async function putIndexColumnInfo(item: SiteIndexColumnEditorItem) {
+export async function putIndexColumnInfo(
+  item: SiteIndexColumnEditorItem,
+): Promise<void> {
   const url = item.isNew ? "/index/column/" : `/index/column/${item.id}`;
   const method = item.isNew ? "POST" : "PUT";
   const token = await getToken();

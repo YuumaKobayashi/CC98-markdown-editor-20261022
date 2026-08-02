@@ -2,7 +2,7 @@ import { formAuthorizeHeader } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
 import type { UserSignInStateInfo } from "../model/types";
 
-export async function signin(content) {
+export async function signin(content: string): Promise<void> {
   const headers = await formAuthorizeHeader();
   headers.append("Content-Type", "application/json");
   const url = `/me/signin`;

@@ -5,6 +5,12 @@ export type FavoriteTopicGroup = {
   name: string;
 };
 
+export enum FavoriteTopicOrder {
+  PostTime = 0,
+  LastReply = 1,
+  FavorTime = 2,
+}
+
 export const defaultFavoriteTopicGroups: FavoriteTopicGroup[] = [
   {
     id: 0,

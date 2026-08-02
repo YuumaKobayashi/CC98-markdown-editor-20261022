@@ -1,11 +1,13 @@
 import { formAuthorizeHeader } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
 import { getAccessToken } from "@foundation/storage/web-storage";
+import type { NewPostInfo } from "@modules/post";
+import type { VoteInfo } from "@modules/topic";
 
 export async function updateFollowedUser(
   userId: number,
   method: "PUT" | "DELETE"
-) {
+): Promise<Response> {
   const headers = new Headers();
   headers.append("Authorization", getAccessToken());
   return cc98Fetch(`/me/followee/${userId}`, {
@@ -14,13 +16,16 @@ export async function updateFollowedUser(
   });
 }
 
-export async function getTopicVote(topicId: number) {
+export async function getTopicVote(topicId: number): Promise<VoteInfo> {
   const headers = await formAuthorizeHeader();
   const response = await cc98Fetch(`/topic/${topicId}/vote`, { headers });
-  return response.json();
+  return (await response.json()) as VoteInfo;
 }
 
-export async function submitTopicVote(topicId: number, items: number[]) {
+export async function submitTopicVote(
+  topicId: number,
+  items: number[],
+): Promise<Response> {
   const headers = await formAuthorizeHeader();
   headers.append("Content-Type", "application/json");
   return cc98Fetch(`/topic/${topicId}/vote`, {
@@ -33,8 +38,8 @@ export async function submitTopicVote(topicId: number, items: number[]) {
 export async function submitTopicReply(
   topicId: number,
   token: string,
-  body: unknown
-) {
+  body: NewPostInfo
+): Promise<Response> {
   const headers = new Headers();
   headers.append("Authorization", token);
   headers.append("Content-Type", "application/json");
@@ -49,8 +54,8 @@ export async function sendAtNotification(
   topicId: number,
   postId: string,
   token: string,
-  atUsers: unknown
-) {
+  atUsers: string[]
+): Promise<Response> {
   const headers = new Headers();
   headers.append("Content-Type", "application/json");
   headers.append("Authorization", token);

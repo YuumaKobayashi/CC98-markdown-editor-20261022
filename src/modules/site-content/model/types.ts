@@ -1,4 +1,4 @@
-import type { IBasicTopic, TopicType } from "@modules/topic";
+import type { TopicType } from "@modules/topic";
 import type {
   ForumIndexColumnType,
   ForumIndexColumnVisibility,
@@ -46,104 +46,6 @@ export interface SiteIndexColumnEditorItem extends ForumIndexColumn {
   isNew?: boolean;
   /** 编辑器提交 Banner/福利优惠时使用，不属于 GET wire DTO。 */
   days?: number | string;
-}
-
-export interface IRecommendationReading {
-  /**
-   * 标题
-   */
-  title: string;
-  /**
-   * 内容
-   */
-  content: string;
-  /**
-   * 帖子链接
-   */
-  url: string;
-  /**
-   * 图标链接
-   */
-  imageUrl: string;
-
-  id: number;
-
-  type: ForumIndexColumnType;
-
-  enable: boolean;
-
-  time: string;
-
-  expiredTime: string;
-}
-
-export interface IConfig {
-  /**
-   * 学术贴
-   */
-  academics: IBasicTopic[];
-  /**
-   * 公告
-   */
-  announcement: string;
-  /**
-   * 感性
-   */
-  emotion: IBasicTopic[];
-  /**
-   * 交易
-   */
-  fleaMarket: IBasicTopic[];
-  /**
-   * 十大
-   */
-  hotTopic: IBasicTopic[];
-  lastUpdateTime: string;
-  lastUpdateUser: string;
-  /**
-   * 在线用户数
-   */
-  onlineUserCount: number;
-  /**
-   * 兼职
-   */
-  partTimeJob: IBasicTopic[];
-  /**
-   * 总帖数
-   */
-  postCount: number;
-  /**
-   * 推荐功能
-   */
-  recommendationFunction: any[];
-  /**
-   * 推荐阅读
-   */
-  recommendationReading: IRecommendationReading[];
-  /**
-   * 校园活动
-   */
-  schoolEvent: IBasicTopic[];
-  /**
-   * 校园新闻
-   */
-  schoolNews: IBasicTopic[];
-  /**
-   * 学习天地
-   */
-  study: IBasicTopic[];
-  /**
-   * 今日贴数
-   */
-  todayCount: number;
-  /**
-   * 总主题
-   */
-  topicCount: number;
-  /**
-   * 总用户
-   */
-  userCount: number;
 }
 
 /** 首页 */

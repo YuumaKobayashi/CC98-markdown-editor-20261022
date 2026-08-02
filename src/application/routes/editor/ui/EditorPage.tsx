@@ -200,7 +200,7 @@ export function EditorPage(): React.ReactElement {
             updateState({ fetchState: "not allowed" });
           }
           const data = (await response.json()) as PostInfo;
-          const topicInfo = await getTopicInfo(data.topicId);
+          const topicInfo = (await getTopicInfo(data.topicId))!;
           data.title = topicInfo.title;
 
           let tag1Name = await getTagNamebyId(topicInfo.tag1);
@@ -329,7 +329,12 @@ export function EditorPage(): React.ReactElement {
     if (!atUsers) return;
     const tempData = await getTopicContent(Number(topicId), 1);
     const postId = tempData[0].id;
-    await sendEditorAtNotification(topicId, postId, atUsers, token);
+    await sendEditorAtNotification(
+      topicId,
+      postId,
+      atUsers as string[],
+      token,
+    );
   };
 
   const validateTopic = (isMarkdown: boolean): boolean => {

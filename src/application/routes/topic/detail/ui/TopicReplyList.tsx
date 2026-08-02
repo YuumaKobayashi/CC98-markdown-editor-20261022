@@ -51,7 +51,7 @@ export function TopicReplyList(props: TopicReplyListProps) {
     postId,
   } = props;
   const [boardName, setBoardName] = useState("");
-  const [maxWealth, setMaxWealth] = useState(20000);
+  const [maxWealth, setMaxWealth] = useState<number | null>(20000);
   const [deductedWealth, setDeductedWealth] = useState(0);
   const [inWaiting, setInWaiting] = useState(true);
   const [contents, setContents] = useState<PostViewModel[]>([]);
@@ -77,20 +77,17 @@ export function TopicReplyList(props: TopicReplyListProps) {
           setContents([]);
         }
       } else {
-        realContents = await getTraceTopics(topicId, postId, currentPage);
+        realContents = await getTraceTopics(topicId, postId!, currentPage);
       }
 
-      let data = {
-        rewardMaxValue: 20000,
-        rewardTotalValue: 0,
-        boardName: boardInfo.name,
-      };
       if (isMaster(boardInfo.boardMasters)) {
-        data = await queryWealth(boardInfo.id);
+        const data = await queryWealth(boardInfo.id);
+        if (data) {
+          setMaxWealth(data.rewardMaxValue);
+          setDeductedWealth(data.rewardTotalValue);
+        }
       }
-      setMaxWealth(data.rewardMaxValue);
-      setDeductedWealth(data.rewardTotalValue);
-      setBoardName(data.boardName);
+      setBoardName(boardInfo.name);
       setInWaiting(false);
       setContents(realContents ?? []);
     };
@@ -138,17 +135,16 @@ export function TopicReplyList(props: TopicReplyListProps) {
       realContents = await getTopicContent(currentTopicId, currentPage);
     }
 
-    let data = {
-      rewardMaxValue: 0,
-      rewardTotalValue: 0,
-      boardName: boardInfo.name,
-    };
+    setMaxWealth(0);
+    setDeductedWealth(0);
     if (isMaster(boardInfo.boardMasters)) {
-      data = await queryWealth(boardInfo.id);
+      const data = await queryWealth(boardInfo.id);
+      if (data) {
+        setMaxWealth(data.rewardMaxValue);
+        setDeductedWealth(data.rewardTotalValue);
+      }
     }
-    setMaxWealth(data.rewardMaxValue);
-    setDeductedWealth(data.rewardTotalValue);
-    setBoardName(data.boardName);
+    setBoardName(boardInfo.name);
     setContents(realContents ?? []);
   };
 

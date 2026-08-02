@@ -27,11 +27,16 @@ export interface LoginCredentials {
   password: string;
 }
 
+type SessionThunk<T> = (dispatch: Dispatch) => Promise<T>;
+
 /**
  * 执行现有 password grant 登录流程。提示、主题切换、100ms 返回和最终
  * 页面跳转仍由 LoginPage 持有。
  */
-export function logIn({ userName, password }: LoginCredentials) {
+export function logIn({
+  userName,
+  password,
+}: LoginCredentials): SessionThunk<CurrentUser> {
   return async (dispatch: Dispatch): Promise<CurrentUser> => {
     dispatch(sessionInvalidated());
 

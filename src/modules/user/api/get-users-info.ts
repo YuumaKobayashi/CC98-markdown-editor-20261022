@@ -14,15 +14,15 @@ import { cc98Fetch } from "@foundation/api/http";
  * @returns {Promise<UserInfo[]>} 用户信息
  * @author AsukaSong
  */
-export async function getUsersInfo(userIds: number[]): Promise<UserInfo[]>;
+export async function getUsersInfo(userIds: number[]): Promise<(UserInfo | undefined)[] | undefined>;
 /**
  * 使用用户名批量查询用户信息
  * @param {string} userNames 用户名
  * @returns {Promise<UserInfo[]>} 用户信息
  * @author AsukaSong
  */
-export async function getUsersInfo(userNames: string[]): Promise<UserInfo[]>;
-export async function getUsersInfo(keys: (number | string)[]): Promise<UserInfo[]> {
+export async function getUsersInfo(userNames: string[]): Promise<(UserInfo | undefined)[] | undefined>;
+export async function getUsersInfo(keys: (number | string)[]): Promise<(UserInfo | undefined)[] | undefined> {
     try {
         // 缓存未命中的项，其值为对应的key，以便进一步通过api查询
         let infos: (UserInfo | number | string)[];
@@ -35,7 +35,7 @@ export async function getUsersInfo(keys: (number | string)[]): Promise<UserInfo[
             const url = keys.some(key => typeof key === 'number') ? `/user?id=${querys.join('&id=')}` : `/user/name?name=${querys.map(encodeURIComponent).join('&name=')}`;
             let headers = await formAuthorizeHeader();
             let res = await cc98Fetch(url, { headers });
-            queryInfo = await res.json();
+            queryInfo = (await res.json()) as UserInfo[];
         }
 
         // 填充通过api查到的项

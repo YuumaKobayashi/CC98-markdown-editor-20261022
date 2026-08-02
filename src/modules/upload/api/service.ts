@@ -8,7 +8,12 @@ import { cc98Fetch } from "@foundation/api/http";
  * 失败时isSuccess为false，content为错误原因
  * @param file
  */
-export async function uploadFile(file: File) {
+export interface UploadResult {
+  isSuccess: boolean;
+  content: string;
+}
+
+export async function uploadFile(file: File): Promise<UploadResult> {
   try {
     // if (file.size > 5242880) {
     //     throw new Error('文件过大');
@@ -23,7 +28,7 @@ export async function uploadFile(file: File) {
       headers: myHeaders,
       body: formdata,
     });
-    let data: string[] = await res.json();
+    const data = (await res.json()) as string[];
     if (res.status === 200 && data.length !== 0) {
       return {
         isSuccess: true,

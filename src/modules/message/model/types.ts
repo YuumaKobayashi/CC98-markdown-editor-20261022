@@ -41,14 +41,14 @@ export interface MessageSendReceiveProps {
   /**
    * 消息的发送时间
    */
-  time: Date;
+  time: string;
   /**
    * 是否显示发送时间
    */
   showTime: boolean;
 }
 
-export interface IMessageContent {
+export interface MessageInfo {
   id: number;
   /**
    * 发送方 ID
@@ -70,9 +70,15 @@ export interface IMessageContent {
    * 发信内容
    */
   content: string;
+
+  senderDeleted: boolean;
+
+  receiverDeleted: boolean;
+
+  isBookMessage: boolean;
 }
 
-export interface IRecentMessage {
+export interface RecentContactUserInfo {
   /**
    * 用户 ID
    */
@@ -89,4 +95,13 @@ export interface IRecentMessage {
    * 最后一条消息
    */
   lastContent: string;
+
+  senderId: number;
+}
+
+/**
+ * 私信 service 在 wire 消息上追加时间显示状态后的渲染模型。
+ */
+export interface MessageViewModel extends MessageInfo {
+  showTime: boolean;
 }

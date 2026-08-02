@@ -27,7 +27,7 @@ export function FavoriteTopicGroupSelect({
         console.log(favoriteTopicListResponse);
         setFavoriteTopicList(
           favoriteTopicListResponse.errorCode === 0
-            ? favoriteTopicListResponse.data
+            ? favoriteTopicListResponse.data ?? defaultFavoriteTopicGroups
             : defaultFavoriteTopicGroups
         );
       } catch (error) {

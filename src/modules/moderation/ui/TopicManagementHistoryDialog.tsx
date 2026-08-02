@@ -2,18 +2,21 @@ import * as React from "react";
 import { List, Modal, Spin } from "antd";
 import moment from "moment";
 import { getManageHistory } from "../api/service";
+import type { BoardEvent } from "@modules/board";
+import type { TopicInfo } from "@modules/topic";
+import type { TopicManageHistory } from "../model/types";
 
 interface TopicManagementHistoryDialogProps {
-  visible;
-  topicInfo;
-  onClose;
+  visible: boolean;
+  topicInfo: TopicInfo;
+  onClose: () => void;
 }
 
 export function TopicManagementHistoryDialog(
   props: TopicManagementHistoryDialogProps
 ) {
   const [visible] = React.useState(true);
-  const [data, setData] = React.useState<any>(null);
+  const [data, setData] = React.useState<TopicManageHistory | null>(null);
   const [loading, setLoading] = React.useState(false);
 
   const onClick = () => props.onClose();
@@ -44,7 +47,7 @@ export function TopicManagementHistoryDialog(
       >
         {data && (
           <List
-            dataSource={data ? data.data : []}
+            dataSource={data ? data.data ?? [] : []}
             pagination={{
               onChange: async (page) => {
                 setLoading(true);
@@ -59,15 +62,7 @@ export function TopicManagementHistoryDialog(
               pageSize: 7,
               total: data.count,
             }}
-            // TODO: item type
-            renderItem={(item: {
-              id: string;
-              content: string;
-              targetUserName: string;
-              time: string;
-              operatorUserName: string;
-              ip: string;
-            }) => (
+            renderItem={(item: BoardEvent) => (
               <List.Item key={item.id}>
                 <List.Item.Meta
                   title={item.content}

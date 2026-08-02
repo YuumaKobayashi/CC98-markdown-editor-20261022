@@ -1,2 +1,3 @@
 export * from "./api/service";
-export type { TransferWealthInfo } from "./model/types";
+export { RewardType } from "./model/types";
+export type { RewardDailyRecordInfo, TransferWealthInfo } from "./model/types";

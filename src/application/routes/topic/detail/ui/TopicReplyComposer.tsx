@@ -352,7 +352,12 @@ export const TopicReplyComposer = React.forwardRef(function TopicReplyComposer(
         if (atUsers) {
           const postId = await mes.text();
           const topicId = props.topicInfo.id;
-          await sendAtNotification(topicId, postId, token, atUsers);
+          await sendAtNotification(
+            topicId,
+            postId,
+            token,
+            atUsers as string[],
+          );
         }
 
         clearReplyDraft(props.topicInfo.id);
@@ -449,7 +454,12 @@ export const TopicReplyComposer = React.forwardRef(function TopicReplyComposer(
         if (atUsers) {
           const postId = await mes.text();
           const topicId = props.topicInfo.id;
-          await sendAtNotification(topicId, postId, token, atUsers);
+          await sendAtNotification(
+            topicId,
+            postId,
+            token,
+            atUsers as string[],
+          );
         }
         clearLegacyTemporaryContent();
         resetNotifyAllReplier();

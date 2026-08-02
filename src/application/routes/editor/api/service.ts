@@ -3,6 +3,7 @@ import {
   formAuthorizeHeader,
   getToken,
 } from "@modules/session";
+import type { EditorPostRequest, EditorTopicRequest } from "../model/types";
 
 function createJsonHeaders(token: string): Headers {
   const headers = new Headers();
@@ -12,7 +13,7 @@ function createJsonHeaders(token: string): Headers {
 }
 
 export async function getEditorBoard(
-  boardId,
+  boardId: number | string,
   currentToken?: string
 ): Promise<Response> {
   const token = currentToken || (await getToken());
@@ -22,7 +23,7 @@ export async function getEditorBoard(
 }
 
 export async function getOriginalEditorPost(
-  postId,
+  postId: number | string,
   currentToken?: string
 ): Promise<Response> {
   const token = currentToken || (await getToken());
@@ -32,8 +33,8 @@ export async function getOriginalEditorPost(
 }
 
 export async function createEditorTopic(
-  boardId,
-  content,
+  boardId: string,
+  content: EditorTopicRequest,
   token: string
 ): Promise<Response> {
   return cc98Fetch(`/board/${boardId}/topic`, {
@@ -44,8 +45,8 @@ export async function createEditorTopic(
 }
 
 export async function updateEditorPost(
-  postId,
-  content
+  postId: string,
+  content: EditorPostRequest,
 ): Promise<Response> {
   const headers = await formAuthorizeHeader();
   headers.append("Content-Type", "application/json");
@@ -57,9 +58,9 @@ export async function updateEditorPost(
 }
 
 export async function sendEditorAtNotification(
-  topicId,
-  postId,
-  atUsers,
+  topicId: number | string,
+  postId: number | string,
+  atUsers: string[],
   token: string
 ): Promise<Response> {
   return cc98Fetch(

@@ -81,7 +81,7 @@ export function TopicSearchPage() {
       if (requestId.current !== currentRequest) return;
       if (result === -1) {
         setStatus("error");
-      } else if (!result?.length) {
+      } else if (!Array.isArray(result) || result.length === 0) {
         setStatus("empty");
       } else {
         setData(result);
@@ -112,7 +112,7 @@ export function TopicSearchPage() {
     if (requestId.current !== currentRequest) return;
     if (result === -1) {
       setStatus("ready");
-    } else if (!result?.length) {
+    } else if (!Array.isArray(result) || result.length === 0) {
       setStatus("done");
     } else {
       setData((current) => [...current, ...result]);

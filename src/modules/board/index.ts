@@ -15,6 +15,8 @@ export {
 } from "./model/enums";
 export type {
   BoardCategoryInfo,
+  BoardEvent,
+  BoardEventInfo,
   BoardInfo,
   BoardSimpleInfo,
   BoardStopPostUserInfo,
@@ -23,7 +25,6 @@ export type {
   BoardTagInfoV2Item,
   FocusBoard,
   IBoard,
-  IBoardGroup,
   IBoardMasterTitle,
   UserFavoritesBoardInfo,
 } from "./model/types";

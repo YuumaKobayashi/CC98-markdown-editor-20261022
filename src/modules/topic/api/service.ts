@@ -5,9 +5,11 @@ import type {
   RecommendedTopicInfo,
   SearchedTopicInfo,
   TopicBasicInfo,
+  TopicBasicLookupFallback,
   TopicInfo,
   UserRecentTopic,
 } from "../model/types";
+import type { ResultWithCount } from "@foundation/api/contracts";
 import type {
   PostBasicInfo,
   PostInfo,
@@ -17,6 +19,7 @@ import type {
 import { TopicSortMode } from "../model/enums";
 import { getUserInfo } from "@modules/user";
 import { getUsersInfo } from "@modules/user";
+import type { UserInfo } from "@modules/user";
 import { readTagInfoCache, writeTagInfoCache } from "../cache/tag-cache";
 import { getToken, formAuthorizeHeader, isLogOn } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
@@ -26,7 +29,17 @@ import { getBasicUsersInfo, getThisUserInfo } from "@modules/user";
 import { replaceHttpToHttps } from "@foundation/lib/text";
 import { transerRecentTime, transerTimeToYearMonthDay } from "@foundation/lib/time";
 
-export async function getTopic(topicid: number) {
+type MutableFocusTopic = Omit<TopicInfo, keyof FocusTopic> & FocusTopic;
+type MutableSearchedTopic = Omit<SearchedTopicInfo, keyof FocusTopic> & FocusTopic;
+type MutableRecommendedTopic = Omit<
+  RecommendedTopicInfo,
+  "topic"
+> &
+  RecommendedTopic & { topic: MutableFocusTopic };
+
+export async function getTopic(
+  topicid: number,
+): Promise<PostViewModel | undefined> {
   try {
     const headers = await formAuthorizeHeader();
     const response = await cc98Fetch(`/Topic/${topicid}/post?from=0&size=1`, {
@@ -58,7 +71,10 @@ export async function getTopic(topicid: number) {
   }
 }
 
-export async function getTopicContent(topicid: number, curPage: number) {
+export async function getTopicContent(
+  topicid: number,
+  curPage: number,
+): Promise<PostViewModel[] | undefined> {
   try {
     const startPage = (curPage - 1) * 10;
     const headers = await formAuthorizeHeader();
@@ -71,7 +87,7 @@ export async function getTopicContent(topicid: number, curPage: number) {
     let topicNumberInPage = content.length;
     //收集id
     const usersId = [];
-    let usersInfo = [];
+    let usersInfo: UserInfo[] = [];
     if (content.length === 0) return [];
     for (let j = 0; j < topicNumberInPage; j++) {
       content[j].content = replaceHttpToHttps(content[j].content);
@@ -137,7 +153,9 @@ export async function getTopicContent(topicid: number, curPage: number) {
   }
 }
 
-export async function getHotReplyContent(topicid: number) {
+export async function getHotReplyContent(
+  topicid: number,
+): Promise<PostViewModel[] | undefined> {
   try {
     const headers = await formAuthorizeHeader();
     const response = await cc98Fetch(`/Topic/${topicid}/hot-post`, { headers });
@@ -149,7 +167,7 @@ export async function getHotReplyContent(topicid: number) {
         const userMesResponse = await cc98Fetch(
           `/user/name/${encodeURIComponent(content[i].userName)}`
         );
-        const userMesJson = await userMesResponse.json();
+        const userMesJson = (await userMesResponse.json()) as UserInfo;
         post[i] = {
           ...content[i],
           userInfo: userMesJson,
@@ -209,7 +227,7 @@ export async function getCurUserTopicContent(
   topicid: number,
   curPage: number,
   userId: number
-) {
+): Promise<PostViewModel[] | undefined> {
   try {
     const topicMessage = await getTopic(topicid);
     let start: number;
@@ -263,7 +281,9 @@ export async function getCurUserTopicContent(
 /**
  * 获取随机精选（推荐）帖
  */
-export async function getRandomRecommendedTopic(size: number) {
+export async function getRandomRecommendedTopic(
+  size: number,
+): Promise<RecommendedTopic[] | undefined> {
   //如果未登录,直接跳转至登录页面
   if (!isLogOn()) {
     throwLegacyError("LogOut");
@@ -288,7 +308,7 @@ export async function getRandomRecommendedTopic(size: number) {
       //throwLegacyError('ServerError');
     }
     const rawTopics = (await response.json()) as RecommendedTopicInfo[];
-    let newTopic = rawTopics as unknown as RecommendedTopic[];
+    let newTopic = rawTopics as MutableRecommendedTopic[];
     //console.log("获取到的数据", newTopic);
     let aTopic = [];
     let aTopicId = [];
@@ -371,7 +391,10 @@ export async function getRandomRecommendedTopic(size: number) {
  * 获取全站新帖
  * @param curPage
  */
-export async function getAllNewTopic(from: number, mediaOnly: boolean = false) {
+export async function getAllNewTopic(
+  from: number,
+  mediaOnly: boolean = false,
+): Promise<FocusTopic[] | undefined> {
   //如果未登录,直接跳转至登录页面
   if (!isLogOn()) {
     throwLegacyError("LogOut");
@@ -410,7 +433,7 @@ export async function getAllNewTopic(from: number, mediaOnly: boolean = false) {
       //throwLegacyError('ServerError');
     }
     const rawTopics = (await response.json()) as TopicInfo[];
-    let newTopic = rawTopics as unknown as FocusTopic[];
+    let newTopic = rawTopics as MutableFocusTopic[];
     //console.log("获取到的数据", newTopic);
     let aTopic = [];
     let aTopicId = [];
@@ -498,7 +521,7 @@ export async function getFocusTopic(
   boardId: number,
   boardName: string,
   from: number
-) {
+): Promise<FocusTopic[] | undefined> {
   //如果未登录,直接跳转至登录页面
   if (!isLogOn()) {
     throwLegacyError("LogOut");
@@ -549,7 +572,7 @@ export async function getFocusTopic(
       //throwLegacyError('ServerError');
     }
     const rawTopics = (await response.json()) as TopicInfo[];
-    let newTopic = rawTopics as unknown as FocusTopic[];
+    let newTopic = rawTopics as MutableFocusTopic[];
     let aTopic = [];
     let aTopicId = [];
     let bTopic = [];
@@ -642,7 +665,10 @@ export async function getCurUserTotalReplyPage(topicId, userId) {
   }
 }
 
-export async function getTraceTopicsCount(topicId, postId) {
+export async function getTraceTopicsCount(
+  topicId: number | string,
+  postId: number | string,
+): Promise<number | undefined> {
   try {
     const headers = await formAuthorizeHeader();
     const response = await cc98Fetch(
@@ -658,7 +684,11 @@ export async function getTraceTopicsCount(topicId, postId) {
   }
 }
 
-export async function getTraceTopics(topicId, postId, page) {
+export async function getTraceTopics(
+  topicId: number | string,
+  postId: number | string,
+  page: number,
+): Promise<PostViewModel[] | undefined> {
   const start = (page - 1) * 10;
   try {
     const headers = await formAuthorizeHeader();
@@ -667,7 +697,7 @@ export async function getTraceTopics(topicId, postId, page) {
       { headers }
     );
     const rawPosts = (await response.json()) as SpecificUserPostInfo[];
-    const data = rawPosts as unknown as PostViewModel[];
+    const data = rawPosts as Array<SpecificUserPostInfo & PostViewModel>;
     if (data[0] && data[0].isAnonymous) {
       let purl = "/static/images/心灵头像.gif";
       for (let i in data) {
@@ -741,7 +771,7 @@ export async function getSearchTopic(
   boardId: number,
   words: string[],
   from: number
-) {
+): Promise<FocusTopic[] | 0 | -1 | null | undefined> {
   //如果未登录,直接跳转至登录页面
   if (!isLogOn()) {
     throwLegacyError("LogOut");
@@ -778,7 +808,7 @@ export async function getSearchTopic(
           //throwLegacyError('ServerError');
         }
         const rawTopics = (await response.json()) as SearchedTopicInfo[];
-        newTopic = rawTopics as unknown as FocusTopic[];
+        newTopic = rawTopics as MutableSearchedTopic[];
       } catch (e) {
         return -1;
       }
@@ -805,7 +835,7 @@ export async function getSearchTopic(
           throwLegacyError("ServerError");
         }
         const rawTopics = (await response.json()) as SearchedTopicInfo[];
-        newTopic = rawTopics as unknown as FocusTopic[];
+        newTopic = rawTopics as MutableSearchedTopic[];
       } catch (e) {
         return -1;
       }
@@ -891,7 +921,9 @@ export async function getSearchTopic(
   }
 }
 
-export async function getTopicInfo(topicId) {
+export async function getTopicInfo(
+  topicId: number | string,
+): Promise<TopicInfo | null> {
   const headers = await formAuthorizeHeader();
   const url = `/topic/${topicId}`;
   const response = await cc98Fetch(url, { headers });
@@ -940,7 +972,7 @@ export async function getPostInfo(postId) {
   return data[0];
 }
 
-export async function getTagInfo() {
+export async function getTagInfo(): Promise<ITag[]> {
   const tagInfo = readTagInfoCache<ITag[]>();
   if (tagInfo) {
     return tagInfo;
@@ -949,7 +981,7 @@ export async function getTagInfo() {
   }
 }
 
-export async function getNewTagInfo() {
+export async function getNewTagInfo(): Promise<ITag[]> {
   const url = `/config/global/alltag`;
   const headers = await formAuthorizeHeader();
   const response = await cc98Fetch(url, { headers });
@@ -958,7 +990,9 @@ export async function getNewTagInfo() {
   return data;
 }
 
-export async function getTagIdbyName(name) {
+export async function getTagIdbyName(
+  name: string,
+): Promise<number | false> {
   const tagInfo = await getTagInfo();
   for (let item of tagInfo) {
     if (item.name === name) return item.id;
@@ -970,7 +1004,9 @@ export async function getTagIdbyName(name) {
   return false;
 }
 
-export async function getTagNamebyId(id) {
+export async function getTagNamebyId(
+  id: number | string,
+): Promise<string | false> {
   const tagInfo = await getTagInfo();
   for (let item of tagInfo) {
     if (item.id === id) return item.name;
@@ -1019,7 +1055,9 @@ export function getThisPostInfo(postId, postIds) {
 }
 
 //批量查询topic的基础信息
-export async function getBasicTopicsInfo(topicIds: any[]) {
+export async function getBasicTopicsInfo(
+  topicIds: number[],
+): Promise<TopicBasicInfo[]> {
   if (!topicIds || topicIds.length === 0) {
     return [];
   }
@@ -1042,7 +1080,10 @@ export async function getBasicTopicsInfo(topicIds: any[]) {
 }
 
 //在topicsId中查询topicId，查到了就返回对应的信息，没有就设置一个默认的
-export function getThisTopicInfo(topicId, topicIds) {
+export function getThisTopicInfo(
+  topicId: number,
+  topicIds: readonly TopicBasicInfo[],
+): TopicBasicInfo | TopicBasicLookupFallback {
   for (let i in topicIds) {
     if (topicIds[i].id === topicId) {
       return topicIds[i];
@@ -1062,7 +1103,9 @@ export function getThisTopicInfo(topicId, topicIds) {
  * @returns {data} 处理好的热门话题数据
  * @author adddna //基于明一gg的获取新帖
  */
-export async function getMonthlyHotTopic(type: string) {
+export async function getMonthlyHotTopic(
+  type: string,
+): Promise<FocusTopic[] | undefined> {
   const headers = await formAuthorizeHeader();
   const response = await cc98Fetch(`/topic/hot-${type}`);
 
@@ -1078,7 +1121,7 @@ export async function getMonthlyHotTopic(type: string) {
   }
 
   const rawTopics = (await response.json()) as TopicInfo[];
-  let data = rawTopics as unknown as FocusTopic[];
+  let data = rawTopics as MutableFocusTopic[];
 
   let aTopic = [];
   let aTopicId = [];
@@ -1154,7 +1197,9 @@ export async function getMonthlyHotTopic(type: string) {
 /**
  * 获取随机(最近)帖
  */
-export async function getRandomTopic(size: number) {
+export async function getRandomTopic(
+  size: number,
+): Promise<FocusTopic[] | undefined> {
   //如果未登录,直接跳转至登录页面
   if (!isLogOn()) {
     throwLegacyError("LogOut");
@@ -1182,7 +1227,7 @@ export async function getRandomTopic(size: number) {
       //throwLegacyError('ServerError');
     }
     const rawTopics = (await response.json()) as TopicInfo[];
-    let newTopic = rawTopics as unknown as FocusTopic[];
+    let newTopic = rawTopics as MutableFocusTopic[];
     //console.log("获取到的数据", newTopic);
     let aTopic = [];
     let aTopicId = [];
@@ -1299,11 +1344,6 @@ export async function getCurrentUserRecentTopics(
   return { topics, hasMore };
 }
 
-interface CurrentUserBrowsingHistoryResponse {
-  data?: UserRecentTopic[] | null;
-  count?: number;
-}
-
 export interface CurrentUserBrowsingHistoryPage {
   topics: UserRecentTopic[];
   totalPage?: number;
@@ -1334,7 +1374,7 @@ export async function getCurrentUserBrowsingHistory(
   }
 
   const result =
-    (await response.json()) as CurrentUserBrowsingHistoryResponse | null;
+    (await response.json()) as ResultWithCount<UserRecentTopic> | null;
   const topics = result?.data;
 
   if (!topics || topics.length === 0) {

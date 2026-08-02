@@ -1,7 +1,7 @@
 import * as React from "react";
 import moment from "moment";
 
-import type { BoardEvent } from "../model/types";
+import type { BoardEvent } from "@modules/board";
 
 import styles from "./BoardModerationRecordItem.module.scss";
 

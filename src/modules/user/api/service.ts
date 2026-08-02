@@ -4,10 +4,31 @@ import {
 } from "../cache/public-user-cache";
 import { getUserInfo } from "./get-user-info";
 import { UserGender } from "../model/enums";
-import type { UserViewModel } from "../model/types";
+import type {
+  UserBasicInfo,
+  UserInfo,
+  UserLookupFallback,
+  UserLookupResult,
+  UserViewModel,
+} from "../model/types";
 import { cc98Fetch } from "@foundation/api/http";
 
-export function getThisUserInfo(userId, usersInfo) {
+export function getThisUserInfo(
+  userId: number | null,
+  usersInfo: readonly UserInfo[],
+): UserInfo | UserLookupFallback;
+export function getThisUserInfo(
+  userId: number | null,
+  usersInfo: readonly UserBasicInfo[],
+): UserBasicInfo | UserLookupFallback;
+export function getThisUserInfo(
+  userId: number | null,
+  usersInfo: readonly (UserInfo | UserBasicInfo)[],
+): UserLookupResult;
+export function getThisUserInfo(
+  userId: number | null,
+  usersInfo: readonly (UserInfo | UserBasicInfo)[],
+): UserLookupResult {
   for (let i in usersInfo) {
     if (usersInfo[i]) {
       if (usersInfo[i].id === userId) {
@@ -16,7 +37,7 @@ export function getThisUserInfo(userId, usersInfo) {
     }
   }
   //查询失败
-  let indexData = {
+  const indexData: UserLookupFallback = {
     id: userId,
     name: "ID不存在",
     portraitUrl: "/static/images/default_avatar_boy.png",
@@ -32,12 +53,15 @@ export function getThisUserInfo(userId, usersInfo) {
   return indexData;
 }
 
-export function getThisUserInfobyName(userName, usersName) {
+export function getThisUserInfobyName(
+  userName: string,
+  usersName: readonly UserInfo[],
+): UserInfo | UserLookupFallback {
   for (let i in usersName) {
     if (usersName[i].name === userName) return usersName[i];
   }
   //查询失败
-  let indexData = {
+  const indexData: UserLookupFallback = {
     id: null,
     name: "ID不存在",
     portraitUrl: "/static/images/default_avatar_boy.png",
@@ -109,14 +133,16 @@ export async function getPortraitUrl(userName) {
   return data.portraitUrl;
 }
 
-export async function updateUserInfo(id, name) {
+export async function updateUserInfo(id: number, name: string): Promise<void> {
   await invalidateUserInfoCache(id, name);
   await getUserInfo(id);
 }
 
-export async function getBasicUsersInfo(userIds: number[]) {
-  let usersInfoNeeded = [];
-  let finalUsersInfo = [];
+export async function getBasicUsersInfo(
+  userIds: number[],
+): Promise<(UserInfo | UserBasicInfo)[]> {
+  const usersInfoNeeded: number[] = [];
+  const finalUsersInfo: (UserInfo | UserBasicInfo)[] = [];
   //检查本地是否有缓存
   for (let i = 0; i < userIds.length; i++) {
     let thisUserInfo = readLocalUserInfoCache(userIds[i]);
@@ -140,7 +166,7 @@ export async function getBasicUsersInfo(userIds: number[]) {
     try {
       //合并查询和缓存的
       let response = await cc98Fetch(url);
-      var data = await response.json();
+      const data = (await response.json()) as UserBasicInfo[];
       for (let i of data) {
         finalUsersInfo.push(i);
       }

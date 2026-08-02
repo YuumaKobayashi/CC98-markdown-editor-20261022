@@ -1,6 +1,11 @@
 import { formAuthorizeHeader } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
 import type { UserRecentTopic } from "@modules/topic";
+import type { ResultWithCount } from "@foundation/api/contracts";
+import {
+  FavoriteTopicOrder,
+  type FavoriteTopicGroup,
+} from "../model/favorite-topic-group";
 
 export interface CurrentUserFavoriteTopicPage {
   topics: UserRecentTopic[];
@@ -14,18 +19,23 @@ export interface CurrentUserFavoriteTopicPage {
 //   return "ok";
 // }
 //PUT 收藏帖子
-export async function setFavoriteTopic(topicId, groupId = 0) {
+export async function setFavoriteTopic(
+  topicId: number,
+  groupId: number = 0,
+): Promise<"ok"> {
   const headers = await formAuthorizeHeader();
   const url = `/me/favorite/${topicId}?groupid=${groupId}`;
   const reponse = await cc98Fetch(url, { method: "PUT", headers });
   return "ok";
 }
 
-export async function getFavoriteAllTopic() {
+export async function getFavoriteAllTopic(): Promise<
+  ResultWithCount<FavoriteTopicGroup>
+> {
   const headers = await formAuthorizeHeader();
   const url = `/me/favorite-topic-group`
   const response = await cc98Fetch(url, { headers });
-  const data = await response.json();
+  const data = (await response.json()) as ResultWithCount<FavoriteTopicGroup>;
   return data;
 }
 
@@ -37,7 +47,7 @@ export async function getFavoriteAllTopic() {
  */
 export async function getCurrentUserFavoriteTopics(
   page: number,
-  order: number = 0,
+  order: FavoriteTopicOrder = FavoriteTopicOrder.PostTime,
   group: number = 0,
   keyword: string = "",
 ): Promise<CurrentUserFavoriteTopicPage> {
@@ -52,30 +62,34 @@ export async function getCurrentUserFavoriteTopics(
     throw new Error(response.statusText);
   }
 
-  const result: UserRecentTopic[] = await response.json();
+  const result = (await response.json()) as UserRecentTopic[];
   const hasMore = result.length === 11;
   const topics = hasMore ? result.slice(0, 10) : result;
 
   return { topics, hasMore };
 }
 
-export async function deleteFavoriteTopic(topicId) {
+export async function deleteFavoriteTopic(topicId: number): Promise<"ok"> {
   const headers = await formAuthorizeHeader();
   const url = `/me/favorite/${topicId}`;
   const reponse = await cc98Fetch(url, { method: "DELETE", headers });
   return "ok";
 }
 
-export async function getFavState(topicId) {
+export async function getFavState(
+  topicId: number | string,
+): Promise<boolean> {
   const headers = await formAuthorizeHeader();
   const url = `/topic/${topicId}/isfavorite`;
   const response = await cc98Fetch(url, { headers });
-  const data = await response.json();
+  const data = (await response.json()) as boolean;
   return data;
 }
 
 //创建收藏夹
-export async function createFavGroup(groupName: string) {
+export async function createFavGroup(
+  groupName: string,
+): Promise<"ok" | "error"> {
   const headers = await formAuthorizeHeader();
   const url = `/me/favorite-topic-group`;
   headers.append("Content-Type", "application/json");
@@ -89,7 +103,10 @@ export async function createFavGroup(groupName: string) {
 }
 
 //修改收藏夹名称
-export async function updateFavGroup(groupId, groupName) {
+export async function updateFavGroup(
+  groupId: number,
+  groupName: string,
+): Promise<"ok" | "error"> {
   const headers = await formAuthorizeHeader();
   const url = `/me/favorite-topic-group/`;
   headers.append("Content-Type", "application/json");
@@ -103,7 +120,9 @@ export async function updateFavGroup(groupId, groupName) {
 }
 
 //删除收藏夹
-export async function deleteFavGroup(groupId) {
+export async function deleteFavGroup(
+  groupId: number,
+): Promise<"ok" | "error"> {
   const headers = await formAuthorizeHeader();
   const url = `/me/favorite-topic-group?groupid=${groupId}`;
   headers.append("Content-Type", "application/json");

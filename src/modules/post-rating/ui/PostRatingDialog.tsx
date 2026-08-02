@@ -7,6 +7,7 @@ import {
   negativeJudge,
   positiveJudge,
 } from "../api/service";
+import type { RatingReason } from "../model/types";
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -19,13 +20,6 @@ interface PostRatingDialogProps {
   update;
 }
 
-interface JudgeTag {
-  id: number;
-  reason: string;
-  type: RatingType;
-  enabled: boolean;
-}
-
 //TODO : Hard code here
 
 export function PostRatingDialog(props: PostRatingDialogProps) {
@@ -33,8 +27,8 @@ export function PostRatingDialog(props: PostRatingDialogProps) {
   const [current, setCurrent] = React.useState("0");
   const [option, setOption] = React.useState("");
   const [loading, setLoading] = React.useState(false);
-  const [positiveTags, setPositiveTags] = React.useState<JudgeTag[]>([]);
-  const [negativeTags, setNegativeTags] = React.useState<JudgeTag[]>([]);
+  const [positiveTags, setPositiveTags] = React.useState<RatingReason[]>([]);
+  const [negativeTags, setNegativeTags] = React.useState<RatingReason[]>([]);
 
   const handleChange = (value) => {
     console.log(value);
@@ -43,7 +37,7 @@ export function PostRatingDialog(props: PostRatingDialogProps) {
 
   const onCreate = async () => {
     let status = "";
-    let value = "";
+    let value = 0;
     try {
       const values = await formRef.current!.validateFields();
       setLoading(true);

@@ -1,22 +1,11 @@
 import * as React from "react";
 import { Collapse, Modal } from "antd";
+import type { PostSimpleInfo, PostWithIpInfo } from "../model/types";
 
 const Panel = Collapse.Panel;
 
-interface Post {
-  userName: string;
-  userId: number;
-  content: string;
-  floor: number;
-}
-
-interface IP {
-  ip: string;
-  posts: Post[];
-}
-
 interface TopicIPDataProps {
-  IPData: IP[];
+  IPData: PostWithIpInfo[];
   changeStatus: () => void;
 }
 
@@ -41,12 +30,12 @@ export function TopicIPData(props: TopicIPDataProps): React.ReactElement {
       bodyStyle={{ maxHeight: "20rem", overflowY: "auto" }}
     >
       <Collapse defaultActiveKey={[]}>
-        {IPData.map((item: IP, index) => (
+        {IPData.map((item: PostWithIpInfo, index) => (
           <Panel
             key={`${index}`}
             header={`${item.ip} 共${item.posts.length}条`}
           >
-            {item.posts.map((post) => (
+            {item.posts.map((post: PostSimpleInfo) => (
               <>
                 <p>
                   用户名:{post.userName} 楼层:{post.floor}

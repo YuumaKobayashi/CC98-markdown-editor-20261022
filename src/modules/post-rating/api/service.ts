@@ -1,8 +1,13 @@
 import { formAuthorizeHeader } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
 import { PostUserOperationType, RatingType } from "@modules/post";
+import type { PostOperationResult, RatingReason } from "../model/types";
 
-export async function awardWealth(reason, value, postId) {
+export async function awardWealth(
+  reason: string,
+  value: number,
+  postId: number,
+): Promise<PostOperationResult> {
   const headers = await formAuthorizeHeader();
   headers.append("Content-Type", "application/json");
   const body = {
@@ -34,7 +39,11 @@ export async function awardWealth(reason, value, postId) {
   return "ok";
 }
 
-export async function deductWealth(reason, value, postId) {
+export async function deductWealth(
+  reason: string,
+  value: number,
+  postId: number,
+): Promise<PostOperationResult> {
   const headers = await formAuthorizeHeader();
   headers.append("Content-Type", "application/json");
   const body = {
@@ -126,7 +135,11 @@ export async function minus1(topicId, postId, reason) {
 }
 
 /**风评接口v2.0 */
-export async function positiveJudge(postId, reasonId, type: RatingType) {
+export async function positiveJudge(
+  postId: number,
+  reasonId: number,
+  type: RatingType,
+): Promise<string> {
   const url = `/post/${postId}/rating-v2`;
   const headers = await formAuthorizeHeader();
   headers.append("Content-Type", "application/json");
@@ -144,7 +157,11 @@ export async function positiveJudge(postId, reasonId, type: RatingType) {
   return "ok";
 }
 
-export async function negativeJudge(postId, reasonId, type: RatingType) {
+export async function negativeJudge(
+  postId: number,
+  reasonId: number,
+  type: RatingType,
+): Promise<string> {
   const url = `/post/${postId}/rating-v2`;
   const headers = await formAuthorizeHeader();
   headers.append("Content-Type", "application/json");
@@ -162,7 +179,11 @@ export async function negativeJudge(postId, reasonId, type: RatingType) {
   return "ok";
 }
 
-export async function addPrestige(postId, value, reason) {
+export async function addPrestige(
+  postId: number,
+  value: number,
+  reason: string,
+): Promise<PostOperationResult> {
   const headers = await formAuthorizeHeader();
   headers.append("Content-Type", "application/json");
   const bodyinfo = {
@@ -188,7 +209,11 @@ export async function addPrestige(postId, value, reason) {
   return "ok";
 }
 
-export async function deductPrestige(postId, value, reason) {
+export async function deductPrestige(
+  postId: number,
+  value: number,
+  reason: string,
+): Promise<PostOperationResult> {
   const headers = await formAuthorizeHeader();
   headers.append("Content-Type", "application/json");
   const bodyinfo = {
@@ -217,9 +242,9 @@ export async function deductPrestige(postId, value, reason) {
 /**
  * 获取可用的风评标签
  */
-export async function getJudgeTags(type: RatingType) {
+export async function getJudgeTags(type: RatingType): Promise<RatingReason[]> {
   const url = `/post/rating-reason?type=${type}`;
   const headers = await formAuthorizeHeader();
   const response = await cc98Fetch(url, { headers });
-  return await response.json();
+  return (await response.json()) as RatingReason[];
 }

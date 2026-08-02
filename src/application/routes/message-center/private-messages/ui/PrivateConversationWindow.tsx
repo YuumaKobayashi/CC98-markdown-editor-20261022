@@ -22,7 +22,7 @@ import {
 } from "@modules/notification";
 import { getMyInfo } from "@modules/session";
 import { uploadFile } from "@modules/upload";
-import type { MessagePersonInfo, MessageProps } from "@modules/message";
+import type { MessagePersonInfo, MessageViewModel } from "@modules/message";
 import { DocumentTitle } from "@foundation/ui/document-title";
 
 import styles from "./PrivateConversationWindow.module.scss";
@@ -35,15 +35,15 @@ interface PrivateConversationWindowProps {
   data: MessagePersonInfo | null;
   onContactUpdate(
     contact: MessagePersonInfo,
-    messages: MessageProps[],
+    messages: MessageViewModel[],
     moveToFront?: boolean
   ): void;
 }
 
 // 合并接口返回的最新消息与联系人缓存，避免重叠部分重复。
 const mergeRecentMessages = (
-  recentMessages: MessageProps[],
-  cachedMessages: MessageProps[]
+  recentMessages: MessageViewModel[],
+  cachedMessages: MessageViewModel[]
 ) => {
   if (!cachedMessages.length) return sortRecentMessage([...recentMessages]);
   const overlapIndex = recentMessages.findIndex(
@@ -66,7 +66,7 @@ export function PrivateConversationWindow({
     useAppSelector(selectUnreadCount).messageCount;
 
   // messages 按时间升序保存，便于从上到下渲染旧消息到新消息。
-  const [messages, setMessages] = useState<MessageProps[]>([]);
+  const [messages, setMessages] = useState<MessageViewModel[]>([]);
   const [loadStatus, setLoadStatus] = useState<MessageLoadStatus>("done");
   const [draft, setDraft] = useState("");
   const [focused, setFocused] = useState(false);

@@ -1,20 +1,22 @@
 import { getMyInfo, refreshUserInfo } from "@modules/session";
 import { formAuthorizeHeader } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
-import type { TransferWealthInfo } from "../model/types";
+import type { RewardDailyRecordInfo, TransferWealthInfo } from "../model/types";
 
-export async function queryWealth(boardId) {
+export async function queryWealth(
+  boardId: number,
+): Promise<RewardDailyRecordInfo | null> {
   const headers = await formAuthorizeHeader();
   const url = `/manage/reward-daily-record?boardId=${boardId}`;
   const response = await cc98Fetch(url, { headers });
-  const json = await response.json();
+  const json = (await response.json()) as RewardDailyRecordInfo | null;
   return json;
 }
 
 /**
  * 返回用户当前财富值
  */
-export async function getUserWealth() {
+export async function getUserWealth(): Promise<number> {
   //更改为直接从userinfo中获取
   let userInfo = getMyInfo();
   let wealth = userInfo.wealth;
@@ -67,5 +69,5 @@ export async function transferWealth(
     throw new Error(response.statusText);
   }
   // 服务器返回转账成功的用户名数组
-  return response.json();
+  return (await response.json()) as string[];
 }

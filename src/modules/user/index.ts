@@ -28,11 +28,13 @@ export {
 } from "./model/enums";
 export type {
   ChangeUserInfo,
-  IBasicUser,
   IUser,
   UserActivityPointInfo,
   UserBoardMasterInfo,
+  UserBasicInfo,
   UserInfo,
+  UserLookupFallback,
+  UserLookupResult,
   UserPrivacySetting,
   UserViewModel,
 } from "./model/types";

@@ -7,7 +7,7 @@ import {
   getRecentContact,
   sortContactList,
 } from "@modules/message";
-import type { MessagePersonInfo, MessageProps } from "@modules/message";
+import type { MessagePersonInfo, MessageViewModel } from "@modules/message";
 import { DocumentTitle } from "@foundation/ui/document-title";
 
 import styles from "./PrivateMessagesPage.module.scss";
@@ -67,7 +67,7 @@ export function PrivateMessagesPage() {
   const handleContactUpdate = useCallback(
     (
       contact: MessagePersonInfo,
-      messages: MessageProps[],
+      messages: MessageViewModel[],
       moveToFront = false
     ) => {
       setContacts((currentContacts) => {

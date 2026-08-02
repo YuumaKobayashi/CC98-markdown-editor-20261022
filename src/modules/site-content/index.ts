@@ -6,12 +6,10 @@ export {
 export type {
   ForumIndexColumnInfo,
   ForumIndexColumn,
-  IConfig,
   IIndex,
   IIndexHotTopic,
   IMainpageAutoContent,
   IMainpageEditableContent,
-  IRecommendationReading,
   ISite,
   PostForumIndexColumnInfo,
   SiteIndexColumnEditorItem,

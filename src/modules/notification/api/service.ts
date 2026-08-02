@@ -10,16 +10,21 @@ import type {
   ReplyAtNotificationViewModel,
   SystemNotificationInfo,
   SystemNotificationViewModel,
+  UnreadCount,
 } from "../model/types";
 
 //获取特定类型的消息的总数，1为回复消息，2为@消息，3为系统消息
 
-export async function getTotalPage(type: number) {
+export type NotificationPageSection = 1 | 2 | 3;
+
+export async function getTotalPage(
+  type: NotificationPageSection,
+): Promise<number | undefined> {
   const headers = await formAuthorizeHeader();
 
   let response = await cc98Fetch("/me/all-message-count", { headers });
 
-  let totalPage = await response.json();
+  const totalPage = (await response.json()) as UnreadCount;
   switch (type) {
     case 1:
       return totalPage.replyCount;
@@ -237,7 +242,9 @@ export async function getMessageAttme(
  */
 export type ReadAllNotificationSection = "reply" | "at" | "system";
 
-export async function readAll(section: ReadAllNotificationSection | null) {
+export async function readAll(
+  section: ReadAllNotificationSection | null,
+): Promise<null> {
   let url = null;
   let unreadCount = getLegacyMessageCounts();
   const headers = await formAuthorizeHeader();

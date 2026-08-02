@@ -2,8 +2,12 @@ import { formAuthorizeHeader } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
 import { throwLegacyError } from "@foundation/lib/legacy-utility-effects";
 import { getTopic } from "@modules/topic";
+import type { PostLikeInfo } from "@modules/post";
 
-export async function like(topicid, postid): Promise<number> {
+export async function like(
+  topicid: number,
+  postid: number,
+): Promise<number | undefined> {
   try {
     const headers = await formAuthorizeHeader();
     headers.append("Content-Type", "application/json");
@@ -35,7 +39,10 @@ export async function like(topicid, postid): Promise<number> {
   }
 }
 
-export async function dislike(topicid, postid): Promise<number> {
+export async function dislike(
+  topicid: number,
+  postid: number,
+): Promise<number | undefined> {
   try {
     const headers = await formAuthorizeHeader();
     headers.append("Content-Type", "application/json");
@@ -115,7 +122,10 @@ export async function getLikeState(topicid) {
   }
 }
 
-export async function refreshLikeState(topicId, postId) {
+export async function refreshLikeState(
+  topicId: number,
+  postId: number,
+): Promise<PostLikeInfo | undefined> {
   try {
     const headers = await formAuthorizeHeader();
     const response = await cc98Fetch(`/post/${postId}/like`, { headers });
@@ -129,7 +139,7 @@ export async function refreshLikeState(topicId, postId) {
       case 500:
         throwLegacyError("ServerError");
     }
-    const data = await response.json();
+    const data = (await response.json()) as PostLikeInfo;
     return data;
   } catch (e) {
     //throwLegacyError('Disconnected');

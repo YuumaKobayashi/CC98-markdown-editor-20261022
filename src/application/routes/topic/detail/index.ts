@@ -22,5 +22,5 @@ export {
   TopicReplySignature,
 } from "./ui/TopicReplySignature";
 export { TopicReplier } from "./ui/TopicReplier";
-export { TopicVote, type voteInfo } from "./ui/TopicVote";
+export { TopicVote } from "./ui/TopicVote";
 export { TrackedTopicPage } from "./ui/TrackedTopicPage";

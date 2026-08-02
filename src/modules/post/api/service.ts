@@ -1,4 +1,5 @@
-import type { UserRecentPost } from "../model/types";
+import type { PostInfo, UserRecentPost } from "../model/types";
+import type { ResultWithCount } from "@foundation/api/contracts";
 import { getBoardName } from "@modules/board";
 import { formAuthorizeHeader } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
@@ -29,12 +30,12 @@ export async function getCurrentUserRecentPosts(
     throw new Error(response.statusText);
   }
 
-  const data: {
-    data: UserRecentPost[];
-    count: number;
-  } = await response.json();
-  const hasMore = data.data.length === 11;
-  const posts = hasMore ? data.data.slice(0, 10) : data.data;
+  const data = (await response.json()) as ResultWithCount<PostInfo>;
+  const rawPosts = data.data!;
+  const hasMore = rawPosts.length === 11;
+  const posts: UserRecentPost[] = (
+    hasMore ? rawPosts.slice(0, 10) : rawPosts
+  ).map((post) => ({ ...post, boardName: "" }));
 
   for (let index = posts.length; index--;) {
     posts[index].boardName = await getBoardName(posts[index].boardId);

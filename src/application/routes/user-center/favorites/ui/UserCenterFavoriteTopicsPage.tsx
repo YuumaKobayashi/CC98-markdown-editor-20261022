@@ -12,6 +12,7 @@ import {
 } from "@application/layouts/user-area";
 import {
   defaultFavoriteTopicGroups,
+  FavoriteTopicOrder,
   getCurrentUserFavoriteTopics,
   getFavoriteAllTopic,
   type FavoriteTopicGroup,
@@ -31,12 +32,6 @@ type RouteParams = {
   order?: string;
   group?: string;
 };
-
-enum PostOrder {
-  PostTime = 0, // 发帖时间
-  LastReply = 1, // 最后回复时间
-  FavorTime = 2, // 收藏时间
-}
 
 const defaultGroup = 0;
 
@@ -67,7 +62,7 @@ export function UserCenterFavoriteTopicsPage() {
     useParams<RouteParams>();
   const requestPage = Number(page || "1");
   const currentPage = parseInt(page ?? "") || 1;
-  const order = Number(orderParam);
+  const order = Number(orderParam) as FavoriteTopicOrder;
   const group = Number(groupParam || "0");
   const keywordRef = React.useRef("");
   const routeRef = React.useRef({ currentPage, group, order });
@@ -85,7 +80,7 @@ export function UserCenterFavoriteTopicsPage() {
 
   const loadFavoriteTopics = async (
     nextPage: number,
-    nextOrder: number,
+    nextOrder: FavoriteTopicOrder,
     nextGroup: number,
     keyword: string,
   ) => {
@@ -125,7 +120,7 @@ export function UserCenterFavoriteTopicsPage() {
       console.log(favoriteTopicListResponse);
       setFavoriteTopicList(
         favoriteTopicListResponse.errorCode === 0
-          ? favoriteTopicListResponse.data
+          ? favoriteTopicListResponse.data ?? defaultFavoriteTopicGroups
           : defaultFavoriteTopicGroups
       );
     } catch (error) {
@@ -142,7 +137,7 @@ export function UserCenterFavoriteTopicsPage() {
   React.useEffect(() => {
     const keyword = getKeyword(location.search);
     // 手动输入企图搜索且排序时重定向
-    if (order !== PostOrder.LastReply && keyword !== "") {
+    if (order !== FavoriteTopicOrder.LastReply && keyword !== "") {
       void navigate(
         `/usercenter/myfavorites/order/0/group/0/1?keyword=${keyword}`,
         { replace: true }
@@ -167,7 +162,7 @@ export function UserCenterFavoriteTopicsPage() {
 
   const changeGroupAndOrderAndKeyword = (
     nextGroup: number,
-    nextOrder: number,
+    nextOrder: FavoriteTopicOrder,
     keyword = ""
   ) => {
     console.log("Change", nextGroup, nextOrder, keyword);
@@ -266,9 +261,9 @@ export function UserCenterFavoriteTopicsPage() {
             changeGroupAndOrderAndKeyword(group, value);
           }}
         >
-          <Option value={PostOrder.PostTime}>按发帖时间排序</Option>
-          <Option value={PostOrder.LastReply}>按最后回复排序</Option>
-          <Option value={PostOrder.FavorTime}>按收藏顺序排序</Option>
+          <Option value={FavoriteTopicOrder.PostTime}>按发帖时间排序</Option>
+          <Option value={FavoriteTopicOrder.LastReply}>按最后回复排序</Option>
+          <Option value={FavoriteTopicOrder.FavorTime}>按收藏顺序排序</Option>
         </Select>
         <Search
           defaultValue={keywordRef.current}

@@ -3,12 +3,19 @@ import { cc98Fetch } from "@foundation/api/http";
 import { throwLegacyError } from "@foundation/lib/legacy-utility-effects";
 import { getBasicUsersInfo, getThisUserInfo } from "@modules/user";
 import { transerTime } from "@foundation/lib/time";
+import type { UserBasicInfo, UserInfo } from "@modules/user";
+import type { MessagePersonInfo } from "../model/MessagePersonInfo";
+import type {
+  MessageInfo,
+  MessageViewModel,
+  RecentContactUserInfo,
+} from "../model/types";
 
 /**
  * 发送私信的函数
  * @param bodyContent
  */
-export async function sendMessage(bodyContent: string) {
+export async function sendMessage(bodyContent: string): Promise<Response> {
   const myHeaders = await formAuthorizeHeader();
   myHeaders.append("content-type", "application/json");
   let response = await cc98Fetch("/message", {
@@ -28,7 +35,10 @@ export async function sendMessage(bodyContent: string) {
 /*
  * 获取最近N个联系人的信息
  */
-export async function getRecentContact(from: number, size: number) {
+export async function getRecentContact(
+  from: number,
+  size: number,
+): Promise<MessagePersonInfo[] | null> {
   //如果未登录,直接跳转至登录页面
   if (!isLogOn()) {
     throwLegacyError("LogOut");
@@ -53,17 +63,23 @@ export async function getRecentContact(from: number, size: number) {
     if (response.status === 500) {
       throwLegacyError("ServerError");
     }
-    let recentContactId = await response.json();
+    const recentContactId =
+      (await response.json()) as RecentContactUserInfo[];
     //console.log("最近联系人列表id", recentContactId);
-    let userId = [];
+    const userId: number[] = [];
     for (let i in recentContactId) {
       userId[i] = recentContactId[i].userId;
     }
 
-    let usersInfo = await getBasicUsersInfo(userId);
-    let recentContact = [];
+    const usersInfo = await getBasicUsersInfo(userId);
+    const recentContact: MessagePersonInfo[] = [];
     for (let i in recentContactId) {
-      recentContact.push(getThisUserInfo(recentContactId[i].userId, usersInfo));
+      recentContact.push(
+        getThisUserInfo(
+          recentContactId[i].userId,
+          usersInfo,
+        ) as MessagePersonInfo,
+      );
     }
 
     for (let i in recentContactId) {
@@ -87,8 +103,8 @@ export async function getRecentContact(from: number, size: number) {
 export async function getRecentMessage(
   userId: number,
   from: number,
-  size: number
-) {
+  size: number,
+): Promise<MessageViewModel[] | null | undefined> {
   //如果未登录,直接跳转至登录页面
   if (!isLogOn()) {
     throwLegacyError("LogOut");
@@ -113,8 +129,8 @@ export async function getRecentMessage(
     if (response.status === 500) {
       //throwLegacyError('ServerError');
     }
-    let response1 = await response.json();
-    let recentMessage = sortRecentMessage(response1);
+    const response1 = (await response.json()) as MessageInfo[];
+    const recentMessage = sortRecentMessage(response1);
     return recentMessage;
   } catch (e) {
     //throwLegacyError(('Disconnected'));
@@ -125,25 +141,28 @@ export async function getRecentMessage(
  * 处理最新消息列表，时间间隔短的消息只显示第一条消息的时间
  * @param recentMessage
  */
-export function sortRecentMessage(recentMessage) {
+export function sortRecentMessage(
+  recentMessage: MessageInfo[] | MessageViewModel[],
+): MessageViewModel[] {
+  const viewMessages = recentMessage as MessageViewModel[];
   if (recentMessage.length === 0 || !recentMessage) {
-    return recentMessage;
+    return viewMessages;
   } else {
     for (let i = 0; i < recentMessage.length; i++) {
       if (i + 1 == recentMessage.length) {
-        recentMessage[i].showTime = true;
+        viewMessages[i].showTime = true;
       } else if (
         transerTime(recentMessage[i].time) -
         transerTime(recentMessage[i + 1].time) <
         60000
       ) {
-        recentMessage[i].showTime = false;
+        viewMessages[i].showTime = false;
       } else {
-        recentMessage[i].showTime = true;
+        viewMessages[i].showTime = true;
       }
     }
 
-    return recentMessage;
+    return viewMessages;
   }
 }
 
@@ -152,10 +171,10 @@ export function sortRecentMessage(recentMessage) {
  * @param recentContact
  */
 export async function sortContactList(
-  recentContact,
+  recentContact: MessagePersonInfo[] | null,
   urlId: RegExpMatchArray | null,
-  urlName: RegExpMatchArray | null
-) {
+  urlName: RegExpMatchArray | null,
+): Promise<MessagePersonInfo[] | null> {
   if (urlId) {
     let chatManId = parseInt(urlId[1]);
     //如果联系人为空，则查找该联系人信息并作为联系人数组的元素
@@ -171,7 +190,7 @@ export async function sortContactList(
         if (response.status === 500) {
           throwLegacyError("ServerError");
         }
-        chatMan = await response.json();
+        chatMan = (await response.json()) as UserBasicInfo;
       } catch (e) {
         throwLegacyError("Disconnected");
         flag = 0;
@@ -221,7 +240,7 @@ export async function sortContactList(
           if (response.status === 500) {
             throwLegacyError("ServerError");
           }
-          chatMan = await response.json();
+          chatMan = (await response.json()) as UserBasicInfo;
         } catch (e) {
           throwLegacyError("Disconnected");
           flag = 0;
@@ -261,7 +280,7 @@ export async function sortContactList(
             case 500:
               throwLegacyError("ServerError");
           }
-          response1 = await response0.json();
+          response1 = (await response0.json()) as UserInfo;
         } catch (e) {
           throwLegacyError("Disconnected");
           flag = 0;
@@ -319,7 +338,7 @@ export async function sortContactList(
               case 500:
                 throwLegacyError("ServerError");
             }
-            response1 = await response0.json();
+            response1 = (await response0.json()) as UserInfo;
           } catch (e) {
             throwLegacyError("Disconnected");
             flag = 0;

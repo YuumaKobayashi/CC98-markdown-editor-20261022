@@ -28,7 +28,7 @@ export function syncGetBoardNameById(boardId) {
   return "未知版面";
 }
 
-export async function getBoardName(boardId: number) {
+export async function getBoardName(boardId: number): Promise<string> {
   for (let item of boardInfo) {
     if (boardId === item.id) {
       return item.name;
@@ -54,7 +54,9 @@ export async function getBoardName(boardId: number) {
  * @param boardId
  * @param word
  */
-export async function getSearchBoard(word: string) {
+export async function getSearchBoard(
+  word: string,
+): Promise<BoardSimpleInfo[] | undefined> {
   if (word) {
     const url = `/board/search?keyword=${word}`;
     const response = await cc98Fetch(url);
@@ -77,7 +79,7 @@ export async function getSearchBoard(word: string) {
   }
 }
 
-export async function getBoards() {
+export async function getBoards(): Promise<BoardCategoryInfo[]> {
   const boards = readBoardsInfoCache<BoardCategoryInfo[]>();
   if (!boards) {
     const url = "/board/all";
@@ -128,7 +130,9 @@ export async function getBoardId(boardName: string) {
   return boardResult;
 }
 
-export async function getBoardInfo(boardId) {
+export async function getBoardInfo(
+  boardId: number,
+): Promise<BoardInfo | "not found" | "server error" | "unauthorized"> {
   const headers = await formAuthorizeHeader();
   const url = `/board/${boardId}`;
   const response = await cc98Fetch(url, { headers });
@@ -145,7 +149,7 @@ export async function getBoardInfo(boardId) {
   return data;
 }
 
-export function isMaster(masters) {
+export function isMaster(masters: readonly string[] | null | undefined): boolean {
   const userInfo = getMyInfo();
 
   if (userInfo) {
@@ -168,7 +172,9 @@ export function isMaster(masters) {
   return false;
 }
 
-export async function getBoardTagV2(boardId) {
+export async function getBoardTagV2(
+  boardId: number | string,
+): Promise<BoardTagInfoV2> {
   const headers = await formAuthorizeHeader();
   const url = `/board/${boardId}/tag-v2`;
   const response = await cc98Fetch(url, { headers });
@@ -176,7 +182,11 @@ export async function getBoardTagV2(boardId) {
   return data;
 }
 
-export async function getTpUsers(boardId, from, size) {
+export async function getTpUsers(
+  boardId: number,
+  from: number,
+  size: number,
+): Promise<BoardStopPostUserInfo[]> {
   const url = `/board/${boardId}/stop-post-user?from=${from}&size=${size}`;
   const headers = await formAuthorizeHeader();
   headers.append("Content-Type", "application/json");

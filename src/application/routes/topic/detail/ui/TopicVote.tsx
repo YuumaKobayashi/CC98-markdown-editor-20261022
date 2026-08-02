@@ -8,39 +8,13 @@ import {
   isLogOn,
   selectCurrentUser,
 } from "@modules/session";
+import type { TopicInfo, VoteInfo } from "@modules/topic";
 import { submitTopicVote } from "../api/service";
 import styles from "./TopicVote.module.scss";
 
-type VoteItem = {
-  id: number;
-  description: string;
-  count: number;
-};
-
-type VoteRecord = {
-  userId: number;
-  userName: string;
-  items: number[];
-  ip: string;
-  time: string;
-};
-
-export type voteInfo = {
-  topicId: number;
-  voteItems: VoteItem[];
-  voteRecords: VoteRecord[];
-  expiredTime: string;
-  isAvailable: boolean;
-  maxVoteCount: number;
-  canVote: boolean;
-  myRecord: VoteRecord;
-  needVote: boolean;
-  voteUserCount: number;
-};
-
 export interface TopicVoteProps {
-  voteInfo: voteInfo;
-  topicInfo: any;
+  voteInfo: VoteInfo;
+  topicInfo: TopicInfo;
   getInfo: () => void;
 }
 

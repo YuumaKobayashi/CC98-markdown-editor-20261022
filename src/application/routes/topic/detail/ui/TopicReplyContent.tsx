@@ -4,20 +4,25 @@ import { Card, Tag } from "antd";
 
 import { UbbCodeOptions, UbbContainer } from "@modules/ubb";
 import { PostContentType } from "@modules/post";
-import { LotteryMode, LotteryTopicStatus } from "@modules/topic";
+import {
+  LotteryMode,
+  LotteryTopicStatus,
+  type TopicInfo,
+  type VoteInfo,
+} from "@modules/topic";
 import { atUserMdUrl, atUserUbbUrl } from "@foundation/lib/text";
 import { getTopicVote } from "../api/service";
-import { TopicVote, type voteInfo } from "./TopicVote";
+import { TopicVote } from "./TopicVote";
 import detailStyles from "./TopicReplyContent.module.scss";
 
 const showdown = require("showdown");
 const showdownExtension = require("showdown-xss-filter");
 
 export interface TopicReplyContentProps {
-  postId: any;
+  postId: number | string;
   content: string;
   contentType: PostContentType;
-  topicInfo: any;
+  topicInfo: TopicInfo;
   floor: number;
 }
 
@@ -28,7 +33,7 @@ export function TopicReplyContent({
   topicInfo,
   floor,
 }: TopicReplyContentProps) {
-  const [vote, setVote] = useState<voteInfo | null>(null);
+  const [vote, setVote] = useState<VoteInfo | null>(null);
   const domId = `doc-content${postId}-${floor}`;
 
   const loadVote = useCallback(async () => {
@@ -117,7 +122,7 @@ export function TopicReplyContent({
           floor === 1 && (
             <Tag>该用户今日在本版发布了{topicInfo.todayCount}个主题帖</Tag>
           )}
-        {topicInfo.notifyAllReplierPostIds.includes(postId) && (
+        {topicInfo.notifyAllReplierPostIds.includes(postId as number) && (
           <Tag>本楼使用了“通知本主题所有回复用户”功能</Tag>
         )}
         {lotteryTopicDetail && floor === 1 && (

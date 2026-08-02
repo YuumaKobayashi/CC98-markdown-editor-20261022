@@ -214,4 +214,6 @@
 - dormant service 只登记，不借类型对齐改变其可达性或删除它。
 - Phase 3 人审前不开始。
 
+实际结果见 [`phase-4-report.md`](./phase-4-report.md)：可达 service 已完成显式参数、返回类型和 raw JSON 边界闭包；19 个 dormant 导出及其可达性保持不变。Topic vote、Message、Favorite Topic、Moderation、Post Rating、Wealth 与通用 `ResultWithCount<T>` 合同已归入领域 owner，零引用重复类型出口已清理；全仓其余显式 `any/unknown` 和直接 UI JSON 边界均已登记来源、消费者、风险与移除条件。代码和机械检查已完成；真实 API、登录态、权限、私信、通知、投票、收藏、版务、评分、财富、主题及浏览器交互未执行。当前停在人审点，不自动提交、推送或清理 dormant service。
+
 每批机械门禁：`npm run typecheck`、`npm run build`、`git diff --check`、`git status --short`、目标 magic number 归零/allowlist、废弃后端项目引用扫描。所有真实 API、登录态、权限、通知、主题、编辑器和浏览器交互均保持“未执行”，不由机械检查替代。

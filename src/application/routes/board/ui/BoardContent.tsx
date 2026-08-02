@@ -52,11 +52,19 @@ export function BoardContent({ data, page }: BoardContentProps) {
         setList(nextList);
       } else if (nextType === TopicBestState.Best) {
         response = await getBestTopics(data.id, nextPage.toString());
+        if (typeof response === "string") {
+          setList(response);
+          return;
+        }
         nextList = response.topics;
         setList(nextList);
         setTopicCount(response.count);
       } else {
         response = await getSaveTopics(data.id, nextPage.toString());
+        if (typeof response === "string") {
+          setList(response);
+          return;
+        }
         nextList = response.topics;
         setList(nextList);
         setTopicCount(response.count);
@@ -68,6 +76,10 @@ export function BoardContent({ data, page }: BoardContentProps) {
         nextTag1,
         nextTag2,
       );
+      if (typeof response === "string") {
+        setList(response);
+        return;
+      }
       nextList = response.topics;
       setList(nextList);
       setTopicCount(response.count);

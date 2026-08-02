@@ -4,7 +4,7 @@ import type {
   PostContentType,
   PostState,
 } from "./enums";
-import type { IUser } from "@modules/user";
+import type { IUser, UserLookupFallback } from "@modules/user";
 
 export interface PostAward {
   /**
@@ -172,6 +172,32 @@ export interface PostBasicInfo {
   boardId: number;
 }
 
+/**
+ * 新建或编辑回复时提交给主后端的请求体。
+ * 未出现的字段继续由后端默认值处理。
+ */
+export interface NewPostInfo {
+  content: string;
+  title?: string | null;
+  contentType: PostContentType;
+  parentId?: number;
+  tag1?: number;
+  tag2?: number;
+  allowedViewers?: string | null;
+  allowedViewerState?: import("@modules/topic").TopicAllowedViewerState;
+  type?: import("@modules/topic").TopicType;
+  notifyPoster?: boolean;
+  isAnonymous?: boolean;
+  notifyAllReplier?: boolean;
+  clientType?: number;
+}
+
+export interface PostLikeInfo {
+  dislikeCount: number;
+  likeCount: number;
+  likeState: LikeState;
+}
+
 export type SpecificUserPostInfo = PostInfo;
 
 export interface AnonymousPostUserInfo {
@@ -189,8 +215,8 @@ export interface AnonymousPostUserInfo {
  * topic service 在 PostInfo wire DTO 上追加用户与兼容 postId 后的渲染模型。
  */
 export type PostViewModel = PostInfo & {
-  postId?: number;
-  userInfo: IUser | AnonymousPostUserInfo;
+  postId?: number | string;
+  userInfo: IUser | UserLookupFallback | AnonymousPostUserInfo;
 };
 
 /**
