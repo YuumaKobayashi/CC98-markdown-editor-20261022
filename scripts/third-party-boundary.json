@@ -5,9 +5,9 @@
   "importContracts": [
     {
       "package": "antd",
-      "edgeCount": 43,
-      "consumerCount": 39,
-      "fingerprint": "3eb31fd4978dd4f5328b584f169d598e001c98c185a61414af9c9ff1f0465df5"
+      "edgeCount": 39,
+      "consumerCount": 35,
+      "fingerprint": "9dea9e013f3f5419942bb469efc0e0c14f0a028f59d6e6d6f4b7e8231a6ee3a2"
     },
     {
       "package": "react-router",

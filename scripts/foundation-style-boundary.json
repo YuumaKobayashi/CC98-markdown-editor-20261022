@@ -166,14 +166,7 @@
       "reason": "Preserves the prior global button cascade under the third-party component root."
     }
   ],
-  "legacyGlobalStyles": [
-    {
-      "path": "Pages/AnnualReview/AnnualReview.scss",
-      "importers": ["Pages/AnnualReview/index.tsx", "Pages/AnnualReviewV2/index.tsx"],
-      "owner": "Frozen Annual Review pages",
-      "removeWhen": "Z4 removes both unreachable Annual Review trees."
-    }
-  ],
+  "legacyGlobalStyles": [],
   "layoutTokens": [
     { "old": "row", "current": "cc98-row", "count": 69 },
     { "old": "column", "current": "cc98-column", "count": 17 }

@@ -1,16 +1,6 @@
 {
-  "phase": "Z2 UBB module closure and Z4 Annual Review freeze",
-  "removalPhase": "Z4 Annual Review removal",
+  "phase": "Z4 Annual Review removal closure",
+  "removalPhase": null,
   "frozenInactiveImports": [],
-  "frozenLegacyStyles": [
-    {
-      "path": "Pages/AnnualReview/AnnualReview.scss",
-      "importers": [
-        "Pages/AnnualReview/index.tsx",
-        "Pages/AnnualReviewV2/index.tsx"
-      ],
-      "reason": "Annual Review V1 and V2 are unreachable legacy pages that retain one explicit shared stylesheet outside the active Site.scss bundle.",
-      "removeWhen": "Z4 removes both Annual Review page trees and their remaining dedicated assets."
-    }
-  ]
+  "frozenLegacyStyles": []
 }
