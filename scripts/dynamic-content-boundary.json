@@ -22,7 +22,7 @@
       "dormantConsumers": [
         "src/application/routes/topic/detail/ui/TopicReplyComposer.tsx"
       ],
-      "dormantTextConsumers": ["Components/Topic/Post.tsx"],
+      "dormantTextConsumers": [],
       "owner": "src/modules/ubb public renderer"
     },
     {

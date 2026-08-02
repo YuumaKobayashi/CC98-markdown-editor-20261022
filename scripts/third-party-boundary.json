@@ -1,19 +1,19 @@
 {
-  "phase": "UBB and UBB Editor module relocation with final third-party boundary",
-  "sourceRoots": ["src", "Components", "Pages", "Utility"],
-  "styleRoots": ["src", "Components", "Pages", "Utility", "Styles"],
+  "phase": "Z3 root adapter closure with final third-party boundary",
+  "sourceRoots": ["src", "Pages"],
+  "styleRoots": ["src", "Pages", "Styles"],
   "importContracts": [
     {
       "package": "antd",
-      "edgeCount": 44,
-      "consumerCount": 40,
-      "fingerprint": "ad74f16f0c0d61ad15032afee9d995e078c977544353d0018c44b9dbf7dba930"
+      "edgeCount": 43,
+      "consumerCount": 39,
+      "fingerprint": "3eb31fd4978dd4f5328b584f169d598e001c98c185a61414af9c9ff1f0465df5"
     },
     {
       "package": "react-router",
-      "edgeCount": 66,
-      "consumerCount": 66,
-      "fingerprint": "a89dde3f1d29c392070875d5d8f21d67121dbf0bf304a4fc5f43f7329e1b095b"
+      "edgeCount": 65,
+      "consumerCount": 65,
+      "fingerprint": "3a28650c944c9b8efbf806bbd7d9b5e9056861a94921c4b086675d99f80e7813"
     },
     {
       "package": "react-router/dom",
@@ -45,7 +45,7 @@
       "package": "antd",
       "symbol": "DatePicker",
       "consumerCount": 2,
-      "fingerprint": "03c88e011cabcb2caa7a34e24387defef80676a358b0f1b707213a3efdfe5523"
+      "fingerprint": "e45a29cfa0436c5cfe86cca51553f118466043fd2bb1facc13421b5168454ec3"
     },
     {
       "package": "antd",
@@ -56,20 +56,20 @@
     {
       "package": "antd",
       "symbol": "Modal",
-      "consumerCount": 16,
-      "fingerprint": "c05decb658fe126de4a0cb05d77045ec6158907757ba9fbf13c504e550f7dd57"
+      "consumerCount": 15,
+      "fingerprint": "1b0bb9f55fdbd6bf2f9b3353ed8e546563996167bc29a7e5e9d4111eba2105d2"
     },
     {
       "package": "antd",
       "symbol": "Popover",
       "consumerCount": 2,
-      "fingerprint": "b88ad517b93cfb34132a061c1cec68e6e5fd48b274a95842d938d8e5458908ce"
+      "fingerprint": "01959f4f41670572ed13b2b61cd16bd3e0276dfd7743ac6f6ac13b1adaf44bc2"
     },
     {
       "package": "antd",
       "symbol": "Select",
-      "consumerCount": 10,
-      "fingerprint": "98dc3db417a8c855cf258648f141b78f3e5126014b1209dee04ad872e7c29ce5"
+      "consumerCount": 9,
+      "fingerprint": "bbc61dc42d6e900cfe653790e2aa3ea8a3001a24f5855211a4dbc7ca2109d66a"
     },
     {
       "package": "antd",
@@ -81,7 +81,7 @@
       "package": "antd",
       "symbol": "message",
       "consumerCount": 1,
-      "fingerprint": "f78166a742b96c5265fa8daa77f1f8d001607d3de11a83d54c92ee2f6bf58e7a"
+      "fingerprint": "9e4f835ff301c5486382711d9263b74da774b298bcf15f0fe654ecbd702d6526"
     },
     {
       "package": "antd",

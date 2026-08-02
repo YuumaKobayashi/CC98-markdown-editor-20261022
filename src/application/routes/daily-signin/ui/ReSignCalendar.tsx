@@ -8,11 +8,11 @@ import {
   RightOutlined,
 } from "@ant-design/icons";
 import {
-  cc98Fetch,
   formAuthorizeHeader,
   getMyInfo,
   refreshUserInfo,
-} from "../Utility";
+} from "@modules/session";
+import { cc98Fetch } from "@foundation/api/http";
 import styles from "./ReSignCalendar.module.scss";
 
 interface ResignCalendarProps {

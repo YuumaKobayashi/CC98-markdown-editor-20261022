@@ -1,7 +1,7 @@
 import {
   cc98Fetch,
-  formAuthorizeHeader,
-} from "@legacy/Utility/fetchUtility";
+} from "@foundation/api/http";
+import { formAuthorizeHeader } from "@modules/session";
 
 export const getBoardInfo = async (boardId: string) => {
   const headers = await formAuthorizeHeader();

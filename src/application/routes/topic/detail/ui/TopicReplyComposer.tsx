@@ -2,11 +2,11 @@ import * as React from "react";
 import $ from "jquery";
 import { UbbEditor } from "@modules/ubb-editor";
 import { RightTagHandler, UbbContainer } from "@modules/ubb";
-import { Constants } from "@legacy/Components/Constant";
+import { Constants } from "@foundation/config/runtime-config";
 import {
   NoticeMessage,
   SendTopicNoticeMessage,
-} from "@legacy/Components/NoticeMessage";
+} from "@foundation/ui/feedback";
 import { NavigationPrompt } from "@application/router/navigation-prompt";
 import { Button, Modal } from "antd";
 import moment from "moment";

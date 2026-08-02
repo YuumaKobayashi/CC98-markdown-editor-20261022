@@ -175,7 +175,7 @@
     }
   ],
   "layoutTokens": [
-    { "old": "row", "current": "cc98-row", "count": 71 },
+    { "old": "row", "current": "cc98-row", "count": 69 },
     { "old": "column", "current": "cc98-column", "count": 17 }
   ],
   "forbiddenPaths": [

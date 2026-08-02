@@ -3,7 +3,7 @@ import { ConfigProvider } from "antd";
 import zhCN from "antd/es/locale/zh_CN";
 import { Provider } from "react-redux";
 
-import ErrorBoundary from "@legacy/Components/ErrorBoundary";
+import ErrorBoundary from "@application/providers/error-boundary";
 import store from "@application/store";
 import { ApplicationErrorProvider } from "@application/providers/application-error";
 import { CrossTabSync } from "@application/providers/cross-tab-sync";

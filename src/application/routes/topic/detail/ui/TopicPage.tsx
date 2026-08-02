@@ -13,8 +13,8 @@ import { TopicBreadcrumb } from "@modules/topic";
 import { Pager } from "@foundation/ui/pagination";
 import { getTotalPageof10 } from "@foundation/lib/page";
 import { getLocalStorage } from "@foundation/storage/web-storage";
-import DocumentTitle from "@legacy/Components/DocumentTitle";
-import { NoticeMessage } from "@legacy/Components/NoticeMessage";
+import DocumentTitle from "@foundation/ui/document-title";
+import { NoticeMessage } from "@foundation/ui/feedback";
 import {
   NotFoundTopic,
   ServerError,

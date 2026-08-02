@@ -8,8 +8,10 @@ import {
   type FavoriteTopicGroup,
   updateFavGroup,
 } from "@modules/favorite-topic";
-import { NoticeMessage } from "@legacy/Components/NoticeMessage";
-import { noticeMessageShow } from "@legacy/Utility";
+import {
+  NoticeMessage,
+  noticeMessageShow,
+} from "@foundation/ui/feedback";
 
 const Item = Menu.Item;
 const FormItem = Form.Item;

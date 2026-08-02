@@ -12,7 +12,7 @@ import {
   refreshLikeState,
 } from "@modules/reaction";
 import { noticeMessageShow } from "@modules/notification";
-import { NoticeMessage } from "@legacy/Components/NoticeMessage";
+import { NoticeMessage } from "@foundation/ui/feedback";
 import { UbbCodeOptions, UbbContainer } from "@modules/ubb";
 import { QuoteContext, QuoteTraceContext } from "../model/quote-context";
 import styles from "./TopicReplySignature.module.scss";

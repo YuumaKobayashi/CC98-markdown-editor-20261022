@@ -15,16 +15,8 @@
   "include": [
     "*.ts",
     "*.tsx",
-    "Components/**/*.ts",
-    "Components/**/*.tsx",
-    "config/**/*.ts",
-    "config/**/*.tsx",
-    "IndexedDB/**/*.ts",
-    "IndexedDB/**/*.tsx",
     "Pages/**/*.ts",
-    "Pages/**/*.tsx",
-    "Utility/**/*.ts",
-    "Utility/**/*.tsx"
+    "Pages/**/*.tsx"
   ],
   "exclude": ["src", "node_modules", "dist"]
 }

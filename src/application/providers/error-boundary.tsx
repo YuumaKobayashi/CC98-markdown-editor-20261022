@@ -21,16 +21,6 @@ interface ErrorBoundaryStates {
   errorInfo?: React.ErrorInfo;
 }
 
-// 测试用
-export class ErrorEmitter extends React.PureComponent {
-  componentDidMount(): void {
-    throw new Error("Test Error");
-  }
-  render() {
-    return null;
-  }
-}
-
 export default class ErrorBoundary extends React.PureComponent<
   ErrorBoundaryProps,
   ErrorBoundaryStates

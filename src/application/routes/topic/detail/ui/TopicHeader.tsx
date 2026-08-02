@@ -13,7 +13,7 @@ import {
 import { noticeMessageShow } from "@modules/notification";
 import { HomeAdvertisementCarousel } from "@application/routes/home/advertisement";
 import { copyToClipboard } from "@foundation/lib/dom";
-import { NoticeMessage } from "@legacy/Components/NoticeMessage";
+import { NoticeMessage } from "@foundation/ui/feedback";
 import actionStyles from "./TopicHeader.module.scss";
 
 export interface TopicHeaderProps {

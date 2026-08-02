@@ -5,7 +5,7 @@ import { Link } from "react-router";
 import { followUser, unfollowUser } from "@modules/follow";
 import { UbbCodeOptions, UbbContainer } from "@modules/ubb";
 import type { UserInfo } from "@modules/user";
-import { isoTime2LocalTime } from "@legacy/Utility/timeZoneUtility";
+import { isoTime2LocalTime } from "@foundation/lib/time-zone";
 import styles from "./UserProfileDetails.module.scss";
 
 interface UserProfileDetailsProps {

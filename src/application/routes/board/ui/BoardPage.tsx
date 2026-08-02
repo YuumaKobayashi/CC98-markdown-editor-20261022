@@ -2,7 +2,7 @@ import * as React from "react";
 import type { IBoard } from "@modules/board";
 import { useNavigate, useParams } from "react-router";
 
-import * as Utility from "@legacy/Utility";
+import { getTagInfo } from "@modules/topic";
 
 import styles from "./BoardPage.module.scss";
 import { getBoardInfo } from "../api/service";
@@ -16,7 +16,7 @@ export function BoardPage() {
 
   React.useEffect(() => {
     const loadBoard = async () => {
-      await Utility.getTagInfo();
+      await getTagInfo();
       const nextData = await getBoardInfo(id);
       if (nextData === "not found") {
         navigate("/error/404");
