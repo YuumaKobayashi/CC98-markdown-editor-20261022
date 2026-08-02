@@ -2783,6 +2783,13 @@ UBB 样式随实现一次性收口：Editor、Container、renderer 及具备独�
 
 不在本批现代化 Handler class、改写解析算法、修改公开扩展 API 或顺手修复已知 UBB 缺陷。机械检查通过后仍必须单独记录浏览器 UBB/editor/media/permission 验收；未执行不得记为通过。
 
+Z2 实施记录（2026-08-02，基线 `dev20260716@84e5c736`）：
+
+- 计划冻结的 66 个 legacy 文件已完整迁入 `src/modules/ubb`，按 renderer、editor 与公共 Container owner 收口；Module 根入口只公开 `UbbContainer`、`UbbEditor`、`UbbCodeOptions`、`UbbCompatiblityMode` 和 `RightTagHandler`，16 个外部调用方全部切到 `@modules/ubb`，legacy UBB alias、Module 深层 import 与 architecture allowlist 均归零；
+- 两份活动 UBB 全局 SCSS 已拆为 16 份单 owner 同名 CSS Module；React producer 使用 Module mapping，Spectrum/DPlayer/APlayer 等第三方动态 DOM 继续由登记根限界，没有 `:global(...)`、旧 class 双写或兼容 facade。63 条活动 Handler 注册顺序、禁用注释、Editor Storage/ID/上传与解析/权限/媒体合同保持；
+- modern/legacy typecheck、architecture/style/dynamic-content/third-party/Foundation 守卫与正式 build 均通过；构建转换 4132 个 modules，产物 9564 个文件、96 个 CSS、29 个主题 CSS。迁址注释审计 410 条缺失为 0，81 个 Module 文件无混合行尾；
+- 浏览器 UBB/editor/media/permission/theme/真实上传验收未执行；详细 source→destination、样式 owner、机械证据与人工清单见 `docs/refactor-log/z2/`。本批不 commit、不 push、不进入 Z3，停在人工验收门禁。
+
 ### Z3：Pages、Components 和根级适配器归真实 owner
 
 按消费者闭包处理剩余根级源码：
