@@ -2748,6 +2748,14 @@ Z0 实施记录（2026-08-02，基线 `dev20260716@de6eca90`）：
 
 UBB 内部的纯 options/context data 可在逐文件审核后单独改为 `interface`，但不能与 UBB 迁址混做。React class 转函数也不作为 Z 的默认要求。
 
+Z1 实施记录（2026-08-02，基线 `dev20260716@2fb2a54f`）：
+
+- 19 个 `@types/@cc98` ambient API 声明已按 Board、Topic、Post、User、Message、Daily Signin 和 Site Content owner 迁入 Module 公共入口；活动 Props/States 合同已迁入对应 Module、现有 Session `CurrentUser` 或唯一 Board Route，48 个 Z1 根级文件已删除，`States/UbbEditorState.tsx` 原样留给 Z2；
+- `@cc98/api`、`@legacy/Props`、Z1 `@legacy/States`、`@legacy/Match` 活动源码引用归零，architecture allowlist 从 27 条降到 10 条 Z2 UBB 例外；modern/legacy typecheck、architecture/style/dynamic-content/third-party/foundation 守卫和 build 均通过；
+- 对 19 个 ambient 文件、6 个活动 Props 文件、BoardEvent 及 AppState 活动声明的 JSDoc/行注释/块注释逐条比对，缺失为 0；六个原有 `any` 已登记，`ISignIn.lastSignInTime` 的旧合同与活动页面冲突仅记录、不猜测修复；
+- 生产构建前后均为 9563 个文件，29 个主题 CSS 的内容哈希文件名和长度保持，但完整产物聚合 SHA-256 从 `72EB74312129118A9BB6F3F1A4163D1D091934A59CE4DD5F2369A16A0901C03D` 变为 `E6A2846C509366418A08BF127697FB21C6331C54016E8C37148C064E5D0BED2A`。计划要求的伪 class/构造器消除和 legacy 运行时边删除会改变 JS 模块图，故完整 JS 字节零漂移门禁未通过；未添加死 class 或兼容 import 伪造旧产物；
+- 详细 source→destination、类型债务、注释审计、机械证据与未运行验收见 `docs/refactor-log/z1/`；本批未 commit、未 push、未进入 Z2，停在人工验收与产物漂移决策门禁。
+
 ### Z2：UBB 完整迁入 `modules/ubb`
 
 将以下能力作为一个受控业务批迁入 `src/modules/ubb`：
