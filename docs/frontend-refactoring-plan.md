@@ -1,6 +1,6 @@
 # CC98 前端目录重构执行计划
 
-> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1–C1.5 的代码实施、机械检查和主代理人工代码审核均已完成；C1.5 已本地提交为 `733eb045`。C1.6.0 已提交为 `bee0dd05`，C1.6.1 代码与记录已提交为 `61b4d5db`/`ff9702be`，C1.6.2 代码已提交为 `ad1db0e7`，C1.6.3 代码已提交为 `788da9e7`，C1.6.4 已提交为 `fdbe3762`，C1.6.5 代码与记录已提交为 `0c6efc6e`/`b232c6ca`。C1.7.1、Legacy Board 删除和 C1.7.2 Status 子批已随代码/记录提交 `f11fe1e7`/`99a8679e`，C1.7.2 其余真实复用候选已提交为 `52b4bc77`/`fe0e02fa`。C1.7.3 已完成代码实施、机械检查与主代理整批审核：活动组件与同名 Module 共置，活动远距离导入和多 importer 均清零，六个休眠候选冻结到 C1.7.4。浏览器运行验收尚未执行；当前停在未提交工作树，不自动启动 C1.7.4 或 Z，不 commit、不 push。
+> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1–C1.5 的代码实施、机械检查和主代理人工代码审核均已完成；C1.5 已本地提交为 `733eb045`。C1.6.0 已提交为 `bee0dd05`，C1.6.1 代码与记录已提交为 `61b4d5db`/`ff9702be`，C1.6.2 代码已提交为 `ad1db0e7`，C1.6.3 代码已提交为 `788da9e7`，C1.6.4 已提交为 `fdbe3762`，C1.6.5 代码与记录已提交为 `0c6efc6e`/`b232c6ca`。C1.7.1、Legacy Board 删除和 C1.7.2 Status 子批已随代码/记录提交 `f11fe1e7`/`99a8679e`，C1.7.2 其余真实复用候选已提交为 `52b4bc77`/`fe0e02fa`，C1.7.3 已提交为 `b361a4c1`/`489dff9d`。C1.7.4 已完成代码实施、机械检查与主代理整批审核；浏览器运行时无可连接实例，运行验收未执行。当前停在未提交工作树，不自动启动 C1.7.5 或 Z，不 commit、不 push。
 >
 > 架构依据：`docs/frontend-directory-architecture-inventory.md`。
 >
@@ -68,11 +68,12 @@ C1.6.5 全仓样式与剩余业务 global 审计               已完成（主�
 C1.7.1 单文件多组件拆分                              已完成（主代理整批审核；浏览器运行验收未执行；已有本地提交）
 Legacy Board 不可达兼容链删除                        已完成（用户明确授权；机械检查通过；已有本地提交）
 C1.7.2 真实共同语义组件复用                          已完成（主代理整批审核；浏览器运行验收未执行；已有本地提交）
-C1.7.3 Route 样式仓库与组件 Module 共置              已完成（主代理整批审核；浏览器运行验收未执行；未提交）
-C1.7.4–C1.7.7 孤儿、动态内容与全局边界收口           待实施（需单独授权）
+C1.7.3 Route 样式仓库与组件 Module 共置              已完成（主代理整批审核；浏览器运行验收未执行；已有本地提交）
+C1.7.4 孤儿源码与样式 owner 收口                     已完成（主代理整批审核；浏览器运行验收未执行；未提交）
+C1.7.5–C1.7.7 动态内容与全局边界收口                 待实施（需单独授权）
 ```
 
-### 当前停点：C1.7.3 样式 owner 共置已完成并停在未提交工作树；浏览器运行验收未执行，不 commit、不 push、不自动实施 C1.7.4 或 Z
+### 当前停点：C1.7.4 孤儿源码与样式 owner 收口已完成并停在未提交工作树；浏览器运行验收未执行，不 commit、不 push、不自动实施 C1.7.5 或 Z
 
 ### M3.1–M3.6 实施记录（2026-07-30）
 
@@ -2554,6 +2555,14 @@ C1.7.7  Foundation 布局工具命名空间化；删除休眠 compatibility、�
 - `npm run check:architecture` 通过：327 个现代源码文件、1343 条 import、27 条既有 allowlist；modern/legacy typecheck 通过。正式 build 在受限环境先因 `spawn EPERM` 失败，放行后修正 Search Module 的 `@use` 顺序/相对路径并重跑通过，转换 4111 个模块，仅有既有 Sass、Spectrum/Lightning CSS 与大 chunk 警告。完整证据见 `docs/refactor-log/c1.7/style-owner-audit.md`。
 - 本地 Vite 根入口 `http://127.0.0.1:5173/` 返回 HTTP 200，但当前浏览器运行时没有可连接实例；Board/Board List、Collection 六类页面、User Center/Profile、New Topics、Search、Editor、Login、Daily Signin、Home、Topic、默认/暗色主题、分页/空态/加载/回顶/hover/focus、Ant Design 控件及真实登录/API/权限均未执行浏览器验收，不记为通过，也不以 build 代替。`NewTopicsBoardSidebar` 仍以自身 Module 映射查询由父页面 Module 生产的容器 class，两个哈希不会相同；后续行为修复改用父 owner 持有的 `ref` 或稳定 `id`，并同步解除子 Module 对错误祖先哈希的依赖。C1.7.3 代码与记录已提交为 `b361a4c1`、`489dff9d`，不自动进入 C1.7.4 或 Z。
 
+#### C1.7.4 孤儿源码与样式 owner 收口实施记录（2026-08-02）
+
+- 以干净的 `dev20260716@37dffb03` 为基线，在用户确认无仓外源码级消费者后删除旧 `Edit`、`FindIP`、三份旧 Topic 管理、`ExactActivitiesPosts` 六个零调用实现及其四份孤儿 Module；旧 Edit facade 的七组导出和 README 失效入口一并清理，活动 Editor 入口仍为 `@application/routes/editor`。
+- Application Shell、Footer、Header、Search、UserMenu、Topic Vote 与赞踩激活规则已归实际 JSX producer 的同名 Module。`MainPage.scss` 只保留原 UBB/editor 规则，删除六组无 producer 的 PWA redirect；`Styles/Vote.scss` 及入口导入删除，不迁移三组休眠 Vote selector。
+- Annual Review 仍使用的 8 组、共 9 个 selector 移入 `Pages/AnnualReview/AnnualReview.scss`，只允许 V1/V2 两个冻结入口显式加载并登记随 Z4 整体删除；三组无 producer 的旧 selector 删除，不恢复 Route、不迁移页面/API。`frozenInactiveImports` 清零，失效边会报错；守卫通过：110 个真实 Module、29 个主题、2 处既有第三方 global、0 条休眠 owner 边、2 条冻结 Annual 样式边。
+- `npm run check:architecture` 通过：327 个现代源码文件、1348 条 import、27 条既有 allowlist；modern/legacy typecheck、正式 build 和 `git diff --check` 通过。基线/当前均为 29 个主题，自定义属性无漂移；静态 URL 差分精确等于 Annual Review 的两个背景 URL，主题 CSS 每份按预期减少 10131–10151 字节。完整证据见 `docs/refactor-log/c1.7/orphan-and-shell-style-audit.md`。
+- 本地 Vite 根入口返回 HTTP 200，但当前浏览器运行时没有可连接实例；首页/非首页 Header、登录/未登录菜单、搜索、未读数、隐私头像、Footer、Shell/Error、默认/暗色主题、Topic 投票和赞踩激活状态均未执行浏览器验收。Annual Review 无 Route 且等待 Z4 删除，只验证冻结入口、legacy typecheck 与主应用产物不携带其样式。本批不修复 C1.7.3 登记的 New Topics 查询缺陷，不 commit、不 push，不自动进入 C1.7.5 或 Z。
+
 Annual Review 的最终删除仍属于 Z4；C1.7 不得借整理样式提前删除业务。若 Z4 尚未实施，C1.7 只把其样式放入明确的冻结 owner，并登记“随 Z4 整体删除”，不得继续留在 `Site.scss`。UBB 实现和样式的完整迁址统一属于 Z2；C1.7.5 只登记 renderer/editor、动态 HTML、播放器、数学公式和 emoji 的当前 producer/consumer/selector 边界，不提前建立过渡 Module、全局兼容 facade 或旧 class 双写。Markdown 现有编辑/预览组件及其样式不在 C1.7 做兼容性迁移，只冻结调用点、内容格式、Storage/草稿、上传和安全边界，留待 Z 后独立整组件替换。根 `Components/` 等 legacy 源码目录的整体迁址和删除仍属于 Z；C1.7 只允许为组件边界、真实复用和样式共置所需的窄拆分，必要时让活动 legacy 组件暂时拥有相邻 Module，并登记随 Z 整体移动，不得把 C1.7 扩张为完整 legacy 逻辑迁移。
 
 #### C1.7 验收、守卫与停点
@@ -2915,7 +2924,7 @@ R1  增加架构检查脚本                            已完成
 - 检查脚本结果；
 - 无业务行为变化证明。
 
-骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7、C1.1–C1.6 与 C1.7.1 均已完成代码实施、机械检查和主代理人工代码审核；C1.7.1、Legacy Board 删除和 Status 子批已提交为 `f11fe1e7`/`99a8679e`，C1.7.2 其余真实组件复用已提交为 `52b4bc77`/`fe0e02fa`，C1.7.3 样式 owner 共置已提交为 `b361a4c1`/`489dff9d`。C1.7.3 浏览器运行验收未执行，New Topics 跨 Module DOM 查询/祖先哈希问题登记为后续修复；当前不自动启动 C1.7.4 或 Z。
+骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7、C1.1–C1.6 与 C1.7.1 均已完成代码实施、机械检查和主代理人工代码审核；C1.7.1、Legacy Board 删除和 Status 子批已提交为 `f11fe1e7`/`99a8679e`，C1.7.2 其余真实组件复用已提交为 `52b4bc77`/`fe0e02fa`，C1.7.3 样式 owner 共置已提交为 `b361a4c1`/`489dff9d`。C1.7.4 已完成并停在未提交工作树；浏览器运行验收未执行，New Topics 跨 Module DOM 查询/祖先哈希问题仍登记为后续修复；当前不自动启动 C1.7.5 或 Z。
 
 ## 22. 已确认决策与后续边界
 
@@ -2940,7 +2949,7 @@ R1  增加架构检查脚本                            已完成
 
 后续仍需单独授权或审核：
 
-1. S1.1–S1.3、S1.4 六组、S1.5、S1.6 与 S1.7 尚未执行的完整浏览器、登录、真实 API、SignalR、跨标签、缓存与草稿运行验收，C1.1–C1.7.3 的浏览器样式/行为验收，C1.7.4–C1.7.7 的逐批代码实施授权，以及后续每个 Z 子批的代码实施授权；
+1. S1.1–S1.3、S1.4 六组、S1.5、S1.6 与 S1.7 尚未执行的完整浏览器、登录、真实 API、SignalR、跨标签、缓存与草稿运行验收，C1.1–C1.7.4 的浏览器样式/行为验收，C1.7.5–C1.7.7 的逐批代码实施授权，以及后续每个 Z 子批的代码实施授权；
 2. 当前 `useUserProfileContext` 接口及 UserProfileLayout 集中取数边界是否随资料缓存归位或 Redux 闭包再次调整；
 3. A2.3–A2.11 与 M3.1–M3.6 尚未执行的浏览器、登录、真实 API、权限、分页、SignalR、通知权限、上传、编辑器、缓存与 UBB 运行验收；
 4. UBB 迁入 `modules/ubb` 后的浏览器、权限标签、编辑器、媒体、数学公式和扩展 API 人工验收；

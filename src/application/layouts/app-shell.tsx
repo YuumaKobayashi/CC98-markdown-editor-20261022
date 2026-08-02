@@ -7,12 +7,14 @@ import { useApplicationError } from "@application/providers/application-error";
 import { NavigationErrorReset } from "@application/providers/navigation-error-reset";
 import * as Status from "@application/routes/status";
 
+import styles from "./app-shell.module.scss";
+
 export function AppShell() {
   const error = useApplicationError();
   const ErrorStatus = error ? Status[error] : null;
 
   return (
-    <div className="main-container">
+    <div className={styles.mainContainer}>
       <Header />
       <NavigationErrorReset />
       {!ErrorStatus ? <Outlet /> : <ErrorStatus />}

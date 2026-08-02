@@ -142,7 +142,7 @@ export function TopicVote({
   return (
     <div className={styles.vote}>
       <p
-        className="vote-message"
+        className={styles.voteMessage}
         style={{ opacity: messageOpacity }}
       >
         {message}
@@ -164,10 +164,10 @@ export function TopicVote({
             />
             <label htmlFor={`vote${item.id}`}>{item.description}</label>
           </p>
-          <p className="vote-bar">
-            <span className="vote-total">
+          <p className={styles.voteBar}>
+            <span className={styles.voteTotal}>
               <span
-                className="vote-current"
+                className={styles.voteCurrent}
                 style={{
                   backgroundColor: colors[index % 5],
                   width: `${
@@ -189,7 +189,7 @@ export function TopicVote({
           </p>
         </div>
       ))}
-      <div className="vote-info">
+      <div className={styles.voteInfo}>
         <p>
           投票过期时间：
           {moment(voteInfo.expiredTime).format("YYYY年MM月DD日 HH:mm:ss")}
@@ -201,7 +201,7 @@ export function TopicVote({
         {renderMessage()}
       </div>
       {!voteInfo.canVote ? null : (
-        <div className="vote-buttons">
+        <div className={styles.voteButtons}>
           <button
             className="button blue"
             type="button"

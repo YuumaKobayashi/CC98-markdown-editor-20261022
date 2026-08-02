@@ -123,6 +123,24 @@ for (const entry of ownerFreeze.frozenInactiveImports) {
 }
 const consumedFrozenOwnerEdges = new Set();
 
+const frozenLegacyStyles = new Map();
+const frozenLegacyStyleEdges = new Map();
+for (const entry of ownerFreeze.frozenLegacyStyles ?? []) {
+  if (frozenLegacyStyles.has(entry.path)) {
+    errors.push(`${ownerFreeze.phase} 冻结 legacy 样式重复登记: ${entry.path}`);
+  }
+  frozenLegacyStyles.set(entry.path, entry);
+
+  for (const importer of entry.importers) {
+    const key = `${importer} -> ${entry.path}`;
+    if (frozenLegacyStyleEdges.has(key)) {
+      errors.push(`${ownerFreeze.phase} 冻结 legacy 样式边重复登记: ${key}`);
+    }
+    frozenLegacyStyleEdges.set(key, entry);
+  }
+}
+const consumedFrozenLegacyStyleEdges = new Set();
+
 if (transitionalModules.size !== 0) {
   errors.push(`C1.5 已收口，过渡样式清单必须为空，实际为 ${transitionalModules.size} 项`);
 }
@@ -301,7 +319,48 @@ for (const [targetPath, consumers] of typescriptConsumers) {
 
 for (const freezeKey of frozenOwnerEdges.keys()) {
   if (!consumedFrozenOwnerEdges.has(freezeKey)) {
-    errors.push(`C1.7.3 冻结样式边已失效，应移出清单: ${freezeKey}`);
+    errors.push(`${ownerFreeze.phase} 冻结样式边已失效，应移出清单: ${freezeKey}`);
+  }
+}
+
+const legacyStyleTypeScriptRoots = ["src", "Components", "Pages"]
+  .map((directory) => path.join(projectRoot, directory))
+  .filter((directory) => fs.existsSync(directory));
+const legacyStyleSourceFiles = legacyStyleTypeScriptRoots.flatMap((directory) =>
+  collectFiles(directory, (name) => /\.tsx?$/.test(name)),
+);
+
+for (const sourceFile of legacyStyleSourceFiles) {
+  const source = fs.readFileSync(sourceFile, "utf8");
+  const importPattern = /import\s+["']([^"']+\.scss)["']/g;
+  for (const match of source.matchAll(importPattern)) {
+    if (match[1].endsWith(".module.scss")) continue;
+    if (!match[1].startsWith(".")) {
+      errors.push(
+        `冻结 legacy 样式必须使用相对路径导入: ${toProjectPath(sourceFile)} -> ${match[1]}`,
+      );
+      continue;
+    }
+
+    const targetPath = path.resolve(path.dirname(sourceFile), match[1]);
+    const key = `${toProjectPath(sourceFile)} -> ${toProjectPath(targetPath)}`;
+    if (!frozenLegacyStyleEdges.has(key)) {
+      errors.push(`禁止新增未登记的 legacy 全局样式导入: ${key}`);
+      continue;
+    }
+    consumedFrozenLegacyStyleEdges.add(key);
+  }
+}
+
+for (const [stylePath] of frozenLegacyStyles) {
+  const absolutePath = path.resolve(projectRoot, stylePath);
+  if (!fs.existsSync(absolutePath)) {
+    errors.push(`${ownerFreeze.phase} 冻结 legacy 样式不存在: ${stylePath}`);
+  }
+}
+for (const freezeKey of frozenLegacyStyleEdges.keys()) {
+  if (!consumedFrozenLegacyStyleEdges.has(freezeKey)) {
+    errors.push(`${ownerFreeze.phase} 冻结 legacy 样式边已失效，应移出清单: ${freezeKey}`);
   }
 }
 
@@ -395,6 +454,7 @@ if (errors.length) {
     `Style migration check passed: ${moduleFiles.length - transitionalModules.size} real CSS Module, ` +
       `${transitionalModules.size} transitional partials, ${themes.length} themes, ` +
       `${actualGlobalOccurrenceCount} registered global occurrences in ${actualGlobalModuleCount} modules, ` +
-      `${frozenOwnerEdges.size} frozen inactive owner edges.`,
+      `${frozenOwnerEdges.size} frozen inactive owner edges, ` +
+      `${frozenLegacyStyleEdges.size} frozen legacy style edges.`,
   );
 }

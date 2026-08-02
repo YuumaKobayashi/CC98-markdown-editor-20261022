@@ -13,7 +13,7 @@ application → modules → foundation
 - `src/application` 是 Application Shell 与 Route owner；业务能力统一由 `src/modules` 承载；
 - 第三方适配已经归入 `src/foundation/integrations`；
 - 环境/第三方声明、全局样式入口和 29 个主题已经分别归入 `src/foundation/{types,styles,theme/themes}`；
-- `@types/@cc98` 和 `Styles/{MainPage,UbbEditor,UserCenter,Vote}.scss` 仍由后续业务阶段处理；
+- `@types/@cc98` 和 `Styles/{MainPage,UbbEditor}.scss` 仍由后续业务阶段处理；
 - Foundation 不得依赖 Modules 或 Application，Modules 不得依赖 Application；
 - `@legacy/*` 是迁移期兼容桥，只允许已迁入模块连接尚未归位的旧实现，不得作为新业务代码的默认依赖入口；
 - `Ubb/` 与 `Components/UbbEditor/` 继续原地冻结。

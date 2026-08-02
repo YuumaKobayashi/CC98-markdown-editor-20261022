@@ -23,6 +23,8 @@ import {
   setLocalStorage,
 } from "@foundation/storage/web-storage";
 
+import styles from "./UserMenu.module.scss";
+
 export function UserMenu() {
   const dispatch = useAppDispatch();
   const { pathname } = useLocation();
@@ -51,8 +53,8 @@ export function UserMenu() {
 
   if (!isLoggedOn) {
     return (
-      <div className="topBarUserInfo">
-        <div className="topBarText">
+      <div className={styles.topBarUserInfo}>
+        <div className={styles.topBarText}>
           {" "}
           <Link
             onClick={() => {
@@ -63,7 +65,7 @@ export function UserMenu() {
             登录
           </Link>
         </div>
-        <div className="topBarText">
+        <div className={styles.topBarText}>
           <a href="https://account.cc98.org/">注册</a>
         </div>
       </div>
@@ -81,9 +83,13 @@ export function UserMenu() {
     height: "0px",
   };
   const userCenterClassName =
-    pathname === "/" ? "topBarUserCenter-mainPage" : "topBarUserCenter";
+    pathname === "/"
+      ? styles.topBarUserCenterMainPage
+      : styles.topBarUserCenter;
   const messageClassName =
-    pathname === "/" ? "topBarMessageDetails-mainPage" : "topBarMessageDetails";
+    pathname === "/"
+      ? styles.topBarMessageDetailsMainPage
+      : styles.topBarMessageDetails;
   const signinInfo =
     userInfo &&
     hasSignedInToday(userInfo.id)
@@ -100,32 +106,35 @@ export function UserMenu() {
 
   return (
     <div className="topBarRight">
-      <div className="topBarUserInfo">
+      <div className={styles.topBarUserInfo}>
         <div
-          className="topBarMessage"
+          className={styles.topBarMessage}
           id="userMessage"
           onMouseOut={(event) => handleMouseEvent(event.type, "message")}
           onMouseOver={(event) => handleMouseEvent(event.type, "message")}
         >
           <Link to="/message/response" className="messageTopBar">
-            <div className="topBarBell">
+            <div className={styles.topBarBell}>
               {" "}
               <i className="fa fa-bell-o" />
             </div>
             {totalCount ? (
-              <div className="message-counter" id="unreadCount-totalCount">
+              <div
+                className={styles.messageCounter}
+                id="unreadCount-totalCount"
+              >
                 {totalCount}
               </div>
             ) : null}
           </Link>
         </div>
         <div
-          className="topBarUserImg"
+          className={styles.topBarUserImg}
           onMouseOut={(event) => handleMouseEvent(event.type, "userName")}
           onMouseOver={(event) => handleMouseEvent(event.type, "userName")}
         >
           <img
-            className={showCardUser ? "" : "topBarUserImgHide"}
+            className={showCardUser ? "" : styles.topBarUserImgHide}
             src={
               showCardUser
                 ? userInfo.portraitUrl
@@ -134,18 +143,18 @@ export function UserMenu() {
           />
           {showCardUser ? (
             <EyeInvisibleOutlined
-              className="topBarUserHideIcon"
+              className={styles.topBarUserHideIcon}
               onClick={() => handleVisibilityChange(false)}
             />
           ) : (
             <EyeOutlined
-              className="topBarUserHideIcon"
+              className={styles.topBarUserHideIcon}
               onClick={() => handleVisibilityChange(true)}
             />
           )}
         </div>
         <div
-          className="topBarUserName"
+          className={styles.topBarUserName}
           onMouseOut={(event) => handleMouseEvent(event.type, "userName")}
           onMouseOver={(event) => handleMouseEvent(event.type, "userName")}
         >
@@ -193,7 +202,7 @@ export function UserMenu() {
             <li>
               回复我的
               {messageCount.replyCount ? (
-                <div className="message-counterLi">
+                <div className={styles.messageCounterLi}>
                   {messageCount.replyCount}
                 </div>
               ) : null}
@@ -203,7 +212,9 @@ export function UserMenu() {
             <li>
               @ 我的
               {messageCount.atCount ? (
-                <div className="message-counterLi">{messageCount.atCount}</div>
+                <div className={styles.messageCounterLi}>
+                  {messageCount.atCount}
+                </div>
               ) : null}
             </li>
           </Link>
@@ -211,7 +222,7 @@ export function UserMenu() {
             <li>
               系统通知
               {messageCount.systemCount ? (
-                <div className="message-counterLi">
+                <div className={styles.messageCounterLi}>
                   {messageCount.systemCount}
                 </div>
               ) : null}
@@ -221,7 +232,7 @@ export function UserMenu() {
             <li>
               我的私信
               {messageCount.messageCount ? (
-                <div className="message-counterLi">
+                <div className={styles.messageCounterLi}>
                   {messageCount.messageCount}
                 </div>
               ) : null}

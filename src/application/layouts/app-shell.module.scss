@@ -1,0 +1,10 @@
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--cc98-background-color-page);
+  width: 100%;
+  min-width: 1140px;
+  min-height: 100%;
+}

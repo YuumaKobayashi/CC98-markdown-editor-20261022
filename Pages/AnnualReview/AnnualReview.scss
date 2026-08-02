@@ -1,0 +1,68 @@
+// 年度报告；两套休眠页面共同使用，随 Z4 整体删除。
+.annual-review-body {
+  display: flex;
+  min-width: 71.25rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+}
+
+.annual-review-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 48vh;
+  height: 76.8vh;
+  font-size: 2.5vh;
+  background-size: contain;
+}
+
+.annual-review-page-bg-cat {
+  background-image: url("/static/images/annual-review/bg-cat.jpg");
+}
+
+.annual-review-page-bg-rabbit {
+  background-image: url("/static/images/annual-review/bg-rabbit.jpg");
+}
+
+.annual-review-page1-during {
+  color: #ff69b4;
+  padding-left: 2px;
+  padding-right: 2px;
+  font-weight: bolder;
+  font-size: 1.25em;
+}
+
+.annual-review-page2-topicCount {
+  color: #ff69b4;
+  padding-left: 2px;
+  padding-right: 2px;
+  font-weight: bolder;
+  font-size: 1.25em;
+}
+
+.annual-review-page2-replyCount {
+  color: #ff69b4;
+  padding-left: 2px;
+  padding-right: 2px;
+  font-weight: bolder;
+  font-size: 1.25em;
+}
+
+.annual-review-page2-hotTopicCount {
+  color: #ff69b4;
+  padding-left: 2px;
+  padding-right: 2px;
+  font-weight: bolder;
+  font-size: 1.25em;
+}
+
+.annual-review-page6-congratulation {
+  color: #ff69b4;
+  padding-left: 2px;
+  padding-right: 2px;
+  font-weight: bolder;
+  font-size: 1.25em;
+}

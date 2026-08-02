@@ -4,6 +4,8 @@ import { useLocation, useNavigate } from "react-router";
 import { getTopicInfo } from "@modules/topic";
 import { getUserInfo } from "@modules/user";
 
+import styles from "./Search.module.scss";
+
 type SearchType = "主题" | "全站" | "版内" | "用户" | "版面";
 
 export function SearchBeforeConnent() {
@@ -86,16 +88,16 @@ export function SearchBeforeConnent() {
     : ["主题", "用户", "版面"];
 
   return (
-    <div id="search" ref={rootRef}>
-      <div className="box">
+    <div id="search" className={styles.search} ref={rootRef}>
+      <div className={styles.box}>
         <div
-          className="searchBoxSelect"
+          className={styles.searchBoxSelect}
           onClick={() => setIsOpen((open) => !open)}
         >
           {searchType}
         </div>
         <div
-          className="caret-down"
+          className={styles.caretDown}
           onClick={() => setIsOpen((open) => !open)}
         >
           <i className="fa fa-caret-down" />
@@ -110,12 +112,12 @@ export function SearchBeforeConnent() {
             if (event.key === "Enter") void handleSearch();
           }}
         />
-        <div className="searchIco" onClick={() => void handleSearch()}>
+        <div className={styles.searchIco} onClick={() => void handleSearch()}>
           <i className="fa fa-search" />
         </div>
       </div>
       <ul
-        className="searchBoxSub"
+        className={styles.searchBoxSub}
         style={{ display: isOpen ? "block" : "none" }}
       >
         {options.map((option) => (

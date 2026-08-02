@@ -213,7 +213,9 @@ export function TopicReplySignature(props: TopicReplySignatureProps) {
           <div
             id={idLike}
             className={
-              likeState === 1 ? `${styles.upup} red-color` : styles.upup
+              likeState === 1
+                ? `${styles.upup} ${styles.redColor}`
+                : styles.upup
             }
             style={{ marginRight: "0.7rem" }}
             onClick={likePost}
@@ -232,7 +234,7 @@ export function TopicReplySignature(props: TopicReplySignatureProps) {
             id={idDislike}
             className={
               likeState === 2
-                ? `${styles.downdown} red-color`
+                ? `${styles.downdown} ${styles.redColor}`
                 : styles.downdown
             }
             onClick={dislikePost}

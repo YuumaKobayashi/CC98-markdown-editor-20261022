@@ -2,7 +2,6 @@
   "transitionalModulePartials": [],
   "legacyRootStyles": [
     "Styles/MainPage.scss",
-    "Styles/UbbEditor.scss",
-    "Styles/Vote.scss"
+    "Styles/UbbEditor.scss"
   ]
 }

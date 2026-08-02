@@ -9,6 +9,7 @@ import Page6 from './page6'
 import Cover from './cover'
 import { Spin } from 'antd'
 import { DownOutlined, UpOutlined } from '@ant-design/icons'
+import './AnnualReview.scss'
 export default class extends React.Component {
     state = {
         data: null,

@@ -12,6 +12,7 @@ import { Spin } from "antd";
 import { DownOutlined, UpOutlined } from "@ant-design/icons";
 import Page8 from "./page8";
 import Page9 from "./page9"
+import "../AnnualReview/AnnualReview.scss";
 
 export const year = 2025;
 

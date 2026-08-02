@@ -1,45 +1,16 @@
-﻿@import "base/animations";
+@import "base/animations";
 @import "../../../Styles/MainPage.scss";
 @import "../../../Components/UbbEditor/stylesheet.scss";
 @import "vendors/spectrum";
-@import "../../../Styles/Vote.scss";
 @import "vendors/antd";
 
 @import "variables/legacy";
-
-// 如需开启首页灰度
-// 把 .main-container .header::after 的 display: none; 注释掉
-
-.main-container .header::after {
-  display: none;
-  content: " ";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  backdrop-filter: grayscale(0.95);
-  -webkit-backdrop-filter: grayscale(0.95);
-  z-index: 9999;
-  pointer-events: none;
-}
 
 @import "base/document";
 
 @import "reset/restore";
 
 @import "base/root";
-
-.main-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  background-color: $background_color_page;
-  width: 100%;
-  min-width: 1140px;
-  min-height: 100%;
-}
 
 .unSupportA {
   text-decoration: underline;
@@ -348,35 +319,6 @@ a {
 
 .displaynone {
   display: none;
-}
-
-//-------------------------以下是底部的样式~~~---------------------------------------------------
-.footer {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  margin-top: 5rem;
-  padding-top: 15px;
-  width: 100%;
-  min-width: 1140px;
-}
-
-.footerRow {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  font-size: 12px;
-  font-family: 微软雅黑;
-  color: rgb(80, 80, 80);
-  margin-bottom: 15px;
-}
-
-.footerRow a {
-  font-size: 12px;
-  font-family: 微软雅黑;
-  color: rgb(80, 80, 80);
-  margin-left: 6px;
-  margin-right: 6px;
 }
 
 /*
@@ -1047,104 +989,3 @@ ol {
 }
 
 @import "route-compatibility/BoardInformationCompatibility";
-// 年度报告
-.annual-review-body {
-  display: flex;
-  min-width: 71.25rem;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: #000;
-}
-
-.annual-review-board-back {
-  height: 60px;
-  width: 60px;
-  background-color: #5198d8;
-  background-size: contain;
-  border-radius: 50%;
-}
-
-.annual-review-page {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 48vh;
-  height: 76.8vh;
-  font-size: 2.5vh;
-  background-size: contain;
-}
-
-.annual-review-page-bg-cat {
-  background-image: url("/static/images/annual-review/bg-cat.jpg");
-}
-
-.annual-review-page-bg-rabbit {
-  background-image: url("/static/images/annual-review/bg-rabbit.jpg");
-}
-
-.annual-review-page1-days {
-  display: flex;
-  margin-top: 0.6rem;
-  margin-bottom: 0.6rem;
-}
-
-.annual-review-page1-day {
-  text-decoration: none;
-  position: relative;
-  width: 3rem;
-  height: 5rem;
-  background-image: linear-gradient(-180deg, #62d7f5 0%, #7fadf7 100%);
-  display: inline-block;
-  transition: all 0.3s ease-in-out;
-  text-align: center;
-  color: white;
-  font-size: 2rem;
-  line-height: 5rem;
-  border-radius: 5px;
-}
-
-.annual-review-page1-during {
-  color: #ff69b4;
-  padding-left: 2px;
-  padding-right: 2px;
-  font-weight: bolder;
-  font-size: 1.25em;
-}
-
-.annual-review-page2-topicCount {
-  color: #ff69b4;
-  padding-left: 2px;
-  padding-right: 2px;
-  font-weight: bolder;
-  font-size: 1.25em;
-}
-
-.annual-review-page2-replyCount {
-  color: #ff69b4;
-  padding-left: 2px;
-  padding-right: 2px;
-  font-weight: bolder;
-  font-size: 1.25em;
-}
-
-.annual-review-page2-hotTopicCount {
-  color: #ff69b4;
-  padding-left: 2px;
-  padding-right: 2px;
-  font-weight: bolder;
-  font-size: 1.25em;
-}
-
-.annual-review-page6-congratulation {
-  color: #ff69b4;
-  padding-left: 2px;
-  padding-right: 2px;
-  font-weight: bolder;
-  font-size: 1.25em;
-}
-
-.red-color {
-  color: red;
-}

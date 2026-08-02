@@ -1,11 +1,13 @@
 import * as React from "react";
 
+import styles from "./footer.module.scss";
+
 //底部
 export function Footer() {
   return (
-    <div className="footer">
+    <div className={styles.footer}>
       <div className="column">
-        <div className="footerRow">
+        <div className={styles.footerRow}>
           <div style={{ marginRight: "15px", color: "#000" }}>
             CC98运营管理团队
           </div>
@@ -18,7 +20,7 @@ export function Footer() {
           <a href="https://account.cc98.org" target="_blank">CC98账户管理 (账号密码找回)</a>|
           <a href="https://openid.cc98.org" target="_blank">CC98登录中心</a>
         </div>
-        <div className="footerRow">
+        <div className={styles.footerRow}>
           <div style={{ marginRight: "15px", color: "#000" }}>友情链接</div>
           <a href="http://www.zju.edu.cn" target="_blank">浙江大学</a>|
           <a href="http://xcb.zju.edu.cn" target="_blank">浙江大学党委宣传部</a>|
@@ -29,7 +31,7 @@ export function Footer() {
           <a href="http://www.zju88.org/agent/index.do" target="_blank" style={{ color: "#787878" }}>飘渺水云间</a>|
           <a href="http://luckweb.057101.com/bt2/index.asp" target="_blank" style={{ color: "#787878" }}>缘网</a>
         </div>
-        <div className="footerRow">
+        <div className={styles.footerRow}>
           Copyright © 2003-{new Date().getFullYear()} CC98 Durian v3.5.0 |{" "}
           <a href="mailto:contact@cc98.org">Email: contact@cc98.org</a>
         </div>
