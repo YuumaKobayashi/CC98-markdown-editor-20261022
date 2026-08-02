@@ -20,7 +20,7 @@
 
 ## Error Provider 边界
 
-- `ApplicationErrorProvider` 是 AppShell 业务错误的唯一状态 owner，仍按原 `ApplicationErrorKey` 映射 `application/routes/status`；根 `Components/Status.tsx` 只保留旧入口兼容转导；
+- `ApplicationErrorProvider` 是 AppShell 业务错误的唯一状态 owner，仍按原 `ApplicationErrorKey` 映射 `application/routes/status`；Z3 已删除零消费的根 `Components/Status.tsx` 兼容转导；
 - AppShell 在错误时只替换根 `Outlet`，Header、Footer 与路由切换清错继续保持挂载；
 - Editor 和 legacy Utility 通过 `reportApplicationError` 命令式上报，组件树外调用不再 dispatch Redux action；
 - HTTP 异常统一化、Router `errorElement` 和错误文案重构不属于 S1.5。
@@ -31,7 +31,7 @@
 - Session 是登录状态和当前用户的唯一 Redux owner；`refreshCurrentUserInfo` 由 Session 公共入口保留原静默失败合同，不再写入独立错误状态；
 - Notification 是四类未读计数的唯一 Redux owner；Application Store 只负责注册 reducer，业务 action、selector 和刷新行为由 Notification Module 公开；
 - Router 不再写入 Redux，也不再拥有独立 `history`、reducer 或 middleware；
-- Application 组件使用 `@application/store` 与 typed hooks；根 `Store.tsx` 只保留到 LEGACY 阶段的兼容转导，已无活动消费者；
+- Application 组件使用 `@application/store` 与 typed hooks；Z3 在零消费者证明后已删除根 `Store.tsx` 兼容转导；
 - Store 装配点向 Utility 兼容适配器注入 `dispatch/getState`，适配器不再自行导入或持有根 Store；
 - listener middleware 保留当前用户通过 User 公共策略接口写入 cache 的跨模块编排，`CrossTabSync` 统一处理 `userInfo` 和 `showCardUser` 跨标签事件；
 - User Preference Module 直接持有 `showCardUser` 的持久化与订阅合同，不建立 Redux slice；页面状态、领域缓存和草稿均由既有 Route/Module owner 持有，不引入 RTK Query。

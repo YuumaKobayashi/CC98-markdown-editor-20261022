@@ -2804,6 +2804,12 @@ Z2 实施记录（2026-08-02，基线 `dev20260716@84e5c736`）：
 
 每个实现文件必须确定唯一 owner；无法确定 owner、必须改变业务逻辑才能编译或可能存在外部 facade 消费者时立即停批审核。
 
+Z3 已于 2026-08-02 按 `dev20260716@7bf2b5cd` 基线实施并停在人工验收门禁：
+
+- 13 条活动 modern→legacy 边已切到现有 owner；应用 ErrorBoundary 与 Daily Signin 补签日历迁入真实 Application/Route owner，其余 `Components`、非 AnnualReview `Pages`、`Utility/IndexedDB/config/Store/SignalR` 短 facade 及休眠实现在零 consumer 复核后删除；
+- 根 `Utility.ts` 只保留 AnnualReview 所需的 4 个精确兼容导出；根 legacy 工作区仅剩 20 个 AnnualReview path 与该 facade，留待 Z4；
+- architecture/style/dynamic-content/third-party/Foundation 守卫、modern/legacy typecheck、正式 build 与 `git diff --check` 均通过；浏览器、真实 API、登录/权限、SignalR、跨标签、通知、补签、主题和响应式验收未执行。详细映射、证据与人工清单见 `docs/refactor-log/z3/`；本批不 commit、不 push、不进入 Z4。
+
 ### Z4：AnnualReview 完整移除
 
 用户已决定不保留 AnnualReview。Z4 删除：
