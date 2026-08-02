@@ -1,16 +1,20 @@
 import type {
+  LotteryMode,
+  LotteryTopicStatus,
   TopicAllowedViewerState,
   TopicBestState,
   TopicContentType,
+  TopicSpecialStyle,
   TopicState,
   TopicTopState,
   TopicType,
 } from "./enums";
+import type { IUser } from "@modules/user";
 
 /**
  * 帖子基础合同。
  */
-export interface IBasicTopic {
+export interface TopicBasicInfo {
   /**
    * 帖子id
    */
@@ -35,7 +39,11 @@ export interface IBasicTopic {
    * 帖子类型
    */
   type: TopicType;
+
+  contentType: TopicContentType;
 }
+
+export type IBasicTopic = TopicBasicInfo;
 
 export interface IHotTopic {
   /**
@@ -91,7 +99,22 @@ export interface ITagGroup {
   tags: ITag[];
 }
 
-export interface ITopic {
+export interface TopicHighlightInfo {
+  isBold: boolean;
+  isItalic: boolean;
+  color: string;
+}
+
+export interface LotteryTopicDetail {
+  status: LotteryTopicStatus;
+  result: string | null;
+  resultFloor: number | null;
+  drawingCount: number;
+  drawingTime: string;
+  mode: LotteryMode;
+}
+
+export interface TopicInfo {
   /**
    * 帖子 ID
    */
@@ -112,11 +135,16 @@ export interface ITopic {
   /**
    * 发布者 ID
    */
-  userId: number;
+  userId: number | null;
   /**
    * 发布者用户名
    */
-  userName: string;
+  userName: string | null;
+
+  /**
+   * 后端 TopicInfo 嵌入的用户信息；完整 User wire 统一留待 Phase 3。
+   */
+  userInfo: IUser | null;
   /**
    * 是否匿名
    */
@@ -146,19 +174,19 @@ export interface ITopic {
   /**
    * 最后回复用户用户名
    */
-  lastPostUser: string;
+  lastPostUser: string | null;
   /**
    * 最后回复内容
    */
-  lastPostContent: string;
+  lastPostContent: string | null;
   topState: TopicTopState;
   bestState: TopicBestState;
   /**
    * 是否是投票
    */
-  isVote: false;
+  isVote: boolean;
 
-  isPosterOnly: false;
+  isPosterOnly: boolean;
 
   allowedViewerState: TopicAllowedViewerState;
   /**
@@ -170,13 +198,82 @@ export interface ITopic {
    */
   dislikeCount: number;
 
-  highlightInfo: any;
+  highlightInfo: TopicHighlightInfo | null;
 
   tag1: number;
 
   tag2: number;
 
   isInternalOnly: boolean;
+
+  notifyPoster: boolean;
+
+  isMe: boolean;
+
+  todayCount: number;
+
+  allowHotReply: boolean;
+
+  contentType: TopicContentType;
+
+  favoriteCount: number;
+
+  topicAuthorPermissions: string[];
+
+  mediaContent: unknown;
+
+  specialStyle: TopicSpecialStyle;
+
+  notifyAllReplierCountByLZ: number;
+
+  lastNotifyAllReplierFloorByLZ: number;
+
+  canNotifyAllReplier: boolean;
+
+  notifyAllReplierPostIds: number[];
+
+  isHotTopic: boolean;
+
+  lotteryTopicDetail: LotteryTopicDetail | null;
+}
+
+/**
+ * 旧名兼容别名；实际 wire DTO 为 {@link TopicInfo}。
+ */
+export type ITopic = TopicInfo;
+
+export interface SearchedTopicInfo {
+  id: number;
+  boardId: number;
+  boardName: string;
+  title: string;
+  time: string;
+  userId: number | null;
+  userName: string | null;
+  isAnonymous: boolean;
+  replyCount: number;
+  hitCount: number;
+  lastPostUser: string;
+  lastPostTime: string;
+  lastPostContent: string;
+  mediaContent: unknown;
+  contentType: TopicContentType;
+  state: TopicState;
+}
+
+export interface RecommendedTopicInfo {
+  topic: TopicInfo;
+  content: string;
+}
+
+export interface BoardBestSaveTopicsInfo {
+  count: number;
+  topics: TopicInfo[];
+}
+
+export interface TagTopicsInfo {
+  count: number;
+  topics: TopicInfo[];
 }
 
 /**
@@ -208,13 +305,17 @@ export interface MediaTopicContent {
  */
 export interface FocusTopic {
   /**
+   * 是否匿名。
+   */
+  isAnonymous?: boolean;
+  /**
   *主题的标题
   */
   title: string;
   /**
   *主题被点击的次数（阅读数）,由于太多，所以显示字符串k
   */
-  hitCount: string;
+  hitCount: number | string;
   /**
   *主题的ID值
   */
@@ -230,7 +331,7 @@ export interface FocusTopic {
   /**
   *主题的回复数（不包括第一次发言），由于太多，所以显示字符串k
   */
-  replyCount: string;
+  replyCount: number | string;
   /**
  *主题的楼层数
  */
@@ -238,7 +339,7 @@ export interface FocusTopic {
   /**
   *主题作者的id。如果主题为匿名主题，则该参数为 null
   */
-  userId: number;
+  userId: number | null;
   /**
   *主题作者的用户名。如果主题为匿名主题，则该参数为 null
   */
@@ -262,7 +363,7 @@ export interface FocusTopic {
   /**
   *最后回复用户
   */
-  lastPostUser: string;
+  lastPostUser: string | null;
   /**
   *最后回复时间
   */
@@ -270,15 +371,15 @@ export interface FocusTopic {
   /**
   *标签1
   */
-  tag1: string;
+  tag1: number | string | false;
   /**
   *标签2
   */
-  tag2: string;
+  tag2: number | string | false;
   /**
    * 媒体主题的摘要信息
    */
-  mediaContent: MediaTopicContent;
+  mediaContent: MediaTopicContent | null;
   /**
    * 主题内容的类型
    */
@@ -296,7 +397,7 @@ export interface RandomTopic {
   /**
   *主题被点击的次数（阅读数）,由于太多，所以显示字符串k
   */
-  hitCount: string;
+  hitCount: number | string;
   /**
   *主题的ID值
   */
@@ -312,7 +413,7 @@ export interface RandomTopic {
   /**
   *主题的回复数（不包括第一次发言），由于太多，所以显示字符串k
   */
-  replyCount: string;
+  replyCount: number | string;
   /**
  *主题的楼层数
  */
@@ -320,7 +421,7 @@ export interface RandomTopic {
   /**
   *主题作者的id。如果主题为匿名主题，则该参数为 null
   */
-  userId: number;
+  userId: number | null;
   /**
   *主题作者的用户名。如果主题为匿名主题，则该参数为 null
   */
@@ -344,7 +445,7 @@ export interface RandomTopic {
   /**
   *最后回复用户
   */
-  lastPostUser: string;
+  lastPostUser: string | null;
   /**
   *最后回复时间
   */
@@ -352,15 +453,15 @@ export interface RandomTopic {
   /**
   *标签1
   */
-  tag1: string;
+  tag1: number | string | false;
   /**
   *标签2
   */
-  tag2: string;
+  tag2: number | string | false;
   /**
    * 媒体主题的摘要信息
    */
-  mediaContent: MediaTopicContent;
+  mediaContent: MediaTopicContent | null;
   /**
    * 主题内容的类型
    */
@@ -379,6 +480,16 @@ export interface RecommendedTopic {
    * 推荐语（一般为内容摘要）
    */
   content: string;
+
+  /**
+   * 旧 service 在大于十万阅读数分支中写入的兼容字段。
+   */
+  hitCount?: string;
+
+  /**
+   * 旧合并逻辑会读取 wrapper id，wire 上并不存在。
+   */
+  id?: number;
 }
 
 /**

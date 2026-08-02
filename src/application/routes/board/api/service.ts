@@ -2,6 +2,14 @@ import {
   cc98Fetch,
 } from "@foundation/api/http";
 import { formAuthorizeHeader } from "@modules/session";
+import type { BoardInfo, BoardTagInfo } from "@modules/board";
+import type {
+  BoardBestSaveTopicsInfo,
+  TagTopicsInfo,
+  TopicInfo,
+} from "@modules/topic";
+import type { PostInfo } from "@modules/post";
+import type { BoardEventInfo } from "../model/types";
 
 export const getBoardInfo = async (boardId: string) => {
   const headers = await formAuthorizeHeader();
@@ -13,7 +21,7 @@ export const getBoardInfo = async (boardId: string) => {
     case 500:
       return "server error";
   }
-  const data = await response.json();
+  const data = (await response.json()) as BoardInfo;
   if (data.canEntry === false) {
     return "unauthorized";
   }
@@ -23,19 +31,19 @@ export const getBoardInfo = async (boardId: string) => {
 export const getNormalTopics = async (boardId: number, page: string) => {
   const from = (parseInt(page) - 1) * 20;
   const url = `/board/${boardId}/topic?from=${from}&size=20`;
-  return await getTopics(url);
+  return (await getTopics(url)) as TopicInfo[];
 };
 
 export const getBestTopics = async (boardId: number, page: string) => {
   const from = (parseInt(page) - 1) * 20;
   const url = `/topic/best/board/${boardId}?from=${from}&size=20`;
-  return await getTopics(url);
+  return (await getTopics(url)) as BoardBestSaveTopicsInfo;
 };
 
 export const getSaveTopics = async (boardId: number, page: string) => {
   const from = (parseInt(page) - 1) * 20;
   const url = `/topic/save/board/${boardId}?from=${from}&size=20`;
-  return await getTopics(url);
+  return (await getTopics(url)) as BoardBestSaveTopicsInfo;
 };
 
 export const getTagTopics = async (
@@ -53,7 +61,7 @@ export const getTagTopics = async (
     query += `tag2=${tag2}&`;
   }
   const url = `/topic/search/board/${boardId}/tag?${query}from=${from}&size=20`;
-  return await getTopics(url);
+  return (await getTopics(url)) as TagTopicsInfo;
 };
 
 export const getTopTopics = async (boardId: number) => {
@@ -66,7 +74,7 @@ export const getTopTopics = async (boardId: number) => {
     case 500:
       return "server error";
   }
-  return await response.json();
+  return (await response.json()) as TopicInfo[];
 };
 
 export const getShortTopic = async (topicId: number) => {
@@ -79,9 +87,10 @@ export const getShortTopic = async (topicId: number) => {
     case 500:
       return "server error";
   }
-  return await response.json();
+  return (await response.json()) as PostInfo[];
 };
 
+//TODO：把这个抽象函数拆咯 三个地方都有调用
 export const getTopics = async (url: string) => {
   const headers = await formAuthorizeHeader();
   const response = await cc98Fetch(url, { headers });
@@ -91,14 +100,14 @@ export const getTopics = async (url: string) => {
     case 500:
       return "server error";
   }
-  return await response.json();
+  return (await response.json()) as unknown;
 };
 
 export const getTags = async (boardId: number) => {
   const headers = await formAuthorizeHeader();
   const url = `/board/${boardId}/tag`;
   const response = await cc98Fetch(url, { headers });
-  return await response.json();
+  return (await response.json()) as BoardTagInfo[];
 };
 
 export const multiDelete = async (topicIds: number[], reason: string) => {
@@ -129,7 +138,7 @@ export const getBoardRecords = async (boardId: string, from: number) => {
   const url = `/board/${boardId}/events?from=${from}&size=7`;
   const headers = await formAuthorizeHeader();
   const response = await cc98Fetch(url, { headers });
-  return await response.json();
+  return (await response.json()) as BoardEventInfo;
 };
 
 export const editBigPaper = async (boardId: string, content: string) => {

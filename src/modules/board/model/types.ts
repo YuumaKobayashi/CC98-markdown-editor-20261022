@@ -1,9 +1,16 @@
-import type { AnonymousState, BoardInternalState } from "./enums";
+import type {
+  AnonymousState,
+  BoardInternalState,
+  BoardPosterOnlyState,
+  BoardPrivacyState,
+  BoardProtectionLevel,
+  ViewerFilterState,
+} from "./enums";
 
 /**
  * 版面合同。
  */
-export interface IBoard {
+export interface BoardInfo {
   /**
    * 版面id
    */
@@ -15,7 +22,7 @@ export interface IBoard {
   /**
    * 版面名称
    */
-  description: string;
+  description: string | null;
   /**
    * 发帖总数
    */
@@ -35,7 +42,7 @@ export interface IBoard {
   /**
    * 是否关注
    */
-  isUserCustomBoard?: boolean;
+  isUserCustomBoard: boolean;
   /**
    * 是否仅内网可见
    */
@@ -43,7 +50,7 @@ export interface IBoard {
   /**
    * 是否已锁定
    */
-  isLock: boolean;
+  isLocked: boolean;
   /**
    * 父版面id
    */
@@ -64,31 +71,82 @@ export interface IBoard {
   /**
    * 大字报
    */
-  bigPaper: string;
+  bigPaper: string | null;
+
+  logoUri: string | null;
+
+  privacyState: BoardPrivacyState;
+
+  viewerFilterState: ViewerFilterState;
+
+  protectionLevel: BoardProtectionLevel;
+
+  rootId: number;
+
+  lastPostContent: string | null;
+
+  allowPostOnly: BoardPosterOnlyState;
+
+  forbidRvpn: boolean;
+
+  topicAuthorPermissions: string[];
+
+  allowNotifyAllReplier: boolean;
+
+  showShareTip: boolean;
 }
 
-export interface IBoardGroup {
-  /**
-   * 版面id
-   */
+/**
+ * 旧名兼容别名；实际 wire DTO 为 {@link BoardInfo}。
+ */
+export type IBoard = BoardInfo;
+
+export interface BoardSimpleInfo {
   id: number;
-  /**
-   * 主管
-   */
-  masters: string[];
-  /**
-   * 版面名称
-   */
   name: string;
-  /**
-   * 排序
-   */
-  order: number;
-  /**
-   * 子版面
-   */
-  boards: IBoard[];
+  boardMasters: string[];
+  topicCount: number;
+  postCount: number;
+  todayCount: number;
+  description: string | null;
+  anonymousState: AnonymousState;
+  showShareTip: boolean;
+  canVote: boolean;
 }
+
+export interface BoardCategoryInfo {
+  id: number;
+  name: string;
+  order: number;
+  masters: string[];
+  boards: BoardSimpleInfo[];
+}
+
+export interface BoardTagInfo {
+  layer: number;
+  tags: Array<{ id: number; name: string }>;
+}
+
+export interface BoardTagInfoV2Item {
+  id: number;
+  name: string;
+  subTags: BoardTagInfoV2Item[];
+}
+
+export interface BoardTagInfoV2 {
+  layers: number;
+  tags: BoardTagInfoV2Item[];
+}
+
+export interface BoardStopPostUserInfo {
+  userId: number;
+  userName: string | null;
+  expiredTime: string;
+  days: number;
+  operatorUserName: string;
+}
+
+export type IBoardGroup = BoardCategoryInfo;
 
 export interface IBoardMasterTitle {
   /**

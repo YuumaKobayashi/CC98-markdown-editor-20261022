@@ -48,8 +48,8 @@ export function EditorTitleInput({
     const loadSelectedTags = async () => {
       let tag1Name = "";
       let tag2Name = "";
-      if (tag1 !== 0) tag1Name = await getTagNamebyId(tag1);
-      if (tag2 !== 0) tag2Name = await getTagNamebyId(tag2);
+      if (tag1 !== 0) tag1Name = (await getTagNamebyId(tag1)) as string;
+      if (tag2 !== 0) tag2Name = (await getTagNamebyId(tag2)) as string;
 
       setCurrent((state) => ({
         ...state,

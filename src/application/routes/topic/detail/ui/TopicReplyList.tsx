@@ -3,13 +3,18 @@ import { useEffect, useState } from "react";
 import { Spin } from "antd";
 import $ from "jquery";
 
-import { isMaster } from "@modules/board";
-import { FloorSize, type PostContentType } from "@modules/post";
+import { isMaster, type BoardInfo } from "@modules/board";
+import {
+  FloorSize,
+  type PostContentType,
+  type PostViewModel,
+} from "@modules/post";
 import {
   getCurUserTopicContent,
   getHotReplyContent,
   getTopicContent,
   getTraceTopics,
+  type TopicInfo,
 } from "@modules/topic";
 import { getMyInfo } from "@modules/session";
 import { queryWealth } from "@modules/wealth";
@@ -24,14 +29,14 @@ import styles from "./TopicReplyList.module.scss";
 export { FloorSize } from "@modules/post";
 
 export interface TopicReplyListProps {
-  topicId: any;
-  page: any;
-  topicInfo: any;
-  boardInfo: any;
+  topicId: number | string;
+  page: number | string;
+  topicInfo: TopicInfo;
+  boardInfo: BoardInfo;
   quote: (...args: any[]) => void;
-  isTrace: any;
-  isHot: any;
-  postId: any;
+  isTrace: boolean;
+  isHot: boolean;
+  postId: number | null;
 }
 
 export function TopicReplyList(props: TopicReplyListProps) {
@@ -49,23 +54,24 @@ export function TopicReplyList(props: TopicReplyListProps) {
   const [maxWealth, setMaxWealth] = useState(20000);
   const [deductedWealth, setDeductedWealth] = useState(0);
   const [inWaiting, setInWaiting] = useState(true);
-  const [contents, setContents] = useState<any[]>([]);
+  const [contents, setContents] = useState<PostViewModel[]>([]);
   const [postManagementVisible, setPostManagementVisible] = useState(false);
   const [ratingVisible, setRatingVisible] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<any>({});
+  const [selectedItem, setSelectedItem] = useState<PostViewModel | null>(null);
 
   useEffect(() => {
     const loadReplies = async () => {
-      const currentPage = page || 1;
+      const currentPage = Number(page) || 1;
+      const currentTopicId = Number(topicId);
       let realContents;
       if (isHot) {
-        realContents = await getHotReplyContent(topicId);
+        realContents = await getHotReplyContent(currentTopicId);
         if (!realContents) {
           setInWaiting(false);
           setContents([]);
         }
       } else if (!isTrace) {
-        realContents = await getTopicContent(topicId, currentPage);
+        realContents = await getTopicContent(currentTopicId, currentPage);
         if (!realContents) {
           setInWaiting(false);
           setContents([]);
@@ -86,7 +92,7 @@ export function TopicReplyList(props: TopicReplyListProps) {
       setDeductedWealth(data.rewardTotalValue);
       setBoardName(data.boardName);
       setInWaiting(false);
-      setContents(realContents);
+      setContents(realContents ?? []);
     };
 
     setInWaiting(true);
@@ -117,14 +123,19 @@ export function TopicReplyList(props: TopicReplyListProps) {
   });
 
   const update = async () => {
-    const currentPage = page || 1;
+    const currentPage = Number(page) || 1;
+    const currentTopicId = Number(topicId);
     let realContents;
     if (isHot) {
-      realContents = await getHotReplyContent(topicId);
+      realContents = await getHotReplyContent(currentTopicId);
     } else if (isTrace) {
-      realContents = await getCurUserTopicContent(topicId, currentPage, postId);
+      realContents = await getCurUserTopicContent(
+        currentTopicId,
+        currentPage,
+        postId,
+      );
     } else {
-      realContents = await getTopicContent(topicId, currentPage);
+      realContents = await getTopicContent(currentTopicId, currentPage);
     }
 
     let data = {
@@ -138,10 +149,10 @@ export function TopicReplyList(props: TopicReplyListProps) {
     setMaxWealth(data.rewardMaxValue);
     setDeductedWealth(data.rewardTotalValue);
     setBoardName(data.boardName);
-    setContents(realContents);
+    setContents(realContents ?? []);
   };
 
-  const renderReply = (item: any) => {
+  const renderReply = (item: PostViewModel) => {
     const id = isTrace ? item.floor : item.floor % 10;
     let replyId = id.toString();
     const likeInfo = {

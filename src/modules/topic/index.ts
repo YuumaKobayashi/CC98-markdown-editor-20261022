@@ -19,11 +19,13 @@ export {
   TopicBestState,
   TopicContentType,
   TopicSortMode,
+  TopicSpecialStyle,
   TopicState,
   TopicTopState,
   TopicType,
 } from "./model/enums";
 export type {
+  BoardBestSaveTopicsInfo,
   FocusTopic,
   IBasicTopic,
   IHotTopic,
@@ -31,7 +33,14 @@ export type {
   ITagGroup,
   ITopic,
   MediaTopicContent,
+  LotteryTopicDetail,
   RandomTopic,
   RecommendedTopic,
+  RecommendedTopicInfo,
+  SearchedTopicInfo,
+  TagTopicsInfo,
+  TopicBasicInfo,
+  TopicHighlightInfo,
+  TopicInfo,
   UserRecentTopic,
 } from "./model/types";

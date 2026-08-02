@@ -13,7 +13,8 @@ import {
   getBoardTagV2,
   isMaster,
 } from "@modules/board";
-import { PostContentType } from "@modules/post";
+import type { BoardInfo } from "@modules/board";
+import { PostContentType, type PostInfo } from "@modules/post";
 import {
   getTagIdbyName,
   getTagNamebyId,
@@ -182,7 +183,7 @@ export function EditorPage(): React.ReactElement {
         case "postTopic":
         case "postVoteTopic": {
           const response = await getEditorBoard(id, token);
-          const data = await response.json();
+          const data = (await response.json()) as BoardInfo;
           const tagsV2 = await getBoardTagV2(id);
           updateState({
             boardName: data.name,
@@ -198,7 +199,7 @@ export function EditorPage(): React.ReactElement {
           if (response.status === 403) {
             updateState({ fetchState: "not allowed" });
           }
-          const data = await response.json();
+          const data = (await response.json()) as PostInfo;
           const topicInfo = await getTopicInfo(data.topicId);
           data.title = topicInfo.title;
 
@@ -214,7 +215,7 @@ export function EditorPage(): React.ReactElement {
           console.log("cache after saving = " + cache);
 
           response = await getEditorBoard(data.boardId, token);
-          const masters = (await response.json()).boardMasters;
+          const masters = ((await response.json()) as BoardInfo).boardMasters;
           const myInfo = getMyInfo();
           if (
             myInfo &&

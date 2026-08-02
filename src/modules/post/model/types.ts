@@ -1,6 +1,12 @@
-import type { LikeState, PostContentType, PostState } from "./enums";
+import type {
+  LikeState,
+  PostAwardType,
+  PostContentType,
+  PostState,
+} from "./enums";
+import type { IUser } from "@modules/user";
 
-export interface IAward {
+export interface PostAward {
   /**
    * 操作内容
    */
@@ -12,20 +18,26 @@ export interface IAward {
   /**
    * 操作理由
    */
-  reason: string;
+  reason: string | null;
   /**
    * 时间
    */
-  time: Date;
+  time: string;
   /**
    * 类型
    */
-  type: number;
+  type: PostAwardType;
   /**
    * TODO:
    */
   id: number;
+
+  postId: number;
+
+  deleted: boolean;
 }
+
+export type IAward = PostAward;
 
 export type ILikeState = LikeState;
 
@@ -44,14 +56,12 @@ export interface ILike {
   likeState: ILikeState;
 }
 
-export interface IPost {
-  allowedViewers: any;
-
-  awardInfo: any;
+export interface PostInfo {
+  allowedViewers: string[] | null;
   /**
    * 风评
    */
-  awards: IAward[];
+  awards: PostAward[];
   /**
    * 帖子内容
    */
@@ -81,7 +91,6 @@ export interface IPost {
    */
   isAnonymous: boolean;
 
-  isBest: boolean;
   /**
    * 是否被删除
    */
@@ -93,11 +102,11 @@ export interface IPost {
   /**
    * 最后更新作者
    */
-  lastUpdateAuthor: any;
+  lastUpdateAuthor: string | null;
   /**
    * 最后更新时间
    */
-  lastUpdateTime: any;
+  lastUpdateTime: string | null;
   /**
    * 赞数量
    */
@@ -110,11 +119,6 @@ export interface IPost {
    * 赞/踩状态
    */
   likeState: ILikeState;
-  /**
-   * 总楼层数
-   */
-  length: number;
-
   parentId: number;
 
   state: PostState;
@@ -125,7 +129,7 @@ export interface IPost {
   /**
    * 帖子标题
    */
-  title: string;
+  title: string | null;
   /**
    * 帖子的 ID
    */
@@ -137,12 +141,57 @@ export interface IPost {
   /**
    * 用户 ID
    */
-  userId: number;
+  userId: number | null;
   /**
    * 用户名
    */
-  userName: string;
+  userName: string | null;
+
+  /**
+   * 当前用户在特定用户追踪结果中的回帖数。
+   */
+  count: number;
+
+  /**
+   * 该发言是否由当前用户发布。
+   */
+  isMe: boolean;
 }
+
+/**
+ * 旧名兼容别名；实际 wire DTO 为 {@link PostInfo}。
+ */
+export type IPost = PostInfo;
+
+export interface PostBasicInfo {
+  id: number;
+  floor: number;
+  userId: number;
+  userName: string;
+  isDeleted: boolean;
+  boardId: number;
+}
+
+export type SpecificUserPostInfo = PostInfo;
+
+export interface AnonymousPostUserInfo {
+  name: string;
+  portraitUrl: string;
+  id: null;
+  privilege: string;
+  popularity: number;
+  signatureCode: string | null;
+  postCount: number;
+  fanCount?: number;
+}
+
+/**
+ * topic service 在 PostInfo wire DTO 上追加用户与兼容 postId 后的渲染模型。
+ */
+export type PostViewModel = PostInfo & {
+  postId?: number;
+  userInfo: IUser | AnonymousPostUserInfo;
+};
 
 /**
  * 表示用户最近帖子

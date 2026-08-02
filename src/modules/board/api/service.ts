@@ -8,7 +8,13 @@ import {
 import { getMyInfo } from "@modules/session";
 import { getToken, formAuthorizeHeader } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
-import type { UserFavoritesBoardInfo } from "../model/types";
+import type {
+  BoardCategoryInfo,
+  BoardInfo,
+  BoardSimpleInfo,
+  BoardStopPostUserInfo,
+  BoardTagInfoV2,
+} from "../model/types";
 
 /*
  * 根据boardId返回boardName
@@ -35,7 +41,7 @@ export async function getBoardName(boardId: number) {
   const url = `/board/${boardId}`;
   try {
     let res = await cc98Fetch(url, { headers });
-    let data = await res.json();
+    const data = (await res.json()) as BoardInfo;
     let boardName = data.name;
     return boardName;
   } catch (e) {
@@ -66,17 +72,17 @@ export async function getSearchBoard(word: string) {
                 throwLegacyError('ServerError');
                 return null;
         }*/
-    const data = await response.json();
+    const data = (await response.json()) as BoardSimpleInfo[];
     return data;
   }
 }
 
 export async function getBoards() {
-  const boards = readBoardsInfoCache();
+  const boards = readBoardsInfoCache<BoardCategoryInfo[]>();
   if (!boards) {
     const url = "/board/all";
     const response = await cc98Fetch(url);
-    const data = await response.json();
+    const data = (await response.json()) as BoardCategoryInfo[];
     writeBoardsInfoCache(data);
     return data;
   } else {
@@ -90,7 +96,7 @@ export async function getBoards() {
  */
 export async function getCurrentUserFavoriteBoards(
   boardIds: readonly number[],
-): Promise<UserFavoritesBoardInfo[]> {
+): Promise<BoardInfo[]> {
   if (boardIds.length === 0) {
     return [];
   }
@@ -104,7 +110,7 @@ export async function getCurrentUserFavoriteBoards(
     throw new Error(response.statusText);
   }
 
-  return await response.json();
+  return (await response.json()) as BoardInfo[];
 }
 
 export async function getBoardId(boardName: string) {
@@ -132,7 +138,7 @@ export async function getBoardInfo(boardId) {
     case 500:
       return "server error";
   }
-  const data = await response.json();
+  const data = (await response.json()) as BoardInfo;
   if (data.canEntry === false) {
     return "unauthorized";
   }
@@ -166,7 +172,7 @@ export async function getBoardTagV2(boardId) {
   const headers = await formAuthorizeHeader();
   const url = `/board/${boardId}/tag-v2`;
   const response = await cc98Fetch(url, { headers });
-  const data = await response.json();
+  const data = (await response.json()) as BoardTagInfoV2;
   return data;
 }
 
@@ -175,5 +181,5 @@ export async function getTpUsers(boardId, from, size) {
   const headers = await formAuthorizeHeader();
   headers.append("Content-Type", "application/json");
   const response = await cc98Fetch(url, { headers });
-  return await response.json();
+  return (await response.json()) as BoardStopPostUserInfo[];
 }

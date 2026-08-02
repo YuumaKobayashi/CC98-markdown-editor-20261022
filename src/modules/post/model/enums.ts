@@ -23,3 +23,10 @@ export enum RatingType {
   Add = 1,
   Subtract = 2,
 }
+
+export enum PostAwardType {
+  OldVersion = 0,
+  Bonus = 1,
+  Punishment = 2,
+  UserRating = 3,
+}

@@ -7,10 +7,19 @@ export interface BoardEvent {
   id: number;
   topicId: number;
   boardId: number;
-  targetUserName: string;
-  operatorUserName: string;
+  targetUserName: string | null;
+  operatorUserName: string | null;
   content: string;
-  time: Date;
+  time: string;
   ip: string;
   isDeleted: boolean;
+  isAnonymous: boolean;
+}
+
+export interface BoardEventInfo {
+  boardId: number;
+  count: number;
+  from: number;
+  size: number;
+  boardEvents: BoardEvent[];
 }

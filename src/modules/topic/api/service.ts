@@ -1,4 +1,19 @@
-import type { UserRecentTopic } from "../model/types";
+import type {
+  FocusTopic,
+  ITag,
+  RecommendedTopic,
+  RecommendedTopicInfo,
+  SearchedTopicInfo,
+  TopicBasicInfo,
+  TopicInfo,
+  UserRecentTopic,
+} from "../model/types";
+import type {
+  PostBasicInfo,
+  PostInfo,
+  PostViewModel,
+  SpecificUserPostInfo,
+} from "@modules/post";
 import { TopicSortMode } from "../model/enums";
 import { getUserInfo } from "@modules/user";
 import { getUsersInfo } from "@modules/user";
@@ -17,7 +32,7 @@ export async function getTopic(topicid: number) {
     const response = await cc98Fetch(`/Topic/${topicid}/post?from=0&size=1`, {
       headers,
     });
-    const data = await response.json();
+    const data = (await response.json()) as PostInfo[];
     let topicMessage = null;
     if (data[0].isAnonymous != true) {
       const userMesJson = await getUserInfo(data[0].userId);
@@ -51,8 +66,8 @@ export async function getTopicContent(topicid: number, curPage: number) {
       `/Topic/${topicid}/post?from=${startPage}&size=10`,
       { headers }
     );
-    const content = await topic.json();
-    const post = [];
+    const content = (await topic.json()) as PostInfo[];
+    const post: PostViewModel[] = [];
     let topicNumberInPage = content.length;
     //收集id
     const usersId = [];
@@ -126,8 +141,8 @@ export async function getHotReplyContent(topicid: number) {
   try {
     const headers = await formAuthorizeHeader();
     const response = await cc98Fetch(`/Topic/${topicid}/hot-post`, { headers });
-    const content = await response.json();
-    const post = [];
+    const content = (await response.json()) as PostInfo[];
+    const post: PostViewModel[] = [];
     let topicNumberInPage: number = content.length;
     for (let i = 0; i < topicNumberInPage; i++) {
       if (content[i].isAnonymous != true) {
@@ -177,13 +192,14 @@ export async function getCurUserTopic(topicid: number, userId: number) {
       `/post/topic/user?topicid=${topicid}&userid=${userId}&from=0&size=1`,
       { headers }
     );
-    const data = await response.json();
+    const data = (await response.json()) as SpecificUserPostInfo[];
     const userMesResponse = await cc98Fetch(
       `/user/name/${encodeURIComponent(data[0].userName)}`
     );
     const userMesJson = await userMesResponse.json();
-    data[0].userInfo = userMesJson;
-    return data[0];
+    const post = data[0] as unknown as PostViewModel;
+    post.userInfo = userMesJson;
+    return post;
   } catch (e) {
     //throwLegacyError('Disconnected');
   }
@@ -207,12 +223,12 @@ export async function getCurUserTopicContent(
       `/Post/topic/user?topicid=${topicid}&userId=${userId}&from=${start}&size=10`,
       { headers }
     );
-    const content = await topic.json();
+    const content = (await topic.json()) as SpecificUserPostInfo[];
 
-    let post = [];
+    const post: PostViewModel[] = [];
     let topicNumberInPage: number = content.length;
     const replyCount = content[0].count;
-    const userMesJson = await getUserInfo(content[0].userId);
+    const userMesJson = await getUserInfo(content[0].userId!);
     for (let i = 0; i < topicNumberInPage; i++) {
       if (content[i].isAnonymous != true) {
         post[i] = {
@@ -222,7 +238,7 @@ export async function getCurUserTopicContent(
         };
       } else {
         let purl = "/static/images/_心灵之约.png";
-        const anonymousUserName = `匿名${content[i].userName.toUpperCase()}`;
+        const anonymousUserName = `匿名${content[i].userName!.toUpperCase()}`;
         const userMesJson = {
           name: anonymousUserName,
           portraitUrl: purl,
@@ -271,7 +287,8 @@ export async function getRandomRecommendedTopic(size: number) {
       case 500:
       //throwLegacyError('ServerError');
     }
-    let newTopic = await response.json();
+    const rawTopics = (await response.json()) as RecommendedTopicInfo[];
+    let newTopic = rawTopics as unknown as RecommendedTopic[];
     //console.log("获取到的数据", newTopic);
     let aTopic = [];
     let aTopicId = [];
@@ -282,24 +299,24 @@ export async function getRandomRecommendedTopic(size: number) {
       item.topic.lastPostTime = transerTimeToYearMonthDay(item.topic.lastPostTime);
 
       //阅读数转换
-      if (item.topic.hitCount > 10000) {
-        if (item.topic.hitCount > 100000) {
-          let index = parseInt(`${item.topic.hitCount / 10000}`);
+      if (Number(item.topic.hitCount) > 10000) {
+        if (Number(item.topic.hitCount) > 100000) {
+          let index = parseInt(`${Number(item.topic.hitCount) / 10000}`);
           item.hitCount = `${index}万`;
         } else {
-          let index = parseInt(`${item.topic.hitCount / 1000}`) / 10;
+          let index = parseInt(`${Number(item.topic.hitCount) / 1000}`) / 10;
           item.topic.hitCount = `${index}万`;
         }
       }
       //计算总楼层
-      item.topic.floorCount = item.topic.replyCount + 1;
+      item.topic.floorCount = Number(item.topic.replyCount) + 1;
       //回复数转换
-      if (item.topic.replyCount > 10000) {
-        if (item.topic.replyCount > 100000) {
-          let index = parseInt(`${item.topic.replyCount / 10000}`);
+      if (Number(item.topic.replyCount) > 10000) {
+        if (Number(item.topic.replyCount) > 100000) {
+          let index = parseInt(`${Number(item.topic.replyCount) / 10000}`);
           item.topic.replyCount = `${index}万`;
         } else {
-          let index = parseInt(`${item.topic.replyCount / 1000}`) / 10;
+          let index = parseInt(`${Number(item.topic.replyCount) / 1000}`) / 10;
           item.topic.replyCount = `${index}万`;
         }
       }
@@ -392,7 +409,8 @@ export async function getAllNewTopic(from: number, mediaOnly: boolean = false) {
       case 500:
       //throwLegacyError('ServerError');
     }
-    let newTopic = await response.json();
+    const rawTopics = (await response.json()) as TopicInfo[];
+    let newTopic = rawTopics as unknown as FocusTopic[];
     //console.log("获取到的数据", newTopic);
     let aTopic = [];
     let aTopicId = [];
@@ -403,24 +421,24 @@ export async function getAllNewTopic(from: number, mediaOnly: boolean = false) {
       item.lastPostTime = transerRecentTime(item.lastPostTime, false);
 
       //阅读数转换
-      if (item.hitCount > 10000) {
-        if (item.hitCount > 100000) {
-          let index = parseInt(`${item.hitCount / 10000}`);
+      if (Number(item.hitCount) > 10000) {
+        if (Number(item.hitCount) > 100000) {
+          let index = parseInt(`${Number(item.hitCount) / 10000}`);
           item.hitCount = `${index}万`;
         } else {
-          let index = parseInt(`${item.hitCount / 1000}`) / 10;
+          let index = parseInt(`${Number(item.hitCount) / 1000}`) / 10;
           item.hitCount = `${index}万`;
         }
       }
       //计算总楼层
-      item.floorCount = item.replyCount + 1;
+      item.floorCount = Number(item.replyCount) + 1;
       //回复数转换
-      if (item.replyCount > 10000) {
-        if (item.replyCount > 100000) {
-          let index = parseInt(`${item.replyCount / 10000}`);
+      if (Number(item.replyCount) > 10000) {
+        if (Number(item.replyCount) > 100000) {
+          let index = parseInt(`${Number(item.replyCount) / 10000}`);
           item.replyCount = `${index}万`;
         } else {
-          let index = parseInt(`${item.replyCount / 1000}`) / 10;
+          let index = parseInt(`${Number(item.replyCount) / 1000}`) / 10;
           item.replyCount = `${index}万`;
         }
       }
@@ -530,7 +548,8 @@ export async function getFocusTopic(
       case 500:
       //throwLegacyError('ServerError');
     }
-    let newTopic = await response.json();
+    const rawTopics = (await response.json()) as TopicInfo[];
+    let newTopic = rawTopics as unknown as FocusTopic[];
     let aTopic = [];
     let aTopicId = [];
     let bTopic = [];
@@ -540,24 +559,24 @@ export async function getFocusTopic(
       item.lastPostTime = transerRecentTime(item.lastPostTime);
 
       //阅读数转换
-      if (item.hitCount > 10000) {
-        if (item.hitCount > 100000) {
-          let index = parseInt(`${item.hitCount / 10000}`);
+      if (Number(item.hitCount) > 10000) {
+        if (Number(item.hitCount) > 100000) {
+          let index = parseInt(`${Number(item.hitCount) / 10000}`);
           item.hitCount = `${index}万`;
         } else {
-          let index = parseInt(`${item.hitCount / 1000}`) / 10;
+          let index = parseInt(`${Number(item.hitCount) / 1000}`) / 10;
           item.hitCount = `${index}万`;
         }
       }
       //计算总楼层
-      item.floorCount = item.replyCount + 1;
+      item.floorCount = Number(item.replyCount) + 1;
       //回复数转换
-      if (item.replyCount > 10000) {
-        if (item.replyCount > 100000) {
-          let index = parseInt(`${item.replyCount / 10000}`);
+      if (Number(item.replyCount) > 10000) {
+        if (Number(item.replyCount) > 100000) {
+          let index = parseInt(`${Number(item.replyCount) / 10000}`);
           item.replyCount = `${index}万`;
         } else {
-          let index = parseInt(`${item.replyCount / 1000}`) / 10;
+          let index = parseInt(`${Number(item.replyCount) / 1000}`) / 10;
           item.replyCount = `${index}万`;
         }
       }
@@ -612,7 +631,8 @@ export async function getCurUserTotalReplyPage(topicId, userId) {
       `/post/topic/user?topicid=${topicId}&userid=${userId}&from=0&size=1`,
       { headers }
     );
-    const replyCountJson = await replyCountResponse.json();
+    const replyCountJson =
+      (await replyCountResponse.json()) as SpecificUserPostInfo[];
     const replyCount = replyCountJson[0].count;
     return replyCount % 10 === 0
       ? replyCount / 10
@@ -629,7 +649,7 @@ export async function getTraceTopicsCount(topicId, postId) {
       `/post/topic/specific-user?topicid=${topicId}&postid=${postId}&from=0&size=1`,
       { headers }
     );
-    const data = await response.json();
+    const data = (await response.json()) as SpecificUserPostInfo[];
     return data[0].count % 10 === 0
       ? data[0].count / 10
       : (data[0].count - (data[0].count % 10)) / 10 + 1;
@@ -646,7 +666,8 @@ export async function getTraceTopics(topicId, postId, page) {
       `/post/topic/specific-user?topicid=${topicId}&postid=${postId}&from=${start}&size=10`,
       { headers }
     );
-    const data = await response.json();
+    const rawPosts = (await response.json()) as SpecificUserPostInfo[];
+    const data = rawPosts as unknown as PostViewModel[];
     if (data[0] && data[0].isAnonymous) {
       let purl = "/static/images/心灵头像.gif";
       for (let i in data) {
@@ -686,7 +707,8 @@ export async function getAnonymousTraceTopics(topicId, postId, page) {
       `/post/topic/anonymous/user?topicid=${topicId}&postid=${postId}&from=${start}&size=10`,
       { headers }
     );
-    const data = await response.json();
+    const rawPosts = (await response.json()) as SpecificUserPostInfo[];
+    const data = rawPosts as unknown as PostViewModel[];
     let purl = "/static/images/心灵头像.gif";
     const anonymousUserName = `匿名${data[0].userName.toUpperCase()}`;
     const userMesJson = {
@@ -755,7 +777,8 @@ export async function getSearchTopic(
           case 500:
           //throwLegacyError('ServerError');
         }
-        newTopic = await response.json();
+        const rawTopics = (await response.json()) as SearchedTopicInfo[];
+        newTopic = rawTopics as unknown as FocusTopic[];
       } catch (e) {
         return -1;
       }
@@ -781,7 +804,8 @@ export async function getSearchTopic(
         if (response.status === 500) {
           throwLegacyError("ServerError");
         }
-        newTopic = await response.json();
+        const rawTopics = (await response.json()) as SearchedTopicInfo[];
+        newTopic = rawTopics as unknown as FocusTopic[];
       } catch (e) {
         return -1;
       }
@@ -797,24 +821,24 @@ export async function getSearchTopic(
         item.lastPostTime = transerRecentTime(item.lastPostTime);
 
         //阅读数转换
-        if (item.hitCount > 10000) {
-          if (item.hitCount > 100000) {
-            let index = parseInt(`${item.hitCount / 10000}`);
+        if (Number(item.hitCount) > 10000) {
+          if (Number(item.hitCount) > 100000) {
+            let index = parseInt(`${Number(item.hitCount) / 10000}`);
             item.hitCount = `${index}万`;
           } else {
-            let index = parseInt(`${item.hitCount / 1000}`) / 10;
+            let index = parseInt(`${Number(item.hitCount) / 1000}`) / 10;
             item.hitCount = `${index}万`;
           }
         }
         //计算总楼层
-        item.floorCount = item.replyCount + 1;
+        item.floorCount = Number(item.replyCount) + 1;
         //回复数转换
-        if (item.replyCount > 10000) {
-          if (item.replyCount > 100000) {
-            let index = parseInt(`${item.replyCount / 10000}`);
+        if (Number(item.replyCount) > 10000) {
+          if (Number(item.replyCount) > 100000) {
+            let index = parseInt(`${Number(item.replyCount) / 10000}`);
             item.replyCount = `${index}万`;
           } else {
-            let index = parseInt(`${item.replyCount / 1000}`) / 10;
+            let index = parseInt(`${Number(item.replyCount) / 1000}`) / 10;
             item.replyCount = `${index}万`;
           }
         }
@@ -892,7 +916,7 @@ export async function getTopicInfo(topicId) {
       return null;
   }
 
-  const data = await response.json();
+  const data = (await response.json()) as TopicInfo;
   return data;
 }
 
@@ -907,7 +931,9 @@ export async function getPostInfo(postId) {
       return "server error";
   }
 
-  const data = await response.json();
+  const data = (await response.json()) as PostBasicInfo[] & {
+    canEntry?: boolean;
+  };
   if (data.canEntry === false) {
     return "unauthorized";
   }
@@ -915,8 +941,9 @@ export async function getPostInfo(postId) {
 }
 
 export async function getTagInfo() {
-  if (readTagInfoCache()) {
-    return readTagInfoCache();
+  const tagInfo = readTagInfoCache<ITag[]>();
+  if (tagInfo) {
+    return tagInfo;
   } else {
     return await getNewTagInfo();
   }
@@ -926,7 +953,7 @@ export async function getNewTagInfo() {
   const url = `/config/global/alltag`;
   const headers = await formAuthorizeHeader();
   const response = await cc98Fetch(url, { headers });
-  const data = await response.json();
+  const data = (await response.json()) as ITag[];
   writeTagInfoCache(data);
   return data;
 }
@@ -967,7 +994,7 @@ export async function getBasicPostsInfo(postIds: any[]) {
   }
   try {
     let response = await cc98Fetch(url, { headers });
-    var data = await response.json();
+    const data = (await response.json()) as PostBasicInfo[];
     return data;
   } catch (e) {
     return [];
@@ -1007,7 +1034,7 @@ export async function getBasicTopicsInfo(topicIds: any[]) {
   }
   try {
     let response = await cc98Fetch(url, { headers });
-    var data = await response.json();
+    const data = (await response.json()) as TopicBasicInfo[];
     return data;
   } catch (e) {
     return [];
@@ -1050,7 +1077,8 @@ export async function getMonthlyHotTopic(type: string) {
     //throwLegacyError('ServerError');
   }
 
-  let data = await response.json();
+  const rawTopics = (await response.json()) as TopicInfo[];
+  let data = rawTopics as unknown as FocusTopic[];
 
   let aTopic = [];
   let aTopicId = [];
@@ -1061,24 +1089,24 @@ export async function getMonthlyHotTopic(type: string) {
     item.lastPostTime = transerRecentTime(item.lastPostTime);
 
     //阅读数转换
-    if (item.hitCount > 10000) {
-      if (item.hitCount > 100000) {
-        let index = parseInt(`${item.hitCount / 10000}`);
+    if (Number(item.hitCount) > 10000) {
+      if (Number(item.hitCount) > 100000) {
+        let index = parseInt(`${Number(item.hitCount) / 10000}`);
         item.hitCount = `${index}万`;
       } else {
-        let index = parseInt(`${item.hitCount / 1000}`) / 10;
+        let index = parseInt(`${Number(item.hitCount) / 1000}`) / 10;
         item.hitCount = `${index}万`;
       }
     }
     //计算总楼层
-    item.floorCount = item.replyCount + 1;
+    item.floorCount = Number(item.replyCount) + 1;
     //回复数转换
-    if (item.replyCount > 10000) {
-      if (item.replyCount > 100000) {
-        let index = parseInt(`${item.replyCount / 10000}`);
+    if (Number(item.replyCount) > 10000) {
+      if (Number(item.replyCount) > 100000) {
+        let index = parseInt(`${Number(item.replyCount) / 10000}`);
         item.replyCount = `${index}万`;
       } else {
-        let index = parseInt(`${item.replyCount / 1000}`) / 10;
+        let index = parseInt(`${Number(item.replyCount) / 1000}`) / 10;
         item.replyCount = `${index}万`;
       }
     }
@@ -1153,7 +1181,8 @@ export async function getRandomTopic(size: number) {
       case 500:
       //throwLegacyError('ServerError');
     }
-    let newTopic = await response.json();
+    const rawTopics = (await response.json()) as TopicInfo[];
+    let newTopic = rawTopics as unknown as FocusTopic[];
     //console.log("获取到的数据", newTopic);
     let aTopic = [];
     let aTopicId = [];
@@ -1164,24 +1193,24 @@ export async function getRandomTopic(size: number) {
       item.lastPostTime = transerRecentTime(item.lastPostTime, false);
 
       //阅读数转换
-      if (item.hitCount > 10000) {
-        if (item.hitCount > 100000) {
-          let index = parseInt(`${item.hitCount / 10000}`);
+      if (Number(item.hitCount) > 10000) {
+        if (Number(item.hitCount) > 100000) {
+          let index = parseInt(`${Number(item.hitCount) / 10000}`);
           item.hitCount = `${index}万`;
         } else {
-          let index = parseInt(`${item.hitCount / 1000}`) / 10;
+          let index = parseInt(`${Number(item.hitCount) / 1000}`) / 10;
           item.hitCount = `${index}万`;
         }
       }
       //计算总楼层
-      item.floorCount = item.replyCount + 1;
+      item.floorCount = Number(item.replyCount) + 1;
       //回复数转换
-      if (item.replyCount > 10000) {
-        if (item.replyCount > 100000) {
-          let index = parseInt(`${item.replyCount / 10000}`);
+      if (Number(item.replyCount) > 10000) {
+        if (Number(item.replyCount) > 100000) {
+          let index = parseInt(`${Number(item.replyCount) / 10000}`);
           item.replyCount = `${index}万`;
         } else {
-          let index = parseInt(`${item.replyCount / 1000}`) / 10;
+          let index = parseInt(`${Number(item.replyCount) / 1000}`) / 10;
           item.replyCount = `${index}万`;
         }
       }

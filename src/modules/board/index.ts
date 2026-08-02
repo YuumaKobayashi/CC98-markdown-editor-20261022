@@ -9,8 +9,18 @@ export {
   AnonymousState,
   BoardInternalState,
   BoardPosterOnlyState,
+  BoardPrivacyState,
+  BoardProtectionLevel,
+  ViewerFilterState,
 } from "./model/enums";
 export type {
+  BoardCategoryInfo,
+  BoardInfo,
+  BoardSimpleInfo,
+  BoardStopPostUserInfo,
+  BoardTagInfo,
+  BoardTagInfoV2,
+  BoardTagInfoV2Item,
   FocusBoard,
   IBoard,
   IBoardGroup,

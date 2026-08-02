@@ -57,6 +57,11 @@ export enum TopicContentType {
   Lottery = 5,
 }
 
+export enum TopicSpecialStyle {
+  Normal = 0,
+  GrayScale = 1,
+}
+
 export enum LotteryTopicStatus {
   Waiting = 1,
   Finished = 2,

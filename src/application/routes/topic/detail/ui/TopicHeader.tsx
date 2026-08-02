@@ -40,8 +40,8 @@ export function TopicHeader(props: TopicHeaderProps) {
     const loadTagNames = async () => {
       let nextTag1Name = "";
       let nextTag2Name = "";
-      if (tag1) nextTag1Name = await getTagNamebyId(tag1);
-      if (tag2) nextTag2Name = await getTagNamebyId(tag2);
+      if (tag1) nextTag1Name = (await getTagNamebyId(tag1)) as string;
+      if (tag2) nextTag2Name = (await getTagNamebyId(tag2)) as string;
       setTag1Name(nextTag1Name);
       setTag2Name(nextTag2Name);
     };
