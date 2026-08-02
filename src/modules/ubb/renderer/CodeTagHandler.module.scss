@@ -1,0 +1,26 @@
+/*
+* UBB用
+*/
+.code {
+  ol {
+    list-style: none;
+    counter-reset: li;
+    padding: 0;
+    font-family: Consolas, Monaco;
+    overflow-x: auto;
+    white-space: pre;
+  }
+
+  li {
+    counter-increment: li;
+  }
+
+  li::before {
+    content: counter(li);
+    display: inline-flex;
+    width: 50px;
+    margin: 0 10px;
+    justify-content: center;
+    background-color: #ebebeb;
+  }
+}

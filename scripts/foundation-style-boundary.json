@@ -1,5 +1,5 @@
 {
-  "phase": "C1.7.7 final Foundation global boundary closure",
+  "phase": "Z2 UBB style closure with final Foundation boundary",
   "siteEntrypoint": {
     "path": "src/foundation/styles/Site.scss",
     "orderedImports": [
@@ -46,7 +46,11 @@
         { "name": "color-urlVisited", "value": "#741b47" }
       ],
       "sassImporters": [
-        "Components/UbbContainer.scss",
+        "src/modules/ubb/renderer/BiliTextHandler.module.scss",
+        "src/modules/ubb/renderer/URLTagHandler.module.scss",
+        "src/modules/ubb/renderer/UrlTextHandler.module.scss",
+        "src/modules/ubb/renderer/UrlTextHandler2.module.scss",
+        "src/modules/ubb/renderer/UserTagHandler.module.scss",
         "src/application/routes/message-center/layout/MessageLayout.module.scss",
         "src/application/routes/message-center/mentions/ui/MessageMentionsPage.module.scss",
         "src/application/routes/message-center/private-messages/ui/PrivateConversationWindow.module.scss",
@@ -163,18 +167,6 @@
     }
   ],
   "legacyGlobalStyles": [
-    {
-      "path": "Components/UbbContainer.scss",
-      "importers": ["Components/UbbContainer.tsx"],
-      "owner": "Legacy UBB renderer",
-      "removeWhen": "Z2 moves the renderer and its generated-class contract."
-    },
-    {
-      "path": "Components/UbbEditor/components/UbbEditor.scss",
-      "importers": ["Components/UbbEditor/components/index.tsx"],
-      "owner": "Legacy UBB editor component family",
-      "removeWhen": "Z2 moves the editor family and assigns final module styles."
-    },
     {
       "path": "Pages/AnnualReview/AnnualReview.scss",
       "importers": ["Pages/AnnualReview/index.tsx", "Pages/AnnualReviewV2/index.tsx"],

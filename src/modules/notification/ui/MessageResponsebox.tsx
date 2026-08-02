@@ -2,7 +2,7 @@
 // for more information see the following page on the TypeScript wiki:
 // https://github.com/Microsoft/TypeScript/wiki/JSX
 import * as React from "react";
-import { UbbCompatiblityMode } from "@legacy/Ubb/UbbCodeExtension";
+import { UbbCompatiblityMode } from "@modules/ubb";
 import type { MessageResponseProps } from "../model/types";
 import { MessageResponseItem } from "./MessageResponseItem";
 

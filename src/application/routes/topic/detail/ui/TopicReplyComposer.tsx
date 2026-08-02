@@ -1,8 +1,7 @@
 import * as React from "react";
 import $ from "jquery";
-import { UbbContainer } from "@legacy/Components/UbbContainer";
+import { RightTagHandler, UbbContainer, UbbEditor } from "@modules/ubb";
 import { Constants } from "@legacy/Components/Constant";
-import { UbbEditor } from "@legacy/Components/UbbEditor";
 import {
   NoticeMessage,
   SendTopicNoticeMessage,
@@ -12,7 +11,6 @@ import { Button, Modal } from "antd";
 import moment from "moment";
 import { MarkdownEditor } from "@foundation/integrations/markdown-editor";
 import * as Showdown from "showdown";
-import { RightTagHandler } from "@legacy/Ubb/RightTagHandler";
 import styles from "./TopicReplyComposer.module.scss";
 import { isMaster } from "@modules/board";
 import { getMyInfo } from "@modules/session";

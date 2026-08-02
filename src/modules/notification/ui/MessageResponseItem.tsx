@@ -1,7 +1,7 @@
 import * as React from "react";
 import moment from "moment";
 
-import { UbbContainer } from "@legacy/Components/UbbContainer";
+import { UbbContainer } from "@modules/ubb";
 
 import type { MessageResponseProps } from "../model/types";
 import styles from "./MessageResponseItem.module.scss";

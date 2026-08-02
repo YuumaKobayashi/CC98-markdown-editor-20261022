@@ -3,8 +3,7 @@
 // https://github.com/Microsoft/TypeScript/wiki/JSX
 import * as React from "react";
 import moment from "moment";
-import { UbbContainer } from "@legacy/Components/UbbContainer";
-import { UbbCompatiblityMode } from "@legacy/Ubb/UbbCodeExtension";
+import { UbbCompatiblityMode, UbbContainer } from "@modules/ubb";
 import type { MessageSystemProps } from "../model/types";
 import styles from "./MessageSystembox.module.scss";
 

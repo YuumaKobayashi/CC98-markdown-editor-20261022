@@ -8,8 +8,7 @@ import {
   isFollowThisBoard,
   unfollowBoard,
 } from "@modules/follow";
-import { UbbContainer } from "@legacy/Components/UbbContainer";
-import { UbbCodeOptions } from "@legacy/Ubb/UbbCodeExtension";
+import { UbbCodeOptions, UbbContainer } from "@modules/ubb";
 import styles from "./BoardAnnouncement.module.scss";
 import { editBigPaper } from "../api/service";
 

@@ -6,9 +6,8 @@ import * as React from "react";
 import { Tag } from "antd";
 import { Link } from "react-router";
 
-import { UbbContainer } from "@legacy/Components/UbbContainer";
+import { UbbCodeOptions, UbbContainer } from "@modules/ubb";
 import type { UserInfo } from "../model/types";
-import { UbbCodeOptions } from "@legacy/Ubb/Core";
 import { isoTime2LocalTime } from "@foundation/lib/time-zone";
 import styles from "./UserProfile.module.scss";
 

@@ -1,6 +1,6 @@
 {
-  "phase": "C1.7.7 final Foundation global boundary closure",
-  "removalPhase": "Z2 UBB migration and Z4 Annual Review removal",
+  "phase": "Z2 UBB module closure and Z4 Annual Review freeze",
+  "removalPhase": "Z4 Annual Review removal",
   "frozenInactiveImports": [],
   "frozenLegacyStyles": [
     {
@@ -11,22 +11,6 @@
       ],
       "reason": "Annual Review V1 and V2 are unreachable legacy pages that retain one explicit shared stylesheet outside the active Site.scss bundle.",
       "removeWhen": "Z4 removes both Annual Review page trees and their remaining dedicated assets."
-    },
-    {
-      "path": "Components/UbbContainer.scss",
-      "importers": [
-        "Components/UbbContainer.tsx"
-      ],
-      "reason": "The active legacy UBB renderer owns fixed global classes that are also queried by Topic behavior and cannot become a CSS Module before the Z2 implementation move.",
-      "removeWhen": "Z2 moves the UBB renderer and its fixed generated-class contract to the final module owner."
-    },
-    {
-      "path": "Components/UbbEditor/components/UbbEditor.scss",
-      "importers": [
-        "Components/UbbEditor/components/index.tsx"
-      ],
-      "reason": "The active legacy UBB editor component family shares generated class names across child files and remains a direct global owner until Z2.",
-      "removeWhen": "Z2 moves the UBB editor component family and assigns its final module style contract."
     }
   ]
 }

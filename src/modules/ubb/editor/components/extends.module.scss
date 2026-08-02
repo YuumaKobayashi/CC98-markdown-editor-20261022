@@ -1,0 +1,42 @@
+.extend {
+    transition-duration: .5s;
+    overflow: hidden;
+    border-bottom: 1px solid rgb(204,204,204);
+
+    button, label {
+        cursor: pointer;
+    }
+
+    form {
+        height: 2rem;
+        display: flex;
+        align-items: center;
+    }
+
+    input {
+        margin: 0 2rem;
+    }
+
+    span {
+        display: flex;
+        align-items: center;
+        color: gray;
+    }
+}
+
+.extendMain {
+    width: 25rem;
+}
+
+.extendSub {
+    width: 13rem;
+}
+
+.buttonIcon {
+    width: 2rem;
+    height: 2rem;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}

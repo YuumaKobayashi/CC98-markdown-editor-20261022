@@ -1,0 +1,48 @@
+//ubb解析图片默认不显示的样式
+//类似bootstrap4的"btn btn-outline-primary"
+.hiddenImage {
+  display: block;
+  color: var(--cc98-theme-color-main);
+  width: 7rem;
+  background-color: transparent;
+  text-align: center;
+  //vertical-align: middle; //设置元素的垂直对齐方式
+  border: 1px solid var(--cc98-theme-color-main);
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  border-radius: .25rem;
+  line-height: normal;
+  white-space: nowrap;
+  margin-top: 1rem;
+  font-family: 微软雅黑;
+}
+
+.hiddenImage:hover {
+  background-color: var(--cc98-theme-color-main);
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+}
+
+//
+.visibleImage {
+  width: 0;
+  height: 0;
+}
+
+//ubb解析图片时的toolbox
+.toolbox {
+  display: flex;
+  flex-direction: row;
+  background-color: rgba(0, 0, 0, 0.618);
+  position: absolute;
+  z-index: 50;
+
+  button {
+    background: none;
+    height: 32px;
+    width: 32px;
+    font-size: 20px;
+    color: white;
+    margin: 8px;
+  }
+}

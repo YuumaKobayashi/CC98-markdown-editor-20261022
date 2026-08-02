@@ -1,7 +1,7 @@
 {
-  "phase": "C1.7.7 final Foundation global boundary closure",
-  "sourceRoots": ["src", "Components", "Pages", "Ubb", "Utility"],
-  "styleRoots": ["src", "Components", "Pages", "Ubb", "Utility", "Styles"],
+  "phase": "Z2 UBB relocation with final third-party boundary",
+  "sourceRoots": ["src", "Components", "Pages", "Utility"],
+  "styleRoots": ["src", "Components", "Pages", "Utility", "Styles"],
   "importContracts": [
     {
       "package": "antd",
@@ -25,7 +25,7 @@
       "package": "react-router-dom",
       "edgeCount": 3,
       "consumerCount": 3,
-      "fingerprint": "a1a8203560f2ba151b754e5dd7bf54d31bac7d08c3beb04a1b021a8cebd17bb8"
+      "fingerprint": "bf09625ea1e3c471df2aed3dd6a0e53bb2b16cfb877dfe5bc144bbfab7ec7fb2"
     },
     {
       "package": "react-markdown-editor-lite",
@@ -154,15 +154,15 @@
       ]
     },
     {
-      "path": "Components/UbbEditor/components/buttons.tsx",
-      "contains": ["ubb-button-color cc98-vendor-spectrum-color-picker"]
+      "path": "src/modules/ubb/editor/components/buttons.tsx",
+      "contains": ["cc98-vendor-spectrum-color-picker", "styles.colorPicker"]
     },
     {
-      "path": "Components/UbbEditor/utility.ts",
+      "path": "src/modules/ubb/editor/utility.ts",
       "contains": [
         "appendTo: 'parent'",
         "containerClassName: 'cc98-vendor-spectrum-container'",
-        "replacerClassName: 'ubb-color-picker'",
+        "replacerClassName,",
         "hideAfterPaletteSelect: true"
       ]
     },

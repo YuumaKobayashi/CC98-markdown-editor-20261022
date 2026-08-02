@@ -3,9 +3,8 @@ import { Tag } from "antd";
 import { Link } from "react-router";
 
 import { followUser, unfollowUser } from "@modules/follow";
-import { UbbContainer } from "@legacy/Components/UbbContainer";
+import { UbbCodeOptions, UbbContainer } from "@modules/ubb";
 import type { UserInfo } from "@modules/user";
-import { UbbCodeOptions } from "@legacy/Ubb/Core";
 import { isoTime2LocalTime } from "@legacy/Utility/timeZoneUtility";
 import styles from "./UserProfileDetails.module.scss";
 

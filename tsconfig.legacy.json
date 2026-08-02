@@ -23,10 +23,6 @@
     "IndexedDB/**/*.tsx",
     "Pages/**/*.ts",
     "Pages/**/*.tsx",
-    "States/**/*.ts",
-    "States/**/*.tsx",
-    "Ubb/**/*.ts",
-    "Ubb/**/*.tsx",
     "Utility/**/*.ts",
     "Utility/**/*.tsx"
   ],

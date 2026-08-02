@@ -2,8 +2,7 @@ import * as React from "react";
 import { useCallback, useEffect, useState } from "react";
 import { Card, Tag } from "antd";
 
-import { UbbContainer } from "@legacy/Components/UbbContainer";
-import { UbbCodeOptions } from "@legacy/Ubb/UbbCodeExtension";
+import { UbbCodeOptions, UbbContainer } from "@modules/ubb";
 import { atUserMdUrl, atUserUbbUrl } from "@foundation/lib/text";
 import { getTopicVote } from "../api/service";
 import { TopicVote, type voteInfo } from "./TopicVote";

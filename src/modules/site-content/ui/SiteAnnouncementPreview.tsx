@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { UbbContainer } from "@legacy/Components/UbbContainer";
+import { UbbContainer } from "@modules/ubb";
 import styles from "./SiteAnnouncementPreview.module.scss";
 
 export interface SiteAnnouncementPreviewProps {

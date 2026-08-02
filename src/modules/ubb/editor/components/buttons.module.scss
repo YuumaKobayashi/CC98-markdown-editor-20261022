@@ -1,0 +1,40 @@
+.buttons {
+    display: flex;
+    border-bottom: 1px solid rgb(204,204,204);
+    padding-left: .5rem;
+    min-height: 2rem;
+}
+
+.button {
+    width: 2rem;
+    height: 2rem;
+    margin: 0 .5rem 0 0;
+    cursor: pointer;
+}
+
+.buttonIcon {
+    width: 2rem;
+    height: 2rem;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.buttonColor, .buttonFontSize {
+    position: relative;
+
+    .colorPicker, select {
+        width: 2rem;
+        height: 2rem;
+        box-sizing: border-box;
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 0;
+    }
+}
+
+.color {
+    display: none;
+}

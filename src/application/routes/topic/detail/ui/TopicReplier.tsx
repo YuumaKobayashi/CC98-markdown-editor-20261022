@@ -123,6 +123,7 @@ export function TopicReplier({
                 />
               </a>
             </div>
+            {/* <>TODO:修复这里的问题</> */}
             <div className="photoFrame">
               <img src={group.imageUrl} style={group.style} />
             </div>

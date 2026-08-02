@@ -54,6 +54,7 @@ export function TopicHeader(props: TopicHeaderProps) {
   };
 
   const showAllImg = () => {
+    //TODO: 修复这个问题
     const buttons = document.getElementsByClassName("hiddenImage");
     for (const buttonId in buttons) {
       if (Object.prototype.hasOwnProperty.call(buttons, buttonId)) {
@@ -63,6 +64,7 @@ export function TopicHeader(props: TopicHeaderProps) {
     toggleImageState();
   };
 
+  //TODO: 修复这个问题
   const hideAllImg = () => {
     const buttons = document.getElementsByClassName("visibleImage");
     for (const buttonId in buttons) {

@@ -1,0 +1,18 @@
+/**
+*主要是首页和顶部条的样式
+*也有发帖页的样式（因为发帖根本没有设计，当时做的时候临时糊的）
+*可能还有其他一些杂项的样式
+*/
+
+.root {
+  width: 100%;
+}
+
+//相框样式
+.photoFrame {
+  //display: none;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  pointer-events: none;
+}
