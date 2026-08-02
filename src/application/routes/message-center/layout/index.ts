@@ -1,1 +1,1 @@
-export { MessageLayout } from "./ui/MessageLayout";
+export { MessageLayout } from "./MessageLayout";

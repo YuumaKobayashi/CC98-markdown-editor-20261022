@@ -4,18 +4,17 @@
 
 import * as React from "react";
 
+import { UserActivitySection } from "@application/layouts/user-area";
 import { UserRecentTopicsActivityList } from "./UserRecentTopicsActivityList";
-import styles from "../../../../layouts/user-area/UserActivityLayout.module.scss";
 
 /**
  * 用户中心主页近期动态组件
  */
 export function UserRecentActivities() {
   return (
-    <div className={styles["user-activities"]}>
-      <p>发表的主题</p>
+    <UserActivitySection title="发表的主题">
       <UserRecentTopicsActivityList />
-    </div>
+    </UserActivitySection>
   );
 }
 

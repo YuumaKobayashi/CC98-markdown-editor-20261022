@@ -1,6 +1,6 @@
 import * as React from "react";
 import { MainPageColumn } from "../model/types";
-import styles from "../Home.module.scss";
+import { HomeSectionHeader } from "./HomeSectionHeader";
 import componentStyles from "./RecommendedFunctionComponent.module.scss";
 
 interface RecommendedFunctionComponentProps {
@@ -33,12 +33,7 @@ export function RecommendedFunctionComponent(
 ): React.ReactElement {
   return (
     <div className={componentStyles.recommendedFunction}>
-      <div className={styles.mainPageTitle1}>
-        <div className={styles.mainPageTitleRow}>
-          <i className="fa fa-volume-up"></i>
-          <div className={styles.mainPageTitleText}>推荐功能</div>
-        </div>
-      </div>
+      <HomeSectionHeader tone="main" title="推荐功能" />
       <div className={componentStyles.recommendedFunctionContent}>
         {props.data.map(convertRecommendedFunction)}
       </div>

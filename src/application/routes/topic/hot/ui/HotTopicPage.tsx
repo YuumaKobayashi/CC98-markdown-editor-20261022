@@ -3,7 +3,7 @@ import * as React from "react";
 import { FocusTopicItem } from "@modules/topic";
 import { getMonthlyHotTopic } from "@modules/topic";
 import type { FocusTopic } from "@legacy/Props/FocusTopic";
-import DocumentTitle from "@foundation/ui/document-title";
+import { CollectionPageShell } from "@application/layouts/collection";
 
 import styles from "../../../../layouts/collection/CollectionLayout.module.scss";
 
@@ -63,16 +63,13 @@ export function HotTopicPage({ breadcrumb, kind, title }: HotTopicPageProps) {
   }, [kind]);
 
   return (
-    <div className={styles["focus-root"]}>
-      <DocumentTitle title={`${title} - CC98论坛`} />
-      <div className={styles.focus}>
-        {breadcrumb}
-        <div className={styles["focus-topic-area"]}>
-          <div className={styles["focus-topic-topicArea"]}>
-            {topics.map(renderFocusTopic)}
-          </div>
+    <CollectionPageShell documentTitle={`${title} - CC98论坛`}>
+      {breadcrumb}
+      <div className={styles["focus-topic-area"]}>
+        <div className={styles["focus-topic-topicArea"]}>
+          {topics.map(renderFocusTopic)}
         </div>
       </div>
-    </div>
+    </CollectionPageShell>
   );
 }

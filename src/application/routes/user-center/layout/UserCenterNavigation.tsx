@@ -1,7 +1,7 @@
 import * as React from "react";
 import $ from "jquery";
 import { NavLink } from "react-router";
-import styles from "../../../../layouts/user-area/UserArea.module.scss";
+import styles from "./UserCenterNavigation.module.scss";
 
 const navigationClassName = (baseClassName: string) =>
   ({ isActive }: { isActive: boolean }) =>

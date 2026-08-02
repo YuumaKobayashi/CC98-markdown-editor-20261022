@@ -6,6 +6,10 @@ import * as React from "react";
 import { Checkbox, Modal } from "antd";
 import { useParams } from "react-router";
 
+import {
+  UserActivityList,
+  UserAreaLoading,
+} from "@application/layouts/user-area";
 import { useAppDispatch, useAppSelector } from "@application/store";
 import {
   getCurrentUserBrowsingHistory,
@@ -20,7 +24,6 @@ import {
 import type { UserRecentTopic } from "@legacy/States/AppState";
 import { UserCenterPager as Pager } from "@application/routes/user-center/pagination";
 import activityStyles from "../../../../layouts/user-area/UserActivityLayout.module.scss";
-import areaStyles from "../../../../layouts/user-area/UserArea.module.scss";
 
 type RouteParams = {
   page?: string;
@@ -141,10 +144,7 @@ export function UserCenterHistoryPage() {
 
   if (isLoading) {
     return (
-      <div className={areaStyles["user-center-loading"]}>
-        {enableCheckbox}
-        <p className="fa fa-spinner fa-pulse fa-2x fa-fw"></p>
-      </div>
+      <UserAreaLoading>{enableCheckbox}</UserAreaLoading>
     );
   }
 
@@ -160,7 +160,7 @@ export function UserCenterHistoryPage() {
   }
 
   return (
-    <div className={activityStyles["user-posts"]}>
+    <UserActivityList>
       {enableCheckBoxModal}
       {enableCheckbox}
       {/* <Button
@@ -187,7 +187,7 @@ export function UserCenterHistoryPage() {
           />
         </>
       )}
-    </div>
+    </UserActivityList>
   );
 }
 

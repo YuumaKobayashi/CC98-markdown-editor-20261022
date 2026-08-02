@@ -1,0 +1,65 @@
+.user-center {
+  button,
+  ul,
+  li {
+    border: 0;
+    margin: 0;
+    padding: 0;
+  }
+
+  button,
+  label {
+    cursor: pointer;
+  }
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.88rem;
+  font-family: 微软雅黑;
+  width: 100%;
+  min-width: 1140px;
+
+  a {
+    color: black;
+
+    &:link {
+      text-decoration: none;
+    }
+
+    &:visited {
+      text-decoration: none;
+    }
+  }
+}
+
+.user-center-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 1140px;
+}
+
+.user-center-head {
+  display: flex;
+  align-self: flex-start;
+  align-items: center;
+  margin-bottom: 1.25rem;
+
+  p {
+    color: black;
+    font-size: 1rem;
+    margin: 0;
+  }
+}
+
+.user-center-body {
+  width: 100%;
+  display: flex;
+  margin-bottom: 3rem;
+  justify-content: space-between;
+
+  *:focus {
+    outline: none;
+  }
+}

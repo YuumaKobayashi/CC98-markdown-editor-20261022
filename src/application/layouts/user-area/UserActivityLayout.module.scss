@@ -1,15 +1,6 @@
 .user-center-exact.user-center-exact.user-center-exact {
   display: flex;
   flex-wrap: wrap;
-
-  .user-activities {
-    width: 100%;
-
-    & > p {
-      font-size: 1.125rem;
-      margin-bottom: 2rem;
-    }
-  }
 }
 
 .user-posts.user-posts.user-posts {

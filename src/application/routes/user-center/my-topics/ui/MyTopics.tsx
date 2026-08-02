@@ -6,6 +6,10 @@ import * as React from "react";
 import { useParams } from "react-router";
 
 import {
+  UserActivityList,
+  UserAreaLoading,
+} from "@application/layouts/user-area";
+import {
   getCurrentUserRecentTopics,
   UserRecentTopicItem as Topic,
 } from "@modules/topic";
@@ -13,7 +17,6 @@ import type { UserRecentTopic } from "@legacy/States/AppState";
 import { parseUserCenterPage } from "@application/routes/user-center/model/route-params";
 import { UserCenterPager as Pager } from "@application/routes/user-center/pagination";
 import activityStyles from "../../../../layouts/user-area/UserActivityLayout.module.scss";
-import areaStyles from "../../../../layouts/user-area/UserArea.module.scss";
 
 type RouteParams = {
   page?: string;
@@ -84,11 +87,7 @@ export function MyTopics() {
   }, [currentPage]);
 
   if (isLoading) {
-    return (
-      <div className={areaStyles["user-center-loading"]}>
-        <p className="fa fa-spinner fa-pulse fa-2x fa-fw"></p>
-      </div>
-    );
+    return <UserAreaLoading />;
   } else if (userRecentTopics.length === 0) {
     return (
       <div className={activityStyles["user-posts"]} style={{ textAlign: "center" }}>
@@ -110,7 +109,7 @@ export function MyTopics() {
   }
 
   return (
-    <div className={activityStyles["user-posts"]}>
+    <UserActivityList>
       {topicItems}
       <Pager
         currentPage={currentPage}
@@ -118,7 +117,7 @@ export function MyTopics() {
         href="/usercenter/mytopics/"
         hasTotal={hasTotal}
       />
-    </div>
+    </UserActivityList>
   );
 }
 

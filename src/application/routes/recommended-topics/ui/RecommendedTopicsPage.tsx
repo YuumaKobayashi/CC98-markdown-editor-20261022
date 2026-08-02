@@ -12,7 +12,7 @@ import {
   removeStorage,
   setStorage,
 } from "@foundation/storage/web-storage";
-import { DocumentTitle } from "@foundation/ui/document-title";
+import { CollectionPageShell } from "@application/layouts/collection";
 
 import styles from "../../../layouts/collection/CollectionLayout.module.scss";
 
@@ -88,11 +88,9 @@ export function RecommendedTopicsPage() {
   };
 
   return (
-    <div className={styles["focus-root"]}>
-      <DocumentTitle title="随机精选 - CC98论坛" />
-      <div className={styles.focus}>
-        <RecommendedTopicsBreadcrumb />
-        <div className={styles["recommendation-button-area"]}>
+    <CollectionPageShell documentTitle="随机精选 - CC98论坛">
+      <RecommendedTopicsBreadcrumb />
+      <div className={styles["recommendation-button-area"]}>
           <button
             className={styles["recommendation-button"]}
             id="recommendation-refresh"
@@ -110,13 +108,12 @@ export function RecommendedTopicsPage() {
             <i className="fa fa-hand-o-left fa-md" />
             上一批
           </button>
-        </div>
-        <div className={styles["focus-topic-area"]}>
-          <div className={styles["focus-topic-topicArea"]}>
-            {data.map(renderRecommendedTopic)}
-          </div>
+      </div>
+      <div className={styles["focus-topic-area"]}>
+        <div className={styles["focus-topic-topicArea"]}>
+          {data.map(renderRecommendedTopic)}
         </div>
       </div>
-    </div>
+    </CollectionPageShell>
   );
 }

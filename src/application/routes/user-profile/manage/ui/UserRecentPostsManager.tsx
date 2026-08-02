@@ -1,10 +1,10 @@
 import * as React from "react";
 import { Link } from "react-router";
 
+import { UserAreaLoading } from "@application/layouts/user-area";
 import { getBoardName } from "@modules/board";
 import { getToken } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
-import userCenterStyles from "../../../../layouts/user-area/UserArea.module.scss";
 import styles from "../../UserProfileManagement.module.scss";
 
 interface UserRecentPostsManagerProps {
@@ -208,9 +208,7 @@ export function UserRecentPostsManager({
           ) : null}
         </div>
       ) : (
-        <div className={userCenterStyles["user-center-loading"]}>
-          <p className="fa fa-spinner fa-pulse fa-2x fa-fw" />
-        </div>
+        <UserAreaLoading />
       )}
     </div>
   );

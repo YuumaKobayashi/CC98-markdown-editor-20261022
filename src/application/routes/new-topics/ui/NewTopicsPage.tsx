@@ -19,10 +19,10 @@ import {
 import { isLogOn } from "@modules/session";
 import type { FocusTopic } from "@legacy/Props/FocusTopic";
 import type { MyInfo } from "@legacy/States/AppState";
+import { CollectionPageShell } from "@application/layouts/collection";
 import { pDebounce } from "@foundation/lib/async";
 import { isBottom } from "@foundation/lib/dom";
 import { setStorage } from "@foundation/storage/web-storage";
-import { DocumentTitle } from "@foundation/ui/document-title";
 
 import { NewTopicsBoardSidebar } from "./NewTopicsBoardSidebar";
 import { RandomRecentTopics } from "./RandomRecentTopics";
@@ -251,9 +251,7 @@ export function NewTopicsPage() {
         : styles["top-button"];
 
   return (
-    <div className={styles["focus-root"]}>
-      <DocumentTitle title="查看新帖 - CC98论坛" />
-      <div className={styles.focus}>
+    <CollectionPageShell documentTitle="查看新帖 - CC98论坛">
         <NewTopicsBreadcrumb />
         <div className={styles["focus-board-area"]}>
           <button
@@ -428,7 +426,6 @@ export function NewTopicsPage() {
         >
           <div className={styles["top-button-text"]}>回到顶部</div>
         </button>
-      </div>
-    </div>
+    </CollectionPageShell>
   );
 }

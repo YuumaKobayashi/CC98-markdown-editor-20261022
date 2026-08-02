@@ -1,6 +1,6 @@
 import * as React from "react";
 import { MainPageColumn } from "../model/types";
-import styles from "../Home.module.scss";
+import { HomeSectionHeader } from "./HomeSectionHeader";
 import componentStyles from "./SpecialOfferComponent.module.scss";
 
 interface SpecialOfferComponentProps {
@@ -27,12 +27,7 @@ export function SpecialOfferComponent(
 ): React.ReactElement | null {
   return props.data && props.data.length > 0 ? (
     <div className={componentStyles.specialOffer}>
-      <div className={styles.mainPageTitle2}>
-        <div className={styles.mainPageTitleRow}>
-          <i className="fa fa-volume-up"></i>
-          <div className={styles.mainPageTitleText}>福利优惠</div>
-        </div>
-      </div>
+      <HomeSectionHeader tone="sub" title="福利优惠" />
       <div className={componentStyles.specialOfferContent}>
         {props.data.map(convertSpecialOffer)}
       </div>

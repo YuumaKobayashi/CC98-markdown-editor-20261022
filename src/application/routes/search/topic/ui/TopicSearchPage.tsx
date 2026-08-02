@@ -6,7 +6,7 @@ import { Link, useLocation } from "react-router";
 import { getSearchTopic } from "@modules/topic";
 import { SearchTopicItem } from "@modules/topic";
 import { FocusTopic } from "@legacy/Props/FocusTopic";
-import { DocumentTitle } from "@foundation/ui/document-title";
+import { CollectionPageShell } from "@application/layouts/collection";
 
 import styles from "../../../../layouts/collection/CollectionLayout.module.scss";
 import searchStyles from "../../Search.module.scss";
@@ -128,9 +128,7 @@ export function TopicSearchPage() {
   const showResults = status !== "empty" && status !== "error";
 
   return (
-    <div className={styles["focus-root"]}>
-      <DocumentTitle title="搜索结果 - CC98论坛" />
-      <div className={styles.focus}>
+    <CollectionPageShell documentTitle="搜索结果 - CC98论坛">
         <TopicSearchBreadcrumb />
         <div
           className={styles["focus-topic-area"]}
@@ -210,8 +208,7 @@ export function TopicSearchPage() {
         <div id="showError" className="resultErr" hidden={status !== "error"}>
           查询出错了，请刷新重试
         </div>
-      </div>
-    </div>
+    </CollectionPageShell>
   );
 }
 

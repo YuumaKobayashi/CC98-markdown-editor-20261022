@@ -6,7 +6,7 @@ import { MessageAttmebox, type MessageResponseProps } from "@modules/notificatio
 import { getMessageAttme } from "@modules/notification";
 import { getTotalPage } from "@modules/notification";
 import { DocumentTitle } from "@foundation/ui/document-title";
-import styles from "../../layout/ui/MessageLayout.module.scss";
+import styles from "./MessageMentionsPage.module.scss";
 import { Pager } from "@foundation/ui/pagination";
 
 import {

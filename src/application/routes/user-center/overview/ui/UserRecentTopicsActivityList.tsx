@@ -5,12 +5,15 @@
 import * as React from "react";
 
 import {
+  UserActivityList,
+  UserAreaLoading,
+} from "@application/layouts/user-area";
+import {
   getCurrentUserRecentTopics,
   UserRecentTopicItem as Topic,
 } from "@modules/topic";
 import type { UserRecentTopic } from "@legacy/States/AppState";
 import activityStyles from "../../../../layouts/user-area/UserActivityLayout.module.scss";
-import areaStyles from "../../../../layouts/user-area/UserArea.module.scss";
 
 //用户中心主页帖子动态组件
 export function UserRecentTopicsActivityList() {
@@ -99,14 +102,10 @@ export function UserRecentTopicsActivityList() {
   }
 
   return (
-    <div className={activityStyles["user-posts"]}>
+    <UserActivityList>
       {topicItems}
-      {isLoading ? (
-        <div className={areaStyles["user-center-loading"]}>
-          <p className="fa fa-spinner fa-pulse fa-2x fa-fw"></p>
-        </div>
-      ) : null}
-    </div>
+      {isLoading ? <UserAreaLoading /> : null}
+    </UserActivityList>
   );
 }
 

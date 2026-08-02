@@ -2,11 +2,9 @@
 // for more information see the following page on the TypeScript wiki:
 // https://github.com/Microsoft/TypeScript/wiki/JSX
 import * as React from "react";
-import moment from "moment";
-import { UbbContainer } from "@legacy/Components/UbbContainer";
 import { UbbCompatiblityMode } from "@legacy/Ubb/UbbCodeExtension";
 import { MessageResponseProps } from "../model/types";
-import styles from "./MessageResponseItem.module.scss";
+import { MessageResponseItem } from "./MessageResponseItem";
 
 export function MessageAttmebox(
   props: MessageResponseProps,
@@ -55,34 +53,24 @@ export function MessageAttmebox(
     content = ` ${userName} [color=gray][b]在《${title}》中@了你。[/b][/color]`;
   }
 
+  const options = {
+    allowExternalImage: false,
+    allowAutoPlay: false,
+    autoDetectUrl: true,
+    allowExternalUrl: true,
+    allowImage: false,
+    allowMediaContent: false,
+    compatibility: UbbCompatiblityMode.Recommended,
+    allowEmotion: false,
+    allowToolbox: false,
+  };
+
   return (
-    <div className={styles["message-response-box"]}>
-      <div className={styles["message-response-box-middle"]}>
-        <div className={styles["message-response-box-middle1"]}>
-          <div className={styles["message-response-box-middle-title"]}>
-            <UbbContainer code={boardName} />
-          </div>
-          <div className={styles["message-response-box-middle-date"]}>
-            {moment(props.time).format("YYYY-MM-DD HH:mm:ss")}
-          </div>
-        </div>
-        <div className={styles["message-response-box-middle-content"]}>
-          <UbbContainer
-            code={content}
-            options={{
-              allowExternalImage: false,
-              allowAutoPlay: false,
-              autoDetectUrl: true,
-              allowExternalUrl: true,
-              allowImage: false,
-              allowMediaContent: false,
-              compatibility: UbbCompatiblityMode.Recommended,
-              allowEmotion: false,
-              allowToolbox: false,
-            }}
-          />
-        </div>
-      </div>
-    </div>
+    <MessageResponseItem
+      boardName={boardName}
+      content={content}
+      time={props.time}
+      options={options}
+    />
   );
 }

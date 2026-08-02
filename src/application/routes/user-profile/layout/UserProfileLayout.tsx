@@ -1,12 +1,16 @@
 import * as React from "react";
 import { Outlet, useMatch, useNavigate, useParams } from "react-router";
 
+import {
+  UserAreaLoading,
+  UserAreaShell,
+} from "@application/layouts/user-area";
 import { NotFoundUser } from "@application/routes/status";
 import { getUserInfo } from "@modules/user";
 import type { UserInfo } from "@legacy/States/AppState";
-import { UserProfileProvider } from "../model/user-profile-context";
+import { UserProfileProvider } from "./model/user-profile-context";
 import { UserProfileNavigation } from "./UserProfileNavigation";
-import styles from "../../../../layouts/user-area/UserArea.module.scss";
+import styles from "./UserProfileLayout.module.scss";
 
 type LoadedUser = {
   requestKey: string;
@@ -108,31 +112,24 @@ export function UserProfileLayout() {
     return <NotFoundUser />;
   }
 
+  if (!loadedUserMatchesRequest) {
+    return (
+      <UserAreaShell heading="用户详情">
+        <div className={styles["user-center-router"]}>
+          <UserAreaLoading />
+        </div>
+      </UserAreaShell>
+    );
+  }
+
   return (
-    <div className={styles["user-center"]}>
-      <div className={styles["user-center-content"]}>
-        <div className={styles["user-center-head"]}>
-          <p>用户详情</p>
+    <UserAreaShell heading="用户详情">
+      <UserProfileProvider value={{ page, userInfo: loadState.userInfo }}>
+        <UserProfileNavigation />
+        <div className={styles["user-center-router"]}>
+          <Outlet />
         </div>
-        <div className={styles["user-center-body"]}>
-          {!loadedUserMatchesRequest ? (
-            <div className={styles["user-center-router"]}>
-              <div className={styles["user-center-loading"]}>
-                <p className="fa fa-spinner fa-pulse fa-2x fa-fw" />
-              </div>
-            </div>
-          ) : (
-            <UserProfileProvider
-              value={{ page, userInfo: loadState.userInfo }}
-            >
-              <UserProfileNavigation />
-              <div className={styles["user-center-router"]}>
-                <Outlet />
-              </div>
-            </UserProfileProvider>
-          )}
-        </div>
-      </div>
-    </div>
+      </UserProfileProvider>
+    </UserAreaShell>
   );
 }

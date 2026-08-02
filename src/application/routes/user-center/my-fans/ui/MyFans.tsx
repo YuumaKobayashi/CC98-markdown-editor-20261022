@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useParams } from "react-router";
 
+import { UserAreaLoading } from "@application/layouts/user-area";
 import { useAppSelector } from "@application/store";
 import { getCurrentUserFans, UserFollowCard } from "@modules/follow";
 import { selectCurrentUser } from "@modules/session";
@@ -8,7 +9,6 @@ import type { UserInfo } from "@legacy/States/AppState";
 import { parseUserCenterPage } from "@application/routes/user-center/model/route-params";
 import { UserCenterPager as Pager } from "@application/routes/user-center/pagination";
 import activityStyles from "../../../../layouts/user-area/UserActivityLayout.module.scss";
-import areaStyles from "../../../../layouts/user-area/UserArea.module.scss";
 
 type RouteParams = {
   page?: string;
@@ -102,11 +102,7 @@ export function MyFans() {
   }, [currentPage]);
 
   if (isLoading) {
-    return (
-      <div className={areaStyles["user-center-loading"]}>
-        <p className="fa fa-spinner fa-pulse fa-2x fa-fw"></p>
-      </div>
-    );
+    return <UserAreaLoading />;
   } else if (userFans.length === 0) {
     return (
       <div className={activityStyles["user-center-myfans"]} style={{ textAlign: "center" }}>

@@ -7,6 +7,10 @@ import { Button, Input, Select } from "antd";
 import { useLocation, useNavigate, useParams } from "react-router";
 
 import {
+  UserActivityList,
+  UserAreaLoading,
+} from "@application/layouts/user-area";
+import {
   defaultFavoriteTopicGroups,
   getCurrentUserFavoriteTopics,
   getFavoriteAllTopic,
@@ -18,7 +22,6 @@ import { UserCenterPager as Pager } from "@application/routes/user-center/pagina
 import { FavoriteTopicGroupManager } from "./FavoriteTopicGroupManager";
 import { UserCenterFavoriteTopicItem as Topic } from "./UserCenterFavoriteTopicItem";
 import activityStyles from "../../../../layouts/user-area/UserActivityLayout.module.scss";
-import areaStyles from "../../../../layouts/user-area/UserArea.module.scss";
 
 const { Search } = Input;
 const { Option } = Select;
@@ -200,11 +203,7 @@ export function UserCenterFavoriteTopicsPage() {
   };
 
   if (isLoading) {
-    return (
-      <div className={areaStyles["user-center-loading"]}>
-        <p className="fa fa-spinner fa-pulse fa-2x fa-fw"></p>
-      </div>
-    );
+    return <UserAreaLoading />;
   }
 
   const emptyPage = (
@@ -243,7 +242,7 @@ export function UserCenterFavoriteTopicsPage() {
   ));
 
   return (
-    <div className={activityStyles["user-posts"]}>
+    <UserActivityList>
       <div className={activityStyles["user-post-operator"]}>
         <Select
           value={group}
@@ -318,7 +317,7 @@ export function UserCenterFavoriteTopicsPage() {
           />
         </>
       )}
-    </div>
+    </UserActivityList>
   );
 }
 

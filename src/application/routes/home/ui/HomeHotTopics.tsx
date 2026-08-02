@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { getLocalStorage } from "@foundation/storage/web-storage";
 
-import styles from "../Home.module.scss";
+import { HomeSectionHeader } from "./HomeSectionHeader";
 import topicStyles from "./MainPageTopic.module.scss";
 
 interface HotTopic {
@@ -63,23 +63,15 @@ export function HomeHotTopics({ data }: { data: HotTopic[] }) {
 
   return (
     <div className={topicStyles.mainPageList}>
-      <div className={styles.mainPageTitle1}>
-        <div className={styles.mainPageTitleRow}>
-          <i className="fa fa-volume-up"></i>
-          <div className={styles.mainPageTitleText}>热门话题</div>
-        </div>
-        <div className={styles.mainPageTitleRow}>
-          <div className={styles.mainPageTitleText}>
-            <a href="/topic/hot-weekly" target="_blank">本周</a>
-          </div>
-          <div className={styles.mainPageTitleText}>
-            <a href="/topic/hot-monthly" target="_blank">本月</a>
-          </div>
-          <div className={styles.mainPageTitleText}>
-            <a href="/topic/hot-history" target="_blank">历史上的今天</a>
-          </div>
-        </div>
-      </div>
+      <HomeSectionHeader
+        tone="main"
+        title="热门话题"
+        links={[
+          { name: "本周", url: "/topic/hot-weekly" },
+          { name: "本月", url: "/topic/hot-monthly" },
+          { name: "历史上的今天", url: "/topic/hot-history" },
+        ]}
+      />
       <div className={topicStyles.mainPageListContent1}>
         {topics.map(convertMainPageTopic)}
       </div>

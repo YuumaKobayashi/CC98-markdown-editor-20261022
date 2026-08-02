@@ -1,4 +1,4 @@
-@use "../../../../../foundation/styles/variables/legacy" as *;
+@use "../../../../foundation/styles/variables/legacy" as *;
 
 /*****************************************以下为我的消息的样式*********************************/
 .message-root {
@@ -64,19 +64,6 @@
   }
 }
 
-.message-right {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-}
-
-.message-pager {
-  flex-shrink: 0;
-  margin-top: 10px;
-  display: flex;
-  flex-direction: row-reverse;
-}
-
 .readAllMessage {
   width: 100px;
   height: 30px;
@@ -127,29 +114,4 @@
   border-radius: 8px;
   top: 32px;
   left: 110px;
-}
-
-/******以下为系统消息部分的样式***/
-.message-system {
-  min-height: 952px;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  font-family: 微软雅黑;
-  border: 1px solid $color-border;
-  flex-shrink: 0;
-  overflow-y: auto;
-  background-color: $color-post;
-}
-
-/******以下为我的回复部分的样式***/
-.message-response {
-  min-height: 952px;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  flex-shrink: 0;
-  border: 1px solid $color-border;
-  overflow-y: hidden;
-  background-color: $color-post;
 }

@@ -1,0 +1,1 @@
+export { CollectionPageShell } from "./CollectionPageShell";

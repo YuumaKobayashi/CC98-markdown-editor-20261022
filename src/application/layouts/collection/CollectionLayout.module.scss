@@ -1,84 +1,69 @@
-/*****************************************以下为内容集合页面的共享样式*********************************/
-.focus-root {
-  display: flex;
-  justify-content: center;
+.top-button.top-button {
+  width: 6rem;
+  position: fixed;
+  bottom: 5%;
+  right: 5%;
+  height: 2rem;
+  border-radius: 1rem;
+  opacity: 0.5;
+  display: none;
+  z-index: 2;
+  margin: 0;
+  padding: 0.7rem;
+  border: 0;
+  font-size: 1.1rem;
+  // text-align: center;
+  // vertical-align: middle;
+  cursor: pointer;
+  line-height: 2rem;
+
+  .top-button-text {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:active {
+    opacity: 1;
+  }
+
+  &:focus {
+    outline: none;
+  }
 }
 
-.focus {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  width: 1140px;
-  min-height: 780px;
-  margin-bottom: 60px;
+.top-button.top-button.btn-show {
+  animation-name: global(fadeIn);
+  animation-duration: 1s;
+  display: inherit;
+}
 
-  .top-button {
-    width: 6rem;
-    position: fixed;
-    bottom: 5%;
-    right: 5%;
-    height: 2rem;
-    border-radius: 1rem;
-    opacity: 0.5;
-    display: none;
-    z-index: 2;
-    margin: 0;
-    padding: 0.7rem;
-    border: 0;
-    font-size: 1.1rem;
-    // text-align: center;
-    // vertical-align: middle;
-    cursor: pointer;
-    line-height: 2rem;
+.top-button.top-button.btn-disappear {
+  display: inherit;
+  animation-name: global(fadeOut);
+  animation-duration: 500ms;
+  animation-fill-mode: forwards;
+}
 
-    .top-button-text {
-      display: flex;
-      width: 100%;
-      justify-content: center;
-    }
+.focus-topic-loading.focus-topic-loading {
+  margin-top: 20px;
+  text-align: center;
 
-    &:hover {
-      opacity: 0.8;
-    }
-
-    &:active {
-      opacity: 1;
-    }
-
-    &:focus {
-      outline: none;
-    }
+  img {
+    width: 200px;
+    height: 18px;
   }
+}
 
-  .top-button.btn-show {
-    animation-name: global(fadeIn);
-    animation-duration: 1s;
-    display: inherit;
-  }
-
-  .top-button.btn-disappear {
-    display: inherit;
-    animation-name: global(fadeOut);
-    animation-duration: 500ms;
-    animation-fill-mode: forwards;
-  }
-
-  .focus-topic-loading {
-    margin-top: 20px;
-    text-align: center;
-
-    img {
-      width: 200px;
-      height: 18px;
-    }
-  }
-
-  .focus-topic-loaddone {
-    margin-top: 20px;
-    text-align: center;
-    font-size: 16px;
-    color: rgb(32, 32, 32);
-  }
+.focus-topic-loaddone.focus-topic-loaddone {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 16px;
+  color: rgb(32, 32, 32);
 }
 
 .recommendation-button-area {

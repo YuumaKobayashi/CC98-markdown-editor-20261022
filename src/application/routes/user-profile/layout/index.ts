@@ -1,4 +1,4 @@
-export { UserProfileLayout as default, UserProfileLayout } from "./ui/UserProfileLayout";
+export { UserProfileLayout as default, UserProfileLayout } from "./UserProfileLayout";
 export {
   useUserProfileContext,
 } from "./model/user-profile-context";

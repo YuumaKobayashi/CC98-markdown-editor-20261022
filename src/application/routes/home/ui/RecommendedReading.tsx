@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 
-import styles from "../Home.module.scss";
+import { HomeSectionHeader } from "./HomeSectionHeader";
 import readingStyles from "./RecommendedReading.module.scss";
 import { MainPageColumn } from "../model/types";
 
@@ -24,12 +24,7 @@ export function RecommendedReading({ data }: { data: MainPageColumn[] }) {
 
   return (
     <div className={readingStyles.recommendedReading}>
-      <div className={styles.mainPageTitle2}>
-        <div className={styles.mainPageTitleRow}>
-          <i className="fa fa-volume-up"></i>
-          <div className={styles.mainPageTitleText}>推荐阅读</div>
-        </div>
-      </div>
+      <HomeSectionHeader tone="sub" title="推荐阅读" />
       <div className={readingStyles.recommendedReadingContent}>
         <div className={readingStyles.recommendedReadingImage}>
           <img src={selected?.imageUrl ?? ""} />

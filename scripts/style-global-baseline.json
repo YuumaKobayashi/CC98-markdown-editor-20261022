@@ -1,6 +1,6 @@
 {
-  "phase": "C1.7 Status route ownership",
-  "totalCssModuleCount": 66,
+  "phase": "C1.7.2 real component reuse",
+  "totalCssModuleCount": 78,
   "totalOccurrences": 2,
   "moduleCount": 2,
   "updatePolicy": "Only update this baseline in an explicitly authorized style-owner closure after auditing selector, producer, consumer, and behavior-query changes.",

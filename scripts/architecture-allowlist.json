@@ -1,10 +1,10 @@
 {
   "violations": [
     {
-      "from": "src/modules/notification/ui/MessageAttmebox.tsx",
+      "from": "src/modules/notification/ui/MessageResponseItem.tsx",
       "specifier": "@legacy/Components/UbbContainer",
       "rule": "legacy-dependency",
-      "reason": "M3.5 preserves the existing Notification rendering while UBB remains frozen.",
+      "reason": "C1.7.2 moves the existing Notification rendering into its common item owner while UBB remains frozen.",
       "removeWhen": "The UBB module migration provides its public rendering entry."
     },
     {
@@ -22,17 +22,10 @@
       "removeWhen": "The UBB module migration provides its public rendering entry."
     },
     {
-      "from": "src/modules/message/ui/MessageReceiver.tsx",
+      "from": "src/modules/message/ui/MessageConversationItem.tsx",
       "specifier": "@legacy/Components/UbbContainer",
       "rule": "legacy-dependency",
-      "reason": "M3.5 preserves the existing Message rendering while UBB remains frozen.",
-      "removeWhen": "The UBB module migration provides its public rendering entry."
-    },
-    {
-      "from": "src/modules/notification/ui/MessageResponsebox.tsx",
-      "specifier": "@legacy/Components/UbbContainer",
-      "rule": "legacy-dependency",
-      "reason": "M3.5 preserves the existing Notification rendering while UBB remains frozen.",
+      "reason": "C1.7.2 moves the existing Message rendering into its common item owner while UBB remains frozen.",
       "removeWhen": "The UBB module migration provides its public rendering entry."
     },
     {
@@ -41,13 +34,6 @@
       "rule": "legacy-dependency",
       "reason": "M3.5 preserves the existing Notification rendering while UBB remains frozen.",
       "removeWhen": "The UBB module migration provides its public compatibility-mode contract."
-    },
-    {
-      "from": "src/modules/message/ui/MessageSender.tsx",
-      "specifier": "@legacy/Components/UbbContainer",
-      "rule": "legacy-dependency",
-      "reason": "M3.5 preserves the existing Message rendering while UBB remains frozen.",
-      "removeWhen": "The UBB module migration provides its public rendering entry."
     },
     {
       "from": "src/modules/notification/ui/MessageSystembox.tsx",

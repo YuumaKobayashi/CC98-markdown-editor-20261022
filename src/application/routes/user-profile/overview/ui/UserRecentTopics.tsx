@@ -1,5 +1,9 @@
 import * as React from "react";
 
+import {
+  UserActivityList,
+  UserActivitySection,
+} from "@application/layouts/user-area";
 import { UserRecentTopicItem as Topic } from "@modules/topic";
 import { getToken } from "@modules/session";
 import type { UserRecentTopic } from "@legacy/States/AppState";
@@ -105,26 +109,24 @@ export function UserRecentTopics({ id }: UserRecentTopicsProps) {
     };
 
     return (
-      <div className={styles["user-activities"]}>
-        <p>发表的主题</p>
+      <UserActivitySection title="发表的主题">
         <div className={styles["user-posts"]} style={style}>
           没有主题
         </div>
-      </div>
+      </UserActivitySection>
     );
   }
 
   return (
-    <div className={styles["user-activities"]}>
-      <p>发表的主题</p>
-      <div className={styles["user-posts"]}>
+    <UserActivitySection title="发表的主题">
+      <UserActivityList>
         {topics.map((item, index) => (
           <React.Fragment key={item.id}>
             {index > 0 ? <hr /> : null}
             <Topic userRecentTopic={item} />
           </React.Fragment>
         ))}
-      </div>
-    </div>
+      </UserActivityList>
+    </UserActivitySection>
   );
 }

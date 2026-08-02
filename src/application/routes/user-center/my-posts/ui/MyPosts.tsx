@@ -7,6 +7,10 @@ import { Button } from "antd";
 import { useNavigate, useParams } from "react-router";
 
 import {
+  UserActivityList,
+  UserAreaLoading,
+} from "@application/layouts/user-area";
+import {
   getCurrentUserRecentPosts,
   UserRecentPostItem as Post,
 } from "@modules/post";
@@ -17,7 +21,6 @@ import {
 } from "@application/routes/user-center/model/route-params";
 import { UserCenterPager as Pager } from "@application/routes/user-center/pagination";
 import activityStyles from "../../../../layouts/user-area/UserActivityLayout.module.scss";
-import areaStyles from "../../../../layouts/user-area/UserArea.module.scss";
 
 type RouteParams = {
   page?: string;
@@ -77,11 +80,7 @@ export function MyPosts() {
   };
 
   if (isLoading) {
-    return (
-      <div className={areaStyles["user-center-loading"]}>
-        <p className="fa fa-spinner fa-pulse fa-2x fa-fw"></p>
-      </div>
-    );
+    return <UserAreaLoading />;
   } else if (userRecentPosts.length === 0) {
     return (
       <div className={activityStyles["user-posts"]} style={{ textAlign: "center" }}>
@@ -103,7 +102,7 @@ export function MyPosts() {
   }
 
   return (
-    <div className={activityStyles["user-posts"]}>
+    <UserActivityList>
       {isHot === 0 ? (
         <Button
           style={{ width: "8rem", marginTop: "-1rem", marginBottom: "2rem" }}
@@ -129,7 +128,7 @@ export function MyPosts() {
         href={`/usercenter/myposts/ishot/${isHot}/`}
         hasTotal={hasTotal}
       />
-    </div>
+    </UserActivityList>
   );
 }
 

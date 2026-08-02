@@ -1,11 +1,11 @@
 import * as React from "react";
 
+import { UserAreaLoading } from "@application/layouts/user-area";
 import { useAppSelector } from "@application/store";
 import { getCurrentUserFavoriteBoards } from "@modules/board";
 import { selectCurrentUser } from "@modules/session";
 import type { UserFavoritesBoardInfo } from "@legacy/States/AppState";
 import { UserFavoriteBoardCard } from "./UserFavoriteBoardCard";
-import styles from "../../../../layouts/user-area/UserArea.module.scss";
 
 /**
  * 用户关注的版面信息
@@ -43,11 +43,7 @@ export function UserFavoriteBoards() {
   }, []);
 
   if (isLoading) {
-    return (
-      <div className={styles["user-center-loading"]}>
-        <p className="fa fa-spinner fa-pulse fa-2x fa-fw"></p>
-      </div>
-    );
+    return <UserAreaLoading />;
   }
   if (boards.length === 0) {
     return <div style={emptyStyle}>没有关注</div>;

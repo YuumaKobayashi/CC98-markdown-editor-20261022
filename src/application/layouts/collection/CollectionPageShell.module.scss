@@ -1,0 +1,14 @@
+/*****************************************以下为内容集合页面的共享样式*********************************/
+.focus-root {
+  display: flex;
+  justify-content: center;
+}
+
+.focus {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 1140px;
+  min-height: 780px;
+  margin-bottom: 60px;
+}

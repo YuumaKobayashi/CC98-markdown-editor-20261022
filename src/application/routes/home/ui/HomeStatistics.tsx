@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Link } from "react-router";
 
-import styles from "../Home.module.scss";
+import { HomeSectionHeader } from "./HomeSectionHeader";
 import statisticsStyles from "./HomeStatistics.module.scss";
 
 export interface MainPageCount {
@@ -19,12 +19,7 @@ export interface MainPageCount {
 export function HomeStatistics({ data }: { data: MainPageCount }) {
   return (
     <div className={statisticsStyles.mainPageCount}>
-      <div className={styles.mainPageTitle1}>
-        <div className={styles.mainPageTitleRow}>
-          <i className="fa fa-volume-up"></i>
-          <div className={styles.mainPageTitleText}>论坛统计</div>
-        </div>
-      </div>
+      <HomeSectionHeader tone="main" title="论坛统计" />
       <div className={statisticsStyles.mainPageCountContent}>
         {[
           ["今日帖数", data.todayCount],

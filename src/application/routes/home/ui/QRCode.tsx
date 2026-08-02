@@ -1,5 +1,5 @@
 import * as React from "react";
-import styles from "../Home.module.scss";
+import { HomeSectionHeader } from "./HomeSectionHeader";
 
 interface QRCodeProps {
   title: string;
@@ -18,12 +18,7 @@ export function QRCode(props: QRCodeProps): React.ReactElement {
         marginBottom: "1rem",
       }}
     >
-      <div className={styles.mainPageTitle2}>
-        <div className={styles.mainPageTitleRow}>
-          <i className="fa fa-volume-up"></i>
-          <div className={styles.mainPageTitleText}>{props.title}</div>
-        </div>
-      </div>
+      <HomeSectionHeader tone="sub" title={props.title} />
       <div style={{ marginTop: "1rem" }}>
         <img style={{ width: "100%" }} src={props.src}></img>
       </div>

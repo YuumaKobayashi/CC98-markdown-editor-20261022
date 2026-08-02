@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router";
 
 import { getSearchBoard } from "@modules/board";
 import { FocusBoard } from "@legacy/Props/FocusBoard";
-import { DocumentTitle } from "@foundation/ui/document-title";
+import { CollectionPageShell } from "@application/layouts/collection";
 
 import styles from "../../../../layouts/collection/CollectionLayout.module.scss";
 import searchStyles from "../../Search.module.scss";
@@ -43,29 +43,30 @@ export function BoardSearchPage() {
   }, [location.search]);
 
   return (
-    <div className={styles["focus-root"]}>
-      <DocumentTitle title="搜索结果 - CC98论坛" />
-      <div className={styles.focus}>
-        <BoardSearchBreadcrumb />
-        <div className={styles["focus-board-area"]}>
-          {data.map((item) => (
-            <a key={item.id} href={`/board/${item.id}`} target="_blank">
-              <div className={styles["focus-board"]}>{item.name}</div>
-            </a>
-          ))}
+    <CollectionPageShell
+      documentTitle="搜索结果 - CC98论坛"
+      afterContent={
+        <div
+          id="noResultBoard"
+          className={searchStyles.noResult}
+          hidden={!showNoResult}
+        >
+          <img src="/static/images/searchNone.png" className={searchStyles.noResultPic} />
+          <div className={searchStyles.noResultText}>
+            -----------------------抱歉呢前辈，没有找到你想要的版面哦~----------------------
+          </div>
         </div>
+      }
+    >
+      <BoardSearchBreadcrumb />
+      <div className={styles["focus-board-area"]}>
+        {data.map((item) => (
+          <a key={item.id} href={`/board/${item.id}`} target="_blank">
+            <div className={styles["focus-board"]}>{item.name}</div>
+          </a>
+        ))}
       </div>
-      <div
-        id="noResultBoard"
-        className={searchStyles.noResult}
-        hidden={!showNoResult}
-      >
-        <img src="/static/images/searchNone.png" className={searchStyles.noResultPic} />
-        <div className={searchStyles.noResultText}>
-          -----------------------抱歉呢前辈，没有找到你想要的版面哦~----------------------
-        </div>
-      </div>
-    </div>
+    </CollectionPageShell>
   );
 }
 

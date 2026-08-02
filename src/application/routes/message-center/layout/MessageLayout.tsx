@@ -5,7 +5,7 @@ import { useAppSelector } from "@application/store";
 import { readAll, selectUnreadCount } from "@modules/notification";
 import { DocumentTitle } from "@foundation/ui/document-title";
 import styles from "./MessageLayout.module.scss";
-import { parseReadAllNotificationSection } from "../../notifications/model/route";
+import { parseReadAllNotificationSection } from "../notifications/model/route";
 
 type MessageSection = "response" | "attme" | "system" | "message" | "setting";
 
