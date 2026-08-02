@@ -86,7 +86,7 @@ Editor Route 与 Topic Reply Composer 是 `MarkdownEditor` 的两个业务消费
 - `defaultEmojiType`、草稿/失败缓存与 Markdown 上传 Storage key；
 - Editor/Reply 的 `contentType` 0/1，以及预览过滤、动态 selector、媒体 DOM 查询和清理标记。
 
-守卫只冻结边界合同，没有对整个 UBB/Markdown 文件做内容哈希，不阻止后续独立维护。C1.7.5 不修改 `src/`、`Components/`、`Ubb/`、`Styles/` 或 `Pages/` 中的任何运行时文件；完成后保持未提交，不进入 C1.7.6、C1.7.7、Z2 或 Markdown 替换批。
+守卫只冻结边界合同，没有对整个 UBB/Markdown 文件做内容哈希，不阻止后续独立维护。C1.7.5 不修改 `src/`、`Components/`、`Ubb/`、`Styles/` 或 `Pages/` 中的任何运行时文件；实施完成时先停在未提交工作树，用户审核授权后再写本地提交，不进入 C1.7.6、C1.7.7、Z2 或 Markdown 替换批。
 
 机械检查与运行边界：
 
@@ -94,4 +94,4 @@ Editor Route 与 Topic Reply Composer 是 `MarkdownEditor` 的两个业务消费
 - modern/legacy typecheck 均通过；正式 build 修改前后均转换 4116 个模块，只保留既有 Sass、Spectrum/Lightning CSS 与大 chunk 警告。沙箱内首次 build 仍因已知 `spawn EPERM` 失败，原命令在允许子进程的环境重跑成功。
 - 修改前后 `dist` 均为 9561 个文件、95 个 CSS 文件；全产物聚合 SHA-256 均为 `ad00794f52f5482f4390c459d9db1e269e3d86a0a2b3bd3d73332f0a89b100c5`，CSS 聚合 SHA-256 均为 `296f2c3c35ec94c04847422bf83eee6cab589cb382b5d42bba5595c1d3998465`。因此主题、静态 URL、CSS chunk、vendor 与脚本产物差异为 0。
 - 本地 Vite 根入口 `http://127.0.0.1:5173/` 返回 HTTP 200，但浏览器连接器没有可用实例。UBB/Markdown 切换与预览、emoji 默认组、上传、草稿恢复、动态图片、播放器、登录与真实 API 均未执行浏览器验收，不以 HTTP 200、build 或静态审核代替。
-- `git diff --check`、未跟踪文件、UTF-8 无 BOM、CRLF、单一 EOF newline、运行时目录零差异与生成产物检查在整批结束时复核。本批不 commit、不 push，不自动进入 C1.7.6、C1.7.7 或 Z。
+- `git diff --check`、未跟踪文件、UTF-8 无 BOM、CRLF、单一 EOF newline、运行时目录零差异与生成产物检查在整批结束时复核。用户审核授权后，机器守卫与清单提交为 `0cc9d51f`，审计记录与总计划提交为 `3db6030e`；未 push，不自动进入 C1.7.6、C1.7.7 或 Z。

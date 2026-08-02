@@ -1,6 +1,6 @@
 # CC98 前端目录重构执行计划
 
-> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1–C1.5 的代码实施、机械检查和主代理人工代码审核均已完成；C1.5 已本地提交为 `733eb045`。C1.6.0 已提交为 `bee0dd05`，C1.6.1 代码与记录已提交为 `61b4d5db`/`ff9702be`，C1.6.2 代码已提交为 `ad1db0e7`，C1.6.3 代码已提交为 `788da9e7`，C1.6.4 已提交为 `fdbe3762`，C1.6.5 代码与记录已提交为 `0c6efc6e`/`b232c6ca`。C1.7.1、Legacy Board 删除和 C1.7.2 Status 子批已随代码/记录提交 `f11fe1e7`/`99a8679e`，C1.7.2 其余真实复用候选已提交为 `52b4bc77`/`fe0e02fa`，C1.7.3 已提交为 `b361a4c1`/`489dff9d`，C1.7.4 已提交为 `4f5f28ba`。C1.7.5 已完成动态内容边界盘点、机器守卫、机械检查和主代理整批审核；浏览器运行时无可连接实例，运行验收未执行。当前停在未提交工作树，不自动启动 C1.7.6、C1.7.7 或 Z，不 commit、不 push。
+> 状态：R0、R1、F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7 与 C1.1–C1.5 的代码实施、机械检查和主代理人工代码审核均已完成；C1.5 已本地提交为 `733eb045`。C1.6.0 已提交为 `bee0dd05`，C1.6.1 代码与记录已提交为 `61b4d5db`/`ff9702be`，C1.6.2 代码已提交为 `ad1db0e7`，C1.6.3 代码已提交为 `788da9e7`，C1.6.4 已提交为 `fdbe3762`，C1.6.5 代码与记录已提交为 `0c6efc6e`/`b232c6ca`。C1.7.1、Legacy Board 删除和 C1.7.2 Status 子批已随代码/记录提交 `f11fe1e7`/`99a8679e`，C1.7.2 其余真实复用候选已提交为 `52b4bc77`/`fe0e02fa`，C1.7.3 已提交为 `b361a4c1`/`489dff9d`，C1.7.4 已提交为 `4f5f28ba`，C1.7.5 代码与记录已提交为 `0cc9d51f`/`3db6030e`。浏览器运行时无可连接实例，C1.7.5 运行验收未执行；当前工作树干净，不自动启动 C1.7.6、C1.7.7 或 Z，不 push。
 >
 > 架构依据：`docs/frontend-directory-architecture-inventory.md`。
 >
@@ -70,11 +70,11 @@ Legacy Board 不可达兼容链删除                        已完成（用户�
 C1.7.2 真实共同语义组件复用                          已完成（主代理整批审核；浏览器运行验收未执行；已有本地提交）
 C1.7.3 Route 样式仓库与组件 Module 共置              已完成（主代理整批审核；浏览器运行验收未执行；已有本地提交）
 C1.7.4 孤儿源码与样式 owner 收口                     已完成（主代理整批审核；浏览器运行验收未执行；已有本地提交）
-C1.7.5 动态内容全局边界盘点与冻结                    已完成（主代理整批审核；浏览器运行验收未执行；未提交）
+C1.7.5 动态内容全局边界盘点与冻结                    已完成（主代理整批审核；浏览器运行验收未执行；已有本地代码/文档提交）
 C1.7.6–C1.7.7 第三方与 Foundation 全局边界收口       待实施（需单独授权）
 ```
 
-### 当前停点：C1.7.5 动态内容全局边界盘点与冻结已完成并停在未提交工作树；浏览器运行验收未执行，不 commit、不 push、不自动实施 C1.7.6、C1.7.7 或 Z
+### 当前停点：C1.7.5 动态内容全局边界盘点与冻结已完成并本地提交；浏览器运行验收未执行，不 push、不自动实施 C1.7.6、C1.7.7 或 Z
 
 ### M3.1–M3.6 实施记录（2026-07-30）
 
@@ -2571,7 +2571,7 @@ C1.7.7  Foundation 布局工具命名空间化；删除休眠 compatibility、�
 - 登记 `Site.scss` 对 `MainPage.scss`、活动 UBB Editor stylesheet 的两条加载边和零 importer `Styles/UbbEditor.scss`；同时冻结六类 emoji 格式与 `defaultEmojiType`、UBB options、Markdown `contentType` 0/1、三组草稿/上传 Storage key、Showdown/XSS 差异，以及 APlayer/DPlayer DOM 查询与清理。完整矩阵见 `docs/refactor-log/c1.7/dynamic-content-boundary-audit.md`。
 - 新增动态内容清单和独立守卫并接入 `npm run check:architecture`。检查通过：327 个现代源码文件、1348 条 import、27 条既有 allowlist；110 个真实 CSS Module、29 个主题、2 处既有第三方 global；18 条直接动态内容 import 边、63 条 UBB 注册、3 份样式边界、3 组 Storage 合同与 2 组内容类型合同。modern/legacy typecheck、正式 build（4116 modules transformed）和 `git diff --check` 通过。
 - 修改前后正式产物均为 9561 个文件、95 个 CSS；全产物与 CSS 聚合 SHA-256 分别保持 `ad00794f52f5482f4390c459d9db1e269e3d86a0a2b3bd3d73332f0a89b100c5`、`296f2c3c35ec94c04847422bf83eee6cab589cb382b5d42bba5595c1d3998465`，主题、静态 URL、CSS chunk、vendor 和脚本产物零漂移。
-- 本地 Vite 根入口返回 HTTP 200，但浏览器连接器没有可用实例；UBB/Markdown 切换与预览、emoji、上传、草稿、动态图片、播放器、登录和真实 API 均未执行运行验收。本批不修复 New Topics 查询缺陷，不进入 C1.7.6/C1.7.7/Z2/Markdown 替换，不 commit、不 push。
+- 本地 Vite 根入口返回 HTTP 200，但浏览器连接器没有可用实例；UBB/Markdown 切换与预览、emoji、上传、草稿、动态图片、播放器、登录和真实 API 均未执行运行验收。本批不修复 New Topics 查询缺陷，不进入 C1.7.6/C1.7.7/Z2/Markdown 替换；用户审核授权后，代码与记录已分别提交为 `0cc9d51f`、`3db6030e`，未 push。
 
 Annual Review 的最终删除仍属于 Z4；C1.7 不得借整理样式提前删除业务。若 Z4 尚未实施，C1.7 只把其样式放入明确的冻结 owner，并登记“随 Z4 整体删除”，不得继续留在 `Site.scss`。UBB 实现和样式的完整迁址统一属于 Z2；C1.7.5 只登记 renderer/editor、动态 HTML、播放器、数学公式和 emoji 的当前 producer/consumer/selector 边界，不提前建立过渡 Module、全局兼容 facade 或旧 class 双写。Markdown 现有编辑/预览组件及其样式不在 C1.7 做兼容性迁移，只冻结调用点、内容格式、Storage/草稿、上传和安全边界，留待 Z 后独立整组件替换。根 `Components/` 等 legacy 源码目录的整体迁址和删除仍属于 Z；C1.7 只允许为组件边界、真实复用和样式共置所需的窄拆分，必要时让活动 legacy 组件暂时拥有相邻 Module，并登记随 Z 整体移动，不得把 C1.7 扩张为完整 legacy 逻辑迁移。
 
@@ -2934,7 +2934,7 @@ R1  增加架构检查脚本                            已完成
 - 检查脚本结果；
 - 无业务行为变化证明。
 
-骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7、C1.1–C1.6 与 C1.7.1 均已完成代码实施、机械检查和主代理人工代码审核；C1.7.1、Legacy Board 删除和 Status 子批已提交为 `f11fe1e7`/`99a8679e`，C1.7.2 其余真实组件复用已提交为 `52b4bc77`/`fe0e02fa`，C1.7.3 样式 owner 共置已提交为 `b361a4c1`/`489dff9d`，C1.7.4 已提交为 `4f5f28ba`。C1.7.5 已完成并停在未提交工作树；浏览器运行验收未执行，New Topics 跨 Module DOM 查询/祖先哈希问题仍登记为后续修复；当前不自动启动 C1.7.6、C1.7.7 或 Z。
+骨架和本计划确认后，F1-A、F1-B、F1-C、F1-D、A1、M1、M2、A2.1–A2.11、M3.1–M3.6、S1.1–S1.3、S1.4 六组、S1.5、S1.6、S1.7、C1.1–C1.6 与 C1.7.1 均已完成代码实施、机械检查和主代理人工代码审核；C1.7.1、Legacy Board 删除和 Status 子批已提交为 `f11fe1e7`/`99a8679e`，C1.7.2 其余真实组件复用已提交为 `52b4bc77`/`fe0e02fa`，C1.7.3 样式 owner 共置已提交为 `b361a4c1`/`489dff9d`，C1.7.4 已提交为 `4f5f28ba`，C1.7.5 代码与记录已提交为 `0cc9d51f`/`3db6030e`。浏览器运行验收未执行，New Topics 跨 Module DOM 查询/祖先哈希问题仍登记为后续修复；当前不自动启动 C1.7.6、C1.7.7 或 Z。
 
 ## 22. 已确认决策与后续边界
 
