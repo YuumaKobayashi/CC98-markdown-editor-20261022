@@ -11,7 +11,7 @@
 
 ## P14 Router 边界
 
-- 完整运行结构、Router 7 API、lazy、兼容桥与树外导航决策见 [`../../docs/refactor-log/phase-14/router-implementation.md`](../../docs/refactor-log/phase-14/router-implementation.md)；
+- 历史迁移期的完整运行结构、Router 7 API、lazy、兼容桥与树外导航决策已归档至 [`../../docs/legacy/refactor-log/phase-14/router-implementation.md`](../../docs/legacy/refactor-log/phase-14/router-implementation.md)；
 - `router/app-router.tsx` 是公开 URL、嵌套路由与 route lazy 的唯一声明位置；
 - `layouts/app-shell.tsx` 持续挂载 Header、Footer、错误控制与根 `Outlet`；
 - `router/legacy-route-props.tsx` 只兼容 `match.params`、`location.pathname/search` 与 `history.push/replace/length`；

@@ -65,3 +65,7 @@ npm run build
 
 - `build/` 保存主题 manifest 和 HTML 模板合同等 Node.js 构建输入；
 - `scripts/build-vite.mjs` 执行正式构建与部署依赖复制。
+
+### ./docs/legacy
+
+已完成的前端迁移计划、架构盘点和各阶段审计记录归档。该目录不参与主线构建或运行。
