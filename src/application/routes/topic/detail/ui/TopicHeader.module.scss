@@ -1,0 +1,91 @@
+.followTopic {
+  width: 3rem;
+  margin-left: 1rem;
+  border: var(--cc98-theme-color-main) solid thin;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;}
+
+.topicInfo-info {
+  display: flex;
+  flex-direction: row;
+  width: 71.2rem;
+  height: 6.5rem;
+  border: rgb(106, 113, 119) solid 2px;
+  font-family: 微软雅黑;
+  box-sizing: border-box;}
+
+.topicInfo-boardMessage {
+  display: flex;
+  flex-direction: column;
+  margin-left: 1rem;
+  color: #6b7178;
+  height: 3rem;
+  align-self: center;
+  border-left: #6b7178 solid 1.5px;
+  width: 7rem;
+  align-items: center;}
+
+.topicInfo-title {
+  width: 52.2rem;
+  height: 6.25rem;
+  display: flex;
+  background-color: var(--cc98-background-color-textarea);
+  color: #000;
+  font-size: 1rem;}
+
+.topicTitleProp {
+  width: 44.5rem;
+  height: 6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;}
+
+.essay {
+  margin-left: 1.5rem;
+  margin-top: 0.5rem;
+  align-items: center;
+  height: 4rem;
+  font-size: 1.25rem;
+  padding-right: 1rem;
+  word-break: break-word;}
+
+.essayProp {
+  margin-left: 1.4rem;
+  display: flex;
+  font-size: 0.75rem;
+  color: var(--cc98-theme-color-main);}
+
+.tags {
+  display: flex;
+  flex-wrap: nowrap;
+  word-break: keep-all;
+  margin-right: 0.6rem;}
+
+// TODO(C1 follow-up): Split this class into semantic Topic Header, Topic Award, and Legacy Board metadata names.
+.tagSize {
+  font-size: 0.75rem;}
+
+.time {
+  display: flex;
+  flex-direction: row;}
+
+// TODO(C1 follow-up): Split this class into semantic Topic Header and Legacy Board metadata names.
+.timeProp {
+  margin-left: 0.1875rem;
+  font-size: 0.75rem;
+  word-break: keep-all;}
+
+.time img {
+  width: 0.625rem;
+  height: 0.625rem;}
+
+.viewtimes,
+.followCount {
+  display: flex;
+  flex-direction: row;
+  margin-left: 0.5rem;}
+
+.topicInfo-ads {
+  width: 18.65rem;
+  height: 6.25rem;}

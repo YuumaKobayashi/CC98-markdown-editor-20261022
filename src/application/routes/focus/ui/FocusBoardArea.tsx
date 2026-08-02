@@ -9,7 +9,7 @@ import {
 } from "@foundation/storage/web-storage";
 
 import { FocusTopicArea } from "./FocusTopicArea";
-import styles from "../../../layouts/collection/CollectionLayout.module.scss";
+import styles from "./FocusBoardArea.module.scss";
 
 interface CurrentFocusBoard {
   boardId: number;

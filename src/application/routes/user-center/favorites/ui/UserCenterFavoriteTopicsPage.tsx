@@ -21,7 +21,7 @@ import { UserCenterPager as Pager } from "@application/routes/user-center/pagina
 
 import { FavoriteTopicGroupManager } from "./FavoriteTopicGroupManager";
 import { UserCenterFavoriteTopicItem as Topic } from "./UserCenterFavoriteTopicItem";
-import activityStyles from "../../../../layouts/user-area/UserActivityLayout.module.scss";
+import activityStyles from "./UserCenterFavoriteTopicsPage.module.scss";
 
 const { Search } = Input;
 const { Option } = Select;

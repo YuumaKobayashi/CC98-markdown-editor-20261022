@@ -6,8 +6,7 @@ import { getSearchBoard } from "@modules/board";
 import { FocusBoard } from "@legacy/Props/FocusBoard";
 import { CollectionPageShell } from "@application/layouts/collection";
 
-import styles from "../../../../layouts/collection/CollectionLayout.module.scss";
-import searchStyles from "../../Search.module.scss";
+import styles from "./BoardSearchPage.module.scss";
 
 const parseBoardSearch = (search: string) => {
   const match = search.match(/^\?keyword=(.*)$/);
@@ -48,11 +47,11 @@ export function BoardSearchPage() {
       afterContent={
         <div
           id="noResultBoard"
-          className={searchStyles.noResult}
+          className={styles.noResult}
           hidden={!showNoResult}
         >
-          <img src="/static/images/searchNone.png" className={searchStyles.noResultPic} />
-          <div className={searchStyles.noResultText}>
+          <img src="/static/images/searchNone.png" className={styles.noResultPic} />
+          <div className={styles.noResultText}>
             -----------------------抱歉呢前辈，没有找到你想要的版面哦~----------------------
           </div>
         </div>

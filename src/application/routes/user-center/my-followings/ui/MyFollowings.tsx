@@ -11,7 +11,7 @@ import { selectCurrentUser } from "@modules/session";
 import type { UserInfo } from "@legacy/States/AppState";
 import { parseUserCenterPage } from "@application/routes/user-center/model/route-params";
 import { UserCenterPager as Pager } from "@application/routes/user-center/pagination";
-import activityStyles from "../../../../layouts/user-area/UserActivityLayout.module.scss";
+import activityStyles from "./MyFollowings.module.scss";
 
 type RouteParams = {
   page?: string;

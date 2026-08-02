@@ -1,0 +1,51 @@
+{
+  "phase": "C1.7.3 route style owner closure",
+  "removalPhase": "C1.7.4 orphan and dormant source audit",
+  "frozenInactiveImports": [
+    {
+      "source": "Components/Edit.tsx",
+      "modules": [
+        "src/application/routes/editor/EditorLegacyForm.module.scss"
+      ],
+      "reason": "The legacy Edit component has no active importer; retain its original style dependency until the C1.7.4 reachability and external-contract audit."
+    },
+    {
+      "source": "Components/FindIP.tsx",
+      "modules": [
+        "src/application/routes/topic/TopicManagementIP.module.scss"
+      ],
+      "reason": "FindIP has no active importer but remains documented as a legacy capability; C1.7.4 must audit external consumers before deletion."
+    },
+    {
+      "source": "Components/Topic/Topic-Judge.tsx",
+      "modules": [
+        "src/application/routes/topic/TopicManagement.module.scss",
+        "src/application/routes/topic/TopicManagementActions.module.scss"
+      ],
+      "reason": "The old judge implementation is superseded by the active moderation module and has no active importer; preserve it unchanged for C1.7.4 proof."
+    },
+    {
+      "source": "Components/Topic/Topic-PostManagement.tsx",
+      "modules": [
+        "src/application/routes/topic/TopicManagement.module.scss",
+        "src/application/routes/topic/TopicManagementActions.module.scss"
+      ],
+      "reason": "The old post-management implementation is superseded by the active moderation module and has no active importer; preserve it unchanged for C1.7.4 proof."
+    },
+    {
+      "source": "Components/Topic/Topic-TopicManagement.tsx",
+      "modules": [
+        "src/application/routes/topic/TopicManagement.module.scss",
+        "src/application/routes/topic/TopicManagementActions.module.scss"
+      ],
+      "reason": "The old topic-management implementation is superseded by the active moderation module and has no active importer; preserve it unchanged for C1.7.4 proof."
+    },
+    {
+      "source": "Components/UserCenter/ExactActivitiesPosts.tsx",
+      "modules": [
+        "src/application/routes/user-center/UserCenter.module.scss"
+      ],
+      "reason": "ExactActivitiesPosts has no active importer and already references a frozen legacy owner; retain both until C1.7.4 completes reachability proof."
+    }
+  ]
+}

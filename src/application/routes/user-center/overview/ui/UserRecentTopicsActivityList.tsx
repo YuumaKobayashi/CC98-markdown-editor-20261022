@@ -13,7 +13,7 @@ import {
   UserRecentTopicItem as Topic,
 } from "@modules/topic";
 import type { UserRecentTopic } from "@legacy/States/AppState";
-import activityStyles from "../../../../layouts/user-area/UserActivityLayout.module.scss";
+import activityStyles from "./UserRecentTopicsActivityList.module.scss";
 
 //用户中心主页帖子动态组件
 export function UserRecentTopicsActivityList() {

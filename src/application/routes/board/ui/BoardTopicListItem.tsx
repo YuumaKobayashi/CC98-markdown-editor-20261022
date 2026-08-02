@@ -7,7 +7,7 @@ import { Link } from "react-router";
 import { getMyInfo } from "@modules/session";
 import { readRawTagInfoCache } from "@modules/topic";
 
-import styles from "../Board.module.scss";
+import styles from "./BoardTopicListItem.module.scss";
 import { BoardTopicPreviewCard } from "./BoardTopicPreviewCard";
 
 export { BoardTopicPreviewCard } from "./BoardTopicPreviewCard";

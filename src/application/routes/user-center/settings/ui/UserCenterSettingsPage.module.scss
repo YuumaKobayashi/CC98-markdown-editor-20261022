@@ -1,0 +1,49 @@
+.user-center-config.user-center-config.user-center-config {
+  h2 {
+    font-size: 0.75rem;
+    margin: 0 0 2rem 0;}
+
+  button {
+    background-color: rgb(240, 240, 240);
+
+    &:hover {
+      opacity: 0.8;}
+
+    &:active {
+      opacity: 0.6;}}
+
+  label {
+    background-color: #f0f0f0;
+
+    &:hover {
+      opacity: 0.8;}
+
+    &:active {
+      opacity: 0.6;}}}
+
+.config-submit.config-submit.config-submit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h2 {
+    align-self: flex-start;}
+
+  button {
+    width: 6.25rem;
+    height: 1.875rem;
+    border-radius: 5px;
+    margin: 0 3rem;}
+
+  .config-submit-button {
+    background-color: var(--cc98-theme-color-main);
+    color: #fff;
+
+    &:hover {
+      opacity: 0.8;}
+
+    &:active {
+      opacity: 0.6;}}
+
+  p {
+    transition-duration: 0.5s;}}

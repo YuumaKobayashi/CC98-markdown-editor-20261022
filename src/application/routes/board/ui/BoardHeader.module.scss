@@ -1,0 +1,30 @@
+
+
+.board-head-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;}
+
+.board-head-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;}
+
+.board-head-button {
+  height: 4rem;
+  width: 7rem;
+  background-color: var(--cc98-theme-color-main);
+  color: #fff;
+  font-size: 1.5rem;}
+
+.board-head-button:hover {
+  background-color: var(--cc98-theme-color-main);}
+
+.board-head-button:before {
+  background-color: var(--cc98-theme-color-main);}
+
+.board-head-button:focus {
+  background-color: var(--cc98-theme-color-main);}

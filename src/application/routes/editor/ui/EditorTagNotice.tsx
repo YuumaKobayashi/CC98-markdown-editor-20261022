@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import type { EditorTagInfo } from "../model/types";
-import styles from "../EditorLegacyForm.module.scss";
+import styles from "./EditorTagNotice.module.scss";
 
 interface EditorTagNoticeProps {
   tagsV2: EditorTagInfo;

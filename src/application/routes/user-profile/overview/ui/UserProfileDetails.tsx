@@ -7,7 +7,7 @@ import { UbbContainer } from "@legacy/Components/UbbContainer";
 import type { UserInfo } from "@legacy/States/AppState";
 import { UbbCodeOptions } from "@legacy/Ubb/Core";
 import { isoTime2LocalTime } from "@legacy/Utility/timeZoneUtility";
-import styles from "../../../../../modules/user/ui/UserProfile.module.scss";
+import styles from "./UserProfileDetails.module.scss";
 
 interface UserProfileDetailsProps {
   /**

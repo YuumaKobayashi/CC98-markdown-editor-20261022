@@ -6,7 +6,7 @@ import { Link } from "react-router";
 import { UbbContainer } from "@legacy/Components/UbbContainer";
 import { UbbCodeOptions } from "@legacy/Ubb/UbbCodeExtension";
 
-import styles from "../Board.module.scss";
+import styles from "./BoardTopicPreviewCard.module.scss";
 import { getShortTopic } from "../api/service";
 
 interface BoardTopicPreviewCardProps {

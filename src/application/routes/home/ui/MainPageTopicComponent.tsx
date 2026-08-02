@@ -4,7 +4,7 @@ import {
   MainPageTopicState,
 } from "../model/types";
 import { HomeSectionHeader } from "./HomeSectionHeader";
-import topicStyles from "./MainPageTopic.module.scss";
+import topicStyles from "./MainPageTopicComponent.module.scss";
 
 interface MainPageTopicComponentProps {
   data: MainPageTopicState[];

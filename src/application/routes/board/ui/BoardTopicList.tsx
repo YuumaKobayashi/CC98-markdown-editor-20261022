@@ -1,7 +1,7 @@
 import * as React from "react";
 import type { ITopic } from "@cc98/api";
 
-import styles from "../Board.module.scss";
+import styles from "./BoardTopicList.module.scss";
 import { BoardTopicListItem } from "./BoardTopicListItem";
 
 interface BoardTopicListProps {

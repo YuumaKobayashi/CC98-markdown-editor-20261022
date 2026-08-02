@@ -1,17 +1,16 @@
 {
-  "phase": "C1.7.2 real component reuse",
-  "totalCssModuleCount": 78,
+  "phase": "C1.7.3 route style owner closure",
   "totalOccurrences": 2,
   "moduleCount": 2,
   "updatePolicy": "Only update this baseline in an explicitly authorized style-owner closure after auditing selector, producer, consumer, and behavior-query changes.",
   "modules": [
     {
-      "path": "src/application/routes/board/Board.module.scss",
+      "path": "src/application/routes/board/ui/BoardContent.module.scss",
       "occurrences": 1,
       "fingerprint": "565a48e817ab4ce818466035f79813d5a73cd9b3a9b4301e047bfa6cb1d196ca"
     },
     {
-      "path": "src/application/routes/new-topics/NewTopics.module.scss",
+      "path": "src/application/routes/new-topics/ui/NewTopicsBoardSidebar.module.scss",
       "occurrences": 1,
       "fingerprint": "9b97c52162bfa3c3a348af9b5952b7f12ad8f5efc0837e7e3b3f7919d57c4bce"
     }

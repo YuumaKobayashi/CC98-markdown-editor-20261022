@@ -3,7 +3,7 @@ import { Link } from "react-router";
 
 import { Pager } from "@foundation/ui/pagination";
 
-import styles from "../BoardTagPagination.module.scss";
+import styles from "./BoardTagPagination.module.scss";
 
 interface BoardTag {
   id: number;

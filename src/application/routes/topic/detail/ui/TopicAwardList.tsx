@@ -5,7 +5,7 @@ import $ from "jquery";
 import { TopicAwardInfo } from "@modules/topic";
 import { getThisUserInfobyName } from "@modules/user";
 import { getUsersInfo } from "@modules/user";
-import styles from "../../TopicDetailAward.module.scss";
+import styles from "./TopicAwardList.module.scss";
 
 export interface TopicAwardListProps {
   postId: any;

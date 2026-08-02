@@ -5,7 +5,7 @@ import { Link } from "react-router";
 
 import { getBoards } from "@modules/board";
 
-import styles from "../NewTopics.module.scss";
+import styles from "./NewTopicsBoardSidebar.module.scss";
 
 const { Panel } = Collapse;
 

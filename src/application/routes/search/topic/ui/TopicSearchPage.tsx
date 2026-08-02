@@ -8,8 +8,7 @@ import { SearchTopicItem } from "@modules/topic";
 import { FocusTopic } from "@legacy/Props/FocusTopic";
 import { CollectionPageShell } from "@application/layouts/collection";
 
-import styles from "../../../../layouts/collection/CollectionLayout.module.scss";
-import searchStyles from "../../Search.module.scss";
+import styles from "./TopicSearchPage.module.scss";
 
 interface SearchInfo {
   boardId: number;
@@ -197,11 +196,11 @@ export function TopicSearchPage() {
         </div>
         <div
           id="noResult"
-          className={searchStyles.noResult}
+          className={styles.noResult}
           hidden={status !== "empty"}
         >
-          <img src="/static/images/searchNone.png" className={searchStyles.noResultPic} />
-          <div className={searchStyles.noResultText}>
+          <img src="/static/images/searchNone.png" className={styles.noResultPic} />
+          <div className={styles.noResultText}>
             -----------------------抱歉呢前辈，没有找到你想要的帖子哦~----------------------
           </div>
         </div>

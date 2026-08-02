@@ -26,8 +26,7 @@ import { setStorage } from "@foundation/storage/web-storage";
 
 import { NewTopicsBoardSidebar } from "./NewTopicsBoardSidebar";
 import { RandomRecentTopics } from "./RandomRecentTopics";
-import newTopicsStyles from "../NewTopics.module.scss";
-import styles from "../../../layouts/collection/CollectionLayout.module.scss";
+import styles from "./NewTopicsPage.module.scss";
 
 //TODO：逻辑重构优化，优先级中
 
@@ -300,15 +299,15 @@ export function NewTopicsPage() {
         </div>
 
         <div
-          className={newTopicsStyles["card-topic-area"]}
+          className={styles["card-topic-area"]}
           id="card-mode-area"
           style={{ display: viewMode === 0 ? "none" : undefined }}
         >
-          <div className={newTopicsStyles["card-topic-area-left"]}>
-            <div className={newTopicsStyles["card-topic-area-left-content"]}>
-              <div className={newTopicsStyles["card-user"]}>
-                <div className={newTopicsStyles["card-user-background"]} />
-                <div className={newTopicsStyles["card-user-portrait"]}>
+          <div className={styles["card-topic-area-left"]}>
+            <div className={styles["card-topic-area-left-content"]}>
+              <div className={styles["card-user"]}>
+                <div className={styles["card-user-background"]} />
+                <div className={styles["card-user-portrait"]}>
                   <img
                     src={
                       myInfo
@@ -335,8 +334,8 @@ export function NewTopicsPage() {
                     />
                   )}
                 </div>
-                <div className={newTopicsStyles["card-user-stats"]}>
-                  <div className={newTopicsStyles["card-user-stats-item"]}>
+                <div className={styles["card-user-stats"]}>
+                  <div className={styles["card-user-stats-item"]}>
                     <a href="../usercenter" target="_blank">
                       {myInfo
                         ? showCardUser
@@ -346,7 +345,7 @@ export function NewTopicsPage() {
                     </a>
                     帖数
                   </div>
-                  <div className={newTopicsStyles["card-user-stats-item"]}>
+                  <div className={styles["card-user-stats-item"]}>
                     <a href="../usercenter/myfollowings" target="_blank">
                       {myInfo
                         ? showCardUser
@@ -356,7 +355,7 @@ export function NewTopicsPage() {
                     </a>
                     关注
                   </div>
-                  <div className={newTopicsStyles["card-user-stats-item"]}>
+                  <div className={styles["card-user-stats-item"]}>
                     <a href="../usercenter/myfans" target="_blank">
                       {myInfo
                         ? showCardUser
@@ -366,7 +365,7 @@ export function NewTopicsPage() {
                     </a>
                     粉丝
                   </div>
-                  <div className={newTopicsStyles["card-user-stats-item"]}>
+                  <div className={styles["card-user-stats-item"]}>
                     <a
                       href="../usercenter/myposts/ishot/1/1"
                       target="_blank"
@@ -382,21 +381,21 @@ export function NewTopicsPage() {
                 </div>
               </div>
 
-              <div className={newTopicsStyles["card-board"]}>
-                <div className={newTopicsStyles["card-board-title"]}>
+              <div className={styles["card-board"]}>
+                <div className={styles["card-board-title"]}>
                   版面列表
                 </div>
                 <NewTopicsBoardSidebar />
               </div>
             </div>
           </div>
-          <div className={newTopicsStyles["card-topic-area-middle"]}>
+          <div className={styles["card-topic-area-middle"]}>
             {viewMode === 2
               ? data.map(renderMediaOnlyTopic)
               : data.map(renderCardTopic)}
           </div>
-          <div className={newTopicsStyles["card-topic-area-right"]}>
-            <div className={newTopicsStyles["card-user-may-mising"]}>
+          <div className={styles["card-topic-area-right"]}>
+            <div className={styles["card-user-may-mising"]}>
               <RandomRecentTopics />
             </div>
           </div>

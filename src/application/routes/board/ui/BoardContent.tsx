@@ -3,7 +3,7 @@ import type { IBoard, ITagGroup, ITopic } from "@cc98/api";
 import { Pagination, Spin } from "antd";
 import { useNavigate } from "react-router";
 
-import styles from "../Board.module.scss";
+import styles from "./BoardContent.module.scss";
 import {
   getBestTopics,
   getNormalTopics,

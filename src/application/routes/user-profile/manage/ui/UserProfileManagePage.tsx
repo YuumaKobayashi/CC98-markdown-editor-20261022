@@ -5,7 +5,7 @@ import { useUserProfileContext } from "@application/routes/user-profile/layout";
 import { DeleteRecentUserContent } from "./DeleteRecentUserContent";
 import { UserPunishmentForm } from "./UserPunishmentForm";
 import { UserRecentPostsManager } from "./UserRecentPostsManager";
-import styles from "../../UserProfileManagement.module.scss";
+import styles from "./UserProfileManagePage.module.scss";
 
 //TODO: 调整组件逻辑
 export function UserProfileManagePage() {

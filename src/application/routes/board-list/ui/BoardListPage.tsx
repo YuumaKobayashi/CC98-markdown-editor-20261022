@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { cc98Fetch } from "@foundation/api/http";
 import DocumentTitle from "@foundation/ui/document-title";
-import styles from "../BoardList.module.scss";
+import styles from "./BoardListPage.module.scss";
 import type { RootBoardState } from "../model/board-list";
 import { BoardListSection } from "./BoardListSection";
 

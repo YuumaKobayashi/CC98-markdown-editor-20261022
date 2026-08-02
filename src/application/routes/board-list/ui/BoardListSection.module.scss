@@ -1,0 +1,44 @@
+
+
+.anArea {
+  display: flex;
+  flex-direction: column;
+  width: 1140px;
+  box-sizing: border-box;
+  background-color: var(--cc98-background-color-textarea);
+  margin-bottom: 2rem;}
+
+.areaName {
+  display: flex;
+  flex-direction: row;
+  font-size: 1rem;
+  font-family: 微软雅黑;
+  color: #fff;
+  margin-left: 1.1rem;
+
+  a {
+    font-size: 1rem;
+    font-family: 微软雅黑;
+    color: #fff;}}
+
+.expendBoardList {
+  width: 2.5rem;
+  margin-top: 0rem;
+  font-size: 0.75rem;
+  color: #fff;
+  border: #fff solid thin;
+  border-radius: 1rem;
+  text-align: center;
+  height: 1.25rem;
+  line-height: 1.25rem;
+  cursor: pointer;
+  margin-right: 2rem;}
+
+.boardListHead {
+  height: 3rem;
+  align-items: center;
+  background-color: var(--cc98-theme-color-main);
+  justify-content: space-between;
+  cursor: pointer;}
+
+.boardListHead:hover {}

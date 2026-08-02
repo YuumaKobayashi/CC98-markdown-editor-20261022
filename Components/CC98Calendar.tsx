@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import styles from '../src/application/routes/daily-signin/Calendar.module.scss';
+import styles from "./CC98Calendar.module.scss";
 
 /**
  * CC98Calendar Component

@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router";
 
 import * as Utility from "@legacy/Utility";
 
-import styles from "../Board.module.scss";
+import styles from "./BoardPage.module.scss";
 import { getBoardInfo } from "../api/service";
 import { BoardContent } from "./BoardContent";
 import { BoardHeader } from "./BoardHeader";

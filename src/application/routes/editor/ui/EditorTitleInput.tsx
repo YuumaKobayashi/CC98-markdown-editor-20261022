@@ -3,7 +3,7 @@ import $ from "jquery";
 
 import { getTagNamebyId } from "@modules/topic";
 import type { EditorTagInfo } from "../model/types";
-import styles from "../EditorLegacyForm.module.scss";
+import styles from "./EditorTitleInput.module.scss";
 
 interface EditorTitleInputProps {
   boardId;

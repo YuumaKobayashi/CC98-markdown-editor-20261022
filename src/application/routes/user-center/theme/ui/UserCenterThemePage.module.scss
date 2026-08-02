@@ -1,0 +1,33 @@
+.user-theme-config {
+  display: flex;
+  justify-content: space-evenly;
+  /* margin: 2rem 0; */
+  flex-wrap: wrap;
+
+  button {
+    width: 14rem;
+    height: 6rem;
+    border-radius: 3px;
+    margin: 1rem;
+    background: center no-repeat;
+    background-size: cover;
+    border: solid black;
+    color: rgba(255, 255, 255, 0);
+    font-size: 1.5rem;
+
+    &:hover {
+      //opacity: 0.8;
+      background-color: #b77341;
+      color: white;
+      cursor: pointer;
+      background-image: none !important;}
+
+    &:active {
+      //opacity: 0.6;
+    }}
+
+  button[disabled] {
+    cursor: default;
+
+    &:hover {
+      opacity: 1;}}}

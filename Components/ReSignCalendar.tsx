@@ -13,7 +13,7 @@ import {
   getMyInfo,
   refreshUserInfo,
 } from "../Utility";
-import styles from "../src/application/routes/daily-signin/Calendar.module.scss";
+import styles from "./ReSignCalendar.module.scss";
 
 interface ResignCalendarProps {
   updateSigninInfo?: (number) => void;

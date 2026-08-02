@@ -2,7 +2,7 @@ import * as React from "react";
 import type { ITagGroup } from "@cc98/api";
 import { Select } from "antd";
 
-import styles from "../Board.module.scss";
+import styles from "./BoardTopicToolbar.module.scss";
 
 const Option = Select.Option;
 

@@ -3,7 +3,7 @@ import * as React from "react";
 import { getLocalStorage } from "@foundation/storage/web-storage";
 
 import { HomeSectionHeader } from "./HomeSectionHeader";
-import topicStyles from "./MainPageTopic.module.scss";
+import topicStyles from "./HomeHotTopics.module.scss";
 
 interface HotTopic {
   title: string;

@@ -11,7 +11,7 @@ import {
 } from "@modules/daily-signin";
 import { getGlobalConfig } from "@modules/site-content";
 import { getMyInfo } from "@modules/session";
-import styles from "../DailySignin.module.scss";
+import styles from "./DailySigninPage.module.scss";
 
 interface SigninInfo {
   hasSignedInToday?: boolean;

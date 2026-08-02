@@ -7,8 +7,7 @@ import { UbbCodeOptions } from "@legacy/Ubb/UbbCodeExtension";
 import { atUserMdUrl, atUserUbbUrl } from "@foundation/lib/text";
 import { getTopicVote } from "../api/service";
 import { TopicVote, type voteInfo } from "./TopicVote";
-import detailStyles from "../../TopicDetail.module.scss";
-import layoutStyles from "../../TopicReplyLayout.module.scss";
+import detailStyles from "./TopicReplyContent.module.scss";
 
 const showdown = require("showdown");
 const showdownExtension = require("showdown-xss-filter");
@@ -96,7 +95,7 @@ export function TopicReplyContent({
     : "";
 
   return (
-    <div className={layoutStyles["reply-content"]}>
+    <div className={detailStyles["reply-content"]}>
       {vote ? (
         <TopicVote
           topicInfo={topicInfo}

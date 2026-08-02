@@ -1,0 +1,79 @@
+.top-button.top-button {
+  width: 6rem;
+  position: fixed;
+  bottom: 5%;
+  right: 5%;
+  height: 2rem;
+  border-radius: 1rem;
+  opacity: 0.5;
+  display: none;
+  z-index: 2;
+  margin: 0;
+  padding: 0.7rem;
+  border: 0;
+  font-size: 1.1rem;
+  // text-align: center;
+  // vertical-align: middle;
+  cursor: pointer;
+  line-height: 2rem;
+
+  &:hover {
+    opacity: 0.8;}
+
+  &:active {
+    opacity: 1;}
+
+  &:focus {
+    outline: none;}}
+
+.top-button.top-button.btn-show {
+  animation-name: global(fadeIn);
+  animation-duration: 1s;
+  display: inherit;}
+
+.top-button.top-button.btn-disappear {
+  display: inherit;
+  animation-name: global(fadeOut);
+  animation-duration: 500ms;
+  animation-fill-mode: forwards;}
+
+.focus-topic-loading.focus-topic-loading {
+  margin-top: 20px;
+  text-align: center;
+
+  img {
+    width: 200px;
+    height: 18px;}}
+
+.focus-topic-loaddone.focus-topic-loaddone {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 16px;
+  color: rgb(32, 32, 32);}
+
+.focus-topic-area {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.45rem;
+
+  .focus-topic-topicArea {
+    display: flex;
+    flex-direction: column;}
+
+  // .focus-topic-loading {
+  //   margin-top: 20px;
+  //   text-align: center;
+
+  //   img {
+  //     width: 200px;
+  //     height: 18px;
+  //   }
+  // }
+
+  // .focus-topic-loaddone {
+  //   margin-top: 20px;
+  //   text-align: center;
+  //   font-size: 16px;
+  //   color: $color-black;
+  // }
+}

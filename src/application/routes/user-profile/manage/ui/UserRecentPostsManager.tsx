@@ -5,7 +5,7 @@ import { UserAreaLoading } from "@application/layouts/user-area";
 import { getBoardName } from "@modules/board";
 import { getToken } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
-import styles from "../../UserProfileManagement.module.scss";
+import styles from "./UserRecentPostsManager.module.scss";
 
 interface UserRecentPostsManagerProps {
   /**

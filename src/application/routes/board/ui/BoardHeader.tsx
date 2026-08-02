@@ -6,7 +6,7 @@ import { Link } from "react-router";
 import { getMyInfo } from "@modules/session";
 import { HomeAdvertisementCarousel } from "@application/routes/home/advertisement";
 
-import styles from "../Board.module.scss";
+import styles from "./BoardHeader.module.scss";
 import { BoardAnnouncement } from "./BoardAnnouncement";
 import { BoardBreadcrumb } from "./BoardBreadcrumb";
 

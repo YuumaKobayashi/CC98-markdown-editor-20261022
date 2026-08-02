@@ -2,8 +2,7 @@ import * as React from "react";
 import { Link } from "react-router";
 
 import type { RootBoardState } from "../model/board-list";
-import layoutStyles from "../BoardList.module.scss";
-import headerStyles from "../BoardListHeader.module.scss";
+import layoutStyles from "./BoardListSection.module.scss";
 import { ChildBoardList } from "./ChildBoardList";
 
 interface BoardListSectionProps {
@@ -43,7 +42,7 @@ export function BoardListSection({ data }: BoardListSectionProps) {
     <div className={layoutStyles.anArea} id={data.name}>
       <div className="column" style={{ border: "2px solid #e9e9e9" }}>
         <div
-          className={`row ${headerStyles.boardListHead}`}
+          className={`row ${layoutStyles.boardListHead}`}
           onClick={toggleIsExpanded}
         >
           <div

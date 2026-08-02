@@ -11,7 +11,7 @@ import {
   setStorage,
 } from "@foundation/storage/web-storage";
 
-import styles from "../../../layouts/collection/CollectionLayout.module.scss";
+import styles from "./FocusTopicArea.module.scss";
 
 export interface FocusTopicAreaProps {
   id: number;

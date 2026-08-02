@@ -1,0 +1,24 @@
+.card-topic-area-left-content.card-topic-area-left-content.card-topic-area-left-content {
+  position: sticky;
+  top: 10px;
+
+  .card-topic-area-left-content-collapse {
+    background: var(--cc98-background-color-textarea);
+    border: 0;
+
+    :global(.ant-collapse-content-box) {
+      padding: 4px;
+      padding-left: 15px;
+    }
+  }
+}
+
+.card-topic-area-left-content-collapse-item.card-topic-area-left-content-collapse-item.card-topic-area-left-content-collapse-item {
+  a {
+    color: inherit;
+  }
+
+  a:hover {
+    color: var(--cc98-theme-color-main);
+  }
+}

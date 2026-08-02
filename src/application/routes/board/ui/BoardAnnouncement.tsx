@@ -10,7 +10,7 @@ import {
 } from "@modules/follow";
 import { UbbContainer } from "@legacy/Components/UbbContainer";
 import { UbbCodeOptions } from "@legacy/Ubb/UbbCodeExtension";
-import styles from "../Board.module.scss";
+import styles from "./BoardAnnouncement.module.scss";
 import { editBigPaper } from "../api/service";
 
 const Panel = Collapse.Panel;

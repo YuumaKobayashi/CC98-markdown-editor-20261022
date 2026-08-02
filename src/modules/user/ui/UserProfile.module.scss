@@ -6,8 +6,7 @@
   width: 18.75rem;
 
   &>* {
-    margin-bottom: 1rem;
-  }
+    margin-bottom: 1rem;}
 
   .userId {
     font-size: 1.125rem;
@@ -18,9 +17,7 @@
 
     &>p {
       flex-grow: 1;
-      white-space: pre;
-    }
-  }
+      white-space: pre;}}
 
   button {
     transition-duration: 0.4s;
@@ -35,41 +32,19 @@
     cursor: pointer;
 
     &:hover {
-      opacity: 0.8;
-    }
+      opacity: 0.8;}
 
     &:active {
-      opacity: 0.6;
-    }
-  }
-
-  .unfollow {
-    background-color: rgb(230, 230, 230);
-    color: rgb(160, 160, 160);
-
-    &:hover {
-      opacity: 0.8;
-    }
-
-    &:active {
-      opacity: 0.6;
-    }
-
-    &:focus {
-      outline: none;
-    }
-  }
+      opacity: 0.6;}}
 
   .userIntroducion {
     margin-left: 2rem;
-    font-size: 0.75rem;
-  }
+    font-size: 0.75rem;}
 
   .user-profile-info {
     display: inline-flex;
     width: 5rem;
-    color: black;
-  }
+    color: black;}
 
   .userGenderAndBirthday {
     display: flex;
@@ -80,15 +55,11 @@
       width: 50%;
 
       &:after {
-        font-family: FontAwesome;
-      }
-    }
+        font-family: FontAwesome;}}
 
     div {
       width: 100%;
-      display: flex;
-    }
-  }
+      display: flex;}}
 
   .user-description {
     display: flex;
@@ -98,15 +69,11 @@
 
     &>p {
       width: 100%;
-      margin-bottom: 1rem;
-    }
+      margin-bottom: 1rem;}
 
     article {
       width: 100%;
       padding: 1rem;
       font-size: 0.75rem;
       text-indent: 2em;
-      white-space: pre;
-    }
-  }
-}
+      white-space: pre;}}}

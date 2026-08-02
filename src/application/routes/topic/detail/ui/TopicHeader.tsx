@@ -14,8 +14,7 @@ import { noticeMessageShow } from "@modules/notification";
 import { HomeAdvertisementCarousel } from "@application/routes/home/advertisement";
 import { copyToClipboard } from "@foundation/lib/dom";
 import { NoticeMessage } from "@legacy/Components/NoticeMessage";
-import actionStyles from "../../TopicHeaderActions.module.scss";
-import infoStyles from "../../TopicHeaderInfo.module.scss";
+import actionStyles from "./TopicHeader.module.scss";
 
 export interface TopicHeaderProps {
   topicInfo: any;
@@ -122,8 +121,8 @@ export function TopicHeader(props: TopicHeaderProps) {
   const boardUrl = `/board/${boardInfo.id}`;
   const tags =
     tag1 || tag2 ? (
-      <div id="tags" className={infoStyles.tags}>
-        <div className={`tagProp ${infoStyles.tagSize}`}>
+      <div id="tags" className={actionStyles.tags}>
+        <div className={`tagProp ${actionStyles.tagSize}`}>
           标签： {tag1Name} {tag2Name}
         </div>
         <div className="tagProp"></div>
@@ -131,40 +130,40 @@ export function TopicHeader(props: TopicHeaderProps) {
     ) : null;
 
   return (
-    <div className={infoStyles["topicInfo-info"]}>
-      <div className={infoStyles["topicInfo-title"]}>
+    <div className={actionStyles["topicInfo-info"]}>
+      <div className={actionStyles["topicInfo-title"]}>
         <div
-          className={`column ${infoStyles.topicTitleProp}`}
+          className={`column ${actionStyles.topicTitleProp}`}
           id="topicTitleProp"
         >
           <div
             id="essay1"
-            className={`row ${infoStyles.essay}`}
+            className={`row ${actionStyles.essay}`}
             title={title.length > overflowLen ? title : undefined}
           >
             {title.length <= overflowLen
               ? title
               : title.slice(0, overflowLen) + " ..."}
           </div>
-          <div className={`row ${infoStyles.essayProp}`} id="essayProp">
+          <div className={`row ${actionStyles.essayProp}`} id="essayProp">
             {tags}
-            <div id="time" className={infoStyles.time}>
+            <div id="time" className={actionStyles.time}>
               <div className="viewProp">
                 <i className="fa fa-clock-o fa-lg fa-fw"></i>
               </div>{" "}
-              <div className={`${infoStyles.timeProp} ${infoStyles.tagSize}`}>
+              <div className={`${actionStyles.timeProp} ${actionStyles.tagSize}`}>
                 {moment(topicInfo.time).format("YYYY-MM-DD HH:mm:ss")}
               </div>
             </div>
-            <div id="viewtimes" className={infoStyles.viewtimes}>
+            <div id="viewtimes" className={actionStyles.viewtimes}>
               <div className="viewProp">
                 <i className="fa fa-eye fa-lg fa-fw"></i>{" "}
               </div>{" "}
-              <div className={`${infoStyles.timeProp} ${infoStyles.tagSize}`}>
+              <div className={`${actionStyles.timeProp} ${actionStyles.tagSize}`}>
                 {topicInfo.hitCount}
               </div>
             </div>
-            <div id="followCount" className={infoStyles.followCount}>
+            <div id="followCount" className={actionStyles.followCount}>
               <div className="viewProp">
                 {isFollow ? (
                   <i className="fa fa-star fa-lg fa-fw"></i>
@@ -172,7 +171,7 @@ export function TopicHeader(props: TopicHeaderProps) {
                   <i className="fa fa-star-o fa-lg fa-fw"></i>
                 )}{" "}
               </div>{" "}
-              <div className={`${infoStyles.timeProp} ${infoStyles.tagSize}`}>
+              <div className={`${actionStyles.timeProp} ${actionStyles.tagSize}`}>
                 {followCount}
               </div>
             </div>
@@ -199,7 +198,7 @@ export function TopicHeader(props: TopicHeaderProps) {
           </div>
         </div>
 
-        <div className={infoStyles["topicInfo-boardMessage"]}>
+        <div className={actionStyles["topicInfo-boardMessage"]}>
           <Link to={boardUrl}>
             <div style={{ color: "#6b7178" }}>{boardInfo.name}</div>
           </Link>
@@ -208,7 +207,7 @@ export function TopicHeader(props: TopicHeaderProps) {
           </div>
         </div>
       </div>
-      <div className={infoStyles["topicInfo-ads"]}>
+      <div className={actionStyles["topicInfo-ads"]}>
         <HomeAdvertisementCarousel />
       </div>
       <NoticeMessage

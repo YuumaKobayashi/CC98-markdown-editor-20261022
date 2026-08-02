@@ -9,8 +9,7 @@ import {
   setStorage,
 } from "@foundation/storage/web-storage";
 
-import newTopicsStyles from "../NewTopics.module.scss";
-import styles from "../RandomRecentTopics.module.scss";
+import styles from "./RandomRecentTopics.module.scss";
 
 const cutOffTitle = (title: string) =>
   title.length > 30 ? `${title.slice(0, 28)}...` : title;
@@ -112,7 +111,7 @@ export function RandomRecentTopics() {
   return (
     <>
       <div className={styles["card-recommendation-button-area"]}>
-        <div className={newTopicsStyles["card-user-may-mising-title"]}>
+        <div className={styles["card-user-may-mising-title"]}>
           可能错过
         </div>
         <button

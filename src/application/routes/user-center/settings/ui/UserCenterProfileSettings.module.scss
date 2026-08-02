@@ -1,0 +1,67 @@
+
+
+.user-center-config-others.user-center-config-others.user-center-config-others {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+
+  & > div {
+    margin-bottom: 2rem;}
+
+  p {
+    margin: 0;}
+
+  p:first-child {
+    width: 10rem;}
+
+  .config-gender {
+    display: flex;
+    align-items: center;
+
+    select {
+      width: 3rem;
+      height: 1.5rem;
+      text-align-last: center;}}
+
+  .config-birthday {
+    display: flex;
+    align-items: center;
+
+    p:first-child {
+      width: 10rem;
+      margin: 0;}
+
+    p {
+      margin-left: 1rem;
+      margin-right: 0.5rem;}
+
+    select {
+      height: 1.5rem;
+      width: 5rem;
+      text-align-last: center;}}
+
+  .config-text {
+    display: flex;
+    align-items: center;
+
+    input {
+      height: 1.5rem;
+      width: 10rem;
+      padding: 0 0.5rem;}}
+
+  .config-introduction {
+    display: flex;
+    align-items: center;
+
+    & > p {
+      align-self: flex-start;}
+
+    div p {
+      font-size: 0.75rem;
+      margin: 0;}
+
+    textarea {
+      height: 3rem;
+      width: 30rem;
+      padding: 0.5rem;
+      resize: none;}}}

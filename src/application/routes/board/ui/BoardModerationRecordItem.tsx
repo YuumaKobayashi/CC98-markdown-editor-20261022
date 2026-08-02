@@ -3,7 +3,7 @@ import moment from "moment";
 
 import type { BoardEvent } from "@legacy/States/BoardEvent";
 
-import styles from "../BoardRecords.module.scss";
+import styles from "./BoardModerationRecordItem.module.scss";
 
 export function BoardModerationRecordItem(props: BoardEvent) {
   const [showIp, setShowIp] = React.useState(false);

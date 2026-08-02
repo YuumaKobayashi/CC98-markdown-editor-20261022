@@ -5,7 +5,7 @@ import { getMonthlyHotTopic } from "@modules/topic";
 import type { FocusTopic } from "@legacy/Props/FocusTopic";
 import { CollectionPageShell } from "@application/layouts/collection";
 
-import styles from "../../../../layouts/collection/CollectionLayout.module.scss";
+import styles from "./HotTopicPage.module.scss";
 
 export type HotTopicKind = "weekly" | "monthly" | "history";
 

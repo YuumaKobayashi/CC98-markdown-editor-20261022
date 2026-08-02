@@ -14,7 +14,7 @@ import {
 } from "@foundation/storage/web-storage";
 import { CollectionPageShell } from "@application/layouts/collection";
 
-import styles from "../../../layouts/collection/CollectionLayout.module.scss";
+import styles from "./RecommendedTopicsPage.module.scss";
 
 const renderRecommendedTopic = (item: RecommendedTopic) => (
   <RecommendedTopicItem

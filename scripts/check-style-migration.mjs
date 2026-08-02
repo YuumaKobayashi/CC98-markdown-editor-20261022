@@ -9,6 +9,7 @@ const projectRoot = path.resolve(scriptDirectory, "..");
 const sourceRoot = path.join(projectRoot, "src");
 const allowlistPath = path.join(scriptDirectory, "style-transition-allowlist.json");
 const globalBaselinePath = path.join(scriptDirectory, "style-global-baseline.json");
+const ownerFreezePath = path.join(scriptDirectory, "style-owner-freeze.json");
 const require = createRequire(import.meta.url);
 const { themes } = require("../build/theme-manifest.cjs");
 
@@ -95,22 +96,35 @@ function fingerprintGlobalOccurrences(occurrences) {
 
 const allowlist = JSON.parse(fs.readFileSync(allowlistPath, "utf8"));
 const globalBaseline = JSON.parse(fs.readFileSync(globalBaselinePath, "utf8"));
+const ownerFreeze = JSON.parse(fs.readFileSync(ownerFreezePath, "utf8"));
 const transitionalModules = new Set(allowlist.transitionalModulePartials);
 const legacyRootStyles = new Set(allowlist.legacyRootStyles);
-const moduleFiles = collectFiles(sourceRoot, (name) => name.endsWith(".module.scss"));
+const moduleRoots = ["src", "Components"]
+  .map((directory) => path.join(projectRoot, directory))
+  .filter((directory) => fs.existsSync(directory));
+const moduleFiles = moduleRoots.flatMap((directory) =>
+  collectFiles(directory, (name) => name.endsWith(".module.scss")),
+);
 const modulePaths = new Set(moduleFiles.map(toProjectPath));
 const sassConsumers = new Map();
 const typescriptConsumers = new Map();
+const typescriptEdges = [];
 const errors = [];
+
+const frozenOwnerEdges = new Map();
+for (const entry of ownerFreeze.frozenInactiveImports) {
+  for (const modulePath of entry.modules) {
+    const key = `${entry.source} -> ${modulePath}`;
+    if (frozenOwnerEdges.has(key)) {
+      errors.push(`C1.7.3 冻结样式边重复登记: ${key}`);
+    }
+    frozenOwnerEdges.set(key, entry);
+  }
+}
+const consumedFrozenOwnerEdges = new Set();
 
 if (transitionalModules.size !== 0) {
   errors.push(`C1.5 已收口，过渡样式清单必须为空，实际为 ${transitionalModules.size} 项`);
-}
-
-if (moduleFiles.length !== globalBaseline.totalCssModuleCount) {
-  errors.push(
-    `${globalBaseline.phase} 应保留 ${globalBaseline.totalCssModuleCount} 个真实 CSS Module，实际为 ${moduleFiles.length} 个`,
-  );
 }
 
 const expectedGlobalModules = new Map();
@@ -236,6 +250,13 @@ for (const sourceFile of sourceFiles) {
       targetPath,
       sourceFile,
     );
+    typescriptEdges.push({
+      sourceFile,
+      sourcePath: toProjectPath(sourceFile),
+      targetPath,
+      targetProjectPath: toProjectPath(targetPath),
+      specifier,
+    });
   }
 
   const anyModuleImportPattern = /(?:import|export)\s+(?:[^"']*?\s+from\s+)?["']([^"']+\.module\.scss)["']/g;
@@ -243,6 +264,44 @@ for (const sourceFile of sourceFiles) {
     if (!matchedSpecifiers.has(match[1])) {
       errors.push(`CSS Module 必须使用默认绑定并实际消费: ${toProjectPath(sourceFile)} -> ${match[1]}`);
     }
+  }
+}
+
+for (const edge of typescriptEdges) {
+  const freezeKey = `${edge.sourcePath} -> ${edge.targetProjectPath}`;
+  const frozen = frozenOwnerEdges.has(freezeKey);
+  const sourceStem = path.basename(edge.sourceFile, path.extname(edge.sourceFile));
+  const moduleStem = path.basename(edge.targetPath, ".module.scss");
+  const colocated = path.dirname(edge.sourceFile) === path.dirname(edge.targetPath);
+  const targetExists = modulePaths.has(edge.targetProjectPath);
+
+  if (!targetExists && !frozen) {
+    errors.push(`CSS Module 导入目标不存在: ${edge.sourcePath} -> ${edge.specifier}`);
+  }
+  if ((!colocated || sourceStem !== moduleStem) && !frozen) {
+    errors.push(
+      `活动组件必须与同名 CSS Module 共置: ${edge.sourcePath} -> ${edge.targetProjectPath}`,
+    );
+  }
+  if (frozen) consumedFrozenOwnerEdges.add(freezeKey);
+}
+
+for (const [targetPath, consumers] of typescriptConsumers) {
+  if (consumers.size <= 1) continue;
+  for (const consumer of consumers) {
+    const targetProjectPath = toProjectPath(targetPath);
+    const freezeKey = `${consumer} -> ${targetProjectPath}`;
+    if (!frozenOwnerEdges.has(freezeKey)) {
+      errors.push(`活动 CSS Module 只能有一个直接 owner: ${targetProjectPath} <- ${consumer}`);
+    } else {
+      consumedFrozenOwnerEdges.add(freezeKey);
+    }
+  }
+}
+
+for (const freezeKey of frozenOwnerEdges.keys()) {
+  if (!consumedFrozenOwnerEdges.has(freezeKey)) {
+    errors.push(`C1.7.3 冻结样式边已失效，应移出清单: ${freezeKey}`);
   }
 }
 
@@ -335,6 +394,7 @@ if (errors.length) {
   console.log(
     `Style migration check passed: ${moduleFiles.length - transitionalModules.size} real CSS Module, ` +
       `${transitionalModules.size} transitional partials, ${themes.length} themes, ` +
-      `${actualGlobalOccurrenceCount} C1.6 global occurrences in ${actualGlobalModuleCount} modules.`,
+      `${actualGlobalOccurrenceCount} registered global occurrences in ${actualGlobalModuleCount} modules, ` +
+      `${frozenOwnerEdges.size} frozen inactive owner edges.`,
   );
 }

@@ -4,7 +4,7 @@ import type {
   EditorVoteInfo,
   EditorVoteSettingsProps,
 } from "../model/types";
-import styles from "../EditorLegacyForm.module.scss";
+import styles from "./EditorVoteSettings.module.scss";
 
 //TODO: 后续移除兼容层
 

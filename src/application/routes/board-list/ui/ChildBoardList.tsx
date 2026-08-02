@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Link } from "react-router";
 
-import styles from "../BoardList.module.scss";
+import styles from "./ChildBoardList.module.scss";
 import type { ChildBoardState } from "../model/board-list";
 
 interface ChildBoardListProps {

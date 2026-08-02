@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { getToken } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
-import styles from "../../UserProfileManagement.module.scss";
+import styles from "./UserPunishmentForm.module.scss";
 
 interface ForumUserOperation {
   /**

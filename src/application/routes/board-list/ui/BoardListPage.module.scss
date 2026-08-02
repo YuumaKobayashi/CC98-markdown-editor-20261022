@@ -1,0 +1,25 @@
+//以下是版面列表的样式~~---------------------------------------------------------
+.boardList {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 1140px;
+  align-items: center;}
+
+.boardGuide {
+  position: fixed;
+  margin-left: 1140px;
+  width: 5rem;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: #eaeaea solid thin;
+  color: #505050;
+  font-size: 0.75rem;}
+
+.boardOption {
+  border-bottom: #eaeaea dashed 3px;
+  margin-top: 0.4rem;
+  white-space: nowrap;
+  cursor: pointer;}

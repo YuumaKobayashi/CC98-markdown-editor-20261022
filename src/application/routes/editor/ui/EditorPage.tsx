@@ -36,7 +36,7 @@ import {
   updateEditorPost,
 } from "../api/service";
 import type { EditorTagInfo, EditorVoteInfo } from "../model/types";
-import styles from "../EditorLegacyForm.module.scss";
+import styles from "./EditorPage.module.scss";
 import { EditorBreadcrumb } from "./EditorBreadcrumb";
 import { EditorTagNotice } from "./EditorTagNotice";
 import { EditorTitleInput } from "./EditorTitleInput";

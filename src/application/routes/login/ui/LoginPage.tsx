@@ -4,8 +4,7 @@ import { useAppDispatch } from "@application/store";
 import { logIn } from "@modules/session";
 import { changeTheme } from "@foundation/theme";
 import DocumentTitle from "@foundation/ui/document-title";
-import styles from "../Login.module.scss";
-import messageStyles from "../LoginMessages.module.scss";
+import styles from "./LoginPage.module.scss";
 
 const getLoginReturnUrl = (): string => {
   if (window.history.length === 1) return "/";
@@ -102,8 +101,8 @@ export function LoginPage() {
 
   return (
     <div>
-      <div className={messageStyles["login-announcement"]}>
-        <p className={messageStyles["login-message"]}>
+      <div className={styles["login-announcement"]}>
+        <p className={styles["login-message"]}>
           <span>
             温馨提示：
             <br />
@@ -143,7 +142,7 @@ export function LoginPage() {
                 />
               </div>
               <p
-                className={`${messageStyles["login-message"]} ${styles.loginMessage}`}
+                className={`${styles["login-message"]} ${styles.loginMessage}`}
               >
                 {loginMessage}
               </p>
@@ -151,7 +150,7 @@ export function LoginPage() {
                 登录账号
               </button>
             </form>
-            <p className={messageStyles["login-message"]}>
+            <p className={styles["login-message"]}>
               <span>
                 还没账号？我要{" "}
                 <a href="//account.cc98.org/" target="_blank">
@@ -159,7 +158,7 @@ export function LoginPage() {
                 </a>
               </span>
             </p>
-            <p className={messageStyles["login-message"]}>
+            <p className={styles["login-message"]}>
               <span>
                 密码错误？我要{" "}
                 <a href="//account.cc98.org/" target="_blank">
