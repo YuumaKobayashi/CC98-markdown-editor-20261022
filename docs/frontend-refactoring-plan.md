@@ -2677,6 +2677,13 @@ Z0 同时冻结下列行为合同：
 
 16 个零调用/P21 候选仍逐项做上述证明；禁止因类名陈旧、文件短或当前无静态调用而批量删除混合文件。
 
+Z0 实施记录（2026-08-02，基线 `dev20260716@de6eca90`）：
+
+- 以 tracked 文件和 bootstrap import 图完成 273 个根级 legacy 文件的 file map、owner map 与 consumer map；现代源码到 `@legacy/*` 共 82 条直接边，其中 27 条 Module 例外继续由 architecture allowlist 精确守卫；
+- Router lazy、dynamic import/require、Vite/Template、IIS、独立 HTML、public/resource、UBB 注册与 AnnualReview 独立入口均已纳入审计；历史 16 个 P21 候选中 5 个已在 C1.7.4 删除，剩余 11 个逐项区分加载、可达与直接调用，本批不删除源码；
+- URL/API/Storage/IndexedDB/UBB/Session/Notification/SignalR/主题/缓存合同已冻结；机械检查、主代理静态审核和未执行的浏览器/真实 API/权限/媒体/跨标签验收分别记录于 `docs/refactor-log/z0/`；
+- Z0 只产生审计记录，不实施 Z1，不 commit、不 push；完成后停在用户人工验收与单独提交授权门禁。
+
 ### Z1：业务类型和数据模型按 owner 收口
 
 删除 ambient `declare module '@cc98/api'` 聚合。业务消费者改为从相应 Module 根入口导入类型，Route 私有模型留在对应 Application Route，浏览器/第三方环境声明才允许留在 `foundation/types`。
