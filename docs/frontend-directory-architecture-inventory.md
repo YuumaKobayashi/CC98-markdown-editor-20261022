@@ -69,8 +69,8 @@ modules → application
 ├─ error.html             # 错误模板片段
 ├─ unsupported.html       # 不支持浏览器模板片段
 ├─ vite.config.mjs
+├─ tsconfig.base.json
 ├─ tsconfig.json
-├─ tsconfig.legacy.json
 └─ package.json
 ```
 
@@ -779,7 +779,7 @@ src/application/
 
 `application/layouts/` 只存放跨 Route 共享或持续挂载的应用壳层；单个 Route 自己的父路由布局放在该 Route 的 `layout/` 目录。`layout/` 已经表达 UI 角色，内部不再嵌套无信息增量的 `ui/` 目录；Layout 组件、其直接拥有的 CSS Module、导航等布局私有组件和 barrel 在 `layout/` 下并列。
 
-C1.7.3 后，活动业务 TS/TSX 只直接导入同目录同名 CSS Module；共享布局通过 React 组件提供 DOM 与样式，Route 不再越过组件接口导入 `CollectionLayout`、`UserActivityLayout` 或其他远端样式仓库。样式守卫同时扫描 `src` 与根 `Components`，活动 Module 必须只有一个直接 owner；六个待 C1.7.4 完成可达性证明的休眠 legacy 文件只允许使用精确冻结清单中的 9 条旧边。
+Z5 后，活动业务 TS/TSX 只存在于 `src/application`、`src/modules` 和 `src/foundation`。业务组件只直接导入同目录同名 CSS Module；共享布局通过 React 组件提供 DOM 与样式，Route 不越过组件接口导入远端样式仓库。样式守卫扫描唯一源码根 `src`，活动 Module 必须只有一个直接 owner。
 
 `compatibility/` 是兼容边界，不是长期业务 owner。它存在时也不能被 Foundation 或 Modules 依赖。
 
@@ -1058,25 +1058,11 @@ src/pages/*                → src/application/routes/*
 src/modules/*/pages        → src/application/routes/*
 ```
 
-### 13.4 旧根目录
+### 13.4 根级源码收口
 
-当前根目录仍有：
+Z1–Z4 已按调用链和行为合同完成业务类型、UBB、页面/组件/适配器的归位，并删除 AnnualReview。Z5 已删除空的根级源码目录、`@legacy/*` alias、legacy TypeScript 配置和双编译分支。
 
-```text
-Components/
-IndexedDB/
-Match/
-Pages/
-Props/
-States/
-Styles/
-Themes/
-Ubb/
-Utility/
-Utility.ts
-```
-
-这些目录是本地兼容、旧 owner 或未迁移代码来源，不是目标架构中的第四个长期层级。具体文件最终归属要按调用链和行为合同判断，不能只按旧目录名机械搬运。
+仓库根目录只保留构建、部署、文档、公开静态资源和工具配置；不再构成浏览器业务源码的第四个层级。
 
 ## 14. Application 的其他形态
 

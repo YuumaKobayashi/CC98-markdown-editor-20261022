@@ -2854,6 +2854,13 @@ git diff --check
 
 并做全仓活动代码搜索和主代理逐文件审核，确认公开 URL、API wire shape、Storage/IndexedDB、DOM/CSS、Session、Notification、SignalR、主题、缓存和 UBB 合同未漂移。完整浏览器、登录、真实 API、权限、SignalR、跨标签、通知、缓存、编辑器、媒体和 UBB 验收仍分别记录为“未执行”或实际结果。
 
+Z5 已于 2026-08-02 按 `dev20260716@e2979a99` 基线实施并停在人工验收门禁：
+
+- 活动源码中 `@legacy`、`@cc98/api`、旧根源码 import/dynamic require 归零；删除 `@legacy/*` alias、`tsconfig.legacy.json`、Vite 双 compiler options 分支、`typecheck:legacy` 和已空 architecture allowlist；
+- 根级 legacy 目录在递归确认无文件后删除；架构守卫新增根源码回流与 `src` 三层之外源码的硬失败规则，其余边界守卫的活动扫描根收缩为 `src`；
+- Z1 登记的 6 个临时 `any` 均与清单一一对应且各存在一次，本批不收窄；architecture/style/dynamic-content/third-party/Foundation 守卫、唯一 modern typecheck、正式 build 与 `git diff --check` 均通过；
+- 正式产物为 9559 个文件、97 个 CSS 与 29 个主题 CSS；浏览器、登录、真实 API、权限、SignalR、跨标签、通知、缓存、编辑器、媒体、UBB 和主题运行验收未执行。详细闭包、类型债务和人工清单见 `docs/refactor-log/z5/`；本批不 commit、不 push、不进入 Markdown 替换或类型收窄批。
+
 ### Z 后续独立批：Markdown 组件整体替换
 
 现有 Markdown 编辑器、预览 renderer 及其全局 class/CSS 不做逐条 Module 化或旧 selector 兼容迁移；C1 与 Z 只保证它们在整体替换前仍可构建，并冻结真实调用点、输入输出内容格式、草稿/Storage、上传、emoji、数学公式、内容安全和与 UBB 编辑模式切换的边界。

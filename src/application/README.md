@@ -5,7 +5,7 @@
 依赖边界：
 
 - 可以组合 `modules`、`foundation` 和第三方包；
-- 目标 `foundation`、`modules` 不得 import `application`；迁移期 `pages`、旧 `features` 和根兼容文件会在各自 owner 阶段收口；
+- `foundation`、`modules` 不得 import `application`；跨层依赖没有 allowlist；
 - 页面只负责入口编排，不重复实现可复用业务能力；
 - Topic Detail、User Center 等页面可以同时消费同一个 Topic 或 Favorite 模块。
 
@@ -22,7 +22,7 @@
 
 - `ApplicationErrorProvider` 是 AppShell 业务错误的唯一状态 owner，仍按原 `ApplicationErrorKey` 映射 `application/routes/status`；Z3 已删除零消费的根 `Components/Status.tsx` 兼容转导；
 - AppShell 在错误时只替换根 `Outlet`，Header、Footer 与路由切换清错继续保持挂载；
-- Editor 和 legacy Utility 通过 `reportApplicationError` 命令式上报，组件树外调用不再 dispatch Redux action；
+- Editor 和 Foundation Utility 通过 `reportApplicationError` 命令式上报，组件树外调用不再 dispatch Redux action；
 - HTTP 异常统一化、Router `errorElement` 和错误文案重构不属于 S1.5。
 
 ## Store 边界

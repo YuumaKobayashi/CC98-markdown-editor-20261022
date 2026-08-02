@@ -53,66 +53,16 @@ npm run build
 
 ### ./src
 
-目标源码边界。当前入口位于 `src/application/bootstrap/index.tsx`，Provider 树位于 `src/application/providers`；Application Routes、业务 Modules 与 Foundation 能力均从各自根入口组合。
+浏览器业务源码只位于三个已收口的 owner 边界：
 
-目标依赖方向为 `application → modules → foundation`。`@legacy/*` 只作为新旧目录共存期间的临时兼容桥。
+- `src/application`：启动入口、Provider、Router、Store、持久布局和 Route；
+- `src/modules`：按业务能力划分的 Module，包括 UBB renderer 与 UBB Editor；
+- `src/foundation`：API/Storage 基础设施、第三方适配、通用库、全局样式、主题与环境类型。
 
-### ./Components
+应用入口为 `src/application/bootstrap/index.tsx`，依赖方向固定为 `application → modules → foundation`。路径别名只保留 `@application/*`、`@modules/*` 和 `@foundation/*`。
 
-- /Board 版面
-  - /Board.tsx 版面内容
-  - /BoardList.tsx 版面列表
-- /Focus 关注
-- /Message 私信
-- /Search 搜索
-- /SiteManage 全站管理
-- /Topic 帖子
-  - /Topic.tsx 帖子组件
-  - /Topic-Award.tsx 风评/奖惩展示组件
-  - /Topic-AwardInfo.tsx 单个风评/奖惩展示组件
-  - /Topic-Category.tsx 导航条组件
-  - /Topic-Hot-Monthly 每月热门话题
-  - /Topic-Hot-Weekly 每周热门话题
-  - /Topic-New 新帖
-  - /Topic-Replier 用户信息组件
-  - /Topic-ReplierSignature 用户签名档/楼层按钮组件
-  - /Topic-Reply 楼层组件
-  - /Topic-ReplyContent 帖子内容
-  - /Topic-SendTopic 回帖
-  - /Topic-TopicInfo 主题信息
-  - /Topic-Trace 追踪
-- /UbbEditor Ubb 编辑器
-- /UserCenter 用户中心
-- /App.tsx 路由中心
-- /Category.tsx 导航条
-- /Constant.tsx 全局变量
-- /DocumentTitle.tsx 网页标题
-- /ErrorControl.tsx 错误页面管理
-- /Footer.tsx 网站底部
-- /Header.tsx 网站头部
-- /LogOn.tsx 登录组件
-- /MainPage.tsx 网站主页
-- /NoticeMessage.tsx 消息提醒
-- /Pager.tsx 翻页器
-- /RouteComponent.tsx 路由组件基类
-- /SignIn.tsx 签到
-- /Status.tsx 报错页面
-- /UbbContainer.tsx Ubb 解析器
-- /UbbEditor.tsx Ubb 编辑器
-- /IndexedDB Indexed 数据库 用户信息缓存
-- /Match 旧路由匹配参数类型
-- /Props React 组件的 Props 类
-- /States React 组件的 State 类
-- /src/foundation/theme/themes 网站主题
-- /Ubb Ubb 解析引擎
-- /Utility 函数集
-- /src/application/bootstrap/index.tsx 程序入口
-- /adddna.scss zza 的样式表
-- /package.json 项目依赖
-- /src/foundation/styles/Site.scss 网站的主样式表
-- /Store.tsx 到 `src/application/store` 的 legacy 兼容转导
-- /UbbEditor.scss Ubb 编辑器样式表
-- /UserCenter.scss 用户中心样式表
-- /Utility.tsx 函数集
-- /vite.config.mjs Vite 开发服务器与正式构建配置
-- /scripts/build-vite.mjs 正式构建及部署依赖复制入口
+### ./build 与 ./scripts
+
+- `build/` 保存主题 manifest 和 HTML 模板合同等 Node.js 构建输入；
+- `scripts/build-vite.mjs` 执行正式构建与部署依赖复制；
+- `scripts/check-*.mjs` 校验层级依赖、样式 owner、动态内容、第三方和 Foundation 边界。
