@@ -8,15 +8,18 @@ import { UbbEditor } from "@modules/ubb-editor";
 import { MarkdownEditor } from "@foundation/integrations/markdown-editor";
 import { reportApplicationError } from "@application/providers/application-error";
 import {
+  AnonymousState,
   getBoardName,
   getBoardTagV2,
   isMaster,
 } from "@modules/board";
+import { PostContentType } from "@modules/post";
 import {
   getTagIdbyName,
   getTagNamebyId,
   getTopicContent,
   getTopicInfo,
+  TopicType,
 } from "@modules/topic";
 import { getMyInfo } from "@modules/session";
 import { getUserWealth } from "@modules/wealth";
@@ -59,13 +62,13 @@ interface EditorState {
   tag2: string;
   fetchState: string;
   boardId: any;
-  type: number;
+  type: TopicType;
   masters: string[];
   voteInfo: EditorVoteInfo;
   mdeState: string;
   notice: boolean;
   houseTmpVisible: boolean;
-  anonymousState: number;
+  anonymousState: AnonymousState;
   isAnonymous: boolean;
   wealth: number | string;
   contentTooLongModalVisible: boolean;
@@ -80,12 +83,17 @@ function createInitialEditorState(): EditorState {
     mode: 0,
     content: "",
     title: "",
-    postInfo: { floor: 0, title: "", content: "", contentType: 0 },
+    postInfo: {
+      floor: 0,
+      title: "",
+      content: "",
+      contentType: PostContentType.Ubb,
+    },
     tag1: "",
     tag2: "",
     fetchState: "ok",
     boardId: 1,
-    type: 0,
+    type: TopicType.Normal,
     topicInfo: {},
     voteInfo: {
       voteItems: ["", ""],
@@ -96,7 +104,7 @@ function createInitialEditorState(): EditorState {
     mdeState: "",
     notice: true,
     houseTmpVisible: false,
-    anonymousState: 0,
+    anonymousState: AnonymousState.NotAllowed,
     isAnonymous: false,
     wealth: "",
     contentTooLongModalVisible: false,
@@ -211,9 +219,9 @@ export function EditorPage(): React.ReactElement {
           if (
             myInfo &&
             !(isMaster(masters) || (myInfo.userTitleIds || []).indexOf(91) !== -1) &&
-            type === 1
+            type === TopicType.SchoolEvent
           ) {
-            type = 0;
+            type = TopicType.Normal;
           }
           const boardName = await getBoardName(data.boardId);
           updateState({
@@ -228,8 +236,9 @@ export function EditorPage(): React.ReactElement {
             topicInfo,
             tag1: tag1Name,
             tag2: tag2Name,
-            mode: data.contentType === 0 ? 0 : 1,
-            mdeState: data.contentType === 0 ? "" : data.content,
+            mode: data.contentType === PostContentType.Ubb ? 0 : 1,
+            mdeState:
+              data.contentType === PostContentType.Ubb ? "" : data.content,
             notice: topicInfo.notifyPoster,
             isAnonymous: data.isAnonymous,
           });
@@ -264,7 +273,7 @@ export function EditorPage(): React.ReactElement {
 
   const resolveTopicContent = async (
     content: string,
-    contentType: number,
+    contentType: PostContentType,
     isAnonymous: boolean
   ) => {
     const tag1Id = await getTagIdbyName(state.tag1);
@@ -357,7 +366,7 @@ export function EditorPage(): React.ReactElement {
     try {
       const content = await resolveTopicContent(
         state.mdeState,
-        1,
+        PostContentType.Markdown,
         finalAnonymous
       );
       const token = await getToken();
@@ -390,7 +399,7 @@ export function EditorPage(): React.ReactElement {
 
     const content = await resolveTopicContent(
       state.content,
-      0,
+      PostContentType.Ubb,
       finalAnonymous
     );
     const token = await getToken();
@@ -418,12 +427,12 @@ export function EditorPage(): React.ReactElement {
 
   const resolveEditContent = async (
     content: string,
-    contentType: number
+    contentType: PostContentType
   ) => {
     let tag1Id = await getTagIdbyName(state.tag1);
     const tag2Id = await getTagIdbyName(state.tag2);
     if (tag1Id && !tag2Id) {
-      if (contentType === 1) {
+      if (contentType === PostContentType.Markdown) {
         tag1Id = await getTagIdbyName(state.tag1);
       }
       return {
@@ -469,7 +478,10 @@ export function EditorPage(): React.ReactElement {
       updateState({ contentTooLongModalVisible: true });
       return;
     }
-    const content = await resolveEditContent(state.content, 0);
+    const content = await resolveEditContent(
+      state.content,
+      PostContentType.Ubb
+    );
     await getToken();
     await updateEditorPost(id, content);
     navigateAfterEdit();
@@ -480,7 +492,10 @@ export function EditorPage(): React.ReactElement {
       updateState({ contentTooLongModalVisible: true });
       return;
     }
-    const content = await resolveEditContent(state.mdeState, 1);
+    const content = await resolveEditContent(
+      state.mdeState,
+      PostContentType.Markdown
+    );
     await getToken();
     await updateEditorPost(id, content);
     navigateAfterEdit();
@@ -548,7 +563,10 @@ export function EditorPage(): React.ReactElement {
 
     let ubbButtons: React.ReactNode;
     let markdownButtons: React.ReactNode;
-    if (state.anonymousState === 0 || mode === "postVoteTopic") {
+    if (
+      state.anonymousState === AnonymousState.NotAllowed ||
+      mode === "postVoteTopic"
+    ) {
       ubbButtons = (
         <div className="cc98-row" style={{ justifyContent: "center" }}>
           <button
@@ -571,7 +589,7 @@ export function EditorPage(): React.ReactElement {
           </button>
         </div>
       );
-    } else if (state.anonymousState === 1) {
+    } else if (state.anonymousState === AnonymousState.Force) {
       ubbButtons = (
         <div className="cc98-row" style={{ justifyContent: "center" }}>
           <button
@@ -595,8 +613,8 @@ export function EditorPage(): React.ReactElement {
         </div>
       );
     } else if (
-      state.anonymousState === 2 ||
-      state.anonymousState === 3
+      state.anonymousState === AnonymousState.Allowed ||
+      state.anonymousState === AnonymousState.OnlyPosterAllowed
     ) {
       const balance = (
         <p>
@@ -758,16 +776,16 @@ export function EditorPage(): React.ReactElement {
     <div className={styles.createTopicType}>
       <div className={styles.createTopicListName}>发帖类型</div>
       <EditorTypeRadio
-        value={0}
+        value={TopicType.Normal}
         currentType={state.type}
         label="普通"
-        onClick={() => updateState({ type: 0 })}
+        onClick={() => updateState({ type: TopicType.Normal })}
       />
       <EditorTypeRadio
-        value={2}
+        value={TopicType.AcademicInfo}
         currentType={state.type}
         label="学术通知"
-        onClick={() => updateState({ type: 2 })}
+        onClick={() => updateState({ type: TopicType.AcademicInfo })}
       />
       <div style={{ color: "rgb(255,0,0)" }}>
         （活动帖和学术帖请选择正确的发帖类型）
@@ -785,22 +803,22 @@ export function EditorPage(): React.ReactElement {
       <div className={styles.createTopicType}>
         <div className={styles.createTopicListName}>发帖类型</div>
         <EditorTypeRadio
-          value={0}
+          value={TopicType.Normal}
           currentType={state.type}
           label="普通"
-          onClick={() => updateState({ type: 0 })}
+          onClick={() => updateState({ type: TopicType.Normal })}
         />
         <EditorTypeRadio
-          value={2}
+          value={TopicType.AcademicInfo}
           currentType={state.type}
           label="学术通知"
-          onClick={() => updateState({ type: 2 })}
+          onClick={() => updateState({ type: TopicType.AcademicInfo })}
         />
         <EditorTypeRadio
-          value={1}
+          value={TopicType.SchoolEvent}
           currentType={state.type}
           label="校园活动"
-          onClick={() => updateState({ type: 1 })}
+          onClick={() => updateState({ type: TopicType.SchoolEvent })}
         />
         <div style={{ color: "rgb(255,0,0)" }}>
           （活动帖和学术帖请选择正确的发帖类型）
@@ -915,8 +933,8 @@ function EditorContentHeader({
 }
 
 interface EditorTypeRadioProps {
-  value: number;
-  currentType: number;
+  value: TopicType;
+  currentType: TopicType;
   label: string;
   onClick: () => void;
 }

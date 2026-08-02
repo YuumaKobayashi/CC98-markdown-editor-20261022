@@ -4,7 +4,7 @@ import { Link } from "react-router";
 
 import { followUser, unfollowUser } from "@modules/follow";
 import { UbbCodeOptions, UbbContainer } from "@modules/ubb";
-import type { UserInfo } from "@modules/user";
+import { UserGender, UserState, type UserInfo } from "@modules/user";
 import { isoTime2LocalTime } from "@foundation/lib/time-zone";
 import styles from "./UserProfileDetails.module.scss";
 
@@ -166,13 +166,14 @@ export function UserProfileDetails({ userInfo }: UserProfileDetailsProps) {
           </button>
         </div>
       </div>
-      {userInfo.lockState === 1 || userInfo.lockState === 2 ? (
+      {userInfo.lockState === UserState.Locked ||
+      userInfo.lockState === UserState.Shielded ? (
         <div className={styles.userGenderAndBirthday}>
           <span style={{ fontSize: "12px", color: "red" }}>
             该账号处于锁定状态
           </span>
         </div>
-      ) : userInfo.lockState === 3 ? (
+      ) : userInfo.lockState === UserState.StopPost ? (
         <div className={styles.userGenderAndBirthday}>
           <span style={{ fontSize: "12px", color: "red" }}>
             该账号处于全站禁言状态
@@ -189,7 +190,7 @@ export function UserProfileDetails({ userInfo }: UserProfileDetailsProps) {
       <div className={styles.userGenderAndBirthday}>
         <p>
           <span className={styles["user-profile-info"]}>性别</span>
-          {userInfo.gender === 1 ? "男" : "女"}{" "}
+          {userInfo.gender === UserGender.Male ? "男" : "女"}{" "}
         </p>
         <p>
           <span className={styles["user-profile-info"]}>发帖数</span>

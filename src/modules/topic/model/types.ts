@@ -1,3 +1,12 @@
+import type {
+  TopicAllowedViewerState,
+  TopicBestState,
+  TopicContentType,
+  TopicState,
+  TopicTopState,
+  TopicType,
+} from "./enums";
+
 /**
  * 帖子基础合同。
  */
@@ -21,11 +30,11 @@ export interface IBasicTopic {
   /**
    * 帖子状态
    */
-  status: number;
+  status: TopicState;
   /**
    * 帖子类型
    */
-  type: number;
+  type: TopicType;
 }
 
 export interface IHotTopic {
@@ -69,7 +78,7 @@ export interface IHotTopic {
    * 帖子类型
    * 0 普通帖子  1 校园活动  2 学术通知
    */
-  type: number;
+  type: TopicType;
 }
 
 export interface ITag {
@@ -121,9 +130,9 @@ export interface ITopic {
    */
   lastPostTime: string;
 
-  state: number;
+  state: TopicState;
 
-  type: number;
+  type: TopicType;
   /**
    * 回复数
    */
@@ -142,8 +151,8 @@ export interface ITopic {
    * 最后回复内容
    */
   lastPostContent: string;
-  topState: number;
-  bestState: number;
+  topState: TopicTopState;
+  bestState: TopicBestState;
   /**
    * 是否是投票
    */
@@ -151,7 +160,7 @@ export interface ITopic {
 
   isPosterOnly: false;
 
-  allowedViewerState: number;
+  allowedViewerState: TopicAllowedViewerState;
   /**
    * 赞同数
    */
@@ -192,32 +201,6 @@ export interface MediaTopicContent {
   width: number;
   audio: string;
   video: string;
-}
-
-/**
- * 主题内容类型枚举
- */
-export enum TopicContentType {
-  /**
-   * 普通主题帖
-   */
-  Normal = 0,
-  /**
-   * 投票主题帖
-   */
-  VoteTopic = 1,
-  /**
-   * 视频主题帖
-   */
-  VideoTopic = 2,
-  /**
-   * 音频主题帖
-   */
-  AudioTopic = 3,
-  /**
-   * 图片主题帖
-   */
-  ImageTopic = 4,
 }
 
 /**

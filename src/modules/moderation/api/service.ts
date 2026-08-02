@@ -1,5 +1,7 @@
 import { formAuthorizeHeader } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
+import { PostUserOperationType } from "@modules/post";
+import type { TopicTopState } from "@modules/topic";
 
 export async function deletePost(topicId, postId, reason) {
   const headers = await formAuthorizeHeader();
@@ -25,7 +27,11 @@ export async function deletePost(topicId, postId, reason) {
 export async function stopBoardPost(postId, reason, days) {
   const headers = await formAuthorizeHeader();
   headers.append("Content-Type", "application/json");
-  const bodyinfo = { operationType: 1, reason: reason, stopPostDays: days };
+  const bodyinfo = {
+    operationType: PostUserOperationType.Punishment,
+    reason: reason,
+    stopPostDays: days,
+  };
   const url = `/post/${postId}/operation`;
   const response = await cc98Fetch(url, {
     method: "POST",
@@ -62,7 +68,7 @@ export async function cancelStopBoardPost(userId, boardId) {
 export async function addBoardTopTopic(
   topicId,
   boardId,
-  topState,
+  topState: TopicTopState,
   days,
   reason
 ) {

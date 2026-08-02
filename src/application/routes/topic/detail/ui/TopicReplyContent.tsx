@@ -3,6 +3,8 @@ import { useCallback, useEffect, useState } from "react";
 import { Card, Tag } from "antd";
 
 import { UbbCodeOptions, UbbContainer } from "@modules/ubb";
+import { PostContentType } from "@modules/post";
+import { LotteryMode, LotteryTopicStatus } from "@modules/topic";
 import { atUserMdUrl, atUserUbbUrl } from "@foundation/lib/text";
 import { getTopicVote } from "../api/service";
 import { TopicVote, type voteInfo } from "./TopicVote";
@@ -14,7 +16,7 @@ const showdownExtension = require("showdown-xss-filter");
 export interface TopicReplyContentProps {
   postId: any;
   content: string;
-  contentType: number;
+  contentType: PostContentType;
   topicInfo: any;
   floor: number;
 }
@@ -87,7 +89,8 @@ export function TopicReplyContent({
       <div id={domId} className={detailStyles.markdownPreviewContent}></div>
     </div>
   );
-  const renderedContent = contentType === 1 ? mdMode : ubbMode;
+  const renderedContent =
+    contentType === PostContentType.Markdown ? mdMode : ubbMode;
   const lotteryTopicDetail = topicInfo.lotteryTopicDetail;
   const drawingTimeStr = lotteryTopicDetail
     ? lotteryTopicDetail.drawingTime.slice(0, 16).replace("T", " ")
@@ -142,12 +145,12 @@ export function TopicReplyContent({
             <p style={{ margin: "3px 0px", fontSize: "12px" }}>
               抽取数量：{lotteryTopicDetail.drawingCount}
             </p>
-            {lotteryTopicDetail.mode === 1 && (
+            {lotteryTopicDetail.mode === LotteryMode.SingleCC98Account && (
               <p style={{ margin: "3px 0px", fontSize: "12px" }}>
                 抽奖模式：同一个CC98账号最多中奖一次
               </p>
             )}
-            {lotteryTopicDetail.mode === 2 && (
+            {lotteryTopicDetail.mode === LotteryMode.SingleZJUInfoId && (
               <p style={{ margin: "3px 0px", fontSize: "12px" }}>
                 抽奖模式：同一个浙大通行证下的CC98账号最多中奖一次
               </p>
@@ -158,18 +161,19 @@ export function TopicReplyContent({
             <p style={{ margin: "3px 0px", fontSize: "12px" }}>
               开奖时间：{drawingTimeStr}
             </p>
-            {lotteryTopicDetail.status === 1 && (
+            {lotteryTopicDetail.status === LotteryTopicStatus.Waiting && (
               <p style={{ margin: "3px 0px", fontSize: "12px" }}>
                 当前状态：等待开奖
               </p>
             )}
-            {lotteryTopicDetail.status === 2 && (
+            {lotteryTopicDetail.status === LotteryTopicStatus.Finished && (
               <p style={{ margin: "3px 0px", fontSize: "12px" }}>
                 当前状态：已开奖，中奖名单见
                 {lotteryTopicDetail.resultFloor}楼
               </p>
             )}
-            {lotteryTopicDetail.status === 3 && (
+            {lotteryTopicDetail.status ===
+              LotteryTopicStatus.FinishedWithoutDrawing && (
               <p style={{ margin: "3px 0px", fontSize: "12px" }}>
                 当前状态：异常，已中止本次抽奖
               </p>

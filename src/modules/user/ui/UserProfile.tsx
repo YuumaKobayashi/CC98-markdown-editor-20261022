@@ -7,6 +7,7 @@ import { Tag } from "antd";
 import { Link } from "react-router";
 
 import { UbbCodeOptions, UbbContainer } from "@modules/ubb";
+import { UserGender } from "../model/enums";
 import type { UserInfo } from "../model/types";
 import { isoTime2LocalTime } from "@foundation/lib/time-zone";
 import styles from "./UserProfile.module.scss";
@@ -103,7 +104,7 @@ export function UserProfile({ userInfo }: UserProfileProps) {
       <div className={styles.userGenderAndBirthday}>
         <p>
           <span className={styles["user-profile-info"]}>性别</span>
-          {userInfo.gender === 1 ? "男" : "女"}{" "}
+          {userInfo.gender === UserGender.Male ? "男" : "女"}{" "}
         </p>
         <p>
           <span className={styles["user-profile-info"]}>发帖数</span>

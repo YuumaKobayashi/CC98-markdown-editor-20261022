@@ -3,6 +3,7 @@ import {
   readLocalUserInfoCache,
 } from "../cache/public-user-cache";
 import { getUserInfo } from "./get-user-info";
+import { UserGender } from "../model/enums";
 import { cc98Fetch } from "@foundation/api/http";
 
 export function getThisUserInfo(userId, usersInfo) {
@@ -21,7 +22,7 @@ export function getThisUserInfo(userId, usersInfo) {
     birthday: "1993-03-25T00:00:00",
     fanCount: 0,
     followCount: 0,
-    gender: 0,
+    gender: UserGender.Female,
     lastLogOnTime: "2007-12-26T02:26:00",
     popularity: 0,
     prestige: 0,
@@ -42,7 +43,7 @@ export function getThisUserInfobyName(userName, usersName) {
     birthday: "1993-03-25T00:00:00",
     fanCount: 0,
     followCount: 0,
-    gender: 0,
+    gender: UserGender.Female,
     lastLogOnTime: "2007-12-26T02:26:00",
     popularity: 0,
     prestige: 0,

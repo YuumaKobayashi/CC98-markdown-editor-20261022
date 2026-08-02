@@ -1,4 +1,5 @@
 import type { Dispatch } from "redux";
+import { UserState } from "@modules/user";
 
 import { Constants } from "@foundation/config/runtime-config";
 import { removeStorage } from "@foundation/storage/web-storage";
@@ -69,7 +70,10 @@ export function logIn({ userName, password }: LoginCredentials) {
 
       // getMyInfo 保留 web-storage 中既有的锁定用户清理及跳转副作用。
       const currentUser = getMyInfo();
-      if (currentUser.lockState === 1 || currentUser.lockState === 2) {
+      if (
+        currentUser.lockState === UserState.Locked ||
+        currentUser.lockState === UserState.Shielded
+      ) {
         throw new Error("账号已锁定");
       }
 

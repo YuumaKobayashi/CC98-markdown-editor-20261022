@@ -1,5 +1,10 @@
 import * as React from "react";
-import type { ITopic } from "@modules/topic";
+import {
+  TopicBestState,
+  TopicState,
+  TopicTopState,
+  type ITopic,
+} from "@modules/topic";
 import { Popover, Tag, Tooltip } from "antd";
 import moment from "moment";
 import { Link } from "react-router";
@@ -54,24 +59,24 @@ export function BoardTopicListItem({
   }
 
   // 被锁
-  if (data.state === 1) {
+  if (data.state === TopicState.Locked) {
     icon = "lock";
     iconText = "已被锁定";
   }
 
   // 精华
-  if (data.bestState === 1) {
+  if (data.bestState === TopicBestState.Best) {
     icon = "star";
     iconText = "精华";
   }
 
   // 置顶
   switch (data.topState) {
-    case 4:
+    case TopicTopState.AllTop:
       icon = "top-red";
       iconText = "全站置顶";
       break;
-    case 2:
+    case TopicTopState.BoardTop:
       icon = "top-orange";
       iconText = "版面置顶";
       break;

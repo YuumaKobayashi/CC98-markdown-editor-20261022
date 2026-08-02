@@ -4,7 +4,7 @@ import { Spin } from "antd";
 import $ from "jquery";
 
 import { isMaster } from "@modules/board";
-import { FloorSize } from "@modules/post";
+import { FloorSize, type PostContentType } from "@modules/post";
 import {
   getCurUserTopicContent,
   getHotReplyContent,
@@ -303,6 +303,6 @@ export interface ContentState {
   likeNumber: number;
   dislikeNumber: number;
   postId: number;
-  contentType: number;
+  contentType: PostContentType;
   popularity: number;
 }

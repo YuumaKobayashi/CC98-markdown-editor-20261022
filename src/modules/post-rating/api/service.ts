@@ -1,11 +1,12 @@
 import { formAuthorizeHeader } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
+import { PostUserOperationType, RatingType } from "@modules/post";
 
 export async function awardWealth(reason, value, postId) {
   const headers = await formAuthorizeHeader();
   headers.append("Content-Type", "application/json");
   const body = {
-    operationType: 0,
+    operationType: PostUserOperationType.Bonus,
     reason: reason,
     wealth: value,
   };
@@ -37,7 +38,7 @@ export async function deductWealth(reason, value, postId) {
   const headers = await formAuthorizeHeader();
   headers.append("Content-Type", "application/json");
   const body = {
-    operationType: 1,
+    operationType: PostUserOperationType.Punishment,
     reason: reason,
     wealth: value,
   };
@@ -125,7 +126,7 @@ export async function minus1(topicId, postId, reason) {
 }
 
 /**风评接口v2.0 */
-export async function positiveJudge(postId, reasonId, type) {
+export async function positiveJudge(postId, reasonId, type: RatingType) {
   const url = `/post/${postId}/rating-v2`;
   const headers = await formAuthorizeHeader();
   headers.append("Content-Type", "application/json");
@@ -143,7 +144,7 @@ export async function positiveJudge(postId, reasonId, type) {
   return "ok";
 }
 
-export async function negativeJudge(postId, reasonId, type) {
+export async function negativeJudge(postId, reasonId, type: RatingType) {
   const url = `/post/${postId}/rating-v2`;
   const headers = await formAuthorizeHeader();
   headers.append("Content-Type", "application/json");
@@ -164,7 +165,11 @@ export async function negativeJudge(postId, reasonId, type) {
 export async function addPrestige(postId, value, reason) {
   const headers = await formAuthorizeHeader();
   headers.append("Content-Type", "application/json");
-  const bodyinfo = { operationType: 0, prestige: value, reason: reason };
+  const bodyinfo = {
+    operationType: PostUserOperationType.Bonus,
+    prestige: value,
+    reason: reason,
+  };
   const url = `/post/${postId}/operation`;
   const body = JSON.stringify(bodyinfo);
   if (value) {
@@ -186,7 +191,11 @@ export async function addPrestige(postId, value, reason) {
 export async function deductPrestige(postId, value, reason) {
   const headers = await formAuthorizeHeader();
   headers.append("Content-Type", "application/json");
-  const bodyinfo = { operationType: 1, prestige: value, reason: reason };
+  const bodyinfo = {
+    operationType: PostUserOperationType.Punishment,
+    prestige: value,
+    reason: reason,
+  };
   const url = `/post/${postId}/operation`;
   const body = JSON.stringify(bodyinfo);
   if (value) {
@@ -208,7 +217,7 @@ export async function deductPrestige(postId, value, reason) {
 /**
  * 获取可用的风评标签
  */
-export async function getJudgeTags(type: number) {
+export async function getJudgeTags(type: RatingType) {
   const url = `/post/rating-reason?type=${type}`;
   const headers = await formAuthorizeHeader();
   const response = await cc98Fetch(url, { headers });

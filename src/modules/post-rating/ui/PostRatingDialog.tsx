@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Form, Menu, Modal, Select, Tag } from "antd";
 import type { FormInstance } from "antd";
+import { RatingType } from "@modules/post";
 import {
   getJudgeTags,
   negativeJudge,
@@ -21,7 +22,7 @@ interface PostRatingDialogProps {
 interface JudgeTag {
   id: number;
   reason: string;
-  type: number;
+  type: RatingType;
   enabled: boolean;
 }
 
@@ -50,10 +51,10 @@ export function PostRatingDialog(props: PostRatingDialogProps) {
       console.log(value, current);
       switch (current) {
         case "1":
-          status = await positiveJudge(props.item.id, value, 1);
+          status = await positiveJudge(props.item.id, value, RatingType.Add);
           break;
         case "2":
-          status = await negativeJudge(props.item.id, value, 2);
+          status = await negativeJudge(props.item.id, value, RatingType.Subtract);
           break;
         case "0":
           alert("请选择加风评还是扣风评。");
@@ -111,13 +112,13 @@ export function PostRatingDialog(props: PostRatingDialogProps) {
     console.log("click ", event);
     // 如果是加分选项卡，且加分理由未获取，则获取加分理由。
     if (event.key === "1" && positiveTags.length === 0) {
-      getJudgeTags(1).then((response) => {
+      getJudgeTags(RatingType.Add).then((response) => {
         setPositiveTags(response);
       });
     }
     // 如果是扣分选项卡，且扣分理由未获取，则获取扣分理由。
     if (event.key === "2" && negativeTags.length === 0) {
-      getJudgeTags(2).then((response) => {
+      getJudgeTags(RatingType.Subtract).then((response) => {
         setNegativeTags(response);
       });
     }

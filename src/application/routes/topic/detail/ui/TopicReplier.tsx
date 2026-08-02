@@ -2,7 +2,7 @@ import * as React from "react";
 import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
 import { Link } from "react-router";
 
-import { updateUserInfo } from "@modules/user";
+import { updateUserInfo, UserGender } from "@modules/user";
 import { getMyInfo } from "@modules/session";
 import { updateFollowedUser } from "../api/service";
 import styles from "./TopicReplier.module.scss";
@@ -302,7 +302,7 @@ export function TopicReplier({
   const gender =
     isAnonymous == true ? null : (
       <div className={styles.userGender}>
-        {userInfo.gender === 0 ? (
+        {userInfo.gender === UserGender.Female ? (
           <i className="fa fa-venus" style={{ color: "#fff" }}></i>
         ) : (
           <i className="fa fa-mars" style={{ color: "#fff" }}></i>

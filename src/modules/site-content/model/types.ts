@@ -1,9 +1,13 @@
-import type { IBasicTopic } from "@modules/topic";
+import type { IBasicTopic, TopicType } from "@modules/topic";
+import type {
+  ForumIndexColumnType,
+  ForumIndexColumnVisibility,
+} from "./enums";
 
 export interface ForumIndexColumnInfo {
   id: number;
   /** 1=推荐阅读，2=推荐功能，3=校园新闻，4=Banner，7=福利优惠 */
-  type: number;
+  type: ForumIndexColumnType;
   /** 必须，Banner表示对Banner的简单描述 */
   title: string;
   /** 只有推荐阅读需要 */
@@ -22,7 +26,7 @@ export interface ForumIndexColumnInfo {
   isNew: boolean;
   /** */
   expiredTime: string;
-  visibility: number;
+  visibility: ForumIndexColumnVisibility;
 }
 
 export interface IRecommendationReading {
@@ -45,7 +49,7 @@ export interface IRecommendationReading {
 
   id: number;
 
-  type: number;
+  type: ForumIndexColumnType;
 
   enable: boolean;
 
@@ -186,7 +190,7 @@ export interface IIndexHotTopic {
   /** 发表时间 */
   createTime: string;
   /** 帖子类型 */
-  type: number;
+  type: TopicType;
 }
 
 /**
@@ -202,7 +206,7 @@ export interface IMainpageEditableContent {
    * 2为推荐功能
    * 3为校园新闻
    */
-  type: number;
+  type: ForumIndexColumnType;
   /** 标题 */
   title: string;
   /** 内容 */
@@ -233,9 +237,9 @@ export interface IMainpageAutoContent {
   /** 帖子标题 */
   title: string;
   /** 帖子状态 */
-  state: number;
+  state: import("@modules/topic").TopicState;
   /** 帖子类型 */
-  type: number;
+  type: import("@modules/topic").TopicType;
   /** 是否仅限内部版面 */
   isInternalOnly: boolean;
   /** 是否是投票帖 */

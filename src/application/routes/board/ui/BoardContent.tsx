@@ -1,6 +1,6 @@
 import * as React from "react";
 import type { IBoard } from "@modules/board";
-import type { ITagGroup, ITopic } from "@modules/topic";
+import { TopicBestState, type ITagGroup, type ITopic } from "@modules/topic";
 import { Pagination, Spin } from "antd";
 import { useNavigate } from "react-router";
 
@@ -26,7 +26,7 @@ export function BoardContent({ data, page }: BoardContentProps) {
   const navigate = useNavigate();
   const [list, setList] = React.useState<any>([]);
   const [topList, setTopList] = React.useState<any>([]);
-  const [type, setType] = React.useState(0);
+  const [type, setType] = React.useState(TopicBestState.None);
   const [topicCount, setTopicCount] = React.useState(0);
   const [tags, setTags] = React.useState<ITagGroup[]>([]);
   const [tag1, setTag1] = React.useState(-1);
@@ -47,10 +47,10 @@ export function BoardContent({ data, page }: BoardContentProps) {
     let response: any = null;
     // 没有标签
     if (nextTag1 === -1 && nextTag2 === -1) {
-      if (nextType === 0) {
+      if (nextType === TopicBestState.None) {
         nextList = await getNormalTopics(data.id, nextPage.toString());
         setList(nextList);
-      } else if (nextType === 1) {
+      } else if (nextType === TopicBestState.Best) {
         response = await getBestTopics(data.id, nextPage.toString());
         nextList = response.topics;
         setList(nextList);
@@ -85,7 +85,7 @@ export function BoardContent({ data, page }: BoardContentProps) {
   React.useEffect(() => {
     setTopicCount(data.topicCount);
     void loadTopTopics();
-    void getTopics(page, 0, -1, -1);
+    void getTopics(page, TopicBestState.None, -1, -1);
     void getBoardTags();
   }, []);
 
@@ -107,7 +107,7 @@ export function BoardContent({ data, page }: BoardContentProps) {
     }
   };
 
-  const changeType = (nextType: number) => {
+  const changeType = (nextType: TopicBestState) => {
     setType(nextType);
     void getTopics(page, nextType);
   };

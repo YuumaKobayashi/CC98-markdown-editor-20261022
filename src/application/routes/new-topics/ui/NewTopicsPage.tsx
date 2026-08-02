@@ -19,6 +19,7 @@ import {
 import { isLogOn } from "@modules/session";
 import type { FocusTopic } from "@modules/topic";
 import type { CurrentUser } from "@modules/session";
+import { UserTopicViewMode } from "@modules/user";
 import { CollectionPageShell } from "@application/layouts/collection";
 import { pDebounce } from "@foundation/lib/async";
 import { isBottom } from "@foundation/lib/dom";
@@ -30,7 +31,6 @@ import styles from "./NewTopicsPage.module.scss";
 
 //TODO：逻辑重构优化，优先级中
 
-type TopicViewMode = 0 | 1 | 2;
 type ScrollButtonState = "show" | "hidden" | null;
 
 const getCountString = (count: number) => {
@@ -90,8 +90,8 @@ export function NewTopicsPage() {
   const [myInfo] = useState<CurrentUser | null>(() =>
     isLogOn() ? getMyInfo() : null
   );
-  const initialMode = (myInfo?.topicViewMode ?? 0) as TopicViewMode;
-  const [viewMode, setViewMode] = useState<TopicViewMode>(initialMode);
+  const initialMode = myInfo?.topicViewMode ?? UserTopicViewMode.Classic;
+  const [viewMode, setViewMode] = useState<UserTopicViewMode>(initialMode);
   const [data, setData] = useState<FocusTopic[]>([]);
   const [from, setFrom] = useState(0);
   const [isLoadDone, setIsLoadDone] = useState(false);
@@ -99,7 +99,9 @@ export function NewTopicsPage() {
     useState<ScrollButtonState>(null);
 
   const isLoadableRef = useRef(true);
-  const mediaOnlyRef = useRef(initialMode === 2);
+  const mediaOnlyRef = useRef(
+    initialMode === UserTopicViewMode.CardMediaOnly
+  );
   const dataRef = useRef(data);
   const fromRef = useRef(from);
 
@@ -128,7 +130,7 @@ export function NewTopicsPage() {
     isLoadableRef.current = true;
   };
 
-  const changeMode = async (mode: TopicViewMode, isInitial = false) => {
+  const changeMode = async (mode: UserTopicViewMode, isInitial = false) => {
     if (!isLoadableRef.current) {
       return;
     }
@@ -136,7 +138,7 @@ export function NewTopicsPage() {
       void setUserTopicViewMode(mode);
     }
     setViewMode(mode);
-    mediaOnlyRef.current = mode === 2;
+    mediaOnlyRef.current = mode === UserTopicViewMode.CardMediaOnly;
     await getAndSetTopic(0);
   };
 
@@ -234,13 +236,13 @@ export function NewTopicsPage() {
   };
 
   const classicButtonClassName = `${styles["focus-board"]} ${styles["new-topic"]}${
-    viewMode === 0 ? ` ${styles["focus-hover"]}` : ""
+    viewMode === UserTopicViewMode.Classic ? ` ${styles["focus-hover"]}` : ""
   }`;
   const cardButtonClassName = `${styles["focus-board"]} ${styles["new-topic"]}${
-    viewMode === 1 ? ` ${styles["focus-hover"]}` : ""
+    viewMode === UserTopicViewMode.Card ? ` ${styles["focus-hover"]}` : ""
   }`;
   const mediaButtonClassName = `${styles["focus-board"]} ${styles["new-topic"]}${
-    viewMode === 2 ? ` ${styles["focus-hover"]}` : ""
+    viewMode === UserTopicViewMode.CardMediaOnly ? ` ${styles["focus-hover"]}` : ""
   }`;
   const scrollButtonClassName =
     scrollButtonState === "show"
@@ -256,21 +258,21 @@ export function NewTopicsPage() {
           <button
             className={classicButtonClassName}
             id="new-topic-classic-button"
-            onClick={() => changeMode(0)}
+            onClick={() => changeMode(UserTopicViewMode.Classic)}
           >
             经典模式
           </button>
           <button
             className={cardButtonClassName}
             id="new-topic-card-button"
-            onClick={() => changeMode(1)}
+            onClick={() => changeMode(UserTopicViewMode.Card)}
           >
             卡片模式
           </button>
           <button
             className={mediaButtonClassName}
             id="new-topic-media-only-button"
-            onClick={() => changeMode(2)}
+            onClick={() => changeMode(UserTopicViewMode.CardMediaOnly)}
           >
             只看媒体
           </button>
@@ -291,7 +293,7 @@ export function NewTopicsPage() {
         <div
           className={styles["focus-topic-area"]}
           id="classic-mode-area"
-          style={{ display: viewMode === 0 ? undefined : "none" }}
+          style={{ display: viewMode === UserTopicViewMode.Classic ? undefined : "none" }}
         >
           <div className={styles["focus-topic-topicArea"]}>
             {data.map(renderClassicTopic)}
@@ -301,7 +303,7 @@ export function NewTopicsPage() {
         <div
           className={styles["card-topic-area"]}
           id="card-mode-area"
-          style={{ display: viewMode === 0 ? "none" : undefined }}
+          style={{ display: viewMode === UserTopicViewMode.Classic ? "none" : undefined }}
         >
           <div className={styles["card-topic-area-left"]}>
             <div className={styles["card-topic-area-left-content"]}>
@@ -390,7 +392,7 @@ export function NewTopicsPage() {
             </div>
           </div>
           <div className={styles["card-topic-area-middle"]}>
-            {viewMode === 2
+            {viewMode === UserTopicViewMode.CardMediaOnly
               ? data.map(renderMediaOnlyTopic)
               : data.map(renderCardTopic)}
           </div>

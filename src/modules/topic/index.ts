@@ -11,7 +11,18 @@ export { RecommendedTopicsBreadcrumb } from "./ui/RecommendedTopicsBreadcrumb";
 export { TopicAudioPlayer } from "./ui/TopicAudioPlayer";
 export { TopicCard } from "./ui/TopicCard";
 export { TopicVideoPlayer } from "./ui/TopicVideoPlayer";
-export { TopicContentType } from "./model/types";
+export {
+  LotteryMode,
+  LotteryTopicStatus,
+  SearchResultOrder,
+  TopicAllowedViewerState,
+  TopicBestState,
+  TopicContentType,
+  TopicSortMode,
+  TopicState,
+  TopicTopState,
+  TopicType,
+} from "./model/enums";
 export type {
   FocusTopic,
   IBasicTopic,

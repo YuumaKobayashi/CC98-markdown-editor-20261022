@@ -4,6 +4,7 @@ import { Button } from "antd";
 import { Link } from "react-router";
 
 import { getMyInfo } from "@modules/session";
+import { UserState } from "@modules/user";
 import { HomeAdvertisementCarousel } from "@application/routes/home/advertisement";
 
 import styles from "./BoardHeader.module.scss";
@@ -36,7 +37,7 @@ export function BoardHeader({ data, page }: BoardHeaderProps) {
       isVerified = true;
     }
 
-    if (getMyInfo().lockState !== 0) {
+    if (getMyInfo().lockState !== UserState.Normal) {
       isLocked = true;
       tip = (
         <div style={{ marginLeft: "1rem", color: "red" }}>您被全站禁言。</div>

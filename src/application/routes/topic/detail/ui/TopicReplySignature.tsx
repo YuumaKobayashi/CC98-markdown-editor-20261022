@@ -5,6 +5,7 @@ import moment from "moment";
 import $ from "jquery";
 
 import { isMaster } from "@modules/board";
+import { LikeState } from "@modules/post";
 import { getMyInfo } from "@modules/session";
 import {
   dislike,
@@ -212,7 +213,7 @@ export function TopicReplySignature(props: TopicReplySignatureProps) {
           <div
             id={idLike}
             className={
-              likeState === 1
+              likeState === LikeState.Like
                 ? `${styles.upup} ${styles.redColor}`
                 : styles.upup
             }
@@ -222,7 +223,7 @@ export function TopicReplySignature(props: TopicReplySignatureProps) {
             <i
               title="赞"
               className={
-                likeState === 1
+                likeState === LikeState.Like
                   ? "fa fa-thumbs-up fa-lg"
                   : "fa fa-thumbs-o-up fa-lg"
               }
@@ -232,7 +233,7 @@ export function TopicReplySignature(props: TopicReplySignatureProps) {
           <div
             id={idDislike}
             className={
-              likeState === 2
+              likeState === LikeState.Dislike
                 ? `${styles.downdown} ${styles.redColor}`
                 : styles.downdown
             }
@@ -241,7 +242,7 @@ export function TopicReplySignature(props: TopicReplySignatureProps) {
             <i
               title="踩"
               className={
-                likeState === 2
+                likeState === LikeState.Dislike
                   ? "fa fa-thumbs-down fa-lg"
                   : "fa fa-thumbs-o-down fa-lg"
               }

@@ -1,4 +1,5 @@
 import type { UserRecentTopic } from "../model/types";
+import { TopicSortMode } from "../model/enums";
 import { getUserInfo } from "@modules/user";
 import { getUsersInfo } from "@modules/user";
 import { readTagInfoCache, writeTagInfoCache } from "../cache/tag-cache";
@@ -500,7 +501,7 @@ export async function getFocusTopic(
     let response;
     if (boardId === -1) {
       response = await cc98Fetch(
-        `/me/followee/topic?from=${from}&size=${size}&order=0`,
+        `/me/followee/topic?from=${from}&size=${size}&order=${TopicSortMode.CreateTime}`,
         { headers }
       );
     } else if (boardId === 0) {

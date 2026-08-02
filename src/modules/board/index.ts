@@ -5,6 +5,11 @@ export {
   readLegacyRawBoardsInfoCache,
 } from "./cache/board-cache";
 export { boardInfo } from "./model/board-info";
+export {
+  AnonymousState,
+  BoardInternalState,
+  BoardPosterOnlyState,
+} from "./model/enums";
 export type {
   FocusBoard,
   IBoard,

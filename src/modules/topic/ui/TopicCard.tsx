@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 
+import { TopicContentType } from "../model/enums";
 import type { FocusTopic } from "../model/types";
 
 import styles from "./TopicCard.module.scss";
@@ -52,7 +53,7 @@ export function TopicCard(props: FocusTopic) {
   };
 
   const renderThumbnailContent = () => {
-    if (props.contentType !== 4) {
+    if (props.contentType !== TopicContentType.ImageTopic) {
       return null;
     }
 
@@ -164,7 +165,7 @@ export function TopicCard(props: FocusTopic) {
         >
           {renderThumbnailContent()}
         </div>
-        {props.contentType === 3 ? (
+        {props.contentType === TopicContentType.AudioTopic ? (
           <TopicAudioPlayer
             key={`card_audio_${props.id}`}
             title={props.title}
@@ -173,7 +174,7 @@ export function TopicCard(props: FocusTopic) {
             topicId={props.id}
           />
         ) : null}
-        {props.contentType === 2 ? (
+        {props.contentType === TopicContentType.VideoTopic ? (
           <TopicVideoPlayer
             key={`card_video_${props.id}`}
             src={props.mediaContent.video}

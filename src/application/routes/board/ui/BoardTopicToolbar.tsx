@@ -1,5 +1,5 @@
 import * as React from "react";
-import type { ITagGroup } from "@modules/topic";
+import { TopicBestState, type ITagGroup } from "@modules/topic";
 import { Select } from "antd";
 
 import styles from "./BoardTopicToolbar.module.scss";
@@ -7,7 +7,7 @@ import styles from "./BoardTopicToolbar.module.scss";
 const Option = Select.Option;
 
 interface BoardTopicToolbarProps {
-  onChange: (type: number) => void;
+  onChange: (type: TopicBestState) => void;
   tags: ITagGroup[];
   handleTag1Change: (value: number) => void;
   handleTag2Change: (value: number) => void;
@@ -25,19 +25,19 @@ export function BoardTopicToolbar({
         <div className={styles["board-postItem-head-left-part"]}>
           <div
             className={styles["board-postItem-head-option"]}
-            onClick={() => onChange(0)}
+            onClick={() => onChange(TopicBestState.None)}
           >
             全部
           </div>
           <div
             className={styles["board-postItem-head-option"]}
-            onClick={() => onChange(1)}
+            onClick={() => onChange(TopicBestState.Best)}
           >
             精华
           </div>
           <div
             className={styles["board-postItem-head-option"]}
-            onClick={() => onChange(2)}
+            onClick={() => onChange(TopicBestState.Save)}
           >
             保存
           </div>

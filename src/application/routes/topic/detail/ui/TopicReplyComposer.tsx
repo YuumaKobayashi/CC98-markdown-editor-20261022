@@ -13,7 +13,8 @@ import moment from "moment";
 import { MarkdownEditor } from "@foundation/integrations/markdown-editor";
 import * as Showdown from "showdown";
 import styles from "./TopicReplyComposer.module.scss";
-import { isMaster } from "@modules/board";
+import { AnonymousState, isMaster } from "@modules/board";
+import { PostContentType } from "@modules/post";
 import { getMyInfo } from "@modules/session";
 import { getUserWealth } from "@modules/wealth";
 import { getToken } from "@modules/session";
@@ -297,7 +298,7 @@ export const TopicReplyComposer = React.forwardRef(function TopicReplyComposer(
       if (quoteJudger(stateRef.current.content)) {
         bodyInfo = {
           content: stateRef.current.content,
-          contentType: 0,
+          contentType: PostContentType.Ubb,
           title: "",
           parentId: props.content.postId,
           isAnonymous: isAnonymous,
@@ -307,7 +308,7 @@ export const TopicReplyComposer = React.forwardRef(function TopicReplyComposer(
       } else {
         bodyInfo = {
           content: stateRef.current.content,
-          contentType: 0,
+          contentType: PostContentType.Ubb,
           title: "",
           isAnonymous: isAnonymous,
           notifyAllReplier: stateRef.current.notifyAllReplier,
@@ -405,7 +406,7 @@ export const TopicReplyComposer = React.forwardRef(function TopicReplyComposer(
       //console.log(c);
       const content = {
         content: c,
-        contentType: 1,
+        contentType: PostContentType.Markdown,
         title: "",
         isAnonymous: isAnonymous,
         notifyAllReplier: stateRef.current.notifyAllReplier,
@@ -486,7 +487,7 @@ export const TopicReplyComposer = React.forwardRef(function TopicReplyComposer(
   };
 
   const postAnonymousUbbContent = () => {
-    if (props.boardInfo.anonymousState !== 1) {
+    if (props.boardInfo.anonymousState !== AnonymousState.Force) {
       if (!confirm("你真的要匿名吗？")) return;
     }
 
@@ -498,7 +499,7 @@ export const TopicReplyComposer = React.forwardRef(function TopicReplyComposer(
   };
 
   const postAnonymousMdContent = () => {
-    if (props.boardInfo.anonymousState !== 1) {
+    if (props.boardInfo.anonymousState !== AnonymousState.Force) {
       if (!confirm("你真的要匿名吗？")) return;
     }
 
@@ -657,7 +658,11 @@ ${nextContent.content}[/quote]
       let ubbButtons;
       let markdownButtons;
       //不可匿名版面，或者，仅楼主可选匿名版面并且主楼非匿名或者非楼主回复时
-      if (anonymousState === 0 || (anonymousState === 3 && (!props.topicInfo.isAnonymous || !props.topicInfo.isMe))) {
+      if (
+        anonymousState === AnonymousState.NotAllowed ||
+        (anonymousState === AnonymousState.OnlyPosterAllowed &&
+          (!props.topicInfo.isAnonymous || !props.topicInfo.isMe))
+      ) {
         ubbButtons = (
           <button
             id="post-topic-button"
@@ -678,7 +683,12 @@ ${nextContent.content}[/quote]
             {stateRef.current.buttonInfo}
           </button>
         );
-      } else if (anonymousState === 1 || (anonymousState === 3 && props.topicInfo.isAnonymous && props.topicInfo.isMe)) {
+      } else if (
+        anonymousState === AnonymousState.Force ||
+        (anonymousState === AnonymousState.OnlyPosterAllowed &&
+          props.topicInfo.isAnonymous &&
+          props.topicInfo.isMe)
+      ) {
         //强制匿名版面，或者，仅楼主可选匿名版面并且主楼是匿名并且是楼主回复
         ubbButtons = (
           <div
@@ -718,7 +728,7 @@ ${nextContent.content}[/quote]
             <p>根据设置，你在本楼的回复都是匿名，并且不花费财富值。</p>
           </div>
         );
-      } else if (anonymousState === 2) {
+      } else if (anonymousState === AnonymousState.Allowed) {
         if (props.topicInfo.isAnonymous && props.topicInfo.isMe) {
           ubbButtons = (
             <div

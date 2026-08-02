@@ -4,7 +4,8 @@ import { useNavigate, useParams } from "react-router";
 import $ from "jquery";
 
 import { getBoardInfo, getBoards } from "@modules/board";
-import { getTopicInfo } from "@modules/topic";
+import { getTopicInfo, TopicState } from "@modules/topic";
+import { UserState } from "@modules/user";
 import { getMyInfo } from "@modules/session";
 import { getFavState } from "@modules/favorite-topic";
 import { type NoticeSetting } from "@modules/notification";
@@ -271,12 +272,12 @@ export function TopicPage() {
       </div>
     );
   }
-  if (myInfo && myInfo.lockState !== 0) {
+  if (myInfo && myInfo.lockState !== UserState.Normal) {
     replyComposer = <div>您的帐号被全站禁言。</div>;
   }
 
   const lockedTip =
-    state.topicInfo && state.topicInfo.state === 1 ? (
+    state.topicInfo && state.topicInfo.state === TopicState.Locked ? (
       <div style={{ color: "red", margin: "0.5rem" }}>该帖已被锁定</div>
     ) : null;
   const pagerUrl = `/topic/${state.topicid}/`;

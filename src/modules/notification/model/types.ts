@@ -1,3 +1,5 @@
+import type { NotificationType } from "./enums";
+
 type UserBooleanSetting = "是" | "否";
 
 export interface UnreadCount {
@@ -37,7 +39,7 @@ export interface MessageResponseProps {
   //通知Id
   id: number;
   //Type通知类型（0 = 全站系统通知，1 = 个人系统通知）
-  type: number;
+  type: NotificationType;
   //（int?类型， 有值表示这个通知超链接到具体的某个帖，null表示不连接），
   topicId: number;
   //帖子标题
@@ -62,7 +64,7 @@ export interface MessageSystemProps {
   //通知Id
   id: number;
   //Type通知类型（0 = 全站系统通知，1 = 个人系统通知）
-  type: number;
+  type: NotificationType;
   //标题
   title: string;
   //内容

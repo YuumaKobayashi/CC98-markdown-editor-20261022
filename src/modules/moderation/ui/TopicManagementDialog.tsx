@@ -4,6 +4,11 @@ import type { FormInstance } from "antd";
 import { SketchPicker } from "react-color";
 import { clearInvalidBoardsInfoCache, getBoards } from "@modules/board";
 import {
+  TopicBestState,
+  TopicState,
+  TopicTopState,
+} from "@modules/topic";
+import {
   addBoardTopTopic,
   cancelBestTopic,
   cancelDisableHot,
@@ -70,7 +75,7 @@ export function TopicManagementDialog(props: TopicManagementDialogProps) {
         // 锁定。
         case "1":
           // 解锁。
-          if (props.topicInfo.state === 1) {
+          if (props.topicInfo.state === TopicState.Locked) {
             status = await unLockTopic(
               props.topicInfo.id,
               props.boardId,
@@ -117,7 +122,7 @@ export function TopicManagementDialog(props: TopicManagementDialogProps) {
         // 固顶。
         case "6":
           // 取消固顶。
-          if (props.topicInfo.topState === 2) {
+          if (props.topicInfo.topState === TopicTopState.BoardTop) {
             status = await removeBoardTopTopic(
               props.topicInfo.id,
               props.boardId,
@@ -129,7 +134,7 @@ export function TopicManagementDialog(props: TopicManagementDialogProps) {
             status = await addBoardTopTopic(
               props.topicInfo.id,
               props.boardId,
-              2,
+              TopicTopState.BoardTop,
               parsedDays,
               reason
             );
@@ -138,7 +143,7 @@ export function TopicManagementDialog(props: TopicManagementDialogProps) {
         // 全站固顶。
         case "7":
           // 取消全站固顶。
-          if (props.topicInfo.topState === 4) {
+          if (props.topicInfo.topState === TopicTopState.AllTop) {
             status = await removeBoardTopTopic(
               props.topicInfo.id,
               props.boardId,
@@ -150,7 +155,7 @@ export function TopicManagementDialog(props: TopicManagementDialogProps) {
             status = await addBoardTopTopic(
               props.topicInfo.id,
               props.boardId,
-              4,
+              TopicTopState.AllTop,
               parsedDays,
               reason
             );
@@ -159,7 +164,7 @@ export function TopicManagementDialog(props: TopicManagementDialogProps) {
         // 加精。
         case "8":
           // 解除加精。
-          if (props.topicInfo.bestState === 1) {
+          if (props.topicInfo.bestState === TopicBestState.Best) {
             status = await cancelBestTopic(props.topicInfo.id, reason);
           }
           // 加精。
@@ -373,7 +378,7 @@ export function TopicManagementDialog(props: TopicManagementDialogProps) {
   let rcForm = null;
   switch (current) {
     case "1":
-      if (props.topicInfo.state === 1) rcForm = formWithReason;
+      if (props.topicInfo.state === TopicState.Locked) rcForm = formWithReason;
       else rcForm = formWithDays;
       break;
     case "2":
@@ -389,11 +394,11 @@ export function TopicManagementDialog(props: TopicManagementDialogProps) {
       rcForm = formWithReason;
       break;
     case "6":
-      if (props.topicInfo.topState === 2) rcForm = formWithReason;
+      if (props.topicInfo.topState === TopicTopState.BoardTop) rcForm = formWithReason;
       else rcForm = formWithDays;
       break;
     case "7":
-      if (props.topicInfo.topState === 4) rcForm = formWithReason;
+      if (props.topicInfo.topState === TopicTopState.AllTop) rcForm = formWithReason;
       else rcForm = formWithDays;
       break;
     case "8":
@@ -426,7 +431,7 @@ export function TopicManagementDialog(props: TopicManagementDialogProps) {
         }}
       >
         <Item key="1">
-          {props.topicInfo.state === 1 ? "解锁" : "锁定"}
+          {props.topicInfo.state === TopicState.Locked ? "解锁" : "锁定"}
         </Item>
         <Item key="2">
           {props.topicInfo.disableHot ? "允许热门" : "禁止热门"}
@@ -435,13 +440,13 @@ export function TopicManagementDialog(props: TopicManagementDialogProps) {
         <Item key="4">移动</Item>
         <Item key="5">提升</Item>
         <Item key="6">
-          {props.topicInfo.topState === 2 ? "取消固顶" : "固顶"}
+          {props.topicInfo.topState === TopicTopState.BoardTop ? "取消固顶" : "固顶"}
         </Item>
         <Item key="7">
-          {props.topicInfo.topState === 4 ? "取消全站固顶" : "全站固顶"}
+          {props.topicInfo.topState === TopicTopState.AllTop ? "取消全站固顶" : "全站固顶"}
         </Item>
         <Item key="8">
-          {props.topicInfo.bestState === 1 ? "解除精华" : "加精"}
+          {props.topicInfo.bestState === TopicBestState.Best ? "解除精华" : "加精"}
         </Item>
         <Item key="9">高亮</Item>
       </Menu>

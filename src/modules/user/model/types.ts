@@ -1,4 +1,9 @@
 import type { IBoardMasterTitle } from "@modules/board";
+import type {
+  UserGender,
+  UserState,
+  UserTopicViewMode,
+} from "./enums";
 
 export interface IBasicUser {
   /**
@@ -25,7 +30,7 @@ export interface IUser {
    * 男：1
    * 女：0
    */
-  gender: 0 | 1;
+  gender: UserGender;
   /**
    * 用户生日
    */
@@ -89,7 +94,7 @@ export interface IUser {
   /**
    * 用户锁定状态：0正常  1锁定  2屏蔽  3全站TP
    */
-  lockState: 0 | 1 | 2 | 3;
+  lockState: UserState;
   /**
    * 风评
    */
@@ -151,7 +156,7 @@ export interface UserInfo {
   /**
    * 用户性别
    */
-  gender: 0 | 1;
+  gender: UserGender;
   /**
    * 用户生日
    */
@@ -215,7 +220,7 @@ export interface UserInfo {
   /**
    * 用户锁定状态，0正常  1锁定  2屏蔽  3全站TP
    */
-  lockState: 0 | 1 | 2 | 3;
+  lockState: UserState;
   /**
    * 风评
    */
@@ -277,7 +282,7 @@ export interface UserInfo {
   /**
    * 用户的主题列表浏览模式设置。
    */
-  topicViewMode: 0 | 1 | 2;
+  topicViewMode: UserTopicViewMode;
 
   /**
    * 用户被版面TP的数量。
@@ -300,7 +305,7 @@ export interface ChangeUserInfo {
   /**
    * 性别 男=1 女=0
    */
-  Gender: 0 | 1;
+  Gender: UserGender;
   /**
    * QQ
    */

@@ -1,3 +1,5 @@
+import type { LikeState, PostContentType, PostState } from "./enums";
+
 export interface IAward {
   /**
    * 操作内容
@@ -25,11 +27,7 @@ export interface IAward {
   id: number;
 }
 
-type NONE = 0;
-type LIKE = 1;
-type DISLIKE = 2;
-
-export type ILikeState = NONE | LIKE | DISLIKE;
+export type ILikeState = LikeState;
 
 export interface ILike {
   /**
@@ -63,7 +61,7 @@ export interface IPost {
    * UBB 0
    * markdown 1
    */
-  contentType: 0 | 1;
+  contentType: PostContentType;
   /**
    * 楼层数
    */
@@ -119,7 +117,7 @@ export interface IPost {
 
   parentId: number;
 
-  state: number;
+  state: PostState;
   /**
    * 回复时间
    */

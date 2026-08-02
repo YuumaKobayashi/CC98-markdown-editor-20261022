@@ -2,6 +2,7 @@ import * as React from "react";
 import { Link } from "react-router";
 
 import { getMyInfo } from "@modules/session";
+import { UserState } from "@modules/user";
 import { HomeAdvertisementCarousel } from "@application/routes/home/advertisement";
 import styles from "./BoardActionsAndAdvertisement.module.scss";
 
@@ -25,7 +26,7 @@ export function BoardActionsAndAdvertisement({
         您还未登录，不能发帖，请先登录
       </div>
     );
-  } else if (userInfo.lockState !== 0) {
+  } else if (userInfo.lockState !== UserState.Normal) {
     tip = (
       <div style={{ marginLeft: "1rem", color: "red" }}>您被全站禁言。</div>
     );

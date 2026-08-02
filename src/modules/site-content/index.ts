@@ -1,4 +1,8 @@
 export * from "./api/service";
+export {
+  ForumIndexColumnType,
+  ForumIndexColumnVisibility,
+} from "./model/enums";
 export type {
   ForumIndexColumnInfo,
   IConfig,

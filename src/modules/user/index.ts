@@ -16,6 +16,14 @@ export {
 export { ConfigSignature } from "./ui/ConfigSignature";
 export { UserProfile } from "./ui/UserProfile";
 export { UserProfileAvatar } from "./ui/profile-avatar";
+export {
+  ForumUserOperationType,
+  TargetWindow,
+  UserGender,
+  UserRateState,
+  UserState,
+  UserTopicViewMode,
+} from "./model/enums";
 export type {
   ChangeUserInfo,
   IBasicUser,

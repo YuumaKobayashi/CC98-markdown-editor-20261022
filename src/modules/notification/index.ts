@@ -1,4 +1,5 @@
 export * from "./api/service";
+export { NotificationType } from "./model/enums";
 export { MessageAttmebox } from "./ui/MessageAttmebox";
 export { MessageResponsebox } from "./ui/MessageResponsebox";
 export { MessageSetting } from "./ui/MessageSetting";

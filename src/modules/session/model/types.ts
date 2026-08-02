@@ -1,3 +1,9 @@
+import type {
+  UserGender,
+  UserState,
+  UserTopicViewMode,
+} from "@modules/user";
+
 export interface CurrentUserThemeSetting {
   enableDayNightSwitch: boolean;
   syncWithBrowserDayNightMode: boolean;
@@ -25,7 +31,7 @@ export interface CurrentUserBoardMasterTitle {
  */
 export interface CurrentUser {
   name: string;
-  gender: 0 | 1;
+  gender: UserGender;
   birthday: string;
   photourl: string;
   introduction: string;
@@ -41,7 +47,7 @@ export interface CurrentUser {
   registerTime: string;
   lastLogOnTime: string;
   customTitle: string;
-  lockState: 0 | 1 | 2 | 3;
+  lockState: UserState;
   popularity: number;
   userTitleIds: number[];
   displayTitleId: number;
@@ -56,7 +62,7 @@ export interface CurrentUser {
   deleteCount: number;
   receivedLikeCount: number;
   themeSetting: CurrentUserThemeSetting;
-  topicViewMode: 0 | 1 | 2;
+  topicViewMode: UserTopicViewMode;
   stopPostBoardCount: number;
   signInCardCount: number;
   browsingHistoryEnabled: boolean;

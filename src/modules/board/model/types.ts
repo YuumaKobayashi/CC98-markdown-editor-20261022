@@ -1,3 +1,5 @@
+import type { AnonymousState, BoardInternalState } from "./enums";
+
 /**
  * 版面合同。
  */
@@ -37,7 +39,7 @@ export interface IBoard {
   /**
    * 是否仅内网可见
    */
-  internalState: number;
+  internalState: BoardInternalState;
   /**
    * 是否已锁定
    */
@@ -49,7 +51,8 @@ export interface IBoard {
   /**
    * 是否匿名
    */
-  anonymousState: number;
+  anonymousState: AnonymousState;
+
   /**
    * 是否能进入
    */

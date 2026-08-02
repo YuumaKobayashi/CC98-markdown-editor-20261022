@@ -4,6 +4,8 @@ import { Button, Checkbox, Input, Table } from "antd";
 import moment from "moment";
 
 import {
+  ForumIndexColumnType,
+  ForumIndexColumnVisibility,
   getIndexColumnInfo,
   putIndexColumnInfo,
 } from "@modules/site-content";
@@ -23,13 +25,13 @@ const urls = [
 export function SiteAdvertisementEditor() {
   const [info, setInfo] = useState("");
   const [data, setData] = useState<ForumIndexColumnInfo[]>([]);
-  const [type, setType] = useState(0);
+  const [type, setType] = useState<ForumIndexColumnType | 0>(0);
   const [current, setCurrent] = useState(1);
   const requestId = useRef(0);
 
   const getInfo = async (url: string) => {
     const currentRequest = ++requestId.current;
-    setType(urls.indexOf(url) + 1);
+    setType((urls.indexOf(url) + 1) as ForumIndexColumnType);
     setData([]);
     try {
       const nextData = await getIndexColumnInfo(url);
@@ -45,10 +47,10 @@ export function SiteAdvertisementEditor() {
     if (key === "visibility") {
       const parsedValue = Number.parseInt(value, 10);
       if (Number.isNaN(parsedValue)) {
-        if (type === 4) {
-          nextValue = 1;
+        if (type === ForumIndexColumnType.Advertisement) {
+          nextValue = ForumIndexColumnVisibility.OnlyLogOn;
         } else {
-          nextValue = 0;
+          nextValue = ForumIndexColumnVisibility.Always;
         }
       } else {
         nextValue = parsedValue;
@@ -79,7 +81,10 @@ export function SiteAdvertisementEditor() {
       isNew: true,
       type,
       id: nextId,
-      visibility: type === 4 ? 1 : 0,
+      visibility:
+        type === ForumIndexColumnType.Advertisement
+          ? ForumIndexColumnVisibility.OnlyLogOn
+          : ForumIndexColumnVisibility.Always,
     } as ForumIndexColumnInfo;
     setData((currentData) => [newData, ...currentData]);
   };
@@ -96,7 +101,7 @@ export function SiteAdvertisementEditor() {
       title: "标题", dataIndex: "title", key: "title", width: 200,
       render: (text, _record, index) => <Input type="text" onChange={(event) => handleTdChange("title", event.target.value, getDataIndex(index))} value={text} />,
     },
-    type === 1 ? {
+    type === ForumIndexColumnType.RecommendationReading ? {
       title: "内容", dataIndex: "content", key: "content", width: 200,
       render: (text, _record, index) => <Input type="text" onChange={(event) => handleTdChange("content", event.target.value, getDataIndex(index))} value={text} />,
     } : null,
@@ -104,11 +109,13 @@ export function SiteAdvertisementEditor() {
       title: "url", dataIndex: "url", key: "url", width: 200,
       render: (text, _record, index) => <Input type="text" onChange={(event) => handleTdChange("url", event.target.value, getDataIndex(index))} value={text} />,
     },
-    type !== 3 && type !== 7 ? {
+    type !== ForumIndexColumnType.SchoolNews &&
+    type !== ForumIndexColumnType.SpecialOffer ? {
       title: "图片url", dataIndex: "imageUrl", key: "imageUrl", width: 200,
       render: (text, _record, index) => <Input type="text" onChange={(event) => handleTdChange("imageUrl", event.target.value, getDataIndex(index))} value={text} />,
     } : null,
-    type === 1 || type === 2 ? {
+    type === ForumIndexColumnType.RecommendationReading ||
+    type === ForumIndexColumnType.RecommendationFunction ? {
       title: "排序权重", dataIndex: "orderWeight", key: "orderWeight", width: 100,
       render: (text, _record, index) => <Input type="text" onChange={(event) => handleTdChange("orderWeight", event.target.value, getDataIndex(index))} value={text} />,
     } : null,
@@ -116,11 +123,13 @@ export function SiteAdvertisementEditor() {
       title: "有效", dataIndex: "enable", key: "enable", width: 80,
       render: (text, _record, index) => <Checkbox checked={text} onChange={(event) => handleTdChange("enable", event.target.checked, getDataIndex(index))} />,
     },
-    type === 4 || type === 7 ? {
+    type === ForumIndexColumnType.Advertisement ||
+    type === ForumIndexColumnType.SpecialOffer ? {
       title: "天数 (新增和修改都填距现在时间)", dataIndex: "days", key: "days",
       render: (text, _record, index) => <Input type="text" onChange={(event) => handleTdChange("days", event.target.value, getDataIndex(index))} value={text} />,
     } : null,
-    type === 4 || type === 7 ? {
+    type === ForumIndexColumnType.Advertisement ||
+    type === ForumIndexColumnType.SpecialOffer ? {
       title: "过期时间", dataIndex: "expiredTime", key: "expiredTime",
       render: (text) => moment(text).format("YYYY-MM-DD HH:mm:ss"),
     } : null,
@@ -138,10 +147,10 @@ export function SiteAdvertisementEditor() {
     <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", marginTop: "1rem", borderTop: "#eaeaea solid thin", paddingTop: "1rem" }}>
       <div style={{ display: "flex", justifyContent: "space-around", alignItems: "center", width: "100%", marginBottom: "1rem" }}>
         <div style={{ marginTop: "10px" }}>自定义栏目</div>
-        <div><Button type="primary" disabled={type === 1} onClick={() => getInfo(urls[0])}>推荐阅读</Button></div>
-        <div><Button type="primary" disabled={type === 2} onClick={() => getInfo(urls[1])}>推荐功能</Button></div>
-        <div><Button type="primary" disabled={type === 4} onClick={() => getInfo(urls[3])}>Banner</Button></div>
-        <div><Button type="primary" disabled={type === 7} onClick={() => getInfo(urls[6])}>福利优惠</Button></div>
+        <div><Button type="primary" disabled={type === ForumIndexColumnType.RecommendationReading} onClick={() => getInfo(urls[0])}>推荐阅读</Button></div>
+        <div><Button type="primary" disabled={type === ForumIndexColumnType.RecommendationFunction} onClick={() => getInfo(urls[1])}>推荐功能</Button></div>
+        <div><Button type="primary" disabled={type === ForumIndexColumnType.Advertisement} onClick={() => getInfo(urls[3])}>Banner</Button></div>
+        <div><Button type="primary" disabled={type === ForumIndexColumnType.SpecialOffer} onClick={() => getInfo(urls[6])}>福利优惠</Button></div>
         {type > 0 ? <div><Button type="primary" onClick={add}>添加</Button></div> : null}
       </div>
       <div>

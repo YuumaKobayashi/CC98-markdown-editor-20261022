@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { getToken } from "@modules/session";
+import { ForumUserOperationType, UserState } from "@modules/user";
 import { cc98Fetch } from "@foundation/api/http";
 import styles from "./UserPunishmentForm.module.scss";
 
@@ -8,11 +9,11 @@ interface ForumUserOperation {
   /**
    * 1=锁定，2=屏蔽，3=tp
    */
-  PunishmentType?: 1 | 2 | 3;
+  PunishmentType?: UserState.Locked | UserState.Shielded | UserState.StopPost;
   /**
    * 0=取消，1=执行
    */
-  OperationType?: 0 | 1;
+  OperationType?: ForumUserOperationType;
   /**
    * -1表示永久，其余7<Days<1000
    */
@@ -59,7 +60,7 @@ export function UserPunishmentForm({ id }: UserPunishmentFormProps) {
       }
       if (
         !isCancel &&
-        PunishmentType === 3 &&
+        PunishmentType === UserState.StopPost &&
         (Days < -1 || Days > 1000 || (Days < 7 && Days > -1))
       ) {
         throw new Error("不合法的TP天数");
@@ -74,7 +75,9 @@ export function UserPunishmentForm({ id }: UserPunishmentFormProps) {
         headers,
         body: JSON.stringify({
           ...operation,
-          OperationType: isCancel ? 0 : 1,
+          OperationType: isCancel
+            ? ForumUserOperationType.Cancel
+            : ForumUserOperationType.Do,
         }),
       });
 
@@ -93,7 +96,7 @@ export function UserPunishmentForm({ id }: UserPunishmentFormProps) {
       <div className={styles["user-manager"]}>
         <p>OperationType: </p>
         <select
-          value={operation.PunishmentType || 0}
+          value={operation.PunishmentType || UserState.Normal}
           onChange={(event) =>
             handleOperationChange(
               "PunishmentType",
@@ -101,12 +104,12 @@ export function UserPunishmentForm({ id }: UserPunishmentFormProps) {
             )
           }
         >
-          <option value={0} disabled>
+          <option value={UserState.Normal} disabled>
             未选择
           </option>
-          <option value={1}>锁定</option>
-          <option value={2}>屏蔽</option>
-          <option value={3}>TP</option>
+          <option value={UserState.Locked}>锁定</option>
+          <option value={UserState.Shielded}>屏蔽</option>
+          <option value={UserState.StopPost}>TP</option>
         </select>
         <p>Reason: </p>
         <input
