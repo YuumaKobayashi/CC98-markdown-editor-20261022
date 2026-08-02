@@ -1,4 +1,4 @@
-import type { ChangeUserInfo, UserInfo } from "@legacy/States/AppState";
+import type { ChangeUserInfo, UserInfo } from "@modules/user";
 
 /**
  * 个人资料设置页使用的可编辑数据。

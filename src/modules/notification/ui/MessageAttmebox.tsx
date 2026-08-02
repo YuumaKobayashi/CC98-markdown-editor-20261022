@@ -3,7 +3,7 @@
 // https://github.com/Microsoft/TypeScript/wiki/JSX
 import * as React from "react";
 import { UbbCompatiblityMode } from "@legacy/Ubb/UbbCodeExtension";
-import { MessageResponseProps } from "../model/types";
+import type { MessageResponseProps } from "../model/types";
 import { MessageResponseItem } from "./MessageResponseItem";
 
 export function MessageAttmebox(

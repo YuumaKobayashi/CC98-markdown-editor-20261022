@@ -10,7 +10,7 @@ export { HomeHotTopics } from "./ui/HomeHotTopics";
 export { HomePage } from "./ui/HomePage";
 export { HomeStatistics } from "./ui/HomeStatistics";
 export { RecommendedReading } from "./ui/RecommendedReading";
-export {
+export type {
   MainPageColumn,
   MainPageTopicMoreProps,
   MainPageTopicState,

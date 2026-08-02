@@ -8,7 +8,7 @@ import {
   UserFollowCard,
 } from "@modules/follow";
 import { selectCurrentUser } from "@modules/session";
-import type { UserInfo } from "@legacy/States/AppState";
+import type { UserInfo } from "@modules/user";
 import { parseUserCenterPage } from "@application/routes/user-center/model/route-params";
 import { UserCenterPager as Pager } from "@application/routes/user-center/pagination";
 import activityStyles from "./MyFollowings.module.scss";

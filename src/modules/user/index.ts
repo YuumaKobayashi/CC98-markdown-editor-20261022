@@ -16,3 +16,9 @@ export {
 export { ConfigSignature } from "./ui/ConfigSignature";
 export { UserProfile } from "./ui/UserProfile";
 export { UserProfileAvatar } from "./ui/profile-avatar";
+export type {
+  ChangeUserInfo,
+  IBasicUser,
+  IUser,
+  UserInfo,
+} from "./model/types";

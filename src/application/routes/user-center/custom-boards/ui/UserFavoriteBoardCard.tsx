@@ -2,7 +2,7 @@ import * as React from "react";
 import { Link } from "react-router";
 
 import { getToken } from "@modules/session";
-import type { UserFavoritesBoardInfo } from "@legacy/States/AppState";
+import type { UserFavoritesBoardInfo } from "@modules/board";
 import { cc98Fetch } from "@foundation/api/http";
 import styles from "./UserFavoriteBoardCard.module.scss";
 

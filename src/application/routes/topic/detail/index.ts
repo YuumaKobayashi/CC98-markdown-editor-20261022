@@ -12,10 +12,10 @@ export {
   type TopicReplyComposerHandle,
 } from "./ui/TopicReplyComposer";
 export {
-  ContentState,
   FloorSize,
   TopicReplyList,
 } from "./ui/TopicReplyList";
+export type { ContentState } from "./ui/TopicReplyList";
 export { TopicReplyContent } from "./ui/TopicReplyContent";
 export {
   default as TopicReplySignatureDefault,

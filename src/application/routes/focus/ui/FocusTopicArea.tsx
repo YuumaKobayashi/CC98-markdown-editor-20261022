@@ -4,7 +4,7 @@ import $ from "jquery";
 
 import { getFocusTopic } from "@modules/topic";
 import { FocusTopicItem } from "@modules/topic";
-import type { FocusTopic } from "@legacy/Props/FocusTopic";
+import type { FocusTopic } from "@modules/topic";
 import { isBottom } from "@foundation/lib/dom";
 import {
   getStorage,

@@ -14,7 +14,7 @@ import {
   getCurrentUserRecentPosts,
   UserRecentPostItem as Post,
 } from "@modules/post";
-import type { UserRecentPost } from "@legacy/States/AppState";
+import type { UserRecentPost } from "@modules/post";
 import {
   parseUserCenterIsHot,
   parseUserCenterPage,

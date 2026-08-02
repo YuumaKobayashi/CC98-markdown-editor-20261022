@@ -13,7 +13,7 @@ import {
   getCurrentUserRecentTopics,
   UserRecentTopicItem as Topic,
 } from "@modules/topic";
-import type { UserRecentTopic } from "@legacy/States/AppState";
+import type { UserRecentTopic } from "@modules/topic";
 import { parseUserCenterPage } from "@application/routes/user-center/model/route-params";
 import { UserCenterPager as Pager } from "@application/routes/user-center/pagination";
 import activityStyles from "./MyTopics.module.scss";

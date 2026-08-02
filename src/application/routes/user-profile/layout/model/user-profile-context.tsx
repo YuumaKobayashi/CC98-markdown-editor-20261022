@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import type { UserInfo } from "@legacy/States/AppState";
+import type { UserInfo } from "@modules/user";
 
 export type UserProfilePage = "exact" | "manage";
 

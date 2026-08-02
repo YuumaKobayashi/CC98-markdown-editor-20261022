@@ -12,7 +12,7 @@ import {
   FavoriteTopicGroupSelect,
   setFavoriteTopic,
 } from "@modules/favorite-topic";
-import type { UserRecentTopic } from "@legacy/States/AppState";
+import type { UserRecentTopic } from "@modules/topic";
 
 import styles from "./UserCenterFavoriteTopicItem.module.scss";
 

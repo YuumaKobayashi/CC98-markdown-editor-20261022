@@ -1,5 +1,5 @@
 import * as React from "react";
-import type { ITopic } from "@cc98/api";
+import type { ITopic } from "@modules/topic";
 import { Popover, Tag, Tooltip } from "antd";
 import moment from "moment";
 import { Link } from "react-router";

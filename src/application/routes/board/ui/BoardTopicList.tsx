@@ -1,5 +1,5 @@
 import * as React from "react";
-import type { ITopic } from "@cc98/api";
+import type { ITopic } from "@modules/topic";
 
 import styles from "./BoardTopicList.module.scss";
 import { BoardTopicListItem } from "./BoardTopicListItem";

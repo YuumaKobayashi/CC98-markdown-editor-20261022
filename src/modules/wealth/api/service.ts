@@ -1,6 +1,7 @@
 import { getMyInfo, refreshUserInfo } from "@modules/session";
 import { formAuthorizeHeader } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
+import type { TransferWealthInfo } from "../model/types";
 
 export async function queryWealth(boardId) {
   const headers = await formAuthorizeHeader();
@@ -52,7 +53,7 @@ export async function transferWealth(
   const headers = await formAuthorizeHeader();
   headers.append("Content-Type", "application/json");
   const url = "/me/transfer-wealth";
-  const body = {
+  const body: TransferWealthInfo = {
     userNames,
     wealth,
     reason,

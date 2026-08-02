@@ -1,9 +1,13 @@
 import { formAuthorizeHeader, getToken } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
 
-import type { ForumIndexColumnInfo } from "../model/types";
+import type {
+  ForumIndexColumnInfo,
+  IIndex,
+  ISite,
+} from "../model/types";
 
-export async function getGlobalConfig() {
+export async function getGlobalConfig(): Promise<ISite> {
   const headers = await formAuthorizeHeader();
   const url = `/config/global`;
   const response = await cc98Fetch(url, { headers });
@@ -11,7 +15,7 @@ export async function getGlobalConfig() {
   return data;
 }
 
-export async function getPublicGlobalConfig() {
+export async function getPublicGlobalConfig(): Promise<ISite> {
   const response = await cc98Fetch("/config/global");
   const data = await response.json();
   return data;
@@ -52,7 +56,7 @@ export async function getAdvertisements() {
   return data;
 }
 
-export async function getMainPageData() {
+export async function getMainPageData(): Promise<IIndex> {
   const response = await cc98Fetch("/config/index");
   const data = await response.json();
   return data;

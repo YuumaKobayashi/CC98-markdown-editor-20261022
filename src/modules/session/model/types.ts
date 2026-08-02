@@ -20,6 +20,9 @@ export interface CurrentUserBoardMasterTitle {
  * 字段保持与现有 MyInfo 完全一致；Session 在 S1.1 起拥有该合同，
  * 不再通过 legacy AppState 间接声明当前用户类型。
  */
+/**
+ * 当前用户的信息。
+ */
 export interface CurrentUser {
   name: string;
   gender: 0 | 1;
@@ -57,6 +60,9 @@ export interface CurrentUser {
   stopPostBoardCount: number;
   signInCardCount: number;
   browsingHistoryEnabled: boolean;
+  /**
+   * 用户是否已经通过验证。
+   */
   isVerified: boolean;
 }
 

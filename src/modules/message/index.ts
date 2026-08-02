@@ -2,8 +2,10 @@ export * from "./api/service";
 export { MessagePerson } from "./ui/MessagePerson";
 export { MessageReceiver } from "./ui/MessageReceiver";
 export { MessageSender } from "./ui/MessageSender";
-export {
+export type {
+  IMessageContent,
+  IRecentMessage,
   MessageSendReceiveProps,
 } from "./model/types";
-export { MessagePersonInfo } from "./model/MessagePersonInfo";
-export { MessageProps } from "./model/MessageProps";
+export type { MessagePersonInfo } from "./model/MessagePersonInfo";
+export type { MessageProps } from "./model/MessageProps";

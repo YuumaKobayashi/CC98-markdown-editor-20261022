@@ -1,6 +1,6 @@
 import { formAuthorizeHeader } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
-import type { UserRecentTopic } from "@legacy/States/AppState";
+import type { UserRecentTopic } from "@modules/topic";
 
 export interface CurrentUserFavoriteTopicPage {
   topics: UserRecentTopic[];

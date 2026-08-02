@@ -1,5 +1,5 @@
 import * as React from "react";
-import { MainPageColumn } from "../model/types";
+import type { MainPageColumn } from "../model/types";
 import { HomeSectionHeader } from "./HomeSectionHeader";
 import componentStyles from "./SpecialOfferComponent.module.scss";
 

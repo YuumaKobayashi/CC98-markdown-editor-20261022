@@ -1,4 +1,4 @@
-import * as State from "@legacy/States/AppState";
+import type { UserRecentTopic } from "../model/types";
 import { getUserInfo } from "@modules/user";
 import { getUsersInfo } from "@modules/user";
 import { readTagInfoCache, writeTagInfoCache } from "../cache/tag-cache";
@@ -1234,7 +1234,7 @@ export async function getRandomTopic(size: number) {
 }
 
 export interface CurrentUserRecentTopicPage {
-  topics: State.UserRecentTopic[];
+  topics: UserRecentTopic[];
   hasMore: boolean;
 }
 
@@ -1258,7 +1258,7 @@ export async function getCurrentUserRecentTopics(
     throw new Error(response.statusText);
   }
 
-  const result: State.UserRecentTopic[] = await response.json();
+  const result: UserRecentTopic[] = await response.json();
   const hasMore = result.length === 11;
   const topics = hasMore ? result.slice(0, 10) : result;
 
@@ -1270,12 +1270,12 @@ export async function getCurrentUserRecentTopics(
 }
 
 interface CurrentUserBrowsingHistoryResponse {
-  data?: State.UserRecentTopic[] | null;
+  data?: UserRecentTopic[] | null;
   count?: number;
 }
 
 export interface CurrentUserBrowsingHistoryPage {
-  topics: State.UserRecentTopic[];
+  topics: UserRecentTopic[];
   totalPage?: number;
 }
 

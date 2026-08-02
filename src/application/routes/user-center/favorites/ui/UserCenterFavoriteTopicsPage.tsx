@@ -16,7 +16,7 @@ import {
   getFavoriteAllTopic,
   type FavoriteTopicGroup,
 } from "@modules/favorite-topic";
-import type { UserRecentTopic } from "@legacy/States/AppState";
+import type { UserRecentTopic } from "@modules/topic";
 import { UserCenterPager as Pager } from "@application/routes/user-center/pagination";
 
 import { FavoriteTopicGroupManager } from "./FavoriteTopicGroupManager";

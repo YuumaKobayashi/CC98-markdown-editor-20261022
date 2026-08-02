@@ -6,7 +6,7 @@ import {
   refreshCurrentUserInfo,
   selectCurrentUser,
 } from "@modules/session";
-import type { ChangeUserInfo } from "@legacy/States/AppState";
+import type { ChangeUserInfo } from "@modules/user";
 import { getToken } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
 

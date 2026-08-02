@@ -5,7 +5,7 @@
 import * as React from "react";
 import { Link } from "react-router";
 
-import type { UserRecentTopic } from "@legacy/States/AppState";
+import type { UserRecentTopic } from "../model/types";
 import styles from "./UserRecentTopicItem.module.scss";
 
 interface UserRecentTopicItemProps {

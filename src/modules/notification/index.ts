@@ -3,7 +3,7 @@ export { MessageAttmebox } from "./ui/MessageAttmebox";
 export { MessageResponsebox } from "./ui/MessageResponsebox";
 export { MessageSetting } from "./ui/MessageSetting";
 export { MessageSystembox } from "./ui/MessageSystembox";
-export {
+export type {
   MessageResponseProps,
   MessageSystemProps,
   NoticeSetting,

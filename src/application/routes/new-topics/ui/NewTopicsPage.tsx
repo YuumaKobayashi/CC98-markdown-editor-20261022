@@ -17,8 +17,8 @@ import {
   useShowCardUser,
 } from "@modules/user-preference";
 import { isLogOn } from "@modules/session";
-import type { FocusTopic } from "@legacy/Props/FocusTopic";
-import type { MyInfo } from "@legacy/States/AppState";
+import type { FocusTopic } from "@modules/topic";
+import type { CurrentUser } from "@modules/session";
 import { CollectionPageShell } from "@application/layouts/collection";
 import { pDebounce } from "@foundation/lib/async";
 import { isBottom } from "@foundation/lib/dom";
@@ -87,7 +87,7 @@ const renderMediaOnlyTopic = (item: FocusTopic) => (
  */
 export function NewTopicsPage() {
   const showCardUser = useShowCardUser();
-  const [myInfo] = useState<MyInfo | null>(() =>
+  const [myInfo] = useState<CurrentUser | null>(() =>
     isLogOn() ? getMyInfo() : null
   );
   const initialMode = (myInfo?.topicViewMode ?? 0) as TopicViewMode;

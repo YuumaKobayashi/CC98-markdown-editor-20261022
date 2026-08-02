@@ -8,7 +8,7 @@ import {
 } from "@foundation/storage/web-storage";
 
 import advertisementStyles from "./HomeAdvertisementCarousel.module.scss";
-import { MainPageColumn } from "../model/types";
+import type { MainPageColumn } from "../model/types";
 
 //TODO：函数位置考虑迁移？
 const loadAdvertisements = async () => {
@@ -16,10 +16,12 @@ const loadAdvertisements = async () => {
   if (cached) return cached;
 
   const data = await getAdvertisements();
-  const ads = data.map(
-    (item) =>
-      new MainPageColumn(item.imageUrl, item.title, item.url, item.content)
-  );
+  const ads = data.map((item) => ({
+    imageUrl: item.imageUrl,
+    title: item.title,
+    url: item.url,
+    content: item.content,
+  }));
   setStorage("mainAds-v2", ads);
   return ads;
 };

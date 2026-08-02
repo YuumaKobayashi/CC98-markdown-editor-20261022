@@ -1,5 +1,6 @@
 import * as React from "react";
-import type { IBoard, ITopic } from "@cc98/api";
+import type { IBoard } from "@modules/board";
+import type { ITopic } from "@modules/topic";
 import { Button, List, Modal, Spin } from "antd";
 import moment from "moment";
 

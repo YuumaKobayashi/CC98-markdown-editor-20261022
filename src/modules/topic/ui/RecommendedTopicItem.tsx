@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import type { RecommendedTopic } from "@legacy/Props/RecommendedTopic";
+import type { RecommendedTopic } from "../model/types";
 
 import styles from "./RecommendedTopicItem.module.scss";
 import { TopicCollectionItem } from "./TopicCollectionItem";

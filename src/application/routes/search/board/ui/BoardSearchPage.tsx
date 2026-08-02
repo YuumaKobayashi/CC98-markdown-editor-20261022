@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router";
 
 import { getSearchBoard } from "@modules/board";
-import { FocusBoard } from "@legacy/Props/FocusBoard";
+import type { FocusBoard } from "@modules/board";
 import { CollectionPageShell } from "@application/layouts/collection";
 
 import styles from "./BoardSearchPage.module.scss";

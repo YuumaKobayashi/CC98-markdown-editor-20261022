@@ -5,7 +5,7 @@ import { Link, useLocation } from "react-router";
 // import { getBoardName } from "@modules/board";
 import { getSearchTopic } from "@modules/topic";
 import { SearchTopicItem } from "@modules/topic";
-import { FocusTopic } from "@legacy/Props/FocusTopic";
+import type { FocusTopic } from "@modules/topic";
 import { CollectionPageShell } from "@application/layouts/collection";
 
 import styles from "./TopicSearchPage.module.scss";

@@ -284,7 +284,7 @@ export function TopicReplyList(props: TopicReplyListProps) {
   );
 }
 
-export class ContentState {
+export interface ContentState {
   id: number;
   content: string;
   time: string;

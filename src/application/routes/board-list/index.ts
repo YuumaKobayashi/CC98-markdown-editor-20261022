@@ -10,4 +10,4 @@ export {
   ChildBoardList,
   ChildBoardList as ChildBoard,
 } from "./ui/ChildBoardList";
-export { RootBoardState, ChildBoardState } from "./model/board-list";
+export type { RootBoardState, ChildBoardState } from "./model/board-list";

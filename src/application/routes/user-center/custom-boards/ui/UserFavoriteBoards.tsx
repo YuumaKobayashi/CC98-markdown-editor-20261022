@@ -4,7 +4,7 @@ import { UserAreaLoading } from "@application/layouts/user-area";
 import { useAppSelector } from "@application/store";
 import { getCurrentUserFavoriteBoards } from "@modules/board";
 import { selectCurrentUser } from "@modules/session";
-import type { UserFavoritesBoardInfo } from "@legacy/States/AppState";
+import type { UserFavoritesBoardInfo } from "@modules/board";
 import { UserFavoriteBoardCard } from "./UserFavoriteBoardCard";
 
 /**

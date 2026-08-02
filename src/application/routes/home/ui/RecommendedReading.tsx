@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 import { HomeSectionHeader } from "./HomeSectionHeader";
 import readingStyles from "./RecommendedReading.module.scss";
-import { MainPageColumn } from "../model/types";
+import type { MainPageColumn } from "../model/types";
 
 /**
  * 推荐阅读组件

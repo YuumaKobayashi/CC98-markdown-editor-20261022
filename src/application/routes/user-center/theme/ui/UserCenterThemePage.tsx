@@ -6,7 +6,7 @@ import {
   selectCurrentUser,
   updateCurrentUser,
 } from "@modules/session";
-import type { ThemeSetting } from "@legacy/States/AppState";
+import type { ThemeSetting } from "@modules/user-preference";
 import { cc98Fetch } from "@foundation/api/http";
 import {
   changeTheme,

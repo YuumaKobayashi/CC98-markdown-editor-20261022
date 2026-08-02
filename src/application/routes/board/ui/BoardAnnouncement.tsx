@@ -1,7 +1,7 @@
 import * as React from "react";
 import { unstable_batchedUpdates } from "react-dom";
 import { Button, Collapse, Divider, Input, Modal, Tag } from "antd";
-import { IBoard } from "@cc98/api";
+import type { IBoard } from "@modules/board";
 import { isMaster } from "@modules/board";
 import {
   followBoard,

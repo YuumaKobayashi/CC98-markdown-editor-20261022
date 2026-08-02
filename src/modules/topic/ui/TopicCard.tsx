@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 
-import type { FocusTopic } from "@legacy/Props/FocusTopic";
+import type { FocusTopic } from "../model/types";
 
 import styles from "./TopicCard.module.scss";
 import { TopicAudioPlayer } from "./TopicAudioPlayer";

@@ -11,3 +11,16 @@ export { RecommendedTopicsBreadcrumb } from "./ui/RecommendedTopicsBreadcrumb";
 export { TopicAudioPlayer } from "./ui/TopicAudioPlayer";
 export { TopicCard } from "./ui/TopicCard";
 export { TopicVideoPlayer } from "./ui/TopicVideoPlayer";
+export { TopicContentType } from "./model/types";
+export type {
+  FocusTopic,
+  IBasicTopic,
+  IHotTopic,
+  ITag,
+  ITagGroup,
+  ITopic,
+  MediaTopicContent,
+  RandomTopic,
+  RecommendedTopic,
+  UserRecentTopic,
+} from "./model/types";

@@ -6,7 +6,7 @@ import {
 } from "@application/layouts/user-area";
 import { UserRecentTopicItem as Topic } from "@modules/topic";
 import { getToken } from "@modules/session";
-import type { UserRecentTopic } from "@legacy/States/AppState";
+import type { UserRecentTopic } from "@modules/topic";
 import { cc98Fetch } from "@foundation/api/http";
 import styles from "./UserRecentTopics.module.scss";
 

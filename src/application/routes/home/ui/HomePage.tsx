@@ -10,7 +10,7 @@ import {
 import { DocumentTitle } from "@foundation/ui/document-title";
 
 import pageStyles from "./HomePage.module.scss";
-import { MainPageTopicMoreProps } from "../model/types";
+import type { MainPageTopicMoreProps } from "../model/types";
 import { AnnouncementComponent } from "./AnnouncementComponent";
 import { HomeAdvertisementCarousel } from "./HomeAdvertisementCarousel";
 import { HomeHotTopics } from "./HomeHotTopics";

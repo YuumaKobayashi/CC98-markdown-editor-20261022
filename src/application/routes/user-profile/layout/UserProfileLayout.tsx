@@ -7,7 +7,7 @@ import {
 } from "@application/layouts/user-area";
 import { NotFoundUser } from "@application/routes/status";
 import { getUserInfo } from "@modules/user";
-import type { UserInfo } from "@legacy/States/AppState";
+import type { UserInfo } from "@modules/user";
 import { UserProfileProvider } from "./model/user-profile-context";
 import { UserProfileNavigation } from "./UserProfileNavigation";
 import styles from "./UserProfileLayout.module.scss";

@@ -1,5 +1,5 @@
 import * as React from "react";
-import type { IBoard } from "@cc98/api";
+import type { IBoard } from "@modules/board";
 import { Button } from "antd";
 import { Link } from "react-router";
 

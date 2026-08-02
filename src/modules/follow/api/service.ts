@@ -4,7 +4,7 @@ import { formAuthorizeHeader } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
 import { refreshUserInfo } from "@modules/session";
 import { getUsersInfo } from "@modules/user";
-import type { UserInfo } from "@legacy/States/AppState";
+import type { UserInfo } from "@modules/user";
 
 /**
  * 获取当前用户的粉丝信息。

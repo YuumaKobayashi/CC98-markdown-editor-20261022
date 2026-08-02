@@ -5,3 +5,4 @@ export {
   synchronizeShowCardUserStorageEvent,
   useShowCardUser,
 } from "./persistence/show-card-user";
+export type { ThemeSetting } from "./model/types";

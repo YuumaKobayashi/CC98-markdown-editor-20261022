@@ -8,7 +8,7 @@ import {
 import { getMyInfo } from "@modules/session";
 import { getToken, formAuthorizeHeader } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
-import type { UserFavoritesBoardInfo } from "@legacy/States/AppState";
+import type { UserFavoritesBoardInfo } from "../model/types";
 
 /*
  * 根据boardId返回boardName

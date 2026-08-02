@@ -1,7 +1,7 @@
 /**
  * 一条站短消息
  */
-export class MessageSendReceiveProps {
+export interface MessageSendReceiveProps {
   /**
    * 消息的标识
    */
@@ -46,4 +46,47 @@ export class MessageSendReceiveProps {
    * 是否显示发送时间
    */
   showTime: boolean;
+}
+
+export interface IMessageContent {
+  id: number;
+  /**
+   * 发送方 ID
+   */
+  senderId: number;
+  /**
+   * 接收方 ID
+   */
+  receiverId: number;
+  /**
+   * 发信时间
+   */
+  time: string;
+  /**
+   * 是否已读
+   */
+  isRead: boolean;
+  /**
+   * 发信内容
+   */
+  content: string;
+}
+
+export interface IRecentMessage {
+  /**
+   * 用户 ID
+   */
+  userId: number;
+  /**
+   * 发信时间
+   */
+  time: string;
+  /**
+   * 是否已读
+   */
+  isRead: boolean;
+  /**
+   * 最后一条消息
+   */
+  lastContent: string;
 }

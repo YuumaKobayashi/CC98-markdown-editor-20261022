@@ -6,7 +6,7 @@ import {
   RecommendedTopicsBreadcrumb,
 } from "@modules/topic";
 import { getRandomRecommendedTopic } from "@modules/topic";
-import type { RecommendedTopic } from "@legacy/Props/RecommendedTopic";
+import type { RecommendedTopic } from "@modules/topic";
 import {
   getStorage,
   removeStorage,

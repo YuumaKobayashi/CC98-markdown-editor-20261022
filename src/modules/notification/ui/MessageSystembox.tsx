@@ -5,7 +5,7 @@ import * as React from "react";
 import moment from "moment";
 import { UbbContainer } from "@legacy/Components/UbbContainer";
 import { UbbCompatiblityMode } from "@legacy/Ubb/UbbCodeExtension";
-import { MessageSystemProps } from "../model/types";
+import type { MessageSystemProps } from "../model/types";
 import styles from "./MessageSystembox.module.scss";
 
 export function MessageSystembox(

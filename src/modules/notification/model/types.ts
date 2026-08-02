@@ -10,7 +10,7 @@ export interface UnreadCount {
 /**
  * 用户消息设置选项。
  */
-export class NoticeSetting {
+export interface NoticeSetting {
   /**
    * 回复消息。
    */
@@ -33,7 +33,7 @@ export class NoticeSetting {
   post: UserBooleanSetting;
 }
 
-export class MessageResponseProps {
+export interface MessageResponseProps {
   //通知Id
   id: number;
   //Type通知类型（0 = 全站系统通知，1 = 个人系统通知）
@@ -58,7 +58,7 @@ export class MessageResponseProps {
   isRead: boolean;
 }
 
-export class MessageSystemProps {
+export interface MessageSystemProps {
   //通知Id
   id: number;
   //Type通知类型（0 = 全站系统通知，1 = 个人系统通知）

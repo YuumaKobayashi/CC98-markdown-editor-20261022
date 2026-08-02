@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import type { ThemeSetting } from "@legacy/States/AppState";
+import type { ThemeSetting } from "@modules/user-preference";
 import { isBrowserDayNightModeSupported } from "@foundation/theme";
 import styles from "./ThemeSettingsForm.module.scss";
 

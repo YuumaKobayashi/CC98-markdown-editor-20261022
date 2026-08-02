@@ -1,5 +1,5 @@
 import * as React from "react";
-import type { ITagGroup } from "@cc98/api";
+import type { ITagGroup } from "@modules/topic";
 import { Select } from "antd";
 
 import styles from "./BoardTopicToolbar.module.scss";

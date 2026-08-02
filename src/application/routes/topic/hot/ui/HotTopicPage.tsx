@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { FocusTopicItem } from "@modules/topic";
 import { getMonthlyHotTopic } from "@modules/topic";
-import type { FocusTopic } from "@legacy/Props/FocusTopic";
+import type { FocusTopic } from "@modules/topic";
 import { CollectionPageShell } from "@application/layouts/collection";
 
 import styles from "./HotTopicPage.module.scss";

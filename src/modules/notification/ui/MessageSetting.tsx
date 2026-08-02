@@ -10,7 +10,7 @@ import {
   setLocalStorage,
 } from "@foundation/storage/web-storage";
 import { noticeMessageShow } from "../api/service";
-import { NoticeSetting } from "../model/types";
+import type { NoticeSetting } from "../model/types";
 import styles from "./MessageSetting.module.scss";
 
 export function MessageSetting(): React.ReactElement {

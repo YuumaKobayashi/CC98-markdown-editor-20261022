@@ -1,5 +1,6 @@
 import * as React from "react";
-import type { IPost, ITopic } from "@cc98/api";
+import type { IPost } from "@modules/post";
+import type { ITopic } from "@modules/topic";
 import { Spin } from "antd";
 import { Link } from "react-router";
 

@@ -1,4 +1,4 @@
-import { UserInfo } from "@legacy/States/AppState";
+import type { UserInfo } from "../model/types";
 
 import {
     readUsersInfoCache,

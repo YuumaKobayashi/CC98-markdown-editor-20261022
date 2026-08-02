@@ -1,4 +1,4 @@
-import type { UserRecentPost } from "@legacy/States/AppState";
+import type { UserRecentPost } from "../model/types";
 import { getBoardName } from "@modules/board";
 import { formAuthorizeHeader } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
