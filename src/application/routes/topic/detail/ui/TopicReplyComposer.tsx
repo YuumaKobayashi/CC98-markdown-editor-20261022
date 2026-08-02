@@ -1,6 +1,7 @@
 import * as React from "react";
 import $ from "jquery";
-import { RightTagHandler, UbbContainer, UbbEditor } from "@modules/ubb";
+import { UbbEditor } from "@modules/ubb-editor";
+import { RightTagHandler, UbbContainer } from "@modules/ubb";
 import { Constants } from "@legacy/Components/Constant";
 import {
   NoticeMessage,

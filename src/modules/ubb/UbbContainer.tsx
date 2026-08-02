@@ -3,7 +3,7 @@
 // https://github.com/Microsoft/TypeScript/wiki/JSX
 
 import * as React from "react";
-import * as Ubb from "./renderer/UbbCodeExtension";
+import * as Ubb from "./engine/UbbCodeExtension";
 import styles from "./UbbContainer.module.scss";
 /**
  * 定义 UBBContainer 组件需要使用的属性。

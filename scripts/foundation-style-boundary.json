@@ -1,5 +1,5 @@
 {
-  "phase": "Z2 UBB style closure with final Foundation boundary",
+  "phase": "UBB and UBB Editor module style closure with final Foundation boundary",
   "siteEntrypoint": {
     "path": "src/foundation/styles/Site.scss",
     "orderedImports": [
@@ -46,11 +46,11 @@
         { "name": "color-urlVisited", "value": "#741b47" }
       ],
       "sassImporters": [
-        "src/modules/ubb/renderer/BiliTextHandler.module.scss",
-        "src/modules/ubb/renderer/URLTagHandler.module.scss",
-        "src/modules/ubb/renderer/UrlTextHandler.module.scss",
-        "src/modules/ubb/renderer/UrlTextHandler2.module.scss",
-        "src/modules/ubb/renderer/UserTagHandler.module.scss",
+        "src/modules/ubb/tag/BiliTextHandler.module.scss",
+        "src/modules/ubb/tag/URLTagHandler.module.scss",
+        "src/modules/ubb/tag/UrlTextHandler.module.scss",
+        "src/modules/ubb/tag/UrlTextHandler2.module.scss",
+        "src/modules/ubb/tag/UserTagHandler.module.scss",
         "src/application/routes/message-center/layout/MessageLayout.module.scss",
         "src/application/routes/message-center/mentions/ui/MessageMentionsPage.module.scss",
         "src/application/routes/message-center/private-messages/ui/PrivateConversationWindow.module.scss",

@@ -4,7 +4,7 @@ import * as Showdown from "showdown";
 import { Button, Modal } from "antd";
 import { useNavigate, useParams } from "react-router";
 
-import { UbbEditor } from "@modules/ubb";
+import { UbbEditor } from "@modules/ubb-editor";
 import { MarkdownEditor } from "@foundation/integrations/markdown-editor";
 import { reportApplicationError } from "@application/providers/application-error";
 import {

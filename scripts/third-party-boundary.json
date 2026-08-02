@@ -1,5 +1,5 @@
 {
-  "phase": "Z2 UBB relocation with final third-party boundary",
+  "phase": "UBB and UBB Editor module relocation with final third-party boundary",
   "sourceRoots": ["src", "Components", "Pages", "Utility"],
   "styleRoots": ["src", "Components", "Pages", "Utility", "Styles"],
   "importContracts": [
@@ -25,7 +25,7 @@
       "package": "react-router-dom",
       "edgeCount": 3,
       "consumerCount": 3,
-      "fingerprint": "bf09625ea1e3c471df2aed3dd6a0e53bb2b16cfb877dfe5bc144bbfab7ec7fb2"
+      "fingerprint": "0bd09dd4a7a96ece768e08f5a8da6ba4942ca5bf8bb7fe001b5a7375e43717b6"
     },
     {
       "package": "react-markdown-editor-lite",
@@ -154,11 +154,11 @@
       ]
     },
     {
-      "path": "src/modules/ubb/editor/components/buttons.tsx",
+      "path": "src/modules/ubb-editor/components/buttons.tsx",
       "contains": ["cc98-vendor-spectrum-color-picker", "styles.colorPicker"]
     },
     {
-      "path": "src/modules/ubb/editor/utility.ts",
+      "path": "src/modules/ubb-editor/utility.ts",
       "contains": [
         "appendTo: 'parent'",
         "containerClassName: 'cc98-vendor-spectrum-container'",

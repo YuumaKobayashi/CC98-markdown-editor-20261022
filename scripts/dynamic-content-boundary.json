@@ -1,11 +1,11 @@
 {
-  "phase": "Z2 UBB module and dynamic content boundary closure",
+  "phase": "UBB and UBB Editor module dynamic content boundary closure",
   "sourceRoots": ["src", "Components", "Pages"],
   "importContracts": [
     {
       "symbol": "UbbContainer",
       "consumers": [
-        "src/modules/ubb/editor/UbbEditor.tsx",
+        "src/modules/ubb-editor/UbbEditor.tsx",
         "src/application/routes/board/ui/BoardAnnouncement.tsx",
         "src/application/routes/board/ui/BoardTopicPreviewCard.tsx",
         "src/application/routes/topic/detail/ui/TopicReplyComposer.tsx",
@@ -23,7 +23,7 @@
         "src/application/routes/topic/detail/ui/TopicReplyComposer.tsx"
       ],
       "dormantTextConsumers": ["Components/Topic/Post.tsx"],
-      "owner": "Z2 src/modules/ubb public renderer"
+      "owner": "src/modules/ubb public renderer"
     },
     {
       "symbol": "UbbEditor",
@@ -33,7 +33,7 @@
         "src/application/routes/topic/detail/ui/TopicReplyComposer.tsx"
       ],
       "dormantConsumers": [],
-      "owner": "Z2 src/modules/ubb public editor"
+      "owner": "src/modules/ubb-editor public editor"
     },
     {
       "symbol": "MarkdownEditor",
@@ -46,7 +46,7 @@
     }
   ],
   "registrationContract": {
-    "path": "src/modules/ubb/renderer/UbbCodeExtension.tsx",
+    "path": "src/modules/ubb/engine/UbbCodeExtension.tsx",
     "activeSequence": [
       "register:BTagHandler",
       "register:ImageTagHandler",
@@ -117,87 +117,87 @@
     {
       "path": "src/modules/ubb/UbbContainer.module.scss",
       "importers": ["src/modules/ubb/UbbContainer.tsx"],
-      "owner": "Z2 UBB Container root"
+      "owner": "UBB Container root"
     },
     {
-      "path": "src/modules/ubb/editor/UbbEditor.module.scss",
-      "importers": ["src/modules/ubb/editor/UbbEditor.tsx"],
-      "owner": "Z2 UBB Editor"
+      "path": "src/modules/ubb-editor/UbbEditor.module.scss",
+      "importers": ["src/modules/ubb-editor/UbbEditor.tsx"],
+      "owner": "UBB Editor module"
     },
     {
-      "path": "src/modules/ubb/editor/components/buttons.module.scss",
-      "importers": ["src/modules/ubb/editor/components/buttons.tsx"],
+      "path": "src/modules/ubb-editor/components/buttons.module.scss",
+      "importers": ["src/modules/ubb-editor/components/buttons.tsx"],
       "owner": "Z2 UBB Editor buttons"
     },
     {
-      "path": "src/modules/ubb/editor/components/emoji.module.scss",
-      "importers": ["src/modules/ubb/editor/components/emoji.tsx"],
+      "path": "src/modules/ubb-editor/components/emoji.module.scss",
+      "importers": ["src/modules/ubb-editor/components/emoji.tsx"],
       "owner": "Z2 UBB Editor emoji picker"
     },
     {
-      "path": "src/modules/ubb/editor/components/extends.module.scss",
-      "importers": ["src/modules/ubb/editor/components/extends.tsx"],
+      "path": "src/modules/ubb-editor/components/extends.module.scss",
+      "importers": ["src/modules/ubb-editor/components/extends.tsx"],
       "owner": "Z2 UBB Editor extended input"
     },
     {
-      "path": "src/modules/ubb/editor/components/message.module.scss",
-      "importers": ["src/modules/ubb/editor/components/message.tsx"],
+      "path": "src/modules/ubb-editor/components/message.module.scss",
+      "importers": ["src/modules/ubb-editor/components/message.tsx"],
       "owner": "Z2 UBB Editor message"
     },
     {
-      "path": "src/modules/ubb/renderer/ImageTagHandler.module.scss",
-      "importers": ["src/modules/ubb/renderer/ImageTagHandler.tsx"],
+      "path": "src/modules/ubb/tag/ImageTagHandler.module.scss",
+      "importers": ["src/modules/ubb/tag/ImageTagHandler.tsx"],
       "owner": "Z2 UBB image renderer"
     },
     {
-      "path": "src/modules/ubb/renderer/QuoteTagHandler.module.scss",
-      "importers": ["src/modules/ubb/renderer/QuoteTagHandler.tsx"],
+      "path": "src/modules/ubb/tag/QuoteTagHandler.module.scss",
+      "importers": ["src/modules/ubb/tag/QuoteTagHandler.tsx"],
       "owner": "Z2 UBB quote reveal control"
     },
     {
-      "path": "src/modules/ubb/renderer/UploadTagHandler.module.scss",
-      "importers": ["src/modules/ubb/renderer/UploadTagHandler.tsx"],
+      "path": "src/modules/ubb/tag/UploadTagHandler.module.scss",
+      "importers": ["src/modules/ubb/tag/UploadTagHandler.tsx"],
       "owner": "Z2 UBB upload renderer"
     },
     {
-      "path": "src/modules/ubb/renderer/TableTagHandler.module.scss",
-      "importers": ["src/modules/ubb/renderer/TableTagHandler.tsx"],
+      "path": "src/modules/ubb/tag/TableTagHandler.module.scss",
+      "importers": ["src/modules/ubb/tag/TableTagHandler.tsx"],
       "owner": "Z2 UBB table renderer"
     },
     {
-      "path": "src/modules/ubb/renderer/BiliTextHandler.module.scss",
-      "importers": ["src/modules/ubb/renderer/BiliTextHandler.tsx"],
+      "path": "src/modules/ubb/tag/BiliTextHandler.module.scss",
+      "importers": ["src/modules/ubb/tag/BiliTextHandler.tsx"],
       "owner": "Z2 UBB Bilibili text renderer"
     },
     {
-      "path": "src/modules/ubb/renderer/URLTagHandler.module.scss",
-      "importers": ["src/modules/ubb/renderer/URLTagHandler.tsx"],
+      "path": "src/modules/ubb/tag/URLTagHandler.module.scss",
+      "importers": ["src/modules/ubb/tag/URLTagHandler.tsx"],
       "owner": "Z2 UBB URL tag renderer"
     },
     {
-      "path": "src/modules/ubb/renderer/UrlTextHandler.module.scss",
-      "importers": ["src/modules/ubb/renderer/UrlTextHandler.tsx"],
+      "path": "src/modules/ubb/tag/UrlTextHandler.module.scss",
+      "importers": ["src/modules/ubb/tag/UrlTextHandler.tsx"],
       "owner": "Z2 UBB URL text renderer"
     },
     {
-      "path": "src/modules/ubb/renderer/UrlTextHandler2.module.scss",
-      "importers": ["src/modules/ubb/renderer/UrlTextHandler2.tsx"],
+      "path": "src/modules/ubb/tag/UrlTextHandler2.module.scss",
+      "importers": ["src/modules/ubb/tag/UrlTextHandler2.tsx"],
       "owner": "Z2 UBB bare-domain text renderer"
     },
     {
-      "path": "src/modules/ubb/renderer/UserTagHandler.module.scss",
-      "importers": ["src/modules/ubb/renderer/UserTagHandler.tsx"],
+      "path": "src/modules/ubb/tag/UserTagHandler.module.scss",
+      "importers": ["src/modules/ubb/tag/UserTagHandler.tsx"],
       "owner": "Z2 UBB user link renderer"
     },
     {
-      "path": "src/modules/ubb/renderer/CodeTagHandler.module.scss",
-      "importers": ["src/modules/ubb/renderer/CodeTagHandler.tsx"],
+      "path": "src/modules/ubb/tag/CodeTagHandler.module.scss",
+      "importers": ["src/modules/ubb/tag/CodeTagHandler.tsx"],
       "owner": "Z2 UBB code renderer"
     }
   ],
   "storageContracts": [
     {
-      "path": "src/modules/ubb/editor/UbbEditor.tsx",
+      "path": "src/modules/ubb-editor/UbbEditor.tsx",
       "keys": ["defaultEmojiType"]
     },
     {
@@ -226,7 +226,7 @@
   ],
   "fileContracts": [
     {
-      "path": "src/modules/ubb/editor/UbbEditor.tsx",
+      "path": "src/modules/ubb-editor/UbbEditor.tsx",
       "contains": [
         "getLocalStorage('defaultEmojiType')",
         "setLocalStorage('defaultEmojiType', em, 2592000)",
@@ -234,7 +234,7 @@
       ]
     },
     {
-      "path": "src/modules/ubb/editor/components/emoji.tsx",
+      "path": "src/modules/ubb-editor/components/emoji.tsx",
       "contains": [
         "this.insertEmoji('cc98', item)",
         "this.insertEmoji('em', item)",
@@ -249,7 +249,7 @@
       "contains": [".root", ".photoFrame"]
     },
     {
-      "path": "src/modules/ubb/renderer/ImageTagHandler.module.scss",
+      "path": "src/modules/ubb/tag/ImageTagHandler.module.scss",
       "contains": [
         ".hiddenImage",
         ".visibleImage",
@@ -257,46 +257,46 @@
       ]
     },
     {
-      "path": "src/modules/ubb/renderer/QuoteTagHandler.module.scss",
+      "path": "src/modules/ubb/tag/QuoteTagHandler.module.scss",
       "contains": [".hiddenImage"]
     },
     {
-      "path": "src/modules/ubb/renderer/UploadTagHandler.module.scss",
+      "path": "src/modules/ubb/tag/UploadTagHandler.module.scss",
       "contains": [".downloadFile"]
     },
     {
-      "path": "src/modules/ubb/renderer/TableTagHandler.module.scss",
+      "path": "src/modules/ubb/tag/TableTagHandler.module.scss",
       "contains": [".tableTag", ".tabletTag"]
     },
     {
-      "path": "src/modules/ubb/renderer/CodeTagHandler.module.scss",
+      "path": "src/modules/ubb/tag/CodeTagHandler.module.scss",
       "contains": [".code"]
     },
     {
-      "path": "src/modules/ubb/renderer/URLTagHandler.module.scss",
+      "path": "src/modules/ubb/tag/URLTagHandler.module.scss",
       "contains": [".urlStyle", "semanticColors.$color-url", "semanticColors.$color-urlVisited"]
     },
     {
-      "path": "src/modules/ubb/editor/UbbEditor.module.scss",
+      "path": "src/modules/ubb-editor/UbbEditor.module.scss",
       "contains": [
         ".editor",
         ".preview"
       ]
     },
     {
-      "path": "src/modules/ubb/editor/components/buttons.module.scss",
+      "path": "src/modules/ubb-editor/components/buttons.module.scss",
       "contains": [".buttons", ".buttonColor", ".colorPicker", ".color"]
     },
     {
-      "path": "src/modules/ubb/editor/components/emoji.module.scss",
+      "path": "src/modules/ubb-editor/components/emoji.module.scss",
       "contains": [".emoji", ".emojiContent", ".emojiButtonActive"]
     },
     {
-      "path": "src/modules/ubb/editor/components/extends.module.scss",
+      "path": "src/modules/ubb-editor/components/extends.module.scss",
       "contains": [".extend", ".extendMain", ".extendSub"]
     },
     {
-      "path": "src/modules/ubb/editor/components/message.module.scss",
+      "path": "src/modules/ubb-editor/components/message.module.scss",
       "contains": [".editorInfo"]
     },
     {
@@ -331,7 +331,7 @@
       ]
     },
     {
-      "path": "src/modules/ubb/renderer/MdTagHandler.tsx",
+      "path": "src/modules/ubb/tag/MdTagHandler.tsx",
       "contains": [
         "require('remark')",
         "require('remark-react')",
@@ -340,16 +340,16 @@
       ]
     },
     {
-      "path": "src/modules/ubb/renderer/UbbCodeExtension.tsx",
+      "path": "src/modules/ubb/engine/UbbCodeExtension.tsx",
       "contains": [
-        "// import { MathTagHandler, MathTextHandler } from './MathTagHandler';",
+        "// import { MathTagHandler, MathTextHandler } from '../tag/MathTagHandler';",
         "// engine.handlers.register(MathTagHandler);",
         "// engine.handlers.registerText(MathTextHandler);",
         "//engine.handlers.registerText(BiliTextHandler);"
       ]
     },
     {
-      "path": "src/modules/ubb/renderer/MathTagHandler.tsx",
+      "path": "src/modules/ubb/tag/MathTagHandler.tsx",
       "contains": [
         "本模块已从 UBB engine 取消注册",
         "dangerouslySetInnerHTML={htmlObject}",
@@ -357,7 +357,7 @@
       ]
     },
     {
-      "path": "src/modules/ubb/renderer/ImageTagHandler.tsx",
+      "path": "src/modules/ubb/tag/ImageTagHandler.tsx",
       "contains": [
         "className={styles.toolbox}",
         "className={styles.visibleImage}",
@@ -365,18 +365,18 @@
       ]
     },
     {
-      "path": "src/modules/ubb/renderer/UploadTagHandler.tsx",
+      "path": "src/modules/ubb/tag/UploadTagHandler.tsx",
       "contains": ["className={styles.downloadFile}", "allowToolbox={allowToolbox}"]
     },
     {
-      "path": "src/modules/ubb/renderer/AudioTagHandler.tsx",
+      "path": "src/modules/ubb/tag/AudioTagHandler.tsx",
       "contains": [
         "getElementsByClassName('aplayer-author')[0].innerHTML = ''",
         "this.ap && this.ap.destroy()"
       ]
     },
     {
-      "path": "src/modules/ubb/renderer/VideoTagHandler.tsx",
+      "path": "src/modules/ubb/tag/VideoTagHandler.tsx",
       "contains": [
         "getElementsByClassName('dplayer-menu')[0].innerHTML",
         "this.dp.destroy()",

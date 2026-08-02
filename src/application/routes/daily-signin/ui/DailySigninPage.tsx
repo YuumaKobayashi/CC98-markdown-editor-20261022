@@ -2,7 +2,7 @@ import * as React from "react";
 import moment from "moment";
 
 import ResignCalendar from "@legacy/Components/ReSignCalendar";
-import { UbbEditor } from "@modules/ubb";
+import { UbbEditor } from "@modules/ubb-editor";
 import {
   clearSignedInToday,
   getSigninInfo,

@@ -16,7 +16,7 @@ application → modules → foundation
 - `@types/@cc98` 仍由后续业务阶段处理；根 `Styles/` 已在 C1.7.7 完成 owner 归位并清空，禁止重新建立；
 - Foundation 不得依赖 Modules 或 Application，Modules 不得依赖 Application；
 - `@legacy/*` 是迁移期兼容桥，只允许已迁入模块连接尚未归位的旧实现，不得作为新业务代码的默认依赖入口；
-- UBB renderer、Container、Editor 与状态已在 Z2 迁入 `modules/ubb`；业务消费者只经 Module 根入口使用，Handler 注册链和编辑器合同由模块内守卫冻结。
+- UBB Container、engine 与 tag 由 `modules/ubb` 承载，Editor 与状态由独立的 `modules/ubb-editor` 承载；业务消费者只经各自 Module 根入口使用，Handler 注册链和编辑器合同由模块内守卫冻结。
 
 ## 路径别名
 

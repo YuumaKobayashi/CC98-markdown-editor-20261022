@@ -1,4 +1,3 @@
 export { UbbContainer } from "./UbbContainer";
-export { UbbEditor } from "./editor";
-export { UbbCodeOptions, UbbCompatiblityMode } from "./renderer/UbbCodeExtension";
-export { RightTagHandler } from "./renderer/RightTagHandler";
+export { UbbCodeOptions, UbbCompatiblityMode } from "./engine/UbbCodeExtension";
+export { RightTagHandler } from "./tag/RightTagHandler";
