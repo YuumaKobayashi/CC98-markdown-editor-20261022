@@ -2826,6 +2826,12 @@ Utility 中 getAnnualReview / getAnnualReviewV2 兼容导出
 
 AnnualReview 功能本身不再要求运行验收；需要确认主 Router、首页、登录、构建入口、图表适配的剩余消费者和公开静态资源未受影响。
 
+Z4 已于 2026-08-02 按 `dev20260716@07e1a3b4` 基线实施并停在人工验收门禁：
+
+- 两代 AnnualReview 页面、业务 Module、根 `Utility.ts` facade、仅其消费的 `IntervalChart` 兼容 stub、专属全局 SCSS 与 4 个公开静态资源共 29 个 tracked path 已删除；不恢复 Route、不建立空 Application/Module/facade；
+- 删除前复核 Router、lazy/dynamic import、bootstrap、Vite/HTML/EJS/IIS、资源与活动源码，未发现运行入口、仓外部署合同或共享消费者；活动代码中 AnnualReview API、图表入口和资源名均归零；
+- architecture/style/dynamic-content/third-party/Foundation 守卫、modern/legacy typecheck、正式 build 与 `git diff --check` 均通过；AnnualReview 本身无需运行验收，主 Router、首页、登录、主题及其余公开资源的浏览器验收未执行。详细删除映射、证据与人工清单见 `docs/refactor-log/z4/`；本批不 commit、不 push、不进入 Z5。
+
 ### Z5：alias、双编译和根目录闭包
 
 最后一批只做全仓闭包：
