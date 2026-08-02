@@ -64,5 +64,4 @@ npm run build
 ### ./build 与 ./scripts
 
 - `build/` 保存主题 manifest 和 HTML 模板合同等 Node.js 构建输入；
-- `scripts/build-vite.mjs` 执行正式构建与部署依赖复制；
-- `scripts/check-*.mjs` 校验层级依赖、样式 owner、动态内容、第三方和 Foundation 边界。
+- `scripts/build-vite.mjs` 执行正式构建与部署依赖复制。
