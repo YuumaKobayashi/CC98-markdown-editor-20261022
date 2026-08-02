@@ -147,6 +147,11 @@
 | board | `AnonymousState` | NotAllowed=0, Force=1, Allowed=2, OnlyPosterAllowed=3 | `Data/AnonymousState.cs:6` | BoardInfo、editor/reply UI |
 | board | `BoardInternalState` | None=0, InternalOnly=1, NeedReview=2 | `Data/BoardInternalState.cs:3` | BoardInfo |
 | board | `BoardPosterOnlyState` | Forbid=0, Stop=1, BandMaster=2, AllUser=3 | `Data/BoardPosterOnlyState.cs:10` | BoardInfo `allowPostOnly` |
+| board | `BoardPrivacyState` | flags: None=0, NotHot=1, NotSearchable=2, NotNewTopic=4 | `Data/BoardPrivacyState.cs:9` | BoardInfo `privacyState`；Phase 2 补记 |
+| board | `ViewerFilterState` | Forbidden=0, NotEnabled=1, EnabledByAdmin=2, Enabled=3 | `Data/ViewerFilterState.cs:6` | BoardInfo `viewerFilterState`；Phase 2 补记 |
+| board | `BoardProtectionLevel` | None=0, RequireLogOn=1, RequireSpecifiedUser=2, Hidden=3 | `Data/BoardProtectionLevel.cs:6` | BoardInfo `protectionLevel`；Phase 2 补记 |
+| topic | `TopicSpecialStyle` | Normal=0, GrayScale=1 | `Data/TopicSpecialStyle.cs:6` | TopicInfo `specialStyle`；Phase 2 补记 |
+| post | `PostAwardType` | OldVersion=0, Bonus=1, Punishment=2, UserRating=3 | `Data/PostAwardType.cs:8` | PostInfo `awards[].type`；Phase 2 补记 |
 | site-content | `ForumIndexColumnType` | 1..7：RecommendationReading, RecommendationFunction, SchoolNews, Advertisement, ManualTopHotTopic, ManualBottomHotTopic, SpecialOffer | `Data/ForumIndexColumnType.cs:6` | index DTO、site management UI |
 | site-content | `ForumIndexColumnVisibility` | Always=0, OnlyLogOn=1, OnlyNotLogOn=2 | `Data/ForumIndexColumn.cs:89` | site management DTO/UI |
 | notification | `NotificationType` | AllUser=0, System=1, Reply=2, At=3 | `Data/NotificationType.cs:6` | notification DTO |
