@@ -142,3 +142,40 @@ export interface PostInfo {
  * 旧名兼容别名；实际 wire DTO 为 {@link PostInfo}。
  */
 export type IPost = PostInfo;
+
+export interface PostBasicInfo {
+  id: number;
+  floor: number;
+  userId: number;
+  userName: string;
+  isDeleted: boolean;
+  boardId: number;
+}
+
+/**
+ * 新建或编辑回复时提交给主后端的请求体。
+ * 未出现的字段继续由后端默认值处理。
+ */
+export interface NewPostInfo {
+  content: string;
+  title?: string | null;
+  contentType: PostContentType;
+  parentId?: number;
+  tag1?: number;
+  tag2?: number;
+  allowedViewers?: string | null;
+  allowedViewerState?: import("@modules/topic").TopicAllowedViewerState;
+  type?: import("@modules/topic").TopicType;
+  notifyPoster?: boolean;
+  isAnonymous?: boolean;
+  notifyAllReplier?: boolean;
+  clientType?: number;
+}
+
+export interface PostLikeInfo {
+  dislikeCount: number;
+  likeCount: number;
+  likeState: LikeState;
+}
+
+export type SpecificUserPostInfo = PostInfo;

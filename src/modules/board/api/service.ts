@@ -9,11 +9,13 @@ import { getMyInfo } from "@modules/session";
 import { getToken, formAuthorizeHeader } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
 import type {
+  BoardCategoryInfo,
   BoardInfo,
+  BoardSimpleInfo,
   BoardStopPostUserInfo,
   BoardTagInfoV2,
-} from "../model/types";
-import type { BoardCategoryInfo, BoardSimpleInfo } from "../model/dto";
+  StaticBoardInfo,
+} from "../model/dto";
 
 /*
  * 根据boardId返回boardName
@@ -125,8 +127,10 @@ export async function getCurrentUserFavoriteBoards(
 
 export async function getBoardId(boardName: string) {
   let boardInfo =
-    readBoardInfoCache<any[]>() ||
-    (await fetch("/static/boardinfo.json").then((res) => res.json()));
+    readBoardInfoCache<StaticBoardInfo[]>() ||
+    ((await fetch("/static/boardinfo.json").then((res) =>
+      res.json(),
+    )) as StaticBoardInfo[]);
   writeBoardInfoCache(boardInfo);
   let boardResult = [];
   //看是否包含

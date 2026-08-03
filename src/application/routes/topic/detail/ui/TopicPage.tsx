@@ -87,7 +87,7 @@ export function TopicPage() {
       } else {
         currentPage = parseInt(params.page);
       }
-      const topicInfo = await getTopicInfo(params.topicid);
+      const topicInfo = await getTopicInfo(Number(params.topicid));
       const boardId = topicInfo.boardId;
       const boardInfo = await getBoardInfo(boardId);
       const totalPage = getTotalPageof10(topicInfo.replyCount);
@@ -192,7 +192,7 @@ export function TopicPage() {
 
   const handleChange = async () => {
     let currentPage = params.page ? parseInt(params.page) : 1;
-    const topicInfo = await getTopicInfo(params.topicid);
+    const topicInfo = await getTopicInfo(Number(params.topicid));
     const newPage = getTotalPageof10(topicInfo.replyCount);
     const floor = (topicInfo.replyCount + 1) % 10;
     //检查用户是否设置跳转到最新回复

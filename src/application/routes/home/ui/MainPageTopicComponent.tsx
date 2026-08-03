@@ -1,6 +1,6 @@
 import * as React from "react";
 import type {
-  MainPageTopicMoreProps,
+  HomeSectionLink,
   MainPageTopicState,
 } from "../model/types";
 import { HomeSectionHeader } from "./HomeSectionHeader";
@@ -11,7 +11,7 @@ interface MainPageTopicComponentProps {
   name: string;
   fetchUrl: string;
   style: string;
-  mores: MainPageTopicMoreProps[];
+  mores: HomeSectionLink[];
 }
 
 function convertMainPageTopic(item: MainPageTopicState): React.ReactElement {

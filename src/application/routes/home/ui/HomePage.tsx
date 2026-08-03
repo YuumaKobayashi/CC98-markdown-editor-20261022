@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 import { getMyInfo } from "@modules/session";
 import { getMainPageData } from "@modules/site-content";
+import type { IIndex } from "@modules/site-content";
 import {
   getLocalStorage,
   setLocalStorage,
@@ -10,7 +11,7 @@ import {
 import { DocumentTitle } from "@foundation/ui/document-title";
 
 import pageStyles from "./HomePage.module.scss";
-import type { MainPageTopicMoreProps } from "../model/types";
+import type { HomeSectionLink } from "../model/types";
 import { AnnouncementComponent } from "./AnnouncementComponent";
 import { HomeAdvertisementCarousel } from "./HomeAdvertisementCarousel";
 import { HomeHotTopics } from "./HomeHotTopics";
@@ -30,13 +31,14 @@ export { RecommendedReading } from "./RecommendedReading";
 
 //TODO：拆分这个文件里面的多个组件
 
-const emptyMainPageData = {
+const emptyMainPageData: IIndex = {
   academics: [],
   announcement: "",
   emotion: [],
   fleaMarket: [],
   fullTimeJob: [],
   hotTopic: [],
+  manualHotTopic: [],
   lastUserName: "",
   partTimeJob: [],
   postCount: 0,
@@ -44,16 +46,18 @@ const emptyMainPageData = {
   recommendationReading: [],
   schoolEvent: [],
   schoolNews: [],
+  specialOffer: [],
   study: [],
   todayCount: 0,
   todayTopicCount: 0,
   topicCount: 0,
   onlineUserCount: 0,
   userCount: 0,
+  lastUpdateTime: "",
 };
 
 const loadMainPageData = async () => {
-  const cached = getLocalStorage<any>("mainPageData");
+  const cached = getLocalStorage<IIndex>("mainPageData");
   if (cached) return cached;
 
   const data = await getMainPageData();
@@ -66,7 +70,7 @@ const loadMainPageData = async () => {
 
 /** 主页。 */
 export function HomePage() {
-  const [data, setData] = useState<any>(emptyMainPageData);
+  const [data, setData] = useState<IIndex>(emptyMainPageData);
 
   useEffect(() => {
     let active = true;
@@ -80,20 +84,20 @@ export function HomePage() {
     };
   }, []);
 
-  const study: MainPageTopicMoreProps[] = [
+  const study: HomeSectionLink[] = [
     { name: "学习", url: "/board/68" }, { name: "外语", url: "/board/304" },
     { name: "考研", url: "/board/263" }, { name: "出国", url: "/board/102" },
   ];
-  const emotion: MainPageTopicMoreProps[] = [
+  const emotion: HomeSectionLink[] = [
     { name: "缘分", url: "/board/152" }, { name: "小屋", url: "/board/114" },
     { name: "感性", url: "/board/81" },
   ];
-  const fleaMarket: MainPageTopicMoreProps[] = [
+  const fleaMarket: HomeSectionLink[] = [
     { name: "数码", url: "/board/562" }, { name: "日用", url: "/board/80" },
     { name: "服饰", url: "/board/563" },
   ];
-  const fullTimeJob: MainPageTopicMoreProps[] = [{ name: "更多", url: "/board/235" }];
-  const partTimeJob: MainPageTopicMoreProps[] = [{ name: "更多", url: "/board/459" }];
+  const fullTimeJob: HomeSectionLink[] = [{ name: "更多", url: "/board/235" }];
+  const partTimeJob: HomeSectionLink[] = [{ name: "更多", url: "/board/459" }];
   const count: MainPageCount = {
     todayCount: data.todayCount,
     todayTopicCount: data.todayTopicCount,

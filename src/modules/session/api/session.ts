@@ -6,12 +6,8 @@ import {
   setLocalStorage,
 } from "@foundation/storage/web-storage";
 import type { CurrentUser } from "../model/types";
+import type { RefreshTokenResponse } from "../model/dto";
 import { logOffAndNavigate } from "@foundation/lib/legacy-utility-effects";
-
-interface RefreshTokenResponse {
-  access_token?: string;
-  expires_in?: number;
-}
 
 /**
  * 获取当前的用户信息。

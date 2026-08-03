@@ -25,28 +25,28 @@ export {
   TopicType,
 } from "./model/enums";
 export type {
-  BoardBestSaveTopicsInfo,
   FocusTopic,
+  MediaTopicContent,
+  RecommendedTopic,
+} from "./model/view-model";
+export type { TopicBasicLookupFallback } from "./model/types";
+export type {
+  BoardBestSaveTopicsInfo,
   IBasicTopic,
   IHotTopic,
   ITag,
   ITagGroup,
-  MediaTopicContent,
-  RecommendedTopic,
-  RecommendedTopicInfo,
-  TagTopicsInfo,
-  TopicBasicInfo,
-  TopicBasicLookupFallback,
-  VoteInfo,
-  VoteItem,
-  VoteRecord,
-} from "./model/types";
-export type {
   ITopic,
   LotteryTopicDetail,
+  RecommendedTopicInfo,
   SearchedTopicInfo,
+  TagTopicsInfo,
+  TopicBasicInfo,
   TopicHighlightInfo,
   TopicInfo,
   UserBrowsingTopicInfo,
+  VoteInfo,
+  VoteItem,
+  VoteRecord,
 } from "./model/dto";
 export type { UserRecentTopic } from "./model/view-model";

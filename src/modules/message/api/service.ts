@@ -2,14 +2,11 @@ import { formAuthorizeHeader, isLogOn } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
 import { throwLegacyError } from "@foundation/lib/legacy-utility-effects";
 import { getBasicUsersInfo, getThisUserInfo } from "@modules/user";
-import { transerTime } from "@foundation/lib/time";
 import type { UserBasicInfo, UserInfo } from "@modules/user";
-import type { MessagePersonInfo } from "../model/MessagePersonInfo";
-import type {
-  MessageInfo,
-  MessageViewModel,
-  RecentContactUserInfo,
-} from "../model/types";
+import type { MessagePersonInfo } from "../model/view-model";
+import type { MessageInfo, RecentContactUserInfo } from "../model/dto";
+import type { MessageViewModel } from "../model/view-model";
+import { toMessagePersonInfo, toMessageViewModels } from "../model/mappers";
 
 /**
  * 发送私信的函数
@@ -75,17 +72,11 @@ export async function getRecentContact(
     const recentContact: MessagePersonInfo[] = [];
     for (let i in recentContactId) {
       recentContact.push(
-        getThisUserInfo(
-          recentContactId[i].userId,
-          usersInfo,
-        ) as MessagePersonInfo,
+        toMessagePersonInfo(
+          getThisUserInfo(recentContactId[i].userId, usersInfo),
+          recentContactId[i],
+        ),
       );
-    }
-
-    for (let i in recentContactId) {
-      recentContact[i].message = [];
-      recentContact[i].lastContent = recentContactId[i].lastContent;
-      recentContact[i].isRead = recentContactId[i].isRead;
     }
     //console.log("最近联系人列表", recentContact);
 
@@ -142,28 +133,9 @@ export async function getRecentMessage(
  * @param recentMessage
  */
 export function sortRecentMessage(
-  recentMessage: MessageInfo[] | MessageViewModel[],
+  recentMessage: readonly MessageInfo[],
 ): MessageViewModel[] {
-  const viewMessages = recentMessage as MessageViewModel[];
-  if (recentMessage.length === 0 || !recentMessage) {
-    return viewMessages;
-  } else {
-    for (let i = 0; i < recentMessage.length; i++) {
-      if (i + 1 == recentMessage.length) {
-        viewMessages[i].showTime = true;
-      } else if (
-        transerTime(recentMessage[i].time) -
-        transerTime(recentMessage[i + 1].time) <
-        60000
-      ) {
-        viewMessages[i].showTime = false;
-      } else {
-        viewMessages[i].showTime = true;
-      }
-    }
-
-    return viewMessages;
-  }
+  return toMessageViewModels(recentMessage);
 }
 
 /**

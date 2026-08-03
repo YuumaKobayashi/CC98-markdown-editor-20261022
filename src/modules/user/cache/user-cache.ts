@@ -1,4 +1,4 @@
-import type { UserInfo } from "../model/types";
+import type { UserInfo } from "../model/dto";
 import { IndexedDB } from "@foundation/storage/indexed-db";
 
 /**

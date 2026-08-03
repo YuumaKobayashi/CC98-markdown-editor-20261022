@@ -12,8 +12,7 @@ export type {
   IMainpageEditableContent,
   ISite,
   PostForumIndexColumnInfo,
-  SiteIndexColumnEditorItem,
-} from "./model/types";
+} from "./model/dto";
 export {
   SiteAnnouncementPreview,
   type SiteAnnouncementPreviewProps,

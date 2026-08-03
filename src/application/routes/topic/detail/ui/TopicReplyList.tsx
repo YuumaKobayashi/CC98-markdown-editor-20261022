@@ -77,7 +77,11 @@ export function TopicReplyList(props: TopicReplyListProps) {
           setContents([]);
         }
       } else {
-        realContents = await getTraceTopics(topicId, postId!, currentPage);
+        realContents = await getTraceTopics(
+          currentTopicId,
+          postId!,
+          currentPage,
+        );
       }
 
       if (isMaster(boardInfo.boardMasters)) {

@@ -9,7 +9,7 @@ import type {
   TopicTopState,
   TopicType,
 } from "./enums";
-import type { IUser } from "@modules/user/model/types";
+import type { UserInfo } from "@modules/user/model/dto";
 
 export interface TopicHighlightInfo {
   isBold: boolean;
@@ -54,9 +54,9 @@ export interface TopicInfo {
   userName: string | null;
 
   /**
-   * 后端 TopicInfo 嵌入的用户信息；完整 User wire 统一留待 Phase 3。
+   * 后端 TopicInfo 嵌入的用户信息。
    */
-  userInfo: IUser | null;
+  userInfo: UserInfo | null;
   /**
    * 是否匿名
    */
@@ -175,4 +175,138 @@ export interface SearchedTopicInfo {
 
 export interface UserBrowsingTopicInfo extends SearchedTopicInfo {
   lastBrowsingTime: string;
+}
+
+/**
+ * 帖子基础合同。
+ */
+export interface TopicBasicInfo {
+  /**
+   * 帖子id
+   */
+  id: number;
+  /**
+   * 主题标题
+   */
+  title: string;
+  /**
+   * 版面id
+   */
+  boardId: number;
+  /**
+   * 是否内网可见
+   */
+  isInternalOnly: boolean;
+  /**
+   * 是否投票贴
+   */
+  isVote: boolean;
+  /**
+   * 帖子状态
+   */
+  status: TopicState;
+  /**
+   * 帖子类型
+   */
+  type: TopicType;
+
+  contentType: TopicContentType;
+}
+
+export type IBasicTopic = TopicBasicInfo;
+
+export interface IHotTopic {
+  /**
+   * 作者名
+   */
+  authorName: string;
+  /**
+   * 版面 ID
+   */
+  boardId: number;
+  /**
+   * 版面名
+   */
+  boardName: string;
+  /**
+   * 创建时间
+   */
+  createTime: string;
+  /**
+   * 点击数
+   */
+  hitCount: number;
+  /**
+   * ID
+   */
+  id: number;
+  /**
+   * 参与者数量
+   */
+  participantCount: number;
+  /**
+   * 回复数
+   */
+  replyCount: number;
+  /**
+   * 标题
+   */
+  title: string;
+  /**
+   * 帖子类型
+   * 0 普通帖子  1 校园活动  2 学术通知
+   */
+  type: TopicType;
+}
+
+export interface ITag {
+  id: number;
+  name: string;
+}
+
+export interface ITagGroup {
+  layer: number;
+  tags: ITag[];
+}
+
+export interface VoteItem {
+  id: number;
+  description: string;
+  count: number;
+}
+
+export interface VoteRecord {
+  userId: number;
+  userName: string;
+  items: number[];
+  ip: string;
+  time: string;
+}
+
+export interface VoteInfo {
+  topicId: number;
+  voteItems: VoteItem[];
+  voteRecords: VoteRecord[] | null;
+  expiredTime: string;
+  isAvailable: boolean;
+  maxVoteCount: number;
+  canVote: boolean;
+  myRecord: VoteRecord | null;
+  needVote: boolean;
+  voteUserCount: number;
+}
+
+export interface RecommendedTopicInfo {
+  topic: TopicInfo;
+  content: string;
+}
+
+export interface BoardBestSaveTopicsInfo {
+  count: number;
+  topics: TopicInfo[];
+}
+
+export interface TagTopicsInfo {
+  count: number;
+  topics: TopicInfo[];
 }

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Link } from "react-router";
 
-import type { UserInfo } from "../../model/types";
+import type { UserInfo } from "../../model/dto";
 import { getAllUserTitles, getPortraitConfig } from "../../api/service";
 import type { UserTitleDto } from "../../model/dto";
 import styles from "./UserProfileAvatar.module.scss";

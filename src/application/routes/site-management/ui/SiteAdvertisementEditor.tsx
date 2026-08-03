@@ -9,7 +9,17 @@ import {
   getIndexColumnInfo,
   putIndexColumnInfo,
 } from "@modules/site-content";
-import type { SiteIndexColumnEditorItem } from "@modules/site-content";
+import type {
+  ForumIndexColumn,
+  PostForumIndexColumnInfo,
+} from "@modules/site-content";
+
+interface SiteIndexColumnEditorItem extends ForumIndexColumn {
+  /** 仅用于区分编辑器中的新增行，不属于 wire DTO。 */
+  isNew?: boolean;
+  /** 编辑器提交 Banner/福利优惠时使用，不属于 GET wire DTO。 */
+  days?: number | string;
+}
 
 const columnTypeNames = ["推荐阅读", "推荐功能", "校园新闻", "Banner", "", "", "福利优惠"];
 const urls = [
@@ -67,7 +77,19 @@ export function SiteAdvertisementEditor() {
     const item = data[index];
     if (!item) return;
     try {
-      await putIndexColumnInfo(item);
+      //TODO：逻辑优化
+      const body: PostForumIndexColumnInfo = {
+        type: item.type,
+        title: item.title,
+        content: item.content,
+        url: item.url,
+        imageUrl: item.imageUrl,
+        orderWeight: item.orderWeight,
+        enable: item.enable,
+        visibility: item.visibility,
+        ...(item.days === undefined ? {} : { days: Number(item.days) }),
+      };
+      await putIndexColumnInfo(item.isNew ? null : item.id, body);
       setInfo("修改成功");
     } catch (error) {
       setInfo(error.message);

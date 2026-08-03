@@ -4,8 +4,14 @@
 import * as React from "react";
 import moment from "moment";
 import { UbbCompatiblityMode, UbbContainer } from "@modules/ubb";
-import type { MessageSystemProps } from "../model/types";
+import type { SystemNotificationViewModel } from "../model/view-model";
 import styles from "./MessageSystembox.module.scss";
+
+/** 旧组件 props 名；组件只接收 ViewModel 中实际渲染的字段。 */
+export type MessageSystemProps = Omit<
+  SystemNotificationViewModel,
+  "postId" | "postBasicInfo"
+>;
 
 export function MessageSystembox(
   props: MessageSystemProps,
@@ -14,8 +20,8 @@ export function MessageSystembox(
   if (props.topicId) {
     if (props.floor) {
       //console.log("楼层", props.floor);
-      const a: any = props.floor / 10 + 1;
-      const b = parseInt(a);
+      const a = props.floor / 10 + 1;
+      const b = parseInt(String(a), 10);
       const c = props.floor + 10 - b * 10;
       let pageNum = `${b}#${c}`;
       if (c === 0) {

@@ -7,8 +7,7 @@ import type {
   IIndex,
   ISite,
   PostForumIndexColumnInfo,
-  SiteIndexColumnEditorItem,
-} from "../model/types";
+} from "../model/dto";
 
 export async function getGlobalConfig(): Promise<ISite> {
   const headers = await formAuthorizeHeader();
@@ -79,15 +78,15 @@ export async function getIndexColumnInfo(
 }
 
 export async function putIndexColumnInfo(
-  item: SiteIndexColumnEditorItem,
+  id: number | null,
+  body: PostForumIndexColumnInfo,
 ): Promise<void> {
-  const url = item.isNew ? "/index/column/" : `/index/column/${item.id}`;
-  const method = item.isNew ? "POST" : "PUT";
+  const url = id === null ? "/index/column/" : `/index/column/${id}`;
+  const method = id === null ? "POST" : "PUT";
   const token = await getToken();
   const headers = new Headers();
   headers.append("Authorization", token);
   headers.append("Content-Type", "application/json");
-  const body = item as PostForumIndexColumnInfo;
   const response = await cc98Fetch(url, {
     method,
     headers,

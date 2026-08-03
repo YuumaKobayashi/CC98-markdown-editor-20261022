@@ -27,20 +27,20 @@ export {
   UserTopicViewMode,
 } from "./model/enums";
 export type {
-  ChangeUserInfo,
   IUser,
-  UserActivityPointInfo,
-  UserBoardMasterInfo,
-  UserBasicInfo,
-  UserInfo,
   UserLookupFallback,
   UserLookupResult,
-  UserPrivacySetting,
   UserViewModel,
 } from "./model/types";
 export type {
+  ChangeUserInfo,
   PortraitConfigDto,
   PortraitConfigItemDto,
   PortraitStyleDto,
+  UserActivityPointInfo,
+  UserBasicInfo,
+  UserBoardMasterInfo,
+  UserInfo,
+  UserPrivacySetting,
   UserTitleDto,
 } from "./model/dto";

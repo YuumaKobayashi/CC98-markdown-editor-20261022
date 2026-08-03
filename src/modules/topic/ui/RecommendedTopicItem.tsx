@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import type { RecommendedTopic } from "../model/types";
+import type { RecommendedTopic } from "../model/view-model";
 
 import styles from "./RecommendedTopicItem.module.scss";
 import { TopicCollectionItem } from "./TopicCollectionItem";
@@ -15,7 +15,7 @@ export function RecommendedTopicItem({ topic, content }: RecommendedTopic) {
     <TopicCollectionItem topic={topic} topicUrl={topicUrl}>
       <div>
         <i className="fa fa-clock-o fa-lg"></i>
-        {topic.time}
+        {topic.displayTime}
       </div>
       <div className={styles["focus-topic-content"]}>
         <i className="fa fa-commenting-o fa-lg"></i>

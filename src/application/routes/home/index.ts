@@ -12,6 +12,6 @@ export { HomeStatistics } from "./ui/HomeStatistics";
 export { RecommendedReading } from "./ui/RecommendedReading";
 export type {
   MainPageColumn,
-  MainPageTopicMoreProps,
+  HomeSectionLink,
   MainPageTopicState,
 } from "./model/types";

@@ -15,7 +15,7 @@ import {
 import { BlinkTitle } from "../../lib/title-blinker";
 import { refreshUnreadCount } from "../../model/refresh-unread-count";
 import { selectUnreadCount } from "../../model/selectors";
-import type { UnreadCount } from "../../model/types";
+import type { UnreadCount } from "../../model/dto";
 import { replaceUnreadCount } from "../../model/unread-count-slice";
 
 const messageEvents = [

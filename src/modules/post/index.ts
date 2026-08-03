@@ -10,15 +10,21 @@ export {
   RatingType,
 } from "./model/enums";
 export type {
-  AnonymousPostUserInfo,
   IAward,
   ILike,
   ILikeState,
-  NewPostInfo,
-  PostBasicInfo,
-  PostLikeInfo,
-  PostViewModel,
-  SpecificUserPostInfo,
 } from "./model/types";
-export type { IPost, PostAward, PostInfo } from "./model/dto";
-export type { UserRecentPost } from "./model/view-model";
+export type {
+  IPost,
+  NewPostInfo,
+  PostAward,
+  PostBasicInfo,
+  PostInfo,
+  PostLikeInfo,
+  SpecificUserPostInfo,
+} from "./model/dto";
+export type {
+  AnonymousPostUserInfo,
+  PostViewModel,
+  UserRecentPost,
+} from "./model/view-model";

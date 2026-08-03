@@ -1,4 +1,5 @@
-import type { Dispatch } from "redux";
+import type { AnyAction } from "redux";
+import type { ThunkDispatch } from "redux-thunk";
 
 import { changeTheme } from "@foundation/theme";
 import { logOut, restoreSession } from "../model/session-actions";
@@ -9,7 +10,7 @@ const parseStoredCurrentUser = (value: string): CurrentUser =>
 
 /** storage 事件只会发送给其他标签页；此处只处理 Session 的 userInfo。 */
 export function synchronizeSessionStorageEvent(event: StorageEvent) {
-  return (dispatch: Dispatch): void => {
+  return (dispatch: ThunkDispatch<unknown, void, AnyAction>): void => {
     if (event.key !== "userInfo") return;
 
     if (event.oldValue && event.newValue) {
@@ -34,11 +35,11 @@ export function synchronizeSessionStorageEvent(event: StorageEvent) {
     if (event.newValue) {
       const currentUser = parseStoredCurrentUser(event.newValue);
       changeTheme(currentUser.theme);
-      dispatch(restoreSession(currentUser) as any);
+      dispatch(restoreSession(currentUser));
       return;
     }
 
-    dispatch(logOut() as any);
+    dispatch(logOut());
     window.location.href = "/";
   };
 }

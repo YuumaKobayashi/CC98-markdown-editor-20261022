@@ -1,12 +1,12 @@
 import * as React from "react";
 
-import type { MainPageTopicMoreProps } from "../model/types";
+import type { HomeSectionLink } from "../model/types";
 import styles from "./HomeSectionHeader.module.scss";
 
 interface HomeSectionHeaderProps {
   tone: "main" | "sub";
   title: string;
-  links?: MainPageTopicMoreProps[];
+  links?: HomeSectionLink[];
 }
 
 /** 首页栏目共同的标题和附加链接行。 */

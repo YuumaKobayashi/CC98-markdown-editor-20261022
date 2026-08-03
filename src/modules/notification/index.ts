@@ -5,15 +5,19 @@ export { MessageResponsebox } from "./ui/MessageResponsebox";
 export { MessageSetting } from "./ui/MessageSetting";
 export { MessageSystembox } from "./ui/MessageSystembox";
 export type {
-  MessageResponseProps,
-  MessageSystemProps,
   NoticeSetting,
-  ReplyAtNotificationInfo,
-  ReplyAtNotificationViewModel,
-  SystemNotificationInfo,
-  SystemNotificationViewModel,
 } from "./model/types";
-export type { UnreadCount } from "./model/dto";
+export type { MessageResponseProps } from "./ui/MessageResponseItem";
+export type { MessageSystemProps } from "./ui/MessageSystembox";
+export type {
+  ReplyAtNotificationInfo,
+  SystemNotificationInfo,
+  UnreadCount,
+} from "./model/dto";
+export type {
+  ReplyAtNotificationViewModel,
+  SystemNotificationViewModel,
+} from "./model/view-model";
 export {
   notificationReducer,
   replaceUnreadCount,

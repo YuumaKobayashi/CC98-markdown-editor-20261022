@@ -12,15 +12,9 @@ import {
   sessionInvalidated,
 } from "../model/session-slice";
 import type { CurrentUser } from "../model/types";
+import type { TokenResponse } from "../model/dto";
 import { getMyInfo } from "./session";
 import { refreshUserInfo } from "./refresh-user-info";
-
-interface TokenResponse {
-  access_token: string;
-  expires_in: number;
-  refresh_token: string;
-  token_type: string;
-}
 
 export interface LoginCredentials {
   userName: string;

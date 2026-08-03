@@ -8,12 +8,12 @@ import { Link } from "react-router";
 
 import { UbbCodeOptions, UbbContainer } from "@modules/ubb";
 import { UserGender } from "../model/enums";
-import type { UserViewModel } from "../model/types";
+import type { UserInfo } from "../model/dto";
 import { isoTime2LocalTime } from "@foundation/lib/time-zone";
 import styles from "./UserProfile.module.scss";
 
 interface UserProfileProps {
-  userInfo: UserViewModel;
+  userInfo: UserInfo & { displayTitle?: string };
 }
 
 /**

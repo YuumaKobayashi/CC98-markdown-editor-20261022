@@ -14,7 +14,7 @@ export interface MainPageTopicState {
  * 首页话题更多参数
  * 拥有名称和链接两个属性
  */
-export interface MainPageTopicMoreProps {
+export interface HomeSectionLink {
   name: string;
   url: string;
 }

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import type { FocusTopic } from "../model/types";
+import type { FocusTopic } from "../model/view-model";
 
 import { TopicCollectionItem } from "./TopicCollectionItem";
 
@@ -21,8 +21,8 @@ export function FocusTopicItem(props: FocusTopic) {
     props.floorCount,
   )}`;
   const lastPostUserUrl = `/user/name/${encodeURI(props.lastPostUser)}`;
-  const tagInfo = props.tag1
-    ? `标签：${props.tag1}${props.tag2 ? ` / ${props.tag2}` : ""}`
+  const tagInfo = props.tag1Name
+    ? `标签：${props.tag1Name}${props.tag2Name ? ` / ${props.tag2Name}` : ""}`
     : "";
 
   return (
@@ -30,10 +30,10 @@ export function FocusTopicItem(props: FocusTopic) {
       {tagInfo && <div>{tagInfo}</div>}
       <div>
         <i className="fa fa-clock-o fa-lg"></i>
-        {props.time}
+        {props.displayTime}
       </div>
       <div>
-        <i className="fa fa-eye fa-lg"></i> {props.hitCount}
+        <i className="fa fa-eye fa-lg"></i> {props.displayHitCount}
       </div>
       <div>
         最后回复：
@@ -47,7 +47,7 @@ export function FocusTopicItem(props: FocusTopic) {
       </div>
       <div>
         <a href={lastPostUrl} target="_blank">
-          {props.lastPostTime}
+          {props.displayLastPostTime}
         </a>
       </div>
     </TopicCollectionItem>

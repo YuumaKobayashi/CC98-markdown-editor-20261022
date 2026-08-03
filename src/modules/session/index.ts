@@ -24,4 +24,5 @@ export type {
   CurrentUserThemeSetting,
   SessionState,
 } from "./model/types";
+export type { RefreshTokenResponse, TokenResponse } from "./model/dto";
 export { synchronizeSessionStorageEvent } from "./sync/session-sync";

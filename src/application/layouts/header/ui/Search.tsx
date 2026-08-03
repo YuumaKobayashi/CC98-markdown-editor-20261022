@@ -61,7 +61,7 @@ export function SearchBeforeConnent() {
     if (searchType === "版内") {
       let boardId = 0;
       if (topicMatch) {
-        const topic = await getTopicInfo(topicMatch[1]);
+        const topic = await getTopicInfo(Number.parseInt(topicMatch[1], 10));
         boardId = topic.boardId;
       } else if (boardMatch) {
         boardId = Number.parseInt(boardMatch[1], 10);

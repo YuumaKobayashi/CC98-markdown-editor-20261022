@@ -2,7 +2,7 @@ import * as React from "react";
 import { SiteAnnouncementPreview } from "@modules/site-content";
 
 interface AnnouncementProps {
-  data: any;
+  data: string;
 }
 
 /**

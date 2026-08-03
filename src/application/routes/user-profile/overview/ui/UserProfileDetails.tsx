@@ -4,7 +4,7 @@ import { Link } from "react-router";
 
 import { followUser, unfollowUser } from "@modules/follow";
 import { UbbCodeOptions, UbbContainer } from "@modules/ubb";
-import { UserGender, UserState, type UserViewModel } from "@modules/user";
+import { UserGender, UserState, type UserInfo } from "@modules/user";
 import { isoTime2LocalTime } from "@foundation/lib/time-zone";
 import styles from "./UserProfileDetails.module.scss";
 
@@ -12,7 +12,7 @@ interface UserProfileDetailsProps {
   /**
    * 用户信息
    */
-  userInfo: UserViewModel;
+  userInfo: UserInfo & { displayTitle?: string };
 }
 
 const getPrivilegeColor = (privilege: string) => {

@@ -29,7 +29,7 @@ const renderTopics = (data: any) =>
             <Link target="_blank" to={`/board/${item.boardId}`}>
               {item.boardName}&nbsp;
             </Link>{" "}
-            {item.hitCount}浏览 {item.replyCount}回复
+            {item.displayHitCount}浏览 {item.displayReplyCount}回复
           </div>
         </div>
       </div>

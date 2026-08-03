@@ -1,5 +1,34 @@
 import type { PostInfo } from "./dto";
-import type { UserRecentPost } from "./view-model";
+import type {
+  AnonymousPostUserInfo,
+  PostViewModel,
+  UserRecentPost,
+} from "./view-model";
+import type { UserInfo, UserLookupFallback } from "@modules/user";
+
+export interface PostViewModelOptions {
+  postId?: number;
+  content?: string;
+  isAnonymous?: boolean;
+  isDeleted?: boolean;
+}
+
+export function toPostViewModel(
+  post: Readonly<PostInfo>,
+  userInfo: UserInfo | UserLookupFallback | AnonymousPostUserInfo,
+  options: Readonly<PostViewModelOptions> = {},
+): PostViewModel {
+  return {
+    ...post,
+    ...("content" in options ? { content: options.content! } : {}),
+    ...("isAnonymous" in options
+      ? { isAnonymous: options.isAnonymous! }
+      : {}),
+    ...("isDeleted" in options ? { isDeleted: options.isDeleted! } : {}),
+    userInfo,
+    ...(options.postId === undefined ? {} : { postId: options.postId }),
+  };
+}
 
 export function toUserRecentPost(
   post: Readonly<PostInfo>,

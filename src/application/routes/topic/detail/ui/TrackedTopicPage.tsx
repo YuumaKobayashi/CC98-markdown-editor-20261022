@@ -61,15 +61,17 @@ export function TrackedTopicPage() {
   useEffect(() => {
     const loadTrackedTopic = async () => {
       const currentPage = normalizedPage;
+      const currentTopicId = Number(params.topicId);
+      const currentPostId = Number(params.postId);
       const shouldLoadFavorite = Boolean(stateRef.current.topicInfo.id);
-      const topicInfo = await getTopicInfo(params.topicId);
+      const topicInfo = await getTopicInfo(currentTopicId);
       const boardInfo = await getBoardInfo(topicInfo.boardId);
-      const repeatedTopicInfo = await getTopicInfo(params.topicId);
+      const repeatedTopicInfo = await getTopicInfo(currentTopicId);
       const isAnonymous = repeatedTopicInfo.isAnonymous;
       console.log(params.postId);
       const totalPage = await getTraceTopicsCount(
-        params.topicId,
-        params.postId
+        currentTopicId,
+        currentPostId,
       );
       const isFav = shouldLoadFavorite
         ? await getFavState(params.topicId)
@@ -169,7 +171,7 @@ export function TrackedTopicPage() {
 
   const handleChange = async () => {
     console.log("handle trace post");
-    const topicInfo = await getTopicInfo(params.topicId);
+    const topicInfo = await getTopicInfo(Number(params.topicId));
     const pages = 1 + Math.floor(topicInfo.replyCount / 10);
     const floor = (topicInfo.replyCount + 1) % 10;
     setState((currentState) => ({

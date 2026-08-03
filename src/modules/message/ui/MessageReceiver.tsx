@@ -2,8 +2,10 @@
 // for more information see the following page on the TypeScript wiki:
 // https://github.com/Microsoft/TypeScript/wiki/JSX
 import * as React from "react";
-import type { MessageSendReceiveProps } from "../model/types";
-import { MessageConversationItem } from "./MessageConversationItem";
+import {
+  MessageConversationItem,
+  type MessageSendReceiveProps,
+} from "./MessageConversationItem";
 
 export function MessageReceiver(
   props: MessageSendReceiveProps,

@@ -3,8 +3,10 @@
 // https://github.com/Microsoft/TypeScript/wiki/JSX
 import * as React from "react";
 import { UbbCompatiblityMode } from "@modules/ubb";
-import type { MessageResponseProps } from "../model/types";
-import { MessageResponseItem } from "./MessageResponseItem";
+import {
+  MessageResponseItem,
+  type MessageResponseProps,
+} from "./MessageResponseItem";
 
 export function MessageAttmebox(
   props: MessageResponseProps,
@@ -14,8 +16,8 @@ export function MessageAttmebox(
   if (props.boardId === 0) {
     boardName = `[color=dodgerblue]${props.boardName}[/color]`;
   }
-  const a: any = props.floor / 10 + 1;
-  const b = parseInt(a);
+  const a = props.floor / 10 + 1;
+  const b = parseInt(String(a), 10);
   const c = props.floor + 10 - b * 10;
   let pageNum = `${b}#${c}`;
 

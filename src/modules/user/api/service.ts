@@ -5,14 +5,16 @@ import {
 import { getUserInfo } from "./get-user-info";
 import { UserGender } from "../model/enums";
 import type {
-  UserBasicInfo,
-  UserInfo,
   UserLookupFallback,
   UserLookupResult,
-  UserViewModel,
 } from "../model/types";
 import { cc98Fetch } from "@foundation/api/http";
-import type { PortraitConfigDto, UserTitleDto } from "../model/dto";
+import type {
+  PortraitConfigDto,
+  UserBasicInfo,
+  UserInfo,
+  UserTitleDto,
+} from "../model/dto";
 
 export async function getAllUserTitles(): Promise<UserTitleDto[]> {
   const response = await cc98Fetch("/config/global/all-user-title");
@@ -119,12 +121,11 @@ export function getThisUserInfobyName(
 export async function getUserDetails(userId) {
   try {
     const data = await getUserInfo(userId);
-    const viewData: UserViewModel = data;
     const body = {
       portraitUrl: data.portraitUrl,
       userName: data.name,
       fanCount: data.fanCount,
-      displayTitle: viewData.displayTitle,
+      displayTitle: undefined,
       birthday: data.birthday,
       prestige: data.prestige,
       gender: data.gender,

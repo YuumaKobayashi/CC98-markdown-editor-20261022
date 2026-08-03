@@ -3,8 +3,14 @@ import moment from "moment";
 
 import { UbbContainer } from "@modules/ubb";
 
-import type { MessageResponseProps } from "../model/types";
+import type { ReplyAtNotificationViewModel } from "../model/view-model";
 import styles from "./MessageResponseItem.module.scss";
+
+/** 旧组件 props 名；组件只接收 ViewModel 中实际渲染的字段。 */
+export type MessageResponseProps = Omit<
+  ReplyAtNotificationViewModel,
+  "postId" | "postBasicInfo"
+>;
 
 interface MessageResponseItemProps {
   boardName: string;

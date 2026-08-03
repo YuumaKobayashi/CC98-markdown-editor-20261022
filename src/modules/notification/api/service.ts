@@ -7,11 +7,17 @@ import { getBoardName } from "@modules/board";
 import { getBasicTopicsInfo, getThisTopicInfo } from "@modules/topic";
 import type {
   ReplyAtNotificationInfo,
-  ReplyAtNotificationViewModel,
   SystemNotificationInfo,
+  UnreadCount,
+} from "../model/dto";
+import type {
+  ReplyAtNotificationViewModel,
   SystemNotificationViewModel,
-} from "../model/types";
-import type { UnreadCount } from "../model/dto";
+} from "../model/view-model";
+import {
+  toReplyAtNotificationViewModel,
+  toSystemNotificationViewModel,
+} from "../model/mappers";
 
 //获取特定类型的消息的总数，1为回复消息，2为@消息，3为系统消息
 //TODO:禁止magic number，改为枚举
@@ -86,16 +92,9 @@ export async function getMessageSystem(
   }
 
   //补充楼层信息
-  for (let i in newTopic) {
-    if (newTopic[i].postId) {
-      (newTopic[i] as SystemNotificationViewModel).floor =
-        newTopic[i].postBasicInfo!.floor;
-    } else {
-      (newTopic[i] as SystemNotificationViewModel).floor = 0;
-    }
-  }
+  const viewTopics = newTopic.map(toSystemNotificationViewModel);
   //console.log("返回前数据", newTopic);
-  return newTopic as SystemNotificationViewModel[];
+  return viewTopics;
 }
 
 //获取回复我的通知
@@ -143,24 +142,18 @@ export async function getMessageResponse(
     //补充帖子标题，版面id和版面名称信息
     if (newTopic) {
       for (let i in newTopic) {
-        const viewTopic = newTopic[i] as ReplyAtNotificationViewModel;
+        let enrichment;
         if (newTopic[i].topicId) {
           let topicInfo = getThisTopicInfo(newTopic[i].topicId, topicsInfo);
-          viewTopic.topicTitle = topicInfo.title;
-          newTopic[i].boardId = topicInfo.boardId;
-          viewTopic.boardName = await getBoardName(newTopic[i].boardId);
+          const boardName = await getBoardName(topicInfo.boardId);
+          enrichment = {
+            topicTitle: topicInfo.title,
+            boardId: topicInfo.boardId,
+            boardName,
+          };
         }
         //获取楼层信息和回复者信息
-        if (newTopic[i].postId) {
-          viewTopic.floor = newTopic[i].postBasicInfo!.floor;
-          viewTopic.userId = newTopic[i].postBasicInfo!.userId;
-          viewTopic.userName = newTopic[i].postBasicInfo!.userName;
-        } else {
-          viewTopic.floor = 1;
-          viewTopic.userId = -1;
-          viewTopic.userName = "有人";
-        }
-        result.push(viewTopic);
+        result.push(toReplyAtNotificationViewModel(newTopic[i], enrichment));
       }
     }
     return result;
@@ -216,24 +209,18 @@ export async function getMessageAttme(
     //补充帖子标题，版面id和版面名称信息
     if (newTopic) {
       for (let i in newTopic) {
-        const viewTopic = newTopic[i] as ReplyAtNotificationViewModel;
+        let enrichment;
         if (newTopic[i].topicId) {
           let topicInfo = getThisTopicInfo(newTopic[i].topicId, topicsInfo);
-          viewTopic.topicTitle = topicInfo.title;
-          newTopic[i].boardId = topicInfo.boardId;
-          viewTopic.boardName = await getBoardName(newTopic[i].boardId);
+          const boardName = await getBoardName(topicInfo.boardId);
+          enrichment = {
+            topicTitle: topicInfo.title,
+            boardId: topicInfo.boardId,
+            boardName,
+          };
         }
         //获取楼层信息和回复者信息
-        if (newTopic[i].postId) {
-          viewTopic.floor = newTopic[i].postBasicInfo!.floor;
-          viewTopic.userId = newTopic[i].postBasicInfo!.userId;
-          viewTopic.userName = newTopic[i].postBasicInfo!.userName;
-        } else {
-          viewTopic.floor = 1;
-          viewTopic.userId = -1;
-          viewTopic.userName = "有人";
-        }
-        result.push(viewTopic);
+        result.push(toReplyAtNotificationViewModel(newTopic[i], enrichment));
       }
     }
     return result;

@@ -2,7 +2,7 @@ import * as React from "react";
 import { useState } from "react";
 
 import { TopicContentType } from "../model/enums";
-import type { FocusTopic } from "../model/types";
+import type { FocusTopic } from "../model/view-model";
 
 import styles from "./TopicCard.module.scss";
 import { TopicAudioPlayer } from "./TopicAudioPlayer";
@@ -114,7 +114,7 @@ export function TopicCard(props: FocusTopic) {
           {props.userName}
         </a>
         <a className={styles["card-topic-time"]} href={topicUrl} target="_blank">
-          {props.time}
+          {props.displayTime}
         </a>
         <a className={styles["card-topic-title"]} href={topicUrl} target="_blank">
           {props.title.trim() ? (
@@ -190,24 +190,24 @@ export function TopicCard(props: FocusTopic) {
               {props.boardName}
             </a>
           </div>
-          {props.tag1 ? (
-            <div className={styles["card-topic-tag"]}>{props.tag1}</div>
+          {props.tag1Name ? (
+            <div className={styles["card-topic-tag"]}>{props.tag1Name}</div>
           ) : null}
-          {props.tag2 ? (
-            <div className={styles["card-topic-tag"]}>{props.tag2}</div>
+          {props.tag2Name ? (
+            <div className={styles["card-topic-tag"]}>{props.tag2Name}</div>
           ) : null}
         </div>
         <div className={styles["card-topic-info"]}>
           <div>
             <a href={topicUrl} target="_blank">
               <i className="fa fa-eye fa-lg" />
-              {props.hitCount}
+              {props.displayHitCount}
             </a>
           </div>
           <div>
             <a href={topicUrl} target="_blank">
               <i className="fa fa-commenting-o fa-lg" />
-              {props.replyCount}
+              {props.displayReplyCount}
             </a>
           </div>
           <div>
@@ -222,7 +222,7 @@ export function TopicCard(props: FocusTopic) {
           </div>
           <div>
             <a href={lastPostUrl} target="_blank">
-              {props.lastPostTime}
+              {props.displayLastPostTime}
             </a>
           </div>
         </div>

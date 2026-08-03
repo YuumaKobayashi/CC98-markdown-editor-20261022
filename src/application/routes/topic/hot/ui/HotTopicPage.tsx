@@ -21,22 +21,29 @@ interface HotTopicPageProps {
 const renderFocusTopic = (item: FocusTopic) => (
   <FocusTopicItem
     key={item.id}
+    isAnonymous={item.isAnonymous}
     title={item.title}
     hitCount={item.hitCount}
+    displayHitCount={item.displayHitCount}
     id={item.id}
     boardId={item.boardId}
     boardName={item.boardName}
     replyCount={item.replyCount}
+    displayReplyCount={item.displayReplyCount}
     userId={item.userId}
     userName={item.userName}
     portraitUrl={item.portraitUrl}
     time={item.time}
+    displayTime={item.displayTime}
     likeCount={item.likeCount}
     dislikeCount={item.dislikeCount}
     lastPostUser={item.lastPostUser}
     lastPostTime={item.lastPostTime}
+    displayLastPostTime={item.displayLastPostTime}
     tag1={item.tag1}
+    tag1Name={item.tag1Name}
     tag2={item.tag2}
+    tag2Name={item.tag2Name}
     floorCount={item.floorCount}
     contentType={item.contentType}
     mediaContent={item.mediaContent}
