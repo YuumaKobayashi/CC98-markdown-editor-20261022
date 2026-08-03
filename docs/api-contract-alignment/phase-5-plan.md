@@ -334,6 +334,8 @@ export type RatePostResult =
 - 选择一个小 module 验证导入规则，不批量迁移全部 import。
 - 根 `index.ts` 保持兼容，不删除现有出口。
 
+执行结果见 [`p5.1-public-entry.md`](./p5.1-public-entry.md)：以 `favorite-topic` 为试点，将 6 个外部根入口消费者按职责切换到 `api/model/ui` 稳定子路径；根 facade 保持兼容，循环 SCC 未新增，正式 chunk 只有可归因的 owner 命名与引用长度变化。typecheck、build、diff check 和本地只读浏览器烟雾测试通过；当前停在人审点，不自动提交、推送或开始 P5.2。
+
 验收：typecheck、build、diff check、循环依赖和 chunk 对比；基础页面浏览器烟雾测试；停在人审点。
 
 ### P5.2：低耦合只读 API 迁移
