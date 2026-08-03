@@ -5,9 +5,9 @@ import type { FormInstance } from "antd";
 import {
   createFavGroup,
   deleteFavGroup,
-  type FavoriteTopicGroup,
   updateFavGroup,
-} from "@modules/favorite-topic";
+} from "@modules/favorite-topic/api/service";
+import type { FavoriteTopicGroup } from "@modules/favorite-topic/model/favorite-topic-group";
 import {
   NoticeMessage,
   noticeMessageShow,

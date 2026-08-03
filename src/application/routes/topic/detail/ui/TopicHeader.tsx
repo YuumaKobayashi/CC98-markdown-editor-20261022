@@ -7,9 +7,9 @@ import moment from "moment";
 import { getTagNamebyId } from "@modules/topic";
 import {
   deleteFavoriteTopic,
-  FavoriteTopicGroupSelect,
   setFavoriteTopic,
-} from "@modules/favorite-topic";
+} from "@modules/favorite-topic/api/service";
+import { FavoriteTopicGroupSelect } from "@modules/favorite-topic/ui/FavoriteTopicGroupSelect";
 import { noticeMessageShow } from "@modules/notification";
 import { HomeAdvertisementCarousel } from "@application/routes/home/advertisement";
 import { copyToClipboard } from "@foundation/lib/dom";

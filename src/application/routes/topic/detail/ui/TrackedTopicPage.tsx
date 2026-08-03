@@ -8,7 +8,7 @@ import {
   getTopicInfo,
   getTraceTopicsCount,
 } from "@modules/topic";
-import { getFavState } from "@modules/favorite-topic";
+import { getFavState } from "@modules/favorite-topic/api/service";
 import { noticeMessageShow } from "@modules/notification";
 import { TopicBreadcrumb } from "@modules/topic";
 import { Pager } from "@foundation/ui/pagination";

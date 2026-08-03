@@ -11,12 +11,14 @@ import {
   UserAreaLoading,
 } from "@application/layouts/user-area";
 import {
-  defaultFavoriteTopicGroups,
-  FavoriteTopicOrder,
   getCurrentUserFavoriteTopics,
   getFavoriteAllTopic,
+} from "@modules/favorite-topic/api/service";
+import {
+  defaultFavoriteTopicGroups,
+  FavoriteTopicOrder,
   type FavoriteTopicGroup,
-} from "@modules/favorite-topic";
+} from "@modules/favorite-topic/model/favorite-topic-group";
 import type { UserRecentTopic } from "@modules/topic";
 import { UserCenterPager as Pager } from "@application/routes/user-center/pagination";
 

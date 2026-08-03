@@ -9,9 +9,9 @@ import { Link } from "react-router";
 
 import {
   deleteFavoriteTopic,
-  FavoriteTopicGroupSelect,
   setFavoriteTopic,
-} from "@modules/favorite-topic";
+} from "@modules/favorite-topic/api/service";
+import { FavoriteTopicGroupSelect } from "@modules/favorite-topic/ui/FavoriteTopicGroupSelect";
 import type { UserRecentTopic } from "@modules/topic";
 
 import styles from "./UserCenterFavoriteTopicItem.module.scss";
