@@ -368,6 +368,8 @@ Recent Topic/Post 子组在本批先建立 Topic/Post 的 `dto.ts`、`view-model
 
 验收：每个 module 独立完成字段 `missing/extra/incompatible` 对照、DTO 原地修改扫描、宽类型归因、typecheck/build/browser 对照；停在人审点。
 
+执行结果见 [`p5.3-core-module-contracts.md`](./p5.3-core-module-contracts.md)：User/Session、Notification/Message、Board、Topic/Post、Site Content/Home 已按纵向 owner 收口；Topic API 拆为 detail、list/search、metadata、history 四个业务闭包，最终仅保留 Topic/Post/Message/Notification 四个 mapper。只读浏览器烟雾、typecheck、production build、DTO mutation/宽类型/双重断言/Props/mapper 数量与产物检查已完成；私信和通知页因挂载会触发已读写入而未打开。当前停在人审点，不 commit、不 push、不进入 P5.4。
+
 ### P5.4：Route API 拆回 module
 
 - 拆分 Board、Editor、Topic Detail 的 Route 私有 API。
