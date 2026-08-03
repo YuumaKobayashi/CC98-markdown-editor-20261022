@@ -11,17 +11,15 @@ import {
   UserAreaLoading,
 } from "@application/layouts/user-area";
 import { useAppDispatch, useAppSelector } from "@application/store";
-import {
-  getCurrentUserBrowsingHistory,
-  UserRecentTopicItem as Topic,
-} from "@modules/topic";
+import { getCurrentUserBrowsingHistory } from "@modules/topic/api/service";
+import { UserRecentTopicItem as Topic } from "@modules/topic/ui/UserRecentTopicItem";
 import {
   refreshCurrentUserInfo,
   selectCurrentUser,
   setBrowsingHistoryEnabled,
   updateCurrentUser,
 } from "@modules/session";
-import type { UserRecentTopic } from "@modules/topic";
+import type { UserRecentTopic } from "@modules/topic/model/view-model";
 import { UserCenterPager as Pager } from "@application/routes/user-center/pagination";
 import activityStyles from "./UserCenterHistoryPage.module.scss";
 

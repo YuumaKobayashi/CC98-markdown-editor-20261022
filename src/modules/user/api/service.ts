@@ -12,6 +12,17 @@ import type {
   UserViewModel,
 } from "../model/types";
 import { cc98Fetch } from "@foundation/api/http";
+import type { PortraitConfigDto, UserTitleDto } from "../model/dto";
+
+export async function getAllUserTitles(): Promise<UserTitleDto[]> {
+  const response = await cc98Fetch("/config/global/all-user-title");
+  return (await response.json()) as UserTitleDto[];
+}
+
+export async function getPortraitConfig(): Promise<PortraitConfigDto> {
+  const response = await fetch("/static/portrait.json");
+  return (await response.json()) as PortraitConfigDto;
+}
 
 export function getThisUserInfo(
   userId: number | null,

@@ -1,15 +1,19 @@
 import type {
-  LotteryMode,
-  LotteryTopicStatus,
-  TopicAllowedViewerState,
-  TopicBestState,
   TopicContentType,
-  TopicSpecialStyle,
   TopicState,
-  TopicTopState,
   TopicType,
 } from "./enums";
-import type { IUser } from "@modules/user";
+import type { TopicInfo } from "./dto";
+
+export type {
+  ITopic,
+  LotteryTopicDetail,
+  SearchedTopicInfo,
+  TopicHighlightInfo,
+  TopicInfo,
+  UserBrowsingTopicInfo,
+} from "./dto";
+export type { UserRecentTopic } from "./view-model";
 
 /**
  * 帖子基础合同。
@@ -109,21 +113,6 @@ export interface ITagGroup {
   tags: ITag[];
 }
 
-export interface TopicHighlightInfo {
-  isBold: boolean;
-  isItalic: boolean;
-  color: string;
-}
-
-export interface LotteryTopicDetail {
-  status: LotteryTopicStatus;
-  result: string | null;
-  resultFloor: number | null;
-  drawingCount: number;
-  drawingTime: string;
-  mode: LotteryMode;
-}
-
 export interface VoteItem {
   id: number;
   description: string;
@@ -149,153 +138,6 @@ export interface VoteInfo {
   myRecord: VoteRecord | null;
   needVote: boolean;
   voteUserCount: number;
-}
-
-export interface TopicInfo {
-  /**
-   * 帖子 ID
-   */
-  id: number;
-  /**
-   * 版面 ID
-   */
-  boardId: number;
-  /**
-   * 标题
-   */
-  title: string;
-  /**
-   * 发布时间
-   * 格式: 2018-10-10T01:43:26.11+08:00
-   */
-  time: string;
-  /**
-   * 发布者 ID
-   */
-  userId: number | null;
-  /**
-   * 发布者用户名
-   */
-  userName: string | null;
-
-  /**
-   * 后端 TopicInfo 嵌入的用户信息；完整 User wire 统一留待 Phase 3。
-   */
-  userInfo: IUser | null;
-  /**
-   * 是否匿名
-   */
-  isAnonymous: boolean;
-  /**
-   * 不上十大
-   */
-  disableHot: boolean;
-  /**
-   * 最后回复时间
-   */
-  lastPostTime: string;
-
-  state: TopicState;
-
-  type: TopicType;
-  /**
-   * 回复数
-   */
-  replyCount: number;
-  /**
-   * 点击数
-   */
-  hitCount: number;
-
-  totalVoteUserCount: number;
-  /**
-   * 最后回复用户用户名
-   */
-  lastPostUser: string | null;
-  /**
-   * 最后回复内容
-   */
-  lastPostContent: string | null;
-  topState: TopicTopState;
-  bestState: TopicBestState;
-  /**
-   * 是否是投票
-   */
-  isVote: boolean;
-
-  isPosterOnly: boolean;
-
-  allowedViewerState: TopicAllowedViewerState;
-  /**
-   * 赞同数
-   */
-  likeCount: number;
-  /**
-   * 反对数量
-   */
-  dislikeCount: number;
-
-  highlightInfo: TopicHighlightInfo | null;
-
-  tag1: number;
-
-  tag2: number;
-
-  isInternalOnly: boolean;
-
-  notifyPoster: boolean;
-
-  isMe: boolean;
-
-  todayCount: number;
-
-  allowHotReply: boolean;
-
-  contentType: TopicContentType;
-
-  favoriteCount: number;
-
-  topicAuthorPermissions: string[];
-
-  mediaContent: unknown;
-
-  specialStyle: TopicSpecialStyle;
-
-  notifyAllReplierCountByLZ: number;
-
-  lastNotifyAllReplierFloorByLZ: number;
-
-  canNotifyAllReplier: boolean;
-
-  notifyAllReplierPostIds: number[];
-
-  isHotTopic: boolean;
-
-  lotteryTopicDetail: LotteryTopicDetail | null;
-}
-
-/**
- * 旧名兼容别名；实际 wire DTO 为 {@link TopicInfo}。
- */
-export type ITopic = TopicInfo;
-
-export interface SearchedTopicInfo {
-  id: number;
-  boardId: number;
-  boardName: string;
-  title: string;
-  time: string;
-  userId: number | null;
-  userName: string | null;
-  isAnonymous: boolean;
-  replyCount: number;
-  hitCount: number;
-  lastPostUser: string;
-  lastPostTime: string;
-  lastPostContent: string;
-  mediaContent: unknown;
-  contentType: TopicContentType;
-  state: TopicState;
 }
 
 export interface RecommendedTopicInfo {
@@ -448,50 +290,4 @@ export interface RecommendedTopic {
    * 旧合并逻辑会读取 wrapper id，wire 上并不存在。
    */
   id?: number;
-}
-
-/**
- * 表示用户最近帖子
- */
-export interface UserRecentTopic {
-  /**
-   * 帖子版面
-   */
-  boardName: string;
-  /**
-   * 发帖时间
-   */
-  time: string;
-  /**
-   * 帖子标题
-   */
-  title: string;
-  /**
-   * 用户名
-   */
-  userName: string;
-  /**
-   * 用户名
-   */
-  isAnonymous: boolean;
-  /**
-   * 帖子id
-   */
-  id: number;
-  /**
-   * 帖子版面id
-   */
-  boardId: number;
-  /**
-   * 帖子内容
-   */
-  content: string;
-  /**
-   * 获得赞数
-   */
-  likeCount: number;
-  /**
-   * 获得踩数
-   */
-  dislikeCount: number;
 }

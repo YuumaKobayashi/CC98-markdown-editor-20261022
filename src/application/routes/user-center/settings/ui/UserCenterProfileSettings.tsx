@@ -1,14 +1,10 @@
 import * as React from "react";
 
-import { cc98Fetch } from "@foundation/api/http";
+import { getAllUserTitles } from "@modules/user/api/service";
+import type { UserTitleDto } from "@modules/user/model/dto";
 
 import type { EditableUserInfo } from "../model/editable-user-info";
 import styles from "./UserCenterProfileSettings.module.scss";
-
-interface DisplayTitle {
-  id: number;
-  name: string;
-}
 
 interface UserCenterProfileSettingsProps {
   userinfo: EditableUserInfo;
@@ -26,13 +22,12 @@ export function UserCenterProfileSettings({
   userinfo,
   handleChange,
 }: UserCenterProfileSettingsProps) {
-  const [displayTitles, setDisplayTitles] = React.useState<DisplayTitle[]>([]);
+  const [displayTitles, setDisplayTitles] = React.useState<UserTitleDto[]>([]);
 
   React.useEffect(() => {
     const loadDisplayTitles = async () => {
       try {
-        const response = await cc98Fetch("/config/global/all-user-title");
-        setDisplayTitles(await response.json());
+        setDisplayTitles(await getAllUserTitles());
       } catch {
         // 旧页面在头衔列表请求失败时保持静默。
       }

@@ -10,12 +10,17 @@ import type {
   ReplyAtNotificationViewModel,
   SystemNotificationInfo,
   SystemNotificationViewModel,
-  UnreadCount,
 } from "../model/types";
+import type { UnreadCount } from "../model/dto";
 
 //获取特定类型的消息的总数，1为回复消息，2为@消息，3为系统消息
-
+//TODO:禁止magic number，改为枚举
 export type NotificationPageSection = 1 | 2 | 3;
+
+export async function getUnreadCount(headers: Headers): Promise<UnreadCount> {
+  const response = await cc98Fetch("/me/unread-count", { headers });
+  return (await response.json()) as UnreadCount;
+}
 
 export async function getTotalPage(
   type: NotificationPageSection,

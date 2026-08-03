@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { cc98Fetch } from "@foundation/api/http";
+import { getBoardList } from "@modules/board/api/service";
 import DocumentTitle from "@foundation/ui/document-title";
 import styles from "./BoardListPage.module.scss";
 import type { RootBoardState } from "../model/board-list";
@@ -12,8 +12,7 @@ export function BoardListPage() {
   //TODO: 统一版面数据信息
   React.useEffect(() => {
     const loadBoards = async () => {
-      const response = await cc98Fetch("/Board/all");
-      const boards = (await response.json()) as RootBoardState[];
+      const boards = await getBoardList();
       setData(boards);
     };
 

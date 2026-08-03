@@ -31,19 +31,22 @@ export type {
   IHotTopic,
   ITag,
   ITagGroup,
-  ITopic,
   MediaTopicContent,
-  LotteryTopicDetail,
   RecommendedTopic,
   RecommendedTopicInfo,
-  SearchedTopicInfo,
   TagTopicsInfo,
   TopicBasicInfo,
   TopicBasicLookupFallback,
-  TopicHighlightInfo,
-  TopicInfo,
-  UserRecentTopic,
   VoteInfo,
   VoteItem,
   VoteRecord,
 } from "./model/types";
+export type {
+  ITopic,
+  LotteryTopicDetail,
+  SearchedTopicInfo,
+  TopicHighlightInfo,
+  TopicInfo,
+  UserBrowsingTopicInfo,
+} from "./model/dto";
+export type { UserRecentTopic } from "./model/view-model";

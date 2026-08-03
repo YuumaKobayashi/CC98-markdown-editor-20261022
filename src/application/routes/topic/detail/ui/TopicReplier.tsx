@@ -3,6 +3,7 @@ import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
 import { Link } from "react-router";
 
 import { updateUserInfo, UserGender } from "@modules/user";
+import { getPortraitConfig } from "@modules/user/api/service";
 import { getMyInfo } from "@modules/session";
 import { updateFollowedUser } from "../api/service";
 import styles from "./TopicReplier.module.scss";
@@ -92,8 +93,7 @@ export function TopicReplier({
       }
 
       if (displayTitleId) {
-        const response = await fetch("/static/portrait.json");
-        const data = await response.json();
+        const data = await getPortraitConfig();
         const groupName =
           portraitGroupByDisplayTitle[displayTitleId] || "普通";
         const group = data[groupName] || data.普通;

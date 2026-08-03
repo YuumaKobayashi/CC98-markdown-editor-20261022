@@ -14,11 +14,9 @@ export {
   ViewerFilterState,
 } from "./model/enums";
 export type {
-  BoardCategoryInfo,
   BoardEvent,
   BoardEventInfo,
   BoardInfo,
-  BoardSimpleInfo,
   BoardStopPostUserInfo,
   BoardTagInfo,
   BoardTagInfoV2,
@@ -28,3 +26,4 @@ export type {
   IBoardMasterTitle,
   UserFavoritesBoardInfo,
 } from "./model/types";
+export type { BoardCategoryInfo, BoardSimpleInfo } from "./model/dto";

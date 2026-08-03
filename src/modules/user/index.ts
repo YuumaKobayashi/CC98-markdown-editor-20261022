@@ -38,3 +38,9 @@ export type {
   UserPrivacySetting,
   UserViewModel,
 } from "./model/types";
+export type {
+  PortraitConfigDto,
+  PortraitConfigItemDto,
+  PortraitStyleDto,
+  UserTitleDto,
+} from "./model/dto";

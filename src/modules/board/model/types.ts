@@ -7,6 +7,8 @@ import type {
   ViewerFilterState,
 } from "./enums";
 
+export type { BoardCategoryInfo, BoardSimpleInfo } from "./dto";
+
 /**
  * 版面合同。
  */
@@ -100,27 +102,6 @@ export interface BoardInfo {
  * 旧名兼容别名；实际 wire DTO 为 {@link BoardInfo}。
  */
 export type IBoard = BoardInfo;
-
-export interface BoardSimpleInfo {
-  id: number;
-  name: string;
-  boardMasters: string[];
-  topicCount: number;
-  postCount: number;
-  todayCount: number;
-  description: string | null;
-  anonymousState: AnonymousState;
-  showShareTip: boolean;
-  canVote: boolean;
-}
-
-export interface BoardCategoryInfo {
-  id: number;
-  name: string;
-  order: number;
-  masters: string[];
-  boards: BoardSimpleInfo[];
-}
 
 export interface BoardTagInfo {
   layer: number;

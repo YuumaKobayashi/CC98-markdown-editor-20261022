@@ -14,13 +14,11 @@ export type {
   IAward,
   ILike,
   ILikeState,
-  IPost,
   NewPostInfo,
-  PostAward,
   PostBasicInfo,
-  PostInfo,
   PostLikeInfo,
   PostViewModel,
   SpecificUserPostInfo,
-  UserRecentPost,
 } from "./model/types";
+export type { IPost, PostAward, PostInfo } from "./model/dto";
+export type { UserRecentPost } from "./model/view-model";

@@ -9,11 +9,9 @@ import {
   UserActivityList,
   UserAreaLoading,
 } from "@application/layouts/user-area";
-import {
-  getCurrentUserRecentTopics,
-  UserRecentTopicItem as Topic,
-} from "@modules/topic";
-import type { UserRecentTopic } from "@modules/topic";
+import { getCurrentUserRecentTopics } from "@modules/topic/api/service";
+import { UserRecentTopicItem as Topic } from "@modules/topic/ui/UserRecentTopicItem";
+import type { UserRecentTopic } from "@modules/topic/model/view-model";
 import { parseUserCenterPage } from "@application/routes/user-center/model/route-params";
 import { UserCenterPager as Pager } from "@application/routes/user-center/pagination";
 import activityStyles from "./MyTopics.module.scss";

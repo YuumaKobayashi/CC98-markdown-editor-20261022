@@ -1,6 +1,42 @@
 import { formAuthorizeHeader } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
-import type { UserSignInStateInfo } from "../model/types";
+import type {
+  ServerNowResultDto,
+  UserSignInDailyInfo,
+  UserSignInStateInfo,
+} from "../model/dto";
+
+export async function getServerNow(): Promise<ServerNowResultDto | undefined> {
+  const headers = await formAuthorizeHeader();
+  const response = await cc98Fetch("/config/now", {
+    method: "GET",
+    headers,
+  });
+  if (!response.ok) {
+    console.error("Failed to fetch signin info:", response.statusText);
+    return;
+  }
+  return (await response.json()) as ServerNowResultDto;
+}
+
+export async function getSigninInMonth(
+  year: number,
+  month: number,
+): Promise<UserSignInDailyInfo[] | null> {
+  const headers = await formAuthorizeHeader();
+  const response = await cc98Fetch(
+    `/me/signin-in-month?year=${year}&month=${month}`,
+    { method: "GET", headers },
+  );
+  if (!response.ok) {
+    console.error(
+      `Failed to fetch signin info for ${year}-${month}:`,
+      response.statusText,
+    );
+    return null;
+  }
+  return (await response.json()) as UserSignInDailyInfo[];
+}
 
 export async function signin(content: string): Promise<void> {
   const headers = await formAuthorizeHeader();

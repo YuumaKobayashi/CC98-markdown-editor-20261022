@@ -10,11 +10,9 @@ import {
   UserActivityList,
   UserAreaLoading,
 } from "@application/layouts/user-area";
-import {
-  getCurrentUserRecentPosts,
-  UserRecentPostItem as Post,
-} from "@modules/post";
-import type { UserRecentPost } from "@modules/post";
+import { getCurrentUserRecentPosts } from "@modules/post/api/service";
+import { UserRecentPostItem as Post } from "@modules/post/ui/UserRecentPostItem";
+import type { UserRecentPost } from "@modules/post/model/view-model";
 import {
   parseUserCenterIsHot,
   parseUserCenterPage,

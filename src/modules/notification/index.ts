@@ -13,7 +13,7 @@ export type {
   SystemNotificationInfo,
   SystemNotificationViewModel,
 } from "./model/types";
-export type { UnreadCount } from "./model/types";
+export type { UnreadCount } from "./model/dto";
 export {
   notificationReducer,
   replaceUnreadCount,

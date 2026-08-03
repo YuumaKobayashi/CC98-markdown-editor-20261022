@@ -4,10 +4,9 @@ import {
   UserActivityList,
   UserActivitySection,
 } from "@application/layouts/user-area";
-import { UserRecentTopicItem as Topic } from "@modules/topic";
-import { getToken } from "@modules/session";
-import type { UserRecentTopic } from "@modules/topic";
-import { cc98Fetch } from "@foundation/api/http";
+import { UserRecentTopicItem as Topic } from "@modules/topic/ui/UserRecentTopicItem";
+import { getUserRecentTopics } from "@modules/topic/api/service";
+import type { UserRecentTopic } from "@modules/topic/model/view-model";
 import styles from "./UserRecentTopics.module.scss";
 
 interface UserRecentTopicsProps {
@@ -36,16 +35,7 @@ export function UserRecentTopics({ id }: UserRecentTopicsProps) {
       }
 
       try {
-        const token = await getToken();
-        const headers = new Headers();
-        headers.append("Authorization", token);
-        const response = await cc98Fetch(
-          `/user/${id}/recent-topic?userid=${id}&from=${offset}&size=11`,
-          { headers }
-        );
-        if (response.status !== 200) throw new Error();
-
-        const result = (await response.json()) as UserRecentTopic[];
+        const result = await getUserRecentTopics(id, offset);
         if (currentRequestId !== requestIdRef.current) return;
 
         const visibleTopics = result.slice(0, result.length === 11 ? 10 : result.length);

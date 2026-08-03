@@ -1,4 +1,6 @@
-import type { PostInfo, UserRecentPost } from "../model/types";
+import type { PostInfo } from "../model/dto";
+import type { UserRecentPost } from "../model/view-model";
+import { toUserRecentPost } from "../model/mappers";
 import type { ResultWithCount } from "@foundation/api/contracts";
 import { getBoardName } from "@modules/board";
 import { formAuthorizeHeader } from "@modules/session";
@@ -33,12 +35,12 @@ export async function getCurrentUserRecentPosts(
   const data = (await response.json()) as ResultWithCount<PostInfo>;
   const rawPosts = data.data!;
   const hasMore = rawPosts.length === 11;
-  const posts: UserRecentPost[] = (
-    hasMore ? rawPosts.slice(0, 10) : rawPosts
-  ).map((post) => ({ ...post, boardName: "" }));
+  const rawVisiblePosts = hasMore ? rawPosts.slice(0, 10) : rawPosts;
+  const posts = new Array<UserRecentPost>(rawVisiblePosts.length);
 
-  for (let index = posts.length; index--;) {
-    posts[index].boardName = await getBoardName(posts[index].boardId);
+  for (let index = rawVisiblePosts.length; index--;) {
+    const boardName = await getBoardName(rawVisiblePosts[index].boardId);
+    posts[index] = toUserRecentPost(rawVisiblePosts[index], boardName);
   }
 
   return {

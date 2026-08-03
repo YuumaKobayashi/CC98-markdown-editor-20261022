@@ -12,7 +12,12 @@ import {
   getMyInfo,
   refreshUserInfo,
 } from "@modules/session";
+import {
+  getServerNow,
+  getSigninInMonth,
+} from "@modules/daily-signin/api/service";
 import { cc98Fetch } from "@foundation/api/http";
+import type { UserSignInDailyInfo } from "@modules/daily-signin/model/dto";
 import styles from "./ReSignCalendar.module.scss";
 
 interface ResignCalendarProps {
@@ -21,7 +26,9 @@ interface ResignCalendarProps {
 
 const ResignCalendar: React.FC<ResignCalendarProps> = (props) => {
   const [dateNow, setDateNow] = React.useState<moment.Moment | null>(null);
-  const [signinInfo, setSigninInfo] = React.useState<any>(null);
+  const [signinInfo, setSigninInfo] = React.useState<
+    UserSignInDailyInfo[] | null
+  >(null);
   const [datePicker, setDatePicker] = React.useState<moment.Moment | null>(
     null
   );
@@ -41,16 +48,8 @@ const ResignCalendar: React.FC<ResignCalendarProps> = (props) => {
   };
 
   const fetchServerDate = async () => {
-    const headers = await formAuthorizeHeader();
-    const response = await cc98Fetch("/config/now", {
-      method: "GET",
-      headers: headers,
-    });
-    if (!response.ok) {
-      console.error("Failed to fetch signin info:", response.statusText);
-      return;
-    }
-    const data = await response.json();
+    const data = await getServerNow();
+    if (!data) return;
     return moment(data.data);
   };
 
@@ -62,25 +61,11 @@ const ResignCalendar: React.FC<ResignCalendarProps> = (props) => {
    * @returns {Promise<any|null>}
    *    返回对应月份的签到数据，如果请求失败则返回 null。
    */
-  const fetchSigninInfo = async (year, month) => {
+  const fetchSigninInfo = async (year: number, month: number) => {
     setSigninInfo(null);
-    const headers = await formAuthorizeHeader();
     // 这里将 URL 改为根据传入的 year 和 month 生成
-    const response = await cc98Fetch(
-      `/me/signin-in-month?year=${year}&month=${month}`,
-      {
-        method: "GET",
-        headers,
-      }
-    );
-    if (!response.ok) {
-      console.error(
-        `Failed to fetch signin info for ${year}-${month}:`,
-        response.statusText
-      );
-      return null;
-    }
-    const data = await response.json();
+    const data = await getSigninInMonth(year, month);
+    if (!data) return null;
     setSigninInfo(data);
     return data;
   };

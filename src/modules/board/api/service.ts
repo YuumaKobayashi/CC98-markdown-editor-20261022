@@ -9,12 +9,11 @@ import { getMyInfo } from "@modules/session";
 import { getToken, formAuthorizeHeader } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
 import type {
-  BoardCategoryInfo,
   BoardInfo,
-  BoardSimpleInfo,
   BoardStopPostUserInfo,
   BoardTagInfoV2,
 } from "../model/types";
+import type { BoardCategoryInfo, BoardSimpleInfo } from "../model/dto";
 
 /*
  * 根据boardId返回boardName
@@ -90,6 +89,15 @@ export async function getBoards(): Promise<BoardCategoryInfo[]> {
   } else {
     return boards;
   }
+}
+
+/**
+ * 获取版面列表页使用的全部版面分类。
+ * 保持旧页面每次进入时直接请求 `/Board/all`，不复用 module 版面缓存。
+ */
+export async function getBoardList(): Promise<BoardCategoryInfo[]> {
+  const response = await cc98Fetch("/Board/all");
+  return (await response.json()) as BoardCategoryInfo[];
 }
 
 /**

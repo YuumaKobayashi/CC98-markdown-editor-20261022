@@ -1,14 +1,9 @@
 import type { NotificationType } from "./enums";
 import type { PostBasicInfo } from "@modules/post";
 
-type UserBooleanSetting = "是" | "否";
+export type { UnreadCount } from "./dto";
 
-export interface UnreadCount {
-  systemCount: number;
-  atCount: number;
-  replyCount: number;
-  messageCount: number;
-}
+type UserBooleanSetting = "是" | "否";
 
 /**
  * 用户消息设置选项。

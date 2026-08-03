@@ -348,6 +348,8 @@ export type RatePostResult =
 
 Recent Topic/Post 子组在本批先建立 Topic/Post 的 `dto.ts`、`view-model.ts` 和唯一 `mappers.ts`，只迁移 recent-topic、browsing-record、recent/hot-post 三条已纳入本批的转换；Topic/Post 其余 mapper 入口留到 P5.3，不建立第二个 mapper 文件。
 
+执行结果见 [`p5.2-low-coupling-read-api.md`](./p5.2-low-coupling-read-api.md)：六个子组的只读请求已迁入对应 API owner，Topic/Post 建立唯一 DTO、ViewModel 与 mapper 分层；改前/改后 11 个只读 GET、页面烟雾、typecheck、build、diff check、循环 SCC、chunk 和字节格式检查均已完成。Daily Signin POST、通知已读、偏好/历史切换和资料提交等未获授权操作均未执行。当前停在人审点，不自动提交、推送或开始 P5.3。
+
 验收：请求 URL/method/query、返回形状和页面行为一致；目标 wire/request DTO 不存在无依据的 `number | string`、`false`、`any`，无 DTO 原地展示性改写；停在人审点。
 
 ### P5.3：核心 module 类型与 API 收口

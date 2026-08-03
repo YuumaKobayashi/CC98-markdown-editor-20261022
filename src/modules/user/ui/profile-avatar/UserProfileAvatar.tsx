@@ -2,19 +2,9 @@ import * as React from "react";
 import { Link } from "react-router";
 
 import type { UserInfo } from "../../model/types";
-import { cc98Fetch } from "@foundation/api/http";
+import { getAllUserTitles, getPortraitConfig } from "../../api/service";
+import type { UserTitleDto } from "../../model/dto";
 import styles from "./UserProfileAvatar.module.scss";
-
-interface DisplayTitle {
-  id: number;
-  name: string;
-}
-
-interface PortraitData {
-  [title: string]: {
-    imageUrl: string;
-  };
-}
 
 interface PortraitFrame {
   title: string;
@@ -104,7 +94,7 @@ const portraitFrames: Record<number, PortraitFrame> = {
 
 //用户中心主页用户头像与徽章组件
 export function UserProfileAvatar({ userInfo }: UserProfileAvatarProps) {
-  const [displayTitles, setDisplayTitles] = React.useState<DisplayTitle[]>([]);
+  const [displayTitles, setDisplayTitles] = React.useState<UserTitleDto[]>([]);
   const [portraitUrl, setPortraitUrl] = React.useState("");
   const [portraitStyle, setPortraitStyle] =
     React.useState<React.CSSProperties>({});
@@ -114,10 +104,7 @@ export function UserProfileAvatar({ userInfo }: UserProfileAvatarProps) {
 
     const loadTitlesAndPortrait = async () => {
       try {
-        const titleResponse = await cc98Fetch(
-          "/config/global/all-user-title"
-        );
-        const titles = (await titleResponse.json()) as DisplayTitle[];
+        const titles = await getAllUserTitles();
         if (!active) return;
         setDisplayTitles(titles);
         setPortraitUrl("");
@@ -129,8 +116,7 @@ export function UserProfileAvatar({ userInfo }: UserProfileAvatarProps) {
         );
         if (!frame || !hasTitle) return;
 
-        const portraitResponse = await fetch("/static/portrait.json");
-        const portraits = (await portraitResponse.json()) as PortraitData;
+        const portraits = await getPortraitConfig();
         if (!active) return;
 
         setPortraitUrl(portraits[frame.title]?.imageUrl ?? "");
