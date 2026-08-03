@@ -2,11 +2,49 @@ import { formAuthorizeHeader } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
 import { PostUserOperationType } from "@modules/post";
 import type { TopicTopState } from "@modules/topic";
+import type { BoardEventInfo } from "@modules/board/model/dto";
 import type {
   ModerationResult,
   PostWithIpInfo,
   TopicManageHistory,
 } from "../model/types";
+
+export async function multiDelete(
+  topicIds: number[],
+  reason: string,
+): Promise<Response> {
+  const headers = await formAuthorizeHeader();
+  headers.append("Content-Type", "application/json");
+  let query = "id=";
+  query += topicIds.join("&id=");
+  const url = `/topic/multi-delete?${query}`;
+  const body = JSON.stringify({ reason });
+  return await cc98Fetch(url, { method: "PUT", headers, body });
+}
+
+export async function multiLock(
+  topicIds: number[],
+  reason: string,
+  value: number,
+): Promise<Response> {
+  const headers = await formAuthorizeHeader();
+  let query = "id=";
+  query += topicIds.join("&id=");
+  const url = `/topic/multi-lock?${query}`;
+  const body = JSON.stringify({ reason, value });
+  headers.append("Content-Type", "application/json");
+  return await cc98Fetch(url, { method: "PUT", headers, body });
+}
+
+export async function getBoardRecords(
+  boardId: string,
+  from: number,
+): Promise<BoardEventInfo> {
+  const url = `/board/${boardId}/events?from=${from}&size=7`;
+  const headers = await formAuthorizeHeader();
+  const response = await cc98Fetch(url, { headers });
+  return (await response.json()) as BoardEventInfo;
+}
 
 export async function deletePost(
   topicId: number,

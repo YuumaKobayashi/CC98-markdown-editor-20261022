@@ -3,8 +3,8 @@ import type { IBoard } from "@modules/board";
 import type { ITopic } from "@modules/topic";
 import { CloseCircleOutlined } from "@ant-design/icons";
 import { Button, Modal, notification, Select, Transfer } from "antd";
+import { multiDelete, multiLock } from "@modules/moderation";
 
-import { multiDelete, multiLock } from "../api/service";
 
 const Option = Select.Option;
 

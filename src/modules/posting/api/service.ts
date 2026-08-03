@@ -2,6 +2,54 @@ import { Constants } from "@foundation/config/runtime-config";
 import { getToken, formAuthorizeHeader } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
 import { throwLegacyError } from "@foundation/lib/legacy-utility-effects";
+import type {
+  NewPostRequestDto,
+  NewTopicRequestDto,
+} from "../model/dto";
+
+function createJsonHeaders(token: string): Headers {
+  const headers = new Headers();
+  headers.append("Authorization", token);
+  headers.append("Content-Type", "application/json");
+  return headers;
+}
+
+export async function createEditorTopic(
+  boardId: string,
+  content: NewTopicRequestDto,
+  token: string,
+): Promise<Response> {
+  return cc98Fetch(`/board/${boardId}/topic`, {
+    method: "POST",
+    headers: createJsonHeaders(token),
+    body: JSON.stringify(content),
+  });
+}
+
+export async function updateEditorPost(
+  postId: string,
+  content: NewPostRequestDto,
+): Promise<Response> {
+  const headers = await formAuthorizeHeader();
+  headers.append("Content-Type", "application/json");
+  return cc98Fetch(`/post/${postId}`, {
+    method: "PUT",
+    headers,
+    body: JSON.stringify(content),
+  });
+}
+
+export async function submitTopicReply(
+  topicId: number,
+  token: string,
+  body: NewPostRequestDto,
+): Promise<Response> {
+  return cc98Fetch(`/topic/${topicId}/post`, {
+    method: "POST",
+    headers: createJsonHeaders(token),
+    body: JSON.stringify(body),
+  });
+}
 
 export async function sendTopic(topicId) {
   try {

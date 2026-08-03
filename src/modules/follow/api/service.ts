@@ -5,6 +5,19 @@ import { cc98Fetch } from "@foundation/api/http";
 import { refreshUserInfo } from "@modules/session";
 import { getUsersInfo } from "@modules/user";
 import type { UserInfo } from "@modules/user";
+import { getAccessToken } from "@foundation/storage/web-storage";
+
+export async function updateFollowedUser(
+  userId: number,
+  method: "PUT" | "DELETE",
+): Promise<Response> {
+  const headers = new Headers();
+  headers.append("Authorization", getAccessToken());
+  return cc98Fetch(`/me/followee/${userId}`, {
+    method,
+    headers,
+  });
+}
 
 /**
  * 获取当前用户的粉丝信息。

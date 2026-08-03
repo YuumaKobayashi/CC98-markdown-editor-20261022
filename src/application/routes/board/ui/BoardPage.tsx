@@ -1,11 +1,10 @@
 import * as React from "react";
-import type { IBoard } from "@modules/board";
+import { getBoardInfo, type IBoard } from "@modules/board";
 import { useNavigate, useParams } from "react-router";
 
 import { getTagInfo } from "@modules/topic";
 
 import styles from "./BoardPage.module.scss";
-import { getBoardInfo } from "../api/service";
 import { BoardContent } from "./BoardContent";
 import { BoardHeader } from "./BoardHeader";
 

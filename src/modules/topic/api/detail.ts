@@ -11,6 +11,26 @@ import { getToken, formAuthorizeHeader } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
 import { getThisUserInfo } from "@modules/user";
 import { replaceHttpToHttps } from "@foundation/lib/text";
+import type { VoteInfo } from "../model/dto";
+
+export async function getTopicVote(topicId: number): Promise<VoteInfo> {
+  const headers = await formAuthorizeHeader();
+  const response = await cc98Fetch(`/topic/${topicId}/vote`, { headers });
+  return (await response.json()) as VoteInfo;
+}
+
+export async function submitTopicVote(
+  topicId: number,
+  items: number[],
+): Promise<Response> {
+  const headers = await formAuthorizeHeader();
+  headers.append("Content-Type", "application/json");
+  return cc98Fetch(`/topic/${topicId}/vote`, {
+    method: "POST",
+    headers,
+    body: JSON.stringify({ items }),
+  });
+}
 
 export async function getTopic(
   topicid: number,

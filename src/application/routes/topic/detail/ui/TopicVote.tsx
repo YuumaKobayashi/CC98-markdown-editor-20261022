@@ -8,8 +8,11 @@ import {
   isLogOn,
   selectCurrentUser,
 } from "@modules/session";
-import type { TopicInfo, VoteInfo } from "@modules/topic";
-import { submitTopicVote } from "../api/service";
+import {
+  submitTopicVote,
+  type TopicInfo,
+  type VoteInfo,
+} from "@modules/topic";
 import styles from "./TopicVote.module.scss";
 
 export interface TopicVoteProps {

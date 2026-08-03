@@ -19,6 +19,25 @@ import {
   toSystemNotificationViewModel,
 } from "../model/mappers";
 
+export async function sendAtNotification(
+  topicId: number | string,
+  postId: number | string,
+  atUsers: string[],
+  token: string,
+): Promise<Response> {
+  const headers = new Headers();
+  headers.append("Content-Type", "application/json");
+  headers.append("Authorization", token);
+  return cc98Fetch(
+    `/notification/at?topicid=${topicId}&postid=${postId}`,
+    {
+      method: "POST",
+      headers,
+      body: JSON.stringify(atUsers),
+    },
+  );
+}
+
 //获取特定类型的消息的总数，1为回复消息，2为@消息，3为系统消息
 //TODO:禁止magic number，改为枚举
 export type NotificationPageSection = 1 | 2 | 3;

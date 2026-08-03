@@ -18,7 +18,10 @@ import { PostContentType } from "@modules/post";
 import { getMyInfo } from "@modules/session";
 import { getUserWealth } from "@modules/wealth";
 import { getToken } from "@modules/session";
-import { noticeMessageShow } from "@modules/notification";
+import {
+  noticeMessageShow,
+  sendAtNotification,
+} from "@modules/notification";
 import {
   clearFailedReplyCache,
   clearLegacyTemporaryContent,
@@ -27,6 +30,7 @@ import {
   getReplyDraft,
   setFailedReplyCache,
   setReplyDraft,
+  submitTopicReply,
   uploadEvent,
 } from "@modules/posting";
 import { findIP } from "@modules/moderation";
@@ -34,7 +38,6 @@ import { atHanderler, quoteJudger } from "@foundation/lib/text";
 import {
   getAccessToken,
 } from "@foundation/storage/web-storage";
-import { sendAtNotification, submitTopicReply } from "../api/service";
 import {
   TopicIPData,
   TopicManagementDialog,
@@ -355,8 +358,8 @@ export const TopicReplyComposer = React.forwardRef(function TopicReplyComposer(
           await sendAtNotification(
             topicId,
             postId,
-            token,
             atUsers as string[],
+            token,
           );
         }
 
@@ -457,8 +460,8 @@ export const TopicReplyComposer = React.forwardRef(function TopicReplyComposer(
           await sendAtNotification(
             topicId,
             postId,
-            token,
             atUsers as string[],
+            token,
           );
         }
         clearLegacyTemporaryContent();

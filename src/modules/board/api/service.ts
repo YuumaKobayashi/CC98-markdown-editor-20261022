@@ -13,6 +13,7 @@ import type {
   BoardInfo,
   BoardSimpleInfo,
   BoardStopPostUserInfo,
+  BoardTagInfo,
   BoardTagInfoV2,
   StaticBoardInfo,
 } from "../model/dto";
@@ -143,7 +144,7 @@ export async function getBoardId(boardName: string) {
 }
 
 export async function getBoardInfo(
-  boardId: number,
+  boardId: number | string,
 ): Promise<BoardInfo | "not found" | "server error" | "unauthorized"> {
   const headers = await formAuthorizeHeader();
   const url = `/board/${boardId}`;
@@ -159,6 +160,16 @@ export async function getBoardInfo(
     return "unauthorized";
   }
   return data;
+}
+
+export async function getEditorBoard(
+  boardId: number | string,
+  currentToken?: string,
+): Promise<Response> {
+  const token = currentToken || (await getToken());
+  const headers = new Headers();
+  headers.append("Authorization", token);
+  return cc98Fetch(`/Board/${boardId}`, { headers });
 }
 
 export function isMaster(masters: readonly string[] | null | undefined): boolean {
@@ -194,6 +205,13 @@ export async function getBoardTagV2(
   return data;
 }
 
+export async function getBoardTags(boardId: number): Promise<BoardTagInfo[]> {
+  const headers = await formAuthorizeHeader();
+  const url = `/board/${boardId}/tag`;
+  const response = await cc98Fetch(url, { headers });
+  return (await response.json()) as BoardTagInfo[];
+}
+
 export async function getTpUsers(
   boardId: number,
   from: number,
@@ -204,4 +222,15 @@ export async function getTpUsers(
   headers.append("Content-Type", "application/json");
   const response = await cc98Fetch(url, { headers });
   return (await response.json()) as BoardStopPostUserInfo[];
+}
+
+export async function editBigPaper(
+  boardId: string,
+  content: string,
+): Promise<Response> {
+  const url = `/board/${boardId}/big-paper`;
+  const headers = await formAuthorizeHeader();
+  headers.append("Content-Type", "application/json");
+  const body = JSON.stringify({ content });
+  return await cc98Fetch(url, { method: "PUT", headers, body });
 }

@@ -1,12 +1,14 @@
 import * as React from "react";
 
-import type {
-  EditorVoteInfo,
-  EditorVoteSettingsProps,
-} from "../model/types";
+import type { EditorVoteInfo } from "../model/types";
 import styles from "./EditorVoteSettings.module.scss";
 
 //TODO: 后续移除兼容层
+
+export interface EditorVoteSettingsProps {
+  voteInfo: EditorVoteInfo;
+  onVoteInfoChange: (voteInfo: EditorVoteInfo) => void;
+}
 
 export function validateEditorVoteInfo(
   voteInfo: EditorVoteInfo

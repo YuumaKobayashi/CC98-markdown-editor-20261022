@@ -1,6 +1,8 @@
 import type {
+  BoardBestSaveTopicsInfo,
   RecommendedTopicInfo,
   SearchedTopicInfo,
+  TagTopicsInfo,
   TopicInfo,
 } from "../model/dto";
 import type { FocusTopic, RecommendedTopic } from "../model/view-model";
@@ -18,6 +20,93 @@ import { getBasicUsersInfo, getThisUserInfo } from "@modules/user";
 import { transerRecentTime, transerTimeToYearMonthDay } from "@foundation/lib/time";
 
 import { getTagNamebyId } from "./metadata";
+
+export type BoardTopicListError = "not found" | "server error";
+
+async function getBoardTopicListResponse(
+  url: string,
+): Promise<Response> {
+  const headers = await formAuthorizeHeader();
+  return cc98Fetch(url, { headers });
+}
+
+function getBoardTopicListError(
+  response: Response,
+): BoardTopicListError | undefined {
+  switch (response.status) {
+    case 404:
+      return "not found";
+    case 500:
+      return "server error";
+  }
+}
+
+export async function getNormalTopics(
+  boardId: number,
+  page: string,
+): Promise<TopicInfo[] | BoardTopicListError> {
+  const from = (parseInt(page) - 1) * 20;
+  const response = await getBoardTopicListResponse(
+    `/board/${boardId}/topic?from=${from}&size=20`,
+  );
+  const error = getBoardTopicListError(response);
+  return error || ((await response.json()) as TopicInfo[]);
+}
+
+export async function getBestTopics(
+  boardId: number,
+  page: string,
+): Promise<BoardBestSaveTopicsInfo | BoardTopicListError> {
+  const from = (parseInt(page) - 1) * 20;
+  const response = await getBoardTopicListResponse(
+    `/topic/best/board/${boardId}?from=${from}&size=20`,
+  );
+  const error = getBoardTopicListError(response);
+  return error || ((await response.json()) as BoardBestSaveTopicsInfo);
+}
+
+export async function getSaveTopics(
+  boardId: number,
+  page: string,
+): Promise<BoardBestSaveTopicsInfo | BoardTopicListError> {
+  const from = (parseInt(page) - 1) * 20;
+  const response = await getBoardTopicListResponse(
+    `/topic/save/board/${boardId}?from=${from}&size=20`,
+  );
+  const error = getBoardTopicListError(response);
+  return error || ((await response.json()) as BoardBestSaveTopicsInfo);
+}
+
+export async function getTagTopics(
+  boardId: number,
+  page: string,
+  tag1: number,
+  tag2: number,
+): Promise<TagTopicsInfo | BoardTopicListError> {
+  const from = (parseInt(page) - 1) * 20;
+  let query = "";
+  if (tag1 !== -1) {
+    query += `tag1=${tag1}&`;
+  }
+  if (tag2 !== -1) {
+    query += `tag2=${tag2}&`;
+  }
+  const response = await getBoardTopicListResponse(
+    `/topic/search/board/${boardId}/tag?${query}from=${from}&size=20`,
+  );
+  const error = getBoardTopicListError(response);
+  return error || ((await response.json()) as TagTopicsInfo);
+}
+
+export async function getTopTopics(
+  boardId: number,
+): Promise<TopicInfo[] | BoardTopicListError> {
+  const response = await getBoardTopicListResponse(
+    `/topic/toptopics?boardid=${boardId}`,
+  );
+  const error = getBoardTopicListError(response);
+  return error || ((await response.json()) as TopicInfo[]);
+}
 
 async function enrichFocusTopics(
   topics: readonly FocusTopicSource[],

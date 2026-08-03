@@ -1,4 +1,3 @@
-export * from "./api/service";
 export { BoardAnnouncement } from "./ui/BoardAnnouncement";
 export { BoardBatchManager } from "./ui/BoardBatchManager";
 export { BoardFooterActions } from "./ui/BoardFooterActions";

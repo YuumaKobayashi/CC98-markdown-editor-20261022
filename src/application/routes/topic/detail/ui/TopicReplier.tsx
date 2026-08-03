@@ -5,7 +5,7 @@ import { Link } from "react-router";
 import { updateUserInfo, UserGender } from "@modules/user";
 import { getPortraitConfig } from "@modules/user/api/service";
 import { getMyInfo } from "@modules/session";
-import { updateFollowedUser } from "../api/service";
+import { updateFollowedUser } from "@modules/follow";
 import styles from "./TopicReplier.module.scss";
 
 export interface TopicReplierProps {

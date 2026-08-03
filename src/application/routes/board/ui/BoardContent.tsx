@@ -1,18 +1,19 @@
 import * as React from "react";
-import type { IBoard } from "@modules/board";
-import { TopicBestState, type ITagGroup, type ITopic } from "@modules/topic";
-import { Pagination, Spin } from "antd";
-import { useNavigate } from "react-router";
-
-import styles from "./BoardContent.module.scss";
+import { getBoardTags, type IBoard } from "@modules/board";
 import {
   getBestTopics,
   getNormalTopics,
   getSaveTopics,
   getTagTopics,
-  getTags,
   getTopTopics,
-} from "../api/service";
+  TopicBestState,
+  type ITagGroup,
+  type ITopic,
+} from "@modules/topic";
+import { Pagination, Spin } from "antd";
+import { useNavigate } from "react-router";
+
+import styles from "./BoardContent.module.scss";
 import { BoardFooterActions } from "./BoardFooterActions";
 import { BoardTopicList } from "./BoardTopicList";
 import { BoardTopicToolbar } from "./BoardTopicToolbar";
@@ -32,8 +33,8 @@ export function BoardContent({ data, page }: BoardContentProps) {
   const [tag1, setTag1] = React.useState(-1);
   const [tag2, setTag2] = React.useState(-1);
 
-  const getBoardTags = async () => {
-    const nextTags = await getTags(data.id);
+  const loadBoardTags = async () => {
+    const nextTags = await getBoardTags(data.id);
     setTags(nextTags);
   };
 
@@ -98,7 +99,7 @@ export function BoardContent({ data, page }: BoardContentProps) {
     setTopicCount(data.topicCount);
     void loadTopTopics();
     void getTopics(page, TopicBestState.None, -1, -1);
-    void getBoardTags();
+    void loadBoardTags();
   }, []);
 
   const handlePageChange = (nextPage: number) => {

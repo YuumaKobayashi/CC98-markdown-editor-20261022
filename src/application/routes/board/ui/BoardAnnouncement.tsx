@@ -1,8 +1,7 @@
 import * as React from "react";
 import { unstable_batchedUpdates } from "react-dom";
 import { Button, Collapse, Divider, Input, Modal, Tag } from "antd";
-import type { IBoard } from "@modules/board";
-import { isMaster } from "@modules/board";
+import { editBigPaper, isMaster, type IBoard } from "@modules/board";
 import {
   followBoard,
   isFollowThisBoard,
@@ -10,7 +9,6 @@ import {
 } from "@modules/follow";
 import { UbbCodeOptions, UbbContainer } from "@modules/ubb";
 import styles from "./BoardAnnouncement.module.scss";
-import { editBigPaper } from "../api/service";
 
 const Panel = Collapse.Panel;
 const TextArea = Input.TextArea;

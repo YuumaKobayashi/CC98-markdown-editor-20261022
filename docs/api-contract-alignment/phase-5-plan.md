@@ -381,6 +381,8 @@ Recent Topic/Post 子组在本批先建立 Topic/Post 的 `dto.ts`、`view-model
 
 验收：Route 不再拥有可下沉的后端请求；GET 浏览器验收完成；所有写 request body 完成静态字段和值域对照，且不存在把 Form sentinel 声明为 wire 值的情况；停在人审点。
 
+执行结果见 [`p5.4-route-api-migration.md`](./p5.4-route-api-migration.md)：Board、Editor、Topic Detail 的 23 个 Route API 导出已按资源 owner 闭合为 21 个 module 入口；无约束泛型已拆分，重复 @ 通知入口已合并，Editor Form/Draft 与 Posting request DTO 已分开。只读浏览器烟雾、typecheck、production build、Route 请求边界、request sentinel、循环 SCC、chunk 和字节格式检查已完成；所有写接口均未执行。当前停在人审点，不 commit、不 push、不进入 P5.5。
+
 ### P5.5：错误合同迁移
 
 顺序：

@@ -4,7 +4,33 @@ import { toUserRecentPost } from "../model/mappers";
 import type { ResultWithCount } from "@foundation/api/contracts";
 import { getBoardName } from "@modules/board";
 import { formAuthorizeHeader } from "@modules/session";
+import { getToken } from "@modules/session";
 import { cc98Fetch } from "@foundation/api/http";
+
+export async function getShortTopic(
+  topicId: number,
+): Promise<PostInfo[] | "not found" | "server error"> {
+  const headers = await formAuthorizeHeader();
+  const url = `/topic/${topicId}/post?from=0&size=10`;
+  const response = await cc98Fetch(url, { headers });
+  switch (response.status) {
+    case 404:
+      return "not found";
+    case 500:
+      return "server error";
+  }
+  return (await response.json()) as PostInfo[];
+}
+
+export async function getOriginalEditorPost(
+  postId: number | string,
+  currentToken?: string,
+): Promise<Response> {
+  const token = currentToken || (await getToken());
+  const headers = new Headers();
+  headers.append("Authorization", token);
+  return cc98Fetch(`/post/${postId}/original`, { headers });
+}
 
 export interface CurrentUserRecentPostPage {
   posts: UserRecentPost[];

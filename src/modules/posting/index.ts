@@ -1,4 +1,9 @@
 export * from "./api/service";
+export type {
+  NewPostRequestDto,
+  NewTopicRequestDto,
+  NewVoteRequestDto,
+} from "./model/dto";
 export {
   clearEditorContentCache,
   clearFailedReplyCache,

@@ -5,13 +5,13 @@ import { Card, Tag } from "antd";
 import { UbbCodeOptions, UbbContainer } from "@modules/ubb";
 import { PostContentType } from "@modules/post";
 import {
+  getTopicVote,
   LotteryMode,
   LotteryTopicStatus,
   type TopicInfo,
   type VoteInfo,
 } from "@modules/topic";
 import { atUserMdUrl, atUserUbbUrl } from "@foundation/lib/text";
-import { getTopicVote } from "../api/service";
 import { TopicVote } from "./TopicVote";
 import detailStyles from "./TopicReplyContent.module.scss";
 

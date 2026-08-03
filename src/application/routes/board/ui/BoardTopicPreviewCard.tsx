@@ -1,5 +1,5 @@
 import * as React from "react";
-import type { IPost } from "@modules/post";
+import { getShortTopic, type IPost } from "@modules/post";
 import type { ITopic } from "@modules/topic";
 import { Spin } from "antd";
 import { Link } from "react-router";
@@ -7,7 +7,6 @@ import { Link } from "react-router";
 import { UbbCodeOptions, UbbContainer } from "@modules/ubb";
 
 import styles from "./BoardTopicPreviewCard.module.scss";
-import { getShortTopic } from "../api/service";
 
 interface BoardTopicPreviewCardProps {
   data: ITopic;

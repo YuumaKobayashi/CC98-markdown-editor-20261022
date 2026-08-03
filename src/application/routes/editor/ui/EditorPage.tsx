@@ -11,10 +11,15 @@ import {
   AnonymousState,
   getBoardName,
   getBoardTagV2,
+  getEditorBoard,
   isMaster,
 } from "@modules/board";
 import type { BoardInfo } from "@modules/board";
-import { PostContentType, type PostInfo } from "@modules/post";
+import {
+  getOriginalEditorPost,
+  PostContentType,
+  type PostInfo,
+} from "@modules/post";
 import {
   getTagIdbyName,
   getTagNamebyId,
@@ -25,20 +30,19 @@ import {
 import { getMyInfo } from "@modules/session";
 import { getUserWealth } from "@modules/wealth";
 import { getToken } from "@modules/session";
+import { sendAtNotification as sendAtNotificationRequest } from "@modules/notification";
 import {
   clearEditorContentCache,
+  createEditorTopic,
   getEditorContentCache,
   setEditorContentCache,
+  type NewPostRequestDto,
+  type NewTopicRequestDto,
+  type NewVoteRequestDto,
+  updateEditorPost,
   uploadEvent,
 } from "@modules/posting";
 import { atHanderler } from "@foundation/lib/text";
-import {
-  createEditorTopic,
-  getEditorBoard,
-  getOriginalEditorPost,
-  sendEditorAtNotification,
-  updateEditorPost,
-} from "../api/service";
 import type { EditorTagInfo, EditorVoteInfo } from "../model/types";
 import styles from "./EditorPage.module.scss";
 import { EditorBreadcrumb } from "./EditorBreadcrumb";
@@ -275,47 +279,38 @@ export function EditorPage(): React.ReactElement {
   const resolveTopicContent = async (
     content: string,
     contentType: PostContentType,
-    isAnonymous: boolean
-  ) => {
+    isAnonymous: boolean,
+  ): Promise<NewTopicRequestDto | null> => {
+    //TODO: logic check
     const tag1Id = await getTagIdbyName(state.tag1);
     const tag2Id = await getTagIdbyName(state.tag2);
-    let result: any;
-    if (tag1Id && !tag2Id) {
-      result = {
-        content,
-        contentType,
-        title: state.title,
-        tag1: tag1Id,
-        type: state.type,
-        notifyPoster: state.notice,
-        isAnonymous,
-        clientType: 1,
-      };
-    } else if (tag2Id) {
-      result = {
-        content,
-        contentType,
-        title: state.title,
-        tag1: tag1Id,
-        tag2: tag2Id,
-        type: state.type,
-        notifyPoster: state.notice,
-        isAnonymous,
-        clientType: 1,
-      };
-    } else {
-      result = {
-        content,
-        contentType,
-        title: state.title,
-        type: state.type,
-        notifyPoster: state.notice,
-        isAnonymous,
-        clientType: 1,
-      };
+    if (
+      (state.tag1 && tag1Id === false) ||
+      (state.tag2 && tag2Id === false) ||
+      (tag2Id !== false && tag1Id === false)
+    ) {
+      alert("标签查询失败，请重新选择标签");
+      return null;
     }
+    const result = {
+      content,
+      contentType,
+      title: state.title,
+      type: state.type,
+      notifyPoster: state.notice,
+      isAnonymous,
+      clientType: 1,
+      ...(tag1Id === false ? {} : { tag1: tag1Id }),
+      ...(tag2Id === false ? {} : { tag2: tag2Id }),
+    };
     if (mode === "postVoteTopic") {
-      result = { ...result, isVote: true, voteInfo: state.voteInfo };
+      const voteInfo: NewVoteRequestDto = {
+        voteItems: state.voteInfo.voteItems,
+        expiredDays: state.voteInfo.expiredDays,
+        maxVoteCount: state.voteInfo.maxVoteCount,
+        needVote: state.voteInfo.needVote,
+      };
+      return { ...result, isVote: true, voteInfo };
     }
     return result;
   };
@@ -329,7 +324,7 @@ export function EditorPage(): React.ReactElement {
     if (!atUsers) return;
     const tempData = await getTopicContent(Number(topicId), 1);
     const postId = tempData[0].id;
-    await sendEditorAtNotification(
+    await sendAtNotificationRequest(
       topicId,
       postId,
       atUsers as string[],
@@ -375,6 +370,7 @@ export function EditorPage(): React.ReactElement {
         PostContentType.Markdown,
         finalAnonymous
       );
+      if (!content) return;
       const token = await getToken();
       const response = await createEditorTopic(id, content, token);
       if (response.status === 402) alert("请输入内容");
@@ -408,6 +404,7 @@ export function EditorPage(): React.ReactElement {
       PostContentType.Ubb,
       finalAnonymous
     );
+    if (!content) return;
     const token = await getToken();
     const response = await createEditorTopic(id, content, token);
     if (response.status === 402) alert("请输入内容");
@@ -433,33 +430,17 @@ export function EditorPage(): React.ReactElement {
 
   const resolveEditContent = async (
     content: string,
-    contentType: PostContentType
-  ) => {
-    let tag1Id = await getTagIdbyName(state.tag1);
+    contentType: PostContentType,
+  ): Promise<NewPostRequestDto | null> => {
+    const tag1Id = await getTagIdbyName(state.tag1);
     const tag2Id = await getTagIdbyName(state.tag2);
-    if (tag1Id && !tag2Id) {
-      if (contentType === PostContentType.Markdown) {
-        tag1Id = await getTagIdbyName(state.tag1);
-      }
-      return {
-        content,
-        contentType,
-        title: state.title,
-        tag1: tag1Id,
-        type: state.type,
-        notifyPoster: state.notice,
-      };
-    }
-    if (tag2Id) {
-      return {
-        content,
-        contentType,
-        title: state.title,
-        tag1: tag1Id,
-        tag2: tag2Id,
-        type: state.type,
-        notifyPoster: state.notice,
-      };
+    if (
+      (state.tag1 && tag1Id === false) ||
+      (state.tag2 && tag2Id === false) ||
+      (tag2Id !== false && tag1Id === false)
+    ) {
+      alert("标签查询失败，请重新选择标签");
+      return null;
     }
     return {
       content,
@@ -467,6 +448,8 @@ export function EditorPage(): React.ReactElement {
       title: state.title,
       type: state.type,
       notifyPoster: state.notice,
+      ...(tag1Id === false ? {} : { tag1: tag1Id }),
+      ...(tag2Id === false ? {} : { tag2: tag2Id }),
     };
   };
 
@@ -488,6 +471,7 @@ export function EditorPage(): React.ReactElement {
       state.content,
       PostContentType.Ubb
     );
+    if (!content) return;
     await getToken();
     await updateEditorPost(id, content);
     navigateAfterEdit();
@@ -502,6 +486,7 @@ export function EditorPage(): React.ReactElement {
       state.mdeState,
       PostContentType.Markdown
     );
+    if (!content) return;
     await getToken();
     await updateEditorPost(id, content);
     navigateAfterEdit();

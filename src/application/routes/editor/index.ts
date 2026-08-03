@@ -7,8 +7,8 @@ export {
   EditorVoteSettings,
   validateEditorVoteInfo,
 } from "./ui/EditorVoteSettings";
+export type { EditorVoteSettingsProps } from "./ui/EditorVoteSettings";
 export type {
   EditorTagInfo,
   EditorVoteInfo,
-  EditorVoteSettingsProps,
 } from "./model/types";
