@@ -3,7 +3,8 @@ import {
   readLocalUserInfoCache,
 } from "../cache/public-user-cache";
 import { getUserInfo } from "./get-user-info";
-import { UserGender } from "../model/enums";
+import { UserGender } from "../model/dto";
+import { getToken } from "@modules/session/api/session";
 import type {
   UserLookupFallback,
   UserLookupResult,
@@ -12,9 +13,37 @@ import { cc98Fetch } from "@foundation/api/http";
 import type {
   PortraitConfigDto,
   UserBasicInfo,
+  ChangeUserInfo,
   UserInfo,
   UserTitleDto,
 } from "../model/dto";
+
+export async function updateCurrentUserPortrait(
+  avatarUrl: string,
+): Promise<Response> {
+  const headers = new Headers();
+  headers.append("Content-Type", "application/json");
+  headers.append("Authorization", await getToken());
+  return cc98Fetch("/me/portrait", {
+    method: "PUT",
+    headers,
+    body: JSON.stringify(avatarUrl),
+  });
+}
+
+export async function updateCurrentUserProfile(
+  userInfo: ChangeUserInfo,
+): Promise<Response> {
+  const token = await getToken();
+  const headers = new Headers();
+  headers.append("Authorization", token);
+  headers.append("Content-Type", "application/json");
+  return cc98Fetch("/me", {
+    method: "PUT",
+    headers,
+    body: JSON.stringify(userInfo),
+  });
+}
 
 export async function getAllUserTitles(): Promise<UserTitleDto[]> {
   const response = await cc98Fetch("/config/global/all-user-title");

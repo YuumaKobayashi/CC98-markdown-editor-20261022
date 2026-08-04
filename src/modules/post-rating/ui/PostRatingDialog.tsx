@@ -1,13 +1,13 @@
 import * as React from "react";
 import { Form, Menu, Modal, Select, Tag } from "antd";
 import type { FormInstance } from "antd";
-import { RatingType } from "@modules/post/model/enums";
+import { RatingType } from "@modules/post/model/dto";
 import {
   getJudgeTags,
   negativeJudge,
   positiveJudge,
 } from "../api/service";
-import type { RatingReason } from "../model/types";
+import type { RatingReason } from "../model/dto";
 
 const FormItem = Form.Item;
 const Option = Select.Option;

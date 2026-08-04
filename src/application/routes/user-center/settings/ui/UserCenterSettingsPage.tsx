@@ -6,8 +6,7 @@ import { invalidateUserInfoCache } from "@modules/user/cache/public-user-cache";
 import { refreshCurrentUserInfo } from "@modules/session/api/refresh-user-info";
 import { selectCurrentUser } from "@modules/session/model/selectors";
 import type { ChangeUserInfo } from "@modules/user/model/dto";
-import { getToken } from "@modules/session/api/session";
-import { cc98Fetch } from "@foundation/api/http";
+import { updateCurrentUserProfile } from "@modules/user/api/service";
 
 import {
   createEditableUserInfo,
@@ -98,15 +97,7 @@ export function UserCenterSettingsPage() {
         throw new Error("请检查生日是否正确");
       }
 
-      const token = await getToken();
-      const headers = new Headers();
-      headers.append("Authorization", token);
-      headers.append("Content-Type", "application/json");
-      const response = await cc98Fetch("/me", {
-        method: "PUT",
-        headers,
-        body: JSON.stringify(newInfo),
-      });
+      const response = await updateCurrentUserProfile(newInfo);
 
       if (response.status !== 200) {
         throw new Error(response.status.toString());

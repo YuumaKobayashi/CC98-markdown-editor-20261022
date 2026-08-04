@@ -2,7 +2,7 @@ import { getMyInfo } from "@modules/session/api/session";
 import { refreshUserInfo } from "@modules/session/api/refresh-user-info";
 import { formAuthorizeHeader } from "@modules/session/api/session";
 import { cc98Fetch } from "@foundation/api/http";
-import type { RewardDailyRecordInfo, TransferWealthInfo } from "../model/types";
+import type { RewardDailyRecordInfo, TransferWealthInfo } from "../model/dto";
 
 export async function queryWealth(
   boardId: number,

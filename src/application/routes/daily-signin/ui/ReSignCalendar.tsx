@@ -8,15 +8,14 @@ import {
   RightOutlined,
 } from "@ant-design/icons";
 import {
-  formAuthorizeHeader,
   getMyInfo,
 } from "@modules/session/api/session";
 import { refreshUserInfo } from "@modules/session/api/refresh-user-info";
 import {
   getServerNow,
   getSigninInMonth,
+  makeUpMissedSignin,
 } from "@modules/daily-signin/api/service";
-import { cc98Fetch } from "@foundation/api/http";
 import type { UserSignInDailyInfo } from "@modules/daily-signin/model/dto";
 import styles from "./ReSignCalendar.module.scss";
 
@@ -75,11 +74,7 @@ const ResignCalendar: React.FC<ResignCalendarProps> = (props) => {
    * @returns {Promise<any|null>}
    */
   const useSignInCard = async () => {
-    const headers = await formAuthorizeHeader();
-    const response = await cc98Fetch("/me/make-up-missed-signin", {
-      method: "POST",
-      headers: headers,
-    });
+    const response = await makeUpMissedSignin();
     if (!response.ok) {
       console.error("Failed to use signin card:", response.statusText);
       return null;

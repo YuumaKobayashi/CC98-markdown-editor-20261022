@@ -8,8 +8,8 @@ import {
   getBoards,
 } from "@modules/board/api/service";
 import { getTopicInfo } from "@modules/topic/api/metadata";
-import { TopicState } from "@modules/topic/model/enums";
-import { UserState } from "@modules/user/model/enums";
+import { TopicState } from "@modules/topic/model/dto";
+import { UserState } from "@modules/user/model/dto";
 import { getMyInfo } from "@modules/session/api/session";
 import { getFavState } from "@modules/favorite-topic/api/service";
 import { type NoticeSetting } from "@modules/notification/model/types";

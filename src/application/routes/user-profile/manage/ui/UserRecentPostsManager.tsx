@@ -3,8 +3,7 @@ import { Link } from "react-router";
 
 import { UserAreaLoading } from "@application/layouts/user-area";
 import { getBoardName } from "@modules/board/api/service";
-import { getToken } from "@modules/session/api/session";
-import { cc98Fetch } from "@foundation/api/http";
+import { getManagedUserPosts } from "@modules/post/api/service";
 import styles from "./UserRecentPostsManager.module.scss";
 
 interface UserRecentPostsManagerProps {
@@ -45,11 +44,6 @@ interface ManagedPost {
   boardName: string;
 }
 
-interface ManagedPostResponse {
-  postInfos: Omit<ManagedPost, "boardName">[];
-  count: number;
-}
-
 /**
  * 显示用户X日内所有帖子的组件
  */
@@ -70,14 +64,7 @@ export function UserRecentPostsManager({
     setIsLoading(true);
 
     try {
-      const token = await getToken();
-      const headers = new Headers();
-      headers.append("Authorization", token);
-      const response = await cc98Fetch(
-        `/User/${id}/post?days=${days}&from=${targetFrom}&size=10`,
-        { headers }
-      );
-      const data = (await response.json()) as ManagedPostResponse;
+      const data = await getManagedUserPosts(id, days, targetFrom);
       const loadedPosts = await Promise.all(
         data.postInfos.map(async (item) => ({
           ...item,

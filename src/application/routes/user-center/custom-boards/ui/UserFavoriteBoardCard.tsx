@@ -1,9 +1,8 @@
 import * as React from "react";
 import { Link } from "react-router";
 
-import { getToken } from "@modules/session/api/session";
+import { updateFollowedBoard } from "@modules/follow/api/service";
 import type { UserFavoritesBoardInfo } from "@modules/board/model/types";
-import { cc98Fetch } from "@foundation/api/http";
 import styles from "./UserFavoriteBoardCard.module.scss";
 
 interface UserFavoriteBoardCardProps {
@@ -26,10 +25,7 @@ export function UserFavoriteBoardCard({ board }: UserFavoriteBoardCardProps) {
   const [followState, setFollowState] = React.useState(initialFollowState);
 
   const requestFollowChange = async (method: "DELETE" | "PUT") => {
-    const token = await getToken();
-    const headers = new Headers();
-    headers.append("Authorization", token);
-    return cc98Fetch(`/me/custom-board/${board.id}`, { method, headers });
+    return updateFollowedBoard(board.id, method);
   };
 
   const unfollow = async () => {

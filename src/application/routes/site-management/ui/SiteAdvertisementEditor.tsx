@@ -6,7 +6,7 @@ import moment from "moment";
 import {
   ForumIndexColumnType,
   ForumIndexColumnVisibility,
-} from "@modules/site-content/model/enums";
+} from "@modules/site-content/model/dto";
 import {
   getIndexColumnInfo,
   putIndexColumnInfo,

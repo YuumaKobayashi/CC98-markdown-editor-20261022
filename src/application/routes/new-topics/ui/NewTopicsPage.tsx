@@ -17,7 +17,7 @@ import { setUserTopicViewMode } from "@modules/user-preference/api/service";
 import { isLogOn } from "@modules/session/api/session";
 import type { FocusTopic } from "@modules/topic/model/view-model";
 import type { CurrentUser } from "@modules/session/model/types";
-import { UserTopicViewMode } from "@modules/user/model/enums";
+import { UserTopicViewMode } from "@modules/user/model/dto";
 import { CollectionPageShell } from "@application/layouts/collection";
 import { pDebounce } from "@foundation/lib/async";
 import { isBottom } from "@foundation/lib/dom";

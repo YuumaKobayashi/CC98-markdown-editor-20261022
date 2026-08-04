@@ -4,12 +4,12 @@ import { Card, Tag } from "antd";
 
 import { UbbCodeOptions } from "@modules/ubb/engine/Core";
 import { UbbContainer } from "@modules/ubb/UbbContainer";
-import { PostContentType } from "@modules/post/model/enums";
+import { PostContentType } from "@modules/post/model/dto";
 import { getTopicVote } from "@modules/topic/api/detail";
 import {
   LotteryMode,
   LotteryTopicStatus,
-} from "@modules/topic/model/enums";
+} from "@modules/topic/model/dto";
 import {
   type TopicInfo,
   type VoteInfo,

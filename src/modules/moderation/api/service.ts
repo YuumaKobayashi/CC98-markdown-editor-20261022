@@ -1,13 +1,51 @@
-import { formAuthorizeHeader } from "@modules/session/api/session";
+import {
+  formAuthorizeHeader,
+  getToken,
+} from "@modules/session/api/session";
 import { cc98Fetch } from "@foundation/api/http";
-import { PostUserOperationType } from "@modules/post/model/enums";
-import type { TopicTopState } from "@modules/topic/model/enums";
+import { PostUserOperationType } from "@modules/post/model/dto";
+import type { TopicTopState } from "@modules/topic/model/dto";
 import type { BoardEventInfo } from "@modules/board/model/dto";
 import type {
-  ModerationResult,
+  ForumUserOperationRequest,
   PostWithIpInfo,
   TopicManageHistory,
-} from "../model/types";
+} from "../model/dto";
+
+export type ModerationResult =
+  | "ok"
+  | "unauthorized"
+  | "not found"
+  | "server error";
+
+export async function deleteRecentUserContent(
+  userId: number,
+  item: "post" | "topic",
+  days: number,
+): Promise<Response> {
+  const token = await getToken();
+  const headers = new Headers();
+  headers.append("Authorization", token);
+  return cc98Fetch(`/user/${userId}/${item}?days=${days}`, {
+    method: "DELETE",
+    headers,
+  });
+}
+
+export async function updateUserOperation(
+  userId: number,
+  operation: ForumUserOperationRequest,
+): Promise<Response> {
+  const token = await getToken();
+  const headers = new Headers();
+  headers.append("Authorization", token);
+  headers.append("Content-Type", "application/json");
+  return cc98Fetch(`/user/${userId}/operation`, {
+    method: "PUT",
+    headers,
+    body: JSON.stringify(operation),
+  });
+}
 
 export async function multiDelete(
   topicIds: number[],

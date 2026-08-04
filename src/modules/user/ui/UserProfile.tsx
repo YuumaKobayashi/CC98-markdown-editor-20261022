@@ -8,7 +8,7 @@ import { Link } from "react-router";
 
 import { UbbCodeOptions } from "@modules/ubb/engine/Core";
 import { UbbContainer } from "@modules/ubb/UbbContainer";
-import { UserGender } from "../model/enums";
+import { UserGender } from "../model/dto";
 import type { UserInfo } from "../model/dto";
 import { isoTime2LocalTime } from "@foundation/lib/time-zone";
 import styles from "./UserProfile.module.scss";

@@ -1,9 +1,67 @@
-import type {
-  LikeState,
-  PostAwardType,
-  PostContentType,
-  PostState,
-} from "./enums";
+export enum PostState {
+  Normal = 0,
+  Deleted = 2,
+}
+
+export enum PostContentType {
+  Ubb = 0,
+  Markdown = 1,
+}
+
+export enum LikeState {
+  None = 0,
+  Like = 1,
+  Dislike = 2,
+}
+
+export enum PostUserOperationType {
+  Bonus = 0,
+  Punishment = 1,
+}
+
+export enum RatingType {
+  Add = 1,
+  Subtract = 2,
+}
+
+export enum PostAwardType {
+  OldVersion = 0,
+  Bonus = 1,
+  Punishment = 2,
+  UserRating = 3,
+}
+
+export interface ManagedPostInfo {
+  /**
+   * 版面ID
+   */
+  boardId: number;
+  /**
+   * 回复内容
+   */
+  content: string;
+  /**
+   * 回复楼层
+   */
+  floor: number;
+  /**
+   * IP地址
+   */
+  ip: string;
+  /**
+   * 回复时间
+   */
+  time: string;
+  /**
+   * 主题id
+   */
+  topicId: number;
+}
+
+export interface ManagedPostResponse {
+  postInfos: ManagedPostInfo[];
+  count: number;
+}
 
 export interface PostAward {
   /**
@@ -159,8 +217,8 @@ export interface NewPostInfo {
   tag1?: number;
   tag2?: number;
   allowedViewers?: string | null;
-  allowedViewerState?: import("@modules/topic/model/enums").TopicAllowedViewerState;
-  type?: import("@modules/topic/model/enums").TopicType;
+  allowedViewerState?: import("@modules/topic/model/dto").TopicAllowedViewerState;
+  type?: import("@modules/topic/model/dto").TopicType;
   notifyPoster?: boolean;
   isAnonymous?: boolean;
   notifyAllReplier?: boolean;

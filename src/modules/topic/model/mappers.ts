@@ -51,7 +51,7 @@ export interface FocusTopicSource {
   tag1?: number;
   tag2?: number;
   mediaContent: unknown;
-  contentType: import("./enums").TopicContentType;
+  contentType: import("./dto").TopicContentType;
 }
 
 export interface FocusTopicEnrichment {

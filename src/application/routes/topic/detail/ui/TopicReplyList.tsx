@@ -6,7 +6,7 @@ import $ from "jquery";
 import { isMaster } from "@modules/board/api/service";
 import { type BoardInfo } from "@modules/board/model/dto";
 import { FloorSize } from "@modules/post/ui/FloorSize";
-import { type PostContentType } from "@modules/post/model/enums";
+import { type PostContentType } from "@modules/post/model/dto";
 import { type PostViewModel } from "@modules/post/model/view-model";
 import {
   getCurUserTopicContent,

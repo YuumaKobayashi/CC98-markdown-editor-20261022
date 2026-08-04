@@ -1,31 +1,12 @@
 import * as React from "react";
 
-import { getToken } from "@modules/session/api/session";
+import { updateUserOperation } from "@modules/moderation/api/service";
+import type { ForumUserOperationRequest } from "@modules/moderation/model/dto";
 import {
   ForumUserOperationType,
   UserState,
-} from "@modules/user/model/enums";
-import { cc98Fetch } from "@foundation/api/http";
+} from "@modules/user/model/dto";
 import styles from "./UserPunishmentForm.module.scss";
-
-interface ForumUserOperation {
-  /**
-   * 1=锁定，2=屏蔽，3=tp
-   */
-  PunishmentType?: UserState.Locked | UserState.Shielded | UserState.StopPost;
-  /**
-   * 0=取消，1=执行
-   */
-  OperationType?: ForumUserOperationType;
-  /**
-   * -1表示永久，其余7<Days<1000
-   */
-  Days?: number;
-  /**
-   * 理由
-   */
-  Reason?: string;
-}
 
 interface UserPunishmentFormProps {
   /**
@@ -38,11 +19,11 @@ interface UserPunishmentFormProps {
  * 对用户进行TP、禁言等操作的组件
  */
 export function UserPunishmentForm({ id }: UserPunishmentFormProps) {
-  const [operation, setOperation] = React.useState<ForumUserOperation>({});
+  const [operation, setOperation] = React.useState<ForumUserOperationRequest>({});
   const [info, setInfo] = React.useState("");
 
   const handleOperationChange = (
-    key: keyof ForumUserOperation,
+    key: keyof ForumUserOperationRequest,
     value: string | number
   ) => {
     setOperation((previousOperation) => ({
@@ -69,19 +50,11 @@ export function UserPunishmentForm({ id }: UserPunishmentFormProps) {
         throw new Error("不合法的TP天数");
       }
 
-      const token = await getToken();
-      const headers = new Headers();
-      headers.append("Authorization", token);
-      headers.append("Content-Type", "application/json");
-      const response = await cc98Fetch(`/user/${id}/operation`, {
-        method: "PUT",
-        headers,
-        body: JSON.stringify({
-          ...operation,
-          OperationType: isCancel
-            ? ForumUserOperationType.Cancel
-            : ForumUserOperationType.Do,
-        }),
+      const response = await updateUserOperation(id, {
+        ...operation,
+        OperationType: isCancel
+          ? ForumUserOperationType.Cancel
+          : ForumUserOperationType.Do,
       });
 
       if (!response.ok) {

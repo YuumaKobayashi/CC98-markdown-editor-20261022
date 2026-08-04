@@ -1,8 +1,8 @@
-import type { PostContentType } from "@modules/post/model/enums";
+import type { PostContentType } from "@modules/post/model/dto";
 import type {
   TopicAllowedViewerState,
   TopicType,
-} from "@modules/topic/model/enums";
+} from "@modules/topic/model/dto";
 
 /** 创建投票主题时提交给主后端的投票设置。 */
 export interface NewVoteRequestDto {

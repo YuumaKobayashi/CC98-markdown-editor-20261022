@@ -3,8 +3,16 @@ import { cc98Fetch } from "@foundation/api/http";
 import {
   PostUserOperationType,
   RatingType,
-} from "@modules/post/model/enums";
-import type { PostOperationResult, RatingReason } from "../model/types";
+} from "@modules/post/model/dto";
+import type { RatingReason } from "../model/dto";
+
+export type PostOperationResult =
+  | "ok"
+  | "limited"
+  | "wrong input"
+  | "unauthorized"
+  | "not found"
+  | "server error";
 
 export async function awardWealth(
   reason: string,

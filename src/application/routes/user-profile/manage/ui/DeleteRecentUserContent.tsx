@@ -1,7 +1,6 @@
 import * as React from "react";
 
-import { getToken } from "@modules/session/api/session";
-import { cc98Fetch } from "@foundation/api/http";
+import { deleteRecentUserContent } from "@modules/moderation/api/service";
 import styles from "./DeleteRecentUserContent.module.scss";
 
 interface DeleteRecentUserContentProps {
@@ -32,16 +31,7 @@ export function DeleteRecentUserContent({
         throw new Error("请检查日期");
       }
 
-      const token = await getToken();
-      const headers = new Headers();
-      headers.append("Authorization", token);
-      const response = await cc98Fetch(
-        `/user/${id}/${item}?days=${days}`,
-        {
-          method: "DELETE",
-          headers,
-        }
-      );
+      const response = await deleteRecentUserContent(id, item, days);
       const deletedCount = await response.json();
       setInfo(`删掉了${deletedCount}条${item}`);
     } catch (error) {

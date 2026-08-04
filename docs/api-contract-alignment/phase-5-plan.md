@@ -389,7 +389,7 @@ Recent Topic/Post 子组在本批先建立 Topic/Post 的 `dto.ts`、`view-model
 
 放弃记录（2026-08-04）：本批曾从干净的 `dev20260716@837740ba` 开始实施，但人工审核认为全仓统一错误合同过重、调用链过绕，且主后端不存在可供前端稳定映射的统一错误范式，实际需要精细错误分支的页面也很少，因此决定放弃。全部未提交实现已撤回到 `837740ba`；新增的 `foundation/api/errors.ts` 和 P5.5 验收报告已删除，`npm run typecheck` 通过，撤回后工作树为 clean。以下步骤与验收文字仅作为历史提案保留，不再执行。
 
-P5.6 已于 2026-08-04 获得人工授权并执行；实现与验收结果见 [`p5.6-public-surface-cleanup.md`](./p5.6-public-surface-cleanup.md)。当前停在人审点，未 stage、未 commit、未 push。
+P5.6 已于 2026-08-04 获得人工授权并执行；实现与验收结果见 [`p5.6-public-surface-cleanup.md`](./p5.6-public-surface-cleanup.md)，实现与报告已提交为 `40ae5438`。
 
 顺序：
 
@@ -408,7 +408,11 @@ P5.6 已于 2026-08-04 获得人工授权并执行；实现与验收结果见 [`
 
 ### P5.6：兼容出口和根 barrel 清理
 
-执行结果见 [`p5.6-public-surface-cleanup.md`](./p5.6-public-surface-cleanup.md)：跨 module 消费者已从根 barrel 迁到明确的 `api/model/ui/cache/...` owner，19 个根 `index.ts` 与 UBB Editor 的根 `index.tsx` 在引用归零后删除；五个登记旧别名及无消费者兼容 facade 已删除。typecheck、production build、循环 SCC、首屏静态 chunk 闭包、字节格式和 32 个只读浏览器路由样本均已检查；未执行任何保存、标已读、发帖、签到或管理写操作。当前停在人审点，未 stage、未 commit、未 push。
+执行结果见 [`p5.6-public-surface-cleanup.md`](./p5.6-public-surface-cleanup.md)：跨 module 消费者已从根 barrel 迁到明确的 `api/model/ui/cache/...` owner，19 个根 `index.ts` 与 UBB Editor 的根 `index.tsx` 在引用归零后删除；五个登记旧别名及无消费者兼容 facade 已删除。typecheck、production build、循环 SCC、首屏静态 chunk 闭包、字节格式和 32 个只读浏览器路由样本均已检查；未执行任何保存、标已读、发帖、签到或管理写操作。实现与报告已提交为 `40ae5438`。
+
+### Phase 5 总收口补充
+
+首次总收口验收发现 `api/` 外请求、独立 `model/enums.ts`、少量 wire 类型仍位于 `model/types.ts`，以及 P5.6 文档状态未反映已提交事实。补充实现与验收见 [`phase-5-closure.md`](./phase-5-closure.md)：请求已下沉到 owner API，enum 与剩余 wire DTO 已完成归位，静态门禁、生产构建和只读浏览器回归通过。当前停在人审点，未 stage、未 commit、未 push。
 
 - 删除无消费者的根出口。
 - 在引用闭包归零后删除 `IUser/ITopic/IPost/IBoard/ISignIn`。

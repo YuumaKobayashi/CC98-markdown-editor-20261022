@@ -49,7 +49,8 @@ export async function sendAtNotification(
 //TODO:禁止magic number，改为枚举
 export type NotificationPageSection = 1 | 2 | 3;
 
-export async function getUnreadCount(headers: Headers): Promise<UnreadCount> {
+export async function getUnreadCount(): Promise<UnreadCount> {
+  const headers = await formAuthorizeHeader();
   const response = await cc98Fetch("/me/unread-count", { headers });
   return (await response.json()) as UnreadCount;
 }

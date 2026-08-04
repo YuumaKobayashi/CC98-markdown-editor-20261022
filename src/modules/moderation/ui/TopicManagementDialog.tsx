@@ -8,7 +8,7 @@ import {
   TopicBestState,
   TopicState,
   TopicTopState,
-} from "@modules/topic/model/enums";
+} from "@modules/topic/model/dto";
 import {
   addBoardTopTopic,
   cancelBestTopic,

@@ -11,7 +11,7 @@ import { UbbContainer } from "@modules/ubb/UbbContainer";
 import {
   UserGender,
   UserState,
-} from "@modules/user/model/enums";
+} from "@modules/user/model/dto";
 import { type UserInfo } from "@modules/user/model/dto";
 import { isoTime2LocalTime } from "@foundation/lib/time-zone";
 import styles from "./UserProfileDetails.module.scss";

@@ -7,7 +7,7 @@ import { useNavigate, useParams } from "react-router";
 import { UbbEditor } from "@modules/ubb-editor/UbbEditor";
 import { MarkdownEditor } from "@foundation/integrations/markdown-editor";
 import { reportApplicationError } from "@application/providers/application-error";
-import { AnonymousState } from "@modules/board/model/enums";
+import { AnonymousState } from "@modules/board/model/dto";
 import {
   getBoardName,
   getBoardTagV2,
@@ -16,7 +16,7 @@ import {
 } from "@modules/board/api/service";
 import type { BoardInfo } from "@modules/board/model/dto";
 import { getOriginalEditorPost } from "@modules/post/api/service";
-import { PostContentType } from "@modules/post/model/enums";
+import { PostContentType } from "@modules/post/model/dto";
 import { type PostInfo } from "@modules/post/model/dto";
 import {
   getTagIdbyName,
@@ -24,7 +24,7 @@ import {
   getTopicInfo,
 } from "@modules/topic/api/metadata";
 import { getTopicContent } from "@modules/topic/api/detail";
-import { TopicType } from "@modules/topic/model/enums";
+import { TopicType } from "@modules/topic/model/dto";
 import { getMyInfo } from "@modules/session/api/session";
 import { getUserWealth } from "@modules/wealth/api/service";
 import { getToken } from "@modules/session/api/session";

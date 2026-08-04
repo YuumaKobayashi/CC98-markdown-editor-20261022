@@ -3,7 +3,7 @@ import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
 import { Link } from "react-router";
 
 import { updateUserInfo } from "@modules/user/api/service";
-import { UserGender } from "@modules/user/model/enums";
+import { UserGender } from "@modules/user/model/dto";
 import { getPortraitConfig } from "@modules/user/api/service";
 import { getMyInfo } from "@modules/session/api/session";
 import { updateFollowedUser } from "@modules/follow/api/service";

@@ -1,11 +1,11 @@
 import * as React from "react";
 
 import { useAppDispatch, useAppSelector } from "@application/store";
-import { getToken } from "@modules/session/api/session";
 import { refreshCurrentUserInfo } from "@modules/session/api/refresh-user-info";
 import { selectCurrentUser } from "@modules/session/model/selectors";
 import { invalidateUserInfoCache } from "@modules/user/cache/public-user-cache";
-import { cc98Fetch } from "@foundation/api/http";
+import { updateCurrentUserPortrait } from "@modules/user/api/service";
+import { uploadPortraitFile } from "@modules/upload/api/service";
 import styles from "./UserCenterAvatarSettings.module.scss";
 
 //TODO：逻辑独立与优化
@@ -373,14 +373,7 @@ export function UserCenterAvatarSettings() {
   const changeAvatar = async (avatarUrl: string) => {
     try {
       patchState({ isLoading: true });
-      const headers = new Headers();
-      headers.append("Content-Type", "application/json");
-      headers.append("Authorization", await getToken());
-      const response = await cc98Fetch("/me/portrait", {
-        method: "PUT",
-        headers,
-        body: JSON.stringify(avatarUrl),
-      });
+      const response = await updateCurrentUserPortrait(avatarUrl);
       if (response.status !== 200) {
         throw new Error();
       }
@@ -452,18 +445,8 @@ export function UserCenterAvatarSettings() {
           );
 
         try {
-          const headers = new Headers();
-          headers.append("Authorization", await getToken());
-          const formdata = new FormData();
-          formdata.append("files", file, file.name);
-          formdata.append("contentType", "multipart/form-data");
-
           // 第一步：上传裁剪后的头像文件。
-          const response = await cc98Fetch("/file/portrait", {
-            method: "POST",
-            headers,
-            body: formdata,
-          });
+          const response = await uploadPortraitFile(file);
           const data: string[] = await response.json();
           if (response.status === 200 && data.length !== 0) {
             // 第二步：使用文件接口返回的地址修改当前用户头像。

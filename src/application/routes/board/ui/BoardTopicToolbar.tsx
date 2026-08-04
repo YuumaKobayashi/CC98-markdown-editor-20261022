@@ -1,5 +1,5 @@
 import * as React from "react";
-import { TopicBestState } from "@modules/topic/model/enums";
+import { TopicBestState } from "@modules/topic/model/dto";
 import { type ITagGroup } from "@modules/topic/model/dto";
 import { Select } from "antd";
 

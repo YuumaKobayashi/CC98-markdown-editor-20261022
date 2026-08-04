@@ -11,7 +11,7 @@ import {
   toRecommendedTopic,
   type FocusTopicSource,
 } from "../model/mappers";
-import { TopicSortMode } from "../model/enums";
+import { TopicSortMode } from "../model/dto";
 import {
   formAuthorizeHeader,
   isLogOn,

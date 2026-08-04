@@ -1,8 +1,20 @@
-import type { TopicType } from "@modules/topic/model/enums";
-import type {
-  ForumIndexColumnType,
-  ForumIndexColumnVisibility,
-} from "./enums";
+import type { TopicType } from "@modules/topic/model/dto";
+
+export enum ForumIndexColumnType {
+  RecommendationReading = 1,
+  RecommendationFunction = 2,
+  SchoolNews = 3,
+  Advertisement = 4,
+  ManualTopHotTopic = 5,
+  ManualBottomHotTopic = 6,
+  SpecialOffer = 7,
+}
+
+export enum ForumIndexColumnVisibility {
+  Always = 0,
+  OnlyLogOn = 1,
+  OnlyNotLogOn = 2,
+}
 
 export interface ForumIndexColumnInfo {
   id: number;
@@ -157,9 +169,9 @@ export interface IMainpageAutoContent {
   /** 帖子标题 */
   title: string;
   /** 帖子状态 */
-  state: import("@modules/topic/model/enums").TopicState;
+  state: import("@modules/topic/model/dto").TopicState;
   /** 帖子类型 */
-  type: import("@modules/topic/model/enums").TopicType;
+  type: import("@modules/topic/model/dto").TopicType;
   /** 是否仅限内部版面 */
   isInternalOnly: boolean;
   /** 是否是投票帖 */

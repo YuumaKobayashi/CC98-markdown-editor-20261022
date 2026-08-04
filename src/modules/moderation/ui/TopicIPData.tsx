@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Collapse, Modal } from "antd";
-import type { PostSimpleInfo, PostWithIpInfo } from "../model/types";
+import type { PostSimpleInfo, PostWithIpInfo } from "../model/dto";
 
 const Panel = Collapse.Panel;
 

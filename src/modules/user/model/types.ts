@@ -1,4 +1,4 @@
-import type { UserGender } from "./enums";
+import type { UserGender } from "./dto";
 import type { UserBasicInfo, UserInfo } from "./dto";
 
 export type {

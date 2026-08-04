@@ -1,4 +1,4 @@
-import type { PostInfo } from "../model/dto";
+import type { ManagedPostResponse, PostInfo } from "../model/dto";
 import type { UserRecentPost } from "../model/view-model";
 import { toUserRecentPost } from "../model/mappers";
 import type { ResultWithCount } from "@foundation/api/contracts";
@@ -30,6 +30,21 @@ export async function getOriginalEditorPost(
   const headers = new Headers();
   headers.append("Authorization", token);
   return cc98Fetch(`/post/${postId}/original`, { headers });
+}
+
+export async function getManagedUserPosts(
+  userId: number,
+  days: number,
+  from: number,
+): Promise<ManagedPostResponse> {
+  const token = await getToken();
+  const headers = new Headers();
+  headers.append("Authorization", token);
+  const response = await cc98Fetch(
+    `/User/${userId}/post?days=${days}&from=${from}&size=10`,
+    { headers },
+  );
+  return (await response.json()) as ManagedPostResponse;
 }
 
 export interface CurrentUserRecentPostPage {

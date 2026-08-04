@@ -2,7 +2,7 @@ import * as React from "react";
 import { Link } from "react-router";
 
 import { getMyInfo } from "@modules/session/api/session";
-import { UserState } from "@modules/user/model/enums";
+import { UserState } from "@modules/user/model/dto";
 import { HomeAdvertisementCarousel } from "@application/routes/home/advertisement";
 import styles from "./BoardActionsAndAdvertisement.module.scss";
 

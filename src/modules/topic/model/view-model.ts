@@ -1,4 +1,4 @@
-import type { TopicContentType } from "./enums";
+import type { TopicContentType } from "./dto";
 
 /**
 * 媒体主题帖里的媒体摘要信息

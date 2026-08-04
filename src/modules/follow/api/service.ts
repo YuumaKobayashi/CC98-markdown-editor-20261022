@@ -1,4 +1,4 @@
-import { getMyInfo } from "@modules/session/api/session";
+import { getMyInfo, getToken } from "@modules/session/api/session";
 import { removeStorage } from "@foundation/storage/web-storage";
 import { formAuthorizeHeader } from "@modules/session/api/session";
 import { cc98Fetch } from "@foundation/api/http";
@@ -17,6 +17,16 @@ export async function updateFollowedUser(
     method,
     headers,
   });
+}
+
+export async function updateFollowedBoard(
+  boardId: number,
+  method: "DELETE" | "PUT",
+): Promise<Response> {
+  const token = await getToken();
+  const headers = new Headers();
+  headers.append("Authorization", token);
+  return cc98Fetch(`/me/custom-board/${boardId}`, { method, headers });
 }
 
 /**

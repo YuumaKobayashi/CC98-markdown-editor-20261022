@@ -8,7 +8,7 @@ import {
   getTagTopics,
   getTopTopics,
 } from "@modules/topic/api/list-search";
-import { TopicBestState } from "@modules/topic/model/enums";
+import { TopicBestState } from "@modules/topic/model/dto";
 import {
   type ITagGroup,
   type TopicInfo,

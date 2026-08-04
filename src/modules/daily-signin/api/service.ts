@@ -38,6 +38,14 @@ export async function getSigninInMonth(
   return (await response.json()) as UserSignInDailyInfo[];
 }
 
+export async function makeUpMissedSignin(): Promise<Response> {
+  const headers = await formAuthorizeHeader();
+  return cc98Fetch("/me/make-up-missed-signin", {
+    method: "POST",
+    headers,
+  });
+}
+
 export async function signin(content: string): Promise<void> {
   const headers = await formAuthorizeHeader();
   headers.append("Content-Type", "application/json");

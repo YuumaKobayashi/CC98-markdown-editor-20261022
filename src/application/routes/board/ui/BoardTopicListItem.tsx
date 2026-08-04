@@ -3,7 +3,7 @@ import {
   TopicBestState,
   TopicState,
   TopicTopState,
-} from "@modules/topic/model/enums";
+} from "@modules/topic/model/dto";
 import { type TopicInfo } from "@modules/topic/model/dto";
 import { Popover, Tag, Tooltip } from "antd";
 import moment from "moment";

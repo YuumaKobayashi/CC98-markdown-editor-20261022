@@ -4,7 +4,7 @@ import moment from "moment";
 import { getManageHistory } from "../api/service";
 import type { BoardEvent } from "@modules/board/model/dto";
 import type { TopicInfo } from "@modules/topic/model/dto";
-import type { TopicManageHistory } from "../model/types";
+import type { TopicManageHistory } from "../model/dto";
 
 interface TopicManagementHistoryDialogProps {
   visible: boolean;

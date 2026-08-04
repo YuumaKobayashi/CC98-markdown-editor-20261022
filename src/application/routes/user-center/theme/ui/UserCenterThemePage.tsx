@@ -1,11 +1,13 @@
 import * as React from "react";
 
 import { useAppDispatch, useAppSelector } from "@application/store";
-import { formAuthorizeHeader } from "@modules/session/api/session";
 import { selectCurrentUser } from "@modules/session/model/selectors";
 import { updateCurrentUser } from "@modules/session/model/session-actions";
-import type { ThemeSetting } from "@modules/user-preference/model/types";
-import { cc98Fetch } from "@foundation/api/http";
+import type { ThemeSetting } from "@modules/user-preference/model/dto";
+import {
+  updateTheme,
+  updateThemeSetting,
+} from "@modules/user-preference/api/service";
 import {
   changeTheme,
   getRealThemeNumber,
@@ -27,13 +29,7 @@ export function UserCenterThemePage() {
     setting: ThemeSetting
   ): Promise<ThemeSettingResult> => {
     try {
-      const headers = await formAuthorizeHeader();
-      headers.append("Content-Type", "application/json");
-      const response = await cc98Fetch("me/theme-setting", {
-        headers,
-        method: "PUT",
-        body: JSON.stringify(setting),
-      });
+      const response = await updateThemeSetting(setting);
       if (!response.ok) {
         throw new Error(response.statusText);
       }
@@ -58,11 +54,7 @@ export function UserCenterThemePage() {
 
   const handleSubmit = async (theme: number) => {
     try {
-      const headers = await formAuthorizeHeader();
-      const response = await cc98Fetch(`/me/theme?id=${theme}`, {
-        headers,
-        method: "PUT",
-      });
+      const response = await updateTheme(theme);
       if (!response.ok) {
         throw new Error(response.statusText);
       }

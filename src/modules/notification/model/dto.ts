@@ -1,5 +1,11 @@
 import type { PostBasicInfo } from "@modules/post/model/dto";
-import type { NotificationType } from "./enums";
+
+export enum NotificationType {
+  AllUser = 0,
+  System = 1,
+  Reply = 2,
+  At = 3,
+}
 
 export interface UnreadCount {
   systemCount: number;

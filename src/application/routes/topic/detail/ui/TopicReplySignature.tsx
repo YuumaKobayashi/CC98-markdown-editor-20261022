@@ -5,7 +5,7 @@ import moment from "moment";
 import $ from "jquery";
 
 import { isMaster } from "@modules/board/api/service";
-import { LikeState } from "@modules/post/model/enums";
+import { LikeState } from "@modules/post/model/dto";
 import { getMyInfo } from "@modules/session/api/session";
 import {
   dislike,

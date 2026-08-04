@@ -1,6 +1,5 @@
 import * as ConfigType from './IConfig'
-import { cc98Fetch } from '@foundation/api/http'
-import { formAuthorizeHeader } from '@modules/session/api/session';
+import { uploadEditorFiles } from '@modules/upload/api/service'
 export const buttonConfig = require('./buttonConfig.json') as (
     ConfigType.IUbbTextSegmentConfig | 
     ConfigType.IUbbExtendSegmentConfig |
@@ -95,16 +94,7 @@ export function createColorPicker(handler: (color) => void, replacerClassName: s
 
 export async function uploadFiles(files: File[], shouldCompassImage?: boolean) {
     if(!files.length) throw new Error('未找到文件，请尝试点击按钮上传')
-    const url = !shouldCompassImage ? '/file?compressImage=false' : '/file';
-    const myHeaders = await formAuthorizeHeader()
-    let formdata = new FormData()
-    formdata.append('contentType', "multipart/form-data")
-    files.map(item => formdata.append('files', item, item.name))
-    let res = await cc98Fetch(url, {
-        method: 'POST',
-        headers: myHeaders,
-        body: formdata
-    })
+    let res = await uploadEditorFiles(files, shouldCompassImage)
     let data: string[] = await res.json();
     if (res.ok) {
         return data

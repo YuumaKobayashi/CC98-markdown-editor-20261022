@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 
-import { TopicContentType } from "../model/enums";
+import { TopicContentType } from "../model/dto";
 import type { FocusTopic } from "../model/view-model";
 
 import styles from "./TopicCard.module.scss";
