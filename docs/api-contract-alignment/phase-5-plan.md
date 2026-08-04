@@ -1,4 +1,4 @@
-# Phase 5：API 边界、类型分层与错误合同收口计划
+# Phase 5：API 边界与类型分层计划
 
 计划日期：2026-08-03
 
@@ -11,7 +11,7 @@
 3. 所有后端网络请求集中到对应 module 的 `api/`；UI、model 和 Redux thunk 不直接拼 URL、Header、method 或 body。
 4. 松开“跨 module 所有内容必须从根 `index.ts` 导出”的约束，允许稳定的 `api/model/ui` 子路径。
 5. 使用真实浏览器响应核验不确定的 wire 字段，不用后端声明或单次样本盲目收窄类型。
-6. 移除前端 API 函数中的裸字符串错误哨兵，建立简单、统一的错误合同。
+6. （已放弃）原计划移除前端 API 函数中的裸字符串错误哨兵并建立统一错误合同；放弃记录见 P5.5。
 
 ## 2. 当前基线
 
@@ -140,7 +140,7 @@ src/
    ├─ api/
    │  ├─ http.ts                        # cc98Fetch 等通用 HTTP 基础设施
    │  ├─ contracts.ts                   # 通用 wire wrapper
-   │  └─ errors.ts                      # ApiFailure 与统一技术错误转换
+   │  └─ errors.ts                      # P5.5 原提案，已放弃，不创建
    ├─ config/                           # 启动配置
    ├─ integrations/                     # 第三方库适配器
    ├─ lib/                              # 通用纯函数
@@ -185,7 +185,7 @@ src/
 
 - API 函数接收 primitive、DTO、`File/Blob` 等数据，不接收 React state setter、DOM event 或 AntD FormInstance。
 - 页面继续拥有交互顺序和 UI state；不能因为集中请求就把整个组件工作流搬进 API。
-- 最终 module API 不向 Route/UI 返回原始 `Response`：API owner 负责 status、JSON 读取和 DTO/`void`/业务 result 输出，页面只处理业务数据与页面交互。P5.4 等价迁移期间可以临时保留 `Promise<Response>`，在 P5.5 错误合同迁移时闭合，避免同批改变行为。
+- module API 是否向 Route/UI 返回原始 `Response` 暂时保持 P5.4 结束时的现状。原计划在 P5.5 统一闭合 status、JSON 读取和错误转换，现已放弃；后续只有具体 endpoint 确有需求并单独评审时，才做局部调整。
 - `foundation/config/runtime-config.ts` 的启动配置加载属于 Foundation 特例，不强行迁入业务 module。
 - `/static/portrait.json` 是共享用户展示资源，由 User API 提供统一读取入口。
 
@@ -213,6 +213,8 @@ import { UserProfileAvatar } from "@modules/user/ui/UserProfileAvatar";
 - 每批检查循环依赖、初始 JS 和 lazy chunk；历史 root barrel 曾造成 57,891 字节初始 JS 增长，不能只依赖 tree-shaking 假设。
 
 ## 6. 错误合同
+
+状态：已放弃（2026-08-04）。本节以下内容仅保留为 P5.5 的历史设计提案，不再作为当前实现规则、迁移要求或 Phase 5 完成条件。放弃原因是主后端没有统一、稳定的错误响应范式，前端实际需要区分错误的场景较少；全局 `ApiFailure`、通用转换 helper 和 discriminated result 会引入与收益不匹配的复杂度，并可能把不稳定的后端行为误建模为稳定合同。后续错误处理按具体 endpoint 和真实 UI 需求局部处理，不预设全仓统一抽象。
 
 ### 6.1 普通 API 失败
 
@@ -324,7 +326,7 @@ export type RatePostResult =
 
 执行结果见 [`p5.0-baseline.md`](./p5.0-baseline.md)：规则与三份清单已冻结；内建浏览器已从 `http://127.0.0.1:25174/` 完成公开、登录后只读基线，并扩展核验 6 个版面的标签响应。除获准登录外未执行业务写请求；主题详情失败黑框作为既有 CSS 缺陷留待其他批次。当前停在人审点，不自动提交、推送或开始 P5.1。
 
-当前宽类型、真实 nullable、ViewModel/Form 混层、service 错误哨兵与 `api/` 外 JSON 边界的核验入口见 [`p5.0-wide-api-types.md`](./p5.0-wide-api-types.md)。该清单是 P5.2-P5.5 的实施输入，不代表这些宽类型已经清理或所有 endpoint 已完成运行时 schema 验证。
+当前宽类型、真实 nullable、ViewModel/Form 混层、service 错误哨兵与 `api/` 外 JSON 边界的核验入口见 [`p5.0-wide-api-types.md`](./p5.0-wide-api-types.md)。该清单原定作为 P5.2-P5.5 的实施输入；P5.5 已放弃，其中错误合同相关条目不再进入本阶段实施，不代表其他宽类型已经清理或所有 endpoint 已完成运行时 schema 验证。
 
 验收：清单闭合；浏览器未执行项和原因明确；停在人审点。
 
@@ -375,7 +377,7 @@ Recent Topic/Post 子组在本批先建立 Topic/Post 的 `dto.ts`、`view-model
 - 拆分 Board、Editor、Topic Detail 的 Route 私有 API。
 - 按 endpoint 的资源 owner 迁移，不按原目录整体搬运。
 - 先处理 GET；写函数只做静态迁移，不发送请求。
-- 等价迁移阶段允许 Route 私有 API 的 `Promise<Response>` 暂时随函数进入 module，页面现有 status/JSON 行为保持不变；不得在 P5.4 借机同时改错误协议。最终 typed return 在 P5.5 闭合。
+- 等价迁移阶段允许 Route 私有 API 的 `Promise<Response>` 随函数进入 module，页面现有 status/JSON 行为保持不变；不得在 P5.4 借机同时改错误协议。原计划由 P5.5 统一闭合 typed return，现因 P5.5 放弃而保留 P5.4 现状。
 - Editor 同步分开编辑 Form/Draft 与 Request DTO：标签查询失败、空输入和组件临时值留在 Form 或显式失败分支，只有后端接受的字段和值可以进入 `JSON.stringify`。
 - 将 `EditorVoteSettingsProps` 移回 `EditorVoteSettings.tsx`；Editor Route model 只保留页面 Form/Draft、Route 参数和页面状态，不继续导出组件 Props。
 
@@ -383,7 +385,11 @@ Recent Topic/Post 子组在本批先建立 Topic/Post 的 `dto.ts`、`view-model
 
 执行结果见 [`p5.4-route-api-migration.md`](./p5.4-route-api-migration.md)：Board、Editor、Topic Detail 的 23 个 Route API 导出已按资源 owner 闭合为 21 个 module 入口；无约束泛型已拆分，重复 @ 通知入口已合并，Editor Form/Draft 与 Posting request DTO 已分开。只读浏览器烟雾、typecheck、production build、Route 请求边界、request sentinel、循环 SCC、chunk 和字节格式检查已完成；所有写接口均未执行。当前停在人审点，不 commit、不 push、不进入 P5.5。
 
-### P5.5：错误合同迁移
+### P5.5：错误合同迁移（已放弃）
+
+放弃记录（2026-08-04）：本批曾从干净的 `dev20260716@837740ba` 开始实施，但人工审核认为全仓统一错误合同过重、调用链过绕，且主后端不存在可供前端稳定映射的统一错误范式，实际需要精细错误分支的页面也很少，因此决定放弃。全部未提交实现已撤回到 `837740ba`；新增的 `foundation/api/errors.ts` 和 P5.5 验收报告已删除，`npm run typecheck` 通过，撤回后工作树为 clean。以下步骤与验收文字仅作为历史提案保留，不再执行。
+
+P5.6 未开始；放弃 P5.5 不自动授权进入 P5.6，后续阶段是否继续或重新规划须另行人工评审。
 
 顺序：
 
@@ -424,7 +430,7 @@ Recent Topic/Post 子组在本批先建立 Topic/Post 的 `dto.ts`、`view-model
 - mapper 审核必须证明不修改输入 DTO，参数以 `Readonly<TDto>` / `readonly TDto[]` 表达只读边界，补充查询已在 mapper 外完成，并覆盖正常、空数据、匿名和失败 fallback。
 - 对本批 owner 扫描 DTO/ViewModel 转换是否全部进入唯一 `model/mappers.ts`，并扫描 `model` 与根出口中残留的 `*Props`；例外必须说明它实际不是组件 Props 并完成重命名。
 - 检查 API 文件按业务职责组织：普通 module 不因 HTTP method 或 endpoint 数量机械拆文件，超大 module 的子文件具有明确业务闭包，迁移后不存在同一能力分散在 `get-*` / `update-*` 文件的形式拆分。
-- P5.5 额外检查 `foundation/api/errors.ts`、所有可达 `Promise<Response>`、裸错误字符串、吞异常返回空值/空数组的分支，以及 Route/UI 对 `message/status` 的逻辑判断。
+- P5.5 已放弃；原定对 `foundation/api/errors.ts`、可达 `Promise<Response>`、裸错误字符串及 Route/UI 错误分支的额外检查不再执行，也不作为其他 P5.x 子批的隐含门禁。
 - 浏览器类型取证默认只执行 GET/read-only；只有页面不会自动触发签到、已读或偏好写入且符合第 7.1 节授权边界时才执行。无法安全实测不是收窄依据，必须保留类型并记录未执行原因。
 - 浏览器项目必须区分：已执行、未执行、因环境不可用而阻塞。
 - 机械检查不能替代真实 API、权限和交互验收。
@@ -444,10 +450,10 @@ Recent Topic/Post 子组在本批先建立 Topic/Post 的 `dto.ts`、`view-model
 - enum 不再作为全局语法类别单列。
 - 可达后端请求均位于 Foundation 或对应 module API owner。
 - Route/UI/model 不再直接拼后端请求。
-- P5.5 完成后，可达 module API 不再向 Route/UI 导出原始 `Response`；status、JSON 读取和错误转换由 API owner 完成。
+- P5.5 已放弃；“可达 module API 不再向 Route/UI 导出原始 `Response`”不再作为 Phase 5 完成条件，保留 P5.4 已确认的现有响应处理行为。
 - 根 `index.ts` 不再是唯一跨 module 入口，且没有因此引入循环依赖或 chunk 回退。
 - 每个可达 wire/request DTO 均完成 `missing=[]`、`extra=[]`、`incompatible=[]` 字段闭包；未达到空集合的项目必须列出 endpoint、消费者、风险和后续批次，不得笼统宣布类型对齐完成。
 - 不确定 wire 字段均已检查 Controller/action 返回逻辑、投影、C# nullable 和 JSON 序列化行为；可安全访问的只读 endpoint 具有真实浏览器响应证据，无法安全实测的字段明确保留宽类型及原因。后端真实 nullable、字段缺失、空数组或空对象不作为类型债务擅自改写。
 - wire/request DTO 中不存在无后端依据的 `number | string`、`false` 或 `any`；`unknown` 只允许保留在真实动态/未验证 JSON 边界，并附来源、消费者和移除条件，不在 P5 内通过断言强转。
-- `foundation/api/errors.ts` 统一拥有 `ApiFailure` 和技术错误转换；可达 API 不再返回裸错误字符串、原始 `Response` 或以空值吞掉技术失败，预期业务拒绝使用紧邻 operation 的 discriminated result。
+- P5.5 已放弃；不创建 `foundation/api/errors.ts`，不要求全仓采用 `ApiFailure`、统一技术错误转换或 discriminated result。后续仅按具体 endpoint 的真实响应和 UI 需求局部处理错误。
 - 所有写请求均有逐次批准记录，且实际目标严格限制在版面 `245`。
