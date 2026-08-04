@@ -4,17 +4,18 @@ import { Link, useLocation, useNavigate } from "react-router";
 import moment from "moment";
 import $ from "jquery";
 
-import { isMaster } from "@modules/board";
-import { LikeState } from "@modules/post";
-import { getMyInfo } from "@modules/session";
+import { isMaster } from "@modules/board/api/service";
+import { LikeState } from "@modules/post/model/enums";
+import { getMyInfo } from "@modules/session/api/session";
 import {
   dislike,
   like,
   refreshLikeState,
-} from "@modules/reaction";
-import { noticeMessageShow } from "@modules/notification";
+} from "@modules/reaction/api/service";
+import { noticeMessageShow } from "@foundation/ui/feedback/NoticeMessage";
 import { NoticeMessage } from "@foundation/ui/feedback";
-import { UbbCodeOptions, UbbContainer } from "@modules/ubb";
+import { UbbCodeOptions } from "@modules/ubb/engine/Core";
+import { UbbContainer } from "@modules/ubb/UbbContainer";
 import { QuoteContext, QuoteTraceContext } from "../model/quote-context";
 import styles from "./TopicReplySignature.module.scss";
 

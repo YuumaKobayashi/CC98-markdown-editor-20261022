@@ -1,4 +1,4 @@
-import type { TopicType } from "@modules/topic";
+import type { TopicType } from "@modules/topic/model/enums";
 import type {
   ForumIndexColumnType,
   ForumIndexColumnVisibility,
@@ -157,9 +157,9 @@ export interface IMainpageAutoContent {
   /** 帖子标题 */
   title: string;
   /** 帖子状态 */
-  state: import("@modules/topic").TopicState;
+  state: import("@modules/topic/model/enums").TopicState;
   /** 帖子类型 */
-  type: import("@modules/topic").TopicType;
+  type: import("@modules/topic/model/enums").TopicType;
   /** 是否仅限内部版面 */
   isInternalOnly: boolean;
   /** 是否是投票帖 */

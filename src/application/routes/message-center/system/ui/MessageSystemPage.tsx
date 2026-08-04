@@ -2,9 +2,10 @@ import * as React from "react";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router";
 
-import { MessageSystembox, type SystemNotificationViewModel } from "@modules/notification";
-import { getMessageSystem } from "@modules/notification";
-import { getTotalPage } from "@modules/notification";
+import { MessageSystembox } from "@modules/notification/ui/MessageSystembox";
+import { type SystemNotificationViewModel } from "@modules/notification/model/view-model";
+import { getMessageSystem } from "@modules/notification/api/service";
+import { getTotalPage } from "@modules/notification/api/service";
 import { DocumentTitle } from "@foundation/ui/document-title";
 import styles from "./MessageSystemPage.module.scss";
 import { Pager } from "@foundation/ui/pagination";

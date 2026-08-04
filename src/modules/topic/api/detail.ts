@@ -1,15 +1,15 @@
-import type {
-  PostViewModel,
-  SpecificUserPostInfo,
-} from "@modules/post";
+import type { PostViewModel } from "@modules/post/model/view-model";
 import type { PostInfo } from "@modules/post/model/dto";
 import { toPostViewModel } from "@modules/post/model/mappers";
-import { getUserInfo } from "@modules/user";
-import { getUsersInfo } from "@modules/user";
-import type { UserInfo } from "@modules/user";
-import { getToken, formAuthorizeHeader } from "@modules/session";
+import { getUserInfo } from "@modules/user/api/get-user-info";
+import { getUsersInfo } from "@modules/user/api/get-users-info";
+import type { UserInfo } from "@modules/user/model/dto";
+import {
+  getToken,
+  formAuthorizeHeader,
+} from "@modules/session/api/session";
 import { cc98Fetch } from "@foundation/api/http";
-import { getThisUserInfo } from "@modules/user";
+import { getThisUserInfo } from "@modules/user/api/service";
 import { replaceHttpToHttps } from "@foundation/lib/text";
 import type { VoteInfo } from "../model/dto";
 
@@ -202,7 +202,7 @@ export async function getCurUserTopic(topicid: number, userId: number) {
       `/post/topic/user?topicid=${topicid}&userid=${userId}&from=0&size=1`,
       { headers }
     );
-    const data = (await response.json()) as SpecificUserPostInfo[];
+    const data = (await response.json()) as PostInfo[];
     const userMesResponse = await cc98Fetch(
       `/user/name/${encodeURIComponent(data[0].userName)}`
     );
@@ -231,7 +231,7 @@ export async function getCurUserTopicContent(
       `/Post/topic/user?topicid=${topicid}&userId=${userId}&from=${start}&size=10`,
       { headers }
     );
-    const content = (await topic.json()) as SpecificUserPostInfo[];
+    const content = (await topic.json()) as PostInfo[];
 
     const post: PostViewModel[] = [];
     let topicNumberInPage: number = content.length;
@@ -277,7 +277,7 @@ export async function getCurUserTotalReplyPage(
       { headers }
     );
     const replyCountJson =
-      (await replyCountResponse.json()) as SpecificUserPostInfo[];
+      (await replyCountResponse.json()) as PostInfo[];
     const replyCount = replyCountJson[0].count;
     return replyCount % 10 === 0
       ? replyCount / 10
@@ -297,7 +297,7 @@ export async function getTraceTopicsCount(
       `/post/topic/specific-user?topicid=${topicId}&postid=${postId}&from=0&size=1`,
       { headers }
     );
-    const data = (await response.json()) as SpecificUserPostInfo[];
+    const data = (await response.json()) as PostInfo[];
     return data[0].count % 10 === 0
       ? data[0].count / 10
       : (data[0].count - (data[0].count % 10)) / 10 + 1;
@@ -318,7 +318,7 @@ export async function getTraceTopics(
       `/post/topic/specific-user?topicid=${topicId}&postid=${postId}&from=${start}&size=10`,
       { headers }
     );
-    const rawPosts = (await response.json()) as SpecificUserPostInfo[];
+    const rawPosts = (await response.json()) as PostInfo[];
     let data: PostViewModel[];
     if (rawPosts[0] && rawPosts[0].isAnonymous) {
       let purl = "/static/images/心灵头像.gif";
@@ -361,7 +361,7 @@ export async function getAnonymousTraceTopics(
       `/post/topic/anonymous/user?topicid=${topicId}&postid=${postId}&from=${start}&size=10`,
       { headers }
     );
-    const rawPosts = (await response.json()) as SpecificUserPostInfo[];
+    const rawPosts = (await response.json()) as PostInfo[];
     let purl = "/static/images/心灵头像.gif";
     const anonymousUserName = `匿名${rawPosts[0].userName.toUpperCase()}`;
     const userMesJson = {

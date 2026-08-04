@@ -1,16 +1,19 @@
 import * as React from "react";
-import type { IBoard } from "@modules/board";
-import type { ITopic } from "@modules/topic";
+import type { BoardInfo } from "@modules/board/model/types";
+import type { TopicInfo } from "@modules/topic/model/dto";
 import { CloseCircleOutlined } from "@ant-design/icons";
 import { Button, Modal, notification, Select, Transfer } from "antd";
-import { multiDelete, multiLock } from "@modules/moderation";
+import {
+  multiDelete,
+  multiLock,
+} from "@modules/moderation/api/service";
 
 
 const Option = Select.Option;
 
 interface BoardBatchManagerProps {
-  data: IBoard;
-  list: ITopic[];
+  data: BoardInfo;
+  list: TopicInfo[];
   visible: boolean;
   onClose: () => void;
 }

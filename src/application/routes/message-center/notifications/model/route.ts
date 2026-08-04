@@ -1,7 +1,5 @@
-import {
-  bindNotificationResponseNavigation,
-  type ReadAllNotificationSection,
-} from "@modules/notification";
+import { bindNotificationResponseNavigation } from "@modules/notification/lib/notification-navigation";
+import { type ReadAllNotificationSection } from "@modules/notification/api/service";
 import { navigate } from "@application/router/navigation";
 
 export function bindMessageNotificationNavigation(): void {

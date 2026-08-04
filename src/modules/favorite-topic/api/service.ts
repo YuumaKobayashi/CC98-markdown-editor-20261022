@@ -1,6 +1,6 @@
-import { formAuthorizeHeader } from "@modules/session";
+import { formAuthorizeHeader } from "@modules/session/api/session";
 import { cc98Fetch } from "@foundation/api/http";
-import type { UserRecentTopic } from "@modules/topic";
+import type { UserRecentTopic } from "@modules/topic/model/view-model";
 import type { ResultWithCount } from "@foundation/api/contracts";
 import {
   FavoriteTopicOrder,

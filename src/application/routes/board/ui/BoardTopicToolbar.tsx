@@ -1,5 +1,6 @@
 import * as React from "react";
-import { TopicBestState, type ITagGroup } from "@modules/topic";
+import { TopicBestState } from "@modules/topic/model/enums";
+import { type ITagGroup } from "@modules/topic/model/dto";
 import { Select } from "antd";
 
 import styles from "./BoardTopicToolbar.module.scss";

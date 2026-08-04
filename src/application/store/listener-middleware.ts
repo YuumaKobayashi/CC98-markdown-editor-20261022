@@ -3,8 +3,8 @@ import {
   TypedStartListening,
 } from "@reduxjs/toolkit";
 
-import { currentUserReceived } from "@modules/session";
-import { writeUserInfoCache } from "@modules/user";
+import { currentUserReceived } from "@modules/session/model/session-slice";
+import { writeUserInfoCache } from "@modules/user/cache/public-user-cache";
 import type { AppDispatch, RootState } from "./store";
 
 /**

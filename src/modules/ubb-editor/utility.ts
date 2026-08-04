@@ -1,6 +1,6 @@
 import * as ConfigType from './IConfig'
 import { cc98Fetch } from '@foundation/api/http'
-import { formAuthorizeHeader } from '@modules/session'
+import { formAuthorizeHeader } from '@modules/session/api/session';
 export const buttonConfig = require('./buttonConfig.json') as (
     ConfigType.IUbbTextSegmentConfig | 
     ConfigType.IUbbExtendSegmentConfig |

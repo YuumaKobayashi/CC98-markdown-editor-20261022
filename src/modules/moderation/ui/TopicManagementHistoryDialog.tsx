@@ -2,8 +2,8 @@ import * as React from "react";
 import { List, Modal, Spin } from "antd";
 import moment from "moment";
 import { getManageHistory } from "../api/service";
-import type { BoardEvent } from "@modules/board";
-import type { TopicInfo } from "@modules/topic";
+import type { BoardEvent } from "@modules/board/model/dto";
+import type { TopicInfo } from "@modules/topic/model/dto";
 import type { TopicManageHistory } from "../model/types";
 
 interface TopicManagementHistoryDialogProps {

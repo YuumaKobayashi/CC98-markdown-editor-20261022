@@ -1,10 +1,10 @@
-import { getMyInfo } from "@modules/session";
+import { getMyInfo } from "@modules/session/api/session";
 import { removeStorage } from "@foundation/storage/web-storage";
-import { formAuthorizeHeader } from "@modules/session";
+import { formAuthorizeHeader } from "@modules/session/api/session";
 import { cc98Fetch } from "@foundation/api/http";
-import { refreshUserInfo } from "@modules/session";
-import { getUsersInfo } from "@modules/user";
-import type { UserInfo } from "@modules/user";
+import { refreshUserInfo } from "@modules/session/api/refresh-user-info";
+import { getUsersInfo } from "@modules/user/api/get-users-info";
+import type { UserInfo } from "@modules/user/model/dto";
 import { getAccessToken } from "@foundation/storage/web-storage";
 
 export async function updateFollowedUser(

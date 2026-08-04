@@ -1,4 +1,5 @@
-import type { UserInfo, UserLookupFallback } from "@modules/user";
+import type { UserInfo } from "@modules/user/model/dto";
+import type { UserLookupFallback } from "@modules/user/model/types";
 import type { PostInfo } from "./dto";
 
 export interface AnonymousPostUserInfo {

@@ -2,8 +2,8 @@ import * as React from "react";
 import { Link } from "react-router";
 
 import { UserAreaLoading } from "@application/layouts/user-area";
-import { getBoardName } from "@modules/board";
-import { getToken } from "@modules/session";
+import { getBoardName } from "@modules/board/api/service";
+import { getToken } from "@modules/session/api/session";
 import { cc98Fetch } from "@foundation/api/http";
 import styles from "./UserRecentPostsManager.module.scss";
 

@@ -1,4 +1,4 @@
-import type { ThemeSetting } from "@modules/user-preference";
+import type { ThemeSetting } from "@modules/user-preference/model/types";
 import type {
   TargetWindow,
   UserAllowWechatNotifyState,

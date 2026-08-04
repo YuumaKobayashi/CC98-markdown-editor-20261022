@@ -1,8 +1,8 @@
 import * as React from "react";
 
-import { FocusTopicItem } from "@modules/topic";
-import { getMonthlyHotTopic } from "@modules/topic";
-import type { FocusTopic } from "@modules/topic";
+import { FocusTopicItem } from "@modules/topic/ui/FocusTopicItem";
+import { getMonthlyHotTopic } from "@modules/topic/api/list-search";
+import type { FocusTopic } from "@modules/topic/model/view-model";
 import { CollectionPageShell } from "@application/layouts/collection";
 
 import styles from "./HotTopicPage.module.scss";

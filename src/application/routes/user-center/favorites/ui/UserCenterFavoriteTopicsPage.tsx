@@ -19,7 +19,7 @@ import {
   FavoriteTopicOrder,
   type FavoriteTopicGroup,
 } from "@modules/favorite-topic/model/favorite-topic-group";
-import type { UserRecentTopic } from "@modules/topic";
+import type { UserRecentTopic } from "@modules/topic/model/view-model";
 import { UserCenterPager as Pager } from "@application/routes/user-center/pagination";
 
 import { FavoriteTopicGroupManager } from "./FavoriteTopicGroupManager";

@@ -10,19 +10,21 @@ import {
 } from "react";
 
 import { useAppDispatch, useAppSelector } from "@application/store";
-import { MessageReceiver, MessageSender } from "@modules/message";
+import { MessageReceiver } from "@modules/message/ui/MessageReceiver";
+import { MessageSender } from "@modules/message/ui/MessageSender";
 import {
   getRecentMessage,
   sendMessage,
   sortRecentMessage,
-} from "@modules/message";
-import {
-  refreshUnreadCount,
-  selectUnreadCount,
-} from "@modules/notification";
-import { getMyInfo } from "@modules/session";
-import { uploadFile } from "@modules/upload";
-import type { MessagePersonInfo, MessageViewModel } from "@modules/message";
+} from "@modules/message/api/service";
+import { refreshUnreadCount } from "@modules/notification/model/refresh-unread-count";
+import { selectUnreadCount } from "@modules/notification/model/selectors";
+import { getMyInfo } from "@modules/session/api/session";
+import { uploadFile } from "@modules/upload/api/service";
+import type {
+  MessagePersonInfo,
+  MessageViewModel,
+} from "@modules/message/model/view-model";
 import { DocumentTitle } from "@foundation/ui/document-title";
 
 import styles from "./PrivateConversationWindow.module.scss";

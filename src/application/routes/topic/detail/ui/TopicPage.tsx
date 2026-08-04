@@ -3,14 +3,18 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import $ from "jquery";
 
-import { getBoardInfo, getBoards } from "@modules/board";
-import { getTopicInfo, TopicState } from "@modules/topic";
-import { UserState } from "@modules/user";
-import { getMyInfo } from "@modules/session";
+import {
+  getBoardInfo,
+  getBoards,
+} from "@modules/board/api/service";
+import { getTopicInfo } from "@modules/topic/api/metadata";
+import { TopicState } from "@modules/topic/model/enums";
+import { UserState } from "@modules/user/model/enums";
+import { getMyInfo } from "@modules/session/api/session";
 import { getFavState } from "@modules/favorite-topic/api/service";
-import { type NoticeSetting } from "@modules/notification";
-import { noticeMessageShow } from "@modules/notification";
-import { TopicBreadcrumb } from "@modules/topic";
+import { type NoticeSetting } from "@modules/notification/model/types";
+import { noticeMessageShow } from "@foundation/ui/feedback/NoticeMessage";
+import { TopicBreadcrumb } from "@modules/topic/ui/TopicBreadcrumb";
 import { Pager } from "@foundation/ui/pagination";
 import { getTotalPageof10 } from "@foundation/lib/page";
 import { getLocalStorage } from "@foundation/storage/web-storage";

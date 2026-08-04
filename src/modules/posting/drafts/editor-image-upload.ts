@@ -1,4 +1,4 @@
-import { uploadFile } from "@modules/upload";
+import { uploadFile } from "@modules/upload/api/service";
 
 export async function uploadEvent(e) {
   localStorage.setItem("react-mde-imageurl-status", "pending");

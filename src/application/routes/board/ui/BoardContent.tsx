@@ -1,15 +1,18 @@
 import * as React from "react";
-import { getBoardTags, type IBoard } from "@modules/board";
+import { getBoardTags } from "@modules/board/api/service";
+import { type BoardInfo } from "@modules/board/model/types";
 import {
   getBestTopics,
   getNormalTopics,
   getSaveTopics,
   getTagTopics,
   getTopTopics,
-  TopicBestState,
+} from "@modules/topic/api/list-search";
+import { TopicBestState } from "@modules/topic/model/enums";
+import {
   type ITagGroup,
-  type ITopic,
-} from "@modules/topic";
+  type TopicInfo,
+} from "@modules/topic/model/dto";
 import { Pagination, Spin } from "antd";
 import { useNavigate } from "react-router";
 
@@ -19,7 +22,7 @@ import { BoardTopicList } from "./BoardTopicList";
 import { BoardTopicToolbar } from "./BoardTopicToolbar";
 
 interface BoardContentProps {
-  data: IBoard;
+  data: BoardInfo;
   page: string;
 }
 
@@ -136,10 +139,10 @@ export function BoardContent({ data, page }: BoardContentProps) {
   };
 
   const currentPage = parseInt(page);
-  const boardList: ITopic[] =
+  const boardList: TopicInfo[] =
     currentPage === 1
-      ? ([] as ITopic[]).concat(topList).concat(list)
-      : ([] as ITopic[]).concat(list);
+      ? ([] as TopicInfo[]).concat(topList).concat(list)
+      : ([] as TopicInfo[]).concat(list);
 
   return boardList.length === 0 ? (
     <Spin size="large" />

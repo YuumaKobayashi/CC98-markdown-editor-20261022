@@ -1,10 +1,17 @@
 import $ from "jquery";
 export { noticeMessageShow } from "@foundation/ui/feedback";
-import { getToken, formAuthorizeHeader, isLogOn } from "@modules/session";
+import {
+  getToken,
+  formAuthorizeHeader,
+  isLogOn,
+} from "@modules/session/api/session";
 import { cc98Fetch } from "@foundation/api/http";
 import { clearLegacyMessageCounts, getLegacyMessageCounts, throwLegacyError } from "@foundation/lib/legacy-utility-effects";
-import { getBoardName } from "@modules/board";
-import { getBasicTopicsInfo, getThisTopicInfo } from "@modules/topic";
+import { getBoardName } from "@modules/board/api/service";
+import {
+  getBasicTopicsInfo,
+  getThisTopicInfo,
+} from "@modules/topic/api/metadata";
 import type {
   ReplyAtNotificationInfo,
   SystemNotificationInfo,

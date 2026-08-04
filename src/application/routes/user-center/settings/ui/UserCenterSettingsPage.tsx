@@ -1,13 +1,12 @@
 import * as React from "react";
 
 import { useAppDispatch, useAppSelector } from "@application/store";
-import { ConfigSignature, invalidateUserInfoCache } from "@modules/user";
-import {
-  refreshCurrentUserInfo,
-  selectCurrentUser,
-} from "@modules/session";
-import type { ChangeUserInfo } from "@modules/user";
-import { getToken } from "@modules/session";
+import { ConfigSignature } from "@modules/user/ui/ConfigSignature";
+import { invalidateUserInfoCache } from "@modules/user/cache/public-user-cache";
+import { refreshCurrentUserInfo } from "@modules/session/api/refresh-user-info";
+import { selectCurrentUser } from "@modules/session/model/selectors";
+import type { ChangeUserInfo } from "@modules/user/model/dto";
+import { getToken } from "@modules/session/api/session";
 import { cc98Fetch } from "@foundation/api/http";
 
 import {

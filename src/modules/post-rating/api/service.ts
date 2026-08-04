@@ -1,6 +1,9 @@
-import { formAuthorizeHeader } from "@modules/session";
+import { formAuthorizeHeader } from "@modules/session/api/session";
 import { cc98Fetch } from "@foundation/api/http";
-import { PostUserOperationType, RatingType } from "@modules/post";
+import {
+  PostUserOperationType,
+  RatingType,
+} from "@modules/post/model/enums";
 import type { PostOperationResult, RatingReason } from "../model/types";
 
 export async function awardWealth(

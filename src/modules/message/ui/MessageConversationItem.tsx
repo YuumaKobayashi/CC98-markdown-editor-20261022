@@ -1,7 +1,7 @@
 import * as React from "react";
 import moment from "moment";
 
-import { UbbContainer } from "@modules/ubb";
+import { UbbContainer } from "@modules/ubb/UbbContainer";
 
 import styles from "./MessageConversationItem.module.scss";
 

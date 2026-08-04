@@ -11,7 +11,7 @@ import {
   awardWealth,
   deductPrestige,
   deductWealth,
-} from "@modules/post-rating";
+} from "@modules/post-rating/api/service";
 
 const FormItem = Form.Item;
 const Option = Select.Option;

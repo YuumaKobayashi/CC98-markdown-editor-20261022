@@ -28,24 +28,3 @@ export interface UserLookupFallback {
 }
 
 export type UserLookupResult = UserInfo | UserBasicInfo | UserLookupFallback;
-
-export interface UserViewModel extends UserInfo {
-  /**
-   * 显示的用户组。
-   * 旧页面读取但当前后端 `UserInfo` 不返回该字段。
-   */
-  displayTitle?: string;
-  /**
-   * 用户个人简介图片。
-   * 旧页面字段；当前后端头像字段为 `portraitUrl`。
-   */
-  photourl?: string;
-  /**
-   * 自定义头衔。
-   * 旧页面读取但当前后端 `UserInfo` 不返回该字段。
-   */
-  customTitle?: string;
-}
-
-/** 旧名兼容别名；实际 wire DTO 为 {@link UserInfo}。 */
-export type IUser = UserViewModel;

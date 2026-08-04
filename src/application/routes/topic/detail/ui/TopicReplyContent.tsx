@@ -2,15 +2,18 @@ import * as React from "react";
 import { useCallback, useEffect, useState } from "react";
 import { Card, Tag } from "antd";
 
-import { UbbCodeOptions, UbbContainer } from "@modules/ubb";
-import { PostContentType } from "@modules/post";
+import { UbbCodeOptions } from "@modules/ubb/engine/Core";
+import { UbbContainer } from "@modules/ubb/UbbContainer";
+import { PostContentType } from "@modules/post/model/enums";
+import { getTopicVote } from "@modules/topic/api/detail";
 import {
-  getTopicVote,
   LotteryMode,
   LotteryTopicStatus,
+} from "@modules/topic/model/enums";
+import {
   type TopicInfo,
   type VoteInfo,
-} from "@modules/topic";
+} from "@modules/topic/model/dto";
 import { atUserMdUrl, atUserUbbUrl } from "@foundation/lib/text";
 import { TopicVote } from "./TopicVote";
 import detailStyles from "./TopicReplyContent.module.scss";

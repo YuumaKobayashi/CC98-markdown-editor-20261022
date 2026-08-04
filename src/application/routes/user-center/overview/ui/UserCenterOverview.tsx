@@ -1,12 +1,10 @@
 import * as React from "react";
 
 import { useAppDispatch, useAppSelector } from "@application/store";
-import {
-  refreshCurrentUserInfo,
-  selectCurrentUser,
-} from "@modules/session";
-import { UserProfile } from "@modules/user";
-import { UserProfileAvatar } from "@modules/user";
+import { refreshCurrentUserInfo } from "@modules/session/api/refresh-user-info";
+import { selectCurrentUser } from "@modules/session/model/selectors";
+import { UserProfile } from "@modules/user/ui/UserProfile";
+import { UserProfileAvatar } from "@modules/user/ui/profile-avatar/UserProfileAvatar";
 
 import { UserRecentActivities } from "./UserRecentActivities";
 import styles from "./UserCenterOverview.module.scss";

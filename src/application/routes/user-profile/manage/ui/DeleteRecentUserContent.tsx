@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { getToken } from "@modules/session";
+import { getToken } from "@modules/session/api/session";
 import { cc98Fetch } from "@foundation/api/http";
 import styles from "./DeleteRecentUserContent.module.scss";
 

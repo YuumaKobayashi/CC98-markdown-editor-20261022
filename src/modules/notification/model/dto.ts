@@ -1,4 +1,4 @@
-import type { PostBasicInfo } from "@modules/post";
+import type { PostBasicInfo } from "@modules/post/model/dto";
 import type { NotificationType } from "./enums";
 
 export interface UnreadCount {

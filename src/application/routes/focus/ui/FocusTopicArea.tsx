@@ -2,9 +2,9 @@ import * as React from "react";
 import { Spin } from "antd";
 import $ from "jquery";
 
-import { getFocusTopic } from "@modules/topic";
-import { FocusTopicItem } from "@modules/topic";
-import type { FocusTopic } from "@modules/topic";
+import { getFocusTopic } from "@modules/topic/api/list-search";
+import { FocusTopicItem } from "@modules/topic/ui/FocusTopicItem";
+import type { FocusTopic } from "@modules/topic/model/view-model";
 import { isBottom } from "@foundation/lib/dom";
 import {
   getStorage,

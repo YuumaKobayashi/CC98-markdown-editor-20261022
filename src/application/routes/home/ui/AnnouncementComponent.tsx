@@ -1,5 +1,5 @@
 import * as React from "react";
-import { SiteAnnouncementPreview } from "@modules/site-content";
+import { SiteAnnouncementPreview } from "@modules/site-content/ui/SiteAnnouncementPreview";
 
 interface AnnouncementComponentProps {
   data: string;

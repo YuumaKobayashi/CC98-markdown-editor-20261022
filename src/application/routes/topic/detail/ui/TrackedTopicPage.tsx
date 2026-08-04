@@ -3,14 +3,12 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import $ from "jquery";
 
-import { getBoardInfo } from "@modules/board";
-import {
-  getTopicInfo,
-  getTraceTopicsCount,
-} from "@modules/topic";
+import { getBoardInfo } from "@modules/board/api/service";
+import { getTopicInfo } from "@modules/topic/api/metadata";
+import { getTraceTopicsCount } from "@modules/topic/api/detail";
 import { getFavState } from "@modules/favorite-topic/api/service";
-import { noticeMessageShow } from "@modules/notification";
-import { TopicBreadcrumb } from "@modules/topic";
+import { noticeMessageShow } from "@foundation/ui/feedback/NoticeMessage";
+import { TopicBreadcrumb } from "@modules/topic/ui/TopicBreadcrumb";
 import { Pager } from "@foundation/ui/pagination";
 import { QuoteTraceContext, type TopicQuote } from "../model/quote-context";
 import { TopicHeader } from "./TopicHeader";

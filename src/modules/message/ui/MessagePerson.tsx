@@ -4,7 +4,7 @@
 
 import * as React from "react";
 
-import { UbbContainer } from "@modules/ubb";
+import { UbbContainer } from "@modules/ubb/UbbContainer";
 import type { MessagePersonInfo } from "../model/view-model";
 import styles from "./MessagePerson.module.scss";
 

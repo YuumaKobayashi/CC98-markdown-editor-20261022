@@ -5,7 +5,7 @@ import {
     writeUserInfoCache
 } from "../cache/public-user-cache";
 
-import { formAuthorizeHeader } from "@modules/session";
+import { formAuthorizeHeader } from "@modules/session/api/session";
 import { cc98Fetch } from "@foundation/api/http";
 
 /**

@@ -2,8 +2,8 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router";
 
-import { getSearchBoard } from "@modules/board";
-import type { FocusBoard } from "@modules/board";
+import { getSearchBoard } from "@modules/board/api/service";
+import type { FocusBoard } from "@modules/board/model/types";
 import { CollectionPageShell } from "@application/layouts/collection";
 
 import styles from "./BoardSearchPage.module.scss";

@@ -1,8 +1,11 @@
 import type { TopicBasicLookupFallback } from "../model/types";
 import type { ITag, TopicBasicInfo, TopicInfo } from "../model/dto";
-import type { PostBasicInfo } from "@modules/post";
+import type { PostBasicInfo } from "@modules/post/model/dto";
 import { readTagInfoCache, writeTagInfoCache } from "../cache/tag-cache";
-import { formAuthorizeHeader, isLogOn } from "@modules/session";
+import {
+  formAuthorizeHeader,
+  isLogOn,
+} from "@modules/session/api/session";
 import { cc98Fetch } from "@foundation/api/http";
 import { throwLegacyError } from "@foundation/lib/legacy-utility-effects";
 

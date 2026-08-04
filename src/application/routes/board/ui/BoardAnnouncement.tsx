@@ -1,20 +1,25 @@
 import * as React from "react";
 import { unstable_batchedUpdates } from "react-dom";
 import { Button, Collapse, Divider, Input, Modal, Tag } from "antd";
-import { editBigPaper, isMaster, type IBoard } from "@modules/board";
+import {
+  editBigPaper,
+  isMaster,
+} from "@modules/board/api/service";
+import { type BoardInfo } from "@modules/board/model/types";
 import {
   followBoard,
   isFollowThisBoard,
   unfollowBoard,
-} from "@modules/follow";
-import { UbbCodeOptions, UbbContainer } from "@modules/ubb";
+} from "@modules/follow/api/service";
+import { UbbCodeOptions } from "@modules/ubb/engine/Core";
+import { UbbContainer } from "@modules/ubb/UbbContainer";
 import styles from "./BoardAnnouncement.module.scss";
 
 const Panel = Collapse.Panel;
 const TextArea = Input.TextArea;
 
 interface BoardAnnouncementProps {
-  data: IBoard;
+  data: BoardInfo;
   isFirstPage: boolean;
 }
 

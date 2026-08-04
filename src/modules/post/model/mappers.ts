@@ -4,7 +4,8 @@ import type {
   PostViewModel,
   UserRecentPost,
 } from "./view-model";
-import type { UserInfo, UserLookupFallback } from "@modules/user";
+import type { UserInfo } from "@modules/user/model/dto";
+import type { UserLookupFallback } from "@modules/user/model/types";
 
 export interface PostViewModelOptions {
   postId?: number;

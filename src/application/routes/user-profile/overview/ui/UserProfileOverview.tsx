@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { useUserProfileContext } from "@application/routes/user-profile/layout";
-import { UserProfileAvatar } from "@modules/user";
+import { UserProfileAvatar } from "@modules/user/ui/profile-avatar/UserProfileAvatar";
 import DocumentTitle from "@foundation/ui/document-title";
 import { UserProfileDetails } from "./UserProfileDetails";
 import { UserRecentTopics } from "./UserRecentTopics";

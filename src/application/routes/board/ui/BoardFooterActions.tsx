@@ -1,11 +1,14 @@
 import * as React from "react";
-import type { IBoard } from "@modules/board";
-import type { ITopic } from "@modules/topic";
+import type { BoardInfo } from "@modules/board/model/types";
+import type { TopicInfo } from "@modules/topic/model/dto";
 import { Button, List, Modal, Spin } from "antd";
 import moment from "moment";
 
-import { getTpUsers, isMaster } from "@modules/board";
-import { cancelStopBoardPost } from "@modules/moderation";
+import {
+  getTpUsers,
+  isMaster,
+} from "@modules/board/api/service";
+import { cancelStopBoardPost } from "@modules/moderation/api/service";
 
 import { BoardBatchManager } from "./BoardBatchManager";
 import { BoardModerationRecordList } from "./BoardModerationRecordList";
@@ -14,8 +17,8 @@ export { BoardBatchManager } from "./BoardBatchManager";
 export { BoardModerationRecordList } from "./BoardModerationRecordList";
 
 interface BoardFooterActionsProps {
-  data: IBoard;
-  list: ITopic[];
+  data: BoardInfo;
+  list: TopicInfo[];
 }
 
 export function BoardFooterActions({

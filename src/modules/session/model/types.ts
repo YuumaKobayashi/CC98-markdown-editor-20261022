@@ -1,14 +1,4 @@
-import type {
-  UserBoardMasterInfo,
-  UserInfo,
-} from "@modules/user";
-import type { ThemeSetting } from "@modules/user-preference";
-
-/** 旧 Session 导出名；实际合同由 User owner 维护。 */
-export type CurrentUserThemeSetting = ThemeSetting;
-
-/** 旧 Session 导出名；实际合同由 User owner 维护。 */
-export type CurrentUserBoardMasterTitle = UserBoardMasterInfo;
+import type { UserInfo } from "@modules/user/model/dto";
 
 /**
  * 当前登录用户的 `/me` 合同。

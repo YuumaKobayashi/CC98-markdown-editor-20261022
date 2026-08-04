@@ -1,12 +1,10 @@
 import * as React from "react";
 
 import { useAppDispatch, useAppSelector } from "@application/store";
-import {
-  formAuthorizeHeader,
-  selectCurrentUser,
-  updateCurrentUser,
-} from "@modules/session";
-import type { ThemeSetting } from "@modules/user-preference";
+import { formAuthorizeHeader } from "@modules/session/api/session";
+import { selectCurrentUser } from "@modules/session/model/selectors";
+import { updateCurrentUser } from "@modules/session/model/session-actions";
+import type { ThemeSetting } from "@modules/user-preference/model/types";
 import { cc98Fetch } from "@foundation/api/http";
 import {
   changeTheme,

@@ -2,10 +2,10 @@ import * as React from "react";
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router";
 
-// import { getBoardName } from "@modules/board";
-import { getSearchTopic } from "@modules/topic";
-import { SearchTopicItem } from "@modules/topic";
-import type { FocusTopic } from "@modules/topic";
+// import { getBoardName } from "@modules/board/api/service";
+import { getSearchTopic } from "@modules/topic/api/list-search";
+import { SearchTopicItem } from "@modules/topic/ui/SearchTopicItem";
+import type { FocusTopic } from "@modules/topic/model/view-model";
 import { CollectionPageShell } from "@application/layouts/collection";
 
 import styles from "./TopicSearchPage.module.scss";

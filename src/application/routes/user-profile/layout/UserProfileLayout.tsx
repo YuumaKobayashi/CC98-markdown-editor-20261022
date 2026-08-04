@@ -6,8 +6,8 @@ import {
   UserAreaShell,
 } from "@application/layouts/user-area";
 import { NotFoundUser } from "@application/routes/status";
-import { getUserInfo } from "@modules/user";
-import type { UserInfo } from "@modules/user";
+import { getUserInfo } from "@modules/user/api/get-user-info";
+import type { UserInfo } from "@modules/user/model/dto";
 import { UserProfileProvider } from "./model/user-profile-context";
 import { UserProfileNavigation } from "./UserProfileNavigation";
 import styles from "./UserProfileLayout.module.scss";

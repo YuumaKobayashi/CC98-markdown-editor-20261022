@@ -4,15 +4,13 @@ import { Link } from "react-router";
 import moment from "moment";
 
 import { useAppSelector } from "@application/store";
+import { isLogOn } from "@modules/session/api/session";
+import { selectCurrentUser } from "@modules/session/model/selectors";
+import { submitTopicVote } from "@modules/topic/api/detail";
 import {
-  isLogOn,
-  selectCurrentUser,
-} from "@modules/session";
-import {
-  submitTopicVote,
   type TopicInfo,
   type VoteInfo,
-} from "@modules/topic";
+} from "@modules/topic/model/dto";
 import styles from "./TopicVote.module.scss";
 
 export interface TopicVoteProps {

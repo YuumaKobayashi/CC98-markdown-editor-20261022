@@ -3,7 +3,8 @@
 // https://github.com/Microsoft/TypeScript/wiki/JSX
 import * as React from "react";
 import moment from "moment";
-import { UbbCompatiblityMode, UbbContainer } from "@modules/ubb";
+import { UbbCompatiblityMode } from "@modules/ubb/engine/Core";
+import { UbbContainer } from "@modules/ubb/UbbContainer";
 import type { SystemNotificationViewModel } from "../model/view-model";
 import styles from "./MessageSystembox.module.scss";
 

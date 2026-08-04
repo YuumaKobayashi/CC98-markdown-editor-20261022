@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Form, Menu, Modal, Select, Tag } from "antd";
 import type { FormInstance } from "antd";
-import { RatingType } from "@modules/post";
+import { RatingType } from "@modules/post/model/enums";
 import {
   getJudgeTags,
   negativeJudge,

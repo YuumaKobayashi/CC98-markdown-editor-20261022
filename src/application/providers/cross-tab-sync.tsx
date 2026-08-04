@@ -1,8 +1,8 @@
 import * as React from "react";
 
 import { useAppDispatch } from "@application/store";
-import { synchronizeSessionStorageEvent } from "@modules/session";
-import { synchronizeShowCardUserStorageEvent } from "@modules/user-preference";
+import { synchronizeSessionStorageEvent } from "@modules/session/sync/session-sync";
+import { synchronizeShowCardUserStorageEvent } from "@modules/user-preference/persistence/show-card-user";
 
 type CrossTabStorageHandler = (
   event: StorageEvent,

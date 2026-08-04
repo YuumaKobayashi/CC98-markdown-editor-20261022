@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import type { UserInfo } from "@modules/user";
+import type { UserInfo } from "@modules/user/model/dto";
 
 export type UserProfilePage = "exact" | "manage";
 

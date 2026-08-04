@@ -1,8 +1,8 @@
 import * as React from "react";
 import { useLocation, useNavigate } from "react-router";
 
-import { getTopicInfo } from "@modules/topic";
-import { getUserInfo } from "@modules/user";
+import { getTopicInfo } from "@modules/topic/api/metadata";
+import { getUserInfo } from "@modules/user/api/get-user-info";
 
 import styles from "./Search.module.scss";
 

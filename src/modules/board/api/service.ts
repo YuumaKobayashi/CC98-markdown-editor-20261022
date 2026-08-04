@@ -5,8 +5,11 @@ import {
   writeBoardInfoCache,
   writeBoardsInfoCache,
 } from "../cache/board-cache";
-import { getMyInfo } from "@modules/session";
-import { getToken, formAuthorizeHeader } from "@modules/session";
+import { getMyInfo } from "@modules/session/api/session";
+import {
+  getToken,
+  formAuthorizeHeader,
+} from "@modules/session/api/session";
 import { cc98Fetch } from "@foundation/api/http";
 import type {
   BoardCategoryInfo,

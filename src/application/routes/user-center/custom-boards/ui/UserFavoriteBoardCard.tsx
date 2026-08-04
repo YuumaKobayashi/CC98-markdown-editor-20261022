@@ -1,8 +1,8 @@
 import * as React from "react";
 import { Link } from "react-router";
 
-import { getToken } from "@modules/session";
-import type { UserFavoritesBoardInfo } from "@modules/board";
+import { getToken } from "@modules/session/api/session";
+import type { UserFavoritesBoardInfo } from "@modules/board/model/types";
 import { cc98Fetch } from "@foundation/api/http";
 import styles from "./UserFavoriteBoardCard.module.scss";
 

@@ -2,7 +2,8 @@ import * as React from "react";
 import { NavLink, Outlet, useLocation } from "react-router";
 
 import { useAppSelector } from "@application/store";
-import { readAll, selectUnreadCount } from "@modules/notification";
+import { readAll } from "@modules/notification/api/service";
+import { selectUnreadCount } from "@modules/notification/model/selectors";
 import { DocumentTitle } from "@foundation/ui/document-title";
 import styles from "./MessageLayout.module.scss";
 import { parseReadAllNotificationSection } from "../notifications/model/route";

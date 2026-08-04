@@ -1,9 +1,9 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 
-import { getMyInfo } from "@modules/session";
-import { getMainPageData } from "@modules/site-content";
-import type { IIndex } from "@modules/site-content";
+import { getMyInfo } from "@modules/session/api/session";
+import { getMainPageData } from "@modules/site-content/api/service";
+import type { IIndex } from "@modules/site-content/model/dto";
 import {
   getLocalStorage,
   setLocalStorage,

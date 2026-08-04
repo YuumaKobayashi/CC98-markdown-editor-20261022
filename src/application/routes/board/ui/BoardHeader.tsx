@@ -1,10 +1,10 @@
 import * as React from "react";
-import type { IBoard } from "@modules/board";
+import type { BoardInfo } from "@modules/board/model/types";
 import { Button } from "antd";
 import { Link } from "react-router";
 
-import { getMyInfo } from "@modules/session";
-import { UserState } from "@modules/user";
+import { getMyInfo } from "@modules/session/api/session";
+import { UserState } from "@modules/user/model/enums";
 import { HomeAdvertisementCarousel } from "@application/routes/home/advertisement";
 
 import styles from "./BoardHeader.module.scss";
@@ -12,7 +12,7 @@ import { BoardAnnouncement } from "./BoardAnnouncement";
 import { BoardBreadcrumb } from "./BoardBreadcrumb";
 
 interface BoardHeaderProps {
-  data: IBoard;
+  data: BoardInfo;
   page: string;
 }
 

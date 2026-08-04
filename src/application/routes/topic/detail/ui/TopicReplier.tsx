@@ -2,10 +2,11 @@ import * as React from "react";
 import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
 import { Link } from "react-router";
 
-import { updateUserInfo, UserGender } from "@modules/user";
+import { updateUserInfo } from "@modules/user/api/service";
+import { UserGender } from "@modules/user/model/enums";
 import { getPortraitConfig } from "@modules/user/api/service";
-import { getMyInfo } from "@modules/session";
-import { updateFollowedUser } from "@modules/follow";
+import { getMyInfo } from "@modules/session/api/session";
+import { updateFollowedUser } from "@modules/follow/api/service";
 import styles from "./TopicReplier.module.scss";
 
 export interface TopicReplierProps {

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 
-import { getAdvertisements } from "@modules/site-content";
+import { getAdvertisements } from "@modules/site-content/api/service";
 import {
   getStorage,
   setStorage,

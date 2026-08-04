@@ -1,5 +1,5 @@
 import * as SignalR from '@aspnet/signalr'
-import * as Utility from '@modules/session'
+import * as Utility from '@modules/session/api/session';
 
 export namespace CC98SignalR {
     export let connection: SignalR.HubConnection

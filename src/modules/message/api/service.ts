@@ -1,8 +1,17 @@
-import { formAuthorizeHeader, isLogOn } from "@modules/session";
+import {
+  formAuthorizeHeader,
+  isLogOn,
+} from "@modules/session/api/session";
 import { cc98Fetch } from "@foundation/api/http";
 import { throwLegacyError } from "@foundation/lib/legacy-utility-effects";
-import { getBasicUsersInfo, getThisUserInfo } from "@modules/user";
-import type { UserBasicInfo, UserInfo } from "@modules/user";
+import {
+  getBasicUsersInfo,
+  getThisUserInfo,
+} from "@modules/user/api/service";
+import type {
+  UserBasicInfo,
+  UserInfo,
+} from "@modules/user/model/dto";
 import type { MessagePersonInfo } from "../model/view-model";
 import type { MessageInfo, RecentContactUserInfo } from "../model/dto";
 import type { MessageViewModel } from "../model/view-model";

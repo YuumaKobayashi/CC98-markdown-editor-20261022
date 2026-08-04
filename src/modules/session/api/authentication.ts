@@ -1,5 +1,5 @@
 import type { Dispatch } from "redux";
-import { UserState } from "@modules/user";
+import { UserState } from "@modules/user/model/enums";
 
 import { Constants } from "@foundation/config/runtime-config";
 import { removeStorage } from "@foundation/storage/web-storage";

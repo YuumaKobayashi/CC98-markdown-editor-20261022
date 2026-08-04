@@ -4,13 +4,13 @@ import { Link } from "react-router";
 import { Modal } from "antd";
 import moment from "moment";
 
-import { getTagNamebyId } from "@modules/topic";
+import { getTagNamebyId } from "@modules/topic/api/metadata";
 import {
   deleteFavoriteTopic,
   setFavoriteTopic,
 } from "@modules/favorite-topic/api/service";
 import { FavoriteTopicGroupSelect } from "@modules/favorite-topic/ui/FavoriteTopicGroupSelect";
-import { noticeMessageShow } from "@modules/notification";
+import { noticeMessageShow } from "@foundation/ui/feedback/NoticeMessage";
 import { HomeAdvertisementCarousel } from "@application/routes/home/advertisement";
 import { copyToClipboard } from "@foundation/lib/dom";
 import { NoticeMessage } from "@foundation/ui/feedback";

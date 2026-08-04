@@ -1,7 +1,7 @@
 import * as React from "react";
 import { List, Spin } from "antd";
 import moment from "moment";
-import { getBoardRecords } from "@modules/moderation";
+import { getBoardRecords } from "@modules/moderation/api/service";
 
 
 interface BoardModerationRecordListProps {

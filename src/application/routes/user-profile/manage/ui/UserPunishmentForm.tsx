@@ -1,7 +1,10 @@
 import * as React from "react";
 
-import { getToken } from "@modules/session";
-import { ForumUserOperationType, UserState } from "@modules/user";
+import { getToken } from "@modules/session/api/session";
+import {
+  ForumUserOperationType,
+  UserState,
+} from "@modules/user/model/enums";
 import { cc98Fetch } from "@foundation/api/http";
 import styles from "./UserPunishmentForm.module.scss";
 

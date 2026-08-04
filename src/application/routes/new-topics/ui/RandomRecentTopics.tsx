@@ -2,7 +2,7 @@ import * as React from "react";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
 
-import { getRandomTopic } from "@modules/topic";
+import { getRandomTopic } from "@modules/topic/api/list-search";
 import {
   getStorage,
   removeStorage,

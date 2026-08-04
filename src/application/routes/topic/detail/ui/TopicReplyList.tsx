@@ -3,30 +3,29 @@ import { useEffect, useState } from "react";
 import { Spin } from "antd";
 import $ from "jquery";
 
-import { isMaster, type BoardInfo } from "@modules/board";
-import {
-  FloorSize,
-  type PostContentType,
-  type PostViewModel,
-} from "@modules/post";
+import { isMaster } from "@modules/board/api/service";
+import { type BoardInfo } from "@modules/board/model/dto";
+import { FloorSize } from "@modules/post/ui/FloorSize";
+import { type PostContentType } from "@modules/post/model/enums";
+import { type PostViewModel } from "@modules/post/model/view-model";
 import {
   getCurUserTopicContent,
   getHotReplyContent,
   getTopicContent,
   getTraceTopics,
-  type TopicInfo,
-} from "@modules/topic";
-import { getMyInfo } from "@modules/session";
-import { queryWealth } from "@modules/wealth";
-import { PostRatingDialog } from "@modules/post-rating";
-import { PostManagementDialog } from "@modules/moderation";
+} from "@modules/topic/api/detail";
+import { type TopicInfo } from "@modules/topic/model/dto";
+import { getMyInfo } from "@modules/session/api/session";
+import { queryWealth } from "@modules/wealth/api/service";
+import { PostRatingDialog } from "@modules/post-rating/ui/PostRatingDialog";
+import { PostManagementDialog } from "@modules/moderation/ui/PostManagementDialog";
 import { TopicAwardList } from "./TopicAwardList";
 import { TopicReplier } from "./TopicReplier";
 import { TopicReplyContent } from "./TopicReplyContent";
 import { TopicReplySignature } from "./TopicReplySignature";
 import styles from "./TopicReplyList.module.scss";
 
-export { FloorSize } from "@modules/post";
+export { FloorSize } from "@modules/post/ui/FloorSize";
 
 export interface TopicReplyListProps {
   topicId: number | string;

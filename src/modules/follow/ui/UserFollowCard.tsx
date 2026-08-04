@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Link } from "react-router";
 
-import type { UserInfo } from "@modules/user";
+import type { UserInfo } from "@modules/user/model/dto";
 import { followUser, unfollowUser } from "../api/service";
 import styles from "./UserFollowCard.module.scss";
 

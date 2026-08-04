@@ -1,15 +1,17 @@
 import * as React from "react";
-import { getShortTopic, type IPost } from "@modules/post";
-import type { ITopic } from "@modules/topic";
+import { getShortTopic } from "@modules/post/api/service";
+import { type PostInfo } from "@modules/post/model/dto";
+import type { TopicInfo } from "@modules/topic/model/dto";
 import { Spin } from "antd";
 import { Link } from "react-router";
 
-import { UbbCodeOptions, UbbContainer } from "@modules/ubb";
+import { UbbCodeOptions } from "@modules/ubb/engine/Core";
+import { UbbContainer } from "@modules/ubb/UbbContainer";
 
 import styles from "./BoardTopicPreviewCard.module.scss";
 
 interface BoardTopicPreviewCardProps {
-  data: ITopic;
+  data: TopicInfo;
 }
 
 export function BoardTopicPreviewCard({
@@ -30,14 +32,14 @@ export function BoardTopicPreviewCard({
     <Spin size="large" />
   ) : (
     <div className={styles["board-postItem-cards"]}>
-      {posts.map((item: IPost) => (
+      {posts.map((item: PostInfo) => (
         <BoardTopicPreviewPost key={item.id} item={item} />
       ))}
     </div>
   );
 }
 
-function BoardTopicPreviewPost({ item }: { item: IPost }) {
+function BoardTopicPreviewPost({ item }: { item: PostInfo }) {
   return (
     <div className={styles["board-postItem-card-body"]}>
       <div className={styles["board-postItem-card-information"]}>

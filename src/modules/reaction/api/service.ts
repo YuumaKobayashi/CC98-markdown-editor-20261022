@@ -1,8 +1,8 @@
-import { formAuthorizeHeader } from "@modules/session";
+import { formAuthorizeHeader } from "@modules/session/api/session";
 import { cc98Fetch } from "@foundation/api/http";
 import { throwLegacyError } from "@foundation/lib/legacy-utility-effects";
-import { getTopic } from "@modules/topic";
-import type { PostLikeInfo } from "@modules/post";
+import { getTopic } from "@modules/topic/api/detail";
+import type { PostLikeInfo } from "@modules/post/model/dto";
 
 export async function like(
   topicid: number,

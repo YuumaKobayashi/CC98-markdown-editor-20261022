@@ -3,14 +3,14 @@ import {
   TopicBestState,
   TopicState,
   TopicTopState,
-  type ITopic,
-} from "@modules/topic";
+} from "@modules/topic/model/enums";
+import { type TopicInfo } from "@modules/topic/model/dto";
 import { Popover, Tag, Tooltip } from "antd";
 import moment from "moment";
 import { Link } from "react-router";
 
-import { getMyInfo } from "@modules/session";
-import { readRawTagInfoCache } from "@modules/topic";
+import { getMyInfo } from "@modules/session/api/session";
+import { readRawTagInfoCache } from "@modules/topic/cache/tag-cache";
 
 import styles from "./BoardTopicListItem.module.scss";
 import { BoardTopicPreviewCard } from "./BoardTopicPreviewCard";
@@ -18,7 +18,7 @@ import { BoardTopicPreviewCard } from "./BoardTopicPreviewCard";
 export { BoardTopicPreviewCard } from "./BoardTopicPreviewCard";
 
 interface BoardTopicListItemProps {
-  data: ITopic;
+  data: TopicInfo;
   order: number;
 }
 

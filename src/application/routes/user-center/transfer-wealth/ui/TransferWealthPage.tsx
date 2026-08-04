@@ -1,8 +1,9 @@
 import * as React from "react";
 
 import { useAppDispatch, useAppSelector } from "@application/store";
-import { selectCurrentUser, updateCurrentUser } from "@modules/session";
-import { transferWealth } from "@modules/wealth";
+import { selectCurrentUser } from "@modules/session/model/selectors";
+import { updateCurrentUser } from "@modules/session/model/session-actions";
+import { transferWealth } from "@modules/wealth/api/service";
 import styles from "./TransferWealthPage.module.scss";
 
 export function TransferWealthPage() {

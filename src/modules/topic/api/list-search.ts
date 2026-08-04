@@ -12,11 +12,17 @@ import {
   type FocusTopicSource,
 } from "../model/mappers";
 import { TopicSortMode } from "../model/enums";
-import { formAuthorizeHeader, isLogOn } from "@modules/session";
+import {
+  formAuthorizeHeader,
+  isLogOn,
+} from "@modules/session/api/session";
 import { cc98Fetch } from "@foundation/api/http";
 import { throwLegacyError } from "@foundation/lib/legacy-utility-effects";
-import { getBoardName } from "@modules/board";
-import { getBasicUsersInfo, getThisUserInfo } from "@modules/user";
+import { getBoardName } from "@modules/board/api/service";
+import {
+  getBasicUsersInfo,
+  getThisUserInfo,
+} from "@modules/user/api/service";
 import { transerRecentTime, transerTimeToYearMonthDay } from "@foundation/lib/time";
 
 import { getTagNamebyId } from "./metadata";

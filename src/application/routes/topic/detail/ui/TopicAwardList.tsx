@@ -2,9 +2,9 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import $ from "jquery";
 
-import { TopicAwardInfo } from "@modules/topic";
-import { getThisUserInfobyName } from "@modules/user";
-import { getUsersInfo } from "@modules/user";
+import { TopicAwardInfo } from "@modules/topic/ui/TopicAwardInfo";
+import { getThisUserInfobyName } from "@modules/user/api/service";
+import { getUsersInfo } from "@modules/user/api/get-users-info";
 import styles from "./TopicAwardList.module.scss";
 
 export interface TopicAwardListProps {

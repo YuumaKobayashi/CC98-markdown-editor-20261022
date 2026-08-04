@@ -13,12 +13,10 @@ import {
 import { useAppDispatch, useAppSelector } from "@application/store";
 import { getCurrentUserBrowsingHistory } from "@modules/topic/api/service";
 import { UserRecentTopicItem as Topic } from "@modules/topic/ui/UserRecentTopicItem";
-import {
-  refreshCurrentUserInfo,
-  selectCurrentUser,
-  setBrowsingHistoryEnabled,
-  updateCurrentUser,
-} from "@modules/session";
+import { refreshCurrentUserInfo } from "@modules/session/api/refresh-user-info";
+import { selectCurrentUser } from "@modules/session/model/selectors";
+import { setBrowsingHistoryEnabled } from "@modules/session/api/browsing-history";
+import { updateCurrentUser } from "@modules/session/model/session-actions";
 import type { UserRecentTopic } from "@modules/topic/model/view-model";
 import { UserCenterPager as Pager } from "@application/routes/user-center/pagination";
 import activityStyles from "./UserCenterHistoryPage.module.scss";

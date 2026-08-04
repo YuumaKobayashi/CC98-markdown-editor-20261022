@@ -1,7 +1,7 @@
-import { formAuthorizeHeader } from "@modules/session";
+import { formAuthorizeHeader } from "@modules/session/api/session";
 import { cc98Fetch } from "@foundation/api/http";
-import { PostUserOperationType } from "@modules/post";
-import type { TopicTopState } from "@modules/topic";
+import { PostUserOperationType } from "@modules/post/model/enums";
+import type { TopicTopState } from "@modules/topic/model/enums";
 import type { BoardEventInfo } from "@modules/board/model/dto";
 import type {
   ModerationResult,

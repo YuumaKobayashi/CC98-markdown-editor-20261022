@@ -3,7 +3,7 @@ import { Outlet } from "react-router";
 
 import { UserAreaShell } from "@application/layouts/user-area";
 import { useAppSelector } from "@application/store";
-import { selectIsLogOn } from "@modules/session";
+import { selectIsLogOn } from "@modules/session/model/selectors";
 import { LogOut } from "@application/routes/status";
 import { UserCenterNavigation } from "./UserCenterNavigation";
 import styles from "./UserCenterLayout.module.scss";

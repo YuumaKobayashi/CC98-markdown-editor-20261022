@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 
 import { registerLegacyUtilityEffects } from "@application/compatibility/register-utility-effects";
-import { notificationReducer } from "@modules/notification";
-import { sessionReducer } from "@modules/session";
+import { notificationReducer } from "@modules/notification/model/unread-count-slice";
+import { sessionReducer } from "@modules/session/model/session-slice";
 
 import { listenerMiddleware } from "./listener-middleware";
 

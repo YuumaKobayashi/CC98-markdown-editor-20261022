@@ -8,7 +8,7 @@ import { Buttons } from './components/buttons'
 import { Extends } from './components/extends'
 import { Message } from './components/message'
 import Emoji from './components/emoji'
-import { UbbContainer } from '@modules/ubb'
+import { UbbContainer } from '@modules/ubb/UbbContainer';
 
 // storage for default emoji
 import { setLocalStorage, getLocalStorage } from '@foundation/storage/web-storage'

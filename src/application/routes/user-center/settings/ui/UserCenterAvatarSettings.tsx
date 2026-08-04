@@ -1,12 +1,10 @@
 import * as React from "react";
 
 import { useAppDispatch, useAppSelector } from "@application/store";
-import {
-  getToken,
-  refreshCurrentUserInfo,
-  selectCurrentUser,
-} from "@modules/session";
-import { invalidateUserInfoCache } from "@modules/user";
+import { getToken } from "@modules/session/api/session";
+import { refreshCurrentUserInfo } from "@modules/session/api/refresh-user-info";
+import { selectCurrentUser } from "@modules/session/model/selectors";
+import { invalidateUserInfoCache } from "@modules/user/cache/public-user-cache";
 import { cc98Fetch } from "@foundation/api/http";
 import styles from "./UserCenterAvatarSettings.module.scss";
 

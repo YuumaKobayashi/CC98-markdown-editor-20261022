@@ -2,12 +2,15 @@ import * as React from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router";
 
-import { MessagePerson } from "@modules/message";
+import { MessagePerson } from "@modules/message/ui/MessagePerson";
 import {
   getRecentContact,
   sortContactList,
-} from "@modules/message";
-import type { MessagePersonInfo, MessageViewModel } from "@modules/message";
+} from "@modules/message/api/service";
+import type {
+  MessagePersonInfo,
+  MessageViewModel,
+} from "@modules/message/model/view-model";
 import { DocumentTitle } from "@foundation/ui/document-title";
 
 import styles from "./PrivateMessagesPage.module.scss";

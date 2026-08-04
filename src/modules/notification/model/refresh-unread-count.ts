@@ -1,7 +1,7 @@
 import type { Dispatch } from "redux";
 
 import { setLocalStorage } from "@foundation/storage/web-storage";
-import { formAuthorizeHeader } from "@modules/session";
+import { formAuthorizeHeader } from "@modules/session/api/session";
 import { getUnreadCount } from "../api/service";
 import { replaceUnreadCount } from "./unread-count-slice";
 

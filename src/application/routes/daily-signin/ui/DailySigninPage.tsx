@@ -2,16 +2,18 @@ import * as React from "react";
 import moment from "moment";
 
 import ResignCalendar from "./ReSignCalendar";
-import { UbbEditor } from "@modules/ubb-editor";
+import { UbbEditor } from "@modules/ubb-editor/UbbEditor";
 import {
   clearSignedInToday,
-  getSigninInfo,
   markSignedInToday,
+} from "@modules/daily-signin/cache/signin-cache";
+import {
+  getSigninInfo,
   signin,
-  type UserSignInStateInfo,
-} from "@modules/daily-signin";
-import { getGlobalConfig } from "@modules/site-content";
-import { getMyInfo } from "@modules/session";
+} from "@modules/daily-signin/api/service";
+import { type UserSignInStateInfo } from "@modules/daily-signin/model/dto";
+import { getGlobalConfig } from "@modules/site-content/api/service";
+import { getMyInfo } from "@modules/session/api/session";
 import styles from "./DailySigninPage.module.scss";
 
 export function DailySigninPage(): React.ReactElement {

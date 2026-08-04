@@ -2,7 +2,7 @@ import * as React from "react";
 import { Link } from "react-router";
 
 import { useAppSelector } from "@application/store";
-import { selectCurrentUser } from "@modules/session";
+import { selectCurrentUser } from "@modules/session/model/selectors";
 import { useUserProfileContext } from "./model/user-profile-context";
 import styles from "./UserProfileNavigation.module.scss";
 

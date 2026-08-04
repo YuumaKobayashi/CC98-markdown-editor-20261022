@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Collapse } from "antd";
 import { Link } from "react-router";
 
-import { getBoards } from "@modules/board";
+import { getBoards } from "@modules/board/api/service";
 
 import styles from "./NewTopicsBoardSidebar.module.scss";
 

@@ -1,7 +1,8 @@
 import * as React from "react";
 import $ from "jquery";
-import { UbbEditor } from "@modules/ubb-editor";
-import { RightTagHandler, UbbContainer } from "@modules/ubb";
+import { UbbEditor } from "@modules/ubb-editor/UbbEditor";
+import { RightTagHandler } from "@modules/ubb/tag/RightTagHandler";
+import { UbbContainer } from "@modules/ubb/UbbContainer";
 import { Constants } from "@foundation/config/runtime-config";
 import {
   NoticeMessage,
@@ -13,15 +14,14 @@ import moment from "moment";
 import { MarkdownEditor } from "@foundation/integrations/markdown-editor";
 import * as Showdown from "showdown";
 import styles from "./TopicReplyComposer.module.scss";
-import { AnonymousState, isMaster } from "@modules/board";
-import { PostContentType } from "@modules/post";
-import { getMyInfo } from "@modules/session";
-import { getUserWealth } from "@modules/wealth";
-import { getToken } from "@modules/session";
-import {
-  noticeMessageShow,
-  sendAtNotification,
-} from "@modules/notification";
+import { AnonymousState } from "@modules/board/model/enums";
+import { isMaster } from "@modules/board/api/service";
+import { PostContentType } from "@modules/post/model/enums";
+import { getMyInfo } from "@modules/session/api/session";
+import { getUserWealth } from "@modules/wealth/api/service";
+import { getToken } from "@modules/session/api/session";
+import { noticeMessageShow } from "@foundation/ui/feedback/NoticeMessage";
+import { sendAtNotification } from "@modules/notification/api/service";
 import {
   clearFailedReplyCache,
   clearLegacyTemporaryContent,
@@ -30,19 +30,17 @@ import {
   getReplyDraft,
   setFailedReplyCache,
   setReplyDraft,
-  submitTopicReply,
-  uploadEvent,
-} from "@modules/posting";
-import { findIP } from "@modules/moderation";
+} from "@modules/posting/drafts/draft-storage";
+import { submitTopicReply } from "@modules/posting/api/service";
+import { uploadEvent } from "@modules/posting/drafts/editor-image-upload";
+import { findIP } from "@modules/moderation/api/service";
 import { atHanderler, quoteJudger } from "@foundation/lib/text";
 import {
   getAccessToken,
 } from "@foundation/storage/web-storage";
-import {
-  TopicIPData,
-  TopicManagementDialog,
-  TopicManagementHistoryDialog,
-} from "@modules/moderation";
+import { TopicIPData } from "@modules/moderation/ui/TopicIPData";
+import { TopicManagementDialog } from "@modules/moderation/ui/TopicManagementDialog";
+import { TopicManagementHistoryDialog } from "@modules/moderation/ui/TopicManagementHistoryDialog";
 var xssFilter = require("showdown-xss-filter");
 
 interface Props {

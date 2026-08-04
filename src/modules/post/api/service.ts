@@ -2,9 +2,9 @@ import type { PostInfo } from "../model/dto";
 import type { UserRecentPost } from "../model/view-model";
 import { toUserRecentPost } from "../model/mappers";
 import type { ResultWithCount } from "@foundation/api/contracts";
-import { getBoardName } from "@modules/board";
-import { formAuthorizeHeader } from "@modules/session";
-import { getToken } from "@modules/session";
+import { getBoardName } from "@modules/board/api/service";
+import { formAuthorizeHeader } from "@modules/session/api/session";
+import { getToken } from "@modules/session/api/session";
 import { cc98Fetch } from "@foundation/api/http";
 
 export async function getShortTopic(

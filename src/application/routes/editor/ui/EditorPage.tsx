@@ -4,44 +4,46 @@ import * as Showdown from "showdown";
 import { Button, Modal } from "antd";
 import { useNavigate, useParams } from "react-router";
 
-import { UbbEditor } from "@modules/ubb-editor";
+import { UbbEditor } from "@modules/ubb-editor/UbbEditor";
 import { MarkdownEditor } from "@foundation/integrations/markdown-editor";
 import { reportApplicationError } from "@application/providers/application-error";
+import { AnonymousState } from "@modules/board/model/enums";
 import {
-  AnonymousState,
   getBoardName,
   getBoardTagV2,
   getEditorBoard,
   isMaster,
-} from "@modules/board";
-import type { BoardInfo } from "@modules/board";
-import {
-  getOriginalEditorPost,
-  PostContentType,
-  type PostInfo,
-} from "@modules/post";
+} from "@modules/board/api/service";
+import type { BoardInfo } from "@modules/board/model/dto";
+import { getOriginalEditorPost } from "@modules/post/api/service";
+import { PostContentType } from "@modules/post/model/enums";
+import { type PostInfo } from "@modules/post/model/dto";
 import {
   getTagIdbyName,
   getTagNamebyId,
-  getTopicContent,
   getTopicInfo,
-  TopicType,
-} from "@modules/topic";
-import { getMyInfo } from "@modules/session";
-import { getUserWealth } from "@modules/wealth";
-import { getToken } from "@modules/session";
-import { sendAtNotification as sendAtNotificationRequest } from "@modules/notification";
+} from "@modules/topic/api/metadata";
+import { getTopicContent } from "@modules/topic/api/detail";
+import { TopicType } from "@modules/topic/model/enums";
+import { getMyInfo } from "@modules/session/api/session";
+import { getUserWealth } from "@modules/wealth/api/service";
+import { getToken } from "@modules/session/api/session";
+import { sendAtNotification as sendAtNotificationRequest } from "@modules/notification/api/service";
 import {
   clearEditorContentCache,
-  createEditorTopic,
   getEditorContentCache,
   setEditorContentCache,
+} from "@modules/posting/drafts/draft-storage";
+import {
+  createEditorTopic,
+  updateEditorPost,
+} from "@modules/posting/api/service";
+import {
   type NewPostRequestDto,
   type NewTopicRequestDto,
   type NewVoteRequestDto,
-  updateEditorPost,
-  uploadEvent,
-} from "@modules/posting";
+} from "@modules/posting/model/dto";
+import { uploadEvent } from "@modules/posting/drafts/editor-image-upload";
 import { atHanderler } from "@foundation/lib/text";
 import type { EditorTagInfo, EditorVoteInfo } from "../model/types";
 import styles from "./EditorPage.module.scss";

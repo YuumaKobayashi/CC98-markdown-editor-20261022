@@ -3,9 +3,10 @@ import { useParams } from "react-router";
 
 import { UserAreaLoading } from "@application/layouts/user-area";
 import { useAppSelector } from "@application/store";
-import { getCurrentUserFans, UserFollowCard } from "@modules/follow";
-import { selectCurrentUser } from "@modules/session";
-import type { UserInfo } from "@modules/user";
+import { getCurrentUserFans } from "@modules/follow/api/service";
+import { UserFollowCard } from "@modules/follow/ui/UserFollowCard";
+import { selectCurrentUser } from "@modules/session/model/selectors";
+import type { UserInfo } from "@modules/user/model/dto";
 import { parseUserCenterPage } from "@application/routes/user-center/model/route-params";
 import { UserCenterPager as Pager } from "@application/routes/user-center/pagination";
 import activityStyles from "./MyFans.module.scss";

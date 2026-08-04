@@ -10,8 +10,8 @@ import {
 import {
   formAuthorizeHeader,
   getMyInfo,
-  refreshUserInfo,
-} from "@modules/session";
+} from "@modules/session/api/session";
+import { refreshUserInfo } from "@modules/session/api/refresh-user-info";
 import {
   getServerNow,
   getSigninInMonth,

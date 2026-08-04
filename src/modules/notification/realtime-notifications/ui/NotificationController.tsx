@@ -3,10 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import type { AnyAction } from "redux";
 import type { ThunkDispatch } from "redux-thunk";
 
-import {
-  selectIsLogOn,
-  type SessionState,
-} from "@modules/session";
+import { selectIsLogOn } from "@modules/session/model/selectors";
+import { type SessionState } from "@modules/session/model/types";
 import { CC98SignalR } from "../signalr";
 import { setLocalStorage } from "@foundation/storage/web-storage";
 import {

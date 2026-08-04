@@ -1,8 +1,9 @@
 import * as React from "react";
-import { getBoardInfo, type IBoard } from "@modules/board";
+import { getBoardInfo } from "@modules/board/api/service";
+import { type BoardInfo } from "@modules/board/model/types";
 import { useNavigate, useParams } from "react-router";
 
-import { getTagInfo } from "@modules/topic";
+import { getTagInfo } from "@modules/topic/api/metadata";
 
 import styles from "./BoardPage.module.scss";
 import { BoardContent } from "./BoardContent";
@@ -11,7 +12,7 @@ import { BoardHeader } from "./BoardHeader";
 export function BoardPage() {
   const navigate = useNavigate();
   const { id, page } = useParams<{ id: string; page: string }>();
-  const [data, setData] = React.useState<IBoard | null>(null);
+  const [data, setData] = React.useState<BoardInfo | null>(null);
 
   React.useEffect(() => {
     const loadBoard = async () => {

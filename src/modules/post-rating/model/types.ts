@@ -1,4 +1,4 @@
-import type { RatingType } from "@modules/post";
+import type { RatingType } from "@modules/post/model/enums";
 
 export interface RatingReason {
   id: number;

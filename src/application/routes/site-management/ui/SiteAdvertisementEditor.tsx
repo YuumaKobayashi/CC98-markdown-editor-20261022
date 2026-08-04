@@ -6,13 +6,15 @@ import moment from "moment";
 import {
   ForumIndexColumnType,
   ForumIndexColumnVisibility,
+} from "@modules/site-content/model/enums";
+import {
   getIndexColumnInfo,
   putIndexColumnInfo,
-} from "@modules/site-content";
+} from "@modules/site-content/api/service";
 import type {
   ForumIndexColumn,
   PostForumIndexColumnInfo,
-} from "@modules/site-content";
+} from "@modules/site-content/model/dto";
 
 interface SiteIndexColumnEditorItem extends ForumIndexColumn {
   /** 仅用于区分编辑器中的新增行，不属于 wire DTO。 */

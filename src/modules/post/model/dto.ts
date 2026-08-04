@@ -138,11 +138,6 @@ export interface PostInfo {
   isMe: boolean;
 }
 
-/**
- * 旧名兼容别名；实际 wire DTO 为 {@link PostInfo}。
- */
-export type IPost = PostInfo;
-
 export interface PostBasicInfo {
   id: number;
   floor: number;
@@ -164,8 +159,8 @@ export interface NewPostInfo {
   tag1?: number;
   tag2?: number;
   allowedViewers?: string | null;
-  allowedViewerState?: import("@modules/topic").TopicAllowedViewerState;
-  type?: import("@modules/topic").TopicType;
+  allowedViewerState?: import("@modules/topic/model/enums").TopicAllowedViewerState;
+  type?: import("@modules/topic/model/enums").TopicType;
   notifyPoster?: boolean;
   isAnonymous?: boolean;
   notifyAllReplier?: boolean;
@@ -177,5 +172,3 @@ export interface PostLikeInfo {
   likeCount: number;
   likeState: LikeState;
 }
-
-export type SpecificUserPostInfo = PostInfo;

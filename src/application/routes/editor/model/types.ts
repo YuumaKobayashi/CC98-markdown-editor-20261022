@@ -1,4 +1,4 @@
-import type { BoardTagInfoV2Item } from "@modules/board";
+import type { BoardTagInfoV2Item } from "@modules/board/model/dto";
 
 export interface EditorVoteInfo {
   voteItems: string[];

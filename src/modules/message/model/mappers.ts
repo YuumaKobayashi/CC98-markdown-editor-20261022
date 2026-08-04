@@ -1,7 +1,8 @@
 import { transerTime } from "@foundation/lib/time";
 import type { MessageInfo, RecentContactUserInfo } from "./dto";
 import type { MessagePersonInfo, MessageViewModel } from "./view-model";
-import type { UserBasicInfo, UserLookupFallback } from "@modules/user";
+import type { UserBasicInfo } from "@modules/user/model/dto";
+import type { UserLookupFallback } from "@modules/user/model/types";
 
 /**
  * 处理最新消息列表，时间间隔短的消息只显示第一条消息的时间

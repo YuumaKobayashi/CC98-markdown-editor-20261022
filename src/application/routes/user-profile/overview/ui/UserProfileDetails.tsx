@@ -2,9 +2,17 @@ import * as React from "react";
 import { Tag } from "antd";
 import { Link } from "react-router";
 
-import { followUser, unfollowUser } from "@modules/follow";
-import { UbbCodeOptions, UbbContainer } from "@modules/ubb";
-import { UserGender, UserState, type UserInfo } from "@modules/user";
+import {
+  followUser,
+  unfollowUser,
+} from "@modules/follow/api/service";
+import { UbbCodeOptions } from "@modules/ubb/engine/Core";
+import { UbbContainer } from "@modules/ubb/UbbContainer";
+import {
+  UserGender,
+  UserState,
+} from "@modules/user/model/enums";
+import { type UserInfo } from "@modules/user/model/dto";
 import { isoTime2LocalTime } from "@foundation/lib/time-zone";
 import styles from "./UserProfileDetails.module.scss";
 

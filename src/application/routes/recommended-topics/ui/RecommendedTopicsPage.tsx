@@ -1,12 +1,10 @@
 import * as React from "react";
 import { useEffect, useRef, useState } from "react";
 
-import {
-  RecommendedTopicItem,
-  RecommendedTopicsBreadcrumb,
-} from "@modules/topic";
-import { getRandomRecommendedTopic } from "@modules/topic";
-import type { RecommendedTopic } from "@modules/topic";
+import { RecommendedTopicItem } from "@modules/topic/ui/RecommendedTopicItem";
+import { RecommendedTopicsBreadcrumb } from "@modules/topic/ui/RecommendedTopicsBreadcrumb";
+import { getRandomRecommendedTopic } from "@modules/topic/api/list-search";
+import type { RecommendedTopic } from "@modules/topic/model/view-model";
 import {
   getStorage,
   removeStorage,

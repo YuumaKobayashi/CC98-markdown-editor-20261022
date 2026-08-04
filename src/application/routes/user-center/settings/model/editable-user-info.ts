@@ -1,4 +1,7 @@
-import type { ChangeUserInfo, UserInfo } from "@modules/user";
+import type {
+  ChangeUserInfo,
+  UserInfo,
+} from "@modules/user/model/dto";
 
 /**
  * 个人资料设置页使用的可编辑数据。

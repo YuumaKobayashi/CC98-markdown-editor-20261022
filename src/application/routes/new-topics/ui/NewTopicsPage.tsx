@@ -4,22 +4,20 @@ import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import $ from "jquery";
 
-import {
-  FocusTopicItem,
-  NewTopicsBreadcrumb,
-  TopicCard,
-} from "@modules/topic";
-import { getAllNewTopic } from "@modules/topic";
-import { getMyInfo } from "@modules/session";
+import { FocusTopicItem } from "@modules/topic/ui/FocusTopicItem";
+import { NewTopicsBreadcrumb } from "@modules/topic/ui/NewTopicsBreadcrumb";
+import { TopicCard } from "@modules/topic/ui/TopicCard";
+import { getAllNewTopic } from "@modules/topic/api/list-search";
+import { getMyInfo } from "@modules/session/api/session";
 import {
   setShowCardUser,
-  setUserTopicViewMode,
   useShowCardUser,
-} from "@modules/user-preference";
-import { isLogOn } from "@modules/session";
-import type { FocusTopic } from "@modules/topic";
-import type { CurrentUser } from "@modules/session";
-import { UserTopicViewMode } from "@modules/user";
+} from "@modules/user-preference/persistence/show-card-user";
+import { setUserTopicViewMode } from "@modules/user-preference/api/service";
+import { isLogOn } from "@modules/session/api/session";
+import type { FocusTopic } from "@modules/topic/model/view-model";
+import type { CurrentUser } from "@modules/session/model/types";
+import { UserTopicViewMode } from "@modules/user/model/enums";
 import { CollectionPageShell } from "@application/layouts/collection";
 import { pDebounce } from "@foundation/lib/async";
 import { isBottom } from "@foundation/lib/dom";

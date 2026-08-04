@@ -1,14 +1,10 @@
 import { navigate } from "@application/router/navigation";
 import { reportApplicationError } from "@application/providers/application-error";
 import type { AppDispatch, RootState } from "@application/store/store";
-import {
-  replaceUnreadCount,
-  selectUnreadCount,
-} from "@modules/notification";
-import {
-  sessionInvalidated,
-  updateCurrentUser,
-} from "@modules/session";
+import { replaceUnreadCount } from "@modules/notification/model/unread-count-slice";
+import { selectUnreadCount } from "@modules/notification/model/selectors";
+import { sessionInvalidated } from "@modules/session/model/session-slice";
+import { updateCurrentUser } from "@modules/session/model/session-actions";
 import { configureLegacyUtilityEffects } from "@foundation/lib/legacy-utility-effects";
 
 export function registerLegacyUtilityEffects(

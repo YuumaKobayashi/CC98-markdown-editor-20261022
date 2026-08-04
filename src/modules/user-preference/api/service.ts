@@ -1,6 +1,7 @@
-import { formAuthorizeHeader, refreshUserInfo } from "@modules/session";
+import { formAuthorizeHeader } from "@modules/session/api/session";
+import { refreshUserInfo } from "@modules/session/api/refresh-user-info";
 import { cc98Fetch } from "@foundation/api/http";
-import type { UserTopicViewMode } from "@modules/user";
+import type { UserTopicViewMode } from "@modules/user/model/enums";
 
 export async function setUserTopicViewMode(
   mode: UserTopicViewMode,

@@ -6,8 +6,8 @@ import {
   changeSiteAnnouncement as updateSiteAnnouncement,
   clearMainPageCache as refreshMainPageCache,
   getPublicGlobalConfig,
-  SiteAnnouncementPreview,
-} from "@modules/site-content";
+} from "@modules/site-content/api/service";
+import { SiteAnnouncementPreview } from "@modules/site-content/ui/SiteAnnouncementPreview";
 
 const { TextArea } = Input;
 

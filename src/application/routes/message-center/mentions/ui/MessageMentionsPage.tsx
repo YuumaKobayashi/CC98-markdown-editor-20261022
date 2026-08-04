@@ -2,9 +2,10 @@ import * as React from "react";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router";
 
-import { MessageAttmebox, type ReplyAtNotificationViewModel } from "@modules/notification";
-import { getMessageAttme } from "@modules/notification";
-import { getTotalPage } from "@modules/notification";
+import { MessageAttmebox } from "@modules/notification/ui/MessageAttmebox";
+import { type ReplyAtNotificationViewModel } from "@modules/notification/model/view-model";
+import { getMessageAttme } from "@modules/notification/api/service";
+import { getTotalPage } from "@modules/notification/api/service";
 import { DocumentTitle } from "@foundation/ui/document-title";
 import styles from "./MessageMentionsPage.module.scss";
 import { Pager } from "@foundation/ui/pagination";

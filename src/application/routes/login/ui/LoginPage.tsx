@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { useAppDispatch } from "@application/store";
-import { logIn } from "@modules/session";
+import { logIn } from "@modules/session/api/authentication";
 import { changeTheme } from "@foundation/theme";
 import DocumentTitle from "@foundation/ui/document-title";
 import styles from "./LoginPage.module.scss";

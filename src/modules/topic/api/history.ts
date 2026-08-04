@@ -6,9 +6,12 @@ import type {
 import type { UserRecentTopic } from "../model/view-model";
 import { toUserRecentTopic } from "../model/mappers";
 import type { ResultWithCount } from "@foundation/api/contracts";
-import { getToken, formAuthorizeHeader } from "@modules/session";
+import {
+  getToken,
+  formAuthorizeHeader,
+} from "@modules/session/api/session";
 import { cc98Fetch } from "@foundation/api/http";
-import { getBoardName } from "@modules/board";
+import { getBoardName } from "@modules/board/api/service";
 
 export interface CurrentUserRecentTopicPage {
   topics: UserRecentTopic[];

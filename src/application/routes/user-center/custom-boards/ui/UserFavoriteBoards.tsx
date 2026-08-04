@@ -2,9 +2,9 @@ import * as React from "react";
 
 import { UserAreaLoading } from "@application/layouts/user-area";
 import { useAppSelector } from "@application/store";
-import { getCurrentUserFavoriteBoards } from "@modules/board";
-import { selectCurrentUser } from "@modules/session";
-import type { UserFavoritesBoardInfo } from "@modules/board";
+import { getCurrentUserFavoriteBoards } from "@modules/board/api/service";
+import { selectCurrentUser } from "@modules/session/model/selectors";
+import type { UserFavoritesBoardInfo } from "@modules/board/model/types";
 import { UserFavoriteBoardCard } from "./UserFavoriteBoardCard";
 
 /**

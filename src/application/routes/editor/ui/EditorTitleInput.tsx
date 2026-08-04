@@ -1,7 +1,7 @@
 import * as React from "react";
 import $ from "jquery";
 
-import { getTagNamebyId } from "@modules/topic";
+import { getTagNamebyId } from "@modules/topic/api/metadata";
 import type { EditorTagInfo } from "../model/types";
 import styles from "./EditorTitleInput.module.scss";
 

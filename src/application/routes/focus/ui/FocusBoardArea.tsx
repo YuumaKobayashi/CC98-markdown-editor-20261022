@@ -1,8 +1,8 @@
 import * as React from "react";
 
-import { getBoardName } from "@modules/board";
-import { getMyInfo } from "@modules/session";
-import type { FocusBoard } from "@modules/board";
+import { getBoardName } from "@modules/board/api/service";
+import { getMyInfo } from "@modules/session/api/session";
+import type { FocusBoard } from "@modules/board/model/types";
 import {
   getStorage,
   setStorage,

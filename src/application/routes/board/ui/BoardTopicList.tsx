@@ -1,11 +1,11 @@
 import * as React from "react";
-import type { ITopic } from "@modules/topic";
+import type { TopicInfo } from "@modules/topic/model/dto";
 
 import styles from "./BoardTopicList.module.scss";
 import { BoardTopicListItem } from "./BoardTopicListItem";
 
 interface BoardTopicListProps {
-  list: ITopic[];
+  list: TopicInfo[];
 }
 
 export function BoardTopicList({ list }: BoardTopicListProps) {

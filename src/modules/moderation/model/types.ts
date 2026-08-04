@@ -1,5 +1,5 @@
 import type { ResultWithCount } from "@foundation/api/contracts";
-import type { BoardEvent } from "@modules/board";
+import type { BoardEvent } from "@modules/board/model/dto";
 
 export interface PostSimpleInfo {
   floor: number;

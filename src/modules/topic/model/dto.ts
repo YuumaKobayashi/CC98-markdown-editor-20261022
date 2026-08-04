@@ -149,11 +149,6 @@ export interface TopicInfo {
   lotteryTopicDetail: LotteryTopicDetail | null;
 }
 
-/**
- * 旧名兼容别名；实际 wire DTO 为 {@link TopicInfo}。
- */
-export type ITopic = TopicInfo;
-
 export interface SearchedTopicInfo {
   id: number;
   boardId: number;

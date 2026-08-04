@@ -1,7 +1,7 @@
 import * as React from "react";
 import moment from "moment";
 
-import { UbbContainer } from "@modules/ubb";
+import { UbbContainer } from "@modules/ubb/UbbContainer";
 
 import type { ReplyAtNotificationViewModel } from "../model/view-model";
 import styles from "./MessageResponseItem.module.scss";

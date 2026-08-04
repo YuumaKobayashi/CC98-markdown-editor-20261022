@@ -2,12 +2,13 @@ import * as React from "react";
 import { Checkbox, Form, Input, Menu, Modal, Select } from "antd";
 import type { FormInstance } from "antd";
 import { SketchPicker } from "react-color";
-import { clearInvalidBoardsInfoCache, getBoards } from "@modules/board";
+import { clearInvalidBoardsInfoCache } from "@modules/board/cache/board-cache";
+import { getBoards } from "@modules/board/api/service";
 import {
   TopicBestState,
   TopicState,
   TopicTopState,
-} from "@modules/topic";
+} from "@modules/topic/model/enums";
 import {
   addBoardTopTopic,
   cancelBestTopic,
