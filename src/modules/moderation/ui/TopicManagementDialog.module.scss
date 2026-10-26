@@ -1,0 +1,238 @@
+.dialog {
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.dialogContent {
+  width: 800px;
+  height: var(--topic-management-content-height);
+}
+
+.dialogBody.dialogBody {
+  box-sizing: border-box;
+  height: var(--topic-management-body-height);
+  padding: 24px;
+  overflow: visible;
+}
+
+.dialogFooter.dialogFooter {
+  box-sizing: border-box;
+  height: 55px;
+}
+
+.highlightViewport {
+  scrollbar-gutter: stable;
+}
+
+.footerButton.footerButton,
+.confirmButton.confirmButton {
+  min-width: 32px;
+}
+
+.confirmButton.confirmButton {
+  margin-left: 8px;
+}
+
+.tabs {
+  width: 100%;
+  color: rgba(0, 0, 0, 0.65);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 14px;
+  line-height: 21px;
+  --cc98-theme-color-main: #1890ff;
+}
+
+.tabs > [role="tablist"] {
+  box-sizing: border-box;
+  width: 752px;
+  height: 48px;
+  align-items: stretch;
+  justify-content: space-around;
+  margin: 0 0 16px;
+}
+
+/* Ant Menu's clearing pseudo-elements were flex items in the legacy layout. */
+.tabs > [role="tablist"]::before {
+  display: table;
+  width: 0;
+  height: 47px;
+  flex: 0 1 auto;
+  content: "";
+}
+
+.tabs > [role="tablist"]::after {
+  display: block;
+  width: 0;
+  height: 0;
+  flex: 0 1 auto;
+  content: " ";
+}
+
+.tabs > [role="tablist"] > [role="tab"] {
+  box-sizing: border-box;
+  min-height: 48px;
+  margin: 0;
+  padding: 0 20px;
+  line-height: 46px;
+}
+
+.tabs > [role="tabpanel"] {
+  outline: 0;
+}
+
+.form {
+  box-sizing: border-box;
+  width: 752px;
+  margin: 0;
+}
+
+.reasonForm {
+  height: 80px;
+}
+
+.daysForm {
+  display: flex;
+  height: 184px;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.moveForm {
+  height: 144px;
+}
+
+.highlightForm {
+  display: flex;
+  height: 665px;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.field {
+  position: relative;
+  width: 752px;
+  height: 80px;
+}
+
+.label {
+  height: 40px;
+  color: rgba(0, 0, 0, 0.65);
+  line-height: 32px;
+}
+
+.input.input {
+  display: block;
+  width: 752px;
+  height: 32px;
+  margin-top: 4px;
+}
+
+.field[data-invalid] .input {
+  border-color: #f5222d;
+}
+
+.error {
+  position: absolute;
+  top: 72px;
+  left: 0;
+  z-index: 1;
+}
+
+.fullSelect,
+.boardSelect {
+  height: 32px;
+}
+
+.daySelectWrapper {
+  box-sizing: border-box;
+  display: block;
+  width: 752px;
+  height: 36px;
+  padding-top: 4px;
+}
+
+.fullSelect {
+  display: block;
+  width: 752px;
+}
+
+.boardSelect {
+  width: 120px;
+}
+
+.selectTrigger.selectTrigger {
+  box-sizing: border-box;
+  height: 32px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.selectTrigger.selectTrigger > [data-placeholder] {
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.legacyDayTrigger.legacyDayTrigger {
+  border-radius: 4px;
+}
+
+.legacyDayPopup.legacyDayPopup {
+  box-sizing: content-box;
+  max-height: 250px;
+  padding: 4px 0;
+  overflow-y: auto;
+  color: rgba(0, 0, 0, 0.65);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.legacyDayItem.legacyDayItem {
+  box-sizing: content-box;
+  min-height: 0;
+  padding: 5px 12px;
+  overflow: hidden;
+  color: rgba(0, 0, 0, 0.65);
+  line-height: 22px;
+}
+
+.boardRow {
+  display: flex;
+  height: 36px;
+  align-items: flex-start;
+  gap: 32px;
+  margin-top: 28px;
+}
+
+.boardStatus {
+  line-height: 32px;
+}
+
+.checkboxRow {
+  display: flex;
+  width: 752px;
+  height: 40px;
+  align-items: flex-start;
+}
+
+.checkboxRow > label,
+.checkboxRow > div > label {
+  height: 40px;
+  line-height: 21px;
+}
+
+.colorField {
+  width: 752px;
+  height: 393px;
+}
+
+.colorLabel {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  height: 40px;
+  padding: 0 0 8px;
+  color: rgba(0, 0, 0, 0.65);
+  line-height: 32px;
+}

@@ -1,0 +1,50 @@
+
+@use "../../../foundation/styles/tokens/semantic-colors" as semanticColors;
+
+.message-right {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+/***********************消息设置的样式*****************************/
+.message-setting {
+  display: flex;
+  flex-direction: column;
+  background-color: semanticColors.$color-post;
+  border: 1px solid semanticColors.$color-border;
+  height: 400px;
+
+  .message-settingbox {
+    display: flex;
+    flex-direction: row;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    font-size: 1rem;
+    font-family: "微软雅黑";
+    color: black;
+    flex-shrink: 0;
+    margin: 1.5rem 0 0 5rem;
+
+    .radioTitle {
+      width: 12rem;
+    }
+
+    .radioGroup {
+      display: contents;
+      color: inherit;
+      line-height: inherit;
+    }
+
+    input {
+      margin: 0.8rem 0.2rem 0 1.5rem;
+    }
+  }
+
+  .message-setting-btn {
+    width: 7rem;
+    height: 2rem;
+    line-height: 1.8rem;
+    margin: 2rem 0rem 0rem 9rem;
+  }
+}

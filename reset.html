@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CC98 论坛 - 清空缓存</title>
+    <link
+      rel="stylesheet"
+      href="/static/content/support-pages.css"
+    />
+  </head>
+  <body>
+    <main class="cc98-support-page">
+      <h2
+        class="cc98-support-title cc98-support-title--lead cc98-support-center"
+      >
+        清空论坛缓存数据
+      </h2>
+      <hr />
+
+      <div class="cc98-support-row">
+        <div class="cc98-support-column">
+          <section class="cc98-support-card">
+            <div class="cc98-support-card__body">
+              <p>
+                如果你遇到无法访问论坛页面、无法登录、浏览内容时持续报错等问题，可以在这个页面清空论坛缓存数据，这可能有助于解决一些问题。
+              </p>
+              <p>
+                注意：清空缓存数据之后，你将需要重新使用用户名密码登录 CC98
+                论坛。
+              </p>
+              <p>
+                如果你确定要执行这个操作，请单击下面的<q>执行清空缓存操作</q>按钮。
+              </p>
+
+              <hr />
+
+              <div class="cc98-support-center">
+                <button
+                  type="button"
+                  class="cc98-support-button"
+                  onclick="doClear();"
+                >
+                  执行清空缓存操作
+                </button>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <dialog
+      id="finished-dialog"
+      class="cc98-support-dialog"
+      aria-labelledby="finished-dialog-title"
+      tabindex="-1"
+    >
+      <div class="cc98-support-dialog__header">
+        <h2 id="finished-dialog-title" class="cc98-support-dialog__title">
+          缓存清空完成
+        </h2>
+        <button
+          type="button"
+          class="cc98-support-icon-button"
+          aria-label="关闭"
+          onclick="finishedDialog.close();"
+        ></button>
+      </div>
+      <div class="cc98-support-dialog__body">
+        <p>
+          论坛的缓存数据已经全部清空。你将在稍后自动跳转到 CC98 论坛首页。
+        </p>
+        <p>如果你的浏览器没有自动跳转，请单击下面的按钮进行手动跳转。</p>
+        <hr />
+        <div class="cc98-support-center">
+          <a href="/" class="cc98-support-button">跳转到 CC98 论坛首页</a>
+        </div>
+      </div>
+    </dialog>
+
+    <script type="text/javascript">
+      const finishedDialog = document.getElementById("finished-dialog");
+
+      function doClear() {
+        window.localStorage.clear();
+        finishedDialog.showModal();
+        finishedDialog.focus();
+
+        setTimeout(function () {
+          location.href = "/";
+        }, 3000);
+      }
+    </script>
+  </body>
+</html>

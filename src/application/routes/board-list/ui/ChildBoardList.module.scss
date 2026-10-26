@@ -1,0 +1,59 @@
+
+
+.areaContent {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;}
+
+.boardContent {
+  display: flex;
+  margin: 1.1rem 1rem 1.1rem 1.1rem;
+  width: 15.6rem;}
+
+.noImgBoardContent {
+  display: flex;
+  flex-direction: column;
+  margin: 0px 1rem 1.1rem 1.1rem;
+  width: 15.6rem;}
+
+.boardBlock {
+  display: flex;
+  flex-direction: column;
+  margin-left: 0.5rem;}
+
+.greenBackdrop {
+  height: 6rem;
+  width: 6rem;
+  background-size: 100%;
+  border-radius: 50%;
+  background-color: var(--cc98-theme-color-main);}
+
+.boardImage {
+  width: 6rem;
+  height: 6rem;
+}
+
+.boardName2 {
+  font-size: 0.88rem;
+  font-family: 微软雅黑;
+  color: #000000;
+  margin-top: 0.75rem;
+  letter-spacing: 2px;}
+
+.boardNameWithImage {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.boardInfo {
+  font-size: 0.75rem;
+  font-family: 微软雅黑;
+  color: #000000;
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;}
+
+.boardStat {
+  display: flex;
+  align-items: center;
+}

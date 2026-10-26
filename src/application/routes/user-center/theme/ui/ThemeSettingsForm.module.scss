@@ -1,0 +1,41 @@
+
+
+.help-text {
+  color: grey;}
+
+.nativeCheckbox {
+  appearance: auto;
+  accent-color: auto;
+  box-sizing: border-box;
+  position: relative;
+  top: -0.09em;
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  padding: 0;
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 14px;
+  line-height: 14px;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.timeInput {
+  margin: 0 10px;
+}
+
+button.saveButton[type="submit"] {
+  padding: 0 10px;
+}
+
+.result {
+  margin-left: 10px;
+}
+
+.resultVisible {
+  display: unset;
+}
+
+.resultHidden {
+  display: none;
+}

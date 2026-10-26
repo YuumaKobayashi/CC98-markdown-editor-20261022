@@ -1,0 +1,206 @@
+# P15 首批人工确认
+
+> 当前状态：剩余 live 非年度回顾主链迁移已完成机械验证，停在人工验收门禁；旧 `/list` Board 由用户免检并暂留至 P21，Topic 两组已通过人工验收，近期动态/收藏/历史与当前公开 `/board` 仍开放。P15 尚未完成、不暂存、不提交、不 push、不自动进入下一组。
+
+## 已确认边界
+
+- [x] 首批仅迁移 `MyTopics`、`MyPosts`；
+- [x] 允许在目标组件范围内按 hooks 职责优化旧 lifecycle 逻辑；
+- [x] 默认使用 `useEffect`，不使用 `isFirstCommit` 模拟 class lifecycle；
+- [x] 保留 API、Redux、URL、展示、冻结 UBB/editor 与阶段门禁。
+- [x] 无 Redux 简单组件组采用三个内部批次连续实施，整组完成后统一停止；
+- [x] 零调用 legacy class 只登记为 P21 候选，不为清零数量而迁移。
+- [x] 无 Redux 轻状态与导航组件组以 `dd514178` 为基线，迁移 9 个 class；
+- [x] 通用 Pager 可保留一个轻量 `useState`，不迁移请求、Redux 或复杂 Focus 数据生命周期；
+- [x] Focus 页签由 pathname 声明式派生，移除该路径的 `useLayoutEffect` 和 jQuery class mutation；
+- [x] 本组完成后保留未暂存 diff，等待统一人工验收。
+- [x] 用户中心交互叶子组以 `312abe27` 为基线，迁移 `Navigation`、`MyFavoritesBoard`、`MyFollowingsUser`；
+- [x] 允许修复用户取关请求漏写 `await`，并明确记录失败行为变化；
+- [x] 保留导航 URL/DOM/回顶动画、卡片 API/文案/CSS 与关注 Redux action；
+- [x] 本组完成后保留未暂存 diff，等待人工验收。
+- [x] 热门主题同构页面组以 `f47bd51a` 为基线，迁移三个页面及三个 breadcrumb；
+- [x] 三个页面共享实现，但保留独立 lazy 入口、原 URL、标题、DOM 和 API；
+- [x] 允许补充稳定 topic key，并在 effect cleanup 中忽略卸载后的旧结果；
+- [x] 不并入随机推荐、无限滚动、Message 缓存页或零调用删除候选；
+- [x] 本组代码与文档分别形成本地检查点，人工验收继续作为独立门禁。
+- [x] 用户中心 Redux 页面与壳层组以 `594215b7` 为基线，迁移 5 个 class；
+- [x] 允许目标 page 使用 typed Redux hooks、路由参数和真实依赖 effect；
+- [x] 关注/粉丝页首次进入滚动到顶部，非正页码统一回退第 1 页；
+- [x] 保留 thunk、API、`isLoading` 共享状态、`hasTotal={true}` 及未迁移 mutation 子组件；
+- [x] 本组完成后保留未暂存 diff，等待统一人工验收。
+
+## 待确认内容
+
+- [x] 首批最终机械验证完成并已形成 `6ab4c465`；
+- [x] 无 Redux 简单组件组最终机械验证完成；
+- [x] 无 Redux 轻状态与导航组件组最终机械验证完成；
+- [x] 用户中心 Redux 页面与壳层组最终机械验证完成并形成代码检查点 `32ff97d8`；
+- [x] 用户中心交互叶子组最终机械验证完成并形成代码检查点 `607289f3`；
+- [x] 热门主题同构页面组最终机械验证完成；
+- [ ] 用户完成真实页面/API 验收；
+- [x] 用户审核本轮未提交代码与文档 diff；
+- [x] 用户授权本轮代码与文档形成阶段性本地提交；
+- [x] 用户已另行授权热门主题同构页面组；下一组仍需另行授权。
+
+## 首页、搜索与站务组件组授权
+
+- [x] 用户授权以 `82bf9fda` 为基线继续 P15；
+- [x] 用户接受只迁移 11 个 live class，不迁移零调用 `RecommendedBoardComponent`；
+- [x] 用户授权在目标组件内修复关键词截取、缓存键、旧响应、timer、重复监听和空列表新增缺陷；
+- [x] 完成后保留未暂存 diff，不提交、不 push、不进入下一组；
+- [x] 用户完成本组真实页面/API 人工验收；
+- [x] 本组代码检查点已形成：`547ecd45`。
+
+## 消息与私信组件组授权
+
+- [x] 用户授权以 `e2ec8348` 为基线继续 P15 并迁移全部 6 个消息 class；
+- [x] 用户授权联系人页与会话窗口作为不可拆分的小批共同迁移；
+- [x] 用户接受声明式页签/未读数、第一页缓存边界、受控编辑器、旧请求保护和滚动锚点修复；
+- [x] `useLayoutEffect` 只允许用于 prepend 后绘制前的 DOM 高度修正；
+- [x] 完成后保留未暂存 diff，不提交、不 push、不进入下一组；
+- [ ] 用户完成本组真实页面/API 人工验收。
+
+## Header、登录、通知与错误控制组授权
+
+- [x] 用户授权以 `986ce9e5` 为基线继续 P15，并迁移本组 6 个 class；
+- [x] 用户授权 Header 搜索改为受控 React 状态、登录返回地址增加安全回退、错误控制首次挂载清错；
+- [x] `NotificationController` 只迁移源码并保持未挂载，不恢复 SignalR 或浏览器通知；
+- [x] `ErrorBoundary` 保留 class，零调用 `ErrorEmitter` 不在本批迁移；
+- [x] 完成后保留未暂存 diff，不提交、不 push、不进入下一组；
+- [x] 用户完成本组真实浏览器、登录态、跨标签页和 API 人工验收；
+- [x] 用户授权本组代码与文档分别形成本地检查点；
+- [x] 本组代码检查点已形成：`220d94d2`。
+
+## 公共用户详情页迁移组授权
+
+- [x] 用户授权以 `69a67b04` 为基线迁移公共用户详情链路 6 个 live class；
+- [x] 用户授权新增“开始用户查询” Redux action，并修复不存在用户后的粘滞错误；
+- [x] 用户授权修复非法生日崩溃、稳定 key、旧响应覆盖与近期主题末页持续请求；
+- [x] 用户管理子页、Redux 数据结构、关注 API、冻结 UBB/editor 与样式不在本组范围；
+- [x] 完成后保留未暂存 diff，不提交、不 push、不进入下一组；
+- [ ] 用户完成本组真实浏览器、登录态、API、滚动与 UBB 人工验收。
+
+## 版面列表与展示叶子迁移组授权
+
+- [x] 用户授权以 `4d40a407` 为基线继续 P15，并一次迁移本组 9 个简单 React class；
+- [x] 用户授权标签补稳定 key、操作记录 hover 去 jQuery、删除未调用方法及导航空目标保护；
+- [x] Board 主页面、复杂列表/管理、Topic 列表、Redux、Modal、编辑器与 P21 候选不在本组范围；
+- [x] 完成后保留未暂存 diff，不提交、不 push、不进入下一组；
+- [x] 用户完成本组真实浏览器、登录态、API、图片、分页与 hover 人工验收；
+- [x] 用户审核本批次代码与文档 diff；
+- [x] 用户授权本批次代码与文档分别形成本地提交；
+- [x] 本组代码检查点已形成：`fe9fc28c`。
+
+## 公共用户管理子页迁移组授权
+
+- [x] 用户授权以 `f74d2733` 为基线继续 P15，并按正常迁移方式处理本组 4 个相互依赖组件；
+- [x] 用户授权在目标范围内修复路由旧用户、name 路由、旧响应覆盖和重复 key 缺陷；
+- [x] 保留原管理 API、校验、文案、Redux 结构和后台权限合同，不扩展其他用户详情子页；
+- [x] 完成后保留未暂存 diff，不提交、不 push、不进入下一组；
+- [x] 用户完成本组真实管理员登录态、API、权限、分页和浏览器人工验收。
+
+## Focus 页面剩余壳层迁移组授权
+
+- [x] 用户授权以 `a2ea94c8` 为基线迁移 `FocusBoardArea`、`FocusTopicArea` 两个相互依赖的 live React class；
+- [x] 用户授权修复重复 listener、未解绑版面 handler 与快速切换旧响应覆盖；
+- [x] 保留关注 API、sessionStorage 键、20/200 条加载合同、URL、DOM/CSS、文案及 500ms 回顶动画；
+- [x] `/newtopics` 卡片、音视频播放器、Redux、服务接口和 P21 候选不在本组范围；
+- [x] 完成后保留未暂存 diff，不提交、不 push、不进入下一组；
+- [x] 用户完成本组真实登录态、API、缓存、滚动、回顶和浏览器人工验收。
+- [x] 本组代码检查点已形成：`53e67ef8`。
+
+## 主题发现页与卡片视图迁移组授权
+
+- [x] 用户授权以 `4e34e83a` 为基线迁移主题发现页、卡片、音视频播放器和两侧栏七个 live React class；
+- [x] 用户要求本组采用严格行为保真，已发现缺陷只登记、留待后续修复；
+- [x] 保留 API、Redux、缓存键、URL、DOM/CSS、文案、加载数量、滚动阈值、回顶动画与播放器合同；
+- [x] 允许只在第三方播放器初始化及显示前 DOM 修正边界使用 `useLayoutEffect`；
+- [x] 不删除零引用 State 类型，不新增依赖，不启动持续 Node server；
+- [x] 完成后保持全部改动未暂存、未提交、未 push，不触碰 `.vscode/`，停止等待人工验收；
+- [x] 用户完成本组真实登录态、API、图片、音视频、缓存、滚动和浏览器人工验收。
+- [x] 用户授权本组代码与文档分别形成本地检查点。
+- [x] 本组代码检查点已形成：`37727da2`。
+
+## 用户中心资料、主题与转账设置迁移组授权
+
+- [x] 用户授权以 `4c3ad089` 为基线继续 P15，并按业务闭环迁移个人资料、头像、其他设置、主题设置和财富转账六个 live React class；
+- [x] 用户要求已发现缺陷全部保留并记录，留待后续批次修复；
+- [x] 保留 API、Redux 数据结构/action/thunk、公开 URL、DOM/CSS、文案、校验、默认头像、主题注册表和业务语义；
+- [x] 登录、收藏/历史、Board 主页面、编辑/主题管理和零调用候选不在本组范围；
+- [x] 不新增依赖，不启动持续 Node server，不触碰 `.vscode/`；
+- [x] 完成后保持全部改动未暂存、未提交、未 push，不自动进入下一批；
+- [x] 用户完成本组真实登录态、资料/头像/主题/转账 API、Canvas、上传和浏览器人工验收。
+- [x] 用户授权本组代码与文档分别形成本地检查点。
+- [x] 本组代码检查点已形成：`37549b04`。
+
+## 用户中心近期动态、收藏与浏览历史迁移组授权
+
+- [x] 用户授权以 `9939e63a` 为基线继续 P15，并按业务闭环迁移近期主题动态、收藏与浏览历史六个 live React class；
+- [x] 用户要求已发现缺陷全部保留并记录，留待后续批次修复；
+- [x] 保留 API、Redux 数据结构/action/thunk、公开 URL、DOM/CSS、文案、分页、分组和业务语义；
+- [x] `ExactActivitiesPosts`、Board、Topic 主链、Edit、登录与其他 P21 候选不在本组范围；
+- [x] 不新增依赖，不启动持续 Node server，不触碰 `.vscode/`；
+- [x] 完成后保持全部改动未暂存、未提交、未 push，不自动进入下一批；
+- [ ] 用户完成本组真实登录态、近期主题/收藏/历史 API、滚动、分页、Modal、back/forward 和浏览器人工验收；
+- [ ] 用户授权本组代码与文档形成本地检查点。
+
+## 当前公开 Board 页面迁移组授权
+
+- [x] 用户授权以 `22a6daae` 为基线继续 P15，并迁移当前公开 `/board/:id/:page?/*` 的完整页面闭环；
+- [x] 用户同意本组迁移 `Pages/Board` 的七个 class declaration、一个 class expression，并把同页函数组件共同归位；
+- [x] 保留 API、公开 URL、DOM/CSS、AntD、UBB adapter、分页、权限、文案和已登记缺陷；
+- [x] 旧 `/list/:boardId/...`、AnnualReview、Index、Topic、Edit、UBB 源码与 P21 候选不在本组；
+- [x] 同时补充 `Pages/**` 的完整 AST 口径，不回写或伪造历史窄口径；
+- [x] 不新增依赖，不启动持续 Node server，不触碰 `.vscode/`；
+- [x] 完成后保持全部改动未暂存、未提交、未 push，不自动进入下一批；
+- [ ] 用户完成本组真实登录态、Board/topic/tag/管理 API、权限、分页、hover UBB、back/forward 和浏览器人工验收；
+- [ ] 用户授权本组代码与文档形成本地检查点。
+
+## Topic 评分与管理弹窗迁移组授权
+
+- [x] 用户授权以 `673995ca` 为基线迁移四个仍被 Topic 主链调用的评分与管理弹窗 class；
+- [x] 四个 owner 归入 `features/moderation`，`Reply`/`SendTopic` 使用 public barrel，旧路径保留兼容 facade；
+- [x] 保留 API、参数顺序、父组件 props/callback、DOM/CSS、AntD 文案、父组件显隐、调试日志及已登记缺陷；
+- [x] `Judge`、`TopicJudgeV2`、`PostManagement` v1、`TopicManagement` v1 只登记 P21 候选，不为清零数字而迁移；
+- [x] `Award`、`ReplierSignature`、`Reply`、`SendTopic`、Topic 页面壳、旧 `/list` Board、Redux、Router、UBB/editor 与依赖不在本组范围；
+- [x] 不启动持续 Node server，不触碰 `.vscode/`，完成后保持全部改动未暂存、未提交、未 push，不自动进入下一批；
+- [x] 用户完成本组真实登录态、发言/评分/主题管理 API、权限、Modal、快速操作和浏览器人工验收；
+- [x] 本组代码检查点已形成：`57029e44`；文档检查点已形成：`908a3c7c`。
+
+## 完整 Topic 主链迁移组授权
+
+- [x] 用户授权以 `908a3c7c` 为基线迁移 Topic 主链十个 React class 结构；
+- [x] 页面 owner 归入 `pages/topic`，Router 直接使用两个页面入口，旧文件保留完整兼容导出；
+- [x] 保留 API、Redux、URL、DOM/CSS、文案、草稿、Quote、递归热评与已登记缺陷；
+- [x] AnnualReview、旧 `/list` Board、Edit、Index、登录、冻结 UBB/editor 和全部 P21 候选不进入本组；
+- [x] 年度回顾暂不处理，不新增依赖，不启动持续 Node server，不触碰 `.vscode/`；
+- [x] 完成后保持全部改动未暂存、未提交、未 push，并停在本组人工验收门禁；
+- [x] 用户完成本组真实页面、登录态、Topic/回复/投票/管理 API、草稿、分页与浏览器人工验收；
+- [x] 用户授权本组代码与文档形成本地检查点；代码检查点已形成：`2f9669c1`，文档检查点已形成：`bf9eabaf`。
+
+## 旧 `/list` Board 主链迁移组授权
+
+- [x] 用户授权以 `bf9eabaf` 为基线迁移 `Components/Board/Board.tsx` 内 12 个 React class 结构；
+- [x] 11 个业务 owner 归入 `pages/board/legacy-list`，Router 直接加载 `LegacyBoardPage`，旧文件保留完整兼容导出；
+- [x] 文件内 route bridge 删除并转导根 `RouteComponent`，不再由本主链使用 `withRouter` 或 legacy route props；
+- [x] 保留 API、Redux、公开 URL、Local Storage、DOM/CSS、文案、jQuery、冻结 UBB、路由混用和已登记缺陷；
+- [x] `Pages/AnnualReview/**`、`Pages/AnnualReviewV2/**`、当前公开 `/board` owner、Edit、Index、登录和 P21 候选不进入本组；
+- [x] 不新增依赖，不启动持续 Node server，不触碰 `.vscode/`；
+- [x] 完成机械验证后保持全部改动未暂存、未提交、未 push，并停在本组决策门禁；
+- [x] 用户明确免除本组 `/list` deep link、登录态、Board/topic/tag/关注/管理 API、权限、分页、back/forward 与浏览器人工验收；不得记为人工验收通过；
+- [x] 当前迁移代码暂时保留，P21 在重新完成仓内引用、外部入口与生产构建证明后删除 `/list` route、legacy owner 与兼容 facade；
+- [x] 用户授权本组代码与文档形成本地检查点。
+- [x] 本组代码检查点已形成：`79e648ca`。
+
+## 剩余 live 非年度回顾主链迁移组授权
+
+- [x] 用户授权以 `78898e75` 为基线，只迁移仍有真实路由或运行时 JSX 调用的九个 React class；
+- [x] 编辑器、签到、旧 Index 分别归入 page owner，MessageBar 归入 shared feedback；Router 直接加载三个 page 入口；
+- [x] 保留编辑器/签到 API、Redux、URL、Local Storage、DOM/CSS、AntD 文案、冻结 UBB/editor、旧导出和已登记缺陷；
+- [x] `mode/id` 变化重新初始化，迁移后的 jQuery document/element 监听器允许配对 cleanup；
+- [x] 年度回顾、`ErrorBoundary`、`Tags`、`Options`、CountDown、旧 Topic v1/v2、旧 breadcrumb、FindIP、近期回复及其他零调用候选不迁移；
+- [x] 修正 MessageBar 零调用误判，但不修改任何 `Ubb/**` 文件；
+- [x] 不新增依赖，不启动持续 Node server，不触碰 `.vscode/`；
+- [x] 完成后保持全部改动未暂存、未提交、未 push，并停在本组人工验收门禁；
+- [ ] 用户完成编辑器、签到、旧 Index、UBB MessageBar、异常 API、权限与浏览器人工验收；
+- [ ] 用户授权本组代码与文档形成本地检查点。

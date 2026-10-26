@@ -1,0 +1,221 @@
+.dialogContent {
+  width: 520px;
+  height: 658px;
+}
+
+.dialogBody {
+  box-sizing: border-box;
+  width: 520px;
+  height: 548px;
+  padding: 24px !important;
+}
+
+.dialogFooter {
+  box-sizing: border-box;
+  height: 55px;
+  padding: 10px 16px !important;
+}
+
+.form {
+  box-sizing: border-box;
+  width: 472px;
+  height: 500px;
+  margin: 0;
+  overflow-y: scroll;
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 14px;
+  line-height: 21px;
+}
+
+.formRow {
+  box-sizing: border-box;
+  display: grid;
+  width: 100%;
+  min-height: 32px;
+  grid-template-columns: 33.333333% 66.666667%;
+  margin: 0 0 24px;
+}
+
+.formRow[data-invalid] {
+  height: 59px;
+  min-height: 59px;
+  margin-bottom: 5px;
+}
+
+.label {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  height: 40px;
+  padding: 0;
+  color: rgba(0, 0, 0, 0.85);
+  line-height: 40px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.label::after {
+  position: relative;
+  top: -0.5px;
+  margin: 0 8px 0 2px;
+  content: ":";
+}
+
+.required {
+  display: inline-block;
+  margin-right: 4px;
+  color: #f5222d;
+  font-family: SimSun, sans-serif;
+  line-height: 1;
+}
+
+.control {
+  box-sizing: border-box;
+  position: relative;
+  width: 305px;
+  min-height: 32px;
+  line-height: 40px;
+}
+
+.formRow[data-invalid] .control {
+  height: 59px;
+}
+
+.input {
+  width: 305px;
+  height: 32px !important;
+  padding: 4px 11px;
+  color: rgba(0, 0, 0, 0.65);
+  line-height: 21px;
+  border-radius: 4px;
+}
+
+.formRow[data-invalid] .input {
+  border-color: #f5222d;
+}
+
+.error {
+  box-sizing: border-box;
+  width: 305px;
+  height: 22px;
+  margin: -2px 0 -1px;
+  color: #f5222d;
+  font-size: 14px;
+  line-height: 21px;
+}
+
+.select {
+  position: relative;
+  top: -1px;
+  width: 305px;
+  height: 32px;
+  vertical-align: baseline;
+}
+
+.dateRangeRoot {
+  vertical-align: baseline;
+}
+
+.selectTrigger {
+  box-sizing: border-box !important;
+  width: 305px !important;
+  height: 32px !important;
+}
+
+.formRow[data-invalid] .selectTrigger {
+  border-color: #f5222d !important;
+}
+
+.selectPopup {
+  box-sizing: border-box !important;
+  width: 305px !important;
+  height: 168px !important;
+  max-height: 168px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+}
+
+.selectPopup [role="listbox"] {
+  box-sizing: border-box;
+  width: 305px;
+  height: 160px;
+}
+
+.selectOption {
+  box-sizing: border-box;
+  width: 305px;
+  height: 32px;
+  min-height: 32px !important;
+  padding: 5px 12px !important;
+  color: rgba(0, 0, 0, 0.65) !important;
+}
+
+.feedbackIcon {
+  position: absolute;
+  top: 9px;
+  right: 11px;
+  z-index: 1;
+  color: #f5222d;
+  font-size: 14px;
+  line-height: 14px;
+  pointer-events: none;
+}
+
+.radioGroup {
+  display: inline-block;
+  width: 305px;
+  color: rgba(0, 0, 0, 0.65);
+  line-height: 21px;
+  vertical-align: baseline;
+}
+
+.customInput {
+  display: inline-block;
+  width: 100px !important;
+  height: 32px !important;
+  margin-left: 10px;
+  padding: 4px 11px;
+  line-height: 21px;
+  vertical-align: middle;
+}
+
+.radioFormRow {
+  height: auto;
+  min-height: 32px;
+}
+
+.radioFormRow[data-invalid] {
+  height: auto;
+  min-height: 59px;
+}
+
+.radioFormRow[data-invalid] .control {
+  height: auto;
+  min-height: 59px;
+}
+
+.textAreaRow {
+  height: 98px;
+  min-height: 98px;
+}
+
+.textAreaRow .control {
+  height: 98px;
+  min-height: 98px;
+}
+
+.textArea {
+  box-sizing: border-box;
+  width: 305px;
+  min-height: 94px;
+  padding: 4px 11px;
+  color: rgba(0, 0, 0, 0.65);
+  line-height: 21px;
+  border-radius: 4px;
+}
+
+.noticeRow {
+  box-sizing: border-box;
+  min-height: 32px;
+  margin: 0 0 24px 33.333333%;
+  line-height: 40px;
+}

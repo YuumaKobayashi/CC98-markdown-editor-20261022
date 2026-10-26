@@ -1,0 +1,32 @@
+.cc98-unsupported-page {
+  position: fixed;
+  top: 10%;
+  left: 10%;
+  width: 100%;
+  font-size: 30px;
+  text-align: left;
+}
+
+.cc98-unsupported-title {
+  font-size: 40px;
+}
+
+.cc98-unsupported-links {
+  font-size: 20px;
+}
+
+.cc98-unsupported-link--gap-35 {
+  margin-left: 35px;
+}
+
+.cc98-unsupported-link--gap-36 {
+  margin-left: 36px;
+}
+
+.cc98-unsupported-link--gap-40 {
+  margin-left: 40px;
+}
+
+.cc98-unsupported-link--gap-46 {
+  margin-left: 46px;
+}

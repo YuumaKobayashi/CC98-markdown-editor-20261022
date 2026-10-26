@@ -1,0 +1,8 @@
+.card { box-sizing: border-box; position: relative; color: rgba(0, 0, 0, 0.65); font-family: inherit; font-size: 14px; font-weight: 400; line-height: 1.5; background: #fff; border: 1px solid #e8e8e8; border-radius: 2px; }
+.borderless { border-color: transparent; }
+.head { box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; min-height: 48px; margin-bottom: -1px; padding: 0 24px; border-bottom: 1px solid #e8e8e8; }
+.title { display: inline-block; flex: 1; padding: 16px 0; overflow: hidden; font-size: 16px; font-weight: 500; white-space: nowrap; text-overflow: ellipsis; }
+.body { box-sizing: content-box; padding: 24px; }
+.small .head { min-height: 36px; padding: 0 12px; }
+.small .title { padding: 8px 0; font-size: 14px; }
+.small .body { padding: 12px; }

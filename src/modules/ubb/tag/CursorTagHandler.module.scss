@@ -1,0 +1,23 @@
+.cursor {
+  cursor: var(--ubb-cursor);
+}
+
+.initial {
+  cursor: initial;
+}
+
+.inherit {
+  cursor: inherit;
+}
+
+.unset {
+  cursor: unset;
+}
+
+.revert {
+  cursor: revert;
+}
+
+.revertLayer {
+  cursor: revert-layer;
+}

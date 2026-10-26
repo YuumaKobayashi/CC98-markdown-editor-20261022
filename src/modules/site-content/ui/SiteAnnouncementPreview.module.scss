@@ -1,0 +1,43 @@
+.announcement {
+  display: flex;
+  flex-direction: column;
+  width: 51.25rem;
+  margin-top: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.25rem;
+  font-family: 微软雅黑;
+  padding-left: 0.75rem;
+  color: var(--cc98-theme-color-main);
+}
+
+.titleRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+}
+
+.titleText {
+  flex-grow: 1;
+  margin-left: 0.5rem;
+}
+
+.announcementContent {
+  display: flex;
+  flex-direction: row;
+  //min-height: 9rem;
+  margin-top: 1rem;
+  padding: 1rem 1.25rem;
+  border-width: 8px 1px 1px 1px;
+  border-style: solid;
+  border-color: var(--cc98-theme-color-main);
+  box-sizing: border-box;
+  background-color: var(--cc98-background-color-textarea);
+}

@@ -1,0 +1,109 @@
+
+
+.announcementRoot {
+  width: 100%;
+}
+
+.board-bigpaper {
+  width: 100%;
+  margin-bottom: 1rem;}
+
+.accordionItem.accordionItem {
+  width: 100%;
+  margin-bottom: 24px;
+  overflow: hidden;
+  background: #f7f7f7;
+  border: 0;
+  border-radius: 4px;
+}
+
+.summary {
+  display: flex;
+  align-items: center;
+  height: 4rem;
+}
+
+.board-avatar {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background-color: var(--cc98-theme-color-main);}
+
+.board-head-name {
+  margin-left: 1rem;
+  font-size: 1.25rem;
+  white-space: nowrap;}
+
+.description {
+  display: flex;
+  flex-direction: column;
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
+
+.masters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.masterItem {
+  margin-right: 10px;
+  font-size: 0.75rem;
+}
+
+.actions {
+  display: flex;
+  flex-grow: 2;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+  margin-right: 1rem;
+}
+
+.metrics {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100%;
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
+
+.metricRow {
+  display: flex;
+  align-items: center;
+}
+
+.metricTag.metricLabel {
+  width: 5rem;
+  margin-right: 0;
+  text-align: center;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.metricTag.metricValue {
+  width: 5rem;
+  margin-right: 0;
+  color: white;
+  text-align: center;
+  background-color: var(--cc98-theme-color-main);
+  border-color: var(--cc98-theme-color-main);
+  border-left: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.editButton {
+  margin-left: 0.5rem;
+}
+
+.boardBigPaperPanel.boardBigPaperPanel {
+  background: transparent;
+  border-top: 0;
+}
+
+.boardBigPaperContent.boardBigPaperContent {
+  padding: 4px 16px 16px;
+}

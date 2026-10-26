@@ -1,0 +1,42 @@
+.tabs {
+  box-sizing: border-box;
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 14px;
+  font-variant: tabular-nums;
+  line-height: 1.5;
+  font-feature-settings: "tnum";
+}
+
+.tabList {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 0 0 16px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.tab {
+  box-sizing: content-box;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 21px;
+  margin: 0 32px 0 0;
+  padding: 12px 0;
+  color: rgba(0, 0, 0, 0.65);
+  font: inherit;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.tab:last-child { margin-right: 0; }
+.tab:hover { color: #40a9ff; }
+.tab:focus-visible { color: #096dd9; outline: 2px solid rgba(24, 144, 255, 0.25); outline-offset: 2px; }
+.tab[aria-selected="true"] { color: var(--cc98-theme-color-main, #1890ff); text-shadow: 0 0 0.25px currentColor; }
+.tab[aria-selected="true"]::after { position: absolute; right: 0; bottom: -1px; left: 0; height: 2px; background: var(--cc98-theme-color-main, #1890ff); content: ""; }
+.tab:disabled { color: rgba(0, 0, 0, 0.25); cursor: not-allowed; }
+.panel { outline: none; }
+.panel[hidden] { display: none; }
+.panel:focus-visible { outline: 2px solid rgba(24, 144, 255, 0.25); outline-offset: 2px; }

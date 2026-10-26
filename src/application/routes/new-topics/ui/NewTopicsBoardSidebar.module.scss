@@ -1,0 +1,55 @@
+.card-topic-area-left-content-collapse {
+  background: var(--cc98-background-color-textarea);
+  border: 0;
+}
+
+.boardList {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.card-topic-area-left-content-collapse-item.card-topic-area-left-content-collapse-item.card-topic-area-left-content-collapse-item {
+  padding-bottom: 4px;
+  white-space: nowrap;
+
+  a {
+    color: inherit;
+  }
+
+  a:hover {
+    color: var(--cc98-theme-color-main);
+  }
+}
+
+.boardItemWide {
+  width: 100%;
+}
+
+.boardItemHalf {
+  width: 50%;
+}
+
+.boardLink {
+  font-size: 14px;
+}
+
+.panelHeading {
+  color: black;
+}
+
+.panelBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-left: 0;
+}
+
+.panelBodyIndented {
+  padding-left: 25px;
+}
+
+.sidebarPanelContent {
+  padding: 4px;
+  padding-left: 15px;
+}

@@ -1,0 +1,92 @@
+.recommendedReading {
+  display: flex;
+  flex-direction: column;
+  width: 51.25rem;
+  margin-top: 0.75rem;
+}
+
+.recommendedReadingContent {
+  display: flex;
+  flex-direction: row;
+  height: 7.5rem;
+  margin-top: 1rem;
+  padding: 1.25rem 1.25rem 0 1.25rem;
+  border-width: 8px 1px 1px 1px;
+  border-style: solid;
+  border-color: var(--cc98-theme-color-sub);
+  box-sizing: border-box;
+  background-color: var(--cc98-background-color-textarea);
+}
+
+.recommendedReadingImage {
+  display: flex;
+  flex-direction: row;
+  margin-right: 1.25rem;
+
+  img {
+    border-radius: 50%;
+    background-color: var(--cc98-theme-color-sub);
+    width: 3.75rem;
+    height: 3.75rem;
+  }
+}
+
+.recommendedReadingDetails {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.recommendedReadingTitle {
+  display: block;
+  max-width: 43.625rem;
+  font-size: 1rem;
+  font-family: 微软雅黑;
+  color: rgb(107, 113, 120);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.recommendedReadingAbstract {
+  display: block;
+  max-width: 43.625rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.75rem;
+  font-family: 微软雅黑;
+  color: rgb(107, 113, 120);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.recommendedReadingButtons {
+  display: flex;
+  height: 0.625rem;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.recommendedReadingButton {
+  width: 0.625rem;
+  height: 0.625rem;
+  margin: 0 0.25rem;
+  border-style: solid;
+  border-color: rgb(107, 113, 120);
+  border-width: 1px;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.recommendedReadingButtonSelected {
+  width: 0.625rem;
+  height: 0.625rem;
+  margin: 0 0.25rem;
+  border-style: solid;
+  border-color: rgb(251, 97, 101);
+  border-width: 1px;
+  border-radius: 50%;
+  box-sizing: border-box;
+  background-color: rgb(251, 97, 101);
+}

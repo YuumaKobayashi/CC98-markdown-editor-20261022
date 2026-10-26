@@ -1,0 +1,164 @@
+
+@use "../../../../../foundation/styles/tokens/semantic-colors" as semanticColors;
+
+.breadcrumb {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-start;
+  margin-bottom: 1rem;
+  color: grey;
+  font-size: 0.75rem;
+}
+
+.breadcrumbItem {
+  color: grey;
+  font-size: 1rem;
+}
+
+.breadcrumbHome {
+  margin-right: 0.5rem;
+}
+
+.breadcrumbSpaced {
+  margin-right: 0.5rem;
+  margin-left: 0.5rem;
+}
+
+.top-button.top-button {
+  width: 6rem;
+  position: fixed;
+  bottom: 5%;
+  right: 5%;
+  height: 2rem;
+  border-radius: 1rem;
+  opacity: 0.5;
+  display: none;
+  z-index: 2;
+  margin: 0;
+  padding: 0.7rem;
+  border: 0;
+  font-size: 1.1rem;
+  // text-align: center;
+  // vertical-align: middle;
+  cursor: pointer;
+  line-height: 2rem;
+
+  .top-button-text {
+    display: flex;
+    width: 100%;
+    justify-content: center;}
+
+  &:hover {
+    opacity: 0.8;}
+
+  &:active {
+    opacity: 1;}
+
+  &:focus {
+    outline: none;}}
+
+.top-button.top-button.btn-show {
+  animation-name: fadeIn;
+  animation-duration: 1s;
+  display: inherit;}
+
+.top-button.top-button.btn-disappear {
+  display: inherit;
+  animation-name: fadeOut;
+  animation-duration: 500ms;
+  animation-fill-mode: forwards;}
+
+.focus-topic-loading.focus-topic-loading {
+  margin-top: 20px;
+  text-align: center;
+
+  img {
+    width: 200px;
+    height: 18px;}}
+
+.focus-topic-loaddone.focus-topic-loaddone {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 16px;
+  color: rgb(32, 32, 32);}
+
+.focus-topic-area {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.45rem;
+
+  .focus-topic-topicArea {
+    display: flex;
+    flex-direction: column;}
+
+  .focus-topic-getMore {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    cursor: pointer;
+    color: var(--cc98-theme-color-main);
+    justify-content: center;
+
+    div {
+      margin-top: 10px;
+      text-align: center;}}
+
+  // .focus-topic-loading {
+  //   margin-top: 20px;
+  //   text-align: center;
+
+  //   img {
+  //     width: 200px;
+  //     height: 18px;
+  //   }
+  // }
+
+  // .focus-topic-loaddone {
+  //   margin-top: 20px;
+  //   text-align: center;
+  //   font-size: 16px;
+  //   color: $color-black;
+  // }
+}
+
+/**********************************搜索页的样式*********************************/
+.noResult {
+  display: flex;
+  flex-direction: column;
+
+  .noResultPic {
+    width: 50%;
+    align-self: center;}
+
+  .noResultText {
+    font-size: 16px;
+    color: semanticColors.$color-thinBlack;
+    margin-top: 20px;
+    align-self: center;}}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 0.5;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 0.5;
+    visibility: visible;
+  }
+
+  80% {
+    opacity: 0.5;
+    visibility: visible;
+  }
+
+  100% {
+    visibility: hidden;
+    opacity: 0;
+  }
+}

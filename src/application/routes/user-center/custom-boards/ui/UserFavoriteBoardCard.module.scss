@@ -1,0 +1,43 @@
+.user-center-myfavorite-board {
+  display: flex;
+  align-items: center;
+
+  img {
+    width: 7rem;
+    height: 7rem;}
+
+  & > a {
+    background-color: var(--cc98-theme-color-main);
+    width: 7rem;
+    height: 7rem;
+    border-radius: 50%;}
+
+  .user-center-myfavorite-board-info {
+    flex-grow: 1;
+    margin-left: 3rem;
+    max-width: 36.75rem;
+
+    p {
+      word-break: keep-all;}}
+
+  button {
+    transition-duration: 0.4s;
+    width: 6rem;
+    height: 2rem;
+    border-radius: 0.5rem;
+
+    &:hover {
+      opacity: 0.8;}
+
+    &:active {
+      opacity: 0.6;}}
+
+  .user-follow-board {
+    background-color: var(--cc98-theme-color-main);
+    color: #ffffff;
+
+    &:hover {
+      opacity: 0.8;}
+
+    &:active {
+      opacity: 0.6;}}}

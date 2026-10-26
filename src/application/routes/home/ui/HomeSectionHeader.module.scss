@@ -1,0 +1,43 @@
+//首页各栏目的标题
+.mainPageTitle1 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.25rem;
+  font-family: 微软雅黑;
+  padding-left: 0.75rem;
+  color: var(--cc98-theme-color-main);
+
+  a {
+    font-size: 1rem;
+    font-family: 微软雅黑;
+    color: var(--cc98-theme-color-main);
+  }
+}
+
+.mainPageTitle2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 1.25rem;
+  font-family: 微软雅黑;
+  padding-left: 0.75rem;
+  color: var(--cc98-theme-color-sub);
+
+  a {
+    font-size: 1rem;
+    font-family: 微软雅黑;
+    color: var(--cc98-theme-color-sub);
+  }
+}
+
+.mainPageTitleRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.mainPageTitleText {
+  margin-left: 0.5rem;
+}

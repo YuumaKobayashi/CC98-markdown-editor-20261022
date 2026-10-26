@@ -1,0 +1,73 @@
+.user-avatar {
+  position: relative;
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .user-avatar-img {
+    width: 10rem;
+    height: 10rem;
+    border-radius: 5rem;
+  }
+
+  .user-badge {
+    margin-top: 2rem;
+    width: 100%;
+    padding-left: 1rem;
+
+    p {
+      display: inline-flex;
+      width: 100%;
+      margin-bottom: 0;
+      margin-top: 0.5rem;
+    }
+
+    a {
+      color: rgb(53, 167, 255);
+      width: 60%;
+    }
+
+    span {
+      width: 40%;
+    }
+  }
+}
+
+.frame {
+  position: absolute;
+}
+
+.frameMascot {
+  width: 13.32rem;
+  top: -1.45rem;
+}
+
+.frameStandard {
+  width: 15rem;
+  top: -2rem;
+  left: -1.75rem;
+}
+
+.frameStaff {
+  width: 15.2rem;
+  top: -2.5rem;
+  left: -2.75rem;
+}
+
+.frameTechnical {
+  width: 13rem;
+  top: -1.4rem;
+  left: -1.2rem;
+}
+
+.frameAnnual {
+  width: 15rem;
+  top: -2rem;
+  left: -2rem;
+}
+
+.titleBadge,
+.supervisorTitle {
+  color: red;
+}

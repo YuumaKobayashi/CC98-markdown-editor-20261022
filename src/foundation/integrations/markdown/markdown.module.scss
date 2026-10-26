@@ -1,0 +1,549 @@
+// 统一 Markdown 模块的容器样式。
+// 预览排版由 md-editor-rt 自带的 preview.css 提供，
+// 这里只负责容器尺寸与站点多主题（含暗色）的衔接。
+
+.view {
+  max-width: 52rem;
+  word-wrap: break-word;
+
+  // UBB 帖子容器（UbbContainer 的 .root）带 white-space: pre-wrap，
+  // 会沿 DOM 继承进这里。md-editor-rt 的代码块等块级 HTML 内部带有
+  // 纯排版的换行与缩进，pre-wrap 会把它们渲染成可见空白——表现为
+  // 代码块语言标注行与代码本体之间出现一大段空行。这里恢复常规
+  // 折叠行为；代码行内与 pre 元素的换行由主题包的
+  // .md-editor-code-line-content{white-space:pre-wrap} 与 pre 自身的
+  // UA 规则保证，不受影响。
+  white-space: normal;
+
+  // md-editor-rt 默认 --md-bk-color 是纯白，和帖子卡片灰底对不上。
+  // 预览跟卡片（--cc98-background-color-textarea）同一色，各主题一起跟着变。
+  :global(.md-editor) {
+    --md-bk-color: var(--cc98-background-color-textarea);
+    background-color: var(--cc98-background-color-textarea);
+    border: none;
+    color: inherit;
+  }
+
+  :global(.md-editor-preview-wrapper),
+  :global(.md-editor-preview) {
+    color: inherit;
+    background-color: transparent;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  // KaTeX 官方 CSS 的 .katex-display 不带 overflow 规则，长公式
+  // （white-space: nowrap）会溢出；md-editor-rt 根容器又是
+  // overflow:hidden，结果整条公式被裁掉且无法滚动。让公式块
+  // 自己成为横向滚动容器：块内左右滑，正文不动。
+  :global(.katex-display) {
+    overflow-x: auto;
+    overflow-y: hidden;
+    // 公式较高时避免字形被滚动容器竖向裁剪。
+    padding: 0.25rem 0;
+  }
+
+  // 行间公式（$$...$$）在帖子页强制居中，与编辑器预览一致。正常由
+  // 主题包的 .md-editor-katex-block{text-align:center} 负责，但其
+  // 优先级仅 (0,1,0)，可能被站点其他样式覆盖；这里在模块作用域内
+  // 以更高优先级兜底。行内公式（$...$）随正文排版，不处理。
+  :global(.md-editor-katex-block),
+  :global(.katex-display) {
+    text-align: center;
+  }
+
+  // 六级标题字号梯度：主题包默认 h4~h6 为 1em/.875em/.85em，h5 与
+  // h6 仅差 0.025em 且都小于正文，几乎无法分辨。重设为 1.15/1/0.9em
+  // （h1~h3 维持主题默认的 2/1.5/1.25em），使六级梯度清晰可辨。
+  :global(.md-editor-preview) h4 {
+    font-size: 1.15em;
+  }
+
+  :global(.md-editor-preview) h5 {
+    font-size: 1em;
+  }
+
+  :global(.md-editor-preview) h6 {
+    font-size: 0.9em;
+  }
+
+  // 语言标识（```cpp 的 "cpp"）默认和复制按钮一组被排在代码块
+  // 头部右侧（grid + space-between）。这里把头部改为 flex：
+  // 圆点装饰与语言标识靠左，复制按钮仍留在右侧。
+  // 选择器多带一层 .md-editor-code 以压过包内三级选择器。
+  :global(.md-editor-preview) :global(.md-editor-code) :global(.md-editor-code-head) {
+    display: flex;
+    align-items: center;
+  }
+
+  :global(.md-editor-preview) :global(.md-editor-code) :global(.md-editor-code-action) {
+    flex: 1;
+    justify-content: flex-start;
+    // 圆点装饰隐藏后，这里同时充当头部的左内边距。
+    margin-inline-start: 12px;
+  }
+
+  :global(.md-editor-preview) :global(.md-editor-code) :global(.md-editor-code-action) :global(.md-editor-copy-button) {
+    margin-inline-start: auto;
+  }
+
+  // 苹果窗口风格的三个圆点装饰（.md-editor-code-flag）对论坛帖子
+  // 没有意义，隐藏后即普通常见的 markdown 代码块头部：语言标识居左、
+  // 复制按钮居右。
+  :global(.md-editor-preview) :global(.md-editor-code) :global(.md-editor-code-head) :global(.md-editor-code-flag) {
+    display: none;
+  }
+
+  // 行号列与代码列的间距：包内默认 0.5em（--md-theme-code-line-number-gap，
+  // 用作 .md-editor-code-line 的 column-gap），偏窄，加大到 1em。
+  :global(.md-editor-preview) :global(.md-editor-code) {
+    --md-theme-code-line-number-gap: 1em;
+  }
+
+  // 语言标识字号：包内继承 .md-editor-code 的 12px，偏小，加大到 14px。
+  :global(.md-editor-preview) :global(.md-editor-code) :global(.md-editor-code-lang) {
+    font-size: 14px;
+  }
+}
+
+.editor {
+  width: 100%;
+  // 表格网格弹层（.tablePicker）的定位基准。
+  position: relative;
+  // 同 .view：避免帖子容器 pre-wrap 继承把渲染 HTML 的模板换行
+  // 显示成可见空白。
+  white-space: normal;
+
+  .editorHost {
+    // Vditor 初始化以该元素为挂载点，自身负责内部布局。
+    // 就绪（Lute 引擎加载完成）前隐藏，避免闪现灰色空壳；
+    // 就绪后整体淡入，呈现完整编辑框。
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    // 代码块“复制代码”悬浮按钮（.cc98-code-copy）的定位基准。
+    position: relative;
+  }
+
+  &.editorReady .editorHost {
+    opacity: 1;
+  }
+
+  // 工具栏按钮间距：包内默认 .vditor-tooltipped 左右 padding 5px，
+  // 图标挨得太近；加宽到 16px（相邻图标间距 10px → 32px）。
+  :global(.vditor-toolbar__item) :global(.vditor-tooltipped) {
+    padding: 10px 16px;
+  }
+
+  // 工具栏悬浮提示：白底黑边（用户指定）。包内默认深灰底白字
+  // （.vditor-tooltipped::after 的 #3b3e43），与编辑框白底外观不搭；
+  // 覆盖为白底黑字黑边，指示箭头相应用白色以贴合白底悬浮框。
+  :global(.vditor-toolbar__item) :global(.vditor-tooltipped)::after {
+    background: #fff;
+    color: #3a3f45;
+    text-shadow: none;
+    border: 1px solid #3a3f45;
+  }
+  :global(.vditor-toolbar__item) :global(.vditor-tooltipped__n)::before,
+  :global(.vditor-toolbar__item) :global(.vditor-tooltipped__ne)::before,
+  :global(.vditor-toolbar__item) :global(.vditor-tooltipped__nw)::before {
+    border-top-color: #fff;
+  }
+
+  // Vditor 主题衔接：编辑器固定为白底亮色外观（与旧 md-editor 一致）。
+  // 注意不要把面板底色绑到 --cc98-background-color-textarea：暗色主题下
+  // 该变量是 #bbbbbb，且 Vditor 会在聚焦/失焦时切换面板与输入区底色
+  // （pre.vditor-reset:focus 用 --textarea-background-color，失焦用
+  // --panel-background-color），绑出去就会出现“点编辑框以外就变灰”。
+  // 两个变量统一固定为白色，任何状态下内容区都是白底。
+  :global(.vditor) {
+    --panel-background-color: #fff;
+    --textarea-background-color: #fff;
+    --toolbar-background-color: #fff;
+    // 包内默认 #586069 偏浅，加深工具栏图标。
+    --toolbar-icon-color: #3a3f45;
+    --toolbar-icon-hover-color: var(--cc98-color-primary, #3594f7);
+    --border-color: var(--cc98-color-border, #d9d9d9);
+    border-color: var(--cc98-color-border, #d9d9d9);
+  }
+
+  // 双保险：内容表面（含聚焦/失焦两个状态）强制白底。
+  :global(.vditor-content),
+  :global(.vditor-ir),
+  :global(.vditor-ir pre.vditor-reset),
+  :global(.vditor-ir pre.vditor-reset:focus) {
+    background-color: #fff !important;
+  }
+
+  // Vditor 的 setPadding() 并不改 CSS 类：它把 "10px Npx" 直接写进
+  // pre.vditor-reset 的行内 style（node_modules/vditor/dist/index.js:7160，
+  // vditor.ir.element 就是 <pre class="vditor-reset">），其中
+  // N = max(35, (容器宽 - preview.maxWidth[默认 800]) / 2)。
+  // 结果正文被挤成中间一条 800px 窄列，左右各留一大片空白。
+  // 论坛回帖不需要这种居中排版：正文从框的左沿一直排到右沿。
+  // 行内样式没法用普通规则覆盖，必须 !important。
+  :global(.vditor-ir) {
+    padding: 0 !important;
+  }
+
+  // 双保险：内容根元素不受 Vditor 预览面板 800px 行内 max-width 影响。
+  // 上下 6px 贴边（原 10px），左右 12px，正文铺满整宽。
+  :global(.vditor-reset) {
+    max-width: none !important;
+    margin: 0;
+    padding: 6px 12px !important;
+  }
+
+  // 工具栏左缩进同样由 setPadding() 按正文缩进写成行内样式
+  // （index.js:7163-7164：toolbar.paddingLeft = 正文的 paddingLeft），
+  // 所以按钮组也被推到中间。一并压平，让工具栏贴左沿排开。
+  :global(.vditor-toolbar) {
+    padding-left: 0 !important;
+    padding-right: 6px !important;
+  }
+
+  // Vditor 会在 IR 内容元素上写行内 --editor-bottom =（编辑框高 - 工具栏高）/2，
+  // 再由 pre.vditor-reset::after 撑出一块同高的空白，用途是把最后一行滚到
+  // 视口中线（typewriter 手感）。430px 的回复框里这等于正文下方多出近 200px
+  // 的死白——滚动到底时最后一行之上还有半屏空白，正是“编辑空间不够大”的来源。
+  // 论坛回帖不需要把末行顶到中间，压到一行高（16px）：仍可点到最后一行下方
+  // 继续输入，但没有多余空白。行内样式只能用 !important 覆盖。
+  :global(.vditor-ir),
+  :global(.vditor-ir) :global(pre.vditor-reset) {
+    --editor-bottom: 16px !important;
+  }
+
+  // 代码块/公式块节点：Vditor 会把它们居中限宽（约为内容区 70%），
+  // 两侧留大片空白、编辑区域偏小。强制铺满整行（对齐 Obsidian）。
+  :global(.vditor-ir__node[data-type="code-block"]),
+  :global(.vditor-ir__node[data-type="math-block"]) {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  :global(.vditor-ir__node[data-type="code-block"]) :global(pre),
+  :global(.vditor-ir__node[data-type="math-block"]) :global(pre),
+  :global(.vditor-ir__node[data-type="code-block"]) :global(code),
+  :global(.vditor-ir__node[data-type="math-block"]) :global(code) {
+    width: 100% !important;
+    max-width: none !important;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  // 代码块编辑态的源码区至少预留三行：新建块里只有一个换行符，一行高的
+  // 编辑区太窄、光标落点局促。code 的行高是 1.5，三行即 4.5em；内容超过
+  // 三行时自然撑高，不影响长代码。只作用于代码块的源码区，公式块按公式
+  // 实际行数展示。
+  :global(.vditor-ir__node[data-type="code-block"])
+    > :global(pre.vditor-ir__marker--pre)
+    > :global(code) {
+    min-height: 4.5em;
+  }
+
+  // 公式/代码定界符着色：连着敲 `$` 或反引号时让定界符本身变成强调色，
+  // 一眼看出「这是语法标记」（Obsidian 同款）。三处上色——还没有判定成
+  // 行内还是块的待定 `$$`（repairBareMathPair）、还没按回车成块的待定
+  // 代码围栏 ```（repairBareCodeFence），以及行内公式两侧的 `$`。公式块
+  // 与代码块的定界符 Vditor 自己会隐藏，不用管。
+  :global(.cc98-math-pending),
+  :global(.cc98-code-pending),
+  :global(.vditor-ir__node--expand):has(> code[data-type="math-inline"])
+    > :global(.vditor-ir__marker) {
+    color: var(--cc98-color-primary, #3594f7);
+  }
+
+  // 光标停在 `$…$` 之间输入时只显示源码，不弹编译结果——光标移开才渲染，
+  // 也就是 Obsidian 的手感。Vditor 默认在编辑态同时显示源码和 KaTeX 预览，
+  // 边打边蹦出一段渲染结果很干扰输入。公式块不在此列：块的预览本来就展开
+  // 在输入行下方，那正是要的效果。
+  :global(.vditor-ir__node--expand):has(> code[data-type="math-inline"])
+    > :global(.vditor-ir__preview) {
+    display: none !important;
+  }
+
+  // 代码语言候补下拉（输入围栏语言时弹出的备选框）：帖子编辑器不需要，
+  // 直接隐藏；语言仍可通过展开后的源码围栏（```lang）修改。
+  :global(.vditor-hint) {
+    display: none !important;
+  }
+
+  // 工具栏右上角：「放大」按钮与字数统计并排固定（用户指定）。Vditor 的
+  // 计数器以 float:right 落在工具栏最右，宽度随字数变化；这里把两者都
+  // 改为绝对定位——按钮钉在最右，计数器贴其左侧（变宽只向左伸展，
+  // 按钮位置稳定）。注意按钮所在的 .vditor-toolbar__item 自带
+  // position:relative，直接 absolute 按钮会被限制在 25px 的 item 里，
+  // 必须用 :has 把整个 item 提出来定位。
+  :global(.vditor-toolbar) {
+    position: relative;
+  }
+
+  :global(.vditor-toolbar)
+    :global(.vditor-toolbar__item:has(> button[data-type="cc98-expand"])) {
+    position: absolute;
+    right: 6px;
+    top: 0;
+    float: none;
+  }
+
+  :global(.vditor-toolbar) :global(.vditor-counter) {
+    float: none;
+    position: absolute;
+    right: 38px;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0;
+  }
+
+  // Obsidian 式末尾垫白（高度由组件 JS 写入 --cc98-tail-space，取编辑框
+  // 可视高的 3/4）：滚动到底时最后一行停在编辑框上方 1/4 处。必须用
+  // ::after 伪元素——滚动容器自身的 padding-bottom 不计入 Chrome 的
+  // 滚动范围（垫了等于白垫）；伪元素是真实参与布局的块级盒，计入
+  // scrollHeight，且不进 DOM、不参与 Lute 往返、不影响光标。
+  :global(.vditor-ir) > :global(.vditor-reset)::after {
+    content: "";
+    display: block;
+    height: var(--cc98-tail-space, 0px);
+  }
+
+  // Reserve a separate header row for the controls. The engine still owns
+  // marker visibility, so moving the caret into an image reveals editable syntax.
+  :global(.vditor-ir__node[data-type="img"].cc98-img-node) {
+    display: inline-block;
+    box-sizing: border-box;
+    min-width: 116px;
+    min-height: 44px;
+    max-width: 100%;
+    padding-top: 44px;
+    vertical-align: middle;
+  }
+
+  :global(.cc98-img-collapsed) > img {
+    display: none;
+  }
+
+  :global(.cc98-img-expanded) > img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin-top: 6px;
+  }
+
+  // This external row is positioned only in the reserved header space, never
+  // pinned over the picture or its source text while scrolling.
+  :global(.cc98-img-controls) {
+    position: absolute;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 36px;
+    max-width: calc(100% - 24px);
+    white-space: nowrap;
+  }
+
+  :global(.cc98-img-toggle),
+  :global(.cc98-img-retry) {
+    box-sizing: border-box;
+    min-width: 104px;
+    min-height: 36px;
+    padding: 7px 18px;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 3px;
+    background: #fff;
+    color: #666;
+    font-size: 13px;
+    line-height: 1.4;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+
+    &:hover {
+      border-color: var(--cc98-color-primary, #3594f7);
+      color: var(--cc98-color-primary, #3594f7);
+    }
+  }
+
+  :global(.cc98-img-retry[hidden]) {
+    display: none;
+  }
+
+  :global(.cc98-img-status) {
+    color: #b33;
+    font-size: 12px;
+  }
+
+  // 代码块语言标注：渲染后的代码块左上角显示语言名（data-lang 由
+  // 组件 JS 写入，非法语言名已归一为 "code"）。pre 顶部预留标注条
+  // 高度（语言标签与复制按钮同处一行），避免与首行代码重叠。
+  :global(.vditor-reset) :global(pre[data-lang]) {
+    position: relative;
+    padding-top: 22px;
+  }
+
+  :global(.vditor-reset) :global(pre[data-lang])::after {
+    content: attr(data-lang);
+    position: absolute;
+    top: 6px;
+    left: 12px;
+    font-size: 12px;
+    line-height: 1;
+    color: rgba(120, 120, 120, 0.95);
+    pointer-events: none;
+  }
+
+  // 光标进入代码块进入源码编辑态时，围栏标注（```lang）本身可见，
+  // 语言标签与预留的标注条不再保留。
+  :global(.vditor-ir__node--expand) :global(pre[data-lang]) {
+    padding-top: 10px;
+  }
+
+  :global(.vditor-ir__node--expand) :global(pre[data-lang])::after {
+    display: none;
+  }
+
+  // 代码块右上角“复制代码”按钮：JS 注入到 .editorHost（可编辑 DOM
+  // 之外，避免进入 Lute 的 DOM→Markdown 转换管线），绝对定位在代码
+  // 块右上角，坐标由 JS 按代码块包围盒实时计算。高度控制在语言标注
+  // 条（22px）内，与语言标签同处一行、不压首行代码。
+  :global(.cc98-code-copy) {
+    position: absolute;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 18px;
+    padding: 0;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 4px;
+    background: #fff;
+    color: #666;
+    line-height: 0;
+    cursor: pointer;
+
+    &:hover {
+      border-color: var(--cc98-color-primary, #3594f7);
+      color: var(--cc98-color-primary, #3594f7);
+    }
+  }
+
+  // 行间公式宽度超出栏宽时允许横向滚动，避免被裁剪。
+  :global(.katex-display) {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0.25rem 0;
+  }
+
+  // 放大态：用 CSS !important 压过 Vditor 根节点的行内 height。
+  // 高度值由 JS 计算写入 --cc98-editor-expanded-height（视口高减去
+  // 编辑框之后的操作按钮行），保证“回复”按钮不被挡住。
+  &.editorExpanded :global(.vditor) {
+    height: var(--cc98-editor-expanded-height, 80vh) !important;
+  }
+}
+// ===== 插入表格弹层（markdown-editor.tsx）=====
+// 顶层类：与 .editor 内的嵌套同名类会生成不同 hash 导致样式对不上，
+// 弹层全部样式集中在这里定义。位置由组件 JS 计算（表格按钮正下方），
+// 这里的 left/top 仅为 JS 未就绪时的兜底。
+.tablePicker {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  z-index: 20;
+  padding: 8px;
+  width: 220px;
+  // 白底黑边（用户指定）：背景不能绑 --cc98-background-color-textarea，
+  // 暗色主题下该变量是 #bbbbbb，弹层会变成整块灰底。
+  background: #fff;
+  border: 1px solid #3a3f45;
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  // 弹层固定白底后，内部文字也固定为深色，避免暗色主题下的浅色
+  // 文字落在白底上不可读。
+  color: #3a3f45;
+}
+
+.tableGrid {
+  display: grid;
+  grid-template-columns: repeat(8, 18px);
+  gap: 3px;
+  justify-content: center;
+}
+
+.tableGridCell {
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: 1px solid rgba(128, 128, 128, 0.45);
+  border-radius: 2px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.tableGridCellActive {
+  border-color: var(--cc98-color-primary, #3594f7);
+  background: var(--cc98-color-primary, #3594f7);
+}
+
+.tablePickerHint {
+  margin: 8px 0 6px;
+  text-align: center;
+  font-size: 12px;
+  opacity: 0.75;
+}
+
+.tablePickerForm {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(128, 128, 128, 0.25);
+}
+
+.tablePickerActions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.tablePickerField {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+
+  input {
+    width: 52px;
+    // 细黑边方框（用户指定）：覆盖站点在 input 上的遗留样式——
+    // 那种左上深右下浅的斜面边框在弹层里显得不对称且粗糙。
+    padding: 2px 6px;
+    box-sizing: border-box;
+    border: 1px solid #3a3f45;
+    border-radius: 3px;
+    box-shadow: none;
+    background: #fff;
+    color: #3a3f45;
+  }
+}
+
+.tablePickerSubmit {
+  padding: 4px 12px;
+  border: 1px solid rgba(128, 128, 128, 0.4);
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  font-size: 12px;
+  cursor: pointer;
+
+  &:hover {
+    border-color: var(--cc98-color-primary, #3594f7);
+    color: var(--cc98-color-primary, #3594f7);
+  }
+}

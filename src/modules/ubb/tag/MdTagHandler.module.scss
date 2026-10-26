@@ -1,0 +1,8 @@
+.markdown {
+  // 占满楼层内容列（.substance 为 52rem，与纯 markdown 帖一致）。
+  // 若用百分比窄盒（如 80%），MarkdownView 内的行间公式会相对这个
+  // 靠左的窄盒居中，视觉上相对整列偏左。
+  width: 100%;
+
+  overflow: hidden;
+}

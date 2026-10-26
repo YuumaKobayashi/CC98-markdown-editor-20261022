@@ -1,0 +1,34 @@
+.root {
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eaeaea;
+}
+
+.toolbar {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-around;
+  margin-bottom: 1rem;
+}
+
+.toolbarTitle {
+  margin-top: 10px;
+}
+
+.tableRegion {
+  box-sizing: border-box;
+  width: 96.5%;
+  min-width: 0;
+  max-width: 96.5%;
+  margin-right: auto;
+  margin-left: auto;
+}

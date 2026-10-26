@@ -1,0 +1,179 @@
+//发帖
+.createTopic {
+  display: flex;
+  flex-direction: column;
+  width: 1140px;
+  font-family: 微软雅黑;
+  font-size: 14px;}
+
+.createTopicType,
+.createTopicContent {
+  display: flex;
+  height: 40px;
+  margin-bottom: 20px;
+  border-style: solid;
+  border-color: rgb(233, 233, 233);
+  border-width: 1px;
+  box-sizing: border-box;
+  background-color: rgb(255, 255, 255);
+  align-items: center;}
+
+.createTopicListName {
+  display: flex;
+  width: 120px;
+  justify-content: center;
+  border-width: 0 1px 0 0;
+  border-style: solid;
+  border-color: rgb(233, 233, 233);
+  box-sizing: border-box;}
+
+.topicTypeNotice {
+  color: rgb(255, 0, 0);
+}
+
+.createTopicType .editorTypeRadioGroup {
+  display: contents;
+  color: inherit;
+  line-height: inherit;
+}
+
+.noticeCheckbox {
+  margin-left: 5px;
+}
+
+.housingTemplateLauncher {
+  margin-bottom: 15px;
+}
+
+.housingTemplateButton {
+  width: 150px;
+}
+
+.housingTemplateNotice {
+  color: red;
+  margin-left: 10px;
+}
+
+.createTopicContent {
+  margin-bottom: 0;
+  justify-content: space-between;}
+
+.createTopicContent {
+  display: flex;
+  align-items: center;
+  height: 3rem;}
+
+.editorColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.submitRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.anonymousSubmitGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.contentHint {
+  color: darkgray;
+}
+
+.button {
+  display: inline-block;
+  outline: none;
+  cursor: pointer;
+  width: 7rem;
+  height: 4rem;
+  text-align: center;
+  text-decoration: none;
+  font-size: 1.25rem;
+  font-family: 微软雅黑;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+  border-radius: 1rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  line-height: 4rem;
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  &:active {
+    position: relative;
+    top: 1px;
+  }
+}
+
+.blue {
+  color: #fff;
+  border: solid 1px var(--cc98-theme-color-main);
+  background-color: var(--cc98-theme-color-main);
+  opacity: 0.8;
+
+  &:hover {
+    background-color: var(--cc98-theme-color-main);
+    opacity: 0.9;
+  }
+
+  &:active {
+    background-color: var(--cc98-theme-color-main);
+  }
+}
+
+.grey {
+  color: white;
+  border: solid 1px grey;
+  background-color: grey;
+  opacity: 0.8;
+
+  &:hover {
+    background-color: grey;
+    opacity: 0.9;
+  }
+
+  &:active {
+    background-color: grey;
+  }
+}
+
+.postTopicButton {
+  width: 6rem;
+  height: 2rem;
+  line-height: 0.8rem;
+  margin-top: 1rem;
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+}
+
+.hiddenImage {
+  display: block;
+  color: var(--cc98-theme-color-main);
+  width: 7rem;
+  background-color: transparent;
+  text-align: center;
+  //vertical-align: middle; //设置元素的垂直对齐方式
+  border: 1px solid var(--cc98-theme-color-main);
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  border-radius: .25rem;
+  line-height: normal;
+  white-space: nowrap;
+  margin-top: 1rem;
+  font-family: 微软雅黑;
+
+  &:hover {
+    background-color: var(--cc98-theme-color-main);
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+  }
+}
+
+.hiddenImage.editorModeSwitch {
+  width: 12rem;
+  margin-top: 0rem;
+}

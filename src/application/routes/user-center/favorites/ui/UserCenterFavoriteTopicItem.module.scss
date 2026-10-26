@@ -1,0 +1,39 @@
+.user-post {
+  .user-post-info {
+    margin: 0 0 2rem 0;
+
+    a {
+      margin-right: 2rem;
+    }
+  }
+
+  .user-post-board {
+    color: rgb(53, 167, 255);
+  }
+
+  .user-post-date {
+    color: rgb(0, 0, 0);
+  }
+
+  .user-post-content {
+    font-size: 0.88rem;
+    display: flex;
+
+    p {
+      flex-grow: 1;
+      margin: 0;
+      max-height: 5rem;
+      overflow: hidden;
+      padding-right: 50px;
+    }
+  }
+
+  .actions {
+    white-space: nowrap;
+    transform: translate(-50px, 0);
+  }
+
+  .actionTrigger {
+    line-height: 19px;
+  }
+}

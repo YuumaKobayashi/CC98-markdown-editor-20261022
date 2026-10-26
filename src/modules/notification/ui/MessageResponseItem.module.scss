@@ -1,0 +1,117 @@
+
+@use "../../../foundation/styles/tokens/semantic-colors" as semanticColors;
+
+.message-response-box {
+  /*一个消息的框框*/
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px dashed lightgray;
+
+  /*.message-response-box-left {
+          flex-basis: 100px;
+          flex-shrink: 0;
+
+          .message-response-img {
+              margin: 30px 20px;
+              border-radius: 50%;
+              width: 60px;
+              height: 60px;
+          }
+      }*/
+}
+
+.message-response-box-middle {
+  /*消息框的中间-文字*/
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  flex-grow: 1;
+  flex-shrink: 0;
+  margin: 0px 30px 20px 30px;
+}
+
+.message-response-box-middle1 {
+  display: flex;
+  flex-direction: row;
+}
+
+.message-response-box-middle-title {
+  /*消息框文字第一行 版面信息*/
+  height: 50px;
+  flex-wrap: nowrap;
+  font-size: 14px;
+  line-height: 50px;
+  color: dodgerblue;
+  flex-shrink: 0;
+  margin-right: 10px;
+
+  a {
+    &:link {
+      color: dodgerblue;
+    }
+
+    /* 已访问的链接 */
+    &:visited {
+      color: dodgerblue;
+    }
+
+    /* 鼠标移动到链接上 */
+    &:hover {
+      text-decoration: underline;
+    }
+
+    /* 选定的链接 */
+    &:active {
+      color: dodgerblue;
+    }
+  }
+}
+
+.message-response-box-middle-date {
+  /*消息框文字第一行日期*/
+  height: 50px;
+  flex-basis: 300px;
+  font-size: 12px;
+  line-height: 50px;
+  color: gray;
+  flex-shrink: 0;
+  flex-grow: 1;
+}
+
+.message-response-box-middle-content {
+  /*消息框文字第二行-主体内容*/
+  height: 24px;
+  font-size: 14px;
+  line-height: 24px;
+  flex-shrink: 0;
+
+  a {
+    &:link {
+      color: semanticColors.$color-url;
+    }
+
+    /* 已访问的链接 */
+    &:visited {
+      color: semanticColors.$color-url;
+    }
+
+    /* 鼠标移动到链接上 */
+    &:hover {
+      text-decoration: underline;
+    }
+
+    /* 选定的链接 */
+    &:active {
+      color: semanticColors.$color-url;
+    }
+  }
+}
+
+/*.message-response-box-right {
+        flex-basis: 60px;
+        line-height: 100px;
+        font-size: 14px;
+        margin-left: 10px;
+        flex-shrink: 0;
+    }*/

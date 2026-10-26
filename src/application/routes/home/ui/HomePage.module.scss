@@ -1,0 +1,32 @@
+//--------------------------------以下是首页的样式~ --------------------------------------------
+.mainPage {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  min-width: 71.25rem;
+  margin-bottom: 2.5rem;
+  z-index: 0;
+
+  a:hover {
+    text-decoration: underline;
+  }
+}
+
+.leftPart {
+  display: flex;
+  flex-direction: column;
+  width: 51.25rem;
+  margin-right: 1.25rem;
+}
+
+.topicRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.rightPart {
+  display: flex;
+  flex-direction: column;
+  width: 18.75rem;
+}

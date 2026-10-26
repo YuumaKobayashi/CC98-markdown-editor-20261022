@@ -1,0 +1,94 @@
+.search .box {
+  display: flex;
+  flex-direction: row;
+  height: 1.5rem;
+  width: 30rem;
+  border-radius: 0.625rem;
+  align-items: center;
+  background-color: #fff;
+  padding: 0 1rem;
+  margin-left: 1rem;
+}
+
+.search .searchBoxSelect {
+  display: flex;
+  width: 2rem;
+  font-size: 0.75rem;
+  font-family: 微软雅黑;
+  color: var(--cc98-theme-color-main);
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.search .caretDown {
+  display: flex;
+  width: 1rem;
+  font-size: 0.75rem;
+  font-family: 微软雅黑;
+  color: var(--cc98-theme-color-main);
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.search input {
+  display: flex;
+  border: 0;
+  flex-grow: 1;
+  font-size: 0.75rem;
+  font-family: 微软雅黑;
+  color: var(--cc98-theme-color-main);
+  background-color: #fff;
+  outline: none;
+}
+
+.search .searchIco {
+  display: flex;
+  flex-direction: row;
+  font-size: 0.75rem;
+  font-family: 微软雅黑;
+  color: var(--cc98-theme-color-main);
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.search ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.search .searchBoxSub {
+  width: 2rem;
+  margin-left: 2rem;
+  font-size: 0.75rem;
+  font-family: 微软雅黑;
+  color: #fff;
+  background-color: var(--cc98-theme-color-main);
+  position: absolute;
+  z-index: 1000;
+}
+
+.search .searchBoxSubOpen {
+  display: block;
+}
+
+.search .searchBoxSubClosed,
+.search .searchBoxSub .hiddenOption {
+  display: none;
+}
+
+.search .searchBoxSub li {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 1.5rem;
+  cursor: pointer;
+}
+
+.search .searchBoxSub li:hover {
+  background-color: rgb(107, 113, 120);
+}

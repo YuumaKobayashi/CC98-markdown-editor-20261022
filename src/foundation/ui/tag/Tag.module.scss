@@ -1,0 +1,10 @@
+.tag { box-sizing: border-box; display: inline-block; height: 22px; margin-right: 8px; padding: 0 7px; color: rgba(0, 0, 0, 0.65); font-family: inherit; font-size: 12px; font-weight: 400; line-height: 20px; white-space: nowrap; background: #fafafa; border: 1px solid #d9d9d9; border-radius: 4px; cursor: default; }
+.blue { color: #1890ff; background: #e6f7ff; border-color: #91d5ff; }
+.cyan { color: #13c2c2; background: #e6fffb; border-color: #87e8de; }
+.green { color: #389e0d; background: #f6ffed; border-color: #b7eb8f; }
+.magenta { color: #c41d7f; background: #fff0f6; border-color: #ffadd2; }
+.red { color: #cf1322; background: #fff1f0; border-color: #ffa39e; }
+.orange { color: #d46b08; background: #fff7e6; border-color: #ffd591; }
+.gold { color: #d48806; background: #fffbe6; border-color: #ffe58f; }
+.purple { color: #531dab; background: #f9f0ff; border-color: #d3adf7; }
+.custom { color: #fff; background: var(--tag-custom-color); border-color: var(--tag-custom-color); }

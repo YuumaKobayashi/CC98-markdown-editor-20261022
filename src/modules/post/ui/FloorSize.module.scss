@@ -1,0 +1,45 @@
+.replyFloor {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  right: -0.8rem;
+  background-color: var(--cc98-theme-color-main);
+  text-align: center;
+  line-height: 40px;
+  position: relative;
+  top: 70px;
+  color: #ffffff;
+  font-family: "微软雅黑";
+  font-size: 16px;
+}
+
+.replyFloor.hotFloor {
+  background-color: #ff4040;
+}
+
+.hotIcon {
+  width: 20px;
+  height: 30px;
+}
+
+.replyFloorLz {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  right: -0.8rem;
+  background-color: var(--cc98-theme-color-main);
+  text-align: center;
+  line-height: 40px;
+  position: relative;
+  top: -15px;
+  color: #ffffff;
+  font-family: "微软雅黑";
+  font-size: 14px;
+}
+
+.replyFloorSmall {
+  @extend .replyFloor;
+  font-size: 10px;
+}

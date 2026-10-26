@@ -1,0 +1,188 @@
+$feedback-font: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+.messageViewport,
+.notificationViewport {
+  position: fixed;
+  z-index: 1010;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  flex-direction: column;
+  pointer-events: none;
+  font-family: $feedback-font;
+  font-size: 14px;
+  line-height: 21px;
+  list-style: none;
+}
+
+.messageViewport {
+  top: 16px;
+  right: 0;
+  left: 0;
+  align-items: center;
+  gap: 8px;
+}
+
+.messageRoot,
+.notificationRoot {
+  pointer-events: auto;
+  outline: none;
+}
+
+.messageRoot {
+  padding-bottom: 8px;
+}
+
+.messageBubble {
+  box-sizing: content-box;
+  display: inline-block;
+  height: 21px;
+  padding: 10px 16px;
+  pointer-events: all;
+  color: rgba(0, 0, 0, 0.65);
+  text-align: center;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.messageText {
+  display: inline;
+  margin: 0;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  line-height: 21px;
+}
+
+.messageBubble .infoIcon,
+.messageBubble .successIcon,
+.messageBubble .errorIcon {
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  margin-right: 8px;
+  line-height: 0;
+  vertical-align: -2px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.infoIcon,
+.successIcon,
+.errorIcon {
+  font-size: 16px;
+}
+
+.infoIcon {
+  color: #1890ff;
+}
+
+.successIcon {
+  color: #52c41a;
+}
+
+.errorIcon {
+  color: #f5222d;
+}
+
+.notificationViewport {
+  top: 24px;
+  right: 0;
+  width: 384px;
+  gap: 0;
+  margin-right: 24px;
+  pointer-events: auto;
+}
+
+.notificationRoot {
+  position: relative;
+  box-sizing: content-box;
+  width: 336px;
+  min-height: 53px;
+  margin-bottom: 16px;
+  padding: 16px 24px;
+  overflow-wrap: normal;
+  word-break: normal;
+  color: rgba(0, 0, 0, 0.65);
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.notificationTitle {
+  display: inline-block;
+  margin: 0 0 8px;
+  padding-right: 24px;
+  color: rgba(0, 0, 0, 0.85);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.notificationDescription {
+  margin: 0;
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 14px;
+  line-height: 21px;
+}
+
+.notificationIcon {
+  position: absolute;
+  top: 16px;
+  left: 24px;
+  width: 24px;
+  height: 26px;
+  margin-left: 4px;
+  color: red;
+  font-size: 24px;
+  line-height: 24px;
+}
+
+.notificationIcon .infoIcon,
+.notificationIcon .successIcon,
+.notificationIcon .errorIcon {
+  font-size: 24px;
+}
+
+.notificationWithIcon {
+  min-height: 49px;
+}
+
+.notificationWithIcon .notificationTitle,
+.notificationWithIcon .notificationDescription {
+  margin-left: 48px;
+}
+
+.notificationWithIcon .notificationTitle {
+  margin-bottom: 4px;
+}
+
+.notificationClose {
+  position: absolute;
+  top: 16px;
+  right: 22px;
+  box-sizing: content-box;
+  width: 14px;
+  height: 21px;
+  padding: 0;
+  color: rgba(0, 0, 0, 0.45);
+  font: inherit;
+  font-size: 14px;
+  line-height: 21px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  transition: color 0.3s ease 0s;
+}
+
+.notificationClose:hover,
+.notificationClose:focus-visible {
+  color: rgba(0, 0, 0, 0.67);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .messageRoot,
+  .notificationRoot {
+    scroll-behavior: auto;
+  }
+}

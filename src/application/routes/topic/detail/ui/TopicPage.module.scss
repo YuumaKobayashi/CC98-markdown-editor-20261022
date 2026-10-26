@@ -1,0 +1,29 @@
+.center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 71.2rem;
+}
+
+.paginationSection {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.paginationRow {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.lockedTip {
+  color: red;
+  margin: 0.5rem;
+}
+
+.bottomPaginationRow {
+  margin-top: 2rem;
+}

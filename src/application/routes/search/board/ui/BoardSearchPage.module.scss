@@ -1,0 +1,70 @@
+
+
+
+@use "../../../../../foundation/styles/tokens/semantic-colors" as semanticColors;
+
+.breadcrumb {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-start;
+  margin-bottom: 1rem;
+  color: grey;
+  font-size: 0.75rem;
+}
+
+.breadcrumbItem {
+  color: grey;
+  font-size: 1rem;
+}
+
+.breadcrumbHome {
+  margin-right: 0.5rem;
+}
+
+.breadcrumbSpaced {
+  margin-right: 0.5rem;
+  margin-left: 0.5rem;
+}
+
+.focus-board-area {
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 30px;
+
+  i {
+    margin-right: 3px;}
+
+  .focus-board {
+    display: block;
+    color: var(--cc98-theme-color-main);
+    background-color: transparent;
+    text-align: center;
+    vertical-align: middle; //设置元素的垂直对齐方式
+    border: 1px solid var(--cc98-theme-color-main);
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    border-radius: 0.25rem;
+    line-height: normal;
+    white-space: nowrap;
+    font-family: 微软雅黑;
+    margin-right: 1rem;
+    margin-top: 1rem;
+    flex-shrink: 0;
+    cursor: pointer;}
+
+}
+
+/**********************************搜索页的样式*********************************/
+.noResult {
+  display: flex;
+  flex-direction: column;
+
+  .noResultPic {
+    width: 50%;
+    align-self: center;}
+
+  .noResultText {
+    font-size: 16px;
+    color: semanticColors.$color-thinBlack;
+    margin-top: 20px;
+    align-self: center;}}

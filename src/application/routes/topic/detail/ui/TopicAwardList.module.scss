@@ -1,0 +1,32 @@
+.awardInfo {
+  display: flex;
+  flex-direction: column;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  margin-top: 2rem;
+  width: 35rem;}
+
+.awardHeader {
+  display: flex;
+  align-items: center;
+  width: 25rem;
+  margin-bottom: .2rem;
+  font-size: .8rem;
+}
+
+.userTitle {
+  margin-left: 3.1rem;
+}
+
+.operationTitle {
+  margin-left: 4.7rem;
+}
+
+.reasonTitle {
+  margin-left: 8.9rem;
+}
+
+.expandButton {
+  border: #eaeaea solid thin;
+  cursor: pointer;
+}

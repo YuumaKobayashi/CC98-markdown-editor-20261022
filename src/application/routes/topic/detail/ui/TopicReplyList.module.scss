@@ -1,0 +1,41 @@
+.reply {
+  width: 100%;
+  margin-top: 1rem;
+  border: var(--cc98-theme-color-main) solid 2px;
+  background-color: var(--cc98-background-color-textarea);
+  flex-direction: row;
+  display: flex;
+  position: relative;
+}
+
+.replyContentColumn {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 55.5rem;
+  position: relative;
+}
+
+.topicReplyGroup {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.floorMarkers {
+  display: flex;
+  flex-direction: column;
+}
+
+.loadingSpinner {
+  margin-top: 4rem;
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 71rem;
+  margin-right: 1px;
+}

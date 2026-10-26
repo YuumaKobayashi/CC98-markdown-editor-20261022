@@ -1,0 +1,31 @@
+.breadcrumb {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-start;
+  color: grey;
+  font-size: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.homeLink {
+  transition: color 0.3s;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  color: grey;
+  font-size: 1rem;
+  margin-right: 0.5rem;
+
+  &:focus {
+    color: grey;
+    outline: none;
+  }
+
+  &:hover {
+    color: grey;
+    outline: 0;
+  }
+
+  &:active {
+    outline: 0;
+  }
+}

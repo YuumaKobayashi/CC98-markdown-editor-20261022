@@ -1,0 +1,11 @@
+// 重构
+
+// 版面部分
+.board-body {
+  width: 1140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  font-size: 0.85rem;}

@@ -1,0 +1,38 @@
+.good {
+  min-height: 1.7rem;
+  width: 35rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-content: center;
+  padding-top: 0.2rem;
+  font-size: 0.75rem;
+  border-top: #eaeaea dashed 2px;
+  box-sizing: border-box;
+  align-items: center;
+}
+
+.userImage img {
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  margin-left: 1.25rem;
+  cursor: pointer;
+}
+
+.userName {
+  flex-shrink: 0;
+  width: 5rem;
+  margin-left: 0.625rem;
+  cursor: pointer;
+}
+
+.grades {
+  flex-shrink: 0;
+  margin-left: 1.25rem;
+  width: 8rem;
+}
+
+.credit {
+  margin-left: 2.5rem;
+}

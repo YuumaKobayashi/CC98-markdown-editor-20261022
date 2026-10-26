@@ -1,0 +1,82 @@
+.substance {
+  display: flex;
+  margin-top: 2rem;
+  margin-left: 1.5rem;
+  width: 52rem;
+  word-wrap: break-word;
+  color: rgb(0, 0, 0);
+  font-family: 微软雅黑;}
+
+//以下用于控制markdown表格的样式
+.substance table {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 14px;}
+
+.substance table {
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: collapse;}
+
+.substance table thead th {
+  font-weight: bold;
+  white-space: nowrap; //
+}
+
+.substance table th,
+.substance table td {
+  padding: 6px 13px;
+  border: 1px solid #c8ccd0;}
+
+.reply-content {
+  width: 100%;
+  display: flex;
+  align-self: flex-start;
+  flex-direction: column;
+  box-sizing: border-box;}
+
+.noticeArea {
+  align-self: center;
+  margin-top: 1rem;
+  margin-bottom: -1rem;
+}
+
+.lotteryCard {
+  width: 400px;
+}
+
+.lotteryMessage {
+  color: red;
+  margin: 3px 0;
+  text-align: center;
+}
+
+.lotteryTitle {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.lotteryDetail {
+  margin: 3px 0;
+  font-size: 12px;
+}
+
+.markdownReply {
+  flex: 1;
+  background-color: var(--cc98-background-color-textarea);
+}
+
+.markdownContainer {
+  // 楼层内容区（.substance）是 flex 布局，此处若不显式声明宽度，
+  // 会作为 flex 子项收缩为内容宽度，导致 markdown 内容（含公式块）
+  // 挤在楼层左侧、无法占满整栏。
+  width: 100%;
+  max-width: 52rem;
+  overflow: hidden;
+  padding: 2px;
+  background-color: var(--cc98-background-color-textarea);
+
+  img {
+    max-width: 100%;
+  }
+}

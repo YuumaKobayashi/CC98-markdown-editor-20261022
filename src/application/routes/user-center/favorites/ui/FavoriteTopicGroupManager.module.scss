@@ -1,0 +1,336 @@
+button.manageButton.manageButton {
+  box-sizing: content-box;
+  width: 80px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  outline: 0;
+}
+
+.dialog.dialog {
+  width: 520px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.dialogContent.dialogContent {
+  width: 520px;
+  height: 408px;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.dialogHeader.dialogHeader {
+  box-sizing: border-box;
+  width: 520px;
+  height: 55px;
+  padding: 16px 24px;
+}
+
+.dialogClose.dialogClose {
+  width: 56px;
+  height: 56px;
+}
+
+.dialogBody.dialogBody {
+  box-sizing: content-box;
+  width: 472px;
+  height: 250px;
+  padding: 24px;
+  color: rgba(0, 0, 0, 0.65);
+  line-height: 21px;
+}
+
+.dialogFooter.dialogFooter {
+  box-sizing: border-box;
+  width: 520px;
+  height: 55px;
+  padding: 10px 16px;
+}
+
+.dialogButton.dialogButton {
+  box-sizing: content-box;
+  width: 32px;
+  height: 32px;
+  padding: 0 15px;
+}
+
+.dialogMain {
+  width: 472px;
+  height: 250px;
+}
+
+.tabList {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: repeat(3, 96px);
+  column-gap: 36.8046875px;
+  width: 472px;
+  height: 48px;
+  align-items: stretch;
+  justify-content: start;
+  margin: 0 0 16px;
+  padding-left: 55.1875px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.tab {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  width: 96px;
+  height: 48px;
+  margin: 0;
+  padding: 0 20px;
+  color: rgba(0, 0, 0, 0.65);
+  font: inherit;
+  line-height: 46px;
+  white-space: nowrap;
+  text-align: center;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.tab:hover {
+  color: #1890ff;
+}
+
+.tab:focus-visible {
+  color: #096dd9;
+  outline: 0;
+}
+
+.tab[aria-selected="true"] {
+  color: #1890ff;
+}
+
+.tab[aria-selected="true"]::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background: #1890ff;
+  content: "";
+}
+
+.tab:nth-child(3) {
+  transform: translateX(0.015625px);
+}
+
+.panel {
+  width: 472px;
+  height: 186px;
+  color: rgba(0, 0, 0, 0.65);
+  line-height: 21px;
+}
+
+.formItem {
+  width: 472px;
+  margin: 0;
+}
+
+.label {
+  width: 472px;
+  height: 40px;
+  padding: 0;
+  color: rgba(0, 0, 0, 0.85);
+  line-height: 40px;
+}
+
+.label::after {
+  position: relative;
+  top: -0.5px;
+  display: inline;
+  margin: 0 8px 0 2px;
+  color: rgba(0, 0, 0, 0.85);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: inherit;
+  content: ":";
+}
+
+.control {
+  box-sizing: border-box;
+  width: 472px;
+  min-height: 40px;
+  padding-top: 3.5px;
+}
+
+.input.input {
+  box-sizing: border-box;
+  display: block;
+  width: 472px;
+  height: 32px;
+  padding: 4px 11px;
+  color: rgba(0, 0, 0, 0.65);
+  line-height: 1.5;
+  border-color: #d9d9d9;
+  border-radius: 4px;
+}
+
+.input.input:hover {
+  border-color: #40a9ff;
+}
+
+.input.input:focus {
+  border-color: #40a9ff;
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+}
+
+.formItem[data-error] .input.input {
+  border-color: #ff4d4f;
+  box-shadow: 0 0 0 2px rgba(245, 34, 45, 0.2);
+}
+
+.formItem[data-error] .input.input:focus {
+  border-color: #ff4d4f;
+  box-shadow: 0 0 0 2px rgba(245, 34, 45, 0.2);
+}
+
+.input.input:disabled {
+  color: rgba(0, 0, 0, 0.25);
+  background: #f5f5f5;
+  border-color: #d9d9d9;
+}
+
+.extra,
+.error {
+  min-height: 21px;
+  font-size: 14px;
+  line-height: 21px;
+}
+
+.extra {
+  margin-top: 8px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.error {
+  height: 22px;
+  margin-top: 13.5px;
+  color: #f5222d;
+}
+
+.createForm {
+  width: 472px;
+  height: 120px;
+}
+
+.createForm .formItem {
+  height: 120px;
+}
+
+.createForm .control {
+  height: 80px;
+}
+
+.createForm .formItem[data-error] {
+  height: 139px;
+  margin-bottom: 5px;
+}
+
+.createForm .formItem[data-error] .control {
+  height: 99px;
+}
+
+.renameForm {
+  width: 472px;
+  height: 184px;
+}
+
+.renameForm .formItem {
+  height: 80px;
+}
+
+.renameForm .control,
+.deleteForm .control {
+  height: 40px;
+}
+
+.renameForm .formItem + .formItem {
+  margin-top: 24px;
+}
+
+.deleteForm {
+  width: 472px;
+  height: 146px;
+}
+
+.deleteForm .formItem {
+  height: 80px;
+}
+
+.warning {
+  width: 472px;
+  margin-top: 24px;
+  color: rgba(0, 0, 0, 0.65);
+  line-height: 21px;
+}
+
+.emptyForm {
+  width: 472px;
+  color: rgba(0, 0, 0, 0.65);
+  line-height: 21px;
+}
+
+.select.select {
+  position: relative;
+  top: 0.5px;
+  display: block;
+  width: 472px;
+  height: 32px;
+}
+
+.selectTrigger.selectTrigger {
+  box-sizing: border-box;
+  width: 472px;
+  height: 32px;
+  min-height: 32px;
+  color: rgba(0, 0, 0, 0.65);
+  border-radius: 4px;
+}
+
+.formItem[data-error] .selectTrigger.selectTrigger {
+  border-color: #ff4d4f;
+}
+
+.formItem[data-error] .selectTrigger.selectTrigger:focus-visible,
+.formItem[data-error] .selectTrigger.selectTrigger[data-popup-open] {
+  border-color: #ff4d4f;
+  box-shadow: 0 0 0 2px rgba(245, 34, 45, 0.2);
+}
+
+.selectPositioner.selectPositioner {
+  z-index: 1050;
+}
+
+.selectPopup.selectPopup {
+  box-sizing: border-box;
+  width: var(--anchor-width);
+  padding: 4px 0;
+  color: rgba(0, 0, 0, 0.65);
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.selectItem.selectItem {
+  box-sizing: border-box;
+  min-height: 32px;
+  padding: 5px 12px;
+  color: rgba(0, 0, 0, 0.65);
+  line-height: 22px;
+}
+
+.selectItem.selectItem[data-highlighted]:not([data-disabled]),
+.selectItem.selectItem:hover:not([data-disabled]) {
+  background: #e6f7ff;
+}
+
+.selectItem.selectItem[data-selected]:not([data-disabled]) {
+  color: rgba(0, 0, 0, 0.65);
+  font-weight: 600;
+}

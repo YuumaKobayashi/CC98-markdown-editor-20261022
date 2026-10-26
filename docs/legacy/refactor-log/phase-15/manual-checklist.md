@@ -1,0 +1,446 @@
+# P15 首批验证与人工验收清单
+
+## Codex 机械检查
+
+- [x] P15 首批实现完成；
+- [x] 首次聚合 `npm run typecheck` 成功；
+- [x] 最终 `npm run typecheck` 成功；
+- [x] `npm run build` 成功；受限沙箱首次因 `spawn EPERM` 失败，在允许子进程的同一工作树重跑成功；
+- [x] `git diff --check` 成功；
+- [x] 两个 owner 无 class、`connect`、legacy route props、`isFirstCommit`、`useLayoutEffect` 或 `React.FC`；
+- [x] 旧文件只有兼容 re-export；
+- [x] `.vscode/`、UBB/editor 与依赖清单未修改。
+
+## 无 Redux 简单组件组机械检查
+
+- [x] 三个内部批次实现完成；
+- [x] 每批 `npm run typecheck` 成功；
+- [x] 每批 `git diff --check` 成功；
+- [x] 每批目标静态审计无 class、Redux/Store、`React.FC`、`isFirstCommit` 或 `useLayoutEffect`；
+- [x] AST 确认 class 总数从 149 降到 136，13 个目标符号全部为 0；
+- [x] 整组最终 `npm run build` 成功；受限沙箱因 `spawn EPERM` 失败，在允许子进程的同一工作树重跑成功；
+- [x] 构建后最终 `npm run typecheck` 与 `git diff --check` 成功；
+
+## 人工页面验收
+
+- [ ] `/usercenter/mytopics` 首次进入，页签、loading、空态和数据列表正常；
+- [ ] `/usercenter/mytopics/2` 及 Pager 前后翻页只请求目标页并滚动到顶部；
+- [ ] `/usercenter/myposts/ishot/0` 显示全部回复并能切到热门；
+- [ ] `/usercenter/myposts/ishot/1` 显示热门回复并能切回全部；
+- [ ] 回复分页、热门切换、back/forward 使用正确 `page/ishot`，每次有效参数变化只有一次目标请求；
+- [ ] 首次进入及参数变化后滚动行为自然，没有陈旧页面闪烁；
+- [ ] 真实登录态、API 返回、主题和样式无回归。
+
+## 无 Redux 简单组件组人工验收
+
+- [ ] 用户中心主题、回复、主页资料、近期动态和签名配置正常；
+- [ ] 私信联系人头像、名称、最近 UBB 内容与未读点正常，且联系人对象未被展示组件修改；
+- [ ] Focus 三个导航与 Outlet 正常，SiteManage 公告/广告正常；
+- [ ] Header/Footer 持久壳层、Footer 链接和年份正常；
+- [ ] 首页、Board、Topic、Message、Focus、UserCenter 等代表页标题正常更新；
+- [ ] 发帖/回复/收藏/消息设置中的 Notice 仍由原 DOM id/CSS/jQuery 合同显示；
+- [ ] 生日、签名 UBB、权限颜色和用户资料字段显示正常。
+
+## 无 Redux 轻状态与导航组件组机械检查
+
+- [x] 三个内部批次实现完成；
+- [x] 每批 `npm run typecheck` 成功；
+- [x] 每批 `git diff --check` 成功；
+- [x] 每批目标静态审计无 class、Redux/Store、`connect`、legacy route props、`React.FC`、`isFirstCommit` 或 `useLayoutEffect`；
+- [x] Focus 页签路径不存在 jQuery DOM class mutation；
+- [x] AST 确认 class 总数从 136 降到 127，9 个目标符号全部为 0；
+- [x] 整组最终 `npm run build` 成功；受限沙箱因 `spawn EPERM` 失败，在允许子进程的同一工作树重跑成功；
+- [x] 构建后最终 `npm run typecheck` 与 `git diff --check` 成功。
+
+## 无 Redux 轻状态与导航组件组人工验收
+
+- [ ] Board、Topic、Message 的当前页、首尾页、前后页和超过 20 页时的 Go 输入正常；非法 Go 输入不改变目标页；
+- [ ] 用户中心主题、回复、关注、粉丝、收藏和历史分页在总页数小于等于 7、起始段、中间段、末尾段时正常；keyword 与 `hasTotal=false` 合同不变；
+- [ ] Focus、搜索、新主题、每周/月度/历史热门和推荐主题中的实名/匿名、标签/无标签、空标题、版面链接及最后回复锚点正常；
+- [ ] `/focus`、`/focus/board`、`/focus/user`、`/focus/favorite` 首次进入、deep link 与 back/forward 始终只有一个正确页签高亮；
+- [ ] Topic 普通阅读与 trace 页的 breadcrumb 首次显示完整，首页/版面/主题链接正确；
+- [ ] 评分信息中的头像和用户名均导航到原用户 URL，评分内容与理由显示正常；
+- [ ] 真实 API、登录态、主题、CSS 和父级 class 组件行为无回归。
+
+## 用户中心 Redux 页面与壳层组机械检查
+
+- [x] 三个内部批次实现完成；
+- [x] 每批 `npm run typecheck` 成功；
+- [x] 每批 `git diff --check` 成功；
+- [x] 每批目标静态审计无 class、`connect`、Store 直接读取、legacy route props、`React.FC`、`isFirstCommit` 或 `useLayoutEffect`；
+- [x] AST 确认 class 总数从 127 降到 122，5 个目标符号全部为 0；
+- [x] 整组最终 `npm run build` 成功；
+- [x] 构建后最终 `npm run typecheck` 与 `git diff --check` 成功。
+
+## 用户中心 Redux 页面与壳层组人工验收
+
+- [ ] 未登录访问 `/usercenter` 保持原未登录页面、标题和登录链接；登录后壳层标题、侧栏、Outlet 和 Footer 正常；
+- [ ] `/usercenter` 个人主页资料、头像、近期主题/回复、loading 与真实刷新请求正常，当前页签为 profile；
+- [ ] `/usercenter/myfollowings`、`/2`、非法页码、back/forward 均只按当前页请求，首次进入和翻页后回到顶部；
+- [ ] `/usercenter/myfans`、`/2`、非法页码、back/forward 均只按当前页请求，首次进入和翻页后回到顶部；
+- [ ] 两页的空态、分页 URL、`hasTotal` 显示、用户卡片和 follow mutation 行为不变；
+- [ ] `/usercenter/mycustomboards` 的 loading、空态、卡片、分隔线、关注/取关操作和真实 API 正常；
+- [ ] 快速切换用户中心页面时无可观察的陈旧请求覆盖或异常 loading；该风险仍需结合真实 API 人工确认。
+
+## 用户中心交互叶子组机械检查
+
+- [x] 三个目标 class 均迁为具名函数，旧路径只保留 default re-export；
+- [x] `npm run typecheck`、`git diff --check` 与目标静态审计通过；
+- [x] AST 确认 class 总数从 122 降到 119，3 个目标符号全部为 0；
+- [x] 整组最终 `npm run build` 成功；
+- [x] 构建后最终 `npm run typecheck` 与 `git diff --check` 成功。
+
+## 用户中心交互叶子组人工验收
+
+- [ ] 用户中心所有侧栏链接、active class、滚动超过/低于 234px 时的按钮 class 和 500ms 回顶动画正常；
+- [ ] 关注版面卡片的版面图片、名称、版主/主题数、关注/取关成功与失败文案正常；
+- [ ] 关注/粉丝卡片的头像、用户名、帖子/粉丝数、hover 文案、私信链接及关注成功/上限/失败状态正常；
+- [ ] 用户取关请求成功后才显示“重新关注”并更新列表 Redux；请求失败时显示“取关失败”且仍保持关注；
+- [ ] 分页、back/forward 和快速切页后各卡片状态与对应用户 id 一致，无跨项残留。
+
+## 热门主题同构页面组机械检查
+
+- [x] 六个目标 class 均迁为具名函数，三个旧文件只保留 named re-export；
+- [x] `npm run typecheck`、`git diff --check` 与目标静态审计通过；
+- [x] AST 确认 class 总数从 119 降到 113，6 个目标符号全部为 0；
+- [x] 整组最终 `npm run build` 成功；
+- [x] 构建后最终 `npm run typecheck` 与 `git diff --check` 成功。
+- [x] 代码检查点已形成：`8c53d6b5`。
+
+## 热门主题同构页面组人工验收
+
+- [ ] `/topic/hot-weekly` 显示“7日热门话题”标题/breadcrumb，列表字段、链接和顺序正常；
+- [ ] `/topic/hot-monthly` 显示“30日热门话题”标题/breadcrumb，列表字段、链接和顺序正常；
+- [ ] `/topic/hot-history` 显示“历史上的今天”标题/breadcrumb，列表字段、链接和顺序正常；
+- [ ] 三页的实名/匿名、头像、标签、媒体、阅读/回复数和最后回复链接保持原行为；
+- [ ] 首次加载仍为空白列表；API 失败不新增异常 UI，既有全局错误行为正常；
+- [ ] 三页互跳、快速离开、deep link 与 back/forward 不出现旧页面结果覆盖或卸载更新警告。
+
+## 退出门禁
+
+- [x] 用户已授权 P15 首批实现与目标组件内的逻辑优化；
+- [x] 用户已授权连续完成无 Redux 简单组件组；
+- [x] 用户已授权连续完成无 Redux 轻状态与导航组件组；
+- [x] 用户已授权连续完成用户中心 Redux 页面与壳层组；
+- [x] 用户已授权继续完成用户中心交互叶子组；
+- [x] 用户已授权继续完成热门主题同构页面组；
+- [ ] 用户已完成人工验收；
+- [x] 用户审核本轮未提交代码与文档 diff；
+- [x] 用户授权本轮代码与文档形成阶段性本地提交；
+- [ ] 用户另行授权下一批。
+
+阶段性提交不表示 P15 完成；机械检查不能替代真实浏览器、登录态与 API 验收。
+
+## 首页、搜索与站务组件组机械检查
+
+- [x] 11 个目标 class 均由具名函数承接，旧路径保持兼容 export；
+- [x] 三个内部批次分别通过 `npm run typecheck`、`git diff --check` 和目标静态审计；
+- [x] AST 确认 React class 总数从 113 降至 102；
+- [x] 整组最终 `npm run build` 成功；
+- [x] 构建后最终 `npm run typecheck` 与 `git diff --check` 成功。
+- [x] 代码检查点已形成：`547ecd45`。
+
+## 首页、搜索与站务组件组人工验收
+
+- [x] 首页缓存命中/未命中、空十大回退、推荐阅读 hover、广告加载/hover/20 秒轮播、登录态福利和统计正常；
+- [x] `/search` 正常、空、错误、非法参数、超过五词、增量加载/失败重试、滚动按钮及 back/forward 正常；
+- [x] `/searchBoard` 正常、空、非法参数、双重编码、快速切换及版面外链正常；
+- [x] `/sitemanage` 公告加载/预览/提交/清缓存的成功失败反馈正常；
+- [x] 四类首页栏目切换、分页、新增、编辑、保存、可见性及空列表新增正常；
+- [x] 快速离开或切换页面不出现旧结果覆盖和卸载更新警告。
+
+## 消息与私信组件组机械检查
+
+- [x] 6 个目标 class 均由具名函数承接，旧路径保持兼容 export；
+- [x] 两个内部批次分别通过 `npm run typecheck`、`git diff --check` 和目标静态审计；
+- [x] AST 确认 React class 总数从 102 降至 96；
+- [x] 整组最终 `npm run build` 成功；
+- [x] 构建后最终 `npm run typecheck` 与 `git diff --check` 成功。
+
+## 消息与私信组件组人工验收
+
+- [ ] `/message`、response、attme、system、setting 的 active 页签、未读数、全部已读、分页、非法页码、缓存及 back/forward 正常；
+- [ ] `/message/message` 和 `?id=`/`?name=` deep link 的联系人请求、排序、选中、已读、置顶与更多联系人正常，重新进入页面会重新请求；
+- [ ] 会话首次加载、切换、加载更早消息后的滚动锚点、发送成功/403、200ms 刷新和未读刷新正常；
+- [ ] 上传按钮、文件选择、剪贴板粘贴、拖放、多图片、非图片拒绝及失败提示正常；
+- [ ] 无联系人、空消息、快速切换联系人和快速离页无崩溃、旧结果覆盖或卸载更新警告。
+
+## Header、登录、通知与错误控制组机械检查
+
+- [x] 三个内部批次分别通过 `npm run typecheck` 与 `git diff --check`；
+- [x] 6 个目标均由具名函数承接，legacy 文件只保留兼容 export；
+- [x] 新 owner 无 class、`connect`、直接 Store、legacy route props、`React.FC`、`isFirstCommit`、`useLayoutEffect`或展示修正 jQuery；
+- [x] AppShell 未导入或挂载 `NotificationController`；
+- [x] AST 最终确认总数为 90，6 个原目标符号均为 0；
+- [x] 整组 `npm run build` 成功；构建后 typecheck 与 `git diff --check` 成功。
+
+## Header、登录、通知与错误控制组人工验收
+
+- [x] 首页与普通页 Header 样式、持久性、Logo、导航、hover 菜单、签到、管理入口和隐私头像正常；
+- [x] 未读总数及四类计数、登录入口、注册入口和完整退出登录行为正常；
+- [x] 两个标签页间登录、退出、用户信息及隐私模式同步，反复导航后事件不会重复触发；
+- [x] 顶部主题、全站、版内、用户、版面搜索，Enter、空输入、下拉外部关闭、deep link 与 back/forward 正常；
+- [x] 登录空用户名/密码 shake、重复提交、成功、密码错误、锁定、未知错误及安全返回地址正常；
+- [x] 全局错误页首次进入及 pathname 变化后能清除，正常页面不被错误状态继续覆盖；
+- [x] 启动、登录和导航期间不存在 SignalR WebSocket、浏览器通知授权提示或 NotificationController 运行时副作用。
+- [x] 代码检查点已形成：`220d94d2`。
+
+## 公共用户详情页迁移组机械检查
+
+- [x] 两个内部批次均通过 `npm run typecheck`、`git diff --check` 与目标静态审计；
+- [x] 6 个目标均由具名函数承接，legacy 文件仅保留兼容 export；
+- [x] 新 owner 不含 class、`connect`、直接 Store、legacy route props、`React.FC`、`isFirstCommit`、`useLayoutEffect` 或展示修正 jQuery；
+- [x] AST 确认 React class 总数从 90 降至 84，6 个原目标符号均为 0；
+- [x] 整组 `npm run build` 成功；受限沙箱首次命中 `spawn EPERM`，允许子进程的同一工作树重跑通过；
+- [x] 构建后复跑 typecheck 与 `git diff --check` 成功。
+
+## 公共用户详情页迁移组人工验收
+
+- [ ] `/user/id/:id`、`/user/name/:name`、中文用户名、非法 method/id 与不存在用户显示正确；
+- [ ] 访问不存在用户后再访问正常用户可以恢复，name 路由以 replace 规范化为 id 路由；
+- [ ] 快速切换、deep link 与 back/forward 时旧响应不覆盖当前用户；
+- [ ] 头像、头像框、用户头衔、版主头衔、资料字段、锁定/禁言、生日蛋糕和签名 UBB 正常；
+- [ ] 关注、取关、重新关注、上限、失败、私信及本人/管理员导航正常；
+- [ ] 近期主题首次加载、滚动增量、最终批次、空态、失败后再次触发及切换用户正常；
+- [ ] 用户中心主页继续正确显示共享头像徽章，legacy manage 子页无回归。
+
+## 版面列表与展示叶子迁移组机械检查
+
+- [x] 三个内部批次均通过 `npm run typecheck`、`git diff --check` 与目标静态审计；
+- [x] 9 个目标 React class 均由具名函数承接，旧位置保持兼容 named export；
+- [x] 新组件不含 Redux/Store、`connect`、legacy route props、`React.FC`、`isFirstCommit`、`useLayoutEffect` 或展示修正 jQuery；
+- [x] AST 确认 React class 总数从 84 降至 75，9 个目标声明均为 0；
+- [x] 整组 `npm run build` 成功；受限沙箱首次命中 `spawn EPERM`，允许子进程的同一工作树重跑通过；
+- [x] 构建后复跑 typecheck 与 `git diff --check` 成功。
+- [x] 代码检查点已形成：`fe9fc28c`。
+
+## 版面列表与展示叶子迁移组人工验收
+
+- [x] `/boardlist` 的 API 数据、顺序、默认展开、反复展开/收起、主管链接和子版面链接正常；
+- [x] 版面导航定位、目标不存在保护、普通/无图片区布局与图片加载失败回退正常；
+- [x] 普通版面及 tag/list 路由的 breadcrumb、一级/二级标签、Pager、deep link 与 back/forward 正常；
+- [x] 未登录、未认证、锁定、可投票和不可投票用户显示正确发帖入口或提示，首页广告正常；
+- [x] 操作记录的实名、匿名、不适用、主题/用户链接、时间和非 `*` IP hover 正常，`*` 不显示；
+- [x] `/newtopics`、`/recommendedtopics` 的 breadcrumb、列表、随机切换、滚动与 Redux 行为无回归。
+
+## 公共用户管理子页迁移组机械验证
+
+- [x] `UserManage`、`Delete`、`Operation`、`ShowTopic` 四个 React class 均由具名函数承接，旧文件仅保留 facade；
+- [x] Router manage 子路由使用 `pages/user-profile/manage` 窄入口；
+- [x] 新 owner 不含 class、`connect`、Store 直接读取、legacy route props、jQuery、`React.FC`、`isFirstCommit` 或 `useLayoutEffect`；
+- [x] `npm run typecheck`、`git diff --check` 与目标静态审计通过；
+- [x] AST 总数从 75 降至 71，四个目标 class 数量为 0；
+- [x] 整组 `npm run build` 成功；受限沙箱首次命中 `spawn EPERM`，允许子进程的同一工作树重跑通过；
+- [x] 构建后复跑 typecheck 与 `git diff --check` 成功。
+
+## 公共用户管理子页迁移组人工验收
+
+- [x] 管理员从公共用户侧栏进入 manage 页，标题、用户身份与三块操作区域正确；
+- [x] `/user/id/:id/manage`、`/user/name/:name/manage`、中文用户名、deep link、快速切换及 back/forward 正常；
+- [x] 非法 method/id、不存在用户及随后访问正常用户时无旧用户内容或粘滞错误；
+- [x] 删除主题/回复的 1、365、0、366 和非数字输入、成功/失败提示及真实 API 正常；
+- [x] 锁定、屏蔽、TP、解除、TP 天数与理由校验、成功/失败提示及真实 API 正常；
+- [x] 近期发言首次加载、前后分页、首尾禁用、快速翻页、版面名、链接、楼层、时间、IP 与内容正常；
+- [x] 非管理员或无权限请求仍由既有入口和后端拒绝，不产生越权操作。
+
+## Focus 页面剩余壳层迁移组机械验证
+
+- [x] `FocusBoardArea`、`FocusTopicArea` 两个 React class 均由具名函数承接，旧文件仅保留 facade；
+- [x] Router index 与 `board/*` 使用 `pages/focus` 窄入口，user/favorite 子页直接组合同 owner 主题流；
+- [x] 新 owner 不含 class、`connect`、Store 直接读取、legacy route props、`React.FC`、`isFirstCommit`、`mounted` 或 `useLayoutEffect`；
+- [x] wheel、touchmove、scroll listener 均有同一 effect 的配对 cleanup；
+- [x] `npm run typecheck`、`git diff --check` 与目标静态审计通过；
+- [x] AST 总数从 71 降至 69，两个目标 class 数量为 0；
+- [x] 整组 `npm run build` 成功；受限沙箱首次命中 `spawn EPERM`，允许子进程的同一工作树重跑通过，共转换 3,913 个模块；
+- [x] 构建后复跑 typecheck 与 `git diff --check` 成功。
+- [x] 代码检查点已形成：`53e67ef8`。
+
+## Focus 页面剩余壳层迁移组人工验收
+
+- [x] `/focus`、`/focus/board`、`/focus/user`、`/focus/favorite` deep link、页签与 back/forward 正常；
+- [x] 关注版面缓存、默认/历史选中项、单击切换、双击进入版面及刷新后恢复正常；
+- [x] 关注版面、关注用户、收藏主题首次加载与空列表正常；
+- [x] 触底追加、重复边界、连续滚动、最终批次、200 条上限及 loading/done 文案正常；
+- [x] 回到顶部按钮显隐与 500ms 动画正常；
+- [x] 快速切换版面时旧响应不覆盖当前内容，切换不会积累重复请求；
+- [x] 请求失败后可再次触发；未登录、401/403 继续遵循既有错误处理。
+
+## 主题发现页与卡片视图迁移组机械验证
+
+- [x] 七个目标 React class 均由具名函数承接，旧文件仅保留兼容 facade；
+- [x] `/newtopics/*`、`/recommendedtopics/*` Router lazy import 使用 page 窄入口；
+- [x] 新 owner 不含 React class、`connect`、Store 直接读取、legacy route props、`React.FC`、`mounted` 或 `isFirstCommit`；
+- [x] `useLayoutEffect` 只存在于 DPlayer/APlayer 初始化边界；新帖 document listener 继续配对 cleanup；
+- [x] `npm run typecheck`、`npm run build`、`git diff --check` 与目标静态审计通过；
+- [x] AST 总数从 69 降至 62，七个目标 class 数量均为 0；
+- [x] 受限沙箱首次构建命中既知 `spawn EPERM`，允许子进程环境重跑成功；
+- [x] 既有缺陷均保持并登记，没有混入修复。
+- [x] 代码检查点已形成：`37727da2`。
+
+## 主题发现页与卡片视图迁移组人工验收
+
+- [x] `/newtopics` deep link、刷新、back/forward 和经典/卡片/只看媒体三种模式正常，偏好 PUT 与再次进入时恢复正常；
+- [x] Redux 隐私开关、本地 `showCardUser`、Header/跨标签页联动及用户统计正常；
+- [x] 首批 20 条、触底追加、重复边界、连续滚动、500 条上限、loading/done 和 500ms 回顶正常；
+- [x] 匿名主题、空标题、作者/主题/版面/最后回复链接及楼层锚点正常；
+- [x] 一至六图布局、缩略图切换、原图 URL、展开/收起和只看媒体正常；
+- [x] 横竖屏视频、菜单、全屏按钮、音频播放及卸载后销毁正常；
+- [x] 版面列表缓存、默认展开、链接、长短名称布局及上下滚动 sticky 正常；
+- [x] 随机近期主题和 `/recommendedtopics` 的 10 条缓存、换一换、上一批、链接及按钮显隐正常；
+- [x] 未登录、401/403、空列表、异常 API 和异常媒体继续遵循迁移前语义；
+- [x] 已登记的 listener、播放器失败路径、空值判断、key 与调试语句缺陷未在本批宣称修复。
+
+## 用户中心资料、主题与转账设置迁移组机械验证
+
+- [x] `Config`、`UserCenterConfigAvatar`、`ConfigOthers` 匿名组件、`Theme`、`ThemeSettingComponent`、`Wealth` 均由具名函数承接，旧文件只保留兼容 facade；
+- [x] Router 的 `config/*`、`theme/*`、`transferwealth/*` lazy import 使用三个 page 窄入口；
+- [x] 新 owner 不含 React class、`connect`、Store 直接读取、legacy route props、`React.FC`、`useLayoutEffect`、`mounted` 或 `isFirstCommit`；
+- [x] 头像 selector、resize、cover 与 window mouse listener 均在同一普通 effect 中配对 cleanup；
+- [x] `npm run typecheck`、`npm run build`、`git diff --check` 与目标静态审计通过；
+- [x] AST 总数从 62 降至 56，六个目标 class 数量均为 0；
+- [x] 受限沙箱首次构建命中既知 `spawn EPERM`，允许子进程环境重跑成功，共转换 3,920 个模块；
+- [x] 既有缺陷均保持并登记，没有混入修复。
+
+## 用户中心资料、主题与转账设置迁移组人工验收
+
+- [x] `/usercenter/config`、`/usercenter/theme`、`/usercenter/transferwealth` deep link、用户中心页签、刷新与 back/forward 正常；
+- [x] 个人资料初始化、性别、生日未选择/保密/边界年月日、头衔、QQ、邮箱、简介、签名、重置与提交提示正常；
+- [x] 头像当前值、六个论坛头像、本地图片类型/最小尺寸、预览、移动、缩放、裁剪、上传、成功/失败与连续选择正常；
+- [x] 固定主题切换、未知主题回退、日夜开关、浏览器同步、起止时间、成功三秒提示与失败提示正常；
+- [x] 单人/多人转账、空白分隔与去重、金额/理由/余额校验、手续费预览、提交锁、成功名单与失败提示正常；
+- [x] 未登录、401/403、空头衔列表、异常图片/Canvas 和异常 API 继续遵循迁移前语义；
+- [x] 已登记的日期、异步回调、主题静默失败、转账输入/共享状态/Redux 原地修改缺陷未在本批宣称修复。
+
+## 用户中心近期动态、收藏与浏览历史迁移组机械验证
+
+- [x] 六个目标 React class 均由具名函数承接，六个旧文件仅保留兼容 re-export；
+- [x] Router 的 `myfavorites/*`、`myhistory/*` 使用 page 窄入口，overview 不再导入 legacy 近期动态 class；
+- [x] 新 owner 不含 React class、`connect`、Store 直读、legacy route props、`React.FC`、`useLayoutEffect`、`mounted` 或 `isFirstCommit`；
+- [x] 近期主题 window scroll listener 在同一普通 effect 中注册并 cleanup；
+- [x] `npm run typecheck`、`npm run build`、`git diff --check` 与目标静态审计通过；
+- [x] class declaration 口径从 56 降至 50；完整 class declaration/expression 口径从 57 降至 51；
+- [x] 受限沙箱首次构建命中既知 `spawn EPERM`，允许子进程环境重跑成功，共转换 3,925 个模块；
+- [x] 已识别的近期动态、收藏、历史与路由缺陷均保持并登记，没有混入修复。
+
+## 用户中心近期动态、收藏与浏览历史迁移组人工验收
+
+- [ ] 用户中心 overview 的近期主题缓存、空列表、首批请求、连续滚动、末批停止和异常 API 正常；
+- [ ] 收藏页 deep link、默认重定向、刷新、分页、三种排序、分组切换、搜索和 back/forward 正常；
+- [ ] 取消收藏、移动分组及操作后的主题/分组列表刷新正常；
+- [ ] 新增、重命名、删除分组的校验、十组上限、成功/失败提示和默认分组保护正常；
+- [ ] Topic 详情页共享收藏分组选择器、收藏/取消收藏和计数显示正常；
+- [ ] 浏览历史开关确认框、跨端设置文案、分页、空列表、403、异常 API 与快速切页正常；
+- [ ] 未登录、401/403、DOM/CSS、文案及五项已登记缺陷继续遵循迁移前语义。
+
+## 当前公开 Board 页面迁移组机械验证
+
+- [x] `Pages/Board` 的七个 class declaration 与一个 class expression 均已消失，旧文件只保留兼容 re-export；
+- [x] Router `/board/:id/:page?/*` 使用 `pages/board/BoardPage` 窄入口，旧 `/list/:boardId/...` 入口未改；
+- [x] 新 owner 不含 React class、`withRouter`、`RouteComponent`、legacy route props、`React.SFC`、`React.FC`、`useLayoutEffect`、Store 直读、mounted 或 isFirstCommit；
+- [x] `npm run typecheck`、`npm run build`、`git diff --check`、目标静态审计和完整 AST 统计通过；
+- [x] 完整口径从 75 declaration 加 2 expression 降至 68 declaration 加 1 expression；排除 `ErrorBoundary` 后仍有 68 个目标；
+- [x] 受限沙箱首次构建命中既知 `spawn EPERM`，允许子进程环境重跑成功，共转换 3,925 个模块；
+- [x] 已识别的 Board 路由、空列表、缓存、请求竞争、小黑屋与管理操作缺陷均保持并登记。
+
+## 当前公开 Board 页面迁移组人工验收
+
+- [ ] `/board/:id`、`/board/:id/:page` deep link、刷新、页码跳转、back/forward 和快速切版面正常；
+- [ ] Board 正常、精华、保存、一级/二级标签、置顶主题、空版面、404、401/403、500 与异常 API 符合迁移前语义；
+- [ ] breadcrumb、大字报展开/编辑、关注、广告以及未登录、未认证、禁言、可发主题/投票状态正常；
+- [ ] 主题图标、高亮、匿名、空标题、标签、楼层分页、最后回复和延迟 hover 速览 UBB 正常；
+- [ ] 普通用户与版主的小黑屋、分页、解除 TP、确定/取消及已登记缺陷保持；
+- [ ] 批量管理的选择、零选择提示、锁沉/删除、理由、天数、成功/失败 API 语义和列表状态保持；
+- [ ] 版面事件打开、分页、匿名对象、时间/操作人、异常 API 与快速切页保持；
+- [ ] DOM/CSS、AntD、文案、公开 URL、冻结 UBB 及旧 `/list/:boardId/...` 回归正常。
+
+## Topic 评分与管理弹窗迁移组机械验证
+
+- [x] 四个 live React class 均由 `features/moderation` 具名函数承接，四个旧文件只保留兼容 re-export；
+- [x] `Topic-Reply.tsx` 与 `Topic-SendTopic.tsx` 使用 moderation public barrel，不再导入四个 legacy 实现；
+- [x] 新 owner 不含 React class、legacy route props、Store 直读、`React.FC`、`useLayoutEffect`、mounted 或 isFirstCommit；
+- [x] API service 符号、参数顺序、HTTP URL 与父组件 props/callback 合同完成静态对照；
+- [x] `npm run typecheck`、`npm run build`、`git diff --check`、目标静态审计与完整 AST declaration/expression 统计通过；
+- [x] 完整口径从 68 declaration 加 1 expression 降至 64 declaration 加 1 expression；排除 `ErrorBoundary` 后仍有 64 个目标；
+- [x] 受限沙箱首次构建命中既知 `spawn EPERM`，允许子进程环境重跑成功，共转换 3,925 个模块；
+- [x] 已识别的 pending、解析、竞态、权限、默认值、高亮和管理记录缺陷均保持并登记，没有混入修复。
+
+## Topic 评分与管理弹窗迁移组人工验收
+
+- [x] 发言管理的奖励财富、奖励威望、扣财富、扣威望、删除、TP、解除 TP，表单校验、零值、成功刷新、取消和异常 API 正常；
+- [x] 评分 `+1/-1`、理由加载、未选择状态、资格/重复/过期等错误反馈及快速重复提交符合迁移前语义；
+- [x] 主题锁定/解锁、允许/禁止热门、删除、移动、提升、版面固顶、全站固顶、精华、高亮九类菜单与天数正常；
+- [x] 父版面/子版面选择、高亮加粗/斜体/颜色，以及普通作者、版主、管理员看到的权限表现保持；
+- [x] 管理记录首次加载、7 条分页、匿名对象、时间、操作人、IP、异常 API 和快速切页正常；
+- [x] Topic 正常页、热评、追踪页、回复编辑器、四类 Modal 开关、刷新回调、DOM/CSS 与文案回归正常；
+- [x] 未登录、401/403、管理 API 异常及六项已登记缺陷继续遵循迁移前语义。
+
+以上 Topic 评分与管理弹窗项目已于 2026-07-28 完成人工验收；代码检查点 `57029e44`、文档检查点 `908a3c7c`。
+
+## 完整 Topic 主链迁移组机械验证
+
+- [x] 十个 React class 结构均由 `pages/topic` 具名函数承接，十个旧文件只保留兼容导出；
+- [x] Router 直接加载 `TopicPage`、`TrackedTopicPage`，回复编辑器仅通过 handle 暴露 `isContentEmpty()`；
+- [x] 新 owner 不含 React class、`RouteComponent`、`withRouter`、`connect`、Store 直读、`React.FC`、`useLayoutEffect`、mounted、isFirstCommit 或 previous-props 模拟器；
+- [x] `npm run typecheck`、`npm run build`、`git diff --check`、目标静态审计和完整 AST 统计通过；
+- [x] 完整 AST 从 64 declaration 加 1 expression 降至 55 declaration 加 0 expression；排除 `ErrorBoundary` 后仍有 54 个目标；
+- [x] 受限沙箱首次构建命中既知 `spawn EPERM`，允许子进程环境重跑成功，共转换 3,927 个模块；
+- [x] API、Redux、公开 URL、DOM/CSS、文案和已识别缺陷均保持；package 与 lockfile 未改。
+
+## 完整 Topic 主链迁移组人工验收
+
+- [x] 普通 Topic 与追踪 deep link、刷新、分页、back/forward、键盘翻页及未提交草稿确认正常；
+- [x] 普通、热评、追踪回复，hash 定位、匿名、作者/版主/管理员权限和楼层展示正常；
+- [x] UBB/Markdown、投票、奖励、关注、点赞踩、引用、编辑、评分和管理弹窗正常；
+- [x] 收藏、标签、广告、回复缓存、匿名回复、通知全部回复及 Local Storage 键保持；
+- [x] 未登录、未认证、禁言以及异常 API、401/403/404/500 继续遵循迁移前语义；
+- [x] 已登记的请求竞态、错误吞噬、投票提示、追踪更新和 composer 缺陷未被误报修复。
+
+以上完整 Topic 主链迁移项目已于 2026-07-28 完成人工验收；代码检查点 `2f9669c1`。
+
+## 旧 `/list` Board 主链迁移组机械验证
+
+- [x] `Components/Board/Board.tsx` 的 12 个 React class 结构均已消失，11 个业务 owner 由具名函数承接；
+- [x] Router 直接从 `@pages/board` 加载 `LegacyBoardPage`，旧 facade 保留全部原导出名并转导根 `RouteComponent`；
+- [x] 新 owner 不含 React class、`RouteComponent`、`withRouter`、`connect`、Store 直读、`React.FC`、`useLayoutEffect`、mounted、isFirstCommit 或 previous-props 模拟器；
+- [x] `npm run typecheck`、`npm run build`、`git diff --check`、目标静态审计和完整 AST 统计通过；
+- [x] 完整 AST 从 55 declaration 加 0 expression 降至 43 declaration 加 0 expression；排除 `ErrorBoundary` 后仍有 42 个目标；
+- [x] 受限环境首次构建命中既知 `spawn EPERM`，在获准环境重跑同一命令成功，共转换 3,932 个模块；
+- [x] API、Redux、公开 URL、Local Storage、DOM/CSS、文案和已识别缺陷均保持；package、lockfile、年度回顾与冻结 UBB/editor 未改。
+
+## 旧 `/list` Board 主链迁移组人工验收（用户免检）
+
+- [ ] `/list` deep link、刷新、切版、分页、back/forward 及内部 `/board/...` 匹配保持；
+- [ ] 版面图标、大字报编辑、关注状态、版主、子版面、发帖入口和广告正常；
+- [ ] 普通、置顶、精华、保存、单标签、双标签列表及每页 20 条合同正常；
+- [ ] 主题图标、高亮、匿名、楼层页码、最后回复、冻结 UBB hover 与链接正常；
+- [ ] 事件记录、小黑屋、解除 TP、批量锁沉/删除及分页正常；
+- [ ] 未登录、权限差异、异常 API、401/403/404/500 继续遵循迁移前语义；
+- [ ] 当前公开 `/board`、Topic、发帖入口和冻结 UBB 回归正常；
+- [ ] 已登记的路由混用、竞态、权限时序、参数顺序、追加分页和批量操作缺陷未被误报修复。
+
+以上项目未执行，不标记为人工验收通过。用户于 2026-07-28 明确免除本组人工验收并授权形成代码、文档本地检查点；当前迁移代码暂时保留，P21 重新完成仓内引用、外部入口与生产构建证明后删除 `/list` route、legacy owner 与兼容 facade。不 push，不自动进入下一组。
+
+## 剩余 live 非年度回顾主链迁移组机械验证
+
+- [x] 九个实际路由/调用 React class 均由具名函数承接，零调用 class、年度回顾和 `ErrorBoundary` 未迁移；
+- [x] Router 直接加载 `EditorPage`、`DailySigninPage`、`LegacyIndexPage`，冻结 UBB 继续通过 MessageBar facade 工作；
+- [x] 旧导出 `ShowEdit`、五个编辑器叶子、`Vote`/`props`、签到、Index、MessageBar/MessageType 均保留；
+- [x] 新 owner 不含 class、`RouteComponent`、`withRouter`、`connect`、Store 直读、`React.FC`、`useLayoutEffect`、mounted、isFirstCommit 或 previous-props 模拟器；
+- [x] 组件本身使用具名 `function`；组件内部 helper、handler 与异步动作经 AST 复核均为 `const + 箭头函数`，内部普通 function declaration/expression 为 0；
+- [x] modern/legacy typecheck、生产 build、`git diff --check`、目标静态审计和完整 AST 统计通过；
+- [x] 完整 AST 从 43 declaration 加 0 expression 降至 34 declaration 加 0 expression；排除 `ErrorBoundary` 后仍有 33 个目标；
+- [x] 受限环境首次 build 命中既知 `spawn EPERM`，在获准环境重跑成功，共转换 3,939 个模块；
+- [x] API、Redux、URL、Local Storage、DOM/CSS、文案和已登记缺陷保持；package、lockfile、年度回顾与冻结 UBB/editor 未改。
+
+## 剩余 live 非年度回顾主链迁移组人工验收
+
+- [ ] `/editor/postTopic/:boardId`、`postVoteTopic`、`edit/:postId` deep link、刷新、参数切换和 back/forward 正常；
+- [ ] UBB/Markdown 切换、标题、0/1/2 层标签、普通/学术/活动类型、消息提醒和 8000 字限制正常；
+- [ ] 匿名状态、财富、投票设置/校验、图片上传、住房模板、编辑主题/回复、缓存、@通知和跳转正常；
+- [ ] 发帖/编辑异常、未登录、权限差异及 400/401/402/403/404/500 继续遵循迁移前语义；
+- [ ] 签到已签/未签、补签日历、UBB 内容、storage、reload 和异常 API 正常；
+- [ ] `/index` 刷新和标题正常；UBB need-reply/poster-only/allow-viewer MessageBar 的 Info/Warning/default 样式正常；
+- [ ] Topic、Board、发帖入口和冻结 UBB/editor 回归正常；
+- [ ] 已登记的竞态、无 pending、状态分支、标签 DOM、住房模板和签到缺陷未被误报修复。
+
+本组停在人工验收门禁；改动保持未暂存、未提交、未 push。

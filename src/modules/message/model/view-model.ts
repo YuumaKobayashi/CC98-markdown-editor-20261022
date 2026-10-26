@@ -1,0 +1,41 @@
+import type { MessageInfo } from "./dto";
+
+/**
+ * 私信 service 在 wire 消息上追加时间显示状态后的渲染模型。
+ */
+export interface MessageViewModel extends MessageInfo {
+  showTime: boolean;
+}
+
+// A '.tsx' file enables JSX support in the TypeScript compiler,
+// for more information see the following page on the TypeScript wiki:
+// https://github.com/Microsoft/TypeScript/wiki/JSX
+/**
+*私信聊天时显示的单个用户信息
+*/
+export interface MessagePersonInfo {
+  /**
+  *当前私信用户id
+  */
+  id: number;
+  /**
+  *当前私信用户名
+  */
+  name: string;
+  /**
+  *当前私信用户头像地址
+  */
+  portraitUrl: string | null;
+  /**
+  *最近消息列表
+  */
+  message: MessageViewModel[];
+  /**
+  *最近一条消息
+  */
+  lastContent: string;
+  /**
+  *是否已读
+  */
+  isRead: boolean;
+}

@@ -1,0 +1,73 @@
+// A '.tsx' file enables JSX support in the TypeScript compiler,
+// for more information see the following page on the TypeScript wiki:
+// https://github.com/Microsoft/TypeScript/wiki/JSX
+import * as React from "react";
+import moment from "moment";
+import { UbbCompatiblityMode } from "@modules/ubb/engine/Core";
+import { UbbContainer } from "@modules/ubb/UbbContainer";
+import type { SystemNotificationViewModel } from "../model/view-model";
+import styles from "./MessageSystembox.module.scss";
+
+/** 旧组件 props 名；组件只接收 ViewModel 中实际渲染的字段。 */
+export type MessageSystemProps = Omit<
+  SystemNotificationViewModel,
+  "postId" | "postBasicInfo"
+>;
+
+export function MessageSystembox(
+  props: MessageSystemProps,
+): React.ReactElement {
+  let content;
+  if (props.topicId) {
+    if (props.floor) {
+      //console.log("楼层", props.floor);
+      const a = props.floor / 10 + 1;
+      const b = parseInt(String(a), 10);
+      const c = props.floor + 10 - b * 10;
+      let pageNum = `${b}#${c}`;
+      if (c === 0) {
+        pageNum = `${b - 1}#10`;
+      }
+      if (props.isRead) {
+        content = `[url=/topic/${props.topicId}/${pageNum}][color=gray]${props.content}[/color][/url]`;
+      } else {
+        content = `[url=/topic/${props.topicId}/${pageNum}][b][color=black]${props.content}[/color][/b][/url]`;
+      }
+    } else if (props.isRead) {
+      content = `[url=/topic/${props.topicId}][color=gray]${props.content}[/color][/url]`;
+    } else {
+      content = `[url=/topic/${props.topicId}][b][color=black]${props.content}[/color][/b][/url]`;
+    }
+  } else if (props.isRead) {
+    content = `[color=gray]${props.content}[/color]`;
+  } else {
+    content = `[color=black][b]${props.content}[/b][/color]`;
+  }
+
+  return (
+    <div className={styles["message-system-box"]}>
+      <div className={styles["message-system-box-bar"]}>
+        <div className={styles["message-system-box-title"]}>{props.title}</div>
+        <div className={styles["message-system-box-date"]}>
+          {moment(props.time).format("YYYY-MM-DD HH:mm:ss")}
+        </div>
+      </div>
+      <div className={styles["message-system-box-content"]}>
+        <UbbContainer
+          code={content}
+          options={{
+            allowExternalImage: false,
+            allowAutoPlay: false,
+            autoDetectUrl: true,
+            allowExternalUrl: true,
+            allowImage: true,
+            allowMediaContent: false,
+            compatibility: UbbCompatiblityMode.Recommended,
+            allowEmotion: false,
+            allowToolbox: false,
+          }}
+        />
+      </div>
+    </div>
+  );
+}

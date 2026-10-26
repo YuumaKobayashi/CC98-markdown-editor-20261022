@@ -1,0 +1,119 @@
+.voteContent {
+  padding: 1.5rem;
+  position: relative;
+  counter-reset: vote-item;
+}
+
+.voteMessage {
+  position: absolute;
+  left: 50%;
+  padding: 1rem;
+  background-color: #5198d8;
+  color: #fff;
+  border-radius: 0.5rem;
+  pointer-events: none;
+  transition: opacity .2s;
+  opacity: var(--topic-vote-message-opacity, 0);
+}
+
+.voteItem label::before {
+  counter-increment: vote-item;
+  content: counter(vote-item) ". ";
+}
+
+.voteDescription {
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+  margin: .4rem 0;
+}
+
+.voteDescription input {
+  margin-right: 1rem;
+}
+
+.voteBar {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+}
+
+.voteTotal {
+  display: inline-flex;
+  position: relative;
+  width: 20rem;
+  background-color: gray;
+  border-radius: 1rem;
+  height: .8rem;
+  margin-left: .3rem;
+  margin-right: 2rem;
+}
+
+.voteCurrent {
+  position: absolute;
+  width: var(--topic-vote-current-width, 10rem);
+  height: .8rem;
+  background-color: var(--topic-vote-current-color);
+  border-radius: 1rem;
+}
+
+.voteInfo {
+  margin: 1.5rem 0;
+  font-size: 0.8rem;
+
+  p {
+    margin-top: 0;
+    margin-bottom: .5rem;
+  }
+}
+
+.button {
+  display: inline-block;
+  outline: none;
+  cursor: pointer;
+  width: 7rem;
+  height: 4rem;
+  text-align: center;
+  text-decoration: none;
+  font-size: 1.25rem;
+  font-family: 微软雅黑;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+  border-radius: 1rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  line-height: 4rem;
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  &:active {
+    position: relative;
+    top: 1px;
+  }
+}
+
+.blue {
+  color: #fff;
+  border: solid 1px var(--cc98-theme-color-main);
+  background-color: var(--cc98-theme-color-main);
+  opacity: 0.8;
+
+  &:hover {
+    background-color: var(--cc98-theme-color-main);
+    opacity: 0.9;
+  }
+
+  &:active {
+    background-color: var(--cc98-theme-color-main);
+  }
+}
+
+.voteButtons button {
+  width: 5rem;
+  height: 2.5rem;
+  padding: 0;
+  line-height: 1;
+  font-size: 1rem;
+  border-radius: 0.3rem;
+  margin-right: 1rem;
+}

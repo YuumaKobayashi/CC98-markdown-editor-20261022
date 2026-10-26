@@ -1,0 +1,94 @@
+//---------------恢复一些被reset的样式------------------
+p {
+  -webkit-margin-before: 1em;
+  -webkit-margin-after: 1em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+}
+
+img {
+  vertical-align: middle;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  margin: 0;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+input,
+optgroup,
+select,
+textarea {
+  line-height: inherit;
+}
+
+button {
+  -webkit-appearance: button;
+  appearance: button;
+  line-height: normal;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="number"],
+textarea {
+  -webkit-appearance: none;
+}
+
+textarea {
+  resize: vertical;
+}
+
+*,
+*::before,
+*::after {
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
+}
+
+ul {
+  display: block;
+  list-style-type: disc;
+  -webkit-margin-after: 1em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  -webkit-padding-start: 40px;
+  -moz-padding-start: 40px;
+}
+
+li {
+  display: list-item;
+  text-align: -webkit-match-parent;
+}
+
+input[type="radio"] {
+  margin: 3px 3px 0px 5px;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+::-moz-selection {
+  background: #1890ff;
+  color: #fff;
+}
+
+::selection {
+  background: #1890ff;
+  color: #fff;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+//------------到此为止---------------

@@ -1,0 +1,88 @@
+
+
+.createTopicTitle {
+  display: flex;
+  height: 40px;
+  margin-bottom: 20px;
+  border-style: solid;
+  border-color: rgb(233, 233, 233);
+  border-width: 1px;
+  box-sizing: border-box;
+  background-color: rgb(255, 255, 255);
+  align-items: center;}
+
+.createTopicListName {
+  display: flex;
+  width: 120px;
+  justify-content: center;
+  border-width: 0 1px 0 0;
+  border-style: solid;
+  border-color: rgb(233, 233, 233);
+  box-sizing: border-box;}
+
+.createTopicTitle {
+  display: flex;
+  flex-direction: row;
+  position: relative;}
+
+.createTopicTitle input {
+  display: flex;
+  flex-grow: 1;
+  border: 0;
+  font-size: 14px;
+  font-family: 微软雅黑;
+  color: rgb(80, 80, 80);
+  outline: none;
+  padding-left: 1rem;}
+
+.hiddenImage {
+  display: block;
+  color: var(--cc98-theme-color-main);
+  width: 7rem;
+  background-color: transparent;
+  text-align: center;
+  //vertical-align: middle; //设置元素的垂直对齐方式
+  border: 1px solid var(--cc98-theme-color-main);
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  border-radius: .25rem;
+  line-height: normal;
+  white-space: nowrap;
+  margin-top: 1rem;
+  font-family: 微软雅黑;
+
+  &:hover {
+    background-color: var(--cc98-theme-color-main);
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+  }
+}
+
+.settingsPrompt {
+  padding-left: 1rem;
+}
+
+.createTopicTitle input.numberInput {
+  border-width: 0 1px 0 0;
+  border-style: solid;
+  border-color: #e9e9e9;
+  box-sizing: border-box;
+  margin: 1rem;
+}
+
+.expiredDaysInput {
+  width: 8.5rem;
+}
+
+.maxVoteCountInput {
+  width: 10rem;
+}
+
+.needVoteInput {
+  width: 1rem;
+}
+
+.hiddenImage.addVoteItemButton {
+  width: 16rem;
+  margin: 0 auto 1rem;
+}

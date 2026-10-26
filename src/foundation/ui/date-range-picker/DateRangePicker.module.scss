@@ -1,0 +1,456 @@
+.root {
+  box-sizing: border-box;
+  position: relative;
+  display: inline-block;
+  width: 305px;
+  height: 32px;
+  color: rgba(0, 0, 0, 0.65);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 14px;
+  font-variant: tabular-nums;
+  line-height: 21px;
+  vertical-align: top;
+  font-feature-settings: "tnum";
+}
+
+.trigger {
+  box-sizing: border-box;
+  display: flex;
+  width: 305px;
+  height: 32px;
+  align-items: center;
+  margin: 0;
+  padding: 4px 28px 4px 11px;
+  color: inherit;
+  font: inherit;
+  background: #fff;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  outline: 0;
+  cursor: pointer;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.trigger:hover,
+.trigger:focus-visible,
+.trigger[data-popup-open] {
+  border-color: #40a9ff;
+}
+
+.trigger[aria-invalid="true"] {
+  border-color: #f5222d;
+}
+
+.trigger:focus-visible,
+.trigger[data-popup-open] {
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+}
+
+.trigger:disabled {
+  color: rgba(0, 0, 0, 0.25);
+  background: #f5f5f5;
+  border-color: #d9d9d9;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.triggerValue {
+  width: 44%;
+  overflow: hidden;
+  text-align: center;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.placeholder {
+  color: rgba(0, 0, 0, 0.25);
+}
+
+.separator {
+  width: 12%;
+  color: rgba(0, 0, 0, 0.45);
+  text-align: center;
+}
+
+.calendarIcon {
+  box-sizing: border-box;
+  position: absolute;
+  top: 9px;
+  right: 11px;
+  width: 14px;
+  height: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  border-radius: 1px;
+  pointer-events: none;
+}
+
+.calendarIcon::before {
+  position: absolute;
+  top: 2px;
+  left: 0;
+  width: 12px;
+  border-top: 1px solid rgba(0, 0, 0, 0.25);
+  content: "";
+}
+
+.calendarIcon::after {
+  position: absolute;
+  top: -3px;
+  left: 3px;
+  width: 6px;
+  height: 4px;
+  border-right: 1px solid rgba(0, 0, 0, 0.25);
+  border-left: 1px solid rgba(0, 0, 0, 0.25);
+  content: "";
+}
+
+.clear {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 1;
+  display: flex;
+  width: 16px;
+  height: 16px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  color: #bfbfbf;
+  font: 16px/16px Arial, sans-serif;
+  background: #fff;
+  border: 0;
+  border-radius: 50%;
+  outline: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.root:hover .clear,
+.clear:focus-visible {
+  opacity: 1;
+}
+
+.clear:hover,
+.clear:focus-visible {
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.positioner {
+  z-index: 1050;
+}
+
+.popup {
+  box-sizing: border-box;
+  width: 554px;
+  height: 391px;
+  padding: 1px;
+  color: rgba(0, 0, 0, 0.65);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 14px;
+  font-variant: tabular-nums;
+  line-height: 21px;
+  background: transparent;
+  border-radius: 4px;
+  outline: 0;
+  font-feature-settings: "tnum";
+}
+
+.calendarContent {
+  box-sizing: border-box;
+  width: 552px;
+  height: 389px;
+  overflow: hidden;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.panels {
+  display: flex;
+  width: 552px;
+  height: 351px;
+}
+
+.panel {
+  box-sizing: border-box;
+  width: 276px;
+  height: 350px;
+  flex: 0 0 276px;
+}
+
+.panel:first-child {
+  border-right: 1px solid #e8e8e8;
+}
+
+.inputWrap {
+  box-sizing: border-box;
+  position: relative;
+  width: 276px;
+  height: 47px;
+  padding: 6px 10px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.calendarInput {
+  box-sizing: border-box;
+  width: 256px;
+  height: 32px;
+  padding: 4px 0;
+  color: rgba(0, 0, 0, 0.65);
+  font: inherit;
+  line-height: 24px;
+  background: #fff;
+  border: 0;
+  outline: 0;
+}
+
+.panel:last-child .inputWrap {
+  z-index: 2;
+  width: 366px;
+  margin-left: -90px;
+  background: #fff;
+}
+
+.panel:last-child .calendarInput {
+  width: 346px;
+}
+
+.inputSeparator {
+  position: absolute;
+  top: 6px;
+  left: 171px;
+  z-index: 3;
+  width: 10px;
+  height: 34px;
+  color: rgba(0, 0, 0, 0.45);
+  line-height: 34px;
+  text-align: center;
+  pointer-events: none;
+}
+
+.calendarInput::placeholder {
+  color: rgba(0, 0, 0, 0.25);
+}
+
+.header {
+  box-sizing: border-box;
+  position: relative;
+  width: 276px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+}
+
+.monthTitle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: rgba(0, 0, 0, 0.85);
+  font-weight: 500;
+}
+
+.previousControls,
+.nextControls {
+  position: absolute;
+  top: 0;
+  z-index: 1;
+  display: block;
+  width: 41px;
+  height: 40px;
+}
+
+.previousControls { left: 7px; }
+.nextControls { right: 7px; }
+
+.navigation {
+  position: absolute;
+  top: 0;
+  height: 40px;
+  padding: 0;
+  color: rgba(0, 0, 0, 0.45);
+  background: transparent;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+}
+
+.navigation:hover,
+.navigation:focus-visible {
+  color: rgba(0, 0, 0, 0.85);
+}
+
+.navigation::before,
+.navigation::after {
+  position: absolute;
+  top: 16px;
+  width: 8px;
+  height: 8px;
+  border-top: 1px solid currentColor;
+  border-left: 1px solid currentColor;
+  content: "";
+}
+
+.previous::before,
+.doublePrevious::before,
+.doublePrevious::after {
+  transform: rotate(-45deg) scale(0.8);
+}
+
+.next::before,
+.doubleNext::before,
+.doubleNext::after {
+  transform: rotate(135deg) scale(0.8);
+}
+
+.doublePrevious { left: 0; width: 28px; }
+.previous { left: 22px; width: 19px; }
+.next { right: 22px; width: 19px; }
+.doubleNext { right: 0; width: 28px; }
+.previous::before { left: 5px; }
+.next::before { right: 5px; }
+.doublePrevious::before { left: 6px; }
+.doublePrevious::after { left: 11px; }
+.doubleNext::before { right: 11px; }
+.doubleNext::after { right: 6px; }
+.previous::after,
+.next::after { display: none; }
+
+.body {
+  box-sizing: border-box;
+  width: 276px;
+  height: 263px;
+  padding: 8px 12px;
+  border-top: 1px solid #e8e8e8;
+}
+
+.table {
+  width: 252px;
+  height: 246px;
+  border-collapse: collapse;
+  table-layout: fixed;
+  text-align: center;
+}
+
+.table th {
+  box-sizing: border-box;
+  width: 36px;
+  height: 30px;
+  padding: 6px 0;
+  color: rgba(0, 0, 0, 0.65);
+  font-weight: 700;
+  line-height: 18px;
+}
+
+.cell {
+  box-sizing: border-box;
+  position: relative;
+  width: 36px;
+  height: 36px;
+  padding: 3px 0;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.inRange::before {
+  position: absolute;
+  inset: 4px 0;
+  width: 36px;
+  height: 28px;
+  background: #e6f7ff;
+  content: "";
+}
+
+.date {
+  position: relative;
+  z-index: 1;
+  display: block;
+  box-sizing: content-box;
+  width: 24px;
+  height: 24px;
+  margin: 0 5px;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  font-weight: 400;
+  line-height: 22px;
+  text-align: center;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  outline: 0;
+  cursor: pointer;
+}
+
+.date:hover,
+.date:focus-visible {
+  background: #e6f7ff;
+}
+
+.endpoint .date {
+  color: #fff;
+  background: #1890ff;
+  border-color: #1890ff;
+}
+
+.endpoint .date:hover,
+.endpoint .date:focus-visible {
+  color: #fff;
+  background: #40a9ff;
+  border-color: #40a9ff;
+}
+
+.today .date {
+  color: #1890ff;
+  font-weight: 700;
+  background: transparent;
+  border-color: #1890ff;
+}
+
+.today .date:hover {
+  background: #e6f7ff;
+}
+
+.today .date:focus-visible {
+  background: transparent;
+}
+
+.today.endpoint .date {
+  color: #fff;
+  background: #1890ff;
+  border-color: #1890ff;
+}
+
+.today.endpoint .date:hover,
+.today.endpoint .date:focus-visible {
+  color: #fff;
+  background: #40a9ff;
+  border-color: #40a9ff;
+}
+
+.outsideMonth {
+  color: rgba(0, 0, 0, 0.25);
+}
+
+.disabledDate .date {
+  cursor: default;
+}
+
+.disabledDate .date:hover,
+.disabledDate .date:focus-visible {
+  background: transparent;
+}
+
+.disabledDate {
+  color: rgba(0, 0, 0, 0.25);
+}
+
+.footer {
+  box-sizing: border-box;
+  width: 552px;
+  height: 38px;
+  padding: 0 12px;
+  color: rgba(0, 0, 0, 0.65);
+  line-height: 38px;
+  text-align: left;
+  border-top: 1px solid #e8e8e8;
+}

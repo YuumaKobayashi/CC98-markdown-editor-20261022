@@ -1,0 +1,46 @@
+.advertisement {
+  position: relative;
+  width: 18.75rem;
+  height: 6.25rem;
+  margin-bottom: 1rem;
+}
+
+.advertisementImage {
+  width: 18.75rem;
+  height: 6.25rem;
+}
+
+.adButtons {
+  display: flex;
+  position: absolute;
+  left: 50%;
+  bottom: 0.25rem;
+  width: 16rem;
+  height: 0.625rem;
+  margin-left: -8rem;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.adButton {
+  width: 0.625rem;
+  height: 0.625rem;
+  margin: 0 0.25rem;
+  border-style: solid;
+  border-color: rgba(255, 255, 255, 0.5);
+  border-width: 1px;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.adButtonSelected {
+  width: 0.625rem;
+  height: 0.625rem;
+  margin: 0 0.25rem;
+  border-style: solid;
+  border-color: rgba(255, 255, 255, 0.5);
+  border-width: 1px;
+  border-radius: 50%;
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0.5);
+}

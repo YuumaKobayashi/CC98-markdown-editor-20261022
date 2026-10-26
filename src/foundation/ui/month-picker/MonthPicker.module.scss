@@ -1,0 +1,280 @@
+.root {
+  position: relative;
+  display: inline-flex;
+  width: 194px;
+  color: rgba(0, 0, 0, 0.65);
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  line-height: 21px;
+}
+
+.trigger {
+  box-sizing: border-box;
+  display: flex;
+  width: 194px;
+  height: 32px;
+  align-items: center;
+  padding: 4px 11px;
+  color: rgba(0, 0, 0, 0.65);
+  font: inherit;
+  text-align: left;
+  background: #fff;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  outline: 0;
+  cursor: pointer;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.trigger:hover {
+  border-color: #40a9ff;
+}
+
+.trigger:focus-visible,
+.trigger[data-popup-open] {
+  border-color: #40a9ff;
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+}
+
+.trigger:disabled {
+  color: rgba(0, 0, 0, 0.25);
+  background: #f5f5f5;
+  cursor: not-allowed;
+}
+
+.triggerText {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.placeholder {
+  color: #bfbfbf;
+}
+
+.calendarIcon {
+  position: relative;
+  box-sizing: border-box;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 14px;
+  margin-left: 8px;
+  border: 1px solid currentColor;
+  border-radius: 1px;
+  color: rgba(0, 0, 0, 0.25);
+}
+
+.calendarIcon::before {
+  position: absolute;
+  top: 3px;
+  right: 1px;
+  left: 1px;
+  border-top: 1px solid currentColor;
+  content: "";
+}
+
+.calendarIcon::after {
+  position: absolute;
+  top: -2px;
+  left: 3px;
+  width: 6px;
+  height: 3px;
+  border-right: 1px solid currentColor;
+  border-left: 1px solid currentColor;
+  content: "";
+}
+
+.positioner {
+  z-index: 1050;
+}
+
+.popup {
+  box-sizing: content-box;
+  width: 280px;
+  height: 327px;
+  padding: 0;
+  color: rgba(0, 0, 0, 0.65);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 21px;
+  background: #fff;
+  border: 1px solid #fff;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  outline: 0;
+  font-variant: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+.content {
+  box-sizing: border-box;
+  width: 280px;
+  height: 327px;
+  overflow: hidden;
+  background: #fff;
+  border-radius: 4px;
+}
+
+.panel {
+  width: 280px;
+  height: 288px;
+}
+
+.header {
+  position: relative;
+  box-sizing: border-box;
+  width: 280px;
+  height: 41px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.yearTitle {
+  height: 40px;
+  color: rgba(0, 0, 0, 0.85);
+  font-weight: 500;
+  line-height: 40px;
+  text-align: center;
+}
+
+.navigation {
+  position: absolute;
+  top: 0;
+  box-sizing: border-box;
+  width: 28px;
+  height: 40px;
+  padding: 0;
+  color: rgba(0, 0, 0, 0.45);
+  background: transparent;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+}
+
+.navigation:disabled {
+  color: rgba(0, 0, 0, 0.15);
+  cursor: not-allowed;
+}
+
+.navigation::before,
+.navigation::after {
+  position: absolute;
+  top: 16px;
+  box-sizing: border-box;
+  width: 8px;
+  height: 8px;
+  border-top: 1px solid currentColor;
+  border-left: 1px solid currentColor;
+  content: "";
+}
+
+.previousYear {
+  left: 7px;
+}
+
+.previousYear::before {
+  left: 7px;
+  transform: rotate(-45deg);
+}
+
+.previousYear::after {
+  left: 12px;
+  transform: rotate(-45deg);
+}
+
+.nextYear {
+  right: 7px;
+}
+
+.nextYear::before {
+  right: 12px;
+  transform: rotate(135deg);
+}
+
+.nextYear::after {
+  right: 7px;
+  transform: rotate(135deg);
+}
+
+.monthGrid {
+  display: grid;
+  width: 280px;
+  height: 247px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(4, 61.75px);
+  outline: 0;
+}
+
+.monthCell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.monthButton {
+  box-sizing: border-box;
+  width: 44px;
+  height: 24px;
+  padding: 0 8px;
+  color: rgba(0, 0, 0, 0.65);
+  font: inherit;
+  line-height: 24px;
+  white-space: nowrap;
+  background: transparent;
+  border: 0;
+  border-radius: 2px;
+  outline: 0;
+  cursor: pointer;
+}
+
+.monthButton:hover,
+.monthButton:focus-visible {
+  color: #1890ff;
+}
+
+.selectedMonth,
+.selectedMonth:hover,
+.selectedMonth:focus-visible {
+  color: #fff;
+  background: #1890ff;
+}
+
+.monthButton:disabled {
+  color: rgba(0, 0, 0, 0.25);
+  background: #f5f5f5;
+  cursor: not-allowed;
+}
+
+.footer {
+  box-sizing: border-box;
+  width: 280px;
+  height: 39px;
+  color: rgba(0, 0, 0, 0.65);
+  line-height: 38px;
+  text-align: center;
+  border-top: 1px solid #e8e8e8;
+}
+
+.currentMonthButton {
+  height: 38px;
+  padding: 0;
+  color: #000;
+  font: inherit;
+  line-height: 38px;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.currentMonthButton:hover,
+.currentMonthButton:focus-visible {
+  color: #40a9ff;
+}
+
+.currentMonthButton:disabled {
+  color: rgba(0, 0, 0, 0.25);
+  cursor: not-allowed;
+}

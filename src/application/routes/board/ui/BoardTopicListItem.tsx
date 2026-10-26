@@ -1,0 +1,210 @@
+import * as React from "react";
+import {
+  TopicBestState,
+  TopicState,
+  TopicTopState,
+} from "@modules/topic/model/dto";
+import { type TopicInfo } from "@modules/topic/model/dto";
+import { Popover } from "@foundation/ui/popover";
+import { Tag } from "@foundation/ui/tag";
+import { Tooltip } from "@foundation/ui/tooltip";
+import moment from "moment";
+import { Link } from "react-router";
+
+import { getMyInfo } from "@modules/session/api/session";
+import { readRawTagInfoCache } from "@modules/topic/cache/tag-cache";
+
+import styles from "./BoardTopicListItem.module.scss";
+import { BoardTopicPreviewCard } from "./BoardTopicPreviewCard";
+
+export { BoardTopicPreviewCard } from "./BoardTopicPreviewCard";
+
+interface BoardTopicListItemProps {
+  data: TopicInfo;
+  order: number;
+}
+
+const generateListPager = (item: number, id: number) => {
+  const url = `/topic/${id}/${item}`;
+  if (item != -1) {
+    return (
+      <div key={item} className={styles.pagerItem}>
+        <Link className={styles.pagerLink} to={url}>
+          {item}
+        </Link>
+      </div>
+    );
+  }
+  return <div key={item} className={styles.pagerItem}>...</div>;
+};
+
+export function BoardTopicListItem({
+  data,
+  order,
+}: BoardTopicListItemProps) {
+  // 普通帖子
+  let icon = "normal";
+  let iconText = "普通帖子";
+
+  // 自己发的
+  let curName;
+  if (getMyInfo()) curName = getMyInfo().name;
+  if (data.userName === curName) {
+    icon = "my";
+    iconText = "我的帖子";
+  }
+
+  // 热门
+  if (data.replyCount > 100) {
+    icon = "hot";
+    iconText = "热帖";
+  }
+
+  // 被锁
+  if (data.state === TopicState.Locked) {
+    icon = "lock";
+    iconText = "已被锁定";
+  }
+
+  // 精华
+  if (data.bestState === TopicBestState.Best) {
+    icon = "star";
+    iconText = "精华";
+  }
+
+  // 置顶
+  switch (data.topState) {
+    case TopicTopState.AllTop:
+      icon = "top-red";
+      iconText = "全站置顶";
+      break;
+    case TopicTopState.BoardTop:
+      icon = "top-orange";
+      iconText = "版面置顶";
+      break;
+    default:
+  }
+  const iconSrc = `/static/images/icon/${icon}.png`;
+
+  let bodyClass = "";
+  // 决定奇偶斑马纹
+  if (order % 2 === 0) {
+    bodyClass = `${styles["board-postItem-body"]} ${styles["board-postItem-body-even"]}`;
+  } else {
+    bodyClass = `${styles["board-postItem-body"]} ${styles["board-postItem-body-odd"]}`;
+  }
+
+  // 气泡内容
+
+  const content = <BoardTopicPreviewCard key={data.id} data={data} />;
+  const topicLinkClassName = [
+    styles.topicLink,
+    data.highlightInfo?.isBold ? styles.topicLinkBold : "",
+    data.highlightInfo?.isItalic ? styles.topicLinkItalic : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+  const topicLinkStyle = {
+    "--board-topic-highlight-color": data.highlightInfo?.color || "#000",
+  } as React.CSSProperties;
+
+  const count = data.replyCount + 1;
+  const totalPage =
+    count % 10 === 0 ? count / 10 : (count - (count % 10)) / 10 + 1;
+
+  const pager = [];
+  if (totalPage === 1) {
+    // pager to be []
+  } else if (totalPage <= 7) {
+    for (let page = 1; page <= totalPage; page++) pager.push(page);
+  } else {
+    pager.push(1, 2, 3, 4, -1, totalPage - 2, totalPage - 1, totalPage);
+  }
+
+  const tagInfo = readRawTagInfoCache<any[]>();
+  let tag1 = "";
+  let tag2 = "";
+
+  for (const item of tagInfo) {
+    if (item.id === data.tag1) tag1 = `[${item.name}]`;
+    if (item.id === data.tag2) tag2 = `[${item.name}]`;
+  }
+  return (
+    <Popover
+      title={
+        <Link className={styles.previewTitle} to={`/topic/${data.id}`}>
+          {data.title}
+        </Link>
+      }
+      content={content}
+      openDelay={1500}
+      closeDelay={100}
+      openOnFocus
+      freezeInitialPosition
+    >
+      <div className={bodyClass}>
+        <Tooltip content={iconText} openDelay={100} closeDelay={100}>
+          <div
+            className={styles["board-postItem-icon"]}
+            role="img"
+            tabIndex={0}
+            aria-label={iconText}
+          >
+            <img src={iconSrc} alt="" />
+          </div>
+        </Tooltip>
+        <div className={styles["board-postItem-title"]}>
+          <Link
+            className={topicLinkClassName}
+            to={`/topic/${data.id}`}
+            style={topicLinkStyle}
+          >
+            {`${tag1}${tag2}`}
+            {data.title.trim() ? (
+              data.title
+            ) : (
+              <span className={styles.emptyTitle}></span>
+            )}
+          </Link>
+
+          {pager.map((page) => generateListPager(page, data.id))}
+        </div>
+
+        <div className={styles["board-postItem-right"]}>
+          {data.userName ? (
+            <Link
+              className={styles["board-postItem-userName"]}
+              to={`/user/id/${data.userId}`}
+            >
+              {data.userName}
+            </Link>
+          ) : (
+            <div className={styles["board-postItem-userName"]}>匿名</div>
+          )}
+          <div className={styles["board-postItem-tags"]}>
+            <div className={styles["board-postItem-tag"]}>
+              <Tag className={styles.countTag} color="blue">
+                {data.hitCount > 10000
+                  ? `${(data.hitCount / 10000).toFixed(0)}万`
+                  : data.hitCount}
+              </Tag>
+            </div>
+            <div className={styles["board-postItem-tag"]}>
+              <Tag className={styles.countTag} color="cyan">
+                {data.replyCount}
+              </Tag>
+            </div>
+          </div>
+          <Link
+            to={`/topic/${data.id}/${Math.ceil((data.replyCount + 1) / 10)}`}
+          >
+            <div className={styles["board-postItem-lastReply"]}>
+              <span>{data.lastPostUser}</span>/
+              <span>{moment(data.lastPostTime).format("YY-MM-DD HH:mm")}</span>
+            </div>
+          </Link>
+        </div>
+      </div>
+    </Popover>
+  );
+}

@@ -1,0 +1,35 @@
+.breadcrumb {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-start;
+  color: grey;
+  font-size: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.homeLink {
+  color: grey;
+  font-size: 1rem;
+  margin-right: 0.5rem;
+
+  &:focus {
+    color: grey;
+    outline: none;
+  }
+
+  &:hover {
+    color: grey;
+    outline: 0;
+  }
+}
+
+.homeLink:active {
+  color: grey;
+  outline: 0;
+}
+
+.currentPage {
+  color: grey;
+  font-size: 1rem;
+  margin-inline: 0.5rem;
+}

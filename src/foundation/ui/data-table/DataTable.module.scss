@@ -1,0 +1,144 @@
+.root {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  color: rgba(0, 0, 0, 0.65);
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  line-height: 21px;
+}
+
+.scrollContainer {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.table {
+  width: max(100%, var(--data-table-min-width));
+  min-width: var(--data-table-min-width);
+  table-layout: auto;
+  border-spacing: 0;
+  border-collapse: collapse;
+  background: #fff;
+}
+
+.column {
+  width: var(--data-table-column-width);
+}
+
+.cell {
+  min-width: var(--data-table-cell-min-width);
+}
+
+.alignLeft {
+  text-align: left;
+}
+
+.alignCenter {
+  text-align: center;
+}
+
+.alignRight {
+  text-align: right;
+}
+
+.table th,
+.table td {
+  box-sizing: border-box;
+  padding: 16px;
+  overflow-wrap: normal;
+  line-height: 21px;
+  word-break: normal;
+  vertical-align: middle;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.table th {
+  color: rgba(0, 0, 0, 0.85);
+  font-weight: 500;
+  background: #fafafa;
+}
+
+.bordered .table th,
+.bordered .table td {
+  border: 1px solid #e8e8e8;
+}
+
+.emptyPlaceholder {
+  box-sizing: border-box;
+  display: flex;
+  height: 168px;
+  align-items: center;
+  justify-content: center;
+  margin-top: -1px;
+  padding: 16px;
+  text-align: center;
+  background: #fff;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.bordered .emptyPlaceholder {
+  border: 1px solid #e8e8e8;
+}
+
+.emptyState {
+  display: flex;
+  height: 70px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  color: rgba(0, 0, 0, 0.25);
+}
+
+.emptyImage {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  width: 64px;
+  height: 40px;
+  margin-bottom: 8px;
+  border: 2px solid #d9d9d9;
+  border-radius: 2px 2px 8px 8px;
+  background: #fafafa;
+}
+
+.emptyImage::before {
+  position: absolute;
+  top: 7px;
+  right: 9px;
+  left: 9px;
+  height: 2px;
+  background: #d9d9d9;
+  content: "";
+}
+
+.emptyImage::after {
+  position: absolute;
+  top: 15px;
+  right: 16px;
+  left: 16px;
+  height: 2px;
+  background: #e8e8e8;
+  content: "";
+}
+
+.emptyState > span:last-child {
+  line-height: 22px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  margin: 16px 0;
+}
+
+@keyframes data-table-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

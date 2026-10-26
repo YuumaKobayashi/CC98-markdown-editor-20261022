@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><title>Markdown 本地回归</title></head>
+<body>
+<script type="module">
+  import * as h from "./markdown-browser-harness.tsx";
+  window.harness = h;
+  h.mount(["![图片](/static/images/icon/lock.png)", "second"], true);
+  const controls = document.createElement("nav");
+  for (const [label, action] of [
+    ["清空第一份稿件", () => h.setValue(0, "")],
+    ["载入新稿件", () => h.setValue(0, "new document")],
+    ["完成待处理上传", () => h.pendingUploads.splice(0).forEach((resolve) => resolve("https://example.com/attachment.txt"))],
+    ["卸载编辑器", () => h.unmount()],
+  ]) {
+    const button = document.createElement("button");
+    button.textContent = label;
+    button.onclick = action;
+    controls.appendChild(button);
+  }
+  document.body.prepend(controls);
+</script>
+</body>
+</html>

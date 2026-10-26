@@ -1,0 +1,51 @@
+.frame {
+  border: none;
+}
+
+.frame.width {
+  width: var(--ubb-sandbox-width);
+}
+
+.frame.height {
+  height: var(--ubb-sandbox-height);
+}
+
+.frame.widthInitial {
+  width: initial;
+}
+
+.frame.widthInherit {
+  width: inherit;
+}
+
+.frame.widthUnset {
+  width: unset;
+}
+
+.frame.widthRevert {
+  width: revert;
+}
+
+.frame.widthRevertLayer {
+  width: revert-layer;
+}
+
+.frame.heightInitial {
+  height: initial;
+}
+
+.frame.heightInherit {
+  height: inherit;
+}
+
+.frame.heightUnset {
+  height: unset;
+}
+
+.frame.heightRevert {
+  height: revert;
+}
+
+.frame.heightRevertLayer {
+  height: revert-layer;
+}

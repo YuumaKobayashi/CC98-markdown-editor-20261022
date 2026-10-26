@@ -1,0 +1,10 @@
+.dialogBody {
+  max-height: 20rem;
+  overflow-y: auto;
+}
+
+.postContent {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -1,0 +1,308 @@
+import * as React from "react";
+import { useEffect, useState } from "react";
+import { Spinner as Spin } from "@foundation/ui/spinner";
+import $ from "jquery";
+
+import { isMaster } from "@modules/board/api/service";
+import { type BoardInfo } from "@modules/board/model/dto";
+import { FloorSize } from "@modules/post/ui/FloorSize";
+import { type PostContentType } from "@modules/post/model/dto";
+import { type PostViewModel } from "@modules/post/model/view-model";
+import {
+  getCurUserTopicContent,
+  getHotReplyContent,
+  getTopicContent,
+  getTraceTopics,
+} from "@modules/topic/api/detail";
+import { type TopicInfo } from "@modules/topic/model/dto";
+import { getMyInfo } from "@modules/session/api/session";
+import { queryWealth } from "@modules/wealth/api/service";
+import { PostRatingDialog } from "@modules/post-rating/ui/PostRatingDialog";
+import { PostManagementDialog } from "@modules/moderation/ui/PostManagementDialog";
+import { TopicAwardList } from "./TopicAwardList";
+import { TopicReplier } from "./TopicReplier";
+import { TopicReplyContent } from "./TopicReplyContent";
+import { TopicReplySignature } from "./TopicReplySignature";
+import styles from "./TopicReplyList.module.scss";
+
+export { FloorSize } from "@modules/post/ui/FloorSize";
+
+export interface TopicReplyListProps {
+  topicId: number | string;
+  page: number | string;
+  topicInfo: TopicInfo;
+  boardInfo: BoardInfo;
+  quote: (...args: any[]) => void;
+  isTrace: boolean;
+  isHot: boolean;
+  postId: number | null;
+}
+
+export function TopicReplyList(props: TopicReplyListProps) {
+  const {
+    topicId,
+    page,
+    topicInfo,
+    boardInfo,
+    quote,
+    isTrace,
+    isHot,
+    postId,
+  } = props;
+  const [boardName, setBoardName] = useState("");
+  const [maxWealth, setMaxWealth] = useState<number | null>(20000);
+  const [deductedWealth, setDeductedWealth] = useState(0);
+  const [inWaiting, setInWaiting] = useState(true);
+  const [contents, setContents] = useState<PostViewModel[]>([]);
+  const [postManagementVisible, setPostManagementVisible] = useState(false);
+  const [ratingVisible, setRatingVisible] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<PostViewModel | null>(null);
+
+  useEffect(() => {
+    const loadReplies = async () => {
+      const currentPage = Number(page) || 1;
+      const currentTopicId = Number(topicId);
+      let realContents;
+      if (isHot) {
+        realContents = await getHotReplyContent(currentTopicId);
+        if (!realContents) {
+          setInWaiting(false);
+          setContents([]);
+        }
+      } else if (!isTrace) {
+        realContents = await getTopicContent(currentTopicId, currentPage);
+        if (!realContents) {
+          setInWaiting(false);
+          setContents([]);
+        }
+      } else {
+        realContents = await getTraceTopics(
+          currentTopicId,
+          postId!,
+          currentPage,
+        );
+      }
+
+      if (isMaster(boardInfo.boardMasters)) {
+        const data = await queryWealth(boardInfo.id);
+        if (data) {
+          setMaxWealth(data.rewardMaxValue);
+          setDeductedWealth(data.rewardTotalValue);
+        }
+      }
+      setBoardName(boardInfo.name);
+      setInWaiting(false);
+      setContents(realContents ?? []);
+    };
+
+    setInWaiting(true);
+    void loadReplies();
+  }, [page, topicInfo.replyCount]);
+
+  useEffect(() => {
+    if (window.location.hash && window.location.hash !== "#") {
+      const hash = window.location.hash;
+      const elementId = hash.split("#");
+      let id = elementId[1];
+      if (id === "10") {
+        id = "0";
+      }
+      const element = document.getElementById(id);
+      if (element) {
+        const top = element.offsetTop;
+        const height = element.clientHeight;
+        const viewportHeight = window.innerHeight;
+        if (height > viewportHeight) {
+          $(document).scrollTop(top);
+        } else {
+          const delta = (viewportHeight - height) / 2;
+          $(document).scrollTop(top - delta);
+        }
+      }
+    }
+  });
+
+  const update = async () => {
+    const currentPage = Number(page) || 1;
+    const currentTopicId = Number(topicId);
+    let realContents;
+    if (isHot) {
+      realContents = await getHotReplyContent(currentTopicId);
+    } else if (isTrace) {
+      realContents = await getCurUserTopicContent(
+        currentTopicId,
+        currentPage,
+        postId,
+      );
+    } else {
+      realContents = await getTopicContent(currentTopicId, currentPage);
+    }
+
+    setMaxWealth(0);
+    setDeductedWealth(0);
+    if (isMaster(boardInfo.boardMasters)) {
+      const data = await queryWealth(boardInfo.id);
+      if (data) {
+        setMaxWealth(data.rewardMaxValue);
+        setDeductedWealth(data.rewardTotalValue);
+      }
+    }
+    setBoardName(boardInfo.name);
+    setContents(realContents ?? []);
+  };
+
+  const renderReply = (item: PostViewModel) => {
+    const id = isTrace ? item.floor : item.floor % 10;
+    let replyId = id.toString();
+    const likeInfo = {
+      likeCount: item.likeCount,
+      dislikeCount: item.dislikeCount,
+      likeState: item.likeState,
+    };
+    const awards =
+      item.awards && item.awards.length !== 0 ? (
+        <TopicAwardList
+          key={Date.now()}
+          postId={item.postId}
+          updateTime={Date.now()}
+          awardInfo={item.awards}
+        />
+      ) : null;
+
+    const replyBody = (
+      <>
+        <TopicReplier
+          key={item.postId}
+          isAnonymous={item.isAnonymous}
+          topicInfo={topicInfo}
+          userInfo={item.userInfo}
+          traceMode={isTrace ? true : false}
+          isHot={isHot ? true : false}
+        />
+        <div className={styles.replyContentColumn}>
+          <TopicReplyContent
+            floor={item.floor}
+            topicInfo={topicInfo}
+            key={item.content}
+            postId={item.postId}
+            content={item.content}
+            contentType={item.contentType}
+          />
+          {awards}
+          <TopicReplySignature
+            userInfo={item.userInfo}
+            quote={quote}
+            boardInfo={boardInfo}
+            postInfo={item}
+            likeInfo={likeInfo}
+            traceMode={isTrace ? true : false}
+            topicInfo={topicInfo}
+            changePmVisible={(visible, selected) => {
+              setPostManagementVisible(visible);
+              setSelectedItem(selected);
+            }}
+            changeJudgeVisible={(visible, selected) => {
+              setRatingVisible(visible);
+              setSelectedItem(selected);
+            }}
+            page={item.floor === 1 && !isTrace ? undefined : page}
+          />
+        </div>
+      </>
+    );
+
+    if (item.floor === 1 && !isTrace) {
+      return (
+        <div key={item.id} className={styles.topicReplyGroup}>
+          <div className={styles.reply} id={id.toString()}>
+            {replyBody}
+            <FloorSize isHot={isHot} floor={item.floor} />
+          </div>
+          <TopicReplyList
+            topicInfo={topicInfo}
+            page={page}
+            boardInfo={boardInfo}
+            quote={quote}
+            isTrace={false}
+            isHot={true}
+            postId={null}
+            topicId={topicId}
+          />
+        </div>
+      );
+    }
+
+    if (isHot) {
+      replyId = `hot_${id}`;
+    }
+    return (
+      <div className={styles.reply} key={item.id} id={replyId}>
+        {replyBody}
+        <div className={styles.floorMarkers}>
+          <FloorSize isHot={isHot} floor={item.floor} />
+          {item.isLZ && <FloorSize isHot={false} floor={-1} />}
+        </div>
+      </div>
+    );
+  };
+
+  //TODO: getMyInfo() should be called once and stored in a state or context to avoid multiple calls and improve performance.
+  const myInfo = getMyInfo();
+  const privilege = myInfo ? myInfo.privilege : null;
+
+  if (isHot && inWaiting) return null;
+  if (inWaiting) {
+    return <Spin className={styles.loadingSpinner} size="large" />;
+  }
+  if (!contents || !contents.length) {
+    return <div></div>;
+  }
+
+  return (
+    <div className={styles.center}>
+      {contents.map(renderReply)}
+      {postManagementVisible && (
+        <PostManagementDialog
+          m_wealth={maxWealth}
+          d_wealth={deductedWealth}
+          boardName={boardName}
+          update={update}
+          privilege={privilege}
+          boardId={boardInfo.id}
+          item={selectedItem}
+          visible={postManagementVisible}
+          onCancel={() => setPostManagementVisible(false)}
+        />
+      )}
+      <PostRatingDialog
+        item={selectedItem}
+        update={update}
+        onCancel={() => setRatingVisible(false)}
+        visible={ratingVisible}
+      />
+    </div>
+  );
+}
+
+export interface ContentState {
+  id: number;
+  content: string;
+  time: string;
+  isDeleted: boolean;
+  floor: number;
+  isAnonymous: boolean;
+  lastUpdateAuthor: string;
+  lastUpdateTime: string;
+  topicId: number;
+  userName: string;
+  sendTopicNumber: number;
+  userImgUrl: string;
+  signature: string;
+  userId: number;
+  privilege: string;
+  likeNumber: number;
+  dislikeNumber: number;
+  postId: number;
+  contentType: PostContentType;
+  popularity: number;
+}

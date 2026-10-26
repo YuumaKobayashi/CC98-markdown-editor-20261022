@@ -1,0 +1,86 @@
+.positioner {
+  z-index: 1060;
+  max-width: 250px;
+  color: rgba(0, 0, 0, 0.65);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 21px;
+}
+
+.popup {
+  position: relative;
+  max-width: 250px;
+  color: inherit;
+  font: inherit;
+  outline: none;
+}
+
+.inner {
+  box-sizing: content-box;
+  width: max-content;
+  min-width: 30px;
+  max-width: 234px;
+  min-height: 32px;
+  padding: 6px 8px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.75);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.arrow {
+  display: flex;
+  width: 13.0625px;
+  height: 13.0625px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.arrowSurface {
+  display: block;
+  width: 9.237px;
+  height: 9.237px;
+  flex: none;
+  background: rgba(0, 0, 0, 0.75);
+  transform: rotate(45deg);
+}
+
+.arrow[data-side="top"] .arrowSurface {
+  transform: translateY(-6.53125px) rotate(45deg);
+}
+
+.arrow[data-side="top"] {
+  bottom: -13.0625px;
+  transform: translateX(-0.5px);
+}
+
+.arrow[data-side="right"] .arrowSurface {
+  transform: translateX(6.53125px) rotate(45deg);
+}
+
+.arrow[data-side="right"] {
+  left: -13.0625px;
+  transform: translateY(-0.5px);
+}
+
+.arrow[data-side="bottom"] .arrowSurface {
+  transform: translateY(6.53125px) rotate(45deg);
+}
+
+.arrow[data-side="bottom"] {
+  top: -13.0625px;
+  transform: translateX(-0.5px);
+}
+
+.arrow[data-side="left"] .arrowSurface {
+  transform: translateX(-6.53125px) rotate(45deg);
+}
+
+.arrow[data-side="left"] {
+  right: -13.0625px;
+  transform: translateY(-0.5px);
+}

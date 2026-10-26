@@ -1,0 +1,60 @@
+import * as React from "react";
+
+import { UserAreaLoading } from "@application/layouts/user-area";
+import { useAppSelector } from "@application/store";
+import { getCurrentUserFavoriteBoards } from "@modules/board/api/service";
+import { selectCurrentUser } from "@modules/session/model/selectors";
+import type { UserFavoritesBoardInfo } from "@modules/board/model/types";
+import { UserFavoriteBoardCard } from "./UserFavoriteBoardCard";
+import styles from "./UserFavoriteBoards.module.scss";
+
+export function UserFavoriteBoardsEmptyState() {
+  return <div className={styles.empty}>没有关注</div>;
+}
+
+/**
+ * 用户关注的版面信息
+ */
+export function UserFavoriteBoards() {
+  const currentBoardIds = useAppSelector(
+    (state) => selectCurrentUser(state).customBoards,
+  );
+  const [boards, setBoards] = React.useState<UserFavoritesBoardInfo[]>([]);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [, setErrorMessage] = React.useState("");
+  React.useEffect(() => {
+    const loadFavoriteBoards = async () => {
+      setIsLoading(true);
+      setErrorMessage("");
+
+      try {
+        const boardsInfo =
+          await getCurrentUserFavoriteBoards(currentBoardIds);
+        setBoards(boardsInfo);
+        setIsLoading(false);
+      } catch (error) {
+        setErrorMessage(
+          error instanceof Error ? error.message : String(error),
+        );
+      }
+    };
+
+    void loadFavoriteBoards();
+  }, []);
+
+  if (isLoading) {
+    return <UserAreaLoading />;
+  }
+  if (boards.length === 0) {
+    return <UserFavoriteBoardsEmptyState />;
+  }
+
+  const boardItems = boards.map((item: UserFavoritesBoardInfo) => (
+    <UserFavoriteBoardCard key={item.id} board={item} />
+  ));
+  for (let index = 1; index < boardItems.length; index += 2) {
+    boardItems.splice(index, 0, <hr key={index} />);
+  }
+
+  return <div>{boardItems}</div>;
+}

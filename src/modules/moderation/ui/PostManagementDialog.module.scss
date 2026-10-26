@@ -1,0 +1,115 @@
+.dialog {
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.dialogContent {
+  width: 800px;
+  min-height: 446px;
+}
+
+.dialogBody.dialogBody {
+  box-sizing: border-box;
+  min-height: 336px;
+  padding: 24px;
+  overflow: visible;
+}
+
+.dialogFooter.dialogFooter {
+  box-sizing: border-box;
+  height: 55px;
+}
+
+.footerButton.footerButton {
+  min-width: 32px;
+}
+
+.tabs {
+  width: 100%;
+  color: rgba(0, 0, 0, 0.65);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 14px;
+  line-height: 21px;
+}
+
+.tabs > [role="tablist"] {
+  box-sizing: border-box;
+  width: 752px;
+  height: 48px;
+  margin: 0 0 32px;
+  align-items: stretch;
+}
+
+.tabs > [role="tablist"] > [role="tab"] {
+  box-sizing: border-box;
+  min-height: 48px;
+  margin: 0;
+  padding: 0 20px;
+  line-height: 46px;
+}
+
+.tabs > [role="tabpanel"] {
+  outline: 0;
+}
+
+.form {
+  margin: 0;
+}
+
+.notice {
+  display: inline-block;
+  margin: 0 8px 0 0;
+}
+
+.field {
+  position: relative;
+  margin: 0 0 24px;
+  padding-bottom: 8px;
+}
+
+.label {
+  height: 29px;
+  color: rgba(0, 0, 0, 0.85);
+  line-height: 21px;
+}
+
+.numberInput {
+  display: block;
+  width: 90px;
+}
+
+.tagsInput {
+  display: block;
+  width: 120px;
+}
+
+.tagsPositioner {
+  margin-left: -1px;
+}
+
+.invalidTagsInput.invalidTagsInput[data-status="error"]
+  .invalidTagsControl {
+  border-color: #f5222d;
+}
+
+.textInput {
+  display: block;
+  height: 32px;
+}
+
+.field[data-invalid] .textInput {
+  border-color: #f5222d;
+}
+
+.error {
+  position: absolute;
+  top: 61px;
+  left: 0;
+}
+
+.cancelTp {
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 14px;
+  line-height: 21px;
+}

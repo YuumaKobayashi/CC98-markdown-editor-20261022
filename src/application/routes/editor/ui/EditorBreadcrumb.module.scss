@@ -1,0 +1,25 @@
+.root {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-start;
+  color: grey;
+  font-size: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.homeLink,
+.boardLink,
+.category {
+  color: grey;
+  font-size: 1rem;
+}
+
+.homeLink {
+  margin-right: 0.5rem;
+}
+
+.boardLink,
+.category {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}

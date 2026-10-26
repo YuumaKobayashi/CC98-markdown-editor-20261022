@@ -1,0 +1,266 @@
+.picker {
+  box-sizing: content-box;
+  width: 200px;
+  height: 343px;
+  padding: 10px 10px 0;
+  color: rgba(0, 0, 0, 0.65);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial,
+    sans-serif;
+  font-size: 14px;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15),
+    0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.picker[data-disabled] {
+  opacity: 0.55;
+}
+
+.saturation {
+  position: relative;
+  width: 200px;
+  height: 150px;
+  overflow: hidden;
+  border-radius: 3px;
+  background-color: var(--color-picker-hue-background);
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.saturationWhite,
+.saturationBlack {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.saturationWhite {
+  background: linear-gradient(to right, #fff, rgba(255, 255, 255, 0));
+}
+
+.saturationBlack {
+  background: linear-gradient(to top, #000, rgba(0, 0, 0, 0));
+}
+
+.saturationThumb {
+  position: absolute;
+  z-index: 1;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1.5px #fff,
+    inset 0 0 1px 1px rgba(0, 0, 0, 0.3),
+    0 0 1px 2px rgba(0, 0, 0, 0.4);
+  transform: translate(-2px, -2px);
+  pointer-events: none;
+  left: var(--color-picker-saturation-x);
+  top: var(--color-picker-saturation-y);
+}
+
+.controls {
+  display: flex;
+  width: 200px;
+  height: 32px;
+}
+
+.sliders {
+  min-width: 0;
+  flex: 1;
+  padding: 4px 0;
+}
+
+.hue,
+.alpha {
+  position: relative;
+  height: 10px;
+  overflow: hidden;
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15),
+    inset 0 0 4px rgba(0, 0, 0, 0.25);
+  cursor: ew-resize;
+  touch-action: none;
+}
+
+.hue {
+  background: linear-gradient(
+    to right,
+    #f00 0%,
+    #ff0 17%,
+    #0f0 33%,
+    #0ff 50%,
+    #00f 67%,
+    #f0f 83%,
+    #f00 100%
+  );
+}
+
+.alpha {
+  margin-top: 4px;
+}
+
+.checkboard,
+.alphaGradient,
+.activeColor {
+  position: absolute;
+  inset: 0;
+}
+
+.checkboard {
+  background-color: #fff;
+  background-image: linear-gradient(45deg, #ccc 25%, transparent 25%),
+    linear-gradient(-45deg, #ccc 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #ccc 75%),
+    linear-gradient(-45deg, transparent 75%, #ccc 75%);
+  background-position: 0 0, 0 4px, 4px -4px, -4px 0;
+  background-size: 8px 8px;
+}
+
+.hueThumb,
+.alphaThumb {
+  position: absolute;
+  top: 1px;
+  z-index: 1;
+  width: 4px;
+  height: 8px;
+  background: #fff;
+  border-radius: 1px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
+  transform: translateX(-2px);
+  pointer-events: none;
+}
+
+.hueThumb {
+  left: var(--color-picker-hue-x);
+}
+
+.alphaThumb {
+  left: var(--color-picker-alpha-x);
+}
+
+.alphaGradient {
+  background: var(--color-picker-alpha-gradient);
+}
+
+.saturation:focus-visible,
+.hue:focus-visible,
+.alpha:focus-visible {
+  outline: 2px solid rgba(24, 144, 255, 0.45);
+  outline-offset: 2px;
+}
+
+.preview {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+  overflow: hidden;
+  margin-top: 4px;
+  margin-left: 4px;
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15),
+    inset 0 0 4px rgba(0, 0, 0, 0.25);
+}
+
+.activeColor {
+  background-color: var(--color-picker-active-color);
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15),
+    inset 0 0 4px rgba(0, 0, 0, 0.25);
+}
+
+.fields {
+  box-sizing: content-box;
+  display: flex;
+  width: 200px;
+  height: 94px;
+  padding-top: 4px;
+}
+
+.hexField,
+.singleField {
+  display: block;
+  min-width: 0;
+  margin: 0;
+}
+
+.hexField {
+  flex: 2;
+}
+
+.singleField {
+  flex: 1;
+  padding-left: 6px;
+}
+
+.fieldInput {
+  box-sizing: content-box;
+  width: 80%;
+  height: 40px;
+  margin: 0;
+  padding: 4px 10% 3px;
+  color: rgba(0, 0, 0, 0.65);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 11px;
+  line-height: 40px;
+  background: #fff;
+  border: 0;
+  border-radius: 0;
+  box-shadow: inset 0 0 0 1px #ccc;
+}
+
+.fieldInput:focus-visible {
+  outline: 2px solid rgba(24, 144, 255, 0.45);
+  outline-offset: -1px;
+}
+
+.fieldLabel {
+  box-sizing: border-box;
+  display: block;
+  height: 47px;
+  padding-top: 3px;
+  padding-bottom: 4px;
+  color: #222;
+  font-size: 11px;
+  line-height: 40px;
+  text-align: center;
+}
+
+.palette {
+  box-sizing: content-box;
+  position: relative;
+  display: flex;
+  width: 210px;
+  height: 52px;
+  flex-wrap: wrap;
+  margin: 0 -10px;
+  padding: 10px 0 0 10px;
+  border-top: 1px solid #eee;
+}
+
+.swatch {
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  margin: 0 10px 10px 0;
+  padding: 0;
+  border: 0;
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  background-color: var(--color-picker-swatch-color);
+}
+
+.swatch:hover,
+.swatch:focus-visible {
+  outline: 0;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15),
+    0 0 4px currentColor;
+}
+
+.swatch:disabled {
+  cursor: not-allowed;
+}

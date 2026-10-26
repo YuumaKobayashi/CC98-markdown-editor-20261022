@@ -1,0 +1,16 @@
+.user-manager.user-manager {
+        display: flex;
+
+        &>* {
+          margin-right: 1rem;}
+
+        p {
+          margin: 0;}
+
+  button {
+    width: 5rem;
+  }
+}
+
+    .user-manage-return {
+      color: red;}

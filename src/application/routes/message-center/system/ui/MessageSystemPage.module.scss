@@ -1,0 +1,28 @@
+
+@use "../../../../../foundation/styles/tokens/semantic-colors" as semanticColors;
+
+.message-right {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.message-pager {
+  flex-shrink: 0;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+/******以下为系统消息部分的样式***/
+.message-system {
+  min-height: 952px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  font-family: 微软雅黑;
+  border: 1px solid semanticColors.$color-border;
+  flex-shrink: 0;
+  overflow-y: auto;
+  background-color: semanticColors.$color-post;
+}

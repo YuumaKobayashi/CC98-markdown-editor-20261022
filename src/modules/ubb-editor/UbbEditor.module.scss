@@ -1,0 +1,106 @@
+.editor {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: var(--ubb-editor-height);
+    position: relative;
+    background-color: white;
+    border: 1px solid rgb(204,204,204);
+
+    // Markdown 编辑态：容器高度跟随内容。MarkdownEditor 自带「放大」
+    // 能力（Vditor 撑到约视口高），固定高度会让它溢出容器、把 composer
+    // 排在容器之后的「回复」按钮行盖在编辑器中间。
+    &.editorMdMode {
+        height: auto;
+        min-height: var(--ubb-editor-height);
+    }
+
+    textarea {
+        transition-duration: .5s;
+        flex-grow: 1;
+        border: none;
+        width: 100%;
+        resize: none;
+        font-size: 1rem;
+        padding: .5rem;
+        box-sizing: border-box;
+    }
+
+    button, label, textarea, input {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-color: white;
+        border: 0;
+
+        &::-ms-expand {
+            display: none;
+        }
+
+        &:focus {
+            outline: 0;
+        }
+
+        &:active {
+            border: 0;
+        }
+    }
+
+    input[type="checkbox"] {
+        margin: 0;
+        -webkit-appearance: checkbox;
+        -moz-appearance: checkbox;
+    }
+}
+
+// 编辑区：textarea 独占一行（此前右侧的 [md] 预览窗格已随嵌入
+// Markdown 编辑器面板的引入而移除）。
+.body {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    flex-wrap: wrap;
+
+    textarea {
+        flex: 1 1 24rem;
+        min-width: 0;
+    }
+}
+
+.fileInput {
+    display: none;
+}
+
+// Markdown 编辑态：编辑框原地切换（单一编辑框，不叠加）。UBB 工具栏
+// 让位给模式条，MarkdownEditor（自带 Vditor 工具栏）占据 textarea 原位。
+.mdModeBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem;
+    min-height: 2rem;
+    padding: 0 .5rem;
+    border-bottom: 1px solid rgb(204, 204, 204);
+    background-color: rgba(53, 148, 247, .07);
+    font-size: .85rem;
+    color: #556;
+}
+
+.mdModeBarClose {
+    flex-shrink: 0;
+    padding: .1rem .7rem !important;
+    font-size: .8rem;
+    color: #fff !important;
+    background-color: var(--cc98-color-primary, #3594f7) !important;
+    border-radius: 3px;
+    cursor: pointer;
+
+    &:hover {
+        filter: brightness(1.08);
+    }
+}
+
+// MarkdownEditor 容器：撑满 textarea 原位。
+.mdBody {
+    flex: 1 1 100%;
+    min-width: 0;
+}

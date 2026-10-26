@@ -1,0 +1,101 @@
+.root {
+  min-height: 700px;
+  margin-top: 40px;
+  color: #333;
+  font-family: Arial, sans-serif;
+  line-height: 24px;
+}
+
+.summaryHeader,
+.pickerRow {
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  margin: 0 auto 10px;
+  padding: 16px;
+  color: #333;
+  font-family: Arial, sans-serif;
+  line-height: 24px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+}
+
+.summaryHeader {
+  gap: 8px;
+}
+
+.monthPicker {
+  flex: 0 0 194px;
+  margin-right: 8px;
+}
+
+.pickerInfo {
+  margin-left: 12px;
+  font-size: 14px;
+  line-height: 21px;
+  white-space: nowrap;
+}
+
+.statusText {
+  margin-left: 8px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.signinButtonGroup.signinButtonGroup > button {
+  outline: 0;
+}
+
+.signinPreviousIcon {
+  margin-right: 8px;
+}
+
+.signinNextIcon {
+  margin-left: 8px;
+}
+
+.calendarCell {
+  box-sizing: border-box;
+  width: 100%;
+  height: 65px;
+  padding: 8px 0;
+  line-height: 24px;
+  border-radius: 4px;
+}
+
+.checkedCell {
+  color: #2ecc71;
+  background: #f0fcf4;
+}
+
+.signinInfo {
+  box-sizing: border-box;
+  width: 22px;
+  height: 21px;
+  margin: 0 auto;
+  padding: 0 4px;
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 21px;
+  white-space: nowrap;
+  border-radius: 4px;
+}
+
+.makeupTag {
+  color: #fff;
+  background: #6cf;
+}
+
+.notSigninTag {
+  color: #fff;
+  background: red;
+}
+
+.calendarPlaceholder {
+  box-sizing: border-box;
+  width: 100%;
+  height: 519px;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+}

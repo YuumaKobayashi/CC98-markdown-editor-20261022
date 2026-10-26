@@ -1,0 +1,21 @@
+
+
+.board-postItem-card-information {
+  display: flex;}
+
+.board-postItem-card-username {
+  margin-left: 1rem;}
+
+.board-postItem-card-content {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;}
+
+.board-postItem-card-body {
+  margin-bottom: 1rem;}
+
+.board-postItem-cards {
+  max-height: 40rem;
+  overflow-y: scroll;
+  width: 40rem;}

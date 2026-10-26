@@ -1,0 +1,62 @@
+
+@use "../../../foundation/styles/tokens/semantic-colors" as semanticColors;
+
+.message-message-person {
+  flex-shrink: 0;
+  display: flex;
+  min-height: 80px;
+  border-bottom: 1px dashed lightgray;
+  cursor: pointer;
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  &:hover {
+    background-color: semanticColors.$color-focus;
+  }
+
+  .message-message-pPortraitUrl {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    padding: 20px 10px;
+    border-radius: 50%;
+  }
+
+  .message-message-pInfo {
+    flex-grow: 1;
+    height: 40px;
+    margin: 20px 0px;
+    display: flex;
+    flex-direction: column;
+
+    .message-message-pName {
+      height: 14px;
+      font-size: 14px;
+      color: semanticColors.$color-black;
+      padding-bottom: 10px;
+    }
+
+    .message-message-pMessage {
+      height: 10px;
+      width: 110px;
+      display: inline-block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis !important;
+      font-size: 10px;
+      color: semanticColors.$color-gray;
+      padding-bottom: 6px;
+    }
+  }
+
+  .message-counterPerson {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: red;
+    top: 36px;
+    right: 15px;
+  }
+}
