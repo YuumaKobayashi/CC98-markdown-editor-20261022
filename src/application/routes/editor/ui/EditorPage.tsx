@@ -5,7 +5,7 @@ import { Button, Modal } from "antd";
 import { useNavigate, useParams } from "react-router";
 
 import { UbbEditor } from "@modules/ubb-editor/UbbEditor";
-import { MarkdownEditor } from "@foundation/integrations/markdown-editor";
+import { MarkdownEditor } from "@foundation/integrations/markdown";
 import { reportApplicationError } from "@application/providers/application-error";
 import { AnonymousState } from "@modules/board/model/dto";
 import {

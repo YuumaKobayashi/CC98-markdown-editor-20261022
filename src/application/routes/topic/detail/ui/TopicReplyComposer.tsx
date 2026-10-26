@@ -11,7 +11,7 @@ import {
 import { NavigationPrompt } from "@application/router/navigation-prompt";
 import { Button, Modal } from "antd";
 import moment from "moment";
-import { MarkdownEditor } from "@foundation/integrations/markdown-editor";
+import { MarkdownEditor } from "@foundation/integrations/markdown";
 import * as Showdown from "showdown";
 import styles from "./TopicReplyComposer.module.scss";
 import { AnonymousState } from "@modules/board/model/dto";
