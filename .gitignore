@@ -292,3 +292,15 @@ __pycache__/
 # Generated frontend build output. Authored static assets live in public/static,
 # and the maintained IIS configuration lives in deploy/iis.
 /dist/
+
+# Local credentials and browser session exports
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+*.key
+*.p12
+*.har
+.auth/
+playwright/.auth/
